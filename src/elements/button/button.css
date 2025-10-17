@@ -1,6 +1,12 @@
 button,
 input[type="button"] {
- 
+  
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  cursor: pointer;
+  
   /* Base */
   @apply rounded-md
         text-sm font-medium transition-all
@@ -22,10 +28,33 @@ input[type="button"] {
     @apply bg-primary text-primary-foreground shadow-xs hover:bg-primary/90;
   }
 
-  &[variant="destructive"] {
-    @apply bg-destructive text-white shadow-xs hover:bg-destructive/90
-                focus-visible:ring-destructive/20
-                dark:focus-visible:ring-destructive/40 dark:bg-destructive/60;
+  /* --- Shared variant styles --- */
+  &[variant="error"],
+  &[variant="warning"],
+  &[variant="info"],
+  &[variant="success"] {
+    @apply text-white shadow-xs hover:opacity-90;
+  }
+
+  /* --- Individual variant colors --- */
+  &[variant="error"] {
+    @apply bg-[var(--error)] focus-visible:ring-[var(--error)]/20
+          dark:bg-[var(--error)]/60 dark:focus-visible:ring-[var(--error)]/40;
+  }
+
+  &[variant="warning"] {
+    @apply bg-[var(--warning)] focus-visible:ring-[var(--warning)]/20
+          dark:bg-[var(--warning)]/60 dark:focus-visible:ring-[var(--warning)]/40;
+  }
+
+  &[variant="info"] {
+    @apply bg-[var(--info)] focus-visible:ring-[var(--info)]/20
+          dark:bg-[var(--info)]/60 dark:focus-visible:ring-[var(--info)]/40;
+  }
+
+  &[variant="success"] {
+    @apply bg-[var(--success)] focus-visible:ring-[var(--success)]/20
+          dark:bg-[var(--success)]/60 dark:focus-visible:ring-[var(--success)]/40;
   }
 
   &[variant="outline"] {
@@ -50,16 +79,29 @@ input[type="button"] {
     @apply h-9 px-4 py-2 gap-2 has-[>svg]:px-3;
   }
 
-  &[size="sm"] {
+  &[size="sm"],  &[size="icon-sm"] {
     @apply h-8 gap-1.5 px-3 has-[>svg]:px-2.5;
   }
 
-  &[size="lg"] {
-    @apply h-10 px-6 has-[>svg]:px-4;
+  &[size="lg"],  &[size="icon-lg"] {
+    @apply h-10 px-6 has-[>svg]:px-3;
   }
 
   &[size="icon"] {
+    align-items: center;
     @apply size-9;
+  }
+
+  &[size="icon-sm"] {
+    > svg {
+      @apply size-3;
+    }
+  }
+
+  &[size="icon-lg"] {
+    > svg {
+      @apply size-4;
+    }
   }
 
   /* --- SVG tweaks --- */
@@ -67,12 +109,12 @@ input[type="button"] {
     @apply pointer-events-none shrink-0;
   }
 
-  & > svg:not([class*="size-"]) {
+  & > svg {
     @apply size-4;
   }
 
   /* --- Accessibility states --- */
   &[aria-invalid="true"] {
-    @apply border-destructive ring-destructive/20 dark:ring-destructive/40;
+    @apply border-error ring-error/20 dark:ring-error/40;
   }
 }

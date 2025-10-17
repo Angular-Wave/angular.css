@@ -22,14 +22,12 @@
     "node": ">=24.0.0"
   },
   "scripts": {
-    "serve": "npm-run-all --parallel dev express css-dev css-dev-docsy",
+    "serve": "npm-run-all --parallel dev express css-dev",
     "dev": "vite",
     "express": "node --watch ./utils/express.js",
     "build": "vite build",
-    "css-dev": "npx @tailwindcss/cli -i ./src/index.css -o ./css/angular.css --watch",
-    "css-dev-docsy": "npx @tailwindcss/cli -i ./src/index.css -o ./docs/assets/angular.css --watch",
-    "css-prod": "npx @tailwindcss/cli -i ./src/index.css -o ./css/angular.css --minify",
-    "css-prod-docsy": "npx @tailwindcss/cli -i ./src/index.css -o ./docs/assets/angular.css --minify",
+    "css-dev": "npx @tailwindcss/cli -i ./src/index.css -o ./docs/assets/angular.css --watch",
+    "css-prod": "npx @tailwindcss/cli -i ./src/index.css -o ./css/angular.css --minify && cp ./css/angular.css ./docs/assets/angular.css",
     "playwright": "./node_modules/.bin/playwright test",
     "generate-docs": "node_modules/.bin/typedoc",
     "prepare": "husky"

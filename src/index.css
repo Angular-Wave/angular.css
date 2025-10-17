@@ -19,8 +19,14 @@
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --info: oklch(0.75 0.15 250);
+  --info-foreground: oklch(0.25 0.05 250);
+  --success: oklch(0.72 0.17 150);
+  --success-foreground: oklch(0.25 0.05 150);
+  --error: oklch(0.577 0.245 27.325);
+  --error-foreground: oklch(0.577 0.245 27.325);
+  --warning: oklch(0.8 0.18 80);
+  --warning-foreground: oklch(0.25 0.03 80);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
@@ -55,8 +61,14 @@
   --muted-foreground: oklch(0.708 0 0);
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --info: oklch(0.43 0.10 250);              
+  --info-foreground: oklch(0.75 0.15 250);   
+  --success: oklch(0.42 0.12 150); 
+  --success-foreground: oklch(0.75 0.15 150);
+  --error: oklch(0.396 0.141 25.723);
+  --error-foreground: oklch(0.637 0.237 25.331);
+  --warning: oklch(0.45 0.12 70); 
+  --warning-foreground: oklch(0.8 0.18 75);
   --border: oklch(0.269 0 0);
   --input: oklch(0.269 0 0);
   --ring: oklch(0.439 0 0);
@@ -90,8 +102,14 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-error: var(--error);
+  --color-error-foreground: var(--error-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -125,24 +143,5 @@
 
 html,
 body {
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  display: flex;
   font-family: var(--font-sans);
-}
-
-#app {
-  text-align: center;
-
-  & section {
-    padding-top: 1rem;
-  }
-}
-
-#footer {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  margin: 2rem;
 }
