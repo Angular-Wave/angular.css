@@ -13,6 +13,7 @@ build: version
 	fi
 	@npm i
 	./node_modules/.bin/rollup -c
+	@npm run css-prod
 
 version:
 	@node utils/version.cjs	
