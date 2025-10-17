@@ -36,7 +36,7 @@ description: >
       <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
     </svg>
   </button>
-</div>  
+</div>
 
 <div class="flex items-start gap-2">
   <button size="lg" variant="outline">Large</button>
@@ -45,11 +45,11 @@ description: >
       <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
     </svg>
   </button>
-</div>  
+</div>
 
 <div class="flex items-start gap-2">
   <button variant="ghost">Button</button>
-</div>  
+</div>
 
 <div class="flex items-start gap-2">
   <button variant="info">Info</button>
@@ -61,15 +61,15 @@ description: >
 
 <div class="flex items-start gap-2">
   <button variant="error">Error</button>
-</div>  
+</div>
 
 <div class="flex items-start gap-2">
   <button variant="warning">Warning</button>
-</div> 
+</div>
 
 <div class="flex items-start gap-2">
   <button variant="link">Link</button>
-</div>  
+</div>
 
 <div class="flex items-start gap-2">
   <button variant="outline">
@@ -77,7 +77,7 @@ description: >
         <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
     </svg>Upload
   </button>
-</div>  
+</div>
 
 <div class="flex items-start gap-2">
   <button variant="outline" disabled>

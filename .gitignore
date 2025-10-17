@@ -137,4 +137,6 @@ node_modules/
 .DS_Store
 .sourcemaps
 dist/
+test-results/
+playwright-report/
 package-lock.json
