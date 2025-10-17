@@ -1,6 +1,6 @@
 {
   "name": "@angular-wave/angular.css",
-  "description": "A modern, optimized and type-safe version of AngularJS",
+  "description": "A design foundation for your AngularTS app",
   "license": "MIT",
   "version": "0.0.1",
   "type": "module",
@@ -22,10 +22,14 @@
     "node": ">=24.0.0"
   },
   "scripts": {
-    "serve": "npm-run-all --parallel dev express",
+    "serve": "npm-run-all --parallel dev express css-dev css-dev-docsy",
     "dev": "vite",
     "express": "node --watch ./utils/express.js",
     "build": "vite build",
+    "css-dev": "npx @tailwindcss/cli -i ./src/index.css -o ./css/angular.css --watch",
+    "css-dev-docsy": "npx @tailwindcss/cli -i ./src/index.css -o ./docs/assets/angular.css --watch",
+    "css-prod": "npx @tailwindcss/cli -i ./src/index.css -o ./css/angular.css --minify",
+    "css-prod-docsy": "npx @tailwindcss/cli -i ./src/index.css -o ./docs/assets/angular.css --minify",
     "playwright": "./node_modules/.bin/playwright test",
     "generate-docs": "node_modules/.bin/typedoc",
     "prepare": "husky"
@@ -39,6 +43,7 @@
     "@rollup/plugin-commonjs": "latest",
     "@rollup/plugin-node-resolve": "latest",
     "@rollup/plugin-terser": "latest",
+    "@tailwindcss/cli": "^4.1.14",
     "@types/jasmine": "latest",
     "eslint": "^9.28.0",
     "eslint-config-prettier": "^10.1.5",

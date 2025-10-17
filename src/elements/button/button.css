@@ -1,0 +1,78 @@
+button,
+input[type="button"] {
+ 
+  /* Base */
+  @apply rounded-md
+        text-sm font-medium transition-all
+        disabled:pointer-events-none disabled:opacity-50
+        outline-none focus-visible:ring-[3px];
+
+  /* Default variant */
+  &:not([variant]) {
+    @apply bg-primary text-primary-foreground shadow-xs hover:bg-primary/90;
+  }
+
+  /* Default size */
+  &:not([size]) {
+    @apply h-9 px-4 py-2 gap-2 has-[>svg]:px-3;
+  }
+
+  /* --- Variants --- */
+  &[variant="default"] {
+    @apply bg-primary text-primary-foreground shadow-xs hover:bg-primary/90;
+  }
+
+  &[variant="destructive"] {
+    @apply bg-destructive text-white shadow-xs hover:bg-destructive/90
+                focus-visible:ring-destructive/20
+                dark:focus-visible:ring-destructive/40 dark:bg-destructive/60;
+  }
+
+  &[variant="outline"] {
+    @apply border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground
+               dark:bg-input/30 dark:border-input dark:hover:bg-input/50;
+  }
+
+  &[variant="secondary"] {
+    @apply bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80;
+  }
+
+  &[variant="ghost"] {
+    @apply hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50;
+  }
+
+  &[variant="link"] {
+    @apply text-primary underline-offset-4 hover:underline;
+  }
+
+  /* --- Sizes --- */
+  &[size="default"] {
+    @apply h-9 px-4 py-2 gap-2 has-[>svg]:px-3;
+  }
+
+  &[size="sm"] {
+    @apply h-8 gap-1.5 px-3 has-[>svg]:px-2.5;
+  }
+
+  &[size="lg"] {
+    @apply h-10 px-6 has-[>svg]:px-4;
+  }
+
+  &[size="icon"] {
+    @apply size-9;
+  }
+
+  /* --- SVG tweaks --- */
+  & > svg {
+    @apply pointer-events-none shrink-0;
+  }
+
+  & > svg:not([class*="size-"]) {
+    @apply size-4;
+  }
+
+  /* --- Accessibility states --- */
+  &[aria-invalid="true"] {
+    @apply border-destructive ring-destructive/20 dark:ring-destructive/40;
+  }
+}
