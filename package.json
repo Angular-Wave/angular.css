@@ -1,0 +1,63 @@
+{
+  "name": "@angular-wave/angular.css",
+  "description": "A modern, optimized and type-safe version of AngularJS",
+  "license": "MIT",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "dist/angular-css.esm.js",
+  "module": "dist/angular-css.esm.js",
+  "browser": "dist/angular-css.umd.js",
+  "types": "@types/interface.d.ts",
+  "style": "css/angular.css",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Angular-Wave/angular.ts.git"
+  },
+  "keywords": [
+    "AngularJS",
+    "AngularTS",
+    "AngularCSS"
+  ],
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "serve": "npm-run-all --parallel dev express",
+    "dev": "vite",
+    "express": "node --watch ./utils/express.js",
+    "build": "vite build",
+    "playwright": "./node_modules/.bin/playwright test",
+    "generate-docs": "node_modules/.bin/typedoc",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@angular-wave/angular.ts": "latest"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.28.0",
+    "@playwright/test": "latest",
+    "@rollup/plugin-commonjs": "latest",
+    "@rollup/plugin-node-resolve": "latest",
+    "@rollup/plugin-terser": "latest",
+    "@types/jasmine": "latest",
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-import": "latest",
+    "eslint-plugin-prettier": "^5.4.1",
+    "eslint-plugin-promise": "latest",
+    "express": "latest",
+    "globals": "^16.2.0",
+    "husky": "^9.1.7",
+    "jasmine-core": "latest",
+    "npm-run-all": "latest",
+    "playwright": "latest",
+    "prettier": "latest",
+    "rollup": "latest",
+    "rollup-plugin-version-injector": "latest",
+    "serve": "latest",
+    "tailwindcss": "^4.1.14",
+    "typedoc": "latest",
+    "typescript": "latest",
+    "vite": "latest"
+  }
+}

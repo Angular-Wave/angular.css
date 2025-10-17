@@ -1,0 +1,8 @@
+{
+  "entryPoints": ["src/index.ts"],
+  "entryPointStrategy": "expand",
+  "out": "./typedoc",
+  "disableSources": true,
+  "name": "AngularCSS",
+  "readme": "none"
+}
