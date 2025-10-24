@@ -1,5 +1,5 @@
-button,
-input[type="button"] {
+button:not(accordion *),
+input[type="button"]:not(accordion *) {
   
   display: inline-flex;
   align-items: center;
