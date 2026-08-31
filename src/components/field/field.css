@@ -1,0 +1,151 @@
+fieldset[data-slot="field-set"],
+fieldset[ng-field-set] {
+  @apply flex flex-col gap-4;
+
+  &:has(
+    > :is(
+      [data-slot="checkbox-group"],
+      [ng-checkbox-group],
+      [data-slot="radio-group"],
+      [ng-radio-group]
+    )
+  ) {
+    @apply gap-3;
+  }
+}
+
+legend[data-slot="field-legend"],
+legend[ng-field-legend] {
+  @apply mb-1.5 font-medium;
+
+  &[data-variant="label"] {
+    @apply text-sm;
+  }
+
+  &[data-variant="legend"] {
+    @apply text-base;
+  }
+}
+
+[data-slot="field-group"],
+[ng-field-group] {
+  @apply flex w-full flex-col gap-5;
+}
+
+[data-slot="field"],
+[ng-field] {
+  @apply flex w-full flex-col gap-2;
+
+  &[orientation="horizontal"],
+  &[data-orientation="horizontal"] {
+    @apply flex-row items-center;
+
+    &:has(> :is([data-slot="field-content"], [ng-field-content])) {
+      @apply items-start;
+    }
+
+    > :is([data-slot="field-label"], [ng-field-label]) {
+      @apply flex-auto;
+    }
+
+    &:has(> :is([data-slot="field-content"], [ng-field-content]))
+      > :is([role="checkbox"], [role="radio"]) {
+      margin-top: 1px;
+    }
+  }
+
+  &[orientation="responsive"],
+  &[data-orientation="responsive"] {
+    @apply flex-col gap-2 md:flex-row md:items-center md:gap-3;
+  }
+
+  &[data-invalid="true"],
+  &[aria-invalid="true"] {
+    [data-slot="field-label"],
+    [ng-field-label] {
+      @apply text-error;
+    }
+  }
+
+  &[data-disabled="true"]
+    :is(
+      [data-slot="field-label"],
+      [ng-field-label],
+      [data-slot="field-title"],
+      [ng-field-title]
+    ) {
+    @apply opacity-50;
+  }
+}
+
+[data-slot="field-content"],
+[ng-field-content] {
+  @apply flex flex-1 flex-col gap-0.5 leading-snug;
+}
+
+[data-slot="field-label"],
+[ng-field-label] {
+  @apply flex w-fit items-center gap-2 text-sm leading-snug font-medium;
+
+  &:has(> :is([data-slot="field"], [ng-field])) {
+    @apply w-full flex-col items-start rounded-lg border border-border;
+
+    > :is([data-slot="field"], [ng-field]) {
+      @apply p-2.5;
+    }
+  }
+
+  &:has(
+    > :is([data-slot="field"], [ng-field])
+      :is(
+        [data-slot="checkbox"],
+        [ng-checkbox],
+        [data-slot="radio-group-item"],
+        [ng-radio-group-item],
+        [data-slot="switch"],
+        [ng-switch-control]
+      ):checked
+  ) {
+    border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
+    background: color-mix(in srgb, var(--primary) 5%, transparent);
+  }
+}
+
+[data-slot="field-title"],
+[ng-field-title] {
+  @apply flex w-fit items-center gap-2 text-sm font-medium;
+}
+
+[data-slot="field-description"],
+[ng-field-description] {
+  @apply text-sm leading-normal font-normal text-muted-foreground;
+
+  a {
+    @apply underline underline-offset-4 hover:text-primary;
+  }
+}
+
+[data-slot="field-error"],
+[ng-field-error] {
+  @apply text-sm font-normal text-error;
+
+  &[role="alert"] {
+    @apply mt-1;
+  }
+}
+
+[data-slot="field-separator"],
+[ng-field-separator] {
+  @apply relative flex items-center justify-center text-xs text-muted-foreground;
+
+  &::before {
+    content: "";
+
+    @apply absolute inset-x-0 top-1/2 border-t border-border;
+  }
+
+  &[data-content="true"] > *,
+  > [data-slot="field-separator-content"] {
+    @apply relative bg-background px-2;
+  }
+}

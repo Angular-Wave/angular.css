@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="avatarAction = 'None'"
+    data-example="avatar-badge-icon avatar-dropdown avatar-group-count-icon avatar-rtl avatar-size"
+  >
+    <main class="avatar-workflows">
+      <section
+        class="avatar-workflow-section"
+        aria-labelledby="avatar-badge-heading"
+      >
+        <h2 id="avatar-badge-heading">Badge icon</h2>
+        <div class="avatar-workflow-row" aria-label="Avatar badge icon">
+          <span ng-avatar>
+            <img
+              data-slot="avatar-image"
+              class="avatar-grayscale"
+              src="../../images/avatars/02.png"
+              alt="@pranathip"
+            />
+            <span data-slot="avatar-fallback">PP</span>
+            <span data-slot="avatar-badge">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14" />
+                <path d="M12 5v14" />
+              </svg>
+            </span>
+          </span>
+        </div>
+      </section>
+
+      <section
+        class="avatar-workflow-section"
+        aria-labelledby="avatar-count-heading"
+      >
+        <h2 id="avatar-count-heading">Group count icon</h2>
+        <div
+          data-slot="avatar-group"
+          class="avatar-grayscale"
+          aria-label="Avatar group count icon"
+        >
+          <span ng-avatar>
+            <img
+              data-slot="avatar-image"
+              src="../../images/avatars/01.png"
+              alt="@shadcn"
+            />
+            <span data-slot="avatar-fallback">CN</span>
+          </span>
+          <span ng-avatar>
+            <img
+              data-slot="avatar-image"
+              src="../../images/avatars/03.png"
+              alt="@maxleiter"
+            />
+            <span data-slot="avatar-fallback">LR</span>
+          </span>
+          <span ng-avatar>
+            <img
+              data-slot="avatar-image"
+              src="../../images/avatars/04.png"
+              alt="@evilrabbit"
+            />
+            <span data-slot="avatar-fallback">ER</span>
+          </span>
+          <span data-slot="avatar-group-count">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <path d="M5 12h14" />
+              <path d="M12 5v14" />
+            </svg>
+          </span>
+        </div>
+      </section>
+
+      <section
+        class="avatar-workflow-section"
+        aria-labelledby="avatar-size-heading"
+      >
+        <h2 id="avatar-size-heading">Sizes</h2>
+        <div
+          class="avatar-workflow-row avatar-grayscale"
+          aria-label="Avatar sizes"
+        >
+          <span ng-avatar size="sm">
+            <img
+              data-slot="avatar-image"
+              src="../../images/avatars/01.png"
+              alt="@shadcn small"
+            />
+            <span data-slot="avatar-fallback">CN</span>
+          </span>
+          <span ng-avatar>
+            <img
+              data-slot="avatar-image"
+              src="../../images/avatars/01.png"
+              alt="@shadcn default"
+            />
+            <span data-slot="avatar-fallback">CN</span>
+          </span>
+          <span ng-avatar size="lg">
+            <img
+              data-slot="avatar-image"
+              src="../../images/avatars/01.png"
+              alt="@shadcn large"
+            />
+            <span data-slot="avatar-fallback">CN</span>
+          </span>
+        </div>
+      </section>
+
+      <section
+        class="avatar-workflow-section avatar-dropdown-stage"
+        aria-labelledby="avatar-menu-heading"
+      >
+        <h2 id="avatar-menu-heading">Dropdown</h2>
+        <div ng-dropdown data-slot="dropdown-menu" class="avatar-dropdown-demo">
+          <button
+            type="button"
+            ng-button
+            data-slot="dropdown-menu-trigger"
+            variant="ghost"
+            size="icon"
+            class="avatar-dropdown-trigger"
+            aria-label="Open user menu"
+          >
+            <span ng-avatar>
+              <img
+                data-slot="avatar-image"
+                src="../../images/avatars/01.png"
+                alt="shadcn"
+              />
+              <span data-slot="avatar-fallback">CN</span>
+            </span>
+          </button>
+          <div data-slot="dropdown-menu-content" class="avatar-dropdown-menu">
+            <div data-slot="dropdown-menu-group">
+              <button
+                data-slot="dropdown-menu-item"
+                ng-click="avatarAction = 'Profile'"
+              >
+                Profile
+              </button>
+              <button
+                data-slot="dropdown-menu-item"
+                ng-click="avatarAction = 'Billing'"
+              >
+                Billing
+              </button>
+              <button
+                data-slot="dropdown-menu-item"
+                ng-click="avatarAction = 'Settings'"
+              >
+                Settings
+              </button>
+            </div>
+            <div data-slot="dropdown-menu-separator"></div>
+            <div data-slot="dropdown-menu-group">
+              <button
+                data-slot="dropdown-menu-item"
+                data-variant="destructive"
+                ng-click="avatarAction = 'Log out'"
+              >
+                Log out
+              </button>
+            </div>
+          </div>
+        </div>
+        <p class="avatar-workflow-output" role="status">
+          Selected: {{ avatarAction }}
+        </p>
+      </section>
+
+      <section
+        class="avatar-workflow-section avatar-workflow-wide"
+        aria-labelledby="avatar-rtl-heading"
+        dir="rtl"
+        lang="ar"
+      >
+        <h2 id="avatar-rtl-heading">اتجاه من اليمين إلى اليسار</h2>
+        <div
+          class="avatar-workflow-row avatar-rtl-demo"
+          aria-label="صور رمزية من اليمين إلى اليسار"
+        >
+          <span ng-avatar>
+            <img
+              data-slot="avatar-image"
+              class="avatar-grayscale"
+              src="../../images/avatars/01.png"
+              alt="@shadcn"
+            />
+            <span data-slot="avatar-fallback">CN</span>
+          </span>
+          <span ng-avatar class="avatar-rtl-badge">
+            <img
+              data-slot="avatar-image"
+              src="../../images/avatars/04.png"
+              alt="@evilrabbit"
+            />
+            <span data-slot="avatar-fallback">ER</span>
+            <span data-slot="avatar-badge" data-variant="success"></span>
+          </span>
+          <span data-slot="avatar-group" class="avatar-grayscale">
+            <span ng-avatar>
+              <img
+                data-slot="avatar-image"
+                src="../../images/avatars/01.png"
+                alt="@shadcn"
+              />
+              <span data-slot="avatar-fallback">CN</span>
+            </span>
+            <span ng-avatar>
+              <img
+                data-slot="avatar-image"
+                src="../../images/avatars/03.png"
+                alt="@maxleiter"
+              />
+              <span data-slot="avatar-fallback">LR</span>
+            </span>
+            <span ng-avatar>
+              <img
+                data-slot="avatar-image"
+                src="../../images/avatars/04.png"
+                alt="@evilrabbit"
+              />
+              <span data-slot="avatar-fallback">ER</span>
+            </span>
+            <span data-slot="avatar-group-count">+٣</span>
+          </span>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

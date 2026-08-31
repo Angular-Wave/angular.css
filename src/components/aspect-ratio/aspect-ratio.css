@@ -1,0 +1,7 @@
+[data-slot="aspect-ratio"],
+[ng-aspect-ratio] {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  aspect-ratio: var(--ratio, 16 / 9);
+}

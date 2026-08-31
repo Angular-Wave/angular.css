@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    data-example="sidebar-group-collapsible sidebar-menu-collapsible"
+    class="sidebar-example-body"
+  >
+    <div ng-sidebar-layout class="sidebar-collapsible-shell visual-example">
+      <aside
+        id="collapsible-sidebar"
+        ng-sidebar
+        collapsible="none"
+        class="sidebar-collapsible-panel"
+        aria-label="Documentation navigation"
+      >
+        <header ng-sidebar-header>
+          <a href="#docs" ng-sidebar-menu-button size="lg">
+            <span class="sidebar-brand-mark" aria-hidden="true">D</span>
+            <span class="sidebar-brand-copy">
+              <strong>Documentation</strong>
+              <small>Developer platform</small>
+            </span>
+          </a>
+        </header>
+        <div ng-sidebar-content>
+          <div ng-collapsible open class="sidebar-group-collapsible">
+            <section ng-sidebar-group>
+              <button
+                ng-collapsible-trigger
+                ng-sidebar-group-label
+                class="sidebar-collapsible-trigger"
+              >
+                Help
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <path d="m6 9 6 6 6-6"></path>
+                </svg>
+              </button>
+              <div ng-collapsible-content>
+                <div ng-sidebar-group-content>
+                  <ul ng-sidebar-menu>
+                    <li ng-sidebar-menu-item>
+                      <a ng-sidebar-menu-button href="#support">
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          aria-hidden="true"
+                        >
+                          <circle cx="12" cy="12" r="9"></circle>
+                          <path
+                            d="M8.5 8.5 6 6m9.5 2.5L18 6m-9.5 9.5L6 18m9.5-2.5L18 18"
+                          ></path>
+                        </svg>
+                        <span>Support</span>
+                      </a>
+                    </li>
+                    <li ng-sidebar-menu-item>
+                      <a ng-sidebar-menu-button href="#feedback">
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          aria-hidden="true"
+                        >
+                          <path d="m22 2-7 20-4-9-9-4zM22 2 11 13"></path>
+                        </svg>
+                        <span>Feedback</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+          <section ng-sidebar-group>
+            <div ng-sidebar-group-label>Guide</div>
+            <div ng-sidebar-group-content>
+              <ul ng-sidebar-menu>
+                <li ng-collapsible open class="sidebar-menu-collapsible">
+                  <div ng-sidebar-menu-item>
+                    <button ng-collapsible-trigger ng-sidebar-menu-button>
+                      <span>Getting Started</span>
+                      <svg
+                        class="sidebar-collapsible-chevron"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        aria-hidden="true"
+                      >
+                        <path d="m9 18 6-6-6-6"></path>
+                      </svg>
+                    </button>
+                    <div ng-collapsible-content>
+                      <ul ng-sidebar-menu-sub>
+                        <li ng-sidebar-menu-sub-item>
+                          <a ng-sidebar-menu-sub-button href="#installation"
+                            >Installation</a
+                          >
+                        </li>
+                        <li ng-sidebar-menu-sub-item>
+                          <a
+                            ng-sidebar-menu-sub-button
+                            data-active="true"
+                            href="#structure"
+                            >Project Structure</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+                <li ng-collapsible class="sidebar-menu-collapsible">
+                  <div ng-sidebar-menu-item>
+                    <button ng-collapsible-trigger ng-sidebar-menu-button>
+                      <span>Build Your Application</span>
+                      <svg
+                        class="sidebar-collapsible-chevron"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        aria-hidden="true"
+                      >
+                        <path d="m9 18 6-6-6-6"></path>
+                      </svg>
+                    </button>
+                    <div ng-collapsible-content>
+                      <ul ng-sidebar-menu-sub>
+                        <li ng-sidebar-menu-sub-item>
+                          <a ng-sidebar-menu-sub-button href="#routing"
+                            >Routing</a
+                          >
+                        </li>
+                        <li ng-sidebar-menu-sub-item>
+                          <a ng-sidebar-menu-sub-button href="#data"
+                            >Data Fetching</a
+                          >
+                        </li>
+                        <li ng-sidebar-menu-sub-item>
+                          <a ng-sidebar-menu-sub-button href="#rendering"
+                            >Rendering</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+                <li ng-collapsible class="sidebar-menu-collapsible">
+                  <div ng-sidebar-menu-item>
+                    <button ng-collapsible-trigger ng-sidebar-menu-button>
+                      <span>API Reference</span>
+                      <svg
+                        class="sidebar-collapsible-chevron"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        aria-hidden="true"
+                      >
+                        <path d="m9 18 6-6-6-6"></path>
+                      </svg>
+                    </button>
+                    <div ng-collapsible-content>
+                      <ul ng-sidebar-menu-sub>
+                        <li ng-sidebar-menu-sub-item>
+                          <a ng-sidebar-menu-sub-button href="#components"
+                            >Components</a
+                          >
+                        </li>
+                        <li ng-sidebar-menu-sub-item>
+                          <a ng-sidebar-menu-sub-button href="#functions"
+                            >Functions</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </div>
+      </aside>
+      <main ng-sidebar-inset class="sidebar-collapsible-inset">
+        <span class="sidebar-dashboard-kicker">Composition</span>
+        <h1>Collapsible navigation</h1>
+        <p>
+          Disclosure behavior is supplied by the existing Collapsible primitive.
+        </p>
+      </main>
+    </div>
+  </body>
+</html>

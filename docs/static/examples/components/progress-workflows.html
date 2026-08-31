@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="progressWorkflow={controlled:50}"
+    data-example="progress-controlled progress-rtl"
+  >
+    <main class="progress-workflows visual-example">
+      <section aria-labelledby="progress-controlled-title">
+        <div class="workflow-heading">
+          <h2 id="progress-controlled-title">Controlled</h2>
+          <output for="progress-controlled-slider">
+            {{ progressWorkflow.controlled }}%
+          </output>
+        </div>
+        <div
+          ng-progress
+          value="{{ progressWorkflow.controlled }}"
+          max="100"
+          aria-labelledby="progress-controlled-title"
+        >
+          <span data-slot="progress-track">
+            <span data-slot="progress-indicator"></span>
+          </span>
+        </div>
+        <input
+          ng-slider
+          id="progress-controlled-slider"
+          type="range"
+          min="0"
+          max="100"
+          step="1"
+          ng-model="progressWorkflow.controlled"
+          aria-label="Progress value"
+        />
+      </section>
+
+      <section lang="ar">
+        <div ng-progress value="56" max="100" dir="rtl">
+          <span data-slot="progress-label">تقدم الرفع</span>
+          <span data-slot="progress-value" data-value-format="custom">٥٦%</span>
+          <span data-slot="progress-track">
+            <span data-slot="progress-indicator"></span>
+          </span>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

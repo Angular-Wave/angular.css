@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak data-example="resizable-demo">
+    <div
+      ng-resizable-panel-group
+      orientation="horizontal"
+      aria-label="Resizable layout"
+      class="resizable-demo visual-example"
+    >
+      <section ng-resizable-panel style="--panel-size: 1">
+        <div class="resizable-panel-content"><strong>One</strong></div>
+      </section>
+      <div
+        ng-resizable-handle
+        aria-label="Resize panel one and panels two and three"
+      >
+        <span ng-resizable-handle-grip aria-hidden="true"></span>
+      </div>
+      <section ng-resizable-panel style="--panel-size: 1">
+        <div
+          ng-resizable-panel-group
+          orientation="vertical"
+          aria-label="Resize panels two and three"
+        >
+          <section ng-resizable-panel style="--panel-size: 1">
+            <div class="resizable-panel-content"><strong>Two</strong></div>
+          </section>
+          <div
+            ng-resizable-handle
+            aria-label="Resize panel two and panel three"
+          >
+            <span ng-resizable-handle-grip aria-hidden="true"></span>
+          </div>
+          <section ng-resizable-panel style="--panel-size: 3">
+            <div class="resizable-panel-content"><strong>Three</strong></div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

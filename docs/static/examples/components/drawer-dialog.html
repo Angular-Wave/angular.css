@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="profile={email:'shadcn@example.com',username:'@shadcn'}"
+    data-example="drawer-dialog"
+  >
+    <main class="drawer-dialog-demo visual-example">
+      <div class="drawer-dialog-desktop">
+        <section id="responsive-profile-dialog" ng-dialog>
+          <button ng-dialog-trigger ng-button variant="outline">
+            Edit Profile
+          </button>
+          <div ng-dialog-overlay></div>
+          <section ng-dialog-content class="drawer-profile-dialog">
+            <header ng-dialog-header>
+              <h2 ng-dialog-title>Edit profile</h2>
+              <p ng-dialog-description>
+                Make changes to your profile here. Click save when you're done.
+              </p>
+            </header>
+            <form class="drawer-profile-form">
+              <div class="drawer-profile-field">
+                <label ng-label for="desktop-email">Email</label>
+                <input
+                  id="desktop-email"
+                  type="email"
+                  data-input
+                  ng-model="profile.email"
+                />
+              </div>
+              <div class="drawer-profile-field">
+                <label ng-label for="desktop-username">Username</label>
+                <input
+                  id="desktop-username"
+                  data-input
+                  ng-model="profile.username"
+                />
+              </div>
+              <button ng-button type="submit" data-dialog-close>
+                Save changes
+              </button>
+            </form>
+          </section>
+        </section>
+      </div>
+
+      <div class="drawer-dialog-mobile">
+        <section id="responsive-profile-drawer" ng-drawer>
+          <button ng-drawer-trigger ng-button variant="outline">
+            Edit Profile
+          </button>
+          <div ng-drawer-overlay></div>
+          <section ng-drawer-content>
+            <div ng-drawer-handle></div>
+            <header ng-drawer-header>
+              <h2 ng-drawer-title>Edit profile</h2>
+              <p ng-drawer-description>
+                Make changes to your profile here. Click save when you're done.
+              </p>
+            </header>
+            <form class="drawer-profile-form drawer-profile-mobile">
+              <div class="drawer-profile-field">
+                <label ng-label for="mobile-email">Email</label>
+                <input
+                  id="mobile-email"
+                  type="email"
+                  data-input
+                  ng-model="profile.email"
+                />
+              </div>
+              <div class="drawer-profile-field">
+                <label ng-label for="mobile-username">Username</label>
+                <input
+                  id="mobile-username"
+                  data-input
+                  ng-model="profile.username"
+                />
+              </div>
+              <button ng-button type="submit">Save changes</button>
+            </form>
+            <footer ng-drawer-footer>
+              <button ng-drawer-close ng-button variant="outline">
+                Cancel
+              </button>
+            </footer>
+          </section>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

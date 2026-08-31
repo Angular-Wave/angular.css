@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="calendar={basic:'',booked:'2026-09-08',caption:'2026-09-12',multiple:'2026-09-10,2026-09-12',rangeStart:'2026-09-10',rangeEnd:'2026-09-15',week:'2026-09-12'}"
+    data-example="calendar-basic calendar-booked-dates calendar-caption calendar-multiple calendar-range calendar-week-numbers"
+  >
+    <main
+      class="calendar-workflow-grid"
+      aria-label="Calendar selection workflows"
+    >
+      <section
+        class="calendar-workflow"
+        aria-labelledby="calendar-basic-heading"
+      >
+        <h2 id="calendar-basic-heading">Basic</h2>
+        <section
+          ng-calendar
+          data-calendar-generated
+          data-month="2026-09"
+          data-value="{{ calendar.basic }}"
+          ng-on-angularcss:calendar-select="calendar.basic=$event.detail.value"
+          class="calendar-demo"
+        >
+          <header data-slot="calendar-header">
+            <button
+              type="button"
+              ng-button
+              data-slot="calendar-previous"
+              size="icon"
+              variant="ghost"
+              aria-label="Previous basic month"
+            >
+              <svg
+                class="icon-sm"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+            </button>
+            <h3 data-slot="calendar-title"></h3>
+            <button
+              type="button"
+              ng-button
+              data-slot="calendar-next"
+              size="icon"
+              variant="ghost"
+              aria-label="Next basic month"
+            >
+              <svg
+                class="icon-sm"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </button>
+          </header>
+          <div data-slot="calendar-grid"></div>
+        </section>
+        <p class="calendar-workflow-output" aria-live="polite">
+          Selected: {{ calendar.basic || 'None' }}
+        </p>
+      </section>
+
+      <section
+        class="calendar-workflow"
+        aria-labelledby="calendar-booked-heading"
+      >
+        <h2 id="calendar-booked-heading">Booked dates</h2>
+        <article ng-card class="calendar-card">
+          <div data-slot="card-content" class="calendar-card-content">
+            <section
+              ng-calendar
+              data-calendar-generated
+              data-month="2026-09"
+              data-value="{{ calendar.booked }}"
+              data-booked-dates="2026-09-10,2026-09-11,2026-09-12,2026-09-13,2026-09-14,2026-09-15,2026-09-16,2026-09-17,2026-09-18,2026-09-19,2026-09-20,2026-09-21,2026-09-22,2026-09-23,2026-09-24"
+              ng-on-angularcss:calendar-select="calendar.booked=$event.detail.value"
+            >
+              <header data-slot="calendar-header">
+                <button
+                  type="button"
+                  ng-button
+                  data-slot="calendar-previous"
+                  size="icon"
+                  variant="ghost"
+                  aria-label="Previous availability month"
+                >
+                  <svg
+                    class="icon-sm"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="m15 18-6-6 6-6" />
+                  </svg>
+                </button>
+                <h3 data-slot="calendar-title"></h3>
+                <button
+                  type="button"
+                  ng-button
+                  data-slot="calendar-next"
+                  size="icon"
+                  variant="ghost"
+                  aria-label="Next availability month"
+                >
+                  <svg
+                    class="icon-sm"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </button>
+              </header>
+              <div data-slot="calendar-grid"></div>
+            </section>
+          </div>
+        </article>
+        <p class="calendar-workflow-output" aria-live="polite">
+          Available date: {{ calendar.booked }}
+        </p>
+      </section>
+
+      <section
+        class="calendar-workflow"
+        aria-labelledby="calendar-caption-heading"
+      >
+        <h2 id="calendar-caption-heading">Dropdown caption</h2>
+        <section
+          ng-calendar
+          data-calendar-generated
+          data-month="2026-09"
+          data-value="{{ calendar.caption }}"
+          data-caption-layout="dropdown"
+          data-start-year="2024"
+          data-end-year="2028"
+          ng-on-angularcss:calendar-select="calendar.caption=$event.detail.value"
+          class="calendar-demo"
+        >
+          <header data-slot="calendar-header">
+            <button
+              type="button"
+              ng-button
+              data-slot="calendar-previous"
+              size="icon"
+              variant="ghost"
+              aria-label="Previous caption month"
+            >
+              <svg
+                class="icon-sm"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+            </button>
+            <h3 data-slot="calendar-title"></h3>
+            <button
+              type="button"
+              ng-button
+              data-slot="calendar-next"
+              size="icon"
+              variant="ghost"
+              aria-label="Next caption month"
+            >
+              <svg
+                class="icon-sm"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </button>
+          </header>
+          <div data-slot="calendar-grid"></div>
+        </section>
+        <p class="calendar-workflow-output" aria-live="polite">
+          Selected: {{ calendar.caption }}
+        </p>
+      </section>
+
+      <section
+        class="calendar-workflow"
+        aria-labelledby="calendar-multiple-heading"
+      >
+        <h2 id="calendar-multiple-heading">Multiple dates</h2>
+        <article ng-card class="calendar-card">
+          <div data-slot="card-content" class="calendar-card-content">
+            <section
+              ng-calendar
+              data-calendar-generated
+              data-month="2026-09"
+              data-selection-mode="multiple"
+              data-values="{{ calendar.multiple }}"
+              ng-on-angularcss:calendar-select="calendar.multiple=$event.detail.values"
+            >
+              <header data-slot="calendar-header">
+                <button
+                  type="button"
+                  ng-button
+                  data-slot="calendar-previous"
+                  size="icon"
+                  variant="ghost"
+                  aria-label="Previous multiple month"
+                >
+                  <svg
+                    class="icon-sm"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="m15 18-6-6 6-6" />
+                  </svg>
+                </button>
+                <h3 data-slot="calendar-title"></h3>
+                <button
+                  type="button"
+                  ng-button
+                  data-slot="calendar-next"
+                  size="icon"
+                  variant="ghost"
+                  aria-label="Next multiple month"
+                >
+                  <svg
+                    class="icon-sm"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </button>
+              </header>
+              <div data-slot="calendar-grid"></div>
+            </section>
+          </div>
+        </article>
+        <p class="calendar-workflow-output" aria-live="polite">
+          Selected dates: {{ calendar.multiple || 'None' }}
+        </p>
+      </section>
+
+      <section
+        class="calendar-workflow calendar-workflow-wide"
+        aria-labelledby="calendar-range-heading"
+      >
+        <h2 id="calendar-range-heading">Date range</h2>
+        <section
+          ng-calendar
+          data-calendar-generated
+          data-month="2026-09"
+          data-number-of-months="2"
+          data-selection-mode="range"
+          data-range-start-value="{{ calendar.rangeStart }}"
+          data-range-end-value="{{ calendar.rangeEnd }}"
+          ng-on-angularcss:calendar-select="calendar.rangeStart=$event.detail.range.start; calendar.rangeEnd=$event.detail.range.end"
+          class="calendar-demo"
+        >
+          <header data-slot="calendar-header">
+            <button
+              type="button"
+              ng-button
+              data-slot="calendar-previous"
+              size="icon"
+              variant="ghost"
+              aria-label="Previous range month"
+            >
+              <svg
+                class="icon-sm"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+            </button>
+            <h3 data-slot="calendar-title"></h3>
+            <button
+              type="button"
+              ng-button
+              data-slot="calendar-next"
+              size="icon"
+              variant="ghost"
+              aria-label="Next range month"
+            >
+              <svg
+                class="icon-sm"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </button>
+          </header>
+          <div data-slot="calendar-grid"></div>
+        </section>
+        <p class="calendar-workflow-output" aria-live="polite">
+          Range: {{ calendar.rangeStart || 'None' }} to {{ calendar.rangeEnd ||
+          'None' }}
+        </p>
+      </section>
+
+      <section
+        class="calendar-workflow"
+        aria-labelledby="calendar-week-heading"
+      >
+        <h2 id="calendar-week-heading">Week numbers</h2>
+        <article ng-card class="calendar-card">
+          <div data-slot="card-content" class="calendar-card-content">
+            <section
+              ng-calendar
+              data-calendar-generated
+              data-month="2026-09"
+              data-value="{{ calendar.week }}"
+              data-show-week-numbers="true"
+              ng-on-angularcss:calendar-select="calendar.week=$event.detail.value"
+            >
+              <header data-slot="calendar-header">
+                <button
+                  type="button"
+                  ng-button
+                  data-slot="calendar-previous"
+                  size="icon"
+                  variant="ghost"
+                  aria-label="Previous week-number month"
+                >
+                  <svg
+                    class="icon-sm"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="m15 18-6-6 6-6" />
+                  </svg>
+                </button>
+                <h3 data-slot="calendar-title"></h3>
+                <button
+                  type="button"
+                  ng-button
+                  data-slot="calendar-next"
+                  size="icon"
+                  variant="ghost"
+                  aria-label="Next week-number month"
+                >
+                  <svg
+                    class="icon-sm"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </button>
+              </header>
+              <div data-slot="calendar-grid"></div>
+            </section>
+          </div>
+        </article>
+        <p class="calendar-workflow-output" aria-live="polite">
+          Selected: {{ calendar.week }}
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

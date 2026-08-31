@@ -2,27 +2,25 @@
 title: AngularCSS
 ---
 
-{{< blocks/cover color="white" height="full" >}}
+<section class="angularcss-home">
+  <h1>AngularCSS</h1>
+  <p>
+    Semantic, HTML-first components for AngularTS. Add accessible behavior with
+    TypeScript directives, then customize every visual detail with Tailwind or
+    ordinary CSS.
+  </p>
+  <nav aria-label="Start with AngularCSS">
+    <a href="{{< relref "/docs/get-started/installation" >}}">Install</a>
+    <a href="{{< relref "/docs/get-started/first-component" >}}">Build a component</a>
+    <a href="{{< relref "/docs/components" >}}">Browse all components</a>
+    <a href="{{< relref "/docs/guides/accessibility" >}}">Accessibility</a>
+  </nav>
+</section>
 
-<div class="text-center" ng-app>
-  <h1 class="display-1 mt-0 mt-md-5 pb-4">Angular<span>CSS</span></h1>
-</div>
-
-<p class="lead mb-5">A design foundation for your AngularTS app</p>
-
-<div id="download">
-  <span id="version"> {{< version >}} </span>
-  <a class="btn btn-lg btn-secondary me-3 mb-4" href="https://github.com/Angular-Wave/angular.css">
-    Download <i class="fab fa-github ms-2 "></i>
-  </a>
-</div>
-
-<div id="npm">
-
-```bash
-  npm i @angular-wave/angular.css
-```
-
-</div>
-
-{{< /blocks/cover >}}
+<section class="angularcss-home-catalog">
+  <header>
+    <h2>All components</h2>
+    <p>Browse every canonical AngularCSS component and its live HTML example.</p>
+  </header>
+  {{< component-catalog section="/docs/components" >}}
+</section>

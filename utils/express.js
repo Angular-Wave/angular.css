@@ -20,3 +20,19 @@ app.use((req, res, next) => {
 
   next();
 });
+
+app.get("/health", (_req, res) => {
+  res.json({ ok: true });
+});
+
+app.post("/post", (req, res) => {
+  res.json(req.body);
+});
+
+app.post("/nocontent", (_req, res) => {
+  res.status(204).end();
+});
+
+app.listen(port, () => {
+  console.log(`Mock server listening on http://localhost:${port}`);
+});

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="fruit=''"
+    data-example="select-demo"
+  >
+    <div class="select-demo visual-example">
+      <div
+        ng-select
+        data-open="false"
+        ng-on-angularcss:select="fruit=$event.detail.value"
+      >
+        <button
+          ng-select-trigger
+          type="button"
+          aria-label="Fruit"
+          data-placeholder="{{ fruit === '' }}"
+        >
+          <span
+            ng-select-value
+            ng-bind="fruit === 'apple' ? 'Apple' : fruit === 'banana' ? 'Banana' : fruit === 'blueberry' ? 'Blueberry' : fruit === 'grapes' ? 'Grapes' : fruit === 'pineapple' ? 'Pineapple' : 'Select a fruit'"
+          ></span>
+        </button>
+        <div ng-select-content>
+          <div ng-select-group>
+            <div ng-select-label>Fruits</div>
+            <div ng-select-item data-value="" aria-selected="true">
+              Select a fruit
+            </div>
+            <div ng-select-item data-value="apple">Apple</div>
+            <div ng-select-item data-value="banana">Banana</div>
+            <div ng-select-item data-value="blueberry">Blueberry</div>
+            <div ng-select-item data-value="grapes">Grapes</div>
+            <div ng-select-item data-value="pineapple">Pineapple</div>
+          </div>
+        </div>
+      </div>
+      <output class="output visually-hidden" aria-live="polite">
+        Selected: <span ng-bind="fruit || 'none'"></span>
+      </output>
+    </div>
+  </body>
+</html>

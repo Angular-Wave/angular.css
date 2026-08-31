@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="fieldState={username:'',password:'',feedback:'',department:'',hardDisks:true,externalDisks:false,cds:false,servers:false,sync:true,twoFactor:false,plan:'monthly',environment:'kubernetes',minimum:200,maximum:800,street:'',city:'',zip:'',push:true,pushTasks:false,emailTasks:false,profileName:'',message:'Ready',sameAsShipping:true,month:'',year:''}"
+  >
+    <main class="field-workflow-grid" aria-label="Field workflows">
+      <section data-example="field-input" class="field-workflow">
+        <fieldset data-slot="field-set">
+          <div data-slot="field-group">
+            <div ng-field>
+              <label data-slot="field-label" for="field-username"
+                >Username</label
+              ><input
+                data-input
+                id="field-username"
+                ng-model="fieldState.username"
+                placeholder="Max Leiter"
+              />
+              <p data-slot="field-description">
+                Choose a unique username for your account.
+              </p>
+            </div>
+            <div ng-field>
+              <label data-slot="field-label" for="field-password"
+                >Password</label
+              >
+              <p data-slot="field-description">
+                Must be at least 8 characters long.
+              </p>
+              <input
+                data-input
+                id="field-password"
+                type="password"
+                ng-model="fieldState.password"
+                placeholder="••••••••"
+              />
+            </div>
+          </div>
+        </fieldset>
+      </section>
+
+      <section data-example="field-textarea" class="field-workflow">
+        <fieldset data-slot="field-set">
+          <div data-slot="field-group">
+            <div ng-field>
+              <label data-slot="field-label" for="field-feedback"
+                >Feedback</label
+              ><textarea
+                ng-textarea
+                id="field-feedback"
+                ng-model="fieldState.feedback"
+                placeholder="Your feedback helps us improve..."
+                rows="4"
+              ></textarea>
+              <p data-slot="field-description">
+                Share your thoughts about our service.
+              </p>
+            </div>
+          </div>
+        </fieldset>
+      </section>
+
+      <section data-example="field-select" class="field-workflow">
+        <div ng-field>
+          <label data-slot="field-label" for="field-department"
+            >Department</label
+          >
+          <div
+            ng-select
+            ng-on-angularcss:select="fieldState.department=$event.detail.value"
+          >
+            <button
+              ng-select-trigger
+              id="field-department"
+              type="button"
+              data-placeholder="{{ fieldState.department === '' }}"
+            >
+              <span
+                ng-select-value
+                ng-bind="fieldState.department || 'Choose department'"
+              ></span>
+            </button>
+            <div ng-select-content>
+              <div ng-select-group>
+                <div ng-select-item data-value="Engineering">Engineering</div>
+                <div ng-select-item data-value="Design">Design</div>
+                <div ng-select-item data-value="Marketing">Marketing</div>
+                <div ng-select-item data-value="Sales">Sales</div>
+                <div ng-select-item data-value="Customer Support">
+                  Customer Support
+                </div>
+              </div>
+            </div>
+          </div>
+          <p data-slot="field-description">
+            Select your department or area of work.
+          </p>
+        </div>
+      </section>
+
+      <section data-example="field-checkbox" class="field-workflow">
+        <div data-slot="field-group">
+          <fieldset data-slot="field-set">
+            <legend data-slot="field-legend" data-variant="label">
+              Show these items on the desktop
+            </legend>
+            <p data-slot="field-description">
+              Select the items you want to show on the desktop.
+            </p>
+            <div data-slot="checkbox-group" class="field-choice-list">
+              <div ng-field orientation="horizontal">
+                <input
+                  ng-checkbox
+                  id="field-hard-disks"
+                  type="checkbox"
+                  ng-model="fieldState.hardDisks"
+                /><label data-slot="field-label" for="field-hard-disks"
+                  >Hard disks</label
+                >
+              </div>
+              <div ng-field orientation="horizontal">
+                <input
+                  ng-checkbox
+                  id="field-external-disks"
+                  type="checkbox"
+                  ng-model="fieldState.externalDisks"
+                /><label data-slot="field-label" for="field-external-disks"
+                  >External disks</label
+                >
+              </div>
+              <div ng-field orientation="horizontal">
+                <input
+                  ng-checkbox
+                  id="field-cds"
+                  type="checkbox"
+                  ng-model="fieldState.cds"
+                /><label data-slot="field-label" for="field-cds"
+                  >CDs, DVDs, and iPods</label
+                >
+              </div>
+              <div ng-field orientation="horizontal">
+                <input
+                  ng-checkbox
+                  id="field-servers"
+                  type="checkbox"
+                  ng-model="fieldState.servers"
+                /><label data-slot="field-label" for="field-servers"
+                  >Connected servers</label
+                >
+              </div>
+            </div>
+          </fieldset>
+          <div data-slot="field-separator"></div>
+          <div ng-field orientation="horizontal">
+            <input
+              ng-checkbox
+              id="field-sync"
+              type="checkbox"
+              ng-model="fieldState.sync"
+            />
+            <div data-slot="field-content">
+              <label data-slot="field-label" for="field-sync"
+                >Sync Desktop &amp; Documents folders</label
+              >
+              <p data-slot="field-description">
+                Access these folders from your other devices.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section data-example="field-switch" class="field-workflow">
+        <div ng-field orientation="horizontal" class="field-switch-demo">
+          <label data-slot="field-label" for="field-2fa"
+            >Multi-factor authentication</label
+          ><input
+            ng-switch-control
+            id="field-2fa"
+            type="checkbox"
+            role="switch"
+            ng-model="fieldState.twoFactor"
+          />
+        </div>
+      </section>
+
+      <section data-example="field-radio" class="field-workflow">
+        <fieldset data-slot="field-set">
+          <legend data-slot="field-legend" data-variant="label">
+            Subscription Plan
+          </legend>
+          <p data-slot="field-description">
+            Yearly and lifetime plans offer significant savings.
+          </p>
+          <div ng-radio-group class="field-choice-list">
+            <div ng-field orientation="horizontal">
+              <input
+                ng-radio-group-item
+                id="field-monthly"
+                name="field-plan"
+                type="radio"
+                value="monthly"
+                ng-model="fieldState.plan"
+              /><label data-slot="field-label" for="field-monthly"
+                >Monthly ($9.99/month)</label
+              >
+            </div>
+            <div ng-field orientation="horizontal">
+              <input
+                ng-radio-group-item
+                id="field-yearly"
+                name="field-plan"
+                type="radio"
+                value="yearly"
+                ng-model="fieldState.plan"
+              /><label data-slot="field-label" for="field-yearly"
+                >Yearly ($99.99/year)</label
+              >
+            </div>
+            <div ng-field orientation="horizontal">
+              <input
+                ng-radio-group-item
+                id="field-lifetime"
+                name="field-plan"
+                type="radio"
+                value="lifetime"
+                ng-model="fieldState.plan"
+              /><label data-slot="field-label" for="field-lifetime"
+                >Lifetime ($299.99)</label
+              >
+            </div>
+          </div>
+        </fieldset>
+      </section>
+
+      <section data-example="field-slider" class="field-workflow">
+        <div ng-field>
+          <div data-slot="field-title">Price Range</div>
+          <p data-slot="field-description">
+            Set your budget range (${{ fieldState.minimum }} - ${{
+            fieldState.maximum }}).
+          </p>
+          <div
+            ng-slider
+            min="0"
+            max="1000"
+            aria-label="Price Range"
+            class="field-slider-demo"
+          >
+            <div ng-slider-track><div ng-slider-range></div></div>
+            <input
+              ng-slider-thumb
+              type="range"
+              min="0"
+              max="1000"
+              step="10"
+              ng-model="fieldState.minimum"
+              aria-label="Minimum budget"
+            /><input
+              ng-slider-thumb
+              type="range"
+              min="0"
+              max="1000"
+              step="10"
+              ng-model="fieldState.maximum"
+              aria-label="Maximum budget"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section
+        data-example="field-choice-card"
+        class="field-workflow"
+      >
+        <div data-slot="field-group">
+          <fieldset data-slot="field-set">
+            <legend data-slot="field-legend" data-variant="label">
+              Compute Environment
+            </legend>
+            <p data-slot="field-description">
+              Select the compute environment for your cluster.
+            </p>
+            <div ng-radio-group class="field-card-list">
+              <label data-slot="field-label" for="field-kubernetes"
+                ><div ng-field orientation="horizontal">
+                  <div data-slot="field-content">
+                    <div data-slot="field-title">Kubernetes</div>
+                    <p data-slot="field-description">
+                      Run GPU workloads on a K8s cluster.
+                    </p>
+                  </div>
+                  <input
+                    ng-radio-group-item
+                    id="field-kubernetes"
+                    name="environment"
+                    type="radio"
+                    value="kubernetes"
+                    ng-model="fieldState.environment"
+                  /></div></label
+              ><label data-slot="field-label" for="field-vm"
+                ><div ng-field orientation="horizontal">
+                  <div data-slot="field-content">
+                    <div data-slot="field-title">Virtual Machine</div>
+                    <p data-slot="field-description">
+                      Access a cluster to run GPU workloads.
+                    </p>
+                  </div>
+                  <input
+                    ng-radio-group-item
+                    id="field-vm"
+                    name="environment"
+                    type="radio"
+                    value="vm"
+                    ng-model="fieldState.environment"
+                  /></div
+              ></label>
+            </div>
+          </fieldset>
+        </div>
+      </section>
+
+      <section data-example="field-fieldset" class="field-workflow">
+        <fieldset data-slot="field-set">
+          <legend data-slot="field-legend">Address Information</legend>
+          <p data-slot="field-description">
+            We need your address to deliver your order.
+          </p>
+          <div data-slot="field-group">
+            <div ng-field>
+              <label data-slot="field-label" for="field-street"
+                >Street Address</label
+              ><input
+                data-input
+                id="field-street"
+                ng-model="fieldState.street"
+                placeholder="123 Main St"
+              />
+            </div>
+            <div class="field-two-column">
+              <div ng-field>
+                <label data-slot="field-label" for="field-city">City</label
+                ><input
+                  data-input
+                  id="field-city"
+                  ng-model="fieldState.city"
+                  placeholder="New York"
+                />
+              </div>
+              <div ng-field>
+                <label data-slot="field-label" for="field-zip"
+                  >Postal Code</label
+                ><input
+                  data-input
+                  id="field-zip"
+                  ng-model="fieldState.zip"
+                  placeholder="90502"
+                />
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </section>
+
+      <section data-example="field-group" class="field-workflow">
+        <div data-slot="field-group">
+          <fieldset data-slot="field-set">
+            <label data-slot="field-label">Responses</label>
+            <p data-slot="field-description">
+              Get notified when ChatGPT responds to requests that take time.
+            </p>
+            <div ng-field orientation="horizontal">
+              <input
+                ng-checkbox
+                id="field-push"
+                type="checkbox"
+                ng-model="fieldState.push"
+                disabled
+              /><label data-slot="field-label" for="field-push"
+                >Push notifications</label
+              >
+            </div>
+          </fieldset>
+          <div data-slot="field-separator"></div>
+          <fieldset data-slot="field-set">
+            <label data-slot="field-label">Tasks</label>
+            <p data-slot="field-description">
+              Get notified when tasks have updates.
+              <a href="#tasks">Manage tasks</a>
+            </p>
+            <div class="field-choice-list">
+              <div ng-field orientation="horizontal">
+                <input
+                  ng-checkbox
+                  id="field-push-tasks"
+                  type="checkbox"
+                  ng-model="fieldState.pushTasks"
+                /><label data-slot="field-label" for="field-push-tasks"
+                  >Push notifications</label
+                >
+              </div>
+              <div ng-field orientation="horizontal">
+                <input
+                  ng-checkbox
+                  id="field-email-tasks"
+                  type="checkbox"
+                  ng-model="fieldState.emailTasks"
+                /><label data-slot="field-label" for="field-email-tasks"
+                  >Email notifications</label
+                >
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </section>
+
+      <section
+        data-example="field-responsive"
+        class="field-workflow field-workflow-wide"
+      >
+        <form
+          ng-submit="fieldState.message='Profile submitted '+fieldState.profileName"
+        >
+          <fieldset data-slot="field-set">
+            <legend data-slot="field-legend">Profile</legend>
+            <p data-slot="field-description">
+              Fill in your profile information.
+            </p>
+            <div data-slot="field-group">
+              <div ng-field orientation="responsive">
+                <div data-slot="field-content">
+                  <label data-slot="field-label" for="field-profile-name"
+                    >Name</label
+                  >
+                  <p data-slot="field-description">
+                    Provide your full name for identification
+                  </p>
+                </div>
+                <input
+                  data-input
+                  id="field-profile-name"
+                  ng-model="fieldState.profileName"
+                  placeholder="Evil Rabbit"
+                  required
+                />
+              </div>
+              <div ng-field orientation="responsive" class="field-form-actions">
+                <button ng-button type="submit">Submit</button
+                ><button
+                  ng-button
+                  type="button"
+                  variant="outline"
+                  ng-click="fieldState.message='Cancelled'"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </section>
+
+      <section
+        data-example="field-demo"
+        class="field-workflow field-workflow-wide"
+      >
+        <form ng-submit="fieldState.message='Payment submitted'">
+          <div data-slot="field-group">
+            <fieldset data-slot="field-set">
+              <legend data-slot="field-legend">Payment Method</legend>
+              <p data-slot="field-description">
+                All transactions are secure and encrypted
+              </p>
+              <div data-slot="field-group">
+                <div ng-field>
+                  <label data-slot="field-label" for="field-card-name"
+                    >Name on Card</label
+                  ><input
+                    data-input
+                    id="field-card-name"
+                    placeholder="Evil Rabbit"
+                    required
+                  />
+                </div>
+                <div ng-field>
+                  <label data-slot="field-label" for="field-card-number"
+                    >Card Number</label
+                  ><input
+                    data-input
+                    id="field-card-number"
+                    placeholder="1234 5678 9012 3456"
+                    required
+                  />
+                  <p data-slot="field-description">
+                    Enter your 16-digit card number
+                  </p>
+                </div>
+                <div class="field-three-column">
+                  <div ng-field>
+                    <label data-slot="field-label" for="field-month"
+                      >Month</label
+                    ><input data-input id="field-month" placeholder="MM" />
+                  </div>
+                  <div ng-field>
+                    <label data-slot="field-label" for="field-year">Year</label
+                    ><input data-input id="field-year" placeholder="YYYY" />
+                  </div>
+                  <div ng-field>
+                    <label data-slot="field-label" for="field-cvv">CVV</label
+                    ><input
+                      data-input
+                      id="field-cvv"
+                      placeholder="123"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+            <div data-slot="field-separator"></div>
+            <fieldset data-slot="field-set">
+              <legend data-slot="field-legend">Billing Address</legend>
+              <p data-slot="field-description">
+                The billing address associated with your payment method
+              </p>
+              <div ng-field orientation="horizontal">
+                <input
+                  ng-checkbox
+                  id="field-same-shipping"
+                  type="checkbox"
+                  ng-model="fieldState.sameAsShipping"
+                /><label data-slot="field-label" for="field-same-shipping"
+                  >Same as shipping address</label
+                >
+              </div>
+            </fieldset>
+            <fieldset data-slot="field-set">
+              <div ng-field>
+                <label data-slot="field-label" for="field-comments"
+                  >Comments</label
+                ><textarea
+                  ng-textarea
+                  id="field-comments"
+                  placeholder="Add any additional comments"
+                ></textarea>
+              </div>
+            </fieldset>
+            <div ng-field orientation="horizontal" class="field-form-actions">
+              <button ng-button type="submit">Submit</button
+              ><button ng-button type="button" variant="outline">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <section
+        data-example="field-rtl"
+        class="field-workflow field-workflow-wide"
+        dir="rtl"
+        lang="ar"
+      >
+        <form>
+          <div data-slot="field-group">
+            <fieldset data-slot="field-set">
+              <legend data-slot="field-legend">طريقة الدفع</legend>
+              <p data-slot="field-description">جميع المعاملات آمنة ومشفرة</p>
+              <div data-slot="field-group">
+                <div ng-field>
+                  <label data-slot="field-label" for="field-card-name-rtl"
+                    >الاسم على البطاقة</label
+                  ><input
+                    data-input
+                    id="field-card-name-rtl"
+                    placeholder="Evil Rabbit"
+                  />
+                </div>
+                <div ng-field>
+                  <label data-slot="field-label" for="field-card-number-rtl"
+                    >رقم البطاقة</label
+                  ><input
+                    data-input
+                    id="field-card-number-rtl"
+                    placeholder="1234 5678 9012 3456"
+                  />
+                  <p data-slot="field-description">
+                    أدخل رقم البطاقة المكون من 16 رقمًا
+                  </p>
+                </div>
+                <div class="field-three-column">
+                  <div ng-field>
+                    <label data-slot="field-label">الشهر</label
+                    ><input data-input placeholder="ش.ش" />
+                  </div>
+                  <div ng-field>
+                    <label data-slot="field-label">السنة</label
+                    ><input data-input placeholder="YYYY" />
+                  </div>
+                  <div ng-field>
+                    <label data-slot="field-label">CVV</label
+                    ><input data-input placeholder="123" />
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+            <div data-slot="field-separator"></div>
+            <div ng-field orientation="horizontal">
+              <input
+                ng-checkbox
+                id="field-same-shipping-rtl"
+                type="checkbox"
+                checked
+              /><label data-slot="field-label" for="field-same-shipping-rtl"
+                >نفس عنوان الشحن</label
+              >
+            </div>
+            <div ng-field>
+              <label data-slot="field-label" for="field-comments-rtl"
+                >تعليقات</label
+              ><textarea
+                ng-textarea
+                id="field-comments-rtl"
+                placeholder="أضف أي تعليقات إضافية"
+              ></textarea>
+            </div>
+            <div ng-field orientation="horizontal" class="field-form-actions">
+              <button ng-button type="button">إرسال</button
+              ><button ng-button type="button" variant="outline">إلغاء</button>
+            </div>
+          </div>
+        </form>
+      </section>
+      <p class="field-workflow-output" role="status">
+        {{ fieldState.message }}
+      </p>
+    </main>
+  </body>
+</html>

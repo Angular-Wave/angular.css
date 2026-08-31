@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak>
+    <div class="row">
+      <span ng-badge>Default</span>
+      <span ng-badge variant="secondary">Secondary</span>
+      <span ng-badge variant="destructive">Destructive</span>
+      <span ng-badge variant="outline">Outline</span>
+      <span ng-badge variant="ghost">Ghost</span>
+      <span ng-badge variant="secondary">
+        <svg
+          class="icon-xs"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.25 7.31a1 1 0 0 1-1.42 0L3.29 9.22a1 1 0 1 1 1.42-1.408l4.04 4.075 6.54-6.59a1 1 0 0 1 1.414-.006Z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        Verified
+      </span>
+    </div>
+  </body>
+</html>

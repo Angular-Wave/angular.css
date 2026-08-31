@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="query='AngularCSS'; showCurrency=false; priceHidden=false"
+  >
+    <main class="component-state-grid" aria-label="Input group state contracts">
+      <section
+        class="component-state-section"
+        aria-labelledby="described-group-title"
+      >
+        <h2 id="described-group-title">Described addons</h2>
+        <p id="external-help" class="component-state-help">
+          Enter an invoice total.
+        </p>
+        <div ng-input-group id="described-group">
+          <input
+            data-input
+            data-slot="input-group-control"
+            aria-label="Invoice total"
+            aria-describedby="external-help"
+          />
+          <span data-slot="input-group-addon" id="currency-code">USD</span>
+          <span
+            data-slot="input-group-addon"
+            data-align="inline-end"
+            aria-hidden="true"
+          >
+            .00
+          </span>
+        </div>
+      </section>
+
+      <section
+        class="component-state-section"
+        aria-labelledby="button-group-title"
+      >
+        <h2 id="button-group-title">Action button</h2>
+        <div ng-input-group id="button-group">
+          <input
+            data-input
+            data-slot="input-group-control"
+            aria-label="Documentation search"
+            ng-model="query"
+          />
+          <button
+            ng-button
+            data-slot="input-group-button"
+            type="button"
+            ng-click="query=''"
+          >
+            Clear
+          </button>
+        </div>
+      </section>
+
+      <section
+        class="component-state-section"
+        aria-labelledby="dynamic-group-title"
+      >
+        <h2 id="dynamic-group-title">Conditional addon</h2>
+        <div ng-input-group id="dynamic-group">
+          <input
+            data-input
+            data-slot="input-group-control"
+            aria-label="Budget"
+            aria-describedby="budget-help"
+          />
+          <span
+            ng-if="showCurrency"
+            data-slot="input-group-addon"
+            id="dynamic-addon"
+          >
+            USD
+          </span>
+        </div>
+        <p id="budget-help" class="component-state-help">Monthly budget</p>
+        <button
+          ng-button
+          variant="outline"
+          type="button"
+          ng-click="showCurrency=true"
+          ng-disabled="showCurrency"
+        >
+          Add currency
+        </button>
+      </section>
+
+      <section
+        class="component-state-section"
+        aria-labelledby="hidden-group-title"
+      >
+        <h2 id="hidden-group-title">Hidden addon</h2>
+        <div ng-input-group id="hidden-group">
+          <input
+            data-input
+            data-slot="input-group-control"
+            aria-label="Price"
+            aria-describedby="price-help"
+          />
+          <span
+            data-slot="input-group-addon"
+            id="addon-price"
+            ng-attr-aria-hidden="{{ priceHidden }}"
+          >
+            USD
+          </span>
+        </div>
+        <p id="price-help" class="component-state-help">Price before tax</p>
+        <button
+          ng-button
+          variant="outline"
+          type="button"
+          ng-click="priceHidden=!priceHidden"
+        >
+          Toggle currency description
+        </button>
+      </section>
+    </main>
+  </body>
+</html>

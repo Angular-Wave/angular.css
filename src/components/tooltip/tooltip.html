@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tooltip</title>
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/assets/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak class="tooltip-example-body">
+    <main class="tooltip-demo visual-example">
+      <span ng-tooltip>
+        <button ng-button type="button" variant="outline" ng-tooltip-trigger>
+          Hover
+        </button>
+        <span ng-tooltip-content side="top">Add to library</span>
+      </span>
+    </main>
+  </body>
+</html>

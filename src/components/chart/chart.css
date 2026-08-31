@@ -1,0 +1,224 @@
+[data-slot="chart"],
+[ng-chart] {
+  display: grid;
+  gap: calc(var(--spacing) * 4);
+  width: 100%;
+  color: var(--foreground);
+}
+
+[data-slot="chart-header"],
+[ng-chart-header] {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: calc(var(--spacing) * 3);
+}
+
+[data-slot="chart-title"],
+[ng-chart-title] {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.2;
+}
+
+[data-slot="chart-description"],
+[ng-chart-description] {
+  color: var(--muted-foreground);
+  font-size: var(--text-sm);
+}
+
+[data-slot="chart-plot"],
+[ng-chart-plot] {
+  position: relative;
+  display: grid;
+  align-items: end;
+  min-height: 12rem;
+  border-inline-start: 1px solid var(--border);
+  border-block-end: 1px solid var(--border);
+  padding: calc(var(--spacing) * 4);
+}
+
+[data-slot="chart-grid"],
+[ng-chart-grid] {
+  position: absolute;
+  inset: calc(var(--spacing) * 4);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(25% - 1px),
+    var(--border) 25%
+  );
+  pointer-events: none;
+}
+
+[data-slot="chart"][data-direction="rtl"] [data-slot="chart-plot"],
+[ng-chart][data-direction="rtl"] [ng-chart-plot],
+[ng-chart][data-direction="rtl"] [data-slot="chart-plot"] {
+  border-inline-start: 0;
+  border-inline-end: 1px solid var(--border);
+  direction: rtl;
+}
+
+[data-slot="chart-bars"],
+[ng-chart-bars] {
+  display: flex;
+  height: 10rem;
+  align-items: end;
+  gap: calc(var(--spacing) * 3);
+}
+
+[data-slot="chart-bar-groups"],
+[ng-chart-bar-groups] {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 100%;
+  height: 10rem;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  align-items: end;
+  gap: calc(var(--spacing) * 3);
+}
+
+[data-slot="chart-bar-group"],
+[ng-chart-bar-group] {
+  display: flex;
+  height: 100%;
+  align-items: end;
+  justify-content: center;
+  gap: calc(var(--spacing) * 1);
+}
+
+[data-slot="chart"][data-direction="rtl"] [data-slot="chart-bars"],
+[ng-chart][data-direction="rtl"] [ng-chart-bars],
+[ng-chart][data-direction="rtl"] [data-slot="chart-bars"] {
+  flex-direction: row-reverse;
+}
+
+[data-slot="chart-bar"],
+[ng-chart-bar] {
+  display: grid;
+  width: 100%;
+  min-width: calc(var(--spacing) * 6);
+  height: var(--value, 50%);
+  align-items: end;
+  border-radius: calc(var(--radius) - 2px) calc(var(--radius) - 2px) 0 0;
+  background: var(--chart-color, var(--chart-1));
+}
+
+[data-slot="chart-legend"],
+[ng-chart-legend] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--spacing) * 3);
+  color: var(--muted-foreground);
+  font-size: var(--text-xs);
+}
+
+[data-slot="chart-legend-item"],
+[ng-chart-legend-item] {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--spacing) * 1.5);
+}
+
+[data-slot="chart-axis"],
+[ng-chart-axis] {
+  display: flex;
+  justify-content: space-between;
+  gap: calc(var(--spacing) * 2);
+  color: var(--muted-foreground);
+  font-size: var(--text-xs);
+}
+
+[data-slot="chart-tooltip"],
+[ng-chart-tooltip] {
+  display: grid;
+  width: fit-content;
+  min-width: 8rem;
+  gap: calc(var(--spacing) * 1.5);
+  border: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
+  border-radius: var(--radius);
+  background: var(--background);
+  color: var(--foreground);
+  padding: calc(var(--spacing) * 2) calc(var(--spacing) * 2.5);
+  font-size: var(--text-xs);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--foreground) 12%, transparent);
+}
+
+[data-slot="chart-tooltip"][data-visible="false"],
+[ng-chart-tooltip][data-visible="false"] {
+  display: none;
+}
+
+[data-slot="chart-tooltip-label"],
+[ng-chart-tooltip-label] {
+  font-weight: var(--font-weight-medium);
+}
+
+[data-slot="chart-tooltip-items"],
+[ng-chart-tooltip-items] {
+  display: grid;
+  gap: calc(var(--spacing) * 1.5);
+}
+
+[data-slot="chart-tooltip-item"],
+[ng-chart-tooltip-item] {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: calc(var(--spacing) * 2);
+}
+
+[data-slot="chart-tooltip-indicator"],
+[ng-chart-tooltip-indicator] {
+  width: calc(var(--spacing) * 2.5);
+  height: calc(var(--spacing) * 2.5);
+  flex: 0 0 auto;
+  border: 1px solid var(--chart-color, var(--chart-1));
+  border-radius: 2px;
+  background: var(--chart-color, var(--chart-1));
+}
+
+:is(
+  [data-slot="chart-tooltip-indicator"],
+  [ng-chart-tooltip-indicator]
+)[data-indicator="line"] {
+  width: calc(var(--spacing) * 1);
+  height: 100%;
+}
+
+:is(
+  [data-slot="chart-tooltip-indicator"],
+  [ng-chart-tooltip-indicator]
+)[data-indicator="dashed"] {
+  width: 0;
+  height: 100%;
+  border-width: 1.5px;
+  border-style: dashed;
+  background: transparent;
+}
+
+[data-slot="chart-tooltip-name"],
+[ng-chart-tooltip-name] {
+  min-width: 0;
+  flex: 1;
+  color: var(--muted-foreground);
+}
+
+[data-slot="chart-tooltip-value"],
+[ng-chart-tooltip-value] {
+  font-family: var(--font-mono);
+  font-weight: var(--font-weight-medium);
+  font-variant-numeric: tabular-nums;
+}
+
+[data-slot="chart-swatch"],
+[ng-chart-swatch] {
+  width: calc(var(--spacing) * 2.5);
+  height: calc(var(--spacing) * 2.5);
+  border-radius: 999px;
+  background: var(--chart-color, var(--chart-1));
+}

@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    data-example="popover-alignments popover-basic popover-form"
+  >
+    <main class="popover-workflows">
+      <section class="popover-workflow-section">
+        <header class="workflow-heading"><h2>Basic</h2></header>
+        <div class="popover-stage popover-basic-stage">
+          <span ng-popover aria-label="Basic popover">
+            <button
+              ng-button
+              type="button"
+              variant="outline"
+              ng-popover-trigger
+            >
+              Open Popover
+            </button>
+            <section ng-popover-content align="start" aria-label="Dimensions">
+              <header ng-popover-header>
+                <h3 ng-popover-title>Dimensions</h3>
+                <p ng-popover-description>Set the dimensions for the layer.</p>
+              </header>
+            </section>
+          </span>
+        </div>
+      </section>
+
+      <section class="popover-workflow-section">
+        <header class="workflow-heading"><h2>Form</h2></header>
+        <div class="popover-stage popover-form-stage">
+          <span ng-popover aria-label="Form popover">
+            <button
+              ng-button
+              type="button"
+              variant="outline"
+              ng-popover-trigger
+            >
+              Edit dimensions
+            </button>
+            <section
+              ng-popover-content
+              class="popover-form-content"
+              align="start"
+              aria-label="Edit dimensions"
+            >
+              <header ng-popover-header>
+                <h3 ng-popover-title>Dimensions</h3>
+                <p ng-popover-description>Set the dimensions for the layer.</p>
+              </header>
+              <div class="popover-form-fields">
+                <label ng-field orientation="horizontal">
+                  <span ng-field-label>Width</span>
+                  <input data-input value="100%" aria-label="Width" />
+                </label>
+                <label ng-field orientation="horizontal">
+                  <span ng-field-label>Height</span>
+                  <input data-input value="25px" aria-label="Height" />
+                </label>
+              </div>
+            </section>
+          </span>
+        </div>
+      </section>
+
+      <section class="popover-workflow-section popover-alignment-section">
+        <header class="workflow-heading"><h2>Alignment</h2></header>
+        <div class="popover-alignment-row">
+          <span ng-popover aria-label="Start aligned popover">
+            <button
+              ng-button
+              type="button"
+              size="sm"
+              variant="outline"
+              ng-popover-trigger
+            >
+              Start
+            </button>
+            <section
+              ng-popover-content
+              class="popover-compact-content"
+              align="start"
+            >
+              Aligned to start
+            </section>
+          </span>
+          <span ng-popover aria-label="Center aligned popover">
+            <button
+              ng-button
+              type="button"
+              size="sm"
+              variant="outline"
+              ng-popover-trigger
+            >
+              Center
+            </button>
+            <section
+              ng-popover-content
+              class="popover-compact-content"
+              align="center"
+            >
+              Aligned to center
+            </section>
+          </span>
+          <span ng-popover aria-label="End aligned popover">
+            <button
+              ng-button
+              type="button"
+              size="sm"
+              variant="outline"
+              ng-popover-trigger
+            >
+              End
+            </button>
+            <section
+              ng-popover-content
+              class="popover-compact-content"
+              align="end"
+            >
+              Aligned to end
+            </section>
+          </span>
+        </div>
+      </section>
+
+      <section class="popover-workflow-section popover-state-section">
+        <header class="workflow-heading"><h2>State</h2></header>
+        <div class="popover-state-row">
+          <span ng-popover aria-label="Disabled popover">
+            <button
+              ng-button
+              type="button"
+              variant="outline"
+              ng-popover-trigger
+              disabled
+            >
+              Disabled
+            </button>
+            <section ng-popover-content>Unavailable</section>
+          </span>
+          <span ng-popover aria-label="First sibling popover">
+            <button
+              ng-button
+              type="button"
+              variant="outline"
+              ng-popover-trigger
+            >
+              First
+            </button>
+            <section
+              ng-popover-content
+              class="popover-compact-content"
+              aria-label="First panel"
+            >
+              First panel
+            </section>
+          </span>
+          <span ng-popover aria-label="Second sibling popover">
+            <button
+              ng-button
+              type="button"
+              variant="outline"
+              ng-popover-trigger
+            >
+              Second
+            </button>
+            <section
+              ng-popover-content
+              class="popover-compact-content"
+              aria-label="Second panel"
+            >
+              Second panel
+            </section>
+          </span>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

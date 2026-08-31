@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak ng-init="search=''; status=''">
+    <div class="stack">
+      <label for="docs-input-search">Search</label>
+      <input
+        data-input
+        id="docs-input-search"
+        placeholder="Search"
+        ng-model="search"
+      />
+      <div class="output">Value: {{ search ? search : "empty" }}</div>
+
+      <label for="docs-input-disabled">Disabled</label>
+      <input
+        data-input
+        id="docs-input-disabled"
+        placeholder="Disabled"
+        disabled
+      />
+
+      <label for="docs-input-invalid">Invalid</label>
+      <input
+        data-input
+        id="docs-input-invalid"
+        placeholder="Invalid"
+        aria-invalid="true"
+      />
+
+      <label for="docs-input-file">File</label>
+      <input data-input id="docs-input-file" type="file" />
+    </div>
+  </body>
+</html>

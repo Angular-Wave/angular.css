@@ -1,35 +1,24 @@
 ---
 title: button-group
+notoc: true
 description: >
   Group button elements
 ---
 
 ### Description
 
-<div class="flex items-start gap-2">
-  <div role="group" class="inline-flex">
-    <button variant="outline">
-      1
-    </button>
-    <button variant="outline">
-      2
-    </button>
-    <button variant="outline">
-      3
-    </button>
-  </div>
-</div>
+## Example
 
-<div class="flex items-start gap-2">
-  <div role="group" orientation="column">
-    <button variant="outline" >
-      1
-    </button>
-    <button variant="outline" >
-      2
-    </button>
-    <button variant="outline">
-      3
-    </button>
-  </div>  
-</div>
+{{< example src="examples/elements/button-group.html" title="Button group example" height="270" >}}
+
+<!-- angularcss-element-reference:start -->
+## Canonical reference
+
+This element entrypoint re-exports the canonical `button-group` TypeScript
+implementation. It does not define separate behavior, state, accessibility, or
+CSS APIs.
+
+Read the [complete button-group component reference]({{< relref
+"/docs/components/button-group" >}}) for selectors, slots, attributes, generated
+state, events, accessibility, and customization.
+<!-- angularcss-element-reference:end -->

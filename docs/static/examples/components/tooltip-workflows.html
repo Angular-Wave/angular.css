@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    data-example="tooltip-disabled tooltip-keyboard tooltip-sides"
+  >
+    <main class="tooltip-workflows">
+      <section class="tooltip-workflow-section">
+        <header class="workflow-heading"><h2>Keyboard</h2></header>
+        <div class="tooltip-stage">
+          <span ng-tooltip>
+            <button
+              ng-button
+              type="button"
+              size="icon-sm"
+              variant="outline"
+              ng-tooltip-trigger
+              aria-label="Save changes"
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"
+                />
+                <path d="M17 21v-8H7v8M7 3v5h8" />
+              </svg>
+            </button>
+            <span ng-tooltip-content> Save Changes <kbd ng-kbd>S</kbd> </span>
+          </span>
+        </div>
+      </section>
+
+      <section class="tooltip-workflow-section">
+        <header class="workflow-heading"><h2>Disabled</h2></header>
+        <div class="tooltip-stage">
+          <span ng-tooltip>
+            <span ng-tooltip-trigger>
+              <button ng-button type="button" variant="outline" disabled>
+                Disabled
+              </button>
+            </span>
+            <span ng-tooltip-content>
+              This feature is currently unavailable
+            </span>
+          </span>
+        </div>
+      </section>
+
+      <section class="tooltip-workflow-section tooltip-sides-section">
+        <header class="workflow-heading"><h2>Physical sides</h2></header>
+        <div class="tooltip-side-row">
+          <span ng-tooltip>
+            <button
+              ng-button
+              type="button"
+              variant="outline"
+              ng-tooltip-trigger
+            >
+              Left
+            </button>
+            <span ng-tooltip-content side="left">Add to library</span>
+          </span>
+          <span ng-tooltip>
+            <button
+              ng-button
+              type="button"
+              variant="outline"
+              ng-tooltip-trigger
+            >
+              Top
+            </button>
+            <span ng-tooltip-content side="top">Add to library</span>
+          </span>
+          <span ng-tooltip>
+            <button
+              ng-button
+              type="button"
+              variant="outline"
+              ng-tooltip-trigger
+            >
+              Bottom
+            </button>
+            <span ng-tooltip-content side="bottom">Add to library</span>
+          </span>
+          <span ng-tooltip>
+            <button
+              ng-button
+              type="button"
+              variant="outline"
+              ng-tooltip-trigger
+            >
+              Right
+            </button>
+            <span ng-tooltip-content side="right">Add to library</span>
+          </span>
+        </div>
+      </section>
+
+      <section class="tooltip-workflow-section tooltip-native-disabled-section">
+        <header class="workflow-heading">
+          <h2>Native disabled trigger</h2>
+        </header>
+        <div class="tooltip-stage">
+          <span ng-tooltip>
+            <button
+              ng-button
+              type="button"
+              variant="outline"
+              ng-tooltip-trigger
+              disabled
+            >
+              Unavailable
+            </button>
+            <span ng-tooltip-content>Not shown</span>
+          </span>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

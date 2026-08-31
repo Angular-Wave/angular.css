@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="rtlCommand={query:'',selected:''}; rtlSuggestions=[{label:'التقويم',disabled:false},{label:'البحث عن الرموز التعبيرية',disabled:false},{label:'الآلة الحاسبة',disabled:true}]; rtlSettings=[{label:'الملف الشخصي',shortcut:'⌘P'},{label:'الفوترة',shortcut:'⌘B'},{label:'الإعدادات',shortcut:'⌘S'}]"
+    data-example="command-rtl"
+  >
+    <main class="command-rtl-demo visual-example">
+      <section
+        id="rtl-command"
+        ng-command
+        data-variant="surface"
+        aria-label="قائمة الأوامر"
+      >
+        <div ng-command-input-wrapper>
+          <div ng-command-input-group>
+            <span ng-command-input-icon aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+              </svg>
+            </span>
+            <input
+              ng-command-input
+              dir="rtl"
+              aria-label="البحث في الأوامر"
+              ng-model="rtlCommand.query"
+              placeholder="اكتب أمرًا أو ابحث..."
+            />
+          </div>
+        </div>
+        <div ng-command-list>
+          <p ng-command-empty>لم يتم العثور على نتائج.</p>
+          <section ng-command-group>
+            <h2 ng-command-group-heading>اقتراحات</h2>
+            <div
+              ng-command-item
+              ng-repeat="item in rtlSuggestions | filter:rtlCommand.query"
+              ng-attr-aria-disabled="{{ item.disabled }}"
+              ng-click="rtlCommand.selected=item.label"
+            >
+              <svg
+                ng-command-item-icon
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="8"></circle>
+              </svg>
+              <span ng-bind="item.label"></span>
+            </div>
+          </section>
+          <div ng-command-separator></div>
+          <section ng-command-group>
+            <h2 ng-command-group-heading>الإعدادات</h2>
+            <div
+              ng-command-item
+              ng-repeat="item in rtlSettings | filter:rtlCommand.query"
+              ng-click="rtlCommand.selected=item.label"
+            >
+              <svg
+                ng-command-item-icon
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="8" r="4"></circle>
+                <path d="M4 21a8 8 0 0 1 16 0"></path>
+              </svg>
+              <span ng-bind="item.label"></span>
+              <span ng-command-shortcut ng-bind="item.shortcut"></span>
+            </div>
+          </section>
+        </div>
+      </section>
+      <output class="output visually-hidden" aria-live="polite">
+        المحدد: <span ng-bind="rtlCommand.selected || 'لا شيء'"></span>
+      </output>
+    </main>
+  </body>
+</html>

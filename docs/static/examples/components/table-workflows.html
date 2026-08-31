@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="invoices=[{id:'INV001',status:'Paid',method:'Credit Card',amount:'$250.00'},{id:'INV002',status:'Pending',method:'PayPal',amount:'$150.00'},{id:'INV003',status:'Unpaid',method:'Bank Transfer',amount:'$350.00'},{id:'INV004',status:'Paid',method:'Credit Card',amount:'$450.00'},{id:'INV005',status:'Paid',method:'PayPal',amount:'$550.00'},{id:'INV006',status:'Pending',method:'Bank Transfer',amount:'$200.00'},{id:'INV007',status:'Unpaid',method:'Credit Card',amount:'$300.00'}];products=[{name:'Wireless Mouse',price:'$29.99'},{name:'Mechanical Keyboard',price:'$129.99'},{name:'USB-C Hub',price:'$49.99'}];payments=[{id:'m5gr84i9',amount:'$316.00',status:'success',statusAr:'ناجح',email:'ken99@example.com',selected:false},{id:'3u1reuv4',amount:'$242.00',status:'success',statusAr:'ناجح',email:'Abe45@example.com',selected:false},{id:'derv1ws0',amount:'$837.00',status:'processing',statusAr:'قيد المعالجة',email:'Monserrat44@example.com',selected:false},{id:'5kma53ae',amount:'$874.00',status:'success',statusAr:'ناجح',email:'Silas22@example.com',selected:false},{id:'bhqecj4p',amount:'$721.00',status:'failed',statusAr:'فشل',email:'carmella@example.com',selected:false}];dataState={query:'',order:'email',all:false,selected:0,showStatus:true,showEmail:true,showAmount:true};rtlDataState={query:'',order:'email',all:false,showStatus:true,showEmail:true,showAmount:true};tableState={action:'Ready'}"
+  >
+    <main class="table-workflow-grid" aria-label="Table workflows">
+      <section
+        class="table-workflow table-workflow-wide"
+        data-example="table-demo table-footer"
+        aria-label="Recent invoices"
+      >
+        <div data-slot="table-container">
+          <table ng-table>
+            <caption data-slot="table-caption">
+              A list of your recent invoices.
+            </caption>
+            <thead data-slot="table-header">
+              <tr data-slot="table-row">
+                <th data-slot="table-head">Invoice</th>
+                <th data-slot="table-head">Status</th>
+                <th data-slot="table-head">Method</th>
+                <th data-slot="table-head" class="text-right">Amount</th>
+              </tr>
+            </thead>
+            <tbody data-slot="table-body">
+              <tr data-slot="table-row" ng-repeat="invoice in invoices">
+                <th data-slot="table-cell">{{ invoice.id }}</th>
+                <td data-slot="table-cell">{{ invoice.status }}</td>
+                <td data-slot="table-cell">{{ invoice.method }}</td>
+                <td data-slot="table-cell" class="text-right">
+                  {{ invoice.amount }}
+                </td>
+              </tr>
+            </tbody>
+            <tfoot data-slot="table-footer">
+              <tr data-slot="table-row">
+                <td data-slot="table-cell" colspan="3">Total</td>
+                <td data-slot="table-cell" class="text-right">$2,500.00</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </section>
+
+      <section
+        class="table-workflow table-actions-example"
+        data-example="table-actions"
+        aria-label="Product actions"
+      >
+        <div data-slot="table-container">
+          <table ng-table>
+            <thead data-slot="table-header">
+              <tr data-slot="table-row">
+                <th data-slot="table-head">Product</th>
+                <th data-slot="table-head">Price</th>
+                <th data-slot="table-head" class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody data-slot="table-body">
+              <tr data-slot="table-row" ng-repeat="product in products">
+                <th data-slot="table-cell">{{ product.name }}</th>
+                <td data-slot="table-cell">{{ product.price }}</td>
+                <td data-slot="table-cell" class="text-right">
+                  <div
+                    ng-dropdown
+                    data-slot="dropdown-menu"
+                    class="table-action-menu"
+                  >
+                    <button
+                      ng-button
+                      variant="ghost"
+                      size="icon-xs"
+                      type="button"
+                      data-slot="dropdown-menu-trigger"
+                      aria-label="Open menu for {{ product.name }}"
+                    >
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="5" cy="12" r="1"></circle>
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="19" cy="12" r="1"></circle>
+                      </svg>
+                    </button>
+                    <div role="menu" data-slot="dropdown-menu-content">
+                      <button
+                        data-slot="dropdown-menu-item"
+                        ng-click="tableState.action='Edit '+product.name"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        data-slot="dropdown-menu-item"
+                        ng-click="tableState.action='Duplicate '+product.name"
+                      >
+                        Duplicate
+                      </button>
+                      <div
+                        data-slot="dropdown-menu-separator"
+                        role="separator"
+                      ></div>
+                      <button
+                        data-slot="dropdown-menu-item"
+                        data-variant="destructive"
+                        ng-click="tableState.action='Delete '+product.name"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section
+        class="table-workflow"
+        data-example="table-rtl"
+        aria-label="جدول الفواتير"
+        dir="rtl"
+        lang="ar"
+      >
+        <div data-slot="table-container">
+          <table ng-table>
+            <caption data-slot="table-caption">
+              قائمة بفواتيرك الأخيرة.
+            </caption>
+            <thead data-slot="table-header">
+              <tr data-slot="table-row">
+                <th data-slot="table-head">الفاتورة</th>
+                <th data-slot="table-head">الحالة</th>
+                <th data-slot="table-head">الطريقة</th>
+                <th data-slot="table-head" class="text-start">المبلغ</th>
+              </tr>
+            </thead>
+            <tbody data-slot="table-body">
+              <tr data-slot="table-row">
+                <th data-slot="table-cell">INV001</th>
+                <td data-slot="table-cell">مدفوع</td>
+                <td data-slot="table-cell">بطاقة ائتمانية</td>
+                <td data-slot="table-cell">$250.00</td>
+              </tr>
+              <tr data-slot="table-row">
+                <th data-slot="table-cell">INV002</th>
+                <td data-slot="table-cell">قيد الانتظار</td>
+                <td data-slot="table-cell">PayPal</td>
+                <td data-slot="table-cell">$150.00</td>
+              </tr>
+              <tr data-slot="table-row">
+                <th data-slot="table-cell">INV003</th>
+                <td data-slot="table-cell">غير مدفوع</td>
+                <td data-slot="table-cell">تحويل بنكي</td>
+                <td data-slot="table-cell">$350.00</td>
+              </tr>
+            </tbody>
+            <tfoot data-slot="table-footer">
+              <tr data-slot="table-row">
+                <td data-slot="table-cell" colspan="3">المجموع</td>
+                <td data-slot="table-cell">$2,500.00</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </section>
+
+      <section
+        class="table-workflow table-workflow-wide"
+        data-example="data-table-demo"
+        aria-label="Payments data table"
+      >
+        <div class="data-table-toolbar">
+          <input
+            data-input
+            ng-model="dataState.query"
+            placeholder="Filter emails..."
+            aria-label="Filter payment emails"
+          />
+          <div ng-dropdown data-slot="dropdown-menu">
+            <button
+              ng-button
+              variant="outline"
+              type="button"
+              data-slot="dropdown-menu-trigger"
+            >
+              Columns <span aria-hidden="true">⌄</span>
+            </button>
+            <div
+              role="menu"
+              data-slot="dropdown-menu-content"
+              class="data-table-column-menu"
+            >
+              <button
+                data-slot="dropdown-menu-checkbox-item"
+                role="menuitemcheckbox"
+                aria-checked="{{ dataState.showStatus }}"
+                ng-click="dataState.showStatus=!dataState.showStatus"
+              >
+                <span
+                  data-slot="dropdown-menu-checkbox-item-indicator"
+                  ng-if="dataState.showStatus"
+                  >✓</span
+                >Status
+              </button>
+              <button
+                data-slot="dropdown-menu-checkbox-item"
+                role="menuitemcheckbox"
+                aria-checked="{{ dataState.showEmail }}"
+                ng-click="dataState.showEmail=!dataState.showEmail"
+              >
+                <span
+                  data-slot="dropdown-menu-checkbox-item-indicator"
+                  ng-if="dataState.showEmail"
+                  >✓</span
+                >Email
+              </button>
+              <button
+                data-slot="dropdown-menu-checkbox-item"
+                role="menuitemcheckbox"
+                aria-checked="{{ dataState.showAmount }}"
+                ng-click="dataState.showAmount=!dataState.showAmount"
+              >
+                <span
+                  data-slot="dropdown-menu-checkbox-item-indicator"
+                  ng-if="dataState.showAmount"
+                  >✓</span
+                >Amount
+              </button>
+            </div>
+          </div>
+        </div>
+        <div data-slot="table-container" class="data-table-frame">
+          <table ng-table>
+            <thead data-slot="table-header">
+              <tr data-slot="table-row">
+                <th data-slot="table-head" class="data-table-select">
+                  <input
+                    ng-checkbox
+                    type="checkbox"
+                    ng-model="dataState.all"
+                    ng-change="payments[0].selected=dataState.all;payments[1].selected=dataState.all;payments[2].selected=dataState.all;payments[3].selected=dataState.all;payments[4].selected=dataState.all"
+                    aria-label="Select all payments"
+                  />
+                </th>
+                <th data-slot="table-head" ng-if="dataState.showStatus">
+                  Status
+                </th>
+                <th data-slot="table-head" ng-if="dataState.showEmail">
+                  <button
+                    ng-button
+                    variant="ghost"
+                    type="button"
+                    ng-click="dataState.order=dataState.order==='email' ? '-email' : 'email'"
+                  >
+                    Email <span aria-hidden="true">↕</span>
+                  </button>
+                </th>
+                <th
+                  data-slot="table-head"
+                  ng-if="dataState.showAmount"
+                  class="text-right"
+                >
+                  Amount
+                </th>
+                <th data-slot="table-head">
+                  <span class="visually-hidden">Actions</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody data-slot="table-body">
+              <tr
+                data-slot="table-row"
+                ng-repeat="payment in payments | filter:dataState.query | orderBy:dataState.order"
+                data-state="{{ payment.selected ? 'selected' : '' }}"
+              >
+                <td data-slot="table-cell" class="data-table-select">
+                  <input
+                    ng-checkbox
+                    type="checkbox"
+                    ng-model="payment.selected"
+                    ng-change="dataState.selected=payment.selected ? 1 : 0"
+                    aria-label="Select {{ payment.email }}"
+                  />
+                </td>
+                <td
+                  data-slot="table-cell"
+                  ng-if="dataState.showStatus"
+                  class="capitalize"
+                >
+                  {{ payment.status }}
+                </td>
+                <td
+                  data-slot="table-cell"
+                  ng-if="dataState.showEmail"
+                  class="lowercase"
+                >
+                  {{ payment.email }}
+                </td>
+                <td
+                  data-slot="table-cell"
+                  ng-if="dataState.showAmount"
+                  class="text-right table-cell-medium"
+                >
+                  {{ payment.amount }}
+                </td>
+                <td data-slot="table-cell" class="text-right">
+                  <button
+                    ng-button
+                    variant="ghost"
+                    size="icon-xs"
+                    type="button"
+                    ng-click="tableState.action='Open '+payment.id"
+                    aria-label="Open menu for {{ payment.email }}"
+                  >
+                    •••
+                  </button>
+                </td>
+              </tr>
+              <tr
+                data-slot="table-row"
+                ng-if="!(payments | filter:dataState.query).length"
+              >
+                <td data-slot="table-cell" colspan="5" class="data-table-empty">
+                  No results.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="data-table-footer">
+          <p>{{ dataState.selected }} of 5 row(s) selected.</p>
+          <div class="row">
+            <button
+              ng-button
+              variant="outline"
+              size="sm"
+              type="button"
+              disabled
+            >
+              Previous</button
+            ><button
+              ng-button
+              variant="outline"
+              size="sm"
+              type="button"
+              disabled
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="table-workflow table-workflow-wide"
+        data-example="data-table-rtl"
+        aria-label="جدول بيانات المدفوعات"
+        dir="rtl"
+        lang="ar"
+        ng-init="rtlPayments=[{amount:'$316.00',statusAr:'ناجح',email:'ken99@example.com',selected:false},{amount:'$242.00',statusAr:'ناجح',email:'Abe45@example.com',selected:false},{amount:'$837.00',statusAr:'قيد المعالجة',email:'Monserrat44@example.com',selected:false},{amount:'$874.00',statusAr:'ناجح',email:'Silas22@example.com',selected:false},{amount:'$721.00',statusAr:'فشل',email:'carmella@example.com',selected:false}]"
+      >
+        <div class="data-table-toolbar">
+          <input
+            data-input
+            ng-model="rtlDataState.query"
+            placeholder="تصفية البريد الإلكتروني..."
+            aria-label="تصفية البريد الإلكتروني"
+          />
+          <div ng-dropdown data-slot="dropdown-menu">
+            <button
+              ng-button
+              variant="outline"
+              type="button"
+              data-slot="dropdown-menu-trigger"
+            >
+              الأعمدة <span aria-hidden="true">⌄</span>
+            </button>
+            <div role="menu" data-slot="dropdown-menu-content">
+              <button
+                data-slot="dropdown-menu-checkbox-item"
+                role="menuitemcheckbox"
+                aria-checked="{{ rtlDataState.showStatus }}"
+                ng-click="rtlDataState.showStatus=!rtlDataState.showStatus"
+              >
+                <span data-slot="dropdown-menu-checkbox-item-indicator">✓</span
+                >الحالة</button
+              ><button
+                data-slot="dropdown-menu-checkbox-item"
+                role="menuitemcheckbox"
+                aria-checked="{{ rtlDataState.showEmail }}"
+                ng-click="rtlDataState.showEmail=!rtlDataState.showEmail"
+              >
+                <span data-slot="dropdown-menu-checkbox-item-indicator">✓</span
+                >البريد الإلكتروني</button
+              ><button
+                data-slot="dropdown-menu-checkbox-item"
+                role="menuitemcheckbox"
+                aria-checked="{{ rtlDataState.showAmount }}"
+                ng-click="rtlDataState.showAmount=!rtlDataState.showAmount"
+              >
+                <span data-slot="dropdown-menu-checkbox-item-indicator">✓</span
+                >المبلغ
+              </button>
+            </div>
+          </div>
+        </div>
+        <div data-slot="table-container" class="data-table-frame">
+          <table ng-table>
+            <thead data-slot="table-header">
+              <tr data-slot="table-row">
+                <th data-slot="table-head" class="data-table-select">
+                  <input
+                    ng-checkbox
+                    type="checkbox"
+                    ng-model="rtlDataState.all"
+                    aria-label="تحديد الكل"
+                  />
+                </th>
+                <th data-slot="table-head" ng-if="rtlDataState.showStatus">
+                  الحالة
+                </th>
+                <th data-slot="table-head" ng-if="rtlDataState.showEmail">
+                  <button
+                    ng-button
+                    variant="ghost"
+                    type="button"
+                    ng-click="rtlDataState.order=rtlDataState.order==='email' ? '-email' : 'email'"
+                  >
+                    البريد الإلكتروني <span aria-hidden="true">↕</span>
+                  </button>
+                </th>
+                <th data-slot="table-head" ng-if="rtlDataState.showAmount">
+                  المبلغ
+                </th>
+                <th data-slot="table-head">
+                  <span class="visually-hidden">الإجراءات</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody data-slot="table-body">
+              <tr
+                data-slot="table-row"
+                ng-repeat="payment in rtlPayments | filter:rtlDataState.query | orderBy:rtlDataState.order"
+              >
+                <td data-slot="table-cell" class="data-table-select">
+                  <input
+                    ng-checkbox
+                    type="checkbox"
+                    ng-model="payment.selected"
+                    aria-label="تحديد {{ payment.email }}"
+                  />
+                </td>
+                <td data-slot="table-cell" ng-if="rtlDataState.showStatus">
+                  {{ payment.statusAr }}
+                </td>
+                <td
+                  data-slot="table-cell"
+                  ng-if="rtlDataState.showEmail"
+                  class="lowercase"
+                >
+                  {{ payment.email }}
+                </td>
+                <td
+                  data-slot="table-cell"
+                  ng-if="rtlDataState.showAmount"
+                  class="table-cell-medium"
+                >
+                  {{ payment.amount }}
+                </td>
+                <td data-slot="table-cell">
+                  <button
+                    ng-button
+                    variant="ghost"
+                    size="icon-xs"
+                    type="button"
+                    aria-label="فتح القائمة"
+                  >
+                    •••
+                  </button>
+                </td>
+              </tr>
+              <tr
+                data-slot="table-row"
+                ng-if="!(rtlPayments | filter:rtlDataState.query).length"
+              >
+                <td data-slot="table-cell" colspan="5" class="data-table-empty">
+                  لا توجد نتائج.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="data-table-footer">
+          <p>0 من 5 صف(وف) محدد.</p>
+          <div class="row">
+            <button
+              ng-button
+              variant="outline"
+              size="sm"
+              type="button"
+              disabled
+            >
+              السابق</button
+            ><button
+              ng-button
+              variant="outline"
+              size="sm"
+              type="button"
+              disabled
+            >
+              التالي
+            </button>
+          </div>
+        </div>
+      </section>
+      <p class="table-workflow-output" role="status">{{ tableState.action }}</p>
+    </main>
+  </body>
+</html>

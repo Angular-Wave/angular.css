@@ -1,0 +1,39 @@
+<main class="container">
+  <section class="vstack">
+    <h2>Input group</h2>
+
+    <div data-slot="field">
+      <label ng-label data-slot="field-label" for="input-group-search">Search</label>
+      <div data-slot="input-group" role="group">
+        <input
+          data-input
+          data-slot="input-group-control"
+          id="input-group-search"
+          placeholder="Search documentation..."
+        />
+        <div data-slot="input-group-addon" data-align="inline-start">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="m21 21-4.34-4.34" />
+            <circle cx="11" cy="11" r="8" />
+          </svg>
+        </div>
+        <div data-slot="input-group-addon" data-align="inline-end">
+          <kbd>Ctrl K</kbd>
+        </div>
+      </div>
+    </div>
+
+    <div data-slot="field">
+      <label ng-label data-slot="field-label" for="input-group-url">URL</label>
+      <div data-slot="input-group" role="group">
+        <div data-slot="input-group-addon" data-align="inline-start">
+          <span data-slot="input-group-text">https://</span>
+        </div>
+        <input data-input data-slot="input-group-control" id="input-group-url" />
+        <div data-slot="input-group-addon" data-align="inline-end">
+          <button ng-button data-slot="input-group-button" variant="ghost">Copy</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

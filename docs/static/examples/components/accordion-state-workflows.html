@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    data-example="accordion-basic accordion-disabled accordion-multiple"
+  >
+    <main class="accordion-workflow-grid">
+      <section
+        class="accordion-workflow-section"
+        aria-labelledby="accordion-basic-title"
+      >
+        <h2 id="accordion-basic-title">Account help</h2>
+        <div ng-accordion aria-label="Account help questions">
+          <div data-slot="accordion-item" data-state="open">
+            <h3>
+              <button type="button" data-slot="accordion-trigger">
+                How do I reset my password?
+              </button>
+            </h3>
+            <div data-slot="accordion-content">
+              Click Forgot Password on the login page, enter your email address,
+              and we'll send you a reset link that expires in 24 hours.
+            </div>
+          </div>
+          <div data-slot="accordion-item">
+            <h3>
+              <button type="button" data-slot="accordion-trigger">
+                Can I change my subscription plan?
+              </button>
+            </h3>
+            <div data-slot="accordion-content">
+              You can upgrade or downgrade your plan at any time from your
+              account settings.
+            </div>
+          </div>
+          <div data-slot="accordion-item">
+            <h3>
+              <button type="button" data-slot="accordion-trigger">
+                What payment methods do you accept?
+              </button>
+            </h3>
+            <div data-slot="accordion-content">
+              We accept major credit cards, PayPal, and bank transfers.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="accordion-workflow-section"
+        aria-labelledby="accordion-disabled-title"
+      >
+        <h2 id="accordion-disabled-title">Availability</h2>
+        <div ng-accordion aria-label="Feature availability questions">
+          <div data-slot="accordion-item">
+            <h3>
+              <button type="button" data-slot="accordion-trigger">
+                Can I access my account history?
+              </button>
+            </h3>
+            <div data-slot="accordion-content">
+              Your complete account history is available from the dashboard.
+            </div>
+          </div>
+          <div data-slot="accordion-item" data-disabled="true">
+            <h3>
+              <button type="button" data-slot="accordion-trigger" disabled>
+                Premium feature information
+              </button>
+            </h3>
+            <div data-slot="accordion-content">
+              Upgrade your plan to access premium feature information.
+            </div>
+          </div>
+          <div data-slot="accordion-item">
+            <h3>
+              <button type="button" data-slot="accordion-trigger">
+                How do I update my email address?
+              </button>
+            </h3>
+            <div data-slot="accordion-content">
+              Update it in account settings and confirm the verification email.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="accordion-workflow-section accordion-workflow-wide"
+        aria-labelledby="accordion-multiple-title"
+      >
+        <h2 id="accordion-multiple-title">Settings</h2>
+        <div ng-accordion multiple aria-label="Settings questions">
+          <div data-slot="accordion-item" data-state="open">
+            <h3>
+              <button type="button" data-slot="accordion-trigger">
+                Notification Settings
+              </button>
+            </h3>
+            <div data-slot="accordion-content">
+              Choose email alerts or push notifications for mobile devices.
+            </div>
+          </div>
+          <div data-slot="accordion-item">
+            <h3>
+              <button type="button" data-slot="accordion-trigger">
+                Privacy &amp; Security
+              </button>
+            </h3>
+            <div data-slot="accordion-content">
+              Enable two-factor authentication, review active sessions, and
+              configure data sharing.
+            </div>
+          </div>
+          <div data-slot="accordion-item">
+            <h3>
+              <button type="button" data-slot="accordion-trigger">
+                Billing &amp; Subscription
+              </button>
+            </h3>
+            <div data-slot="accordion-content">
+              View your plan, payment history, and upcoming invoices.
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

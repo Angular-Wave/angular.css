@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="basic=false;described=true;hardDisks=true;externalDisks=true;cds=false;servers=false;rtlTerms=false;rtlDetails=true;rtlNotifications=false"
+    data-example="checkbox-basic checkbox-description checkbox-disabled checkbox-group checkbox-invalid checkbox-rtl"
+  >
+    <main class="checkbox-workflow-grid" aria-label="Checkbox workflows">
+      <section
+        class="checkbox-workflow"
+        aria-labelledby="checkbox-basic-heading"
+      >
+        <h2 id="checkbox-basic-heading">Basic</h2>
+        <div data-slot="field-group" class="checkbox-workflow-narrow">
+          <div ng-field orientation="horizontal">
+            <input
+              ng-checkbox
+              id="terms-checkbox-basic"
+              name="terms-checkbox-basic"
+              type="checkbox"
+              ng-model="basic"
+            />
+            <label data-slot="field-label" ng-label for="terms-checkbox-basic"
+              >Accept terms and conditions</label
+            >
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="checkbox-workflow"
+        aria-labelledby="checkbox-description-heading"
+      >
+        <h2 id="checkbox-description-heading">Description</h2>
+        <div data-slot="field-group" class="checkbox-workflow-description">
+          <div ng-field orientation="horizontal">
+            <input
+              ng-checkbox
+              id="terms-checkbox-desc"
+              name="terms-checkbox-desc"
+              type="checkbox"
+              ng-model="described"
+            />
+            <div data-slot="field-content">
+              <label data-slot="field-label" ng-label for="terms-checkbox-desc"
+                >Accept terms and conditions</label
+              >
+              <p data-slot="field-description">
+                By clicking this checkbox, you agree to the terms and
+                conditions.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="checkbox-workflow"
+        aria-labelledby="checkbox-disabled-heading"
+      >
+        <h2 id="checkbox-disabled-heading">Disabled</h2>
+        <div data-slot="field-group" class="checkbox-workflow-narrow">
+          <div ng-field orientation="horizontal" data-disabled="true">
+            <input
+              ng-checkbox
+              id="toggle-checkbox-disabled"
+              name="toggle-checkbox-disabled"
+              type="checkbox"
+              disabled
+            />
+            <label
+              data-slot="field-label"
+              ng-label
+              for="toggle-checkbox-disabled"
+              >Enable notifications</label
+            >
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="checkbox-workflow"
+        aria-labelledby="checkbox-invalid-heading"
+      >
+        <h2 id="checkbox-invalid-heading">Invalid</h2>
+        <div data-slot="field-group" class="checkbox-workflow-narrow">
+          <div ng-field orientation="horizontal" data-invalid="true">
+            <input
+              ng-checkbox
+              id="terms-checkbox-invalid"
+              name="terms-checkbox-invalid"
+              type="checkbox"
+              aria-invalid="true"
+            />
+            <label data-slot="field-label" ng-label for="terms-checkbox-invalid"
+              >Accept terms and conditions</label
+            >
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="checkbox-workflow"
+        aria-labelledby="checkbox-group-heading"
+      >
+        <h2 id="checkbox-group-heading">Group</h2>
+        <fieldset ng-field-set>
+          <legend data-slot="field-legend" data-variant="label">
+            Show these items on the desktop:
+          </legend>
+          <p data-slot="field-description">
+            Select the items you want to show on the desktop.
+          </p>
+          <div data-slot="field-group" class="checkbox-preference-group">
+            <div data-slot="field" orientation="horizontal">
+              <input
+                ng-checkbox
+                id="hard-disks"
+                type="checkbox"
+                ng-model="hardDisks"
+              />
+              <label data-slot="field-label" ng-label for="hard-disks"
+                >Hard disks</label
+              >
+            </div>
+            <div data-slot="field" orientation="horizontal">
+              <input
+                ng-checkbox
+                id="external-disks"
+                type="checkbox"
+                ng-model="externalDisks"
+              />
+              <label data-slot="field-label" ng-label for="external-disks"
+                >External disks</label
+              >
+            </div>
+            <div data-slot="field" orientation="horizontal">
+              <input ng-checkbox id="cds-dvds" type="checkbox" ng-model="cds" />
+              <label data-slot="field-label" ng-label for="cds-dvds"
+                >CDs, DVDs, and iPods</label
+              >
+            </div>
+            <div data-slot="field" orientation="horizontal">
+              <input
+                ng-checkbox
+                id="connected-servers"
+                type="checkbox"
+                ng-model="servers"
+              />
+              <label data-slot="field-label" ng-label for="connected-servers"
+                >Connected servers</label
+              >
+            </div>
+          </div>
+        </fieldset>
+      </section>
+
+      <section
+        class="checkbox-workflow checkbox-workflow-rtl"
+        aria-labelledby="checkbox-rtl-heading"
+        dir="rtl"
+        lang="ar"
+      >
+        <h2 id="checkbox-rtl-heading">من اليمين إلى اليسار</h2>
+        <div data-slot="field-group">
+          <div ng-field orientation="horizontal">
+            <input
+              ng-checkbox
+              id="terms-checkbox-rtl"
+              type="checkbox"
+              ng-model="rtlTerms"
+            />
+            <label ng-label for="terms-checkbox-rtl"
+              >قبول الشروط والأحكام</label
+            >
+          </div>
+          <div ng-field orientation="horizontal">
+            <input
+              ng-checkbox
+              id="terms-checkbox-2-rtl"
+              type="checkbox"
+              ng-model="rtlDetails"
+            />
+            <div data-slot="field-content">
+              <label data-slot="field-label" ng-label for="terms-checkbox-2-rtl"
+                >قبول الشروط والأحكام</label
+              >
+              <p data-slot="field-description">
+                بالنقر على هذا المربع، فإنك توافق على الشروط.
+              </p>
+            </div>
+          </div>
+          <div ng-field orientation="horizontal" data-disabled="true">
+            <input
+              ng-checkbox
+              id="toggle-checkbox-rtl"
+              type="checkbox"
+              disabled
+            />
+            <label data-slot="field-label" ng-label for="toggle-checkbox-rtl"
+              >تفعيل الإشعارات</label
+            >
+          </div>
+          <label data-slot="field-label" ng-label>
+            <div data-slot="field" orientation="horizontal">
+              <input
+                ng-checkbox
+                id="toggle-checkbox-2-rtl"
+                type="checkbox"
+                ng-model="rtlNotifications"
+              />
+              <div data-slot="field-content">
+                <span data-slot="field-title">تفعيل الإشعارات</span>
+                <span data-slot="field-description"
+                  >يمكنك تفعيل أو إلغاء تفعيل الإشعارات في أي وقت.</span
+                >
+              </div>
+            </div>
+          </label>
+        </div>
+      </section>
+
+      <p class="visually-hidden" role="status" aria-live="polite">
+        Basic {{ basic }}. Described {{ described }}. Hard disks {{ hardDisks
+        }}. External disks {{ externalDisks }}. CDs {{ cds }}. Servers {{
+        servers }}.
+      </p>
+    </main>
+  </body>
+</html>

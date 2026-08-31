@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak>
+    <div class="stack">
+      <div>
+        <h3>AngularCSS</h3>
+        <p class="muted">Layout divider and semantic separator.</p>
+      </div>
+      <div ng-separator></div>
+      <div class="row" style="height: 2rem">
+        <span>Docs</span>
+        <div ng-separator orientation="vertical"></div>
+        <span>Components</span>
+        <div ng-separator orientation="vertical"></div>
+        <span>Examples</span>
+      </div>
+    </div>
+  </body>
+</html>

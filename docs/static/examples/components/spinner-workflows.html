@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    data-example="spinner-badge spinner-button spinner-custom spinner-empty spinner-input-group spinner-rtl spinner-size input-group-spinner"
+  >
+    <main class="spinner-workflows">
+      <div class="workflow-row" aria-label="Spinner sizes">
+        <svg
+          ng-spinner
+          id="processing-spinner"
+          role="img"
+          aria-live="assertive"
+          aria-label="Processing data"
+          style="width: 12px; height: 12px"
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="M21 12a9 9 0 1 1-6.22-8.56"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+        <svg ng-spinner viewBox="0 0 24 24" fill="none">
+          <path
+            d="M21 12a9 9 0 1 1-6.22-8.56"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+        <svg
+          ng-spinner
+          style="width: 24px; height: 24px"
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="M21 12a9 9 0 1 1-6.22-8.56"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+        <svg
+          ng-spinner
+          style="width: 32px; height: 32px"
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="M21 12a9 9 0 1 1-6.22-8.56"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+      </div>
+
+      <div class="workflow-row" aria-label="Spinner badges">
+        <span ng-badge
+          ><svg
+            ng-spinner
+            data-icon="inline-start"
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path
+              d="M21 12a9 9 0 1 1-6.22-8.56"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            /></svg
+          >Syncing</span
+        >
+        <span ng-badge variant="secondary"
+          ><svg
+            ng-spinner
+            data-icon="inline-start"
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path
+              d="M21 12a9 9 0 1 1-6.22-8.56"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            /></svg
+          >Updating</span
+        >
+        <span ng-badge variant="outline"
+          ><svg
+            ng-spinner
+            data-icon="inline-start"
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path
+              d="M21 12a9 9 0 1 1-6.22-8.56"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            /></svg
+          >Processing</span
+        >
+      </div>
+
+      <div class="workflow-buttons-column" aria-label="Spinner buttons">
+        <button ng-button disabled size="sm">
+          <svg
+            ng-spinner
+            data-icon="inline-start"
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path
+              d="M21 12a9 9 0 1 1-6.22-8.56"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            /></svg
+          >Loading...
+        </button>
+        <button ng-button variant="outline" disabled size="sm">
+          <svg
+            ng-spinner
+            data-icon="inline-start"
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path
+              d="M21 12a9 9 0 1 1-6.22-8.56"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            /></svg
+          >Please wait
+        </button>
+        <button ng-button variant="secondary" disabled size="sm">
+          <svg
+            ng-spinner
+            data-icon="inline-start"
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path
+              d="M21 12a9 9 0 1 1-6.22-8.56"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            /></svg
+          >Processing
+        </button>
+      </div>
+
+      <section ng-empty class="spinner-empty-demo">
+        <div data-slot="empty-header">
+          <div data-slot="empty-media" variant="icon">
+            <svg ng-spinner viewBox="0 0 24 24" fill="none">
+              <path
+                d="M21 12a9 9 0 1 1-6.22-8.56"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+          <h3 data-slot="empty-title">Processing your request</h3>
+          <p data-slot="empty-description">
+            Please wait while we process your request. Do not refresh the page.
+          </p>
+        </div>
+        <div data-slot="empty-content">
+          <button ng-button variant="outline" size="sm">Cancel</button>
+        </div>
+      </section>
+
+      <div class="workflow-input-groups" aria-label="Spinner input groups">
+        <div ng-input-group>
+          <input
+            data-input
+            data-slot="input-group-control"
+            placeholder="Searching..."
+          />
+          <div data-slot="input-group-addon" data-align="inline-end">
+            <svg ng-spinner viewBox="0 0 24 24" fill="none">
+              <path
+                d="M21 12a9 9 0 1 1-6.22-8.56"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        </div>
+        <div ng-input-group>
+          <input
+            data-input
+            data-slot="input-group-control"
+            placeholder="Saving changes..."
+          />
+          <div data-slot="input-group-addon" data-align="inline-end">
+            <span data-slot="input-group-text">Saving...</span
+            ><svg ng-spinner viewBox="0 0 24 24" fill="none">
+              <path
+                d="M21 12a9 9 0 1 1-6.22-8.56"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div ng-item variant="muted" class="spinner-rtl-demo" dir="rtl">
+        <div data-slot="item-media">
+          <svg ng-spinner viewBox="0 0 24 24" fill="none">
+            <path
+              d="M21 12a9 9 0 1 1-6.22-8.56"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+        <div data-slot="item-content">
+          <div data-slot="item-title">جاري معالجة الدفع...</div>
+        </div>
+        <div data-slot="item-content" class="spinner-amount">
+          <span>١٠٠.٠٠ دولار</span>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak data-example="card-demo">
+    <section ng-card class="example-card visual-example">
+      <header data-slot="card-header">
+        <h3 data-slot="card-title">Login to your account</h3>
+        <p data-slot="card-description">
+          Enter your email below to login to your account
+        </p>
+        <div data-slot="card-action">
+          <button ng-button variant="link" type="button">Sign Up</button>
+        </div>
+      </header>
+      <div data-slot="card-content">
+        <form class="card-form" id="login-form">
+          <div class="card-field">
+            <label ng-label for="card-email">Email</label>
+            <input
+              data-input
+              id="card-email"
+              type="email"
+              placeholder="m@example.com"
+              required
+            />
+          </div>
+          <div class="card-field">
+            <div class="card-label-row">
+              <label ng-label for="card-password">Password</label>
+              <a href="#forgot-password">Forgot your password?</a>
+            </div>
+            <input data-input id="card-password" type="password" required />
+          </div>
+        </form>
+      </div>
+      <footer data-slot="card-footer" class="card-footer-stacked">
+        <button ng-button type="submit" form="login-form">Login</button>
+        <button ng-button variant="outline" type="button">
+          Login with Google
+        </button>
+      </footer>
+    </section>
+  </body>
+</html>

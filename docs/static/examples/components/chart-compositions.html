@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="activeChart='desktop'; demoTip={visible:false}; rtlTip={visible:false}; interactiveData=[{date:'Apr 1',d:222,m:150,dp:'49%',mp:'36%'},{date:'Apr 2',d:97,m:180,dp:'21%',mp:'43%'},{date:'Apr 3',d:167,m:120,dp:'37%',mp:'29%'},{date:'Apr 4',d:242,m:260,dp:'53%',mp:'62%'},{date:'Apr 5',d:373,m:290,dp:'82%',mp:'69%'},{date:'Apr 6',d:301,m:340,dp:'66%',mp:'81%'},{date:'Apr 7',d:245,m:180,dp:'54%',mp:'43%'},{date:'Apr 8',d:409,m:320,dp:'90%',mp:'76%'},{date:'Apr 9',d:59,m:110,dp:'13%',mp:'26%'},{date:'Apr 10',d:261,m:190,dp:'57%',mp:'45%'},{date:'Apr 11',d:327,m:350,dp:'72%',mp:'83%'},{date:'Apr 12',d:292,m:210,dp:'64%',mp:'50%'},{date:'Apr 13',d:342,m:380,dp:'75%',mp:'90%'},{date:'Apr 14',d:137,m:220,dp:'30%',mp:'52%'},{date:'Apr 15',d:120,m:170,dp:'26%',mp:'40%'},{date:'Apr 16',d:138,m:190,dp:'30%',mp:'45%'},{date:'Apr 17',d:446,m:360,dp:'98%',mp:'86%'},{date:'Apr 18',d:364,m:410,dp:'80%',mp:'98%'},{date:'Apr 19',d:243,m:180,dp:'54%',mp:'43%'},{date:'Apr 20',d:89,m:150,dp:'20%',mp:'36%'},{date:'Apr 21',d:137,m:200,dp:'30%',mp:'48%'},{date:'Apr 22',d:224,m:170,dp:'49%',mp:'40%'},{date:'Apr 23',d:138,m:230,dp:'30%',mp:'55%'},{date:'Apr 24',d:387,m:290,dp:'85%',mp:'69%'},{date:'Apr 25',d:215,m:250,dp:'47%',mp:'60%'},{date:'Apr 26',d:75,m:130,dp:'17%',mp:'31%'},{date:'Apr 27',d:383,m:420,dp:'84%',mp:'100%'},{date:'Apr 28',d:122,m:180,dp:'27%',mp:'43%'},{date:'Apr 29',d:315,m:240,dp:'69%',mp:'57%'},{date:'Apr 30',d:454,m:380,dp:'100%',mp:'90%'}]; rtlData=[{month:'يناير',short:'ينا',desktop:186,mobile:80,d:'61%',m:'26%'},{month:'فبراير',short:'فبر',desktop:305,mobile:200,d:'100%',m:'66%'},{month:'مارس',short:'مار',desktop:237,mobile:120,d:'78%',m:'39%'},{month:'أبريل',short:'أبر',desktop:73,mobile:190,d:'24%',m:'62%'},{month:'مايو',short:'ماي',desktop:209,mobile:130,d:'69%',m:'43%'},{month:'يونيو',short:'يون',desktop:214,mobile:140,d:'70%',m:'46%'}]"
+    data-example="chart-demo chart-rtl chart-tooltip"
+  >
+    <main
+      class="chart-composition-grid"
+      aria-label="Chart reference compositions"
+    >
+      <article ng-card class="chart-interactive-card chart-composition-wide">
+        <header data-slot="card-header" class="chart-interactive-header">
+          <div class="chart-interactive-copy">
+            <h2 data-slot="card-title">Bar Chart - Interactive</h2>
+            <p data-slot="card-description">
+              Showing total visitors for the last 3 months
+            </p>
+          </div>
+          <div class="chart-series-controls" aria-label="Visitor series">
+            <button
+              type="button"
+              ng-button
+              variant="ghost"
+              data-active="{{ activeChart == 'desktop' }}"
+              ng-click="activeChart='desktop'"
+            >
+              <span>Desktop</span><strong>7,324</strong>
+            </button>
+            <button
+              type="button"
+              ng-button
+              variant="ghost"
+              data-active="{{ activeChart == 'mobile' }}"
+              ng-click="activeChart='mobile'"
+            >
+              <span>Mobile</span><strong>7,250</strong>
+            </button>
+          </div>
+        </header>
+        <div data-slot="card-content" class="chart-interactive-content">
+          <section
+            ng-chart
+            class="chart-interactive-demo"
+            aria-label="Interactive daily visitors"
+          >
+            <div data-slot="chart-plot">
+              <div data-slot="chart-grid"></div>
+              <div data-slot="chart-bars" class="chart-daily-bars">
+                <span
+                  data-slot="chart-bar"
+                  ng-repeat="point in interactiveData"
+                  data-label="{{ point.date }} {{ activeChart }}"
+                  data-value="{{ activeChart == 'desktop' ? point.dp : point.mp }}"
+                  data-color="{{ activeChart == 'desktop' ? 'var(--chart-2)' : 'var(--chart-1)' }}"
+                  ng-mouseenter="demoTip.visible=true;demoTip.date=point.date;demoTip.value=activeChart == 'desktop' ? point.d : point.m"
+                  ng-mouseleave="demoTip.visible=false"
+                ></span>
+              </div>
+              <div
+                data-slot="chart-tooltip"
+                class="chart-floating-tooltip"
+                ng-if="demoTip.visible"
+              >
+                <strong data-slot="chart-tooltip-label"
+                  >{{ demoTip.date }}, 2024</strong
+                >
+                <div data-slot="chart-tooltip-items">
+                  <div data-slot="chart-tooltip-item">
+                    <span
+                      data-slot="chart-tooltip-indicator"
+                      data-color="{{ activeChart == 'desktop' ? 'var(--chart-2)' : 'var(--chart-1)' }}"
+                    ></span
+                    ><span data-slot="chart-tooltip-name"
+                      >{{ activeChart == 'desktop' ? 'Desktop' : 'Mobile'
+                      }}</span
+                    ><span data-slot="chart-tooltip-value"
+                      >{{ demoTip.value }}</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div data-slot="chart-axis" class="chart-date-axis">
+              <span data-slot="chart-axis-item">Apr 1</span
+              ><span data-slot="chart-axis-item">Apr 8</span
+              ><span data-slot="chart-axis-item">Apr 15</span
+              ><span data-slot="chart-axis-item">Apr 22</span
+              ><span data-slot="chart-axis-item">Apr 30</span>
+            </div>
+          </section>
+        </div>
+      </article>
+
+      <section
+        class="chart-composition"
+        aria-labelledby="chart-rtl-heading"
+        dir="rtl"
+        lang="ar"
+      >
+        <h2 id="chart-rtl-heading">مخطط من اليمين إلى اليسار</h2>
+        <section
+          ng-chart
+          class="chart-reference-demo"
+          aria-label="زوار سطح المكتب والجوال"
+        >
+          <div data-slot="chart-plot">
+            <div data-slot="chart-grid"></div>
+            <div data-slot="chart-bar-groups">
+              <div
+                data-slot="chart-bar-group"
+                ng-repeat="point in rtlData"
+                ng-mouseenter="rtlTip.visible=true;rtlTip.month=point.month;rtlTip.desktop=point.desktop;rtlTip.mobile=point.mobile"
+                ng-mouseleave="rtlTip.visible=false"
+              >
+                <span
+                  data-slot="chart-bar"
+                  data-label="{{ point.month }} سطح المكتب"
+                  data-value="{{ point.d }}"
+                  data-color="var(--chart-2)"
+                ></span>
+                <span
+                  data-slot="chart-bar"
+                  data-label="{{ point.month }} الجوال"
+                  data-value="{{ point.m }}"
+                  data-color="var(--chart-1)"
+                ></span>
+              </div>
+            </div>
+            <div
+              data-slot="chart-tooltip"
+              class="chart-floating-tooltip"
+              ng-if="rtlTip.visible"
+            >
+              <strong data-slot="chart-tooltip-label"
+                >{{ rtlTip.month }}</strong
+              >
+              <div data-slot="chart-tooltip-items">
+                <div data-slot="chart-tooltip-item">
+                  <span
+                    data-slot="chart-tooltip-indicator"
+                    data-color="var(--chart-2)"
+                  ></span
+                  ><span data-slot="chart-tooltip-name">سطح المكتب</span
+                  ><span data-slot="chart-tooltip-value"
+                    >{{ rtlTip.desktop }}</span
+                  >
+                </div>
+                <div data-slot="chart-tooltip-item">
+                  <span
+                    data-slot="chart-tooltip-indicator"
+                    data-color="var(--chart-1)"
+                  ></span
+                  ><span data-slot="chart-tooltip-name">الجوال</span
+                  ><span data-slot="chart-tooltip-value"
+                    >{{ rtlTip.mobile }}</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div data-slot="chart-axis">
+            <span data-slot="chart-axis-item" ng-repeat="point in rtlData"
+              >{{ point.short }}</span
+            >
+          </div>
+          <div data-slot="chart-legend">
+            <span data-slot="chart-legend-item"
+              ><span data-slot="chart-swatch" data-color="var(--chart-2)"></span
+              >سطح المكتب</span
+            >
+            <span data-slot="chart-legend-item"
+              ><span data-slot="chart-swatch" data-color="var(--chart-1)"></span
+              >الجوال</span
+            >
+          </div>
+        </section>
+      </section>
+
+      <section
+        class="chart-composition"
+        aria-labelledby="chart-tooltip-gallery-heading"
+      >
+        <h2 id="chart-tooltip-gallery-heading">Tooltip anatomy</h2>
+        <div
+          ng-chart
+          class="chart-tooltip-gallery"
+          aria-label="Chart tooltip anatomy examples"
+        >
+          <div data-slot="chart-tooltip">
+            <strong data-slot="chart-tooltip-label">Page Views</strong>
+            <div data-slot="chart-tooltip-items">
+              <div data-slot="chart-tooltip-item">
+                <span
+                  data-slot="chart-tooltip-indicator"
+                  data-color="var(--chart-1)"
+                ></span
+                ><span data-slot="chart-tooltip-name">Desktop</span
+                ><span data-slot="chart-tooltip-value">186</span>
+              </div>
+              <div data-slot="chart-tooltip-item">
+                <span
+                  data-slot="chart-tooltip-indicator"
+                  data-color="var(--chart-2)"
+                ></span
+                ><span data-slot="chart-tooltip-name">Mobile</span
+                ><span data-slot="chart-tooltip-value">80</span>
+              </div>
+            </div>
+          </div>
+          <div data-slot="chart-tooltip">
+            <div data-slot="chart-tooltip-items">
+              <div data-slot="chart-tooltip-item">
+                <span
+                  data-slot="chart-tooltip-indicator"
+                  data-indicator="dashed"
+                  data-color="var(--chart-3)"
+                ></span
+                ><span data-slot="chart-tooltip-name">Chrome</span
+                ><span data-slot="chart-tooltip-value">1,286</span>
+              </div>
+              <div data-slot="chart-tooltip-item">
+                <span
+                  data-slot="chart-tooltip-indicator"
+                  data-indicator="dashed"
+                  data-color="var(--chart-4)"
+                ></span
+                ><span data-slot="chart-tooltip-name">Firefox</span
+                ><span data-slot="chart-tooltip-value">1,000</span>
+              </div>
+            </div>
+          </div>
+          <div data-slot="chart-tooltip">
+            <div data-slot="chart-tooltip-items">
+              <div data-slot="chart-tooltip-item">
+                <span
+                  data-slot="chart-tooltip-indicator"
+                  data-indicator="line"
+                  data-color="var(--chart-3)"
+                ></span
+                ><span data-slot="chart-tooltip-name"
+                  ><strong>Page Views</strong><br />Desktop</span
+                ><span data-slot="chart-tooltip-value">12,486</span>
+              </div>
+            </div>
+          </div>
+          <div data-slot="chart-tooltip">
+            <div data-slot="chart-tooltip-items">
+              <div data-slot="chart-tooltip-item">
+                <span
+                  data-slot="chart-tooltip-indicator"
+                  data-color="var(--chart-1)"
+                ></span
+                ><span data-slot="chart-tooltip-name">Chrome</span
+                ><span data-slot="chart-tooltip-value">1,286</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

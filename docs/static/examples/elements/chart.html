@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    class="chart-example-body"
+    data-example="chart-example"
+  >
+    <section
+      ng-chart
+      class="chart-basic-demo visual-example"
+      aria-label="Desktop and mobile visitors from January through June"
+    >
+      <div data-slot="chart-plot">
+        <div data-slot="chart-bar-groups">
+          <div data-slot="chart-bar-group">
+            <span
+              data-slot="chart-bar"
+              data-label="January desktop"
+              data-value="61%"
+              data-color="#2563eb"
+            ></span>
+            <span
+              data-slot="chart-bar"
+              data-label="January mobile"
+              data-value="26%"
+              data-color="#60a5fa"
+            ></span>
+          </div>
+          <div data-slot="chart-bar-group">
+            <span
+              data-slot="chart-bar"
+              data-label="February desktop"
+              data-value="100%"
+              data-color="#2563eb"
+            ></span>
+            <span
+              data-slot="chart-bar"
+              data-label="February mobile"
+              data-value="66%"
+              data-color="#60a5fa"
+            ></span>
+          </div>
+          <div data-slot="chart-bar-group">
+            <span
+              data-slot="chart-bar"
+              data-label="March desktop"
+              data-value="78%"
+              data-color="#2563eb"
+            ></span>
+            <span
+              data-slot="chart-bar"
+              data-label="March mobile"
+              data-value="39%"
+              data-color="#60a5fa"
+            ></span>
+          </div>
+          <div data-slot="chart-bar-group">
+            <span
+              data-slot="chart-bar"
+              data-label="April desktop"
+              data-value="24%"
+              data-color="#2563eb"
+            ></span>
+            <span
+              data-slot="chart-bar"
+              data-label="April mobile"
+              data-value="62%"
+              data-color="#60a5fa"
+            ></span>
+          </div>
+          <div data-slot="chart-bar-group">
+            <span
+              data-slot="chart-bar"
+              data-label="May desktop"
+              data-value="69%"
+              data-color="#2563eb"
+            ></span>
+            <span
+              data-slot="chart-bar"
+              data-label="May mobile"
+              data-value="43%"
+              data-color="#60a5fa"
+            ></span>
+          </div>
+          <div data-slot="chart-bar-group">
+            <span
+              data-slot="chart-bar"
+              data-label="June desktop"
+              data-value="70%"
+              data-color="#2563eb"
+            ></span>
+            <span
+              data-slot="chart-bar"
+              data-label="June mobile"
+              data-value="46%"
+              data-color="#60a5fa"
+            ></span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

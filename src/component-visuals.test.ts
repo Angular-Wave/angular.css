@@ -1,0 +1,425 @@
+import { expect, test, type Page } from "@playwright/test";
+
+const examples = [
+  "accordion",
+  "alert",
+  "aspect-ratio",
+  "avatar",
+  "badge",
+  "button",
+  "button-group",
+  "calendar",
+  "card",
+  "carousel",
+  "chart",
+  "checkbox",
+  "collapsible",
+  "empty",
+  "input-otp",
+  "radio-group",
+  "resizable",
+  "skeleton",
+  "spinner",
+  "switch",
+] as const;
+
+const assertGeometry = async (
+  page: Page,
+  component: (typeof examples)[number],
+) => {
+  if (component === "aspect-ratio") {
+    const viewportWidth = await page.evaluate(
+      () => document.documentElement.clientWidth,
+    );
+    const root = await page.locator("[ng-aspect-ratio]").boundingBox();
+    expect(root).not.toBeNull();
+    expect(root!.width).toBeCloseTo(Math.min(384, viewportWidth - 48), 0);
+    expect(root!.width / root!.height).toBeCloseTo(16 / 9, 2);
+    await expect(page.locator(".aspect-ratio-image")).toBeVisible();
+    return;
+  }
+
+  if (component === "alert") {
+    const viewportWidth = await page.evaluate(
+      () => document.documentElement.clientWidth,
+    );
+    const root = await page.locator(".alert-demo").boundingBox();
+    const alerts = page.locator("[ng-alert]");
+    const icons = page.locator(":is([data-slot=alert-icon], [ng-alert-icon])");
+    expect(root).not.toBeNull();
+    expect(root!.width).toBeCloseTo(Math.min(448, viewportWidth - 48), 0);
+    await expect(alerts).toHaveCount(2);
+    await expect(icons).toHaveCount(2);
+    expect(
+      await icons.evaluateAll((items) =>
+        items.map((item) => {
+          const box = item.getBoundingClientRect();
+          return { height: box.height, width: box.width };
+        }),
+      ),
+    ).toEqual([
+      { height: 16, width: 16 },
+      { height: 16, width: 16 },
+    ]);
+    return;
+  }
+
+  if (component === "accordion") {
+    const root = await page.locator("[ng-accordion]").boundingBox();
+    const triggers = page.locator(
+      ":is([data-slot=accordion-trigger], [ng-accordion-trigger])",
+    );
+    const viewportWidth = await page.evaluate(
+      () => document.documentElement.clientWidth,
+    );
+    expect(root).not.toBeNull();
+    expect(root!.width).toBeCloseTo(Math.min(512, viewportWidth - 48), 0);
+    await expect(triggers).toHaveCount(3);
+    await expect(triggers.first()).toHaveAttribute("aria-expanded", "true");
+    return;
+  }
+
+  if (component === "skeleton") {
+    const boxes = await page
+      .locator(".visual-example [ng-skeleton]")
+      .evaluateAll((items) =>
+        items.map((item) => {
+          const box = item.getBoundingClientRect();
+          return { height: box.height, width: box.width };
+        }),
+      );
+    expect(boxes).toEqual([
+      { height: 48, width: 48 },
+      { height: 16, width: 250 },
+      { height: 16, width: 200 },
+    ]);
+    return;
+  }
+
+  if (component === "empty") {
+    const media = await page
+      .locator(":is([data-slot=empty-media], [ng-empty-media])")
+      .boundingBox();
+    expect(media).not.toBeNull();
+    expect(media!.width).toBeCloseTo(40, 0);
+    expect(media!.height).toBeCloseTo(40, 0);
+    await expect(
+      page.locator(":is([data-slot=empty-title], [ng-empty-title])"),
+    ).toHaveCSS("font-size", "18px");
+    return;
+  }
+
+  if (component === "button") {
+    const boxes = await page.locator("[ng-button]").evaluateAll((items) =>
+      items.map((item) => {
+        const box = item.getBoundingClientRect();
+        return { height: box.height, width: box.width };
+      }),
+    );
+    expect(boxes).toHaveLength(2);
+    expect(boxes[0].height).toBeCloseTo(36, 0);
+    expect(boxes[1]).toEqual({ height: 36, width: 36 });
+    return;
+  }
+
+  if (component === "button-group") {
+    const groups = page.locator("[ng-button-group]");
+    await expect(groups).toHaveCount(6);
+    const sizeButtons = page
+      .getByLabel("Button group sizes")
+      .getByRole("button");
+    expect(
+      await sizeButtons.evaluateAll((buttons) =>
+        buttons.map((button) => button.getBoundingClientRect().height),
+      ),
+    ).toEqual([32, 32, 32, 32, 36, 36, 36, 36, 40, 40, 40, 40]);
+    const vertical = page.getByRole("group", { name: "Media controls" });
+    const verticalBox = await vertical.boundingBox();
+    expect(verticalBox).not.toBeNull();
+    expect(verticalBox!.width).toBeCloseTo(36, 0);
+    expect(verticalBox!.height).toBeCloseTo(73, 0);
+    await expect(
+      vertical.locator(
+        ':is([data-slot="button-group-separator"], [ng-button-group-separator])',
+      ),
+    ).toHaveCSS("height", "1px");
+    await expect(
+      page
+        .locator(
+          ':is([data-slot="button-group-separator"], [ng-button-group-separator])[data-orientation="vertical"]',
+        )
+        .first(),
+    ).toHaveCSS("width", "1px");
+    return;
+  }
+
+  if (component === "badge") {
+    const boxes = await page
+      .locator("[ng-badge]")
+      .evaluateAll((items) =>
+        items.map((item) => item.getBoundingClientRect().height),
+      );
+    expect(boxes).toEqual([20, 20, 20, 20]);
+    return;
+  }
+
+  if (component === "calendar") {
+    const root = await page.locator("[ng-calendar]").boundingBox();
+    expect(root).not.toBeNull();
+    expect(root!.width).toBeCloseTo(214, 0);
+    expect(root!.height).toBeCloseTo(314, 0);
+    await expect(
+      page.locator(`:is([data-slot=calendar-day], [ng-calendar-day])`),
+    ).toHaveCount(42);
+    await expect(
+      page.locator(
+        `:is([data-slot=calendar-day], [ng-calendar-day])[aria-selected="true"]`,
+      ),
+    ).toHaveCount(1);
+    await expect(page.getByRole("combobox", { name: "Month" })).toHaveValue(
+      "4",
+    );
+    return;
+  }
+
+  if (component === "spinner") {
+    const spinnerSize = await page
+      .locator("[ng-spinner]")
+      .evaluate((element) => {
+        const style = getComputedStyle(element);
+        return { height: style.height, width: style.width };
+      });
+    const item = await page.locator("[ng-item]").boundingBox();
+    expect(item).not.toBeNull();
+    expect(spinnerSize).toEqual({ height: "16px", width: "16px" });
+    expect(item!.width).toBeCloseTo(320, 0);
+    return;
+  }
+
+  if (component === "avatar") {
+    const avatars = await page
+      .locator(":is([data-slot=avatar], [ng-avatar])")
+      .evaluateAll((items) =>
+        items.map((item) => {
+          const box = item.getBoundingClientRect();
+          return { height: box.height, width: box.width };
+        }),
+      );
+    expect(avatars).toHaveLength(5);
+    expect(avatars).toEqual(avatars.map(() => ({ height: 32, width: 32 })));
+    await expect(
+      page.locator(":is([data-slot=avatar-badge], [ng-avatar-badge])"),
+    ).toHaveCSS("width", "10px");
+    return;
+  }
+
+  if (component === "switch") {
+    const box = await page.locator("#airplane-mode").boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.width).toBeCloseTo(32, 0);
+    expect(box!.height).toBeCloseTo(18.4, 0);
+    return;
+  }
+
+  if (component === "radio-group") {
+    const boxes = await page
+      .locator(":is([data-slot=radio-group-item], [ng-radio-group-item])")
+      .evaluateAll((items) =>
+        items.map((item) => {
+          const box = item.getBoundingClientRect();
+          return { height: box.height, width: box.width };
+        }),
+      );
+    expect(boxes).toHaveLength(3);
+    expect(boxes).toEqual(boxes.map(() => ({ height: 16, width: 16 })));
+    return;
+  }
+
+  if (component === "card") {
+    const card = page.locator(":is([data-slot=card], [ng-card])");
+    const buttons = page.locator(
+      ":is([data-slot=card-footer], [ng-card-footer]) > button",
+    );
+    const [cardBox, firstButtonBox, secondButtonBox] = await Promise.all([
+      card.boundingBox(),
+      buttons.nth(0).boundingBox(),
+      buttons.nth(1).boundingBox(),
+    ]);
+    expect(cardBox).not.toBeNull();
+    expect(firstButtonBox).not.toBeNull();
+    expect(secondButtonBox).not.toBeNull();
+    expect(firstButtonBox!.width).toBeCloseTo(secondButtonBox!.width, 0);
+    expect(firstButtonBox!.width).toBeCloseTo(cardBox!.width - 34, 0);
+    return;
+  }
+
+  if (component === "carousel") {
+    const root = page.locator("[ng-carousel]");
+    const rootBox = await root.boundingBox();
+    const cardBox = await root
+      .locator(`:is([data-slot=card-content], [ng-card-content])`)
+      .first()
+      .boundingBox();
+    const controls = root.locator("[ng-carousel-previous], [ng-carousel-next]");
+    expect(rootBox).not.toBeNull();
+    expect(cardBox).not.toBeNull();
+    expect(rootBox!.width).toBeCloseTo(
+      viewportWidthForCarousel(await page.evaluate(() => innerWidth)),
+      0,
+    );
+    expect(cardBox!.width / cardBox!.height).toBeCloseTo(1, 2);
+    await expect(controls).toHaveCount(2);
+    expect(
+      await controls.evaluateAll((items) =>
+        items.map((item) => item.getBoundingClientRect().width),
+      ),
+    ).toEqual([32, 32]);
+    await expect(controls.first()).toBeDisabled();
+    await expect(controls.last()).toBeEnabled();
+    return;
+  }
+
+  if (component === "chart") {
+    const viewportWidth = await page.evaluate(() => innerWidth);
+    const chart = page.locator("[ng-chart]");
+    const plot = page.locator(`:is([data-slot=chart-plot], [ng-chart-plot])`);
+    const groups = page.locator(
+      `:is([data-slot=chart-bar-group], [ng-chart-bar-group])`,
+    );
+    const bars = page.locator(`:is([data-slot=chart-bar], [ng-chart-bar])`);
+    const [chartBox, plotBox] = await Promise.all([
+      chart.boundingBox(),
+      plot.boundingBox(),
+    ]);
+    expect(chartBox).not.toBeNull();
+    expect(plotBox).not.toBeNull();
+    expect(chartBox!.width).toBeCloseTo(Math.min(512, viewportWidth - 48), 0);
+    expect(plotBox!.height).toBeCloseTo(200, 0);
+    await expect(groups).toHaveCount(6);
+    await expect(bars).toHaveCount(12);
+    expect(
+      await bars.evaluateAll((items) =>
+        items.map((item) => item.getBoundingClientRect().height),
+      ),
+    ).toEqual([122, 52, 200, 132, 156, 78, 48, 124, 138, 86, 140, 92]);
+    return;
+  }
+
+  if (component === "checkbox") {
+    const viewportWidth = await page.evaluate(() => innerWidth);
+    const root = page.locator(".checkbox-demo");
+    const controls = page.locator("[ng-checkbox]");
+    const rootBox = await root.boundingBox();
+    expect(rootBox).not.toBeNull();
+    expect(rootBox!.width).toBeCloseTo(Math.min(384, viewportWidth - 48), 0);
+    await expect(controls).toHaveCount(4);
+    expect(
+      await controls.evaluateAll((items) =>
+        items.map((item) => {
+          const box = item.getBoundingClientRect();
+          return { height: box.height, width: box.width };
+        }),
+      ),
+    ).toEqual(Array(4).fill({ height: 16, width: 16 }));
+    await expect(controls.nth(1)).toBeChecked();
+    await expect(controls.nth(2)).toBeDisabled();
+    await expect(controls.first()).toHaveCSS("box-shadow", "none");
+    return;
+  }
+
+  if (component === "collapsible") {
+    const viewportWidth = await page.evaluate(() => innerWidth);
+    const root = page.locator(".collapsible-order-demo");
+    const trigger = page.getByRole("button", { name: "Toggle details" });
+    const rootBox = await root.boundingBox();
+    const triggerBox = await trigger.boundingBox();
+    expect(rootBox).not.toBeNull();
+    expect(triggerBox).not.toBeNull();
+    expect(rootBox!.width).toBeCloseTo(Math.min(350, viewportWidth - 48), 0);
+    expect(triggerBox).toMatchObject({ height: 32, width: 32 });
+    await expect(page.getByText("Status", { exact: true })).toBeVisible();
+    await expect(
+      page.locator(
+        `:is([data-slot=collapsible-content], [ng-collapsible-content])`,
+      ),
+    ).toBeHidden();
+    await expect(trigger).toHaveCSS("box-shadow", "none");
+    return;
+  }
+
+  if (component === "input-otp") {
+    const slots = page.locator(
+      `:is([data-slot=input-otp-slot], [ng-input-otp-slot])`,
+    );
+    const group = page.locator(
+      `:is([data-slot=input-otp-group], [ng-input-otp-group])`,
+    );
+    await expect(slots).toHaveCount(6);
+    expect(
+      await slots.evaluateAll((items) =>
+        items.map((item) => {
+          const box = item.getBoundingClientRect();
+          return { height: box.height, width: box.width };
+        }),
+      ),
+    ).toEqual(Array(6).fill({ height: 32, width: 32 }));
+    const groupBox = await group.boundingBox();
+    expect(groupBox).not.toBeNull();
+    expect(groupBox!.width).toBeCloseTo(192, 0);
+    await slots.nth(0).locator("input").focus();
+    await expect(slots.nth(0)).toHaveAttribute("data-active", "true");
+    await expect(slots.nth(0)).not.toHaveCSS("box-shadow", "none");
+    await slots
+      .nth(0)
+      .locator("input")
+      .evaluate((input) => input.blur());
+    await expect(slots.nth(0)).toHaveAttribute("data-active", "false");
+    return;
+  }
+
+  const groups = page.locator(
+    ":is([data-slot=resizable-panel-group], [ng-resizable-panel-group])",
+  );
+  const outerPanels = groups
+    .first()
+    .locator(":scope > :is([data-slot=resizable-panel], [ng-resizable-panel])");
+  const innerPanels = groups
+    .nth(1)
+    .locator(":scope > :is([data-slot=resizable-panel], [ng-resizable-panel])");
+  const [groupBox, leftBox, rightBox, topBox, bottomBox] = await Promise.all([
+    groups.first().boundingBox(),
+    outerPanels.nth(0).boundingBox(),
+    outerPanels.nth(1).boundingBox(),
+    innerPanels.nth(0).boundingBox(),
+    innerPanels.nth(1).boundingBox(),
+  ]);
+  expect(groupBox).not.toBeNull();
+  expect(groupBox!.height).toBeCloseTo(200, 0);
+  expect(leftBox!.width).toBeCloseTo(rightBox!.width, 0);
+  expect(bottomBox!.height / topBox!.height).toBeCloseTo(3, 0);
+};
+
+const viewportWidthForCarousel = (viewportWidth: number): number =>
+  viewportWidth <= 700 ? Math.min(192, viewportWidth - 48) : 320;
+
+for (const component of examples) {
+  for (const viewport of [
+    { name: "desktop", width: 800 },
+    { name: "compact", width: 420 },
+  ]) {
+    test(`${component} matches its ${viewport.name} visual contract`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ height: 600, width: viewport.width });
+      await page.goto(`/docs/static/examples/components/${component}.html`);
+
+      const example = page.locator(".visual-example");
+      await expect(example).toBeVisible();
+      await assertGeometry(page, component);
+      await expect(example).toHaveScreenshot(
+        `${component}-${viewport.name}.png`,
+        { animations: "disabled" },
+      );
+    });
+  }
+}

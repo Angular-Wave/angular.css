@@ -1,0 +1,155 @@
+[data-slot="toggle-group"],
+[ng-toggle-group] {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: calc(var(--spacing) * var(--gap, 0));
+}
+
+[data-slot="toggle-group"][orientation="vertical"],
+[ng-toggle-group][orientation="vertical"],
+[data-slot="toggle-group"][data-orientation="vertical"],
+[ng-toggle-group][data-orientation="vertical"] {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+[data-slot="toggle-group"][variant="outline"],
+[ng-toggle-group][variant="outline"] {
+  gap: 0;
+}
+
+:is(
+    [data-slot="toggle-group"][variant="outline"],
+    [ng-toggle-group][variant="outline"]
+  )
+  > :is([data-slot="toggle-group-item"], [ng-toggle-group-item]) {
+  border-color: var(--input);
+  border-radius: 0;
+  margin-left: -1px;
+}
+
+:is(
+    [data-slot="toggle-group"][variant="outline"],
+    [ng-toggle-group][variant="outline"]
+  )
+  > :is([data-slot="toggle-group-item"], [ng-toggle-group-item]):first-child {
+  margin-left: 0;
+  border-top-left-radius: calc(var(--radius) - 2px);
+  border-bottom-left-radius: calc(var(--radius) - 2px);
+}
+
+:is(
+    [data-slot="toggle-group"][variant="outline"],
+    [ng-toggle-group][variant="outline"]
+  )
+  > :is([data-slot="toggle-group-item"], [ng-toggle-group-item]):last-child {
+  border-top-right-radius: calc(var(--radius) - 2px);
+  border-bottom-right-radius: calc(var(--radius) - 2px);
+}
+
+[data-slot="toggle-group"][data-direction="rtl"][variant="outline"]
+  > :is([data-slot="toggle-group-item"], [ng-toggle-group-item]),
+[ng-toggle-group][data-direction="rtl"][variant="outline"]
+  > :is([data-slot="toggle-group-item"], [ng-toggle-group-item]) {
+  margin-right: -1px;
+  margin-left: 0;
+}
+
+:is(
+    [data-slot="toggle-group"],
+    [ng-toggle-group]
+  )[data-direction="rtl"][variant="outline"]
+  > :is([data-slot="toggle-group-item"], [ng-toggle-group-item]):first-child {
+  margin-right: 0;
+  border-radius: 0 calc(var(--radius) - 2px) calc(var(--radius) - 2px) 0;
+}
+
+:is(
+    [data-slot="toggle-group"],
+    [ng-toggle-group]
+  )[data-direction="rtl"][variant="outline"]
+  > :is([data-slot="toggle-group-item"], [ng-toggle-group-item]):last-child {
+  border-radius: calc(var(--radius) - 2px) 0 0 calc(var(--radius) - 2px);
+}
+
+[data-slot="toggle-group-item"],
+[ng-toggle-group-item] {
+  display: inline-flex;
+  height: calc(var(--spacing) * 9);
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--spacing) * 2);
+  border: 1px solid transparent;
+  border-radius: calc(var(--radius) - 2px);
+  background: transparent;
+  color: var(--foreground);
+  padding-inline: calc(var(--spacing) * 3);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+:is([data-slot="toggle-group-item"], [ng-toggle-group-item]):hover {
+  background: var(--muted);
+}
+
+:is([data-slot="toggle-group-item"], [ng-toggle-group-item]):is(
+  [aria-pressed="true"],
+  [data-state="on"]
+) {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+:is([data-slot="toggle-group"][size="sm"], [ng-toggle-group][size="sm"])
+  > :is([data-slot="toggle-group-item"], [ng-toggle-group-item]) {
+  height: calc(var(--spacing) * 8);
+  padding-inline: calc(var(--spacing) * 2);
+}
+
+:is([data-slot="toggle-group"][size="lg"], [ng-toggle-group][size="lg"])
+  > :is([data-slot="toggle-group-item"], [ng-toggle-group-item]) {
+  height: calc(var(--spacing) * 10);
+  padding-inline: calc(var(--spacing) * 4);
+}
+
+:is([data-slot="toggle-group"], [ng-toggle-group])[data-orientation="vertical"]
+  > :is([data-slot="toggle-group-item"], [ng-toggle-group-item]) {
+  margin-top: -1px;
+  margin-left: 0;
+}
+
+:is([data-slot="toggle-group"], [ng-toggle-group])[data-orientation="vertical"]
+  > :is([data-slot="toggle-group-item"], [ng-toggle-group-item]):first-child {
+  margin-top: 0;
+  border-radius: calc(var(--radius) - 2px) calc(var(--radius) - 2px) 0 0;
+}
+
+:is([data-slot="toggle-group"], [ng-toggle-group])[data-orientation="vertical"]
+  > :is([data-slot="toggle-group-item"], [ng-toggle-group-item]):last-child {
+  border-radius: 0 0 calc(var(--radius) - 2px) calc(var(--radius) - 2px);
+}
+
+:is([data-slot="toggle-group"], [ng-toggle-group])[spacing]:not([spacing="0"]) {
+  gap: calc(var(--spacing) * var(--gap, 0));
+}
+
+:is([data-slot="toggle-group"], [ng-toggle-group])[spacing]:not([spacing="0"])
+  > :is([data-slot="toggle-group-item"], [ng-toggle-group-item]) {
+  margin: 0;
+  border-radius: calc(var(--radius) - 2px);
+}
+
+:is([data-slot="toggle-group-item"], [ng-toggle-group-item]) > svg {
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+}
+
+[data-slot="toggle-group-item"][data-disabled="true"],
+[ng-toggle-group-item][data-disabled="true"] {
+  pointer-events: none;
+  opacity: 0.5;
+}

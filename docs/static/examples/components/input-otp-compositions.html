@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    class="input-otp-composition-body"
+    ng-init="verify={a:'',b:'',c:'',d:'',e:'',f:'',submitted:false};resends=0"
+    data-example="input-otp-form"
+  >
+    <form
+      data-slot="card"
+      class="input-otp-form-card visual-example"
+      ng-submit="verify.submitted=true"
+    >
+      <div data-slot="card-header">
+        <h2 data-slot="card-title">Verify your login</h2>
+        <p data-slot="card-description">
+          Enter the verification code we sent to your email address:
+          <strong>m@example.com</strong>.
+        </p>
+      </div>
+      <div data-slot="card-content">
+        <div data-slot="field" class="input-otp-form-field">
+          <div class="input-otp-form-label-row">
+            <label data-slot="field-label" ng-label for="verify-otp-1"
+              >Verification code</label
+            >
+            <button
+              ng-button
+              variant="outline"
+              size="xs"
+              type="button"
+              ng-click="resends=resends+1"
+            >
+              <svg
+                data-icon="inline-start"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M20 11a8.1 8.1 0 0 0-15.5-2M4 4v5h5m-5 4a8.1 8.1 0 0 0 15.5 2M20 20v-5h-5"
+                />
+              </svg>
+              Resend Code
+            </button>
+          </div>
+          <div
+            ng-input-otp
+            class="input-otp-large"
+            aria-label="Verification code"
+          >
+            <div data-slot="input-otp-group">
+              <span data-slot="input-otp-slot"
+                ><input id="verify-otp-1" ng-model="verify.a" /></span
+              ><span data-slot="input-otp-slot"
+                ><input ng-model="verify.b" /></span
+              ><span data-slot="input-otp-slot"
+                ><input ng-model="verify.c"
+              /></span>
+            </div>
+            <span data-slot="input-otp-separator" role="separator"
+              ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14" /></svg
+            ></span>
+            <div data-slot="input-otp-group">
+              <span data-slot="input-otp-slot"
+                ><input ng-model="verify.d" /></span
+              ><span data-slot="input-otp-slot"
+                ><input ng-model="verify.e" /></span
+              ><span data-slot="input-otp-slot"
+                ><input ng-model="verify.f"
+              /></span>
+            </div>
+          </div>
+          <p data-slot="field-description">
+            <a href="#">I no longer have access to this email address.</a>
+          </p>
+        </div>
+      </div>
+      <div data-slot="card-footer" class="input-otp-form-footer">
+        <div data-slot="field">
+          <button ng-button type="submit" class="input-otp-verify-button">
+            Verify
+          </button>
+          <p class="input-otp-support">
+            Having trouble signing in? <a href="#">Contact support</a>
+          </p>
+        </div>
+      </div>
+      <p class="visually-hidden" role="status" aria-live="polite">
+        {{ verify.submitted ? 'Verification submitted' : (resends ? 'Code resent
+        ' + resends + ' time' : '') }}
+      </p>
+    </form>
+  </body>
+</html>

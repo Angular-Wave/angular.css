@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak data-example="context-menu-sides">
+    <main class="context-menu-sides visual-example">
+      <div
+        ng-context-menu
+        ng-repeat="side in ['inline-start','left','top','bottom','right','inline-end']"
+      >
+        <div ng-context-menu-trigger ng-bind="side"></div>
+        <div
+          ng-context-menu-content
+          side="{{ side }}"
+          aria-label="{{ side }} actions"
+        >
+          <button ng-context-menu-item>Back</button>
+          <button ng-context-menu-item>Forward</button>
+          <button ng-context-menu-item>Reload</button>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

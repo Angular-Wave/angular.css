@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="custom={start:'2026-09-10',end:'2026-09-15'}; presetDate='2026-09-12'; time={date:'2026-09-12',start:'09:00',end:'17:00'}; rtlDate='2026-09-12'; hijriDate='2025-06-12'; customDays=[{v:'2026-08-30',d:'30',p:'',o:true},{v:'2026-08-31',d:'31',p:'',o:true},{v:'2026-09-01',d:'1',p:'$100',o:false},{v:'2026-09-02',d:'2',p:'$100',o:false},{v:'2026-09-03',d:'3',p:'$100',o:false},{v:'2026-09-04',d:'4',p:'$100',o:false},{v:'2026-09-05',d:'5',p:'$120',o:false},{v:'2026-09-06',d:'6',p:'$120',o:false},{v:'2026-09-07',d:'7',p:'$100',o:false},{v:'2026-09-08',d:'8',p:'$100',o:false},{v:'2026-09-09',d:'9',p:'$100',o:false},{v:'2026-09-10',d:'10',p:'$100',o:false},{v:'2026-09-11',d:'11',p:'$100',o:false},{v:'2026-09-12',d:'12',p:'$120',o:false},{v:'2026-09-13',d:'13',p:'$120',o:false},{v:'2026-09-14',d:'14',p:'$100',o:false},{v:'2026-09-15',d:'15',p:'$100',o:false},{v:'2026-09-16',d:'16',p:'$100',o:false},{v:'2026-09-17',d:'17',p:'$100',o:false},{v:'2026-09-18',d:'18',p:'$100',o:false},{v:'2026-09-19',d:'19',p:'$120',o:false},{v:'2026-09-20',d:'20',p:'$120',o:false},{v:'2026-09-21',d:'21',p:'$100',o:false},{v:'2026-09-22',d:'22',p:'$100',o:false},{v:'2026-09-23',d:'23',p:'$100',o:false},{v:'2026-09-24',d:'24',p:'$100',o:false},{v:'2026-09-25',d:'25',p:'$100',o:false},{v:'2026-09-26',d:'26',p:'$120',o:false},{v:'2026-09-27',d:'27',p:'$120',o:false},{v:'2026-09-28',d:'28',p:'$100',o:false},{v:'2026-09-29',d:'29',p:'$100',o:false},{v:'2026-09-30',d:'30',p:'$100',o:false},{v:'2026-10-01',d:'1',p:'',o:true},{v:'2026-10-02',d:'2',p:'',o:true},{v:'2026-10-03',d:'3',p:'',o:true},{v:'2026-10-04',d:'4',p:'',o:true},{v:'2026-10-05',d:'5',p:'',o:true},{v:'2026-10-06',d:'6',p:'',o:true},{v:'2026-10-07',d:'7',p:'',o:true},{v:'2026-10-08',d:'8',p:'',o:true},{v:'2026-10-09',d:'9',p:'',o:true},{v:'2026-10-10',d:'10',p:'',o:true}]; hijriDays=[{v:'2025-05-17',d:'۲۷',o:true},{v:'2025-05-18',d:'۲۸',o:true},{v:'2025-05-19',d:'۲۹',o:true},{v:'2025-05-20',d:'۳۰',o:true},{v:'2025-05-21',d:'۳۱',o:true},{v:'2025-05-22',d:'۱',o:false},{v:'2025-05-23',d:'۲',o:false},{v:'2025-05-24',d:'۳',o:false},{v:'2025-05-25',d:'۴',o:false},{v:'2025-05-26',d:'۵',o:false},{v:'2025-05-27',d:'۶',o:false},{v:'2025-05-28',d:'۷',o:false},{v:'2025-05-29',d:'۸',o:false},{v:'2025-05-30',d:'۹',o:false},{v:'2025-05-31',d:'۱۰',o:false},{v:'2025-06-01',d:'۱۱',o:false},{v:'2025-06-02',d:'۱۲',o:false},{v:'2025-06-03',d:'۱۳',o:false},{v:'2025-06-04',d:'۱۴',o:false},{v:'2025-06-05',d:'۱۵',o:false},{v:'2025-06-06',d:'۱۶',o:false},{v:'2025-06-07',d:'۱۷',o:false},{v:'2025-06-08',d:'۱۸',o:false},{v:'2025-06-09',d:'۱۹',o:false},{v:'2025-06-10',d:'۲۰',o:false},{v:'2025-06-11',d:'۲۱',o:false},{v:'2025-06-12',d:'۲۲',o:false},{v:'2025-06-13',d:'۲۳',o:false},{v:'2025-06-14',d:'۲۴',o:false},{v:'2025-06-15',d:'۲۵',o:false},{v:'2025-06-16',d:'۲۶',o:false},{v:'2025-06-17',d:'۲۷',o:false},{v:'2025-06-18',d:'۲۸',o:false},{v:'2025-06-19',d:'۲۹',o:false},{v:'2025-06-20',d:'۳۰',o:false},{v:'2025-06-21',d:'۳۱',o:false},{v:'2025-06-22',d:'۱',o:true},{v:'2025-06-23',d:'۲',o:true},{v:'2025-06-24',d:'۳',o:true},{v:'2025-06-25',d:'۴',o:true},{v:'2025-06-26',d:'۵',o:true},{v:'2025-06-27',d:'۶',o:true}]"
+    data-example="calendar-custom-days calendar-presets calendar-rtl calendar-time calendar-hijri"
+  >
+    <main class="calendar-composition-grid" aria-label="Calendar compositions">
+      <section
+        class="calendar-composition calendar-composition-wide"
+        aria-labelledby="custom-days-heading"
+      >
+        <h2 id="custom-days-heading">Custom day prices</h2>
+        <article ng-card class="calendar-card">
+          <div data-slot="card-content" class="calendar-card-content">
+            <section
+              ng-calendar
+              data-selection-mode="range"
+              data-range-start-value="{{ custom.start }}"
+              data-range-end-value="{{ custom.end }}"
+              ng-on-angularcss:calendar-select="custom.start=$event.detail.range.start; custom.end=$event.detail.range.end"
+              class="calendar-custom-days"
+            >
+              <header data-slot="calendar-header">
+                <h3 data-slot="calendar-title">September 2026</h3>
+              </header>
+              <div data-slot="calendar-grid">
+                <span data-slot="calendar-weekday">Su</span
+                ><span data-slot="calendar-weekday">Mo</span
+                ><span data-slot="calendar-weekday">Tu</span
+                ><span data-slot="calendar-weekday">We</span
+                ><span data-slot="calendar-weekday">Th</span
+                ><span data-slot="calendar-weekday">Fr</span
+                ><span data-slot="calendar-weekday">Sa</span>
+                <button
+                  type="button"
+                  data-slot="calendar-day"
+                  ng-repeat="day in customDays"
+                  data-value="{{ day.v }}"
+                  data-outside="{{ day.o }}"
+                  aria-label="{{ day.v }} {{ day.p }}"
+                >
+                  <strong>{{ day.d }}</strong><span>{{ day.p }}</span>
+                </button>
+              </div>
+            </section>
+          </div>
+        </article>
+        <p class="calendar-workflow-output" aria-live="polite">
+          Range: {{ custom.start }} to {{ custom.end }}
+        </p>
+      </section>
+
+      <section class="calendar-composition" aria-labelledby="preset-heading">
+        <h2 id="preset-heading">Presets</h2>
+        <article ng-card size="sm" class="calendar-preset-card">
+          <div data-slot="card-content" class="calendar-preset-content">
+            <section
+              ng-calendar
+              data-calendar-generated
+              data-month="2026-09"
+              data-value="{{ presetDate }}"
+              ng-on-angularcss:calendar-select="presetDate=$event.detail.value"
+              class="calendar-flush calendar-preset-grid"
+            >
+              <header data-slot="calendar-header">
+                <button
+                  type="button"
+                  ng-button
+                  data-slot="calendar-previous"
+                  size="icon"
+                  variant="ghost"
+                  aria-label="Previous preset month"
+                >
+                  <svg
+                    class="icon-sm"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="m15 18-6-6 6-6" />
+                  </svg>
+                </button>
+                <h3 data-slot="calendar-title"></h3>
+                <button
+                  type="button"
+                  ng-button
+                  data-slot="calendar-next"
+                  size="icon"
+                  variant="ghost"
+                  aria-label="Next preset month"
+                >
+                  <svg
+                    class="icon-sm"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </button>
+              </header>
+              <div data-slot="calendar-grid"></div>
+            </section>
+          </div>
+          <footer data-slot="card-footer" class="calendar-preset-footer">
+            <button
+              type="button"
+              ng-button
+              variant="outline"
+              size="sm"
+              ng-click="presetDate='2026-09-12'"
+            >
+              Today
+            </button>
+            <button
+              type="button"
+              ng-button
+              variant="outline"
+              size="sm"
+              ng-click="presetDate='2026-09-13'"
+            >
+              Tomorrow
+            </button>
+            <button
+              type="button"
+              ng-button
+              variant="outline"
+              size="sm"
+              ng-click="presetDate='2026-09-15'"
+            >
+              In 3 days
+            </button>
+            <button
+              type="button"
+              ng-button
+              variant="outline"
+              size="sm"
+              ng-click="presetDate='2026-09-19'"
+            >
+              In a week
+            </button>
+            <button
+              type="button"
+              ng-button
+              variant="outline"
+              size="sm"
+              ng-click="presetDate='2026-09-26'"
+            >
+              In 2 weeks
+            </button>
+          </footer>
+        </article>
+        <p class="calendar-workflow-output" aria-live="polite">
+          Selected: {{ presetDate }}
+        </p>
+      </section>
+
+      <section class="calendar-composition" aria-labelledby="time-heading">
+        <h2 id="time-heading">Date and time</h2>
+        <article ng-card size="sm" class="calendar-time-card">
+          <div data-slot="card-content" class="calendar-time-content">
+            <section
+              ng-calendar
+              data-calendar-generated
+              data-month="2026-09"
+              data-value="{{ time.date }}"
+              ng-on-angularcss:calendar-select="time.date=$event.detail.value"
+              class="calendar-flush"
+            >
+              <header data-slot="calendar-header">
+                <button
+                  type="button"
+                  ng-button
+                  data-slot="calendar-previous"
+                  size="icon"
+                  variant="ghost"
+                  aria-label="Previous time month"
+                >
+                  <svg
+                    class="icon-sm"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="m15 18-6-6 6-6" />
+                  </svg>
+                </button>
+                <h3 data-slot="calendar-title"></h3>
+                <button
+                  type="button"
+                  ng-button
+                  data-slot="calendar-next"
+                  size="icon"
+                  variant="ghost"
+                  aria-label="Next time month"
+                >
+                  <svg
+                    class="icon-sm"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </button>
+              </header>
+              <div data-slot="calendar-grid"></div>
+            </section>
+          </div>
+          <footer data-slot="card-footer" class="calendar-time-footer">
+            <label
+              ><span>Start</span
+              ><span ng-input-group
+                ><input
+                  ng-input-group-input
+                  type="time"
+                  ng-model="time.start"
+                  aria-label="Start time" /><span ng-input-group-addon
+                  ><svg
+                    class="icon-sm"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M12 7v5l3 2" /></svg></span></span
+            ></label>
+            <label
+              ><span>End</span
+              ><span ng-input-group
+                ><input
+                  ng-input-group-input
+                  type="time"
+                  ng-model="time.end"
+                  aria-label="End time" /><span ng-input-group-addon
+                  ><svg
+                    class="icon-sm"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M12 7v5l3 2" /></svg></span></span
+            ></label>
+          </footer>
+        </article>
+        <p class="calendar-workflow-output" aria-live="polite">
+          {{ time.date }} · {{ time.start }}–{{ time.end }}
+        </p>
+      </section>
+
+      <section
+        class="calendar-composition"
+        aria-labelledby="rtl-heading"
+        dir="rtl"
+        lang="ar-SA"
+      >
+        <h2 id="rtl-heading">تقويم من اليمين إلى اليسار</h2>
+        <section
+          ng-calendar
+          data-calendar-generated
+          data-month="2026-09"
+          data-value="{{ rtlDate }}"
+          data-caption-layout="dropdown"
+          data-start-year="2024"
+          data-end-year="2028"
+          ng-on-angularcss:calendar-select="rtlDate=$event.detail.value"
+          class="calendar-demo calendar-rtl-grid"
+        >
+          <header data-slot="calendar-header">
+            <button
+              type="button"
+              ng-button
+              data-slot="calendar-previous"
+              size="icon"
+              variant="ghost"
+              aria-label="الشهر السابق"
+            >
+              <svg
+                class="icon-sm"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+            </button>
+            <h3 data-slot="calendar-title"></h3>
+            <button
+              type="button"
+              ng-button
+              data-slot="calendar-next"
+              size="icon"
+              variant="ghost"
+              aria-label="الشهر التالي"
+            >
+              <svg
+                class="icon-sm"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </button>
+          </header>
+          <div data-slot="calendar-grid"></div>
+        </section>
+        <p class="calendar-workflow-output" aria-live="polite">
+          التاريخ: {{ rtlDate }}
+        </p>
+      </section>
+
+      <section
+        class="calendar-composition"
+        aria-labelledby="hijri-heading"
+        dir="rtl"
+        lang="fa"
+      >
+        <h2 id="hijri-heading">تقویم هجری شمسی</h2>
+        <section
+          ng-calendar
+          data-value="{{ hijriDate }}"
+          ng-on-angularcss:calendar-select="hijriDate=$event.detail.value"
+          class="calendar-demo calendar-hijri-grid"
+          aria-label="خرداد ۱۴۰۴"
+        >
+          <header data-slot="calendar-header">
+            <h3 data-slot="calendar-title">خرداد ۱۴۰۴</h3>
+          </header>
+          <div data-slot="calendar-grid">
+            <span data-slot="calendar-weekday">ش</span
+            ><span data-slot="calendar-weekday">ی</span
+            ><span data-slot="calendar-weekday">د</span
+            ><span data-slot="calendar-weekday">س</span
+            ><span data-slot="calendar-weekday">چ</span
+            ><span data-slot="calendar-weekday">پ</span
+            ><span data-slot="calendar-weekday">ج</span>
+            <button
+              type="button"
+              data-slot="calendar-day"
+              ng-repeat="day in hijriDays"
+              data-value="{{ day.v }}"
+              data-outside="{{ day.o }}"
+              aria-label="روز {{ day.d }}"
+            >
+              {{ day.d }}
+            </button>
+          </div>
+        </section>
+        <p class="calendar-workflow-output" aria-live="polite">
+          روز انتخاب‌شده: {{ hijriDate }}
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

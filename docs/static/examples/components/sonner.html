@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="canonical = { visible: false, status: 'Ready' }"
+    data-example="sonner-demo"
+    class="sonner-example-body"
+  >
+    <main class="sonner-demo visual-example">
+      <button
+        ng-button
+        type="button"
+        variant="outline"
+        ng-click="canonical.visible = true; canonical.status = 'Toast shown'"
+      >
+        Show Toast
+      </button>
+      <p class="output" role="status">{{ canonical.status }}</p>
+    </main>
+
+    <div ng-toaster position="bottom-right" aria-label="Notifications">
+      <section data-slot="toast" ng-if="canonical.visible">
+        <div data-slot="toast-content">
+          <h3 data-slot="toast-title">Event has been created</h3>
+          <p data-slot="toast-description">
+            Sunday, December 03, 2023 at 9:00 AM
+          </p>
+        </div>
+        <button
+          data-slot="button"
+          ng-toast-action
+          variant="outline"
+          size="sm"
+          ng-click="canonical.visible = false; canonical.status = 'Undo selected'"
+        >
+          Undo
+        </button>
+      </section>
+    </div>
+  </body>
+</html>

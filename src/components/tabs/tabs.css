@@ -1,0 +1,131 @@
+[data-slot="tabs"],
+[ng-tabs] {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 3);
+}
+
+[data-slot="tabs"][orientation="vertical"],
+[ng-tabs][orientation="vertical"],
+[data-slot="tabs"][data-orientation="vertical"],
+[ng-tabs][data-orientation="vertical"] {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+:is([data-slot="tabs"], [ng-tabs])[data-orientation="vertical"]
+  > :is([data-slot="tabs-list"], [ng-tabs-list]) {
+  flex-direction: column;
+}
+
+[data-slot="tabs-list"],
+[ng-tabs-list] {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
+  background: var(--muted);
+  color: var(--muted-foreground);
+  padding: calc(var(--spacing) * 1);
+}
+
+[data-slot="tabs-list"][variant="line"],
+[ng-tabs-list][variant="line"] {
+  gap: calc(var(--spacing) * 1);
+  background: transparent;
+  padding: 0;
+}
+
+[data-slot="tabs-trigger"],
+[ng-tabs-trigger] {
+  position: relative;
+  display: inline-flex;
+  min-height: calc(var(--spacing) * 8);
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--spacing) * 2);
+  border: 1px solid transparent;
+  border-radius: calc(var(--radius) - 2px);
+  background: transparent;
+  color: color-mix(in srgb, var(--foreground) 60%, transparent);
+  padding-inline: calc(var(--spacing) * 3);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+}
+
+[data-slot="tabs-trigger"]:hover,
+[ng-tabs-trigger]:hover {
+  color: var(--foreground);
+}
+
+:is([data-slot="tabs-trigger"], [ng-tabs-trigger]):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+:is([data-slot="tabs-trigger"], [ng-tabs-trigger]):is(
+  :disabled,
+  [aria-disabled="true"],
+  [data-disabled="true"]
+) {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+[data-slot="tabs-trigger"][aria-selected="true"],
+[ng-tabs-trigger][aria-selected="true"],
+[data-slot="tabs-trigger"][data-active="true"],
+[ng-tabs-trigger][data-active="true"] {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+[data-slot="tabs-list"][variant="line"]
+  :is([data-slot="tabs-trigger"], [ng-tabs-trigger])[aria-selected="true"],
+[ng-tabs-list][variant="line"]
+  :is([data-slot="tabs-trigger"], [ng-tabs-trigger])[aria-selected="true"],
+[data-slot="tabs-list"][variant="line"]
+  :is([data-slot="tabs-trigger"], [ng-tabs-trigger])[data-active="true"],
+[ng-tabs-list][variant="line"]
+  :is([data-slot="tabs-trigger"], [ng-tabs-trigger])[data-active="true"] {
+  background: transparent;
+}
+
+[data-slot="tabs-list"][variant="line"]
+  :is(
+    [data-slot="tabs-trigger"],
+    [ng-tabs-trigger]
+  )[aria-selected="true"]::after,
+[ng-tabs-list][variant="line"]
+  :is(
+    [data-slot="tabs-trigger"],
+    [ng-tabs-trigger]
+  )[aria-selected="true"]::after,
+[data-slot="tabs-list"][variant="line"]
+  :is([data-slot="tabs-trigger"], [ng-tabs-trigger])[data-active="true"]::after,
+[ng-tabs-list][variant="line"]
+  :is(
+    [data-slot="tabs-trigger"],
+    [ng-tabs-trigger]
+  )[data-active="true"]::after {
+  content: "";
+  position: absolute;
+  inset-inline: calc(var(--spacing) * 2);
+  bottom: calc(var(--spacing) * -1);
+  height: 2px;
+  background: var(--foreground);
+}
+
+[data-slot="tabs-content"],
+[ng-tabs-content] {
+  flex: 1 1 auto;
+  outline: none;
+}
+
+:is([data-slot="tabs-trigger"], [ng-tabs-trigger]) > svg {
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+}

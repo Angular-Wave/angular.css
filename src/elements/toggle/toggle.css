@@ -1,0 +1,58 @@
+[data-slot="toggle"],
+[ng-toggle] {
+  display: inline-flex;
+  height: calc(var(--spacing) * 9);
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--spacing) * 2);
+  border: 1px solid transparent;
+  border-radius: calc(var(--radius) - 2px);
+  background: transparent;
+  color: var(--foreground);
+  padding-inline: calc(var(--spacing) * 3);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+[data-slot="toggle"]:hover,
+[ng-toggle]:hover {
+  background: var(--muted);
+}
+
+[data-slot="toggle"][data-disabled="true"],
+[ng-toggle][data-disabled="true"] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+[data-slot="toggle"][variant="outline"],
+[ng-toggle][variant="outline"] {
+  border-color: var(--input);
+}
+
+[data-slot="toggle"][aria-pressed="true"],
+[ng-toggle][aria-pressed="true"],
+[data-slot="toggle"][data-state="on"],
+[ng-toggle][data-state="on"] {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+[data-slot="toggle"][size="sm"],
+[ng-toggle][size="sm"] {
+  height: calc(var(--spacing) * 8);
+  padding-inline: calc(var(--spacing) * 2);
+}
+
+[data-slot="toggle"][size="lg"],
+[ng-toggle][size="lg"] {
+  height: calc(var(--spacing) * 10);
+  padding-inline: calc(var(--spacing) * 4);
+}
+
+:is([data-slot="toggle"], [ng-toggle]) > svg {
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+}

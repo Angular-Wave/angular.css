@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="inputState={basic:'',apiKey:'',username:'',name:'',email:'',firstName:'',lastName:'',search:'',website:'',required:'',country:'us',formName:'',formEmail:'',phone:'',address:'',message:'Ready'}"
+  >
+    <main class="input-workflow-grid" aria-label="Input workflows">
+      <section data-example="input-basic" class="input-workflow">
+        <input
+          data-input
+          ng-model="inputState.basic"
+          placeholder="Enter text"
+          aria-label="Basic input"
+        />
+      </section>
+
+      <section data-example="input-demo" class="input-workflow">
+        <div data-slot="field">
+          <label data-slot="field-label" for="input-demo-api-key"
+            >API Key</label
+          >
+          <input
+            data-input
+            id="input-demo-api-key"
+            type="password"
+            ng-model="inputState.apiKey"
+            placeholder="sk-..."
+          />
+          <p data-slot="field-description">
+            Your API key is encrypted and stored securely.
+          </p>
+        </div>
+      </section>
+
+      <section data-example="input-disabled" class="input-workflow">
+        <div data-slot="field" data-disabled="true">
+          <label data-slot="field-label" for="input-demo-disabled">Email</label>
+          <input
+            data-input
+            id="input-demo-disabled"
+            type="email"
+            placeholder="Email"
+            disabled
+          />
+          <p data-slot="field-description">This field is currently disabled.</p>
+        </div>
+      </section>
+
+      <section data-example="input-invalid" class="input-workflow">
+        <div data-slot="field" data-invalid="true">
+          <label data-slot="field-label" for="input-invalid-workflow"
+            >Invalid Input</label
+          >
+          <input
+            data-input
+            id="input-invalid-workflow"
+            placeholder="Error"
+            aria-invalid="true"
+          />
+          <p data-slot="field-description">
+            This field contains validation errors.
+          </p>
+        </div>
+      </section>
+
+      <section data-example="input-required" class="input-workflow">
+        <div data-slot="field">
+          <label data-slot="field-label" for="input-required-workflow"
+            >Required Field <span class="input-required-mark">*</span></label
+          >
+          <input
+            data-input
+            id="input-required-workflow"
+            ng-model="inputState.required"
+            placeholder="This field is required"
+            required
+          />
+          <p data-slot="field-description">This field must be filled out.</p>
+        </div>
+      </section>
+
+      <section data-example="input-file" class="input-workflow">
+        <div data-slot="field">
+          <label data-slot="field-label" for="input-picture">Picture</label>
+          <input data-input id="input-picture" type="file" />
+          <p data-slot="field-description">Select a picture to upload.</p>
+        </div>
+      </section>
+
+      <section data-example="input-field" class="input-workflow">
+        <div data-slot="field">
+          <label data-slot="field-label" for="input-field-username"
+            >Username</label
+          >
+          <input
+            data-input
+            id="input-field-username"
+            ng-model="inputState.username"
+            placeholder="Enter your username"
+          />
+          <p data-slot="field-description">
+            Choose a unique username for your account.
+          </p>
+        </div>
+      </section>
+
+      <section data-example="input-badge" class="input-workflow">
+        <div data-slot="field">
+          <label data-slot="field-label" for="input-webhook"
+            >Webhook URL
+            <span ng-badge variant="secondary" class="input-label-badge"
+              >Beta</span
+            ></label
+          >
+          <input
+            data-input
+            id="input-webhook"
+            type="url"
+            placeholder="https://api.example.com/webhook"
+          />
+        </div>
+      </section>
+
+      <section
+        data-example="input-grid"
+        class="input-workflow input-workflow-wide"
+      >
+        <div data-slot="field-group" class="input-name-grid">
+          <div data-slot="field">
+            <label data-slot="field-label" for="input-first-name"
+              >First Name</label
+            ><input
+              data-input
+              id="input-first-name"
+              ng-model="inputState.firstName"
+              placeholder="Jordan"
+            />
+          </div>
+          <div data-slot="field">
+            <label data-slot="field-label" for="input-last-name"
+              >Last Name</label
+            ><input
+              data-input
+              id="input-last-name"
+              ng-model="inputState.lastName"
+              placeholder="Lee"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section
+        data-example="input-inline"
+        class="input-workflow input-workflow-wide"
+      >
+        <div
+          data-slot="field"
+          orientation="horizontal"
+          class="input-inline-demo"
+        >
+          <input
+            data-input
+            type="search"
+            ng-model="inputState.search"
+            placeholder="Search..."
+            aria-label="Inline search"
+          />
+          <button
+            ng-button
+            type="button"
+            ng-click="inputState.message='Search '+inputState.search"
+          >
+            Search
+          </button>
+        </div>
+      </section>
+
+      <section
+        data-example="input-button-group"
+        class="input-workflow"
+      >
+        <div data-slot="field">
+          <label data-slot="field-label" for="input-button-group-workflow"
+            >Search</label
+          >
+          <div ng-button-group>
+            <input
+              data-input
+              id="input-button-group-workflow"
+              placeholder="Type to search..."
+            /><button
+              ng-button
+              variant="outline"
+              type="button"
+              ng-click="inputState.message='Button group search'"
+            >
+              Search
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section
+        data-example="input-input-group"
+        class="input-workflow"
+      >
+        <div data-slot="field">
+          <label data-slot="field-label" for="input-group-url"
+            >Website URL</label
+          >
+          <div ng-input-group>
+            <input
+              data-input
+              data-slot="input-group-control"
+              id="input-group-url"
+              ng-model="inputState.website"
+              placeholder="example.com"
+            />
+            <div data-slot="input-group-addon">https://</div>
+            <div
+              data-slot="input-group-addon"
+              data-align="inline-end"
+              aria-label="Website URL information"
+            >
+              ⓘ
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <form
+        data-example="input-fieldgroup"
+        class="input-workflow input-workflow-form"
+        ng-submit="inputState.message='Submitted '+inputState.name"
+      >
+        <div data-slot="field-group">
+          <div data-slot="field">
+            <label data-slot="field-label" for="fieldgroup-name">Name</label
+            ><input
+              data-input
+              id="fieldgroup-name"
+              ng-model="inputState.name"
+              placeholder="Jordan Lee"
+            />
+          </div>
+          <div data-slot="field">
+            <label data-slot="field-label" for="fieldgroup-email">Email</label
+            ><input
+              data-input
+              id="fieldgroup-email"
+              type="email"
+              ng-model="inputState.email"
+              placeholder="name@example.com"
+            />
+            <p data-slot="field-description">
+              We'll send updates to this address.
+            </p>
+          </div>
+          <div
+            data-slot="field"
+            orientation="horizontal"
+            class="input-form-actions"
+          >
+            <button
+              ng-button
+              type="reset"
+              variant="outline"
+              ng-click="inputState.name='';inputState.email=''"
+            >
+              Reset</button
+            ><button ng-button type="submit">Submit</button>
+          </div>
+        </div>
+      </form>
+
+      <form
+        data-example="input-form"
+        class="input-workflow input-workflow-form input-workflow-form-large"
+        ng-submit="inputState.message='Contact submitted '+inputState.formName"
+      >
+        <div data-slot="field-group">
+          <div data-slot="field">
+            <label data-slot="field-label" for="form-name">Name</label
+            ><input
+              data-input
+              id="form-name"
+              ng-model="inputState.formName"
+              placeholder="Evil Rabbit"
+              required
+            />
+          </div>
+          <div data-slot="field">
+            <label data-slot="field-label" for="form-email">Email</label
+            ><input
+              data-input
+              id="form-email"
+              type="email"
+              ng-model="inputState.formEmail"
+              placeholder="john@example.com"
+            />
+            <p data-slot="field-description">
+              We'll never share your email with anyone.
+            </p>
+          </div>
+          <div class="input-name-grid">
+            <div data-slot="field">
+              <label data-slot="field-label" for="form-phone">Phone</label
+              ><input
+                data-input
+                id="form-phone"
+                type="tel"
+                ng-model="inputState.phone"
+                placeholder="+1 (555) 123-4567"
+              />
+            </div>
+            <div data-slot="field">
+              <label data-slot="field-label" for="form-country">Country</label>
+              <div
+                ng-select
+                ng-on-angularcss:select="inputState.country=$event.detail.value"
+              >
+                <button ng-select-trigger id="form-country" type="button">
+                  <span
+                    ng-select-value
+                    ng-bind="inputState.country === 'uk' ? 'United Kingdom' : inputState.country === 'ca' ? 'Canada' : 'United States'"
+                  ></span>
+                </button>
+                <div ng-select-content>
+                  <div ng-select-group>
+                    <div ng-select-item data-value="us" aria-selected="true">
+                      United States
+                    </div>
+                    <div ng-select-item data-value="uk">United Kingdom</div>
+                    <div ng-select-item data-value="ca">Canada</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div data-slot="field">
+            <label data-slot="field-label" for="form-address">Address</label
+            ><input
+              data-input
+              id="form-address"
+              ng-model="inputState.address"
+              placeholder="123 Main St"
+            />
+          </div>
+          <div
+            data-slot="field"
+            orientation="horizontal"
+            class="input-form-actions"
+          >
+            <button
+              ng-button
+              type="button"
+              variant="outline"
+              ng-click="inputState.message='Cancelled'"
+            >
+              Cancel</button
+            ><button ng-button type="submit">Submit</button>
+          </div>
+        </div>
+      </form>
+
+      <section
+        data-example="input-rtl"
+        class="input-workflow"
+        dir="rtl"
+        lang="ar"
+      >
+        <div data-slot="field">
+          <label data-slot="field-label" for="input-rtl-api-key"
+            >مفتاح API</label
+          ><input
+            data-input
+            id="input-rtl-api-key"
+            type="password"
+            dir="rtl"
+            placeholder="sk-..."
+          />
+          <p data-slot="field-description">
+            مفتاح API الخاص بك مشفر ومخزن بأمان.
+          </p>
+        </div>
+      </section>
+
+      <p class="input-workflow-output" role="status">
+        {{ inputState.message }}
+      </p>
+    </main>
+  </body>
+</html>

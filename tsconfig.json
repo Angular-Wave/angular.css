@@ -1,19 +1,21 @@
 {
   "compilerOptions": {
-    "checkJs": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "allowJs": true,
+    "allowJs": false,
     "allowSyntheticDefaultImports": true,
-    "allowImportingTsExtensions": true,
+    "ignoreDeprecations": "6.0",
     "lib": ["ESNext", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "skipLibCheck": true,
+    "strict": true,
     "target": "ES2017",
     "downlevelIteration": true,
     "sourceMap": false,
     "declaration": false,
-    "incremental": true,
     "typeRoots": ["node_modules/@types"]
   },
-  "include": ["src"],
-  "exclude": ["**/*.d.ts", "node_modules", "**/*.spec.js", "**/*.test.js"]
+  "include": ["src", "examples/**/*.ts"],
+  "exclude": ["**/*.d.ts", "node_modules", "**/*.spec.ts", "**/*.test.ts"]
 }

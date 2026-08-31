@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="status='todo'; includeArchived=false; externalOpen=false"
+  >
+    <main class="select-state-workflows visual-example">
+      <div class="select-state-controls">
+        <button
+          ng-button
+          type="button"
+          data-variant="outline"
+          ng-click="externalOpen=!externalOpen"
+        >
+          Toggle popup
+        </button>
+        <button
+          ng-button
+          type="button"
+          data-variant="outline"
+          ng-click="includeArchived=!includeArchived"
+        >
+          Toggle archived option
+        </button>
+      </div>
+
+      <div
+        id="state-select"
+        ng-select
+        open="{{ externalOpen }}"
+        ng-on-angularcss:select="status=$event.detail.value; externalOpen=false"
+        ng-on-angularcss:select-open-change="externalOpen=$event.detail.open"
+      >
+        <button ng-select-trigger type="button" aria-label="Status">
+          <span
+            ng-select-value
+            ng-bind="status === 'doing' ? 'In progress' : status === 'done' ? 'Done' : status === 'archived' ? 'Archived' : 'Todo'"
+          ></span>
+        </button>
+        <div ng-select-content data-align-trigger="false">
+          <div ng-select-group>
+            <div ng-select-label>Workflow</div>
+            <div ng-select-item data-value="todo" aria-selected="true">
+              Todo
+            </div>
+            <div ng-select-item data-value="doing" aria-disabled="true">
+              In progress
+            </div>
+            <div ng-select-item data-value="done">Done</div>
+            <div ng-select-item data-value="archived" ng-if="includeArchived">
+              Archived
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <output class="select-state-output" aria-live="polite">
+        Selected: <span ng-bind="status"></span>. Archived option:
+        <span ng-bind="includeArchived ? 'shown' : 'hidden'"></span>. Popup:
+        <span ng-bind="externalOpen ? 'open' : 'closed'"></span>.
+      </output>
+    </main>
+  </body>
+</html>

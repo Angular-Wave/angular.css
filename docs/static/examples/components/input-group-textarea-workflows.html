@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="comment=''; commentCount=0; code=''; codeColumn=1; customText=''; customCount=0; textareaStatus='Ready'"
+    class="input-group-workflow-body"
+  >
+    <svg class="example-icon-definitions" aria-hidden="true">
+      <defs>
+        <symbol id="igt-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></symbol>
+        <symbol id="igt-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0 2 5M20 4v7h-7"></path></symbol>
+        <symbol id="igt-code-icon" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6M14.5 4l-5 16"></path></symbol>
+        <symbol id="igt-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4ZM22 2 11 13"></path></symbol>
+        <symbol id="igt-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></symbol>
+      </defs>
+    </svg>
+
+    <main class="input-group-textarea-grid" aria-label="Input group textarea examples">
+      <section class="input-group-workflow" data-example="input-group-block-start" aria-labelledby="igt-start-title">
+        <h2 id="igt-start-title">Block start</h2>
+        <div data-slot="field">
+          <label ng-label data-slot="field-label" for="igt-start-input">Input</label>
+          <div ng-input-group>
+            <input data-input data-slot="input-group-control" id="igt-start-input" placeholder="Enter your name" />
+            <div data-slot="input-group-addon" data-align="block-start"><span data-slot="input-group-text">Full name</span></div>
+          </div>
+          <p data-slot="field-description">Header positioned above the input.</p>
+        </div>
+        <div data-slot="field">
+          <label ng-label data-slot="field-label" for="igt-start-textarea">Textarea</label>
+          <div ng-input-group>
+            <textarea ng-textarea data-slot="input-group-control" id="igt-start-textarea" placeholder="console.log('Hello, world!');"></textarea>
+            <div data-slot="input-group-addon" data-align="block-start" data-border="true">
+              <svg aria-hidden="true"><use href="#igt-code-icon"></use></svg>
+              <span data-slot="input-group-text" class="input-group-mono">script.js</span>
+              <button ng-button data-slot="input-group-button" data-size="icon-xs" class="input-group-push-end" variant="ghost" type="button" aria-label="Copy code" ng-click="textareaStatus='Copied code'"><svg aria-hidden="true"><use href="#igt-copy"></use></svg></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="input-group-workflow" data-example="input-group-block-end" aria-labelledby="igt-end-title">
+        <h2 id="igt-end-title">Block end</h2>
+        <div data-slot="field">
+          <label ng-label data-slot="field-label" for="igt-amount">Input</label>
+          <div ng-input-group>
+            <input data-input data-slot="input-group-control" id="igt-amount" inputmode="decimal" placeholder="Enter amount" />
+            <div data-slot="input-group-addon" data-align="block-end"><span data-slot="input-group-text">USD</span></div>
+          </div>
+          <p data-slot="field-description">Footer positioned below the input.</p>
+        </div>
+        <div data-slot="field">
+          <label ng-label data-slot="field-label" for="igt-comment">Textarea</label>
+          <div ng-input-group>
+            <textarea ng-textarea data-slot="input-group-control" id="igt-comment" ng-model="comment" data-change="commentCount=comment.length" maxlength="280" placeholder="Write a comment..."></textarea>
+            <div data-slot="input-group-addon" data-align="block-end">
+              <span data-slot="input-group-text">{{ commentCount }}/280</span>
+              <button ng-button data-slot="input-group-button" data-size="sm" class="input-group-push-end" type="button" ng-click="textareaStatus='Posted comment'">Post</button>
+            </div>
+          </div>
+          <p data-slot="field-description">Footer positioned below the textarea.</p>
+        </div>
+      </section>
+
+      <section class="input-group-workflow input-group-workflow-wide" data-example="input-group-textarea" aria-labelledby="igt-editor-title">
+        <h2 id="igt-editor-title">Code editor</h2>
+        <div ng-input-group class="input-group-code-editor">
+          <textarea ng-textarea data-slot="input-group-control" id="igt-code" ng-model="code" data-change="codeColumn=code.length+1" placeholder="console.log('Hello, world!');" aria-label="JavaScript code"></textarea>
+          <div data-slot="input-group-addon" data-align="block-start" data-border="true">
+            <span data-slot="input-group-text" class="input-group-mono"><svg aria-hidden="true"><use href="#igt-code-icon"></use></svg>script.js</span>
+            <button ng-button data-slot="input-group-button" data-size="icon-xs" class="input-group-push-end" variant="ghost" type="button" aria-label="Refresh code" ng-click="code=''; textareaStatus='Reset code'"><svg aria-hidden="true"><use href="#igt-refresh"></use></svg></button>
+            <button ng-button data-slot="input-group-button" data-size="icon-xs" variant="ghost" type="button" aria-label="Copy code" ng-click="textareaStatus='Copied code'"><svg aria-hidden="true"><use href="#igt-copy"></use></svg></button>
+          </div>
+          <div data-slot="input-group-addon" data-align="block-end" data-border="true">
+            <span data-slot="input-group-text">Line 1, Column {{ codeColumn }}</span>
+            <button ng-button data-slot="input-group-button" data-size="sm" class="input-group-push-end" type="button" ng-click="textareaStatus='Ran code'">Run</button>
+          </div>
+        </div>
+        <p class="input-group-output" role="status">{{ textareaStatus }}</p>
+      </section>
+
+      <section class="input-group-workflow input-group-workflow-wide" data-example="input-group-textarea-examples" aria-labelledby="igt-examples-title">
+        <h2 id="igt-examples-title">Textarea states and addons</h2>
+        <div class="input-group-pair-grid">
+          <div data-slot="field">
+            <label ng-label data-slot="field-label" for="igt-default-textarea">Default textarea</label>
+            <textarea ng-textarea id="igt-default-textarea" placeholder="Enter your text here..."></textarea>
+          </div>
+          <div data-slot="field" data-invalid="true">
+            <label ng-label data-slot="field-label" for="igt-invalid-textarea">Invalid</label>
+            <div ng-input-group><textarea ng-textarea data-slot="input-group-control" id="igt-invalid-textarea" aria-invalid="true" placeholder="Enter your text here..."></textarea></div>
+          </div>
+          <div data-slot="field" data-disabled="true">
+            <label ng-label data-slot="field-label" for="igt-disabled-textarea">Disabled</label>
+            <div ng-input-group><textarea ng-textarea data-slot="input-group-control" id="igt-disabled-textarea" disabled placeholder="Enter your text here..."></textarea></div>
+          </div>
+          <div data-slot="field">
+            <label ng-label data-slot="field-label" for="igt-prompt">Addon (block start)</label>
+            <div ng-input-group>
+              <textarea ng-textarea data-slot="input-group-control" id="igt-prompt"></textarea>
+              <div data-slot="input-group-addon" data-align="block-start"><span data-slot="input-group-text">Ask, search or chat...</span><svg class="input-group-push-end" aria-hidden="true"><use href="#igt-info"></use></svg></div>
+            </div>
+          </div>
+          <div data-slot="field">
+            <label ng-label data-slot="field-label" for="igt-send-comment">Addon (send)</label>
+            <div ng-input-group>
+              <textarea ng-textarea data-slot="input-group-control" id="igt-send-comment" ng-model="comment" data-change="commentCount=comment.length" placeholder="Enter your text here..."></textarea>
+              <div data-slot="input-group-addon" data-align="block-end"><span data-slot="input-group-text">{{ commentCount }}/280 characters</span><button ng-button data-slot="input-group-button" data-size="icon-xs" class="input-group-push-end input-group-round-button" type="button" aria-label="Send" ng-click="textareaStatus='Sent message'"><svg aria-hidden="true"><use href="#igt-send"></use></svg></button></div>
+            </div>
+          </div>
+          <div data-slot="field">
+            <label ng-label data-slot="field-label" for="igt-actions">Addon (buttons)</label>
+            <div ng-input-group>
+              <textarea ng-textarea data-slot="input-group-control" id="igt-actions" placeholder="Share your thoughts..."></textarea>
+              <div data-slot="input-group-addon" data-align="block-end"><button ng-button data-slot="input-group-button" data-size="sm" class="input-group-push-end" variant="ghost" type="button" ng-click="textareaStatus='Cancelled comment'">Cancel</button><button ng-button data-slot="input-group-button" data-size="sm" type="button" ng-click="textareaStatus='Posted comment'">Post comment</button></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="input-group-workflow" data-example="input-group-custom" aria-labelledby="igt-custom-title">
+        <h2 id="igt-custom-title">Autosizing custom control</h2>
+        <div ng-input-group>
+          <textarea class="input-group-autosize" data-slot="input-group-control" ng-model="customText" data-change="customCount=customText.length" placeholder="Autoresize textarea..." aria-label="Autosize textarea"></textarea>
+          <div data-slot="input-group-addon" data-align="block-end"><span data-slot="input-group-text">{{ customCount }} characters</span><button ng-button data-slot="input-group-button" data-size="sm" class="input-group-push-end" type="button" ng-click="textareaStatus='Submitted custom text'">Submit</button></div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak>
+    <div>
+      <button aria-controls="profile-dialog">Open dialog</button>
+      <section id="profile-dialog" ng-dialog>
+        <div data-slot="dialog-overlay"></div>
+        <section data-slot="dialog-content" role="dialog">
+          <header data-slot="dialog-header">
+            <h2 data-slot="dialog-title">Profile</h2>
+            <p data-slot="dialog-description">Preview your profile.</p>
+          </header>
+        </section>
+      </section>
+    </div>
+  </body>
+</html>

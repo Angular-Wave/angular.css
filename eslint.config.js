@@ -2,10 +2,22 @@ import js from "@eslint/js";
 import globals from "globals";
 import { defineConfig } from "eslint/config";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
+import tseslint from "typescript-eslint";
 
 export default defineConfig([
   {
-    files: ["**/*.{js,mjs,cjs}"],
+    ignores: [
+      "**/*.spec.ts",
+      "**/*.test.ts",
+      "**/*.spec.js",
+      "**/*.test.js",
+      "node_modules/**",
+      "dist/**",
+      "@types/**",
+    ],
+  },
+  {
+    files: ["**/*.{js,mjs,cjs,ts}"],
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
@@ -14,12 +26,11 @@ export default defineConfig([
         ...globals.es2021,
       },
     },
-    plugins: { js },
-    extends: ["js/recommended"],
-    ignores: ["**/*.spec.js"],
   },
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
   {
-    files: ["**/*.{js,mjs,cjs}"],
+    files: ["**/*.{js,mjs,cjs,ts}"],
     languageOptions: { globals: globals.browser },
   },
   eslintPluginPrettierRecommended,

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Popover</title>
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/assets/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak class="popover-example-body">
+    <main class="popover-demo visual-example">
+      <span ng-popover aria-label="Dimensions popover">
+        <button ng-button type="button" variant="outline" ng-popover-trigger>
+          Open popover
+        </button>
+        <section
+          ng-popover-content
+          class="popover-demo-content"
+          side="bottom"
+          aria-label="Dimensions"
+        >
+          <header ng-popover-header>
+            <h2 ng-popover-title>Dimensions</h2>
+            <p ng-popover-description>Set the dimensions for the layer.</p>
+          </header>
+          <div class="popover-dimension-fields">
+            <div class="popover-dimension-field">
+              <label ng-label for="source-popover-width">Width</label>
+              <input data-input id="source-popover-width" value="100%" />
+            </div>
+            <div class="popover-dimension-field">
+              <label ng-label for="source-popover-max-width">Max. width</label>
+              <input data-input id="source-popover-max-width" value="300px" />
+            </div>
+            <div class="popover-dimension-field">
+              <label ng-label for="source-popover-height">Height</label>
+              <input data-input id="source-popover-height" value="25px" />
+            </div>
+            <div class="popover-dimension-field">
+              <label ng-label for="source-popover-max-height">
+                Max. height
+              </label>
+              <input data-input id="source-popover-max-height" value="none" />
+            </div>
+          </div>
+        </section>
+      </span>
+    </main>
+  </body>
+</html>

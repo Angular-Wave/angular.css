@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak ng-init="bold=false;italic=true">
+    <div class="stack-sm">
+      <div class="row">
+        <button
+          ng-toggle
+          aria-pressed="{{ bold }}"
+          ng-click="bold = !bold"
+          type="button"
+        >
+          Bold
+        </button>
+        <button
+          ng-toggle
+          variant="outline"
+          aria-pressed="false"
+          ng-click="italic = !italic"
+          type="button"
+        >
+          Italic
+        </button>
+        <button ng-toggle size="sm" type="button">Small</button>
+        <button ng-toggle size="lg" type="button">Large</button>
+      </div>
+      <div class="output">
+        Bold: <span ng-bind="bold ? 'on' : 'off'"></span>, Italic:
+        <span ng-bind="italic ? 'on' : 'off'"></span>
+      </div>
+    </div>
+  </body>
+</html>

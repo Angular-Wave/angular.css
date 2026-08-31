@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="paginationWorkflow={showPage4:false,activePage:2,nextDisabled:false,rows:'25'}"
+    data-example="pagination-icons-only pagination-rtl pagination-simple"
+  >
+    <main class="component-state-workflows pagination-workflows visual-example">
+      <section aria-labelledby="pagination-dynamic-heading">
+        <header>
+          <h2 id="pagination-dynamic-heading">Application state</h2>
+          <div class="component-state-actions">
+            <button
+              ng-button
+              type="button"
+              variant="outline"
+              size="sm"
+              ng-click="paginationWorkflow.showPage4=!paginationWorkflow.showPage4; paginationWorkflow.activePage=paginationWorkflow.showPage4 ? 4 : 2"
+            >
+              {{ paginationWorkflow.showPage4 ? 'Remove page 4' : 'Add page 4'
+              }}
+            </button>
+            <button
+              ng-button
+              type="button"
+              variant="outline"
+              size="sm"
+              ng-click="paginationWorkflow.nextDisabled=!paginationWorkflow.nextDisabled"
+            >
+              {{ paginationWorkflow.nextDisabled ? 'Enable next' : 'Disable
+              next' }}
+            </button>
+          </div>
+        </header>
+        <nav
+          ng-pagination
+          aria-label="Dynamic pagination"
+          id="dynamic-pagination"
+        >
+          <ul data-slot="pagination-content">
+            <li data-slot="pagination-item">
+              <a
+                data-slot="pagination-link"
+                href="#page-1"
+                ng-click="paginationWorkflow.activePage=1"
+                data-active="{{ paginationWorkflow.activePage === 1 }}"
+                >1</a
+              >
+            </li>
+            <li data-slot="pagination-item">
+              <a
+                data-slot="pagination-link"
+                href="#page-2"
+                ng-click="paginationWorkflow.activePage=2"
+                data-active="{{ paginationWorkflow.activePage === 2 }}"
+                >2</a
+              >
+            </li>
+            <li data-slot="pagination-item">
+              <a
+                data-slot="pagination-link"
+                href="#page-3"
+                ng-click="paginationWorkflow.activePage=3"
+                data-active="{{ paginationWorkflow.activePage === 3 }}"
+                >3</a
+              >
+            </li>
+            <li
+              data-slot="pagination-item"
+              ng-if="paginationWorkflow.showPage4"
+            >
+              <a
+                data-slot="pagination-link"
+                href="#page-4"
+                ng-click="paginationWorkflow.activePage=4"
+                data-active="{{ paginationWorkflow.activePage === 4 }}"
+                >4</a
+              >
+            </li>
+            <li data-slot="pagination-item">
+              <a
+                data-slot="pagination-next"
+                href="#next"
+                aria-label="Go to next page"
+                aria-disabled="{{ paginationWorkflow.nextDisabled }}"
+              >
+                <span class="pagination-next-text">Next</span>
+                <svg
+                  data-icon="inline-end"
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </section>
+
+      <section aria-labelledby="pagination-simple-heading">
+        <header>
+          <h2 id="pagination-simple-heading">Simple</h2>
+        </header>
+        <nav ng-pagination aria-label="Simple pagination">
+          <ul data-slot="pagination-content">
+            <li data-slot="pagination-item">
+              <a data-slot="pagination-link" href="#simple-1">1</a>
+            </li>
+            <li data-slot="pagination-item">
+              <a
+                data-slot="pagination-link"
+                href="#simple-2"
+                aria-current="page"
+                >2</a
+              >
+            </li>
+            <li data-slot="pagination-item">
+              <a data-slot="pagination-link" href="#simple-3">3</a>
+            </li>
+            <li data-slot="pagination-item">
+              <a data-slot="pagination-link" href="#simple-4">4</a>
+            </li>
+            <li data-slot="pagination-item">
+              <a data-slot="pagination-link" href="#simple-5">5</a>
+            </li>
+          </ul>
+        </nav>
+      </section>
+
+      <section
+        class="pagination-compact-section"
+        aria-labelledby="pagination-icons-heading"
+      >
+        <header>
+          <h2 id="pagination-icons-heading">Rows</h2>
+        </header>
+        <div class="pagination-compact-row">
+          <label class="pagination-rows-field" for="pagination-rows-per-page">
+            <span>Rows per page</span>
+            <span data-slot="native-select-wrapper">
+              <select
+                ng-native-select
+                id="pagination-rows-per-page"
+                ng-model="paginationWorkflow.rows"
+              >
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+            </span>
+          </label>
+          <nav
+            ng-pagination
+            aria-label="Compact pagination"
+            class="pagination-compact"
+          >
+            <ul data-slot="pagination-content">
+              <li data-slot="pagination-item">
+                <a
+                  data-slot="pagination-previous"
+                  href="#compact-previous"
+                  aria-label="Go to previous page"
+                >
+                  <svg
+                    data-icon="inline-start"
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="m15 18-6-6 6-6"></path>
+                  </svg>
+                </a>
+              </li>
+              <li data-slot="pagination-item">
+                <a
+                  data-slot="pagination-next"
+                  href="#compact-next"
+                  aria-label="Go to next page"
+                >
+                  <svg
+                    data-icon="inline-end"
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="m9 18 6-6-6-6"></path>
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <output class="workflow-output">
+          Rows: <span ng-bind="paginationWorkflow.rows"></span>
+        </output>
+      </section>
+
+      <section aria-labelledby="pagination-rtl-heading" lang="ar">
+        <header>
+          <h2 id="pagination-rtl-heading">الصفحات</h2>
+        </header>
+        <nav
+          ng-pagination
+          dir="rtl"
+          aria-label="ترقيم الصفحات"
+          id="rtl-pagination"
+        >
+          <ul data-slot="pagination-content">
+            <li data-slot="pagination-item">
+              <a
+                data-slot="pagination-previous"
+                href="#rtl-previous"
+                aria-label="الانتقال إلى الصفحة السابقة"
+              >
+                <svg
+                  data-icon="inline-start"
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="m15 18-6-6 6-6"></path>
+                </svg>
+                <span class="pagination-previous-text">السابق</span>
+              </a>
+            </li>
+            <li data-slot="pagination-item">
+              <a data-slot="pagination-link" href="#rtl-1">١</a>
+            </li>
+            <li data-slot="pagination-item">
+              <a data-slot="pagination-link" href="#rtl-2" aria-current="page"
+                >٢</a
+              >
+            </li>
+            <li data-slot="pagination-item">
+              <a data-slot="pagination-link" href="#rtl-3">٣</a>
+            </li>
+            <li data-slot="pagination-item">
+              <span data-slot="pagination-ellipsis">
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
+                  <circle cx="5" cy="12" r="1.5"></circle>
+                  <circle cx="12" cy="12" r="1.5"></circle>
+                  <circle cx="19" cy="12" r="1.5"></circle>
+                </svg>
+                <span class="pagination-sr-only">صفحات إضافية</span>
+              </span>
+            </li>
+            <li data-slot="pagination-item">
+              <a
+                data-slot="pagination-next"
+                href="#rtl-next"
+                aria-label="الانتقال إلى الصفحة التالية"
+              >
+                <span class="pagination-next-text">التالي</span>
+                <svg
+                  data-icon="inline-end"
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="advancedVisible = false; overviewDisabled = false"
+    data-example="tabs-disabled tabs-icons tabs-line tabs-rtl tabs-vertical"
+  >
+    <main class="component-state-workflows tabs-workflows visual-example">
+      <section aria-labelledby="tabs-dynamic-heading">
+        <header>
+          <h2 id="tabs-dynamic-heading">Dynamic sections</h2>
+          <button
+            ng-button
+            type="button"
+            variant="outline"
+            size="sm"
+            ng-click="advancedVisible = !advancedVisible"
+          >
+            {{ advancedVisible ? 'Remove advanced' : 'Add advanced' }}
+          </button>
+        </header>
+        <div ng-tabs id="dynamic-tabs">
+          <div data-slot="tabs-list" aria-label="Dynamic project sections">
+            <button data-slot="tabs-trigger" aria-selected="true">
+              Overview
+            </button>
+            <button data-slot="tabs-trigger">Activity</button>
+            <button data-slot="tabs-trigger" ng-if="advancedVisible">
+              Advanced
+            </button>
+          </div>
+          <div data-slot="tabs-content">Project overview</div>
+          <div data-slot="tabs-content">Recent project activity</div>
+          <div data-slot="tabs-content" ng-if="advancedVisible">
+            Advanced project controls
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="tabs-disabled-heading">
+        <header>
+          <h2 id="tabs-disabled-heading">Disabled state</h2>
+          <button
+            ng-button
+            type="button"
+            variant="outline"
+            size="sm"
+            ng-click="overviewDisabled = !overviewDisabled"
+          >
+            {{ overviewDisabled ? 'Enable overview' : 'Disable overview' }}
+          </button>
+        </header>
+        <div ng-tabs id="disabled-tabs">
+          <div data-slot="tabs-list" aria-label="Account sections">
+            <button
+              data-slot="tabs-trigger"
+              aria-selected="true"
+              ng-disabled="overviewDisabled"
+            >
+              Overview
+            </button>
+            <button data-slot="tabs-trigger">Settings</button>
+            <button data-slot="tabs-trigger" disabled>Unavailable</button>
+          </div>
+          <div data-slot="tabs-content">Account overview</div>
+          <div data-slot="tabs-content">Account settings</div>
+          <div data-slot="tabs-content">Unavailable settings</div>
+        </div>
+      </section>
+
+      <section aria-labelledby="tabs-vertical-heading">
+        <header><h2 id="tabs-vertical-heading">Vertical</h2></header>
+        <div ng-tabs orientation="vertical" id="vertical-tabs">
+          <div data-slot="tabs-list" aria-label="Preference sections">
+            <button data-slot="tabs-trigger" aria-selected="true">
+              Account
+            </button>
+            <button data-slot="tabs-trigger">Password</button>
+            <button data-slot="tabs-trigger">Notifications</button>
+          </div>
+          <div data-slot="tabs-content">Account preferences</div>
+          <div data-slot="tabs-content">Password preferences</div>
+          <div data-slot="tabs-content">Notification preferences</div>
+        </div>
+      </section>
+
+      <section aria-labelledby="tabs-variants-heading">
+        <header><h2 id="tabs-variants-heading">Variants</h2></header>
+        <div class="tabs-variant-stack">
+          <div ng-tabs id="icon-tabs">
+            <div data-slot="tabs-list" aria-label="Editor view">
+              <button data-slot="tabs-trigger" aria-selected="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <rect x="3" y="4" width="18" height="16" rx="2" />
+                  <path d="M3 9h18" />
+                </svg>
+                Preview
+              </button>
+              <button data-slot="tabs-trigger">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <path d="m8 9-3 3 3 3M16 9l3 3-3 3" />
+                </svg>
+                Code
+              </button>
+            </div>
+          </div>
+          <div ng-tabs id="line-tabs">
+            <div
+              data-slot="tabs-list"
+              variant="line"
+              aria-label="Report sections"
+            >
+              <button data-slot="tabs-trigger" aria-selected="true">
+                Overview
+              </button>
+              <button data-slot="tabs-trigger">Analytics</button>
+              <button data-slot="tabs-trigger">Reports</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="tabs-rtl-heading" dir="rtl" lang="ar">
+        <header><h2 id="tabs-rtl-heading">الاتجاه من اليمين</h2></header>
+        <div ng-tabs id="rtl-tabs">
+          <div data-slot="tabs-list" aria-label="أقسام المشروع">
+            <button data-slot="tabs-trigger">نظرة عامة</button>
+            <button data-slot="tabs-trigger" aria-selected="true">
+              التحليلات
+            </button>
+            <button data-slot="tabs-trigger">التقارير</button>
+          </div>
+          <div data-slot="tabs-content">نظرة عامة على المشروع</div>
+          <div data-slot="tabs-content">تحليلات المشروع</div>
+          <div data-slot="tabs-content">تقارير المشروع</div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

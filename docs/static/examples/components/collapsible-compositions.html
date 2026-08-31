@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    class="collapsible-composition-body"
+    data-example="collapsible-file-tree"
+  >
+    <main aria-label="Collapsible file tree composition">
+      <div
+        data-slot="card"
+        data-size="sm"
+        class="collapsible-file-card visual-example"
+      >
+        <div data-slot="card-header">
+          <div ng-tabs>
+            <div data-slot="tabs-list" role="tablist" aria-label="File views">
+              <button data-slot="tabs-trigger" role="tab" aria-selected="true">
+                Explorer
+              </button>
+              <button data-slot="tabs-trigger" role="tab">Outline</button>
+            </div>
+            <section
+              data-slot="tabs-content"
+              role="tabpanel"
+              class="visually-hidden"
+            >
+              Explorer file tree
+            </section>
+            <section
+              data-slot="tabs-content"
+              role="tabpanel"
+              class="visually-hidden"
+            >
+              No outline available
+            </section>
+          </div>
+        </div>
+        <div data-slot="card-content">
+          <div class="collapsible-file-tree">
+            <details ng-collapsible>
+              <summary data-slot="collapsible-trigger">
+                <svg
+                  class="tree-chevron"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path d="m9 18 6-6-6-6" /></svg
+                ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M4 19V5a2 2 0 0 1 2-2h5l2 3h5a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"
+                  /></svg
+                ><span>components</span>
+              </summary>
+              <div data-slot="collapsible-content">
+                <details ng-collapsible>
+                  <summary data-slot="collapsible-trigger">
+                    <svg
+                      class="tree-chevron"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path d="m9 18 6-6-6-6" /></svg
+                    ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path
+                        d="M4 19V5a2 2 0 0 1 2-2h5l2 3h5a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"
+                      /></svg
+                    ><span>ui</span>
+                  </summary>
+                  <div data-slot="collapsible-content">
+                    <button ng-button variant="link" size="sm">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path
+                          d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"
+                        />
+                        <path d="M14 2v6h6" /></svg
+                      >button.tsx
+                    </button>
+                    <button ng-button variant="link" size="sm">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path
+                          d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"
+                        />
+                        <path d="M14 2v6h6" /></svg
+                      >card.tsx
+                    </button>
+                    <button ng-button variant="link" size="sm">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path
+                          d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"
+                        />
+                        <path d="M14 2v6h6" /></svg
+                      >dialog.tsx
+                    </button>
+                    <button ng-button variant="link" size="sm">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path
+                          d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"
+                        />
+                        <path d="M14 2v6h6" /></svg
+                      >input.tsx
+                    </button>
+                    <button ng-button variant="link" size="sm">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path
+                          d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"
+                        />
+                        <path d="M14 2v6h6" /></svg
+                      >select.tsx
+                    </button>
+                    <button ng-button variant="link" size="sm">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path
+                          d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"
+                        />
+                        <path d="M14 2v6h6" /></svg
+                      >table.tsx
+                    </button>
+                  </div>
+                </details>
+                <button ng-button variant="link" size="sm">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"
+                    />
+                    <path d="M14 2v6h6" /></svg
+                  >login-form.tsx
+                </button>
+                <button ng-button variant="link" size="sm">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"
+                    />
+                    <path d="M14 2v6h6" /></svg
+                  >register-form.tsx
+                </button>
+              </div>
+            </details>
+            <details ng-collapsible>
+              <summary data-slot="collapsible-trigger">
+                <svg
+                  class="tree-chevron"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path d="m9 18 6-6-6-6" /></svg
+                ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M4 19V5a2 2 0 0 1 2-2h5l2 3h5a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"
+                  /></svg
+                ><span>lib</span>
+              </summary>
+              <div data-slot="collapsible-content">
+                <button ng-button variant="link" size="sm">utils.ts</button
+                ><button ng-button variant="link" size="sm">cn.ts</button
+                ><button ng-button variant="link" size="sm">api.ts</button>
+              </div>
+            </details>
+            <details ng-collapsible>
+              <summary data-slot="collapsible-trigger">
+                <svg
+                  class="tree-chevron"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path d="m9 18 6-6-6-6" /></svg
+                ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M4 19V5a2 2 0 0 1 2-2h5l2 3h5a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"
+                  /></svg
+                ><span>hooks</span>
+              </summary>
+              <div data-slot="collapsible-content">
+                <button ng-button variant="link" size="sm">
+                  use-media-query.ts</button
+                ><button ng-button variant="link" size="sm">
+                  use-debounce.ts</button
+                ><button ng-button variant="link" size="sm">
+                  use-local-storage.ts
+                </button>
+              </div>
+            </details>
+            <details ng-collapsible>
+              <summary data-slot="collapsible-trigger">
+                <svg
+                  class="tree-chevron"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path d="m9 18 6-6-6-6" /></svg
+                ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M4 19V5a2 2 0 0 1 2-2h5l2 3h5a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"
+                  /></svg
+                ><span>types</span>
+              </summary>
+              <div data-slot="collapsible-content">
+                <button ng-button variant="link" size="sm">index.d.ts</button
+                ><button ng-button variant="link" size="sm">api.d.ts</button>
+              </div>
+            </details>
+            <details ng-collapsible>
+              <summary data-slot="collapsible-trigger">
+                <svg
+                  class="tree-chevron"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path d="m9 18 6-6-6-6" /></svg
+                ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M4 19V5a2 2 0 0 1 2-2h5l2 3h5a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"
+                  /></svg
+                ><span>public</span>
+              </summary>
+              <div data-slot="collapsible-content">
+                <button ng-button variant="link" size="sm">favicon.ico</button
+                ><button ng-button variant="link" size="sm">logo.svg</button
+                ><button ng-button variant="link" size="sm">images</button>
+              </div>
+            </details>
+            <button ng-button variant="link" size="sm">app.tsx</button>
+            <button ng-button variant="link" size="sm">layout.tsx</button>
+            <button ng-button variant="link" size="sm">globals.css</button>
+            <button ng-button variant="link" size="sm">package.json</button>
+            <button ng-button variant="link" size="sm">tsconfig.json</button>
+            <button ng-button variant="link" size="sm">README.md</button>
+            <button ng-button variant="link" size="sm">.gitignore</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

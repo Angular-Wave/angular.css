@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="action='None'; view={bookmarks:true,urls:false}; person='pedro'; theme='light'"
+    data-example="context-menu-checkboxes context-menu-destructive context-menu-groups context-menu-icons context-menu-radio context-menu-shortcuts"
+  >
+    <main class="context-menu-workflow-grid visual-example">
+      <section class="context-menu-workflow" aria-labelledby="icons-title">
+        <h2 id="icons-title">Icons and destructive action</h2>
+        <div ng-context-menu>
+          <div ng-context-menu-trigger>Right click here</div>
+          <div ng-context-menu-content aria-label="Editing actions">
+            <div ng-context-menu-group>
+              <button ng-context-menu-item ng-click="action='Copy'">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <rect x="9" y="9" width="11" height="11" rx="2"></rect>
+                  <path
+                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                  ></path>
+                </svg>
+                Copy
+              </button>
+              <button ng-context-menu-item ng-click="action='Cut'">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <circle cx="6" cy="6" r="3"></circle>
+                  <circle cx="6" cy="18" r="3"></circle>
+                  <path d="m20 4-8.5 8.5"></path>
+                  <path d="m14.5 14.5 5.5 5.5"></path>
+                </svg>
+                Cut
+              </button>
+              <button ng-context-menu-item ng-click="action='Paste'">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <rect x="5" y="4" width="14" height="18" rx="2"></rect>
+                  <path d="M9 4.5V2h6v2.5"></path>
+                </svg>
+                Paste
+              </button>
+            </div>
+            <div ng-context-menu-separator></div>
+            <button
+              ng-context-menu-item
+              data-variant="destructive"
+              ng-click="action='Delete'"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="M3 6h18"></path>
+                <path d="M8 6V4h8v2"></path>
+                <path d="m19 6-1 15H6L5 6"></path>
+              </svg>
+              Delete
+            </button>
+          </div>
+        </div>
+        <output>Action: <span ng-bind="action"></span></output>
+      </section>
+
+      <section class="context-menu-workflow" aria-labelledby="groups-title">
+        <h2 id="groups-title">Groups and shortcuts</h2>
+        <div ng-context-menu>
+          <div ng-context-menu-trigger>Right click here</div>
+          <div ng-context-menu-content aria-label="File actions">
+            <div ng-context-menu-group>
+              <div ng-context-menu-label>File</div>
+              <button ng-context-menu-item>
+                New File <span ng-context-menu-shortcut>Ctrl+N</span>
+              </button>
+              <button ng-context-menu-item>
+                Open File <span ng-context-menu-shortcut>Ctrl+O</span>
+              </button>
+              <button ng-context-menu-item>
+                Save <span ng-context-menu-shortcut>Ctrl+S</span>
+              </button>
+            </div>
+            <div ng-context-menu-separator></div>
+            <div ng-context-menu-group>
+              <div ng-context-menu-label>Edit</div>
+              <button ng-context-menu-item>
+                Undo <span ng-context-menu-shortcut>Ctrl+Z</span>
+              </button>
+              <button ng-context-menu-item disabled>
+                Redo <span ng-context-menu-shortcut>Shift+Ctrl+Z</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="context-menu-workflow" aria-labelledby="checkbox-title">
+        <h2 id="checkbox-title">Checkboxes</h2>
+        <div ng-context-menu>
+          <div ng-context-menu-trigger>Right click here</div>
+          <div ng-context-menu-content aria-label="View options">
+            <button
+              ng-context-menu-checkbox-item
+              aria-checked="{{ view.bookmarks }}"
+              ng-click="view.bookmarks=!view.bookmarks"
+            >
+              Show Bookmarks Bar
+            </button>
+            <button
+              ng-context-menu-checkbox-item
+              aria-checked="{{ view.urls }}"
+              ng-click="view.urls=!view.urls"
+            >
+              Show Full URLs
+            </button>
+          </div>
+        </div>
+        <output>
+          Bookmarks: <span ng-bind="view.bookmarks ? 'On' : 'Off'"></span>
+        </output>
+      </section>
+
+      <section class="context-menu-workflow" aria-labelledby="radio-title">
+        <h2 id="radio-title">Radio groups</h2>
+        <div ng-context-menu>
+          <div ng-context-menu-trigger>Right click here</div>
+          <div ng-context-menu-content aria-label="Profile and theme">
+            <div ng-context-menu-group>
+              <div ng-context-menu-label>People</div>
+              <div ng-context-menu-radio-group aria-label="People">
+                <button
+                  ng-context-menu-radio-item
+                  aria-checked="{{ person === 'pedro' }}"
+                  ng-click="person='pedro'"
+                >
+                  Pedro Duarte
+                </button>
+                <button
+                  ng-context-menu-radio-item
+                  aria-checked="{{ person === 'colm' }}"
+                  ng-click="person='colm'"
+                >
+                  Colm Tuite
+                </button>
+              </div>
+            </div>
+            <div ng-context-menu-separator></div>
+            <div ng-context-menu-group>
+              <div ng-context-menu-label>Theme</div>
+              <div ng-context-menu-radio-group aria-label="Theme">
+                <button
+                  ng-context-menu-radio-item
+                  aria-checked="{{ theme === 'light' }}"
+                  ng-click="theme='light'"
+                >
+                  Light
+                </button>
+                <button
+                  ng-context-menu-radio-item
+                  aria-checked="{{ theme === 'dark' }}"
+                  ng-click="theme='dark'"
+                >
+                  Dark
+                </button>
+                <button
+                  ng-context-menu-radio-item
+                  aria-checked="{{ theme === 'system' }}"
+                  ng-click="theme='system'"
+                >
+                  System
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <output>
+          Person: <span ng-bind="person"></span>; Theme:
+          <span ng-bind="theme"></span>
+        </output>
+      </section>
+    </main>
+  </body>
+</html>

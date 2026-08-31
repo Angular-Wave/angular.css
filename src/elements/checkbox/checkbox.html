@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>AngularCSS</title>
+    <link rel="stylesheet" href="/docs/assets/angular.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@angular-wave/angular.ts/dist/angular-ts.umd.min.js"></script>
+    <script type="module" src="../../index.ts"></script>
+  </head>
+
+  <body ng-app="ui" ng-cloak>
+    <div class="grid w-full max-w-xl items-start gap-4 p-10">
+      <div data-slot="field" orientation="horizontal">
+        <input ng-checkbox id="terms" type="checkbox" />
+        <label ng-label data-slot="field-label" for="terms">Accept terms</label>
+      </div>
+
+      <div data-slot="field" orientation="horizontal" data-invalid>
+        <input ng-checkbox id="terms-invalid" type="checkbox" aria-invalid="true" />
+        <label ng-label data-slot="field-label" for="terms-invalid">Required</label>
+      </div>
+    </div>
+  </body>
+</html>

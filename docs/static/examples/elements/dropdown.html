@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="menuState={toolbar:true,density:'comfortable'}"
+    data-example="dropdown-menu-complex dropdown-menu-demo"
+    class="dropdown-example-body"
+  >
+    <div
+      ng-dropdown
+      data-slot="dropdown-menu"
+      class="dropdown-demo visual-example"
+    >
+      <button type="button" data-slot="dropdown-menu-trigger">Options</button>
+      <div role="menu" data-slot="dropdown-menu-content">
+        <div data-slot="dropdown-menu-group">
+          <div data-slot="dropdown-menu-label">Project</div>
+          <button data-slot="dropdown-menu-item">
+            New task <span data-slot="dropdown-menu-shortcut">Ctrl+N</span>
+          </button>
+          <button data-slot="dropdown-menu-item">Edit task</button>
+        </div>
+        <div data-slot="dropdown-menu-separator" role="separator"></div>
+        <button
+          data-slot="dropdown-menu-checkbox-item"
+          role="menuitemcheckbox"
+          aria-checked="{{ menuState.toolbar }}"
+          ng-click="menuState.toolbar=!menuState.toolbar"
+        >
+          <span data-slot="dropdown-menu-checkbox-item-indicator">
+            <svg
+              ng-if="menuState.toolbar"
+              viewBox="0 0 16 16"
+              aria-hidden="true"
+            >
+              <path d="m3 8 3 3 7-7"></path>
+            </svg>
+          </span>
+          Show toolbar
+        </button>
+        <div
+          data-slot="dropdown-menu-radio-group"
+          role="group"
+          aria-label="Density"
+        >
+          <button
+            data-slot="dropdown-menu-radio-item"
+            role="menuitemradio"
+            aria-checked="{{ menuState.density === 'comfortable' }}"
+            ng-click="menuState.density='comfortable'"
+          >
+            <span data-slot="dropdown-menu-radio-item-indicator">
+              <svg
+                ng-if="menuState.density === 'comfortable'"
+                viewBox="0 0 16 16"
+                aria-hidden="true"
+              >
+                <circle cx="8" cy="8" r="3"></circle>
+              </svg>
+            </span>
+            Comfortable
+          </button>
+          <button
+            data-slot="dropdown-menu-radio-item"
+            role="menuitemradio"
+            aria-checked="{{ menuState.density === 'compact' }}"
+            ng-click="menuState.density='compact'"
+          >
+            <span data-slot="dropdown-menu-radio-item-indicator">
+              <svg
+                ng-if="menuState.density === 'compact'"
+                viewBox="0 0 16 16"
+                aria-hidden="true"
+              >
+                <circle cx="8" cy="8" r="3"></circle>
+              </svg>
+            </span>
+            Compact
+          </button>
+        </div>
+        <div data-slot="dropdown-menu-sub">
+          <button data-slot="dropdown-menu-sub-trigger">Share</button>
+          <div data-slot="dropdown-menu-sub-content">
+            <button data-slot="dropdown-menu-item">Copy link</button>
+            <button data-slot="dropdown-menu-item">Email link</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

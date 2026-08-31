@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak>
+    <div class="stack">
+      <div data-slot="field" orientation="horizontal">
+        <input ng-checkbox id="terms" type="checkbox" />
+        <label ng-label data-slot="field-label" for="terms">Accept terms</label>
+      </div>
+
+      <div data-slot="field" orientation="horizontal" data-invalid>
+        <input
+          ng-checkbox
+          id="terms-invalid"
+          type="checkbox"
+          aria-invalid="true"
+        />
+        <label ng-label data-slot="field-label" for="terms-invalid"
+          >Required</label
+        >
+      </div>
+    </div>
+  </body>
+</html>

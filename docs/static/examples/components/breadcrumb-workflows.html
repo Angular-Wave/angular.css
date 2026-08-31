@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="breadcrumbSelection = 'None'; rtlBreadcrumbSelection = 'لا شيء'"
+    data-example="breadcrumb-demo breadcrumb-dropdown breadcrumb-ellipsis breadcrumb-rtl breadcrumb-separator"
+  >
+    <main class="breadcrumb-workflows">
+      <section
+        class="breadcrumb-workflow-section"
+        aria-labelledby="breadcrumb-separator-heading"
+      >
+        <h2 id="breadcrumb-separator-heading">Custom separator</h2>
+        <nav ng-breadcrumb aria-label="Custom separator breadcrumb">
+          <ol data-slot="breadcrumb-list">
+            <li data-slot="breadcrumb-item">
+              <a data-slot="breadcrumb-link" href="#home">Home</a>
+            </li>
+            <li data-slot="breadcrumb-separator">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <circle cx="12" cy="12" r="2.5" />
+              </svg>
+            </li>
+            <li data-slot="breadcrumb-item">
+              <a data-slot="breadcrumb-link" href="#components">Components</a>
+            </li>
+            <li data-slot="breadcrumb-separator">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <circle cx="12" cy="12" r="2.5" />
+              </svg>
+            </li>
+            <li data-slot="breadcrumb-item">
+              <span data-slot="breadcrumb-page">Breadcrumb</span>
+            </li>
+          </ol>
+        </nav>
+      </section>
+
+      <section
+        class="breadcrumb-workflow-section"
+        aria-labelledby="breadcrumb-ellipsis-heading"
+      >
+        <h2 id="breadcrumb-ellipsis-heading">Ellipsis</h2>
+        <nav ng-breadcrumb aria-label="Ellipsis breadcrumb">
+          <ol data-slot="breadcrumb-list">
+            <li data-slot="breadcrumb-item">
+              <a data-slot="breadcrumb-link" href="#home">Home</a>
+            </li>
+            <li data-slot="breadcrumb-separator"></li>
+            <li data-slot="breadcrumb-item">
+              <span data-slot="breadcrumb-ellipsis"></span>
+            </li>
+            <li data-slot="breadcrumb-separator"></li>
+            <li data-slot="breadcrumb-item">
+              <a data-slot="breadcrumb-link" href="#components">Components</a>
+            </li>
+            <li data-slot="breadcrumb-separator"></li>
+            <li data-slot="breadcrumb-item">
+              <span data-slot="breadcrumb-page">Breadcrumb</span>
+            </li>
+          </ol>
+        </nav>
+      </section>
+
+      <section
+        class="breadcrumb-workflow-section breadcrumb-menu-stage"
+        aria-labelledby="breadcrumb-demo-heading"
+      >
+        <h2 id="breadcrumb-demo-heading">Collapsed trail</h2>
+        <nav ng-breadcrumb aria-label="Collapsed breadcrumb">
+          <ol data-slot="breadcrumb-list">
+            <li data-slot="breadcrumb-item">
+              <a data-slot="breadcrumb-link" href="#home">Home</a>
+            </li>
+            <li data-slot="breadcrumb-separator"></li>
+            <li data-slot="breadcrumb-item">
+              <span ng-dropdown data-slot="dropdown-menu">
+                <button
+                  type="button"
+                  ng-button
+                  data-slot="dropdown-menu-trigger"
+                  variant="ghost"
+                  size="icon-sm"
+                  aria-label="Toggle breadcrumb menu"
+                >
+                  <span data-slot="breadcrumb-ellipsis"></span>
+                </button>
+                <span data-slot="dropdown-menu-content">
+                  <span data-slot="dropdown-menu-group">
+                    <button
+                      data-slot="dropdown-menu-item"
+                      ng-click="breadcrumbSelection = 'Documentation'"
+                    >
+                      Documentation
+                    </button>
+                    <button
+                      data-slot="dropdown-menu-item"
+                      ng-click="breadcrumbSelection = 'Themes'"
+                    >
+                      Themes
+                    </button>
+                    <button
+                      data-slot="dropdown-menu-item"
+                      ng-click="breadcrumbSelection = 'GitHub'"
+                    >
+                      GitHub
+                    </button>
+                  </span>
+                </span>
+              </span>
+            </li>
+            <li data-slot="breadcrumb-separator"></li>
+            <li data-slot="breadcrumb-item">
+              <a data-slot="breadcrumb-link" href="#components">Components</a>
+            </li>
+            <li data-slot="breadcrumb-separator"></li>
+            <li data-slot="breadcrumb-item">
+              <span data-slot="breadcrumb-page">Breadcrumb</span>
+            </li>
+          </ol>
+        </nav>
+        <p class="breadcrumb-workflow-output" role="status">
+          Selected: {{ breadcrumbSelection }}
+        </p>
+      </section>
+
+      <section
+        class="breadcrumb-workflow-section breadcrumb-menu-stage breadcrumb-dropdown-example"
+        aria-labelledby="breadcrumb-dropdown-heading"
+      >
+        <h2 id="breadcrumb-dropdown-heading">Dropdown</h2>
+        <nav ng-breadcrumb aria-label="Dropdown breadcrumb">
+          <ol data-slot="breadcrumb-list">
+            <li data-slot="breadcrumb-item">
+              <a data-slot="breadcrumb-link" href="#home">Home</a>
+            </li>
+            <li data-slot="breadcrumb-separator">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <circle cx="12" cy="12" r="2.5" />
+              </svg>
+            </li>
+            <li data-slot="breadcrumb-item">
+              <span ng-dropdown data-slot="dropdown-menu">
+                <button
+                  type="button"
+                  data-slot="dropdown-menu-trigger"
+                  class="breadcrumb-plain-trigger"
+                >
+                  Components
+                  <svg
+                    data-icon="inline-end"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                </button>
+                <span data-slot="dropdown-menu-content">
+                  <span data-slot="dropdown-menu-group">
+                    <button data-slot="dropdown-menu-item">
+                      Documentation
+                    </button>
+                    <button data-slot="dropdown-menu-item">Themes</button>
+                    <button data-slot="dropdown-menu-item">GitHub</button>
+                  </span>
+                </span>
+              </span>
+            </li>
+            <li data-slot="breadcrumb-separator">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <circle cx="12" cy="12" r="2.5" />
+              </svg>
+            </li>
+            <li data-slot="breadcrumb-item">
+              <span data-slot="breadcrumb-page">Breadcrumb</span>
+            </li>
+          </ol>
+        </nav>
+      </section>
+
+      <section
+        class="breadcrumb-workflow-section breadcrumb-menu-stage breadcrumb-workflow-wide breadcrumb-rtl-example"
+        aria-labelledby="breadcrumb-rtl-heading"
+        dir="rtl"
+        lang="ar"
+      >
+        <h2 id="breadcrumb-rtl-heading">اتجاه من اليمين إلى اليسار</h2>
+        <nav ng-breadcrumb aria-label="مسار التنقل">
+          <ol data-slot="breadcrumb-list">
+            <li data-slot="breadcrumb-item">
+              <a data-slot="breadcrumb-link" href="#home">الرئيسية</a>
+            </li>
+            <li data-slot="breadcrumb-separator">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <circle cx="12" cy="12" r="2.5" />
+              </svg>
+            </li>
+            <li data-slot="breadcrumb-item">
+              <span ng-dropdown data-slot="dropdown-menu">
+                <button
+                  type="button"
+                  data-slot="dropdown-menu-trigger"
+                  class="breadcrumb-plain-trigger"
+                >
+                  المكونات
+                  <svg
+                    data-icon="inline-end"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                </button>
+                <span data-slot="dropdown-menu-content">
+                  <span data-slot="dropdown-menu-group">
+                    <button
+                      data-slot="dropdown-menu-item"
+                      ng-click="rtlBreadcrumbSelection = 'التوثيق'"
+                    >
+                      التوثيق
+                    </button>
+                    <button
+                      data-slot="dropdown-menu-item"
+                      ng-click="rtlBreadcrumbSelection = 'السمات'"
+                    >
+                      السمات
+                    </button>
+                    <button
+                      data-slot="dropdown-menu-item"
+                      ng-click="rtlBreadcrumbSelection = 'جيت هاب'"
+                    >
+                      جيت هاب
+                    </button>
+                  </span>
+                </span>
+              </span>
+            </li>
+            <li data-slot="breadcrumb-separator">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <circle cx="12" cy="12" r="2.5" />
+              </svg>
+            </li>
+            <li data-slot="breadcrumb-item">
+              <span data-slot="breadcrumb-page">مسار التنقل</span>
+            </li>
+          </ol>
+        </nav>
+        <p class="breadcrumb-workflow-output" role="status">
+          المحدد: {{ rtlBreadcrumbSelection }}
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

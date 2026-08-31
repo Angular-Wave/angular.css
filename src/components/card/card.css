@@ -1,0 +1,103 @@
+[data-slot="card"],
+[ng-card] {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 4);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+  border-radius: calc(var(--radius) + 4px);
+  background: var(--card);
+  color: var(--card-foreground);
+  font-size: var(--text-sm);
+}
+
+[data-slot="card"]:not([data-size="sm"]),
+[ng-card]:not([data-size="sm"]) {
+  padding-block: calc(var(--spacing) * 4);
+}
+
+[data-slot="card"][data-size="sm"],
+[ng-card][data-size="sm"] {
+  gap: calc(var(--spacing) * 3);
+  padding-block: calc(var(--spacing) * 3);
+}
+
+:is([data-slot="card"], [ng-card]):has(
+  > [data-slot="card-footer"],
+  > [ng-card-footer]
+) {
+  padding-bottom: 0;
+}
+
+[data-slot="card-header"],
+[ng-card-header] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: calc(var(--spacing) * 1);
+  align-items: start;
+  padding-inline: calc(var(--spacing) * 4);
+}
+
+:is([data-slot="card"], [ng-card])[data-size="sm"]
+  :is([data-slot="card-header"], [ng-card-header]) {
+  padding-inline: calc(var(--spacing) * 3);
+}
+
+:is([data-slot="card-header"], [ng-card-header]):has(
+  [data-slot="card-action"],
+  [ng-card-action]
+) {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+[data-slot="card-title"],
+[ng-card-title] {
+  color: var(--card-foreground);
+  font-size: 1rem;
+  line-height: 1.25;
+  font-weight: var(--font-weight-medium);
+}
+
+:is([data-slot="card"], [ng-card])[data-size="sm"]
+  :is([data-slot="card-title"], [ng-card-title]) {
+  font-size: var(--text-sm);
+}
+
+[data-slot="card-description"],
+[ng-card-description] {
+  color: var(--muted-foreground);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+[data-slot="card-action"],
+[ng-card-action] {
+  grid-column-start: 2;
+  grid-row: 1 / span 2;
+  place-self: start end;
+}
+
+[data-slot="card-content"],
+[ng-card-content] {
+  padding-inline: calc(var(--spacing) * 4);
+}
+
+:is([data-slot="card"], [ng-card])[data-size="sm"]
+  :is([data-slot="card-content"], [ng-card-content]) {
+  padding-inline: calc(var(--spacing) * 3);
+}
+
+[data-slot="card-footer"],
+[ng-card-footer] {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--spacing) * 2);
+  padding: calc(var(--spacing) * 4);
+  border-top: 1px solid var(--border);
+  background: color-mix(in srgb, var(--muted) 50%, transparent);
+}
+
+:is([data-slot="card"], [ng-card])[data-size="sm"]
+  :is([data-slot="card-footer"], [ng-card-footer]) {
+  padding: calc(var(--spacing) * 3);
+}

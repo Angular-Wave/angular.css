@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    data-example="resizable-handle resizable-rtl resizable-vertical"
+  >
+    <main class="resizable-workflows visual-example">
+      <section aria-label="Visible handle example">
+        <div
+          ng-resizable-panel-group
+          id="handle-layout"
+          orientation="horizontal"
+          aria-label="Sidebar and content layout"
+          class="resizable-reference-layout"
+        >
+          <section ng-resizable-panel style="--panel-size: 1">
+            <div class="resizable-panel-content"><strong>Sidebar</strong></div>
+          </section>
+          <div ng-resizable-handle aria-label="Resize sidebar and content">
+            <span ng-resizable-handle-grip aria-hidden="true"></span>
+          </div>
+          <section ng-resizable-panel style="--panel-size: 3">
+            <div class="resizable-panel-content"><strong>Content</strong></div>
+          </section>
+        </div>
+      </section>
+
+      <section aria-label="Vertical layout example">
+        <div
+          ng-resizable-panel-group
+          id="vertical-layout"
+          orientation="vertical"
+          data-step="0.5"
+          aria-label="Header and content layout"
+          class="resizable-reference-layout"
+        >
+          <section
+            ng-resizable-panel
+            data-min-size="0.5"
+            data-max-size="3.5"
+            style="--panel-size: 1"
+          >
+            <div class="resizable-panel-content"><strong>Header</strong></div>
+          </section>
+          <div ng-resizable-handle aria-label="Resize header and content"></div>
+          <section
+            ng-resizable-panel
+            data-min-size="0.5"
+            style="--panel-size: 3"
+          >
+            <div class="resizable-panel-content"><strong>Content</strong></div>
+          </section>
+        </div>
+      </section>
+
+      <section
+        class="resizable-workflow-wide"
+        aria-label="Right to left nested layout example"
+        lang="ar"
+      >
+        <div
+          ng-resizable-panel-group
+          id="rtl-layout"
+          orientation="horizontal"
+          aria-label="تخطيط قابل لتغيير الحجم"
+          class="resizable-reference-layout"
+          dir="rtl"
+        >
+          <section ng-resizable-panel style="--panel-size: 1">
+            <div class="resizable-panel-content"><strong>واحد</strong></div>
+          </section>
+          <div ng-resizable-handle aria-label="تغيير حجم اللوحات">
+            <span ng-resizable-handle-grip aria-hidden="true"></span>
+          </div>
+          <section ng-resizable-panel style="--panel-size: 1">
+            <div
+              ng-resizable-panel-group
+              orientation="vertical"
+              aria-label="تغيير حجم اللوحتين الثانية والثالثة"
+              dir="rtl"
+            >
+              <section ng-resizable-panel style="--panel-size: 1">
+                <div class="resizable-panel-content">
+                  <strong>اثنان</strong>
+                </div>
+              </section>
+              <div
+                ng-resizable-handle
+                aria-label="تغيير حجم اللوحتين الثانية والثالثة"
+              >
+                <span ng-resizable-handle-grip aria-hidden="true"></span>
+              </div>
+              <section ng-resizable-panel style="--panel-size: 3">
+                <div class="resizable-panel-content">
+                  <strong>ثلاثة</strong>
+                </div>
+              </section>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

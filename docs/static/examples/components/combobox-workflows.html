@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="frameworks=['Next.js','SvelteKit','Nuxt.js','Remix','Astro']; clearState={query:'Next.js',selected:'Next.js'}; grouped={query:'',selected:''}; invalidState={query:'',selected:''}; inputGroupState={query:'',selected:''}; popup={query:'',selected:'Select country'}; timezoneGroups=[{value:'Americas',items:['(GMT-5) New York','(GMT-8) Los Angeles','(GMT-6) Chicago','(GMT-5) Toronto','(GMT-8) Vancouver','(GMT-3) São Paulo']},{value:'Europe',items:['(GMT+0) London','(GMT+1) Paris','(GMT+1) Berlin','(GMT+1) Rome','(GMT+1) Madrid','(GMT+1) Amsterdam']},{value:'Asia/Pacific',items:['(GMT+9) Tokyo','(GMT+8) Shanghai','(GMT+8) Singapore','(GMT+4) Dubai','(GMT+11) Sydney','(GMT+9) Seoul']}]; countries=['Argentina','Australia','Brazil','Canada','China','Colombia','Egypt','France','Germany','Italy','Japan','Kenya','Mexico','New Zealand','Nigeria','South Africa','South Korea','United Kingdom','United States']"
+    data-example="combobox-clear combobox-disabled combobox-groups combobox-input-group combobox-invalid combobox-popup"
+  >
+    <main class="combobox-workflows visual-example">
+      <section class="combobox-workflow">
+        <div
+          id="clear-combobox"
+          ng-combobox
+          ng-on-angularcss:combobox-select="clearState.selected=$event.detail.value; clearState.query=$event.detail.value"
+          ng-on-angularcss:combobox-clear="clearState.selected=''; clearState.query=''"
+        >
+          <div ng-combobox-control>
+            <input
+              ng-combobox-input
+              aria-label="Clearable framework"
+              ng-model="clearState.query"
+              placeholder="Select a framework"
+            />
+            <button ng-combobox-clear type="button"></button>
+          </div>
+          <div ng-combobox-content aria-label="Clearable framework options">
+            <div ng-combobox-empty>No items found.</div>
+            <div ng-combobox-list>
+              <div ng-combobox-collection>
+                <div
+                  ng-combobox-item
+                  ng-repeat="framework in frameworks | filter:clearState.query"
+                  data-value="{{ framework }}"
+                  ng-attr-aria-selected="{{ clearState.selected === framework }}"
+                >
+                  {{ framework }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="combobox-workflow">
+        <div id="disabled-combobox" ng-combobox>
+          <div ng-combobox-control>
+            <input
+              ng-combobox-input
+              aria-label="Disabled framework"
+              placeholder="Select a framework"
+              disabled
+            />
+            <button
+              ng-combobox-trigger
+              type="button"
+              aria-label="Show disabled frameworks"
+              disabled
+            ></button>
+          </div>
+          <div ng-combobox-content aria-label="Disabled framework options">
+            <div ng-combobox-list>
+              <div ng-combobox-collection>
+                <div
+                  ng-combobox-item
+                  ng-repeat="framework in frameworks"
+                  data-value="{{ framework }}"
+                >
+                  {{ framework }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="combobox-workflow combobox-groups-workflow">
+        <div
+          id="groups-combobox"
+          ng-combobox
+          ng-on-angularcss:combobox-select="grouped.selected=$event.detail.value; grouped.query=$event.detail.value"
+        >
+          <div ng-combobox-control>
+            <input
+              ng-combobox-input
+              aria-label="Grouped timezone"
+              ng-model="grouped.query"
+              placeholder="Select a timezone"
+            />
+            <button
+              ng-combobox-trigger
+              type="button"
+              aria-label="Show grouped timezones"
+            ></button>
+          </div>
+          <div ng-combobox-content aria-label="Grouped timezone options">
+            <div ng-combobox-empty>No timezones found.</div>
+            <div ng-combobox-list>
+              <section
+                ng-combobox-group
+                ng-repeat="group in timezoneGroups"
+                ng-if="(group.items | filter:grouped.query).length"
+              >
+                <div ng-combobox-label>{{ group.value }}</div>
+                <div ng-combobox-collection>
+                  <div
+                    ng-combobox-item
+                    ng-repeat="zone in group.items | filter:grouped.query"
+                    data-value="{{ zone }}"
+                    ng-attr-aria-selected="{{ grouped.selected === zone }}"
+                  >
+                    {{ zone }}
+                  </div>
+                </div>
+                <div ng-combobox-separator></div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="combobox-workflow combobox-input-group-workflow">
+        <div
+          id="input-group-combobox"
+          ng-combobox
+          ng-on-angularcss:combobox-select="inputGroupState.selected=$event.detail.value; inputGroupState.query=$event.detail.value"
+        >
+          <div ng-combobox-control>
+            <span class="combobox-globe" aria-hidden="true"></span>
+            <input
+              ng-combobox-input
+              aria-label="Timezone with icon"
+              ng-model="inputGroupState.query"
+              placeholder="Select a timezone"
+            />
+            <button
+              ng-combobox-trigger
+              type="button"
+              aria-label="Show icon timezones"
+            ></button>
+          </div>
+          <div
+            ng-combobox-content
+            class="combobox-content-wide"
+            aria-label="Icon timezone options"
+          >
+            <div ng-combobox-empty>No timezones found.</div>
+            <div ng-combobox-list>
+              <section
+                ng-combobox-group
+                ng-repeat="group in timezoneGroups"
+                ng-if="(group.items | filter:inputGroupState.query).length"
+              >
+                <div ng-combobox-label>{{ group.value }}</div>
+                <div ng-combobox-collection>
+                  <div
+                    ng-combobox-item
+                    ng-repeat="zone in group.items | filter:inputGroupState.query"
+                    data-value="{{ zone }}"
+                  >
+                    {{ zone }}
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="combobox-workflow">
+        <div
+          id="invalid-combobox"
+          ng-combobox
+          ng-on-angularcss:combobox-select="invalidState.selected=$event.detail.value; invalidState.query=$event.detail.value"
+        >
+          <div ng-combobox-control>
+            <input
+              ng-combobox-input
+              aria-label="Invalid framework"
+              aria-invalid="true"
+              ng-model="invalidState.query"
+              placeholder="Select a framework"
+            />
+            <button
+              ng-combobox-trigger
+              type="button"
+              aria-label="Show invalid frameworks"
+            ></button>
+          </div>
+          <div ng-combobox-content aria-label="Invalid framework options">
+            <div ng-combobox-empty>No items found.</div>
+            <div ng-combobox-list>
+              <div ng-combobox-collection>
+                <div
+                  ng-combobox-item
+                  ng-repeat="framework in frameworks | filter:invalidState.query"
+                  data-value="{{ framework }}"
+                >
+                  {{ framework }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="combobox-workflow combobox-popup-workflow">
+        <div
+          id="popup-combobox"
+          ng-combobox
+          ng-on-angularcss:combobox-select="popup.selected=$event.detail.value; popup.query=''"
+        >
+          <button
+            ng-button
+            ng-combobox-trigger
+            type="button"
+            data-variant="outline"
+            aria-label="Country"
+          >
+            <span ng-combobox-value ng-bind="popup.selected"></span>
+          </button>
+          <div ng-combobox-content aria-label="Country options">
+            <div ng-combobox-control>
+              <input
+                ng-combobox-input
+                aria-label="Search countries"
+                ng-model="popup.query"
+                placeholder="Search"
+              />
+            </div>
+            <div ng-combobox-empty>No items found.</div>
+            <div ng-combobox-list>
+              <div ng-combobox-collection>
+                <div
+                  ng-combobox-item
+                  ng-repeat="country in countries | filter:popup.query"
+                  data-value="{{ country }}"
+                  ng-attr-aria-selected="{{ popup.selected === country }}"
+                >
+                  {{ country }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <output class="output visually-hidden" aria-live="polite">
+        Clear: <span ng-bind="clearState.selected || 'none'"></span>. Grouped:
+        <span ng-bind="grouped.selected || 'none'"></span>. Popup:
+        <span ng-bind="popup.selected"></span>.
+      </output>
+    </main>
+  </body>
+</html>

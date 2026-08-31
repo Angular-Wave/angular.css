@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak data-example="tooltip-rtl">
+    <main class="tooltip-rtl-workflow" dir="rtl">
+      <header class="workflow-heading"><h2>الجوانب الفعلية</h2></header>
+      <div class="tooltip-side-row">
+        <span ng-tooltip>
+          <button ng-button type="button" variant="outline" ng-tooltip-trigger>
+            يسار
+          </button>
+          <span ng-tooltip-content side="left">إضافة إلى المكتبة</span>
+        </span>
+        <span ng-tooltip>
+          <button ng-button type="button" variant="outline" ng-tooltip-trigger>
+            أعلى
+          </button>
+          <span ng-tooltip-content side="top">إضافة إلى المكتبة</span>
+        </span>
+        <span ng-tooltip>
+          <button ng-button type="button" variant="outline" ng-tooltip-trigger>
+            أسفل
+          </button>
+          <span ng-tooltip-content side="bottom">إضافة إلى المكتبة</span>
+        </span>
+        <span ng-tooltip>
+          <button ng-button type="button" variant="outline" ng-tooltip-trigger>
+            يمين
+          </button>
+          <span ng-tooltip-content side="right">إضافة إلى المكتبة</span>
+        </span>
+      </div>
+    </main>
+  </body>
+</html>

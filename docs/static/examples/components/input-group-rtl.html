@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="rtlQuery=''; rtlComment=''; rtlCount=0; rtlStatus='جاهز'"
+    class="input-group-workflow-body"
+    data-example="input-group-rtl"
+  >
+    <main class="input-group-rtl-workflow" aria-label="مجموعات إدخال من اليمين إلى اليسار">
+      <div ng-input-group>
+        <input data-input data-slot="input-group-control" ng-model="rtlQuery" placeholder="بحث..." aria-label="بحث" />
+        <div data-slot="input-group-addon" data-align="inline-start">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+        </div>
+        <div data-slot="input-group-addon" data-align="inline-end">١٢ نتيجة</div>
+      </div>
+      <div ng-input-group>
+        <input data-input data-slot="input-group-control" placeholder="جاري البحث..." aria-label="جاري البحث" />
+        <div data-slot="input-group-addon" data-align="inline-end"><span ng-spinner data-size="sm" aria-label="تحميل"></span></div>
+      </div>
+      <div ng-input-group>
+        <input data-input data-slot="input-group-control" placeholder="جاري حفظ التغييرات..." aria-label="جاري الحفظ" />
+        <div data-slot="input-group-addon" data-align="inline-end"><span data-slot="input-group-text">جاري الحفظ...</span><span ng-spinner data-size="sm" aria-label="تحميل"></span></div>
+      </div>
+      <div data-slot="field">
+        <label ng-label data-slot="field-label" for="input-group-rtl-comment">منطقة النص</label>
+        <div ng-input-group>
+          <textarea ng-textarea data-slot="input-group-control" id="input-group-rtl-comment" ng-model="rtlComment" data-change="rtlCount=rtlComment.length" maxlength="280" placeholder="اكتب تعليقًا..."></textarea>
+          <div data-slot="input-group-addon" data-align="block-end">
+            <span data-slot="input-group-text">{{ rtlCount }}/٢٨٠</span>
+            <button ng-button data-slot="input-group-button" data-size="sm" class="input-group-push-end" type="button" ng-click="rtlStatus='تم النشر'">نشر</button>
+          </div>
+        </div>
+        <p data-slot="field-description">تذييل موضع أسفل منطقة النص.</p>
+      </div>
+      <p class="input-group-output" role="status">{{ rtlStatus }} · {{ rtlQuery || 'لا يوجد بحث' }}</p>
+    </main>
+  </body>
+</html>

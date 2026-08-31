@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak ng-init="selected='Two'">
+    <div class="stack">
+      <div ng-button-group role="group">
+        <button
+          ng-button
+          type="button"
+          variant="outline"
+          ng-click="selected='One'"
+        >
+          One
+        </button>
+        <button
+          ng-button
+          type="button"
+          variant="outline"
+          ng-click="selected='Two'"
+        >
+          Two
+        </button>
+        <button
+          ng-button
+          type="button"
+          variant="outline"
+          ng-click="selected='Three'"
+        >
+          Three
+        </button>
+      </div>
+      <div class="output">Selected: {{ selected }}</div>
+
+      <div ng-button-group role="group" orientation="vertical">
+        <button ng-button type="button" variant="outline">A</button>
+        <button ng-button type="button" variant="outline">B</button>
+        <button ng-button type="button" variant="outline">C</button>
+      </div>
+    </div>
+  </body>
+</html>

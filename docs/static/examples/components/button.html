@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak data-example="button-demo">
+    <div class="row visual-example">
+      <button ng-button variant="outline">Button</button>
+      <button ng-button variant="outline" size="icon" aria-label="Submit">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path
+            d="m5 12 7-7 7 7M12 19V5"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+    </div>
+  </body>
+</html>

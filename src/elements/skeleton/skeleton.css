@@ -1,0 +1,17 @@
+[data-slot="skeleton"],
+[ng-skeleton] {
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--muted);
+  animation: angularcss-skeleton-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes angularcss-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}

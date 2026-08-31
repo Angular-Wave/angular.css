@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    data-example="skeleton-avatar skeleton-card skeleton-demo skeleton-form skeleton-rtl skeleton-table skeleton-text"
+  >
+    <main class="skeleton-workflows" aria-label="Skeleton examples">
+      <section
+        class="skeleton-demo visual-example"
+        aria-label="Loading profile preview"
+      >
+        <div
+          ng-skeleton
+          id="labeled-skeleton"
+          aria-label="Loading avatar"
+          aria-hidden="false"
+          style="width: 3rem; height: 3rem; border-radius: 9999px"
+        ></div>
+        <div class="skeleton-lines">
+          <div
+            ng-skeleton
+            id="decorative-skeleton"
+            style="width: 15.625rem; height: 1rem"
+          ></div>
+          <div ng-skeleton style="width: 12.5rem; height: 1rem"></div>
+        </div>
+      </section>
+
+      <section class="skeleton-card-demo" aria-label="Loading card">
+        <div ng-skeleton class="skeleton-card-media"></div>
+        <div ng-skeleton class="skeleton-line-wide"></div>
+        <div ng-skeleton class="skeleton-line-medium"></div>
+        <div ng-skeleton class="skeleton-button-placeholder"></div>
+      </section>
+
+      <section class="skeleton-form-demo" aria-label="Loading form">
+        <div>
+          <div ng-skeleton class="skeleton-label-placeholder"></div>
+          <div ng-skeleton class="skeleton-input-placeholder"></div>
+        </div>
+        <div>
+          <div ng-skeleton class="skeleton-label-placeholder"></div>
+          <div ng-skeleton class="skeleton-input-placeholder"></div>
+        </div>
+        <div ng-skeleton class="skeleton-button-placeholder"></div>
+      </section>
+
+      <section class="skeleton-table-demo" aria-label="Loading table">
+        <div ng-skeleton class="skeleton-table-heading"></div>
+        <div class="skeleton-table-row">
+          <div ng-skeleton></div>
+          <div ng-skeleton></div>
+          <div ng-skeleton></div>
+        </div>
+        <div class="skeleton-table-row">
+          <div ng-skeleton></div>
+          <div ng-skeleton></div>
+          <div ng-skeleton></div>
+        </div>
+        <div class="skeleton-table-row">
+          <div ng-skeleton></div>
+          <div ng-skeleton></div>
+          <div ng-skeleton></div>
+        </div>
+      </section>
+
+      <section class="skeleton-text-demo" aria-label="Loading text">
+        <div ng-skeleton class="skeleton-line-wide"></div>
+        <div ng-skeleton class="skeleton-line-wide"></div>
+        <div ng-skeleton class="skeleton-line-medium"></div>
+      </section>
+
+      <section
+        class="skeleton-rtl-demo"
+        aria-label="تحميل الملف الشخصي"
+        dir="rtl"
+        lang="ar"
+      >
+        <div ng-skeleton class="skeleton-avatar-placeholder"></div>
+        <div>
+          <div ng-skeleton class="skeleton-line-wide"></div>
+          <div ng-skeleton class="skeleton-line-medium"></div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

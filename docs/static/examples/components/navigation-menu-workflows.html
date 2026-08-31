@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="navigationWorkflow={controlled:false,showMenu:false,showLink:false}"
+  >
+    <main class="navigation-menu-workflows">
+      <section class="navigation-menu-workflow-section">
+        <header class="workflow-heading">
+          <h2>Controlled and disabled</h2>
+        </header>
+        <div class="navigation-menu-workflow-actions">
+          <button
+            ng-button
+            type="button"
+            variant="outline"
+            ng-click="navigationWorkflow.controlled=!navigationWorkflow.controlled"
+          >
+            Toggle controlled panel
+          </button>
+        </div>
+        <nav ng-navigation-menu aria-label="Controlled navigation">
+          <ul ng-navigation-menu-list>
+            <li ng-navigation-menu-item>
+              <button type="button" ng-navigation-menu-trigger>
+                Resources
+              </button>
+              <div
+                ng-if="!navigationWorkflow.controlled"
+                ng-navigation-menu-content
+              >
+                <ul
+                  class="navigation-menu-content-list navigation-menu-intro-list"
+                >
+                  <li><a ng-navigation-menu-link href="#guides">Guides</a></li>
+                  <li>
+                    <a ng-navigation-menu-link href="#api">API reference</a>
+                  </li>
+                </ul>
+              </div>
+              <div
+                ng-if="navigationWorkflow.controlled"
+                ng-navigation-menu-content
+                data-open="true"
+              >
+                <ul
+                  class="navigation-menu-content-list navigation-menu-intro-list"
+                >
+                  <li><a ng-navigation-menu-link href="#guides">Guides</a></li>
+                  <li>
+                    <a ng-navigation-menu-link href="#api">API reference</a>
+                  </li>
+                </ul>
+              </div>
+              <span ng-navigation-menu-indicator aria-hidden="true"></span>
+            </li>
+            <li ng-navigation-menu-item>
+              <button type="button" ng-navigation-menu-trigger disabled>
+                Disabled
+              </button>
+              <div ng-navigation-menu-content>
+                <a ng-navigation-menu-link href="#unavailable">Unavailable</a>
+              </div>
+            </li>
+            <li ng-navigation-menu-item>
+              <a ng-navigation-menu-link href="#pricing">Pricing</a>
+            </li>
+          </ul>
+        </nav>
+      </section>
+
+      <section class="navigation-menu-workflow-section">
+        <header class="workflow-heading">
+          <h2>Dynamic AngularTS content</h2>
+        </header>
+        <div class="navigation-menu-workflow-actions">
+          <button
+            ng-button
+            type="button"
+            variant="outline"
+            ng-click="navigationWorkflow.showMenu=true"
+          >
+            Add company menu
+          </button>
+          <button
+            ng-button
+            type="button"
+            variant="outline"
+            ng-click="navigationWorkflow.showLink=true"
+          >
+            Add careers link
+          </button>
+        </div>
+        <nav ng-navigation-menu aria-label="Dynamic navigation">
+          <ul ng-navigation-menu-list>
+            <li ng-navigation-menu-item>
+              <button type="button" ng-navigation-menu-trigger>Product</button>
+              <div ng-navigation-menu-content>
+                <ul
+                  class="navigation-menu-content-list navigation-menu-intro-list"
+                >
+                  <li>
+                    <a ng-navigation-menu-link href="#overview">Overview</a>
+                  </li>
+                  <li ng-if="navigationWorkflow.showLink">
+                    <a
+                      ng-navigation-menu-link
+                      id="dynamic-careers-link"
+                      href="#careers"
+                    >
+                      Careers
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <span ng-navigation-menu-indicator aria-hidden="true"></span>
+            </li>
+            <li
+              ng-if="navigationWorkflow.showMenu"
+              ng-navigation-menu-item
+              id="dynamic-company-menu"
+            >
+              <button type="button" ng-navigation-menu-trigger>Company</button>
+              <div ng-navigation-menu-content>
+                <ul
+                  class="navigation-menu-content-list navigation-menu-intro-list"
+                >
+                  <li><a ng-navigation-menu-link href="#about">About</a></li>
+                  <li>
+                    <a ng-navigation-menu-link href="#contact">Contact</a>
+                  </li>
+                </ul>
+              </div>
+              <span ng-navigation-menu-indicator aria-hidden="true"></span>
+            </li>
+            <li ng-navigation-menu-item>
+              <a ng-navigation-menu-link href="#support">Support</a>
+            </li>
+          </ul>
+        </nav>
+      </section>
+
+      <button ng-button type="button" variant="outline">
+        Outside focus target
+      </button>
+    </main>
+  </body>
+</html>

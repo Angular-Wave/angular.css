@@ -1,0 +1,80 @@
+[data-slot="breadcrumb"],
+[ng-breadcrumb] {
+  display: block;
+  color: var(--muted-foreground);
+  font-size: var(--text-sm);
+}
+
+[data-slot="breadcrumb-list"],
+[ng-breadcrumb-list] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--spacing) * 1.5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-wrap: anywhere;
+}
+
+[data-slot="breadcrumb-item"],
+[ng-breadcrumb-item] {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--spacing) * 1.5);
+}
+
+[data-slot="breadcrumb-link"],
+[ng-breadcrumb-link] {
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+[data-slot="breadcrumb-link"]:hover,
+[ng-breadcrumb-link]:hover {
+  color: var(--foreground);
+}
+
+[data-slot="breadcrumb-page"],
+[ng-breadcrumb-page] {
+  color: var(--foreground);
+  font-weight: var(--font-weight-normal);
+}
+
+[data-slot="breadcrumb-separator"],
+[ng-breadcrumb-separator],
+[data-slot="breadcrumb-ellipsis"],
+[ng-breadcrumb-ellipsis] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted-foreground);
+}
+
+:is([data-slot="breadcrumb-separator"], [ng-breadcrumb-separator]) > svg {
+  width: calc(var(--spacing) * 3.5);
+  height: calc(var(--spacing) * 3.5);
+}
+
+[data-slot="breadcrumb-ellipsis"],
+[ng-breadcrumb-ellipsis] {
+  width: calc(var(--spacing) * 5);
+  height: calc(var(--spacing) * 5);
+}
+
+:is([data-slot="breadcrumb-ellipsis"], [ng-breadcrumb-ellipsis]) > svg {
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+}
+
+[dir="rtl"] [data-breadcrumb-generated="separator"] {
+  transform: rotate(180deg);
+}
+
+@media (width >= 40rem) {
+  [data-slot="breadcrumb-list"],
+  [ng-breadcrumb-list] {
+    gap: calc(var(--spacing) * 2.5);
+  }
+}

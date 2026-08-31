@@ -1,11 +1,12 @@
-[role="group"] {
+[ng-button-group],
+[data-slot="button-group"] {
   display: inline-flex;
 
-  > button {
+  > button[ng-button],
+  > button[data-slot="button"] {
     border: 1px solid;
     border-color: var(--input);
     background-color: var(--background);
-    box-shadow: var(--shadow-xs);
     cursor: pointer;
     border-radius: 0;
 
@@ -27,9 +28,11 @@
   &[orientation="column"] {
     flex-direction: column;
 
-    > button {
+    > button[ng-button],
+    > button[data-slot="button"] {
       &:first-child {
         @apply rounded-t-md;
+
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
       }
@@ -37,6 +40,7 @@
       &:last-child {
         border-top-left-radius: 0;
         border-top-right-radius: 0;
+
         @apply rounded-b-md;
       }
 

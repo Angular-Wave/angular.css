@@ -1,0 +1,179 @@
+[data-slot="avatar"],
+[ng-avatar] {
+  position: relative;
+  display: inline-flex;
+  width: calc(var(--spacing) * 8);
+  height: calc(var(--spacing) * 8);
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  border-radius: 9999px;
+  background: var(--muted);
+  color: var(--muted-foreground);
+  user-select: none;
+}
+
+:is([data-slot="avatar"], [ng-avatar])::after {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--border);
+  border-radius: inherit;
+  content: "";
+  pointer-events: none;
+}
+
+[data-slot="avatar"][data-size="sm"],
+[ng-avatar][data-size="sm"] {
+  width: calc(var(--spacing) * 6);
+  height: calc(var(--spacing) * 6);
+}
+
+[data-slot="avatar"][data-size="lg"],
+[ng-avatar][data-size="lg"] {
+  width: calc(var(--spacing) * 10);
+  height: calc(var(--spacing) * 10);
+}
+
+[data-slot="avatar-image"],
+[ng-avatar-image] {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
+[data-slot="avatar-fallback"],
+[ng-avatar-fallback] {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  border-radius: inherit;
+  font-size: var(--text-sm);
+}
+
+:is([data-slot="avatar"], [ng-avatar])[data-size="sm"]
+  :is([data-slot="avatar-fallback"], [ng-avatar-fallback]) {
+  font-size: var(--text-xs);
+}
+
+[data-slot="avatar-badge"],
+[ng-avatar-badge] {
+  position: absolute;
+  inset-inline-end: 0;
+  bottom: 0;
+  z-index: 1;
+  display: inline-flex;
+  width: calc(var(--spacing) * 2.5);
+  height: calc(var(--spacing) * 2.5);
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 2px var(--background);
+  border-radius: 9999px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+:is([data-slot="avatar-badge"], [ng-avatar-badge]) > svg {
+  width: calc(var(--spacing) * 2);
+  height: calc(var(--spacing) * 2);
+}
+
+:is([data-slot="avatar-badge"], [ng-avatar-badge])[data-variant="success"] {
+  background: var(--success);
+}
+
+:is([data-slot="avatar-group-count"], [ng-avatar-group-count]) > svg {
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+}
+
+:is([data-slot="avatar"], [ng-avatar])[data-size="sm"]
+  :is([data-slot="avatar-badge"], [ng-avatar-badge]) {
+  width: calc(var(--spacing) * 2);
+  height: calc(var(--spacing) * 2);
+}
+
+:is([data-slot="avatar"], [ng-avatar])[data-size="sm"]
+  :is([data-slot="avatar-badge"], [ng-avatar-badge])
+  > svg {
+  display: none;
+}
+
+:is([data-slot="avatar"], [ng-avatar])[data-size="lg"]
+  :is([data-slot="avatar-badge"], [ng-avatar-badge]) {
+  width: calc(var(--spacing) * 3);
+  height: calc(var(--spacing) * 3);
+}
+
+[data-slot="avatar-group"],
+[ng-avatar-group] {
+  display: flex;
+  align-items: center;
+}
+
+:is([data-slot="avatar-group"], [ng-avatar-group])
+  > :is([data-slot="avatar"], [ng-avatar]) {
+  box-shadow: 0 0 0 2px var(--background);
+  margin-inline-start: calc(var(--spacing) * -2);
+}
+
+:is([data-slot="avatar-group"], [ng-avatar-group]) > :first-child {
+  margin-inline-start: 0;
+}
+
+[data-slot="avatar-group-count"],
+[ng-avatar-group-count] {
+  position: relative;
+  display: inline-flex;
+  width: calc(var(--spacing) * 8);
+  height: calc(var(--spacing) * 8);
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px var(--background);
+  border-radius: 9999px;
+  background: var(--muted);
+  color: var(--muted-foreground);
+  font-size: var(--text-sm);
+  margin-inline-start: calc(var(--spacing) * -2);
+}
+
+:is([data-slot="avatar-group"], [ng-avatar-group]):has(
+    > :is([data-slot="avatar"], [ng-avatar])[data-size="sm"]
+  )
+  > :is([data-slot="avatar-group-count"], [ng-avatar-group-count]) {
+  width: calc(var(--spacing) * 6);
+  height: calc(var(--spacing) * 6);
+  font-size: var(--text-xs);
+}
+
+:is([data-slot="avatar-group"], [ng-avatar-group]):has(
+    > :is([data-slot="avatar"], [ng-avatar])[data-size="sm"]
+  )
+  > :is([data-slot="avatar-group-count"], [ng-avatar-group-count])
+  > svg {
+  width: calc(var(--spacing) * 3);
+  height: calc(var(--spacing) * 3);
+}
+
+:is([data-slot="avatar-group"], [ng-avatar-group]):has(
+    > :is([data-slot="avatar"], [ng-avatar])[data-size="lg"]
+  )
+  > :is([data-slot="avatar-group-count"], [ng-avatar-group-count]) {
+  width: calc(var(--spacing) * 10);
+  height: calc(var(--spacing) * 10);
+}
+
+:is([data-slot="avatar-group"], [ng-avatar-group]):has(
+    > :is([data-slot="avatar"], [ng-avatar])[data-size="lg"]
+  )
+  > :is([data-slot="avatar-group-count"], [ng-avatar-group-count])
+  > svg {
+  width: calc(var(--spacing) * 5);
+  height: calc(var(--spacing) * 5);
+}

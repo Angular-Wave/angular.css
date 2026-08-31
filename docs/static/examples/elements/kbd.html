@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="kbdAction='Ready'"
+    data-example="kbd-button kbd-demo kbd-group kbd-input-group kbd-rtl kbd-tooltip"
+  >
+    <main class="kbd-workflows visual-example">
+      <section class="kbd-row">
+        <span>Open command menu</span>
+        <span data-slot="kbd-group"><kbd ng-kbd>Ctrl</kbd><kbd ng-kbd>K</kbd></span>
+        <span>or</span>
+        <kbd ng-kbd aria-label="Slash">/</kbd>
+      </section>
+
+      <button ng-button variant="outline" type="button" ng-click="kbdAction='Saved'">
+        Save changes <span data-slot="kbd-group"><kbd ng-kbd>Ctrl</kbd><kbd ng-kbd>S</kbd></span>
+      </button>
+
+      <div ng-input-group>
+        <input data-input data-slot="input-group-control" placeholder="Search..." aria-label="Search with shortcut" />
+        <div data-slot="input-group-addon" data-align="inline-end"><kbd ng-kbd>⌘K</kbd></div>
+      </div>
+
+      <span ng-tooltip>
+        <button ng-button ng-tooltip-trigger variant="outline" type="button">Keyboard help</button>
+        <span ng-tooltip-content side="top">Press <kbd ng-kbd>?</kbd> to open help.</span>
+      </span>
+
+      <section class="kbd-row" dir="rtl" lang="ar">
+        <span>فتح قائمة الأوامر</span>
+        <span data-slot="kbd-group"><kbd ng-kbd>Ctrl</kbd><kbd ng-kbd>K</kbd></span>
+      </section>
+
+      <p class="kbd-output" role="status">{{ kbdAction }}</p>
+    </main>
+  </body>
+</html>

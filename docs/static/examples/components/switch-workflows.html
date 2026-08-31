@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="small=false; standard=false; share=false; notifications=true; focus=false; terms=false"
+    data-example="switch-choice-card switch-description switch-disabled switch-invalid switch-rtl switch-sizes"
+  >
+    <main class="switch-workflows">
+      <section class="switch-workflow-section" aria-label="Switch sizes">
+        <div ng-field-group class="switch-size-list">
+          <div ng-field orientation="horizontal" role="group">
+            <input
+              ng-switch-control
+              id="switch-size-sm"
+              type="checkbox"
+              size="sm"
+              ng-model="small"
+            />
+            <label ng-label for="switch-size-sm">Small</label>
+          </div>
+          <div ng-field orientation="horizontal" role="group">
+            <input
+              ng-switch-control
+              id="switch-size-default"
+              type="checkbox"
+              size="default"
+              ng-model="standard"
+            />
+            <label ng-label for="switch-size-default">Default</label>
+          </div>
+        </div>
+      </section>
+
+      <section class="switch-workflow-section" aria-label="Disabled switch">
+        <div
+          ng-field
+          orientation="horizontal"
+          role="group"
+          data-disabled="true"
+        >
+          <input
+            ng-switch-control
+            id="switch-disabled-unchecked"
+            type="checkbox"
+            disabled
+          />
+          <label ng-label for="switch-disabled-unchecked">Disabled</label>
+        </div>
+      </section>
+
+      <section class="switch-workflow-section" aria-label="Switch description">
+        <div ng-field orientation="horizontal" role="group">
+          <div data-slot="field-content">
+            <label ng-label for="switch-focus-mode">Share across devices</label>
+            <p data-slot="field-description">
+              Focus is shared across devices, and turns off when you leave the
+              app.
+            </p>
+          </div>
+          <input
+            ng-switch-control
+            id="switch-focus-mode"
+            type="checkbox"
+            ng-model="focus"
+          />
+        </div>
+      </section>
+
+      <section class="switch-workflow-section" aria-label="Invalid switch">
+        <div ng-field orientation="horizontal" role="group" data-invalid="true">
+          <div data-slot="field-content">
+            <label ng-label for="switch-terms">
+              Accept terms and conditions
+            </label>
+            <p data-slot="field-description">
+              You must accept the terms and conditions to continue.
+            </p>
+          </div>
+          <input
+            ng-switch-control
+            id="switch-terms"
+            type="checkbox"
+            aria-invalid="true"
+            ng-model="terms"
+          />
+        </div>
+      </section>
+
+      <section
+        class="switch-workflow-section switch-workflow-wide"
+        aria-label="Switch choice cards"
+      >
+        <div ng-field-group class="switch-choice-list">
+          <label ng-label for="switch-share" class="switch-choice">
+            <span ng-field orientation="horizontal" role="group">
+              <span data-slot="field-content">
+                <span data-slot="field-title">Share across devices</span>
+                <span data-slot="field-description">
+                  Focus is shared across devices, and turns off when you leave
+                  the app.
+                </span>
+              </span>
+              <input
+                ng-switch-control
+                id="switch-share"
+                type="checkbox"
+                ng-model="share"
+              />
+            </span>
+          </label>
+          <label ng-label for="switch-notifications" class="switch-choice">
+            <span ng-field orientation="horizontal" role="group">
+              <span data-slot="field-content">
+                <span data-slot="field-title">Enable notifications</span>
+                <span data-slot="field-description">
+                  Receive notifications when focus mode is enabled or disabled.
+                </span>
+              </span>
+              <input
+                ng-switch-control
+                id="switch-notifications"
+                type="checkbox"
+                ng-model="notifications"
+              />
+            </span>
+          </label>
+        </div>
+      </section>
+
+      <section
+        class="switch-workflow-section switch-workflow-wide"
+        aria-label="RTL switch"
+        dir="rtl"
+        lang="ar"
+      >
+        <div ng-field orientation="horizontal" role="group">
+          <div data-slot="field-content">
+            <label ng-label for="switch-focus-mode-rtl">
+              المشاركة عبر الأجهزة
+            </label>
+            <p data-slot="field-description">
+              يتم مشاركة التركيز عبر الأجهزة، ويتم إيقاف تشغيله عند مغادرة
+              التطبيق.
+            </p>
+          </div>
+          <input
+            ng-switch-control
+            id="switch-focus-mode-rtl"
+            type="checkbox"
+            dir="rtl"
+          />
+        </div>
+      </section>
+
+      <section
+        class="switch-workflow-section switch-workflow-wide"
+        aria-label="Button-backed switch"
+      >
+        <div class="switch-demo">
+          <button
+            ng-switch-control
+            id="switch-button-control"
+            type="button"
+            aria-checked="false"
+            aria-label="Button control"
+          ></button>
+          <label ng-label for="switch-button-control">Button control</label>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

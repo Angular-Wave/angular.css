@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak data-example="sheet-no-close-button">
+    <main class="sheet-demo visual-example">
+      <section id="plain-sheet" ng-sheet>
+        <button ng-sheet-trigger ng-button variant="outline">Open Sheet</button>
+        <div ng-sheet-overlay></div>
+        <aside ng-sheet-content>
+          <header ng-sheet-header>
+            <h2 ng-sheet-title>No Close Button</h2>
+            <p ng-sheet-description>
+              This sheet doesn't have a close button in the top-right corner.
+              Click outside to close.
+            </p>
+          </header>
+        </aside>
+      </section>
+    </main>
+  </body>
+</html>

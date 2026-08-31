@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak ng-init="alignment='center'">
+    <div class="stack-sm">
+      <div class="row" ng-toggle-group role="group" variant="outline">
+        <button
+          data-slot="toggle-group-item"
+          aria-pressed="false"
+          ng-click="alignment='left'"
+          type="button"
+        >
+          Left
+        </button>
+        <button
+          data-slot="toggle-group-item"
+          aria-pressed="true"
+          ng-click="alignment='center'"
+          type="button"
+        >
+          Center
+        </button>
+        <button
+          data-slot="toggle-group-item"
+          aria-pressed="false"
+          ng-click="alignment='right'"
+          type="button"
+        >
+          Right
+        </button>
+      </div>
+
+      <div class="output">Alignment: <span ng-bind="alignment"></span></div>
+    </div>
+  </body>
+</html>

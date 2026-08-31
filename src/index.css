@@ -1,96 +1,119 @@
-@import "tailwindcss";
-
+@import "tailwindcss/theme.css" source(none);
+@import "tailwindcss/utilities.css" source(none);
+@import "@radix-ui/colors/slate.css";
+@import "@radix-ui/colors/slate-dark.css";
+@import "@radix-ui/colors/blue.css";
+@import "@radix-ui/colors/blue-dark.css";
+@import "@radix-ui/colors/green.css";
+@import "@radix-ui/colors/green-dark.css";
+@import "@radix-ui/colors/cyan.css";
+@import "@radix-ui/colors/cyan-dark.css";
+@import "@radix-ui/colors/violet.css";
+@import "@radix-ui/colors/violet-dark.css";
+@import "@radix-ui/colors/amber.css";
+@import "@radix-ui/colors/amber-dark.css";
+@import "@radix-ui/colors/red.css";
+@import "@radix-ui/colors/red-dark.css";
+@import "./styles/modal.css";
 @import "./components/accordion/accordion.css";
 @import "./components/dropdown/dropdown.css";
-
-@import "./elements/alert/alert.css";
-@import "./elements/button/button.css";
-@import "./elements/button/button-group.css";
+@import "./components/alert/alert.css";
+@import "./components/input/input.css";
+@import "./components/checkbox/checkbox.css";
+@import "./components/field/field.css";
+@import "./components/label/label.css";
+@import "./components/radio-group/radio-group.css";
+@import "./components/textarea/textarea.css";
+@import "./components/native-select/native-select.css";
+@import "./components/input-group/input-group.css";
+@import "./components/input-otp/input-otp.css";
+@import "./components/select/select.css";
+@import "./components/slider/slider.css";
+@import "./components/switch/switch.css";
+@import "./components/button/button.css";
+@import "./components/button-group/button-group.css";
+@import "./components/alert-dialog/alert-dialog.css";
+@import "./components/aspect-ratio/aspect-ratio.css";
+@import "./components/avatar/avatar.css";
+@import "./components/badge/badge.css";
+@import "./components/breadcrumb/breadcrumb.css";
+@import "./components/calendar/calendar.css";
+@import "./components/card/card.css";
+@import "./components/carousel/carousel.css";
+@import "./components/chart/chart.css";
+@import "./components/collapsible/collapsible.css";
+@import "./components/combobox/combobox.css";
+@import "./components/command/command.css";
+@import "./components/context-menu/context-menu.css";
+@import "./components/dialog/dialog.css";
+@import "./components/direction/direction.css";
+@import "./components/drawer/drawer.css";
+@import "./components/empty/empty.css";
+@import "./components/hover-card/hover-card.css";
+@import "./components/item/item.css";
+@import "./components/kbd/kbd.css";
+@import "./components/menubar/menubar.css";
+@import "./components/navigation-menu/navigation-menu.css";
+@import "./components/pagination/pagination.css";
+@import "./components/popover/popover.css";
+@import "./components/progress/progress.css";
+@import "./components/resizable/resizable.css";
+@import "./components/scroll-area/scroll-area.css";
+@import "./components/separator/separator.css";
+@import "./components/sheet/sheet.css";
+@import "./components/sidebar/sidebar.css";
+@import "./components/skeleton/skeleton.css";
+@import "./components/sonner/sonner.css";
+@import "./components/spinner/spinner.css";
+@import "./components/table/table.css";
+@import "./components/tabs/tabs.css";
+@import "./components/tooltip/tooltip.css";
+@import "./components/toggle/toggle.css";
+@import "./components/toggle-group/toggle-group.css";
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --info: oklch(0.75 0.15 250);
-  --info-foreground: oklch(0.25 0.05 250);
-  --success: oklch(0.72 0.17 150);
-  --success-foreground: oklch(0.25 0.05 150);
-  --error: oklch(0.577 0.245 27.325);
-  --error-foreground: oklch(0.577 0.245 27.325);
-  --warning: oklch(0.8 0.18 80);
-  --warning-foreground: oklch(0.25 0.03 80);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+  --background: var(--slate-1);
+  --foreground: var(--slate-12);
+  --card: var(--slate-1);
+  --card-foreground: var(--slate-12);
+  --popover: var(--slate-1);
+  --popover-foreground: var(--slate-12);
+  --primary: var(--slate-12);
+  --primary-foreground: var(--slate-1);
+  --secondary: var(--slate-3);
+  --secondary-foreground: var(--slate-12);
+  --muted: var(--slate-3);
+  --muted-foreground: var(--slate-11);
+  --accent: var(--slate-3);
+  --accent-foreground: var(--slate-12);
+  --info: var(--blue-9);
+  --info-foreground: var(--blue-12);
+  --success: var(--green-9);
+  --success-foreground: var(--green-12);
+  --error: var(--red-9);
+  --error-foreground: var(--red-11);
+  --warning: var(--amber-9);
+  --warning-foreground: var(--amber-12);
+  --border: var(--slate-6);
+  --input: var(--slate-7);
+  --ring: var(--slate-8);
+  --chart-1: var(--blue-9);
+  --chart-2: var(--green-9);
+  --chart-3: var(--amber-9);
+  --chart-4: var(--red-9);
+  --chart-5: var(--slate-9);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: var(--slate-2);
+  --sidebar-foreground: var(--slate-12);
+  --sidebar-primary: var(--slate-12);
+  --sidebar-primary-foreground: var(--slate-1);
+  --sidebar-accent: var(--slate-3);
+  --sidebar-accent-foreground: var(--slate-12);
+  --sidebar-border: var(--slate-6);
+  --sidebar-ring: var(--slate-8);
   --spacing: 0.25rem;
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --info: oklch(0.43 0.1 250);
-  --info-foreground: oklch(0.75 0.15 250);
-  --success: oklch(0.42 0.12 150);
-  --success-foreground: oklch(0.75 0.15 150);
-  --error: oklch(0.396 0.141 25.723);
-  --error-foreground: oklch(0.637 0.237 25.331);
-  --warning: oklch(0.45 0.12 70);
-  --warning-foreground: oklch(0.8 0.18 75);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
 }
 
 @theme inline {
@@ -136,18 +159,4 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
-html,
-body {
-  font-family: var(--font-sans);
 }

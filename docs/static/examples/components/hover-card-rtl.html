@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    data-example="hover-card-rtl"
+  >
+    <main class="hover-card-workflow" dir="rtl">
+      <header class="hover-card-workflow-header">
+        <h2>الجوانب الفعلية</h2>
+      </header>
+      <div class="hover-card-side-grid">
+        <section class="hover-card-stage hover-card-stage-left">
+          <span ng-hover-card open-delay="20" close-delay="100">
+            <button
+              ng-button
+              type="button"
+              variant="outline"
+              ng-hover-card-trigger
+            >
+              يسار
+            </button>
+            <span ng-hover-card-content side="left">
+              <strong ng-hover-card-title>سماعات لاسلكية</strong>
+              <span ng-hover-card-description>٩٩.٩٩ $</span>
+            </span>
+          </span>
+        </section>
+
+        <section class="hover-card-stage hover-card-stage-top">
+          <span ng-hover-card open-delay="20" close-delay="100">
+            <button
+              ng-button
+              type="button"
+              variant="outline"
+              ng-hover-card-trigger
+            >
+              أعلى
+            </button>
+            <span ng-hover-card-content side="top">
+              <strong ng-hover-card-title>سماعات لاسلكية</strong>
+              <span ng-hover-card-description>٩٩.٩٩ $</span>
+            </span>
+          </span>
+        </section>
+
+        <section class="hover-card-stage hover-card-stage-bottom">
+          <span ng-hover-card open-delay="20" close-delay="100">
+            <button
+              ng-button
+              type="button"
+              variant="outline"
+              ng-hover-card-trigger
+            >
+              أسفل
+            </button>
+            <span ng-hover-card-content side="bottom">
+              <strong ng-hover-card-title>سماعات لاسلكية</strong>
+              <span ng-hover-card-description>٩٩.٩٩ $</span>
+            </span>
+          </span>
+        </section>
+
+        <section class="hover-card-stage hover-card-stage-right">
+          <span ng-hover-card open-delay="20" close-delay="100">
+            <button
+              ng-button
+              type="button"
+              variant="outline"
+              ng-hover-card-trigger
+            >
+              يمين
+            </button>
+            <span ng-hover-card-content side="right">
+              <strong ng-hover-card-title>سماعات لاسلكية</strong>
+              <span ng-hover-card-description>٩٩.٩٩ $</span>
+            </span>
+          </span>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

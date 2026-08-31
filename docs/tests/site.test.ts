@@ -1,0 +1,203 @@
+import { expect, test, type Frame, type Page } from '@playwright/test';
+import { existsSync, readdirSync, statSync } from 'node:fs';
+import { join } from 'node:path';
+
+const componentNames = readdirSync('src/components')
+  .filter((entry) => statSync(join('src/components', entry)).isDirectory())
+  .filter((entry) => existsSync(join('src/components', entry, `${entry}.ts`)))
+  .sort();
+
+const openExample = async (page: Page, component: string): Promise<Frame> => {
+  await page.goto(`docs/components/${component}/`);
+  const iframe = page.locator(
+    `.angularcss-example-frame[src$="/examples/components/${component}.html"]`,
+  );
+  await expect(iframe).toHaveCount(1);
+  await expect(iframe).not.toHaveAttribute('sandbox');
+
+  const frameUrl = new RegExp(`/examples/components/${component}\\.html$`);
+  await expect
+    .poll(() => page.frames().some((frame) => frameUrl.test(frame.url())))
+    .toBe(true);
+  const frame = page.frame({ url: frameUrl });
+  expect(frame, `${component}: example iframe did not load`).not.toBeNull();
+  await frame!.waitForLoadState('load');
+  return frame!;
+};
+
+test('homepage links every component', async ({ page }) => {
+  await page.goto('./');
+
+  const componentLinks = page.locator('.component-catalog-list a');
+  await expect(componentLinks).toHaveCount(componentNames.length);
+
+  const linkedComponents = await componentLinks.evaluateAll((links) =>
+    links
+      .map(
+        (link) =>
+          link
+            .getAttribute('href')
+            ?.match(/\/docs\/components\/([^/]+)\/$/)?.[1],
+      )
+      .filter((component): component is string => Boolean(component))
+      .sort(),
+  );
+
+  expect(linkedComponents).toEqual(componentNames);
+});
+
+test('every component page loads a bootstrapped local example', async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  const failures: string[] = [];
+
+  for (const component of componentNames) {
+    const errors: string[] = [];
+    page.removeAllListeners('pageerror');
+    page.on('pageerror', (error) => errors.push(error.message));
+
+    const frame = await openExample(page, component);
+    const state = await frame.evaluate(() => ({
+      accessibleName: Boolean(
+        document.body.querySelector('[aria-label], img[alt]:not([alt=""])'),
+      ),
+      angular: Boolean(window.angular),
+      bodyText: document.body.innerText.trim(),
+      module: Boolean(window.angular?.module?.('ui')),
+      remoteAssets: Array.from(
+        document.querySelectorAll('script[src], link[href]'),
+        (element) =>
+          element.getAttribute('src') ?? element.getAttribute('href') ?? '',
+      ).filter((source) => /^(?:https?:)?\/\//i.test(source)),
+    }));
+
+    if (!state.angular) failures.push(`${component}: AngularTS did not load`);
+    if (!state.module)
+      failures.push(`${component}: ui module did not register`);
+    if (!state.bodyText && !state.accessibleName) {
+      failures.push(
+        `${component}: example rendered no text or accessible name`,
+      );
+    }
+    if (state.remoteAssets.length > 0) {
+      failures.push(
+        `${component}: loaded remote assets ${state.remoteAssets.join(', ')}`,
+      );
+    }
+    if (errors.length > 0) {
+      failures.push(`${component}: ${errors.join('; ')}`);
+    }
+  }
+
+  expect(failures).toEqual([]);
+});
+
+test('published iframe interactions update component and AngularTS state', async ({
+  page,
+}) => {
+  let frame = await openExample(page, 'accordion');
+  const accordionTrigger = frame.getByRole('button', {
+    name: 'What are your shipping options?',
+  });
+  await expect(accordionTrigger).toHaveAttribute('aria-expanded', 'true');
+  await accordionTrigger.click();
+  await expect(accordionTrigger).toHaveAttribute('aria-expanded', 'false');
+  await accordionTrigger.click();
+  await expect(accordionTrigger).toHaveAttribute('aria-expanded', 'true');
+
+  frame = await openExample(page, 'dropdown');
+  const dropdownTrigger = frame.getByRole('button', { name: 'Options' });
+  await dropdownTrigger.click();
+  await expect(dropdownTrigger).toHaveAttribute('aria-expanded', 'true');
+  await expect(frame.getByRole('menu')).toHaveAttribute('data-open', 'true');
+
+  frame = await openExample(page, 'tabs');
+  const analyticsTab = frame.getByRole('tab', { name: 'Analytics' });
+  await analyticsTab.click();
+  await expect(analyticsTab).toHaveAttribute('aria-selected', 'true');
+
+  frame = await openExample(page, 'dialog');
+  await frame.getByRole('button', { name: 'Edit profile' }).click();
+  await expect(frame.getByRole('dialog')).toBeVisible();
+
+  frame = await openExample(page, 'input');
+  await frame.locator('#docs-input-search').fill('functional');
+  await expect(frame.locator('.output').first()).toContainText(
+    'Value: functional',
+  );
+
+  frame = await openExample(page, 'slider');
+  await frame.locator('#volume').fill('42');
+  await expect(frame.locator('output[for="volume"]')).toHaveText('42');
+
+  frame = await openExample(page, 'switch');
+  await frame.locator('#airplane-mode').check();
+  await expect(frame.locator('.output').first()).toContainText(
+    'Mode enabled: true',
+  );
+
+  frame = await openExample(page, 'select');
+  await frame.locator('[ng-select-trigger]').click();
+  await frame.locator("[ng-select-item][data-value='pineapple']").click();
+  await expect(frame.locator('.output').first()).toContainText(
+    'Selected: pineapple',
+  );
+
+  frame = await openExample(page, 'calendar');
+  await expect(frame.locator("[data-slot='calendar-day']")).toHaveCount(42);
+  await frame
+    .locator("[data-slot='calendar-day'][data-value='2026-05-20']")
+    .click();
+  await expect(frame.locator('.output')).toContainText('Selected: 2026-05-20');
+  await frame.locator("[data-slot='calendar-next']").click();
+  await expect(
+    frame
+      .locator("[data-slot='calendar-title']")
+      .getByRole('combobox', { name: 'Month' }),
+  ).toHaveValue('5');
+  const calendarViewport = await frame.evaluate(() => ({
+    contentHeight: document.body.scrollHeight,
+    viewportHeight: document.documentElement.clientHeight,
+  }));
+  expect(calendarViewport.contentHeight).toBeLessThanOrEqual(
+    calendarViewport.viewportHeight,
+  );
+});
+
+test('bookings application is published with local functional assets', async ({
+  page,
+}) => {
+  const errors: string[] = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  await page.goto('docs/examples/bookings/');
+
+  const iframe = page.locator(
+    '.angularcss-example-frame[src$="/examples/applications/bookings/index.html"]',
+  );
+  await expect(iframe).toHaveCount(1);
+  await iframe.scrollIntoViewIfNeeded();
+  const frameUrl = /\/examples\/applications\/bookings\/(?:index\.html)?$/;
+  await expect
+    .poll(() => page.frames().some((frame) => frameUrl.test(frame.url())))
+    .toBe(true);
+  const frame = page.frame({ url: frameUrl });
+  expect(frame).not.toBeNull();
+
+  const visibleRows = frame!.locator('.booking-row:not(.ng-hide)');
+  await expect(visibleRows).toHaveCount(8);
+  await frame!.getByRole('searchbox').fill('Nora');
+  await expect(visibleRows).toHaveCount(1);
+  await visibleRows.first().locator('.booking-row-trigger').click();
+  await expect(frame!.getByRole('dialog')).toContainText('Nora Hansen');
+
+  const remoteAssets = await frame!.evaluate(() =>
+    Array.from(
+      document.querySelectorAll('script[src], link[href]'),
+      (element) =>
+        element.getAttribute('src') ?? element.getAttribute('href') ?? '',
+    ).filter((source) => /^(?:https?:)?\/\//i.test(source)),
+  );
+  expect(remoteAssets).toEqual([]);
+  expect(errors).toEqual([]);
+});

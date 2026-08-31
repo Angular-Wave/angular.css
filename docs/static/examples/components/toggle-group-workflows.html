@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="fontWeight = 'normal'; pageDirection = 'rtl'"
+    data-example="toggle-group-demo toggle-group-disabled toggle-group-font-weight-selector toggle-group-outline toggle-group-rtl toggle-group-sizes toggle-group-spacing toggle-group-vertical"
+  >
+    <main
+      class="component-state-workflows toggle-group-workflows visual-example"
+    >
+      <section aria-labelledby="toggle-format-heading">
+        <header><h2 id="toggle-format-heading">Formatting</h2></header>
+        <div
+          ng-toggle-group
+          multiple
+          variant="outline"
+          aria-label="Text formatting"
+          id="multiple-toggle-group"
+        >
+          <button
+            data-slot="toggle-group-item"
+            type="button"
+            aria-label="Toggle bold"
+            aria-pressed="true"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="M6 4h7a4 4 0 0 1 0 8H6zM6 12h8a4 4 0 0 1 0 8H6z" />
+            </svg>
+          </button>
+          <button
+            data-slot="toggle-group-item"
+            type="button"
+            aria-label="Toggle italic"
+            aria-pressed="true"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="M10 4h7M7 20h7M14 4 10 20" />
+            </svg>
+          </button>
+          <button
+            data-slot="toggle-group-item"
+            type="button"
+            aria-label="Toggle underline"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="M6 4v6a6 6 0 0 0 12 0V4M4 20h16" />
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      <section aria-labelledby="toggle-keyboard-heading">
+        <header>
+          <h2 id="toggle-keyboard-heading">Keyboard navigation</h2>
+        </header>
+        <div
+          ng-toggle-group
+          variant="outline"
+          aria-label="Text style"
+          id="keyboard-toggle-group"
+        >
+          <button
+            data-slot="toggle-group-item"
+            type="button"
+            aria-pressed="true"
+          >
+            Bold
+          </button>
+          <button
+            data-slot="toggle-group-item"
+            type="button"
+            aria-disabled="true"
+          >
+            Italic
+          </button>
+          <button data-slot="toggle-group-item" type="button">Underline</button>
+        </div>
+      </section>
+
+      <section aria-labelledby="toggle-disabled-heading">
+        <header><h2 id="toggle-disabled-heading">Disabled</h2></header>
+        <div
+          ng-toggle-group
+          disabled
+          aria-label="Disabled formatting"
+          id="disabled-toggle-group"
+        >
+          <button data-slot="toggle-group-item" type="button">Bold</button>
+          <button data-slot="toggle-group-item" type="button">Italic</button>
+          <button data-slot="toggle-group-item" type="button">Underline</button>
+        </div>
+      </section>
+
+      <section aria-labelledby="toggle-weight-heading">
+        <header><h2 id="toggle-weight-heading">Font weight</h2></header>
+        <div
+          ng-toggle-group
+          variant="outline"
+          spacing="2"
+          size="lg"
+          aria-label="Font weight"
+          id="font-weight-toggle-group"
+        >
+          <button
+            data-slot="toggle-group-item"
+            class="toggle-weight-item"
+            type="button"
+            ng-click="fontWeight = 'light'"
+          >
+            <strong style="font-weight: 300">Aa</strong><span>Light</span>
+          </button>
+          <button
+            data-slot="toggle-group-item"
+            class="toggle-weight-item"
+            type="button"
+            aria-pressed="true"
+            ng-click="fontWeight = 'normal'"
+          >
+            <strong style="font-weight: 400">Aa</strong><span>Normal</span>
+          </button>
+          <button
+            data-slot="toggle-group-item"
+            class="toggle-weight-item"
+            type="button"
+            ng-click="fontWeight = 'medium'"
+          >
+            <strong style="font-weight: 500">Aa</strong><span>Medium</span>
+          </button>
+          <button
+            data-slot="toggle-group-item"
+            class="toggle-weight-item"
+            type="button"
+            ng-click="fontWeight = 'bold'"
+          >
+            <strong style="font-weight: 700">Aa</strong><span>Bold</span>
+          </button>
+        </div>
+        <p class="output" role="status">Selected: font-{{ fontWeight }}</p>
+      </section>
+
+      <section aria-labelledby="toggle-sizes-heading">
+        <header><h2 id="toggle-sizes-heading">Sizes and spacing</h2></header>
+        <div class="toggle-group-size-stack">
+          <div
+            ng-toggle-group
+            size="sm"
+            variant="outline"
+            aria-label="Small position"
+          >
+            <button
+              data-slot="toggle-group-item"
+              type="button"
+              aria-pressed="true"
+            >
+              Top
+            </button>
+            <button data-slot="toggle-group-item" type="button">Bottom</button>
+            <button data-slot="toggle-group-item" type="button">Left</button>
+            <button data-slot="toggle-group-item" type="button">Right</button>
+          </div>
+          <div
+            ng-toggle-group
+            variant="outline"
+            spacing="2"
+            aria-label="Spaced position"
+            id="spaced-toggle-group"
+          >
+            <button
+              data-slot="toggle-group-item"
+              type="button"
+              aria-pressed="true"
+            >
+              Top
+            </button>
+            <button data-slot="toggle-group-item" type="button">Bottom</button>
+            <button data-slot="toggle-group-item" type="button">Left</button>
+            <button data-slot="toggle-group-item" type="button">Right</button>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="toggle-vertical-heading">
+        <header><h2 id="toggle-vertical-heading">Vertical</h2></header>
+        <div
+          ng-toggle-group
+          multiple
+          orientation="vertical"
+          spacing="1"
+          aria-label="Vertical formatting"
+          id="vertical-toggle-group"
+        >
+          <button
+            data-slot="toggle-group-item"
+            type="button"
+            aria-pressed="true"
+          >
+            Bold
+          </button>
+          <button
+            data-slot="toggle-group-item"
+            type="button"
+            aria-pressed="true"
+          >
+            Italic
+          </button>
+          <button data-slot="toggle-group-item" type="button">Underline</button>
+        </div>
+      </section>
+
+      <section
+        aria-labelledby="toggle-rtl-heading"
+        dir="{{ pageDirection }}"
+        lang="ar"
+        id="toggle-rtl-shell"
+      >
+        <header>
+          <h2 id="toggle-rtl-heading">اتجاه العرض</h2>
+          <button
+            ng-button
+            type="button"
+            variant="outline"
+            size="sm"
+            ng-click="pageDirection = pageDirection === 'rtl' ? 'ltr' : 'rtl'"
+          >
+            Change direction
+          </button>
+        </header>
+        <div
+          ng-toggle-group
+          variant="outline"
+          aria-label="طريقة العرض"
+          id="rtl-toggle-group"
+        >
+          <button
+            data-slot="toggle-group-item"
+            type="button"
+            aria-pressed="true"
+          >
+            قائمة
+          </button>
+          <button data-slot="toggle-group-item" type="button">شبكة</button>
+          <button data-slot="toggle-group-item" type="button">بطاقات</button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

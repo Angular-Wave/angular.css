@@ -1,0 +1,300 @@
+:root {
+  --docs-background: #fff;
+  --docs-foreground: #1c2024;
+  --docs-muted: #60646c;
+  --docs-subtle: #f9f9fb;
+  --docs-border: #d9d9e0;
+  --docs-accent: #0d74ce;
+  --docs-code: #f0f0f3;
+}
+
+html,
+body {
+  font-family:
+    ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+  letter-spacing: 0;
+  color: var(--docs-foreground);
+  background: var(--docs-background);
+}
+
+body,
+.td-content {
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.td-navbar {
+  min-height: 3.75rem;
+  color: var(--docs-foreground);
+  background: rgb(255 255 255 / 96%);
+  border-bottom: 1px solid var(--docs-border);
+  box-shadow: none;
+}
+
+.td-navbar.td-navbar .navbar-brand,
+.td-navbar.td-navbar .nav-link {
+  color: var(--docs-foreground);
+}
+
+.td-sidebar,
+.td-sidebar-toc {
+  background: var(--docs-background);
+  border-color: var(--docs-border);
+}
+
+.td-sidebar-nav a,
+.td-toc a {
+  color: var(--docs-muted);
+}
+
+.td-main main {
+  min-width: 0;
+}
+
+.td-content > h1,
+.td-content > h2,
+.td-content > h3,
+.td-content > h4 {
+  letter-spacing: 0;
+  color: var(--docs-foreground);
+}
+
+.td-content > h1 {
+  margin-top: 1.5rem;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  line-height: 1.12;
+  font-weight: 700;
+}
+
+.td-content > h2 {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--docs-border);
+  font-size: 1.5rem;
+  line-height: 1.3;
+  font-weight: 650;
+}
+
+.td-content > h3 {
+  margin-top: 2rem;
+  font-size: 1.125rem;
+  font-weight: 650;
+}
+
+.td-content a {
+  color: var(--docs-accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.td-content code:not(pre code) {
+  padding: 0.1rem 0.32rem;
+  color: var(--docs-foreground);
+  background: var(--docs-code);
+  border-radius: 4px;
+}
+
+.td-content pre {
+  border: 1px solid var(--docs-border);
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+.td-content table {
+  width: 100%;
+  margin-block: 1.25rem;
+  font-size: 0.875rem;
+}
+
+.td-content th,
+.td-content td {
+  padding: 0.65rem 0.75rem;
+  border-color: var(--docs-border);
+  vertical-align: top;
+}
+
+.angularcss-example-frame {
+  width: 100%;
+  margin-top: 1rem;
+  background: var(--docs-background);
+  border: 1px solid var(--docs-border);
+  border-radius: 6px;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.angularcss-example-source {
+  margin-top: 0.75rem;
+  border-bottom: 1px solid var(--docs-border);
+}
+
+.angularcss-example-source summary {
+  width: fit-content;
+  padding: 0.45rem 0;
+  color: var(--docs-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.angularcss-example-source .highlight {
+  margin-top: 0.5rem;
+}
+
+.component-catalog-group {
+  margin-top: 2.75rem;
+}
+
+.component-catalog-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 0;
+  padding: 0;
+  border-top: 1px solid var(--docs-border);
+  list-style: none;
+}
+
+.component-catalog-list li {
+  margin: 0;
+  border-bottom: 1px solid var(--docs-border);
+}
+
+.component-catalog-list a {
+  display: grid;
+  gap: 0.2rem;
+  height: 100%;
+  padding: 1rem 0.75rem;
+  color: var(--docs-foreground);
+  text-decoration: none;
+}
+
+.component-catalog-list span {
+  font-weight: 650;
+}
+
+.component-catalog-list small {
+  color: var(--docs-muted);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.angularcss-home {
+  max-width: 72rem;
+  margin-inline: auto;
+  padding: clamp(3rem, 9vw, 7rem) clamp(1.25rem, 5vw, 4rem);
+}
+
+.angularcss-home h1 {
+  max-width: 14ch;
+  margin: 0;
+  font-size: clamp(2.75rem, 7vw, 5rem);
+  line-height: 1;
+  font-weight: 750;
+  letter-spacing: 0;
+}
+
+.angularcss-home > p {
+  max-width: 42rem;
+  margin-top: 1.5rem;
+  color: var(--docs-muted);
+  font-size: 1.125rem;
+}
+
+.application-examples > a {
+  display: grid;
+  gap: 0.25rem;
+  border: 1px solid var(--docs-border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  color: var(--docs-foreground);
+  text-decoration: none;
+}
+
+.angularcss-home nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  margin-top: 2rem;
+}
+
+.angularcss-home nav a {
+  color: var(--docs-foreground);
+  font-weight: 650;
+  text-underline-offset: 0.3em;
+}
+
+.angularcss-home-catalog {
+  max-width: 72rem;
+  margin-inline: auto;
+  padding: 0 clamp(1.25rem, 5vw, 4rem) 6rem;
+}
+
+.angularcss-home-catalog > header {
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--docs-border);
+}
+
+.application-examples h2 {
+  margin: 0;
+}
+
+.application-examples p {
+  margin: 0.4rem 0 0;
+  color: var(--docs-muted);
+}
+
+.angularcss-home-catalog > header h2 {
+  margin: 0;
+  font-size: 1.75rem;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+.angularcss-home-catalog > header p {
+  margin-top: 0.5rem;
+  color: var(--docs-muted);
+}
+
+.application-examples {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 28rem);
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  border-block: 1px solid var(--docs-border);
+  padding-block: 2rem;
+}
+
+.application-examples > a:hover {
+  border-color: var(--docs-foreground);
+}
+
+.component-catalog-list a:hover {
+  background: var(--docs-subtle);
+}
+
+.application-examples > a span {
+  color: var(--docs-muted);
+}
+
+.td-sidebar-nav .active > a,
+.td-sidebar-nav a:hover,
+.td-toc a:hover {
+  color: var(--docs-foreground);
+}
+
+@media (width <= 767px) {
+  .application-examples {
+    grid-template-columns: 1fr;
+  }
+
+  .td-content > h1 {
+    font-size: 2rem;
+  }
+
+  .td-content table {
+    display: block;
+    overflow-x: auto;
+  }
+}

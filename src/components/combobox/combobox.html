@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="frameworks=['AngularTS', 'AngularCSS', 'Tailwind CSS']; state={ query: '', selected: 'AngularTS' }"
+  >
+    <div ng-combobox>
+      <label data-slot="label" for="framework">Framework</label>
+      <div data-slot="combobox-control">
+        <input
+          data-input
+          id="framework"
+          role="combobox"
+          ng-model="state.query"
+          placeholder="Search frameworks..."
+        />
+        <button
+          ng-combobox-trigger
+          variant="outline"
+          size="icon"
+          aria-label="Open options"
+        >
+          v
+        </button>
+      </div>
+      <div
+        data-slot="combobox-content"
+        role="listbox"
+        aria-label="Framework options"
+      >
+        <section data-slot="combobox-group">
+          <h3 data-slot="combobox-group-label">Libraries</h3>
+          <div
+            ng-repeat="framework in frameworks | filter:state.query"
+            data-slot="combobox-item"
+            role="option"
+            data-value="{{ framework }}"
+            ng-click="state.selected=framework; state.query=framework"
+          >
+            {{ framework }}
+          </div>
+        </section>
+        <p
+          data-slot="combobox-empty"
+          ng-if="(frameworks | filter:state.query).length === 0"
+        >
+          No frameworks found.
+        </p>
+      </div>
+      <button
+        ng-combobox-clear
+        ng-click="state.query=''; state.selected=''"
+        variant="ghost"
+      >
+        Clear selection
+      </button>
+      <p class="muted">
+        Selected: {{ state.selected ? state.selected : 'None' }}
+      </p>
+    </div>
+  </body>
+</html>

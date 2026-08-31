@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>AngularCSS</title>
+    <link rel="stylesheet" href="/docs/assets/angular.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@angular-wave/angular.ts/dist/angular-ts.umd.min.js"></script>
+    <script type="module" src="../../index.ts"></script>
+  </head>
+
+  <body ng-app="ui" ng-cloak>
+    <div class="grid w-full max-w-xl items-start gap-4 p-10">
+      <div data-slot="field" orientation="horizontal">
+        <input data-slot="switch" id="airplane-mode" type="checkbox" role="switch" />
+        <label ng-label for="airplane-mode">Airplane Mode</label>
+      </div>
+
+      <div data-slot="field" orientation="horizontal">
+        <input data-slot="switch" id="small-switch" type="checkbox" role="switch" size="sm" checked />
+        <label ng-label for="small-switch">Small switch</label>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,40 +1,46 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>AngularTS</title>
-    <link rel="shortcut icon" type="image/png" href="images/favicon.ico" />
-    <link rel="stylesheet" href="/docs/assets/angular.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@angular-wave/angular.ts/css/angular.css"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/@angular-wave/angular.ts/dist/angular-ts.umd.min.js"></script>
-    <script type="module" src="../../index.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
   </head>
-
-  <body ng-app="ui" ng-cloak>
-    <div class="p-10">
-      <div ng-accordion>
-        <div>
-          <h3>
-            <button>Section 1</button>
-          </h3>
-          <div>Content for section 1</div>
+  <body ng-app="ui" ng-cloak data-example="accordion-demo">
+    <div ng-accordion class="accordion-demo visual-example">
+      <div data-slot="accordion-item" data-state="open">
+        <h3>
+          <button type="button" data-slot="accordion-trigger">
+            What are your shipping options?
+          </button>
+        </h3>
+        <div data-slot="accordion-content">
+          We offer standard (5-7 days), express (2-3 days), and overnight
+          shipping. Free shipping on international orders.
         </div>
-
-        <div>
-          <h3>
-            <button>Section 2</button>
-          </h3>
-          <div>Content for section 2</div>
+      </div>
+      <div data-slot="accordion-item">
+        <h3>
+          <button type="button" data-slot="accordion-trigger">
+            What is your return policy?
+          </button>
+        </h3>
+        <div data-slot="accordion-content">
+          Returns are accepted within 30 days. Items must be unused and in their
+          original packaging.
         </div>
-
-        <div>
-          <h3>
-            <button>Section 3</button>
-          </h3>
-          <div>Content for section 3</div>
+      </div>
+      <div data-slot="accordion-item">
+        <h3>
+          <button type="button" data-slot="accordion-trigger">
+            How can I contact customer support?
+          </button>
+        </h3>
+        <div data-slot="accordion-content">
+          Reach us by email, live chat, or phone during business hours.
         </div>
       </div>
     </div>

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    class="hover-card-example-body"
+    data-example="hover-card-demo"
+  >
+    <main class="hover-card-demo visual-example">
+      <span ng-hover-card open-delay="10" close-delay="100">
+        <button ng-button type="button" variant="link" ng-hover-card-trigger>
+          Hover Here
+        </button>
+        <span ng-hover-card-content>
+          <strong ng-hover-card-title>@nextjs</strong>
+          <span ng-hover-card-description>
+            The React Framework - created and maintained by @vercel.
+          </span>
+          <span class="hover-card-meta">Joined December 2021</span>
+        </span>
+      </span>
+    </main>
+  </body>
+</html>

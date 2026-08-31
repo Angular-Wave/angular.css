@@ -1,4 +1,4 @@
-.PHONY: build test types
+.PHONY: build check doc lint prepare-release pretty serve setup test test-components test-docs test-ui types version
 
 setup:
 	@rm -r ./node_modules/
@@ -11,9 +11,7 @@ build: version
 		echo "Removing $(BUILD_DIR)..."; \
 		rm -r "$(BUILD_DIR)"; \
 	fi
-	@npm i
-	./node_modules/.bin/rollup -c
-	@npm run css-prod
+	@npm run build
 
 version:
 	@node utils/version.cjs	
@@ -26,7 +24,7 @@ lint:
 
 check:
 	@echo "Typechecking Js"
-	./node_modules/.bin/tsc 
+	@npm run check
 
 types:
 	@rm -rf @types
@@ -45,17 +43,28 @@ doc:
 serve:
 	@npm run serve
 
-prepare-release: test check types doc pretty build
+prepare-release: check test-docs test types doc pretty build
 
 PLAYWRIGHT_TEST := npx playwright test
 
 test:
 	@echo $(INFO) "Playwright test JS"
-	@$(PLAYWRIGHT_TEST) 
+	@npm run test
+
+test-components:
+	@echo $(INFO) "Playwright component and element tests"
+	@npm run test:components
+
+test-docs:
+	@echo $(INFO) "Playwright docs iframe tests"
+	@npm run test:docs
 
 test-ui:
 	@echo $(INFO) "Playwright test JS with ui"
 	@$(PLAYWRIGHT_TEST) --ui
 
 hugo:
-	hugo server --source=docs --disableFastRender
+	@if [ ! -d "docs/node_modules" ]; then \
+		npm --prefix docs install; \
+	fi
+	npm --prefix docs run _hugo-dev -- serve --disableFastRender --renderToMemory

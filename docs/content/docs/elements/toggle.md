@@ -1,0 +1,30 @@
+---
+title: toggle
+notoc: true
+description: >
+  Pressed-state button
+---
+
+Use native `button` elements with `aria-pressed`. The CSS also accepts
+`data-state="on"`.
+
+```html
+<button data-slot="toggle" aria-pressed="true">Bold</button>
+<button data-slot="toggle" variant="outline">Italic</button>
+```
+
+## Example
+
+{{< example src="examples/elements/toggle.html" title="Toggle example" height="360" >}}
+
+<!-- angularcss-element-reference:start -->
+## Canonical reference
+
+This element entrypoint re-exports the canonical `toggle` TypeScript
+implementation. It does not define separate behavior, state, accessibility, or
+CSS APIs.
+
+Read the [complete toggle component reference]({{< relref
+"/docs/components/toggle" >}}) for selectors, slots, attributes, generated
+state, events, accessibility, and customization.
+<!-- angularcss-element-reference:end -->

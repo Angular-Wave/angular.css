@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="labelTerms=false;labelTermsRtl=false"
+    data-example="label-demo label-rtl"
+  >
+    <main class="label-workflows visual-example">
+      <form class="label-control-contract" aria-label="Label state contract">
+        <label ng-label for="email">Email</label>
+        <input data-input id="email" placeholder="Email" />
+        <label ng-label for="name">Name</label>
+        <input data-input id="name" placeholder="Name" />
+      </form>
+
+      <section class="label-checkbox-demo" aria-label="Label checkbox">
+        <input
+          ng-checkbox
+          id="label-terms"
+          type="checkbox"
+          ng-model="labelTerms"
+        />
+        <label ng-label for="label-terms">Accept terms and conditions</label>
+      </section>
+
+      <section
+        class="label-checkbox-demo"
+        aria-label="تسمية خانة الاختيار"
+        dir="rtl"
+        lang="ar"
+      >
+        <input
+          ng-checkbox
+          id="label-terms-rtl"
+          type="checkbox"
+          ng-model="labelTermsRtl"
+        />
+        <label ng-label for="label-terms-rtl">قبول الشروط والأحكام</label>
+      </section>
+
+      <p class="label-output" role="status">
+        Terms: {{ labelTerms ? 'accepted' : 'not accepted' }} · الشروط: {{
+        labelTermsRtl ? 'مقبولة' : 'غير مقبولة' }}
+      </p>
+    </main>
+  </body>
+</html>

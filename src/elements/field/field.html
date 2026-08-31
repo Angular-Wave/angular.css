@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>AngularCSS</title>
+    <link rel="stylesheet" href="/docs/assets/angular.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@angular-wave/angular.ts/dist/angular-ts.umd.min.js"></script>
+    <script type="module" src="../../index.ts"></script>
+  </head>
+
+  <body ng-app="ui" ng-cloak>
+    <form class="grid w-full max-w-xl items-start gap-6 p-10">
+      <fieldset data-slot="field-set">
+        <legend data-slot="field-legend">Profile</legend>
+
+        <div data-slot="field-group">
+          <div data-slot="field">
+            <label ng-label data-slot="field-label" for="name">Name</label>
+            <input data-input id="name" placeholder="Jane Doe" />
+            <p data-slot="field-description">Use your public display name.</p>
+          </div>
+
+          <div data-slot="field" data-invalid>
+            <label ng-label data-slot="field-label" for="email">Email</label>
+            <input data-input id="email" placeholder="Email" aria-invalid="true" />
+            <p data-slot="field-error" role="alert">Enter a valid email.</p>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </body>
+</html>

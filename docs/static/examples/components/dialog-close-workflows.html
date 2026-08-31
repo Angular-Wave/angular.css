@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    data-example="dialog-close-button dialog-no-close-button"
+  >
+    <main class="dialog-workflow-grid visual-example">
+      <section class="dialog-workflow" aria-labelledby="share-heading">
+        <h2 id="share-heading">Custom close action</h2>
+        <div id="share-dialog" ng-dialog>
+          <button ng-dialog-trigger ng-button variant="outline">Share</button>
+          <div ng-dialog-overlay></div>
+          <section ng-dialog-content>
+            <header ng-dialog-header>
+              <h3 ng-dialog-title>Share link</h3>
+              <p ng-dialog-description>
+                Anyone who has this link will be able to view this project.
+              </p>
+            </header>
+            <div class="dialog-copy-row">
+              <input
+                data-input
+                aria-label="Share URL"
+                value="https://example.com/link/to/document"
+                readonly
+              />
+              <button ng-button variant="secondary">Copy Link</button>
+            </div>
+            <footer ng-dialog-footer>
+              <button ng-button variant="outline" data-dialog-close>
+                Close
+              </button>
+            </footer>
+            <button ng-dialog-close ng-button variant="ghost" size="icon-sm">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="M18 6 6 18"></path>
+                <path d="m6 6 12 12"></path>
+              </svg>
+              <span class="example-sr-only">Close</span>
+            </button>
+          </section>
+        </div>
+      </section>
+
+      <section class="dialog-workflow" aria-labelledby="plain-heading">
+        <h2 id="plain-heading">Without corner close</h2>
+        <div id="plain-dialog" ng-dialog>
+          <button ng-dialog-trigger ng-button variant="outline">
+            Open dialog
+          </button>
+          <div ng-dialog-overlay></div>
+          <section ng-dialog-content>
+            <header ng-dialog-header>
+              <h3 ng-dialog-title>Terms of service</h3>
+              <p ng-dialog-description>
+                Review the current terms before continuing.
+              </p>
+            </header>
+            <p>Your workspace data remains available to members with access.</p>
+            <footer ng-dialog-footer>
+              <button ng-button data-dialog-close>Continue</button>
+            </footer>
+          </section>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak style="padding: 0">
+    <button
+      data-slot="button"
+      variant="outline"
+      aria-controls="notifications-sheet"
+      style="position: absolute; left: 24px; top: 24px; z-index: 60"
+    >
+      Open sheet
+    </button>
+    <section
+      id="notifications-sheet"
+      ng-sheet
+      data-open="true"
+      style="height: 370px"
+    >
+      <div data-slot="sheet-overlay"></div>
+      <aside
+        data-slot="sheet-content"
+        data-side="right"
+        aria-label="Notifications"
+      >
+        <header data-slot="sheet-header">
+          <h2 data-slot="sheet-title">Notifications</h2>
+          <p data-slot="sheet-description">
+            Recent updates from your workspace.
+          </p>
+        </header>
+        <div class="stack-sm">
+          <div data-slot="item">
+            <div data-slot="item-content">
+              <div data-slot="item-title">Build completed</div>
+              <div data-slot="item-description">
+                Production build finished 2 minutes ago.
+              </div>
+            </div>
+          </div>
+          <div data-slot="item">
+            <div data-slot="item-content">
+              <div data-slot="item-title">Invite accepted</div>
+              <div data-slot="item-description">
+                Jane joined the design team.
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer data-slot="sheet-footer">
+          <button data-slot="button" variant="outline" data-sheet-close>
+            Close
+          </button>
+        </footer>
+      </aside>
+    </section>
+  </body>
+</html>

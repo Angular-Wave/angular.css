@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="selectedDate='2026-05-14'"
+    data-example="calendar-demo"
+  >
+    <div class="stack-sm">
+      <section
+        ng-calendar
+        data-calendar-generated
+        data-month="2026-05"
+        data-value="{{ selectedDate }}"
+        data-caption-layout="dropdown"
+        data-start-year="2024"
+        data-end-year="2028"
+        ng-on-angularcss:calendar-select="selectedDate = $event.detail.value"
+        class="calendar-demo visual-example"
+      >
+        <header data-slot="calendar-header">
+          <button
+            type="button"
+            ng-button
+            data-slot="calendar-previous"
+            size="icon"
+            variant="ghost"
+            aria-label="Previous month"
+          >
+            <svg
+              class="icon-sm"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <h3 data-slot="calendar-title"></h3>
+          <button
+            type="button"
+            ng-button
+            data-slot="calendar-next"
+            size="icon"
+            variant="ghost"
+            aria-label="Next month"
+          >
+            <svg
+              class="icon-sm"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+        </header>
+        <div data-slot="calendar-grid"></div>
+      </section>
+      <p class="output" aria-live="polite">Selected: {{ selectedDate }}</p>
+    </div>
+  </body>
+</html>

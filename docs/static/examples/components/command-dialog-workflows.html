@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="basic={query:'',selected:''}; grouped={query:'',selected:''}; shortcuts={query:'',selected:''}; shortcutDialog={query:'',selected:'',open:false}; suggestions=['Calendar','Search Emoji','Calculator']; settings=[{label:'Profile',shortcut:'⌘P'},{label:'Billing',shortcut:'⌘B'},{label:'Settings',shortcut:'⌘S'}]"
+    ng-keydown="($event.key === 'j' && ($event.ctrlKey || $event.metaKey)) ? shortcutDialog.open=!shortcutDialog.open : shortcutDialog.open"
+    data-example="command-basic command-dialog command-groups command-shortcuts"
+  >
+    <main class="command-dialog-workflows visual-example">
+      <section class="command-dialog-workflow">
+        <button
+          ng-button
+          type="button"
+          data-variant="outline"
+          aria-controls="basic-command-dialog"
+        >
+          Open Menu
+        </button>
+        <section
+          id="basic-command-dialog"
+          class="command-dialog-shell"
+          ng-dialog
+          data-open="false"
+        >
+          <div ng-dialog-overlay></div>
+          <section ng-dialog-content>
+            <header class="visually-hidden">
+              <h2 ng-dialog-title>Command Palette</h2>
+              <p ng-dialog-description>Search for a command to run.</p>
+            </header>
+            <section ng-command aria-label="Basic command menu">
+              <div ng-command-input-wrapper>
+                <div ng-command-input-group>
+                  <span ng-command-input-icon aria-hidden="true">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                  </span>
+                  <input
+                    ng-command-input
+                    aria-label="Search basic commands"
+                    ng-model="basic.query"
+                    placeholder="Type a command or search..."
+                  />
+                </div>
+              </div>
+              <div ng-command-list>
+                <p ng-command-empty>No results found.</p>
+                <section ng-command-group>
+                  <h3 ng-command-group-heading>Suggestions</h3>
+                  <div
+                    ng-command-item
+                    data-dialog-close
+                    ng-repeat="item in suggestions | filter:basic.query"
+                    ng-click="basic.selected=item"
+                  >
+                    <span ng-bind="item"></span>
+                  </div>
+                </section>
+              </div>
+            </section>
+          </section>
+        </section>
+        <output class="command-workflow-output" aria-live="polite">
+          Basic: <span ng-bind="basic.selected || 'None'"></span>
+        </output>
+      </section>
+
+      <section class="command-dialog-workflow">
+        <button
+          ng-button
+          type="button"
+          data-variant="outline"
+          aria-controls="groups-command-dialog"
+        >
+          Open Grouped Menu
+        </button>
+        <section
+          id="groups-command-dialog"
+          class="command-dialog-shell"
+          ng-dialog
+          data-open="false"
+        >
+          <div ng-dialog-overlay></div>
+          <section ng-dialog-content>
+            <header class="visually-hidden">
+              <h2 ng-dialog-title>Grouped Command Palette</h2>
+              <p ng-dialog-description>Search grouped application commands.</p>
+            </header>
+            <section ng-command aria-label="Grouped command menu">
+              <div ng-command-input-wrapper>
+                <div ng-command-input-group>
+                  <span ng-command-input-icon aria-hidden="true">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                  </span>
+                  <input
+                    ng-command-input
+                    aria-label="Search grouped commands"
+                    ng-model="grouped.query"
+                    placeholder="Type a command or search..."
+                  />
+                </div>
+              </div>
+              <div ng-command-list>
+                <p ng-command-empty>No results found.</p>
+                <section ng-command-group>
+                  <h3 ng-command-group-heading>Suggestions</h3>
+                  <div
+                    ng-command-item
+                    data-dialog-close
+                    ng-repeat="item in suggestions | filter:grouped.query"
+                    ng-click="grouped.selected=item"
+                  >
+                    <svg
+                      ng-command-item-icon
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      aria-hidden="true"
+                    >
+                      <circle cx="12" cy="12" r="8"></circle>
+                    </svg>
+                    <span ng-bind="item"></span>
+                  </div>
+                </section>
+                <div ng-command-separator></div>
+                <section ng-command-group>
+                  <h3 ng-command-group-heading>Settings</h3>
+                  <div
+                    ng-command-item
+                    data-dialog-close
+                    ng-repeat="item in settings | filter:grouped.query"
+                    ng-click="grouped.selected=item.label"
+                  >
+                    <svg
+                      ng-command-item-icon
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      aria-hidden="true"
+                    >
+                      <circle cx="12" cy="8" r="4"></circle>
+                      <path d="M4 21a8 8 0 0 1 16 0"></path>
+                    </svg>
+                    <span ng-bind="item.label"></span>
+                    <span ng-command-shortcut ng-bind="item.shortcut"></span>
+                  </div>
+                </section>
+              </div>
+            </section>
+          </section>
+        </section>
+        <output class="command-workflow-output" aria-live="polite">
+          Grouped: <span ng-bind="grouped.selected || 'None'"></span>
+        </output>
+      </section>
+
+      <section class="command-dialog-workflow">
+        <button
+          ng-button
+          type="button"
+          data-variant="outline"
+          aria-controls="shortcuts-command-dialog"
+        >
+          Open Shortcuts
+        </button>
+        <section
+          id="shortcuts-command-dialog"
+          class="command-dialog-shell"
+          ng-dialog
+          data-open="false"
+        >
+          <div ng-dialog-overlay></div>
+          <section ng-dialog-content>
+            <header class="visually-hidden">
+              <h2 ng-dialog-title>Command Shortcuts</h2>
+              <p ng-dialog-description>Search settings commands.</p>
+            </header>
+            <section ng-command aria-label="Shortcut command menu">
+              <div ng-command-input-wrapper>
+                <div ng-command-input-group>
+                  <span ng-command-input-icon aria-hidden="true">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                  </span>
+                  <input
+                    ng-command-input
+                    aria-label="Search shortcut commands"
+                    ng-model="shortcuts.query"
+                    placeholder="Type a command or search..."
+                  />
+                </div>
+              </div>
+              <div ng-command-list>
+                <p ng-command-empty>No results found.</p>
+                <section ng-command-group>
+                  <h3 ng-command-group-heading>Settings</h3>
+                  <div
+                    ng-command-item
+                    data-dialog-close
+                    ng-repeat="item in settings | filter:shortcuts.query"
+                    ng-click="shortcuts.selected=item.label"
+                  >
+                    <svg
+                      ng-command-item-icon
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      aria-hidden="true"
+                    >
+                      <circle cx="12" cy="8" r="4"></circle>
+                      <path d="M4 21a8 8 0 0 1 16 0"></path>
+                    </svg>
+                    <span ng-bind="item.label"></span>
+                    <span ng-command-shortcut ng-bind="item.shortcut"></span>
+                  </div>
+                </section>
+              </div>
+            </section>
+          </section>
+        </section>
+        <output class="command-workflow-output" aria-live="polite">
+          Shortcut: <span ng-bind="shortcuts.selected || 'None'"></span>
+        </output>
+      </section>
+
+      <section class="command-dialog-workflow command-shortcut-workflow">
+        <p>Press <kbd>Ctrl J</kbd></p>
+        <section
+          id="keyboard-command-dialog"
+          class="command-dialog-shell"
+          ng-dialog
+          data-open="{{ shortcutDialog.open }}"
+        >
+          <div ng-dialog-overlay></div>
+          <section ng-dialog-content>
+            <header class="visually-hidden">
+              <h2 ng-dialog-title>Keyboard Command Palette</h2>
+              <p ng-dialog-description>Search for a command to run.</p>
+            </header>
+            <section ng-command aria-label="Keyboard command menu">
+              <div ng-command-input-wrapper>
+                <div ng-command-input-group>
+                  <span ng-command-input-icon aria-hidden="true">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                  </span>
+                  <input
+                    ng-command-input
+                    aria-label="Search keyboard commands"
+                    ng-model="shortcutDialog.query"
+                    placeholder="Type a command or search..."
+                  />
+                </div>
+              </div>
+              <div ng-command-list>
+                <p ng-command-empty>No results found.</p>
+                <section ng-command-group>
+                  <h3 ng-command-group-heading>Suggestions</h3>
+                  <div
+                    ng-command-item
+                    data-dialog-close
+                    ng-repeat="item in suggestions | filter:shortcutDialog.query"
+                    ng-click="shortcutDialog.selected=item; shortcutDialog.open=false"
+                  >
+                    <span ng-bind="item"></span>
+                  </div>
+                </section>
+                <div ng-command-separator></div>
+                <section ng-command-group>
+                  <h3 ng-command-group-heading>Settings</h3>
+                  <div
+                    ng-command-item
+                    data-dialog-close
+                    ng-repeat="item in settings | filter:shortcutDialog.query"
+                    ng-click="shortcutDialog.selected=item.label; shortcutDialog.open=false"
+                  >
+                    <span ng-bind="item.label"></span>
+                    <span ng-command-shortcut ng-bind="item.shortcut"></span>
+                  </div>
+                </section>
+              </div>
+            </section>
+          </section>
+        </section>
+        <output class="command-workflow-output" aria-live="polite">
+          Keyboard:
+          <span ng-bind="shortcutDialog.selected || 'None'"></span>
+        </output>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,276 @@
+input[type="range"][ng-slider],
+input[type="range"][data-slot="slider"] {
+  width: 100%;
+  height: calc(var(--spacing) * 5);
+  appearance: none;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+
+  &::-webkit-slider-runnable-track {
+    height: calc(var(--spacing) * 1);
+    border-radius: 9999px;
+    background: linear-gradient(
+      to right,
+      var(--primary) 0 var(--value, 0%),
+      var(--muted) var(--value, 0%) 100%
+    );
+  }
+
+  &::-moz-range-track {
+    height: calc(var(--spacing) * 1);
+    border-radius: 9999px;
+    background: var(--muted);
+  }
+
+  &::-moz-range-progress {
+    height: calc(var(--spacing) * 1);
+    border-radius: 9999px;
+    background: var(--primary);
+  }
+
+  &::-webkit-slider-thumb {
+    width: calc(var(--spacing) * 3);
+    height: calc(var(--spacing) * 3);
+    margin-block-start: calc(var(--spacing) * -1);
+    appearance: none;
+    border: 1px solid var(--ring);
+    border-radius: 9999px;
+    background: white;
+    transition:
+      box-shadow 120ms ease,
+      border-color 120ms ease;
+  }
+
+  &::-moz-range-thumb {
+    width: calc(var(--spacing) * 3);
+    height: calc(var(--spacing) * 3);
+    border: 1px solid var(--ring);
+    border-radius: 9999px;
+    background: white;
+    transition:
+      box-shadow 120ms ease,
+      border-color 120ms ease;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+
+  &:focus-visible::-webkit-slider-thumb {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+  }
+
+  &:focus-visible::-moz-range-thumb {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &:dir(rtl)::-webkit-slider-runnable-track {
+    background: linear-gradient(
+      to left,
+      var(--primary) 0 var(--value, 0%),
+      var(--muted) var(--value, 0%) 100%
+    );
+  }
+
+  &[orientation="vertical"],
+  &[data-orientation="vertical"] {
+    width: calc(var(--spacing) * 5);
+    height: calc(var(--spacing) * 40);
+    direction: rtl;
+    writing-mode: vertical-lr;
+
+    &::-webkit-slider-runnable-track {
+      width: calc(var(--spacing) * 1);
+      height: 100%;
+      background: linear-gradient(
+        to top,
+        var(--primary) 0 var(--value, 0%),
+        var(--muted) var(--value, 0%) 100%
+      );
+    }
+
+    &::-moz-range-track {
+      width: calc(var(--spacing) * 1);
+      height: 100%;
+    }
+
+    &::-moz-range-progress {
+      width: calc(var(--spacing) * 1);
+    }
+  }
+}
+
+:is([ng-slider], [data-slot="slider"]):not(input) {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: calc(var(--spacing) * 5);
+  align-items: center;
+  touch-action: none;
+  user-select: none;
+}
+
+:is([ng-slider], [data-slot="slider"]):not(input)[data-disabled="true"] {
+  opacity: 0.5;
+}
+
+:is([data-slot="slider-track"], [ng-slider-track]) {
+  position: absolute;
+  inset-inline: 0;
+  top: 50%;
+  height: calc(var(--spacing) * 1);
+  overflow: hidden;
+  border-radius: 9999px;
+  background: var(--muted);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+:is([data-slot="slider-range"], [ng-slider-range]) {
+  position: absolute;
+  inset-block: 0;
+  left: var(--range-start, 0%);
+  width: calc(var(--range-end, 0%) - var(--range-start, 0%));
+  background: var(--primary);
+  pointer-events: none;
+}
+
+:is([ng-slider], [data-slot="slider"]):not(input)
+  > :is(
+    input[type="range"][ng-slider-thumb],
+    input[type="range"][data-slot="slider-thumb"]
+  ) {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: calc(var(--spacing) * 5);
+  appearance: none;
+  border: 0;
+  background: transparent;
+  pointer-events: none;
+}
+
+:is([ng-slider], [data-slot="slider"]):not(input)
+  > :is(
+    input[type="range"][ng-slider-thumb],
+    input[type="range"][data-slot="slider-thumb"]
+  ):is(:focus, [data-active="true"]) {
+  z-index: 2;
+  outline: none;
+}
+
+:is([ng-slider], [data-slot="slider"]):not(input)
+  > :is(
+    input[type="range"][ng-slider-thumb],
+    input[type="range"][data-slot="slider-thumb"]
+  )::-webkit-slider-runnable-track {
+  height: calc(var(--spacing) * 1);
+  background: transparent;
+}
+
+:is([ng-slider], [data-slot="slider"]):not(input)
+  > :is(
+    input[type="range"][ng-slider-thumb],
+    input[type="range"][data-slot="slider-thumb"]
+  )::-moz-range-track {
+  height: calc(var(--spacing) * 1);
+  background: transparent;
+}
+
+:is([ng-slider], [data-slot="slider"]):not(input)
+  > :is(
+    input[type="range"][ng-slider-thumb],
+    input[type="range"][data-slot="slider-thumb"]
+  )::-webkit-slider-thumb {
+  width: calc(var(--spacing) * 3);
+  height: calc(var(--spacing) * 3);
+  margin-block-start: calc(var(--spacing) * -1);
+  appearance: none;
+  border: 1px solid var(--ring);
+  border-radius: 9999px;
+  background: white;
+  pointer-events: auto;
+  transition: box-shadow 120ms ease;
+}
+
+:is([ng-slider], [data-slot="slider"]):not(input)
+  > :is(
+    input[type="range"][ng-slider-thumb],
+    input[type="range"][data-slot="slider-thumb"]
+  )::-moz-range-thumb {
+  width: calc(var(--spacing) * 3);
+  height: calc(var(--spacing) * 3);
+  border: 1px solid var(--ring);
+  border-radius: 9999px;
+  background: white;
+  pointer-events: auto;
+  transition: box-shadow 120ms ease;
+}
+
+:is([ng-slider], [data-slot="slider"]):not(input)
+  > :is(
+    input[type="range"][ng-slider-thumb],
+    input[type="range"][data-slot="slider-thumb"]
+  ):focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+}
+
+:is([ng-slider], [data-slot="slider"]):not(input)
+  > :is(
+    input[type="range"][ng-slider-thumb],
+    input[type="range"][data-slot="slider-thumb"]
+  ):focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+}
+
+:is([ng-slider], [data-slot="slider"]):not(input)
+  > :is(
+    input[type="range"][ng-slider-thumb],
+    input[type="range"][data-slot="slider-thumb"]
+  ):disabled {
+  pointer-events: none;
+}
+
+/* stylelint-disable-next-line no-descending-specificity -- Native and composite slider roots cannot match the same element. */
+:is([ng-slider], [data-slot="slider"]):not(input)[data-orientation="vertical"] {
+  width: calc(var(--spacing) * 5);
+  height: calc(var(--spacing) * 40);
+  flex-direction: column;
+}
+
+:is([ng-slider], [data-slot="slider"]):not(input)[data-orientation="vertical"]
+  :is([data-slot="slider-track"], [ng-slider-track]) {
+  inset-block: 0;
+  inset-inline-start: 50%;
+  top: auto;
+  width: calc(var(--spacing) * 1);
+  height: auto;
+  transform: translateX(-50%);
+}
+
+:is([ng-slider], [data-slot="slider"]):not(input)[data-orientation="vertical"]
+  :is([data-slot="slider-range"], [ng-slider-range]) {
+  inset-inline: 0;
+  top: auto;
+  bottom: var(--range-start, 0%);
+  width: auto;
+  height: calc(var(--range-end, 0%) - var(--range-start, 0%));
+}
+
+:is([ng-slider], [data-slot="slider"]):not(input)[data-orientation="vertical"]
+  > :is(
+    input[type="range"][ng-slider-thumb],
+    input[type="range"][data-slot="slider-thumb"]
+  ) {
+  width: calc(var(--spacing) * 5);
+  height: calc(var(--spacing) * 40);
+  direction: rtl;
+  writing-mode: vertical-lr;
+}

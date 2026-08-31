@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak ng-init="name='Jane Doe'">
+    <form class="stack">
+      <fieldset data-slot="field-set">
+        <legend data-slot="field-legend">Profile</legend>
+        <div data-slot="field-group">
+          <div ng-field>
+            <label ng-label data-slot="field-label" for="profile-name">
+              Name
+            </label>
+            <input
+              data-input
+              id="profile-name"
+              placeholder="Enter your name"
+              ng-model="name"
+            />
+            <p data-slot="field-description">Use your public display name.</p>
+          </div>
+          <div data-invalid ng-field>
+            <label ng-label data-slot="field-label" for="profile-email">
+              Email
+            </label>
+            <input
+              data-input
+              id="profile-email"
+              placeholder="Email"
+              aria-invalid="true"
+            />
+            <p data-slot="field-error" role="alert">Enter a valid email.</p>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </body>
+</html>

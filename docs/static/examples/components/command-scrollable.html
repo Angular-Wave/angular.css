@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="scroll={query:'',selected:''}; commandGroups=[{label:'Navigation',items:[{label:'Home',shortcut:'⌘H'},{label:'Inbox',shortcut:'⌘I'},{label:'Documents',shortcut:'⌘D'},{label:'Folders',shortcut:'⌘F'}]},{label:'Actions',items:[{label:'New File',shortcut:'⌘N'},{label:'New Folder',shortcut:'⇧⌘N'},{label:'Copy',shortcut:'⌘C'},{label:'Cut',shortcut:'⌘X'},{label:'Paste',shortcut:'⌘V'},{label:'Delete',shortcut:'⌫'}]},{label:'View',items:[{label:'Grid View',shortcut:''},{label:'List View',shortcut:''},{label:'Zoom In',shortcut:'⌘+'},{label:'Zoom Out',shortcut:'⌘-'}]},{label:'Account',items:[{label:'Profile',shortcut:'⌘P'},{label:'Billing',shortcut:'⌘B'},{label:'Settings',shortcut:'⌘S'},{label:'Notifications',shortcut:''},{label:'Help & Support',shortcut:''}]},{label:'Tools',items:[{label:'Calculator',shortcut:''},{label:'Calendar',shortcut:''},{label:'Image Editor',shortcut:''},{label:'Code Editor',shortcut:''}]}]"
+    data-example="command-scrollable"
+  >
+    <main class="command-scrollable-demo visual-example">
+      <button
+        ng-button
+        type="button"
+        data-variant="outline"
+        aria-controls="scrollable-command-dialog"
+      >
+        Open Menu
+      </button>
+      <section
+        id="scrollable-command-dialog"
+        class="command-dialog-shell"
+        ng-dialog
+        data-open="false"
+      >
+        <div ng-dialog-overlay></div>
+        <section ng-dialog-content>
+          <header class="visually-hidden">
+            <h2 ng-dialog-title>Scrollable Command Palette</h2>
+            <p ng-dialog-description>Search all application commands.</p>
+          </header>
+          <section ng-command aria-label="Scrollable command menu">
+            <div ng-command-input-wrapper>
+              <div ng-command-input-group>
+                <span ng-command-input-icon aria-hidden="true">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.3-4.3"></path>
+                  </svg>
+                </span>
+                <input
+                  ng-command-input
+                  aria-label="Search all commands"
+                  ng-model="scroll.query"
+                  placeholder="Type a command or search..."
+                />
+              </div>
+            </div>
+            <div ng-command-list>
+              <p ng-command-empty>No results found.</p>
+              <section ng-command-group ng-repeat="group in commandGroups">
+                <h3 ng-command-group-heading ng-bind="group.label"></h3>
+                <div
+                  ng-command-item
+                  data-dialog-close
+                  ng-repeat="item in group.items | filter:scroll.query"
+                  ng-click="scroll.selected=item.label"
+                >
+                  <svg
+                    ng-command-item-icon
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M6 2h9l3 3v17H6z"></path>
+                    <path d="M14 2v4h4"></path>
+                  </svg>
+                  <span ng-bind="item.label"></span>
+                  <span
+                    ng-command-shortcut
+                    ng-if="item.shortcut"
+                    ng-bind="item.shortcut"
+                  ></span>
+                </div>
+                <div ng-command-separator></div>
+              </section>
+            </div>
+          </section>
+        </section>
+      </section>
+      <output class="command-workflow-output" aria-live="polite">
+        Selected: <span ng-bind="scroll.selected || 'None'"></span>
+      </output>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+[data-slot="progress"],
+[ng-progress] {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--spacing) * 3);
+  color: var(--foreground);
+  font-size: var(--text-sm);
+}
+
+[data-slot="progress-label"],
+[ng-progress-label] {
+  font-weight: var(--font-weight-medium);
+}
+
+[data-slot="progress-value"],
+[ng-progress-value] {
+  margin-inline-start: auto;
+  color: var(--muted-foreground);
+  font-variant-numeric: tabular-nums;
+}
+
+[data-slot="progress-track"],
+[ng-progress-track] {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: calc(var(--spacing) * 1);
+  align-items: center;
+  overflow-x: hidden;
+  border-radius: 9999px;
+  background: var(--muted);
+}
+
+[data-slot="progress-indicator"],
+[ng-progress-indicator] {
+  display: block;
+  height: 100%;
+  width: var(--value, 0%);
+  border-radius: inherit;
+  background: var(--primary);
+  transition: width 150ms ease;
+}
+
+progress[data-slot="progress"],
+progress[ng-progress] {
+  width: 100%;
+  height: calc(var(--spacing) * 1);
+  overflow: hidden;
+  border: 0;
+  border-radius: 9999px;
+  background: var(--muted);
+}
+
+progress[data-slot="progress"]::-webkit-progress-bar,
+progress[ng-progress]::-webkit-progress-bar {
+  background: var(--muted);
+}
+
+progress[data-slot="progress"]::-webkit-progress-value,
+progress[ng-progress]::-webkit-progress-value {
+  background: var(--primary);
+}
+
+progress[data-slot="progress"]::-moz-progress-bar,
+progress[ng-progress]::-moz-progress-bar {
+  background: var(--primary);
+}

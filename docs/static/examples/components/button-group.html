@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="buttonGroupAction = 'None'"
+    data-example="button-group-orientation button-group-separator button-group-size button-group-split"
+  >
+    <main class="button-group-canonical visual-example">
+      <div class="button-group-size-stack" aria-label="Button group sizes">
+        <div ng-button-group aria-label="State ownership">
+          <button
+            ng-button
+            id="button-group-unmanaged"
+            type="button"
+            variant="outline"
+            size="sm"
+          >
+            Small
+          </button>
+          <button
+            ng-button
+            id="button-group-managed"
+            type="button"
+            variant="outline"
+            size="sm"
+            aria-pressed="true"
+            tabindex="3"
+          >
+            Button
+          </button>
+          <button ng-button type="button" variant="outline" size="sm">
+            Group
+          </button>
+          <button
+            ng-button
+            type="button"
+            variant="outline"
+            size="icon-sm"
+            aria-label="Add small"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="M5 12h14M12 5v14" />
+            </svg>
+          </button>
+        </div>
+        <div ng-button-group>
+          <button ng-button type="button" variant="outline">Default</button>
+          <button ng-button type="button" variant="outline">Button</button>
+          <button ng-button type="button" variant="outline">Group</button>
+          <button
+            ng-button
+            type="button"
+            variant="outline"
+            size="icon"
+            aria-label="Add default"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="M5 12h14M12 5v14" />
+            </svg>
+          </button>
+        </div>
+        <div ng-button-group>
+          <button ng-button type="button" variant="outline" size="lg">
+            Large
+          </button>
+          <button ng-button type="button" variant="outline" size="lg">
+            Button
+          </button>
+          <button ng-button type="button" variant="outline" size="lg">
+            Group
+          </button>
+          <button
+            ng-button
+            type="button"
+            variant="outline"
+            size="icon-lg"
+            aria-label="Add large"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="M5 12h14M12 5v14" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div ng-button-group orientation="vertical" aria-label="Media controls">
+        <button
+          ng-button
+          type="button"
+          variant="outline"
+          size="icon"
+          aria-label="Increase"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14M12 5v14" />
+          </svg>
+        </button>
+        <span
+          data-slot="button-group-separator"
+          orientation="horizontal"
+        ></span>
+        <button
+          ng-button
+          type="button"
+          variant="outline"
+          size="icon"
+          aria-label="Decrease"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="button-group-canonical-row">
+        <div ng-button-group>
+          <button
+            ng-button
+            type="button"
+            variant="secondary"
+            size="sm"
+            ng-click="buttonGroupAction = 'Copy'"
+          >
+            Copy
+          </button>
+          <span data-slot="button-group-separator"></span>
+          <button
+            ng-button
+            type="button"
+            variant="secondary"
+            size="sm"
+            ng-click="buttonGroupAction = 'Paste'"
+          >
+            Paste
+          </button>
+        </div>
+        <div ng-button-group>
+          <button
+            ng-button
+            type="button"
+            variant="secondary"
+            ng-click="buttonGroupAction = 'Button'"
+          >
+            Button
+          </button>
+          <span data-slot="button-group-separator"></span>
+          <button
+            ng-button
+            type="button"
+            variant="secondary"
+            size="icon"
+            aria-label="Add item"
+            ng-click="buttonGroupAction = 'Add'"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="M5 12h14M12 5v14" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <p class="output" role="status">Action: {{ buttonGroupAction }}</p>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="resizableState={orientation:'horizontal',firstSize:1,showThird:false}"
+  >
+    <main class="resizable-state-workflows">
+      <section class="resizable-state-section" aria-labelledby="state-title">
+        <h2 id="state-title">Reactive layout</h2>
+        <div class="resizable-state-actions">
+          <button
+            ng-button
+            size="sm"
+            type="button"
+            ng-click="resizableState.orientation=resizableState.orientation==='horizontal'?'vertical':'horizontal'"
+          >
+            Toggle orientation
+          </button>
+          <button
+            ng-button
+            size="sm"
+            type="button"
+            ng-click="resizableState.firstSize=2"
+          >
+            Set first size to 2
+          </button>
+          <button
+            ng-button
+            size="sm"
+            type="button"
+            ng-click="resizableState.showThird=true"
+          >
+            Add third panel
+          </button>
+        </div>
+        <div
+          ng-resizable-panel-group
+          id="state-layout"
+          orientation="{{ resizableState.orientation }}"
+          data-step="0.25"
+          aria-label="Reactive resizable layout"
+          class="resizable-reference-layout"
+        >
+          <section
+            ng-resizable-panel
+            id="state-first-panel"
+            style="--panel-size: {{ resizableState.firstSize }}"
+          >
+            <div class="resizable-panel-content"><strong>One</strong></div>
+          </section>
+          <div
+            ng-resizable-handle
+            id="state-first-handle"
+            aria-label="Resize first and second panels"
+          >
+            <span ng-resizable-handle-grip aria-hidden="true"></span>
+          </div>
+          <section ng-resizable-panel style="--panel-size: 1">
+            <div class="resizable-panel-content"><strong>Two</strong></div>
+          </section>
+          <div
+            ng-if="resizableState.showThird"
+            ng-resizable-handle
+            id="state-inserted-handle"
+            aria-label="Resize second and third panels"
+          ></div>
+          <section
+            ng-if="resizableState.showThird"
+            ng-resizable-panel
+            id="state-inserted-panel"
+            style="--panel-size: 1"
+          >
+            <div class="resizable-panel-content"><strong>Three</strong></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="resizable-state-section" aria-labelledby="bounds-title">
+        <h2 id="bounds-title">Bounded vertical layout</h2>
+        <div
+          ng-resizable-panel-group
+          id="bounded-layout"
+          orientation="vertical"
+          data-step="0.5"
+          aria-label="Bounded vertical layout"
+          class="resizable-reference-layout"
+        >
+          <section
+            ng-resizable-panel
+            data-min-size="0.5"
+            data-max-size="2"
+            style="--panel-size: 1"
+          >
+            <div class="resizable-panel-content"><strong>Top</strong></div>
+          </section>
+          <div ng-resizable-handle aria-label="Resize bounded panels"></div>
+          <section
+            ng-resizable-panel
+            data-min-size="0.5"
+            style="--panel-size: 1"
+          >
+            <div class="resizable-panel-content"><strong>Bottom</strong></div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

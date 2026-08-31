@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="profile={name:'محمد علي',username:'@mohamed'}"
+    data-example="dialog-rtl"
+  >
+    <main class="dialog-demo visual-example">
+      <section id="rtl-profile-dialog" ng-dialog>
+        <button ng-dialog-trigger ng-button variant="outline">
+          تعديل الملف الشخصي
+        </button>
+        <div ng-dialog-overlay></div>
+        <section ng-dialog-content>
+          <header ng-dialog-header>
+            <h2 ng-dialog-title>تعديل الملف الشخصي</h2>
+            <p ng-dialog-description>
+              غيّر بيانات ملفك الشخصي ثم احفظ التعديلات.
+            </p>
+          </header>
+          <div class="dialog-profile-form">
+            <div class="dialog-form-row">
+              <label ng-label for="rtl-name">الاسم</label>
+              <input id="rtl-name" data-input ng-model="profile.name" />
+            </div>
+            <div class="dialog-form-row">
+              <label ng-label for="rtl-username">اسم المستخدم</label>
+              <input id="rtl-username" data-input ng-model="profile.username" />
+            </div>
+          </div>
+          <footer ng-dialog-footer>
+            <button ng-button variant="outline" data-dialog-close>إلغاء</button>
+            <button ng-button data-dialog-close>حفظ التغييرات</button>
+          </footer>
+          <button ng-dialog-close ng-button variant="ghost" size="icon-sm">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="M18 6 6 18"></path>
+              <path d="m6 6 12 12"></path>
+            </svg>
+            <span class="example-sr-only">إغلاق</span>
+          </button>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

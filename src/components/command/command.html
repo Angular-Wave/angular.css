@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak>
+    <section ng-command>
+      <div data-slot="command-input-wrapper">
+        <input data-slot="command-input" placeholder="Search command..." />
+      </div>
+      <div data-slot="command-list">
+        <div data-slot="command-item">Deploy project</div>
+        <div data-slot="command-item">Invite member</div>
+        <div data-slot="command-item">Open settings</div>
+      </div>
+    </section>
+  </body>
+</html>

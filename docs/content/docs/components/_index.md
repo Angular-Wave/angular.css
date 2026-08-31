@@ -1,0 +1,22 @@
+---
+title: Components
+weight: 30
+description:
+  Complete AngularCSS component catalog with live demos, HTML contracts, APIs,
+  accessibility, and customization.
+---
+
+Every canonical component includes a locally bundled, non-scrollable iframe demo
+and its complete TypeScript-derived contract. Open **View source** below a demo
+to inspect the exact HTML and AngularTS expressions running in the iframe.
+
+Each reference page answers:
+
+1. What the component does and where to use it.
+2. What semantic HTML and directive selectors it requires.
+3. Which slots, attributes, state hooks, CSS variables, and events it exposes.
+4. Which behavior belongs to AngularCSS, AngularTS, native HTML, or application
+   code.
+5. What accessibility and customization constraints apply.
+
+{{< component-catalog >}}

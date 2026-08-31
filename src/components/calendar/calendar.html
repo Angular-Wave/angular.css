@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak>
+    <section ng-calendar aria-label="May 2026">
+      <header data-slot="calendar-header">
+        <button
+          data-slot="button"
+          size="icon"
+          variant="outline"
+          aria-label="Previous month"
+        >
+          &lt;
+        </button>
+        <h3 data-slot="calendar-title">May 2026</h3>
+        <button
+          data-slot="button"
+          size="icon"
+          variant="outline"
+          aria-label="Next month"
+        >
+          &gt;
+        </button>
+      </header>
+      <div data-slot="calendar-grid">
+        <span data-slot="calendar-weekday">Su</span>
+        <span data-slot="calendar-weekday">Mo</span>
+        <span data-slot="calendar-weekday">Tu</span>
+        <span data-slot="calendar-weekday">We</span>
+        <span data-slot="calendar-weekday">Th</span>
+        <span data-slot="calendar-weekday">Fr</span>
+        <span data-slot="calendar-weekday">Sa</span>
+        <button
+          data-slot="calendar-day"
+          data-outside="true"
+          data-value="2026-04-26"
+        >
+          26
+        </button>
+        <button
+          data-slot="calendar-day"
+          data-outside="true"
+          data-value="2026-04-27"
+        >
+          27
+        </button>
+        <button
+          data-slot="calendar-day"
+          data-outside="true"
+          data-value="2026-04-28"
+        >
+          28
+        </button>
+        <button
+          data-slot="calendar-day"
+          data-outside="true"
+          data-value="2026-04-29"
+        >
+          29
+        </button>
+        <button
+          data-slot="calendar-day"
+          data-outside="true"
+          data-value="2026-04-30"
+        >
+          30
+        </button>
+        <button data-slot="calendar-day" data-value="2026-05-01">1</button>
+        <button data-slot="calendar-day" data-value="2026-05-02">2</button>
+      </div>
+    </section>
+  </body>
+</html>

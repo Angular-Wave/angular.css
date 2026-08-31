@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="showOverflow = false; scrollDirection = 'rtl'"
+    data-example="scroll-area-demo scroll-area-horizontal-demo scroll-area-rtl"
+  >
+    <main class="scroll-area-workflows visual-example">
+      <section
+        class="scroll-area-workflow"
+        aria-labelledby="scroll-tags-heading"
+      >
+        <h2 id="scroll-tags-heading">Tags</h2>
+        <div
+          ng-scroll-area
+          class="scroll-area-tags"
+          id="vertical-scroll-area"
+          aria-label="Release tags"
+        >
+          <div ng-scroll-area-viewport>
+            <div class="scroll-tag-list">
+              <span>v1.2.0-beta.50</span>
+              <div data-slot="separator"></div>
+              <span>v1.2.0-beta.49</span>
+              <div data-slot="separator"></div>
+              <span>v1.2.0-beta.48</span>
+              <div data-slot="separator"></div>
+              <span>v1.2.0-beta.47</span>
+              <div data-slot="separator"></div>
+              <span>v1.2.0-beta.46</span>
+              <div data-slot="separator"></div>
+              <span>v1.2.0-beta.45</span>
+              <div data-slot="separator"></div>
+              <span>v1.2.0-beta.44</span>
+              <div data-slot="separator"></div>
+              <span>v1.2.0-beta.43</span>
+              <div data-slot="separator"></div>
+              <span>v1.2.0-beta.42</span>
+              <div data-slot="separator"></div>
+              <span>v1.2.0-beta.41</span>
+              <div data-slot="separator"></div>
+              <span>v1.2.0-beta.40</span>
+              <div data-slot="separator"></div>
+              <span>v1.2.0-beta.39</span>
+            </div>
+          </div>
+          <div data-slot="scroll-area-scrollbar" data-orientation="vertical">
+            <div data-slot="scroll-area-thumb"></div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="scroll-area-workflow scroll-area-workflow-wide"
+        aria-labelledby="scroll-art-heading"
+      >
+        <h2 id="scroll-art-heading">Artwork</h2>
+        <div
+          ng-scroll-area
+          class="scroll-area-artwork"
+          id="horizontal-scroll-area"
+          aria-label="Featured artists"
+        >
+          <div ng-scroll-area-viewport>
+            <div class="scroll-artwork-row">
+              <figure>
+                <img
+                  src="../../images/avatars/01.png"
+                  alt="Portrait by Ornella Binni"
+                />
+                <figcaption>Photo by <strong>Ornella Binni</strong></figcaption>
+              </figure>
+              <figure>
+                <img
+                  src="../../images/avatars/02.png"
+                  alt="Portrait by Tom Byrom"
+                />
+                <figcaption>Photo by <strong>Tom Byrom</strong></figcaption>
+              </figure>
+              <figure>
+                <img
+                  src="../../images/avatars/03.png"
+                  alt="Portrait by Vladimir Malyavko"
+                />
+                <figcaption>
+                  Photo by <strong>Vladimir Malyavko</strong>
+                </figcaption>
+              </figure>
+              <figure>
+                <img
+                  src="../../images/avatars/04.png"
+                  alt="Portrait by Sarah Chen"
+                />
+                <figcaption>Photo by <strong>Sarah Chen</strong></figcaption>
+              </figure>
+            </div>
+          </div>
+          <div data-slot="scroll-area-scrollbar" data-orientation="horizontal">
+            <div data-slot="scroll-area-thumb"></div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="scroll-area-workflow"
+        aria-labelledby="scroll-dynamic-heading"
+      >
+        <header>
+          <h2 id="scroll-dynamic-heading">Dynamic content</h2>
+          <button
+            ng-button
+            type="button"
+            variant="outline"
+            size="sm"
+            ng-click="showOverflow = !showOverflow"
+          >
+            {{ showOverflow ? 'Remove content' : 'Add content' }}
+          </button>
+        </header>
+        <div
+          ng-scroll-area
+          class="scroll-area-dynamic"
+          id="dynamic-scroll-area"
+          aria-label="Dynamic release notes"
+        >
+          <div ng-scroll-area-viewport>
+            <div class="scroll-dynamic-content">
+              <p>Current release</p>
+              <div ng-if="showOverflow" class="scroll-dynamic-overflow">
+                <p>Compatibility notes</p>
+                <p>Migration details</p>
+                <p>API changes</p>
+                <p>Resolved issues</p>
+              </div>
+            </div>
+          </div>
+          <div data-slot="scroll-area-scrollbar" data-orientation="vertical">
+            <div data-slot="scroll-area-thumb"></div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="scroll-area-workflow"
+        aria-labelledby="scroll-rtl-heading"
+        dir="rtl"
+        lang="ar"
+      >
+        <header>
+          <h2 id="scroll-rtl-heading">العلامات</h2>
+          <button
+            ng-button
+            type="button"
+            variant="outline"
+            size="sm"
+            ng-click="scrollDirection = scrollDirection === 'rtl' ? 'ltr' : 'rtl'"
+          >
+            Change direction
+          </button>
+        </header>
+        <div
+          ng-scroll-area
+          class="scroll-area-tags"
+          id="rtl-scroll-area"
+          dir="{{ scrollDirection }}"
+          aria-label="علامات الإصدار"
+        >
+          <div ng-scroll-area-viewport>
+            <div class="scroll-tag-list">
+              <span>v1.2.0-beta.50</span>
+              <div data-slot="separator"></div>
+              <span>v1.2.0-beta.49</span>
+              <div data-slot="separator"></div>
+              <span>v1.2.0-beta.48</span>
+              <div data-slot="separator"></div>
+              <span>v1.2.0-beta.47</span>
+              <div data-slot="separator"></div>
+              <span>v1.2.0-beta.46</span>
+              <div data-slot="separator"></div>
+              <span>v1.2.0-beta.45</span>
+              <div data-slot="separator"></div>
+              <span>v1.2.0-beta.44</span>
+              <div data-slot="separator"></div>
+              <span>v1.2.0-beta.43</span>
+            </div>
+          </div>
+          <div data-slot="scroll-area-scrollbar" data-orientation="vertical">
+            <div data-slot="scroll-area-thumb"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

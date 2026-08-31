@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak>
+    <button aria-controls="delete-dialog" style="margin: 1rem">
+      Delete project
+    </button>
+    <section id="delete-dialog" ng-alert-dialog>
+      <div data-slot="alert-dialog-overlay"></div>
+      <section data-slot="alert-dialog-content">
+        <header data-slot="alert-dialog-header">
+          <h2 data-slot="alert-dialog-title">Delete this item?</h2>
+          <p data-slot="alert-dialog-description">
+            This action cannot be undone.
+          </p>
+        </header>
+        <footer data-slot="alert-dialog-footer">
+          <button data-slot="alert-dialog-cancel">Cancel</button>
+          <button data-slot="alert-dialog-action">Continue</button>
+        </footer>
+      </section>
+    </section>
+  </body>
+</html>

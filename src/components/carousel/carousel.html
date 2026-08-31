@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak>
+    <section ng-carousel aria-label="Featured reports" style="max-width: 28rem">
+      <div data-slot="carousel-content">
+        <div data-slot="carousel-track">
+          <article data-slot="carousel-item">
+            <section data-slot="card">
+              <header data-slot="card-header">
+                <h3 data-slot="card-title">Revenue</h3>
+                <p data-slot="card-description">
+                  Quarterly performance summary.
+                </p>
+              </header>
+              <div data-slot="card-content">
+                <div
+                  class="media-surface"
+                  style="height: 9rem; border-radius: var(--radius)"
+                >
+                  +18%
+                </div>
+              </div>
+            </section>
+          </article>
+          <article data-slot="carousel-item">
+            <section data-slot="card">
+              <header data-slot="card-header">
+                <h3 data-slot="card-title">Retention</h3>
+                <p data-slot="card-description">Monthly cohort movement.</p>
+              </header>
+              <div data-slot="card-content">
+                <div
+                  class="media-surface"
+                  style="height: 9rem; border-radius: var(--radius)"
+                >
+                  94%
+                </div>
+              </div>
+            </section>
+          </article>
+        </div>
+      </div>
+      <button
+        data-slot="button"
+        ng-carousel-previous
+        size="icon"
+        variant="outline"
+        aria-label="Previous"
+      >
+        &lt;
+      </button>
+      <button
+        data-slot="button"
+        ng-carousel-next
+        size="icon"
+        variant="outline"
+        aria-label="Next"
+      >
+        &gt;
+      </button>
+      <div data-slot="carousel-dots" aria-hidden="true">
+        <button
+          data-slot="carousel-dot"
+          data-active="true"
+          aria-label="Show revenue"
+        ></button>
+        <button data-slot="carousel-dot" aria-label="Show retention"></button>
+      </div>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak>
+    <div ng-tabs style="max-width: 28rem">
+      <div data-slot="tabs-list" role="tablist" aria-label="Project sections">
+        <button data-slot="tabs-trigger" role="tab" aria-selected="true">
+          Overview
+        </button>
+        <button data-slot="tabs-trigger" role="tab">Analytics</button>
+        <button data-slot="tabs-trigger" role="tab">Reports</button>
+      </div>
+      <section data-slot="tabs-content" role="tabpanel">
+        <section data-slot="card">
+          <header data-slot="card-header">
+            <h3 data-slot="card-title">Overview</h3>
+            <p data-slot="card-description">
+              View key metrics and recent activity.
+            </p>
+          </header>
+          <div data-slot="card-content" class="muted">
+            You have 12 active projects and 3 pending tasks.
+          </div>
+        </section>
+      </section>
+      <section data-slot="tabs-content" role="tabpanel">
+        <section data-slot="card">
+          <header data-slot="card-header">
+            <h3 data-slot="card-title">Analytics</h3>
+            <p data-slot="card-description">
+              Review conversion and usage trends.
+            </p>
+          </header>
+          <div data-slot="card-content" class="muted">
+            Conversion is up 8% over the previous period.
+          </div>
+        </section>
+      </section>
+      <section data-slot="tabs-content" role="tabpanel">
+        <section data-slot="card">
+          <header data-slot="card-header">
+            <h3 data-slot="card-title">Reports</h3>
+            <p data-slot="card-description">
+              Export weekly workspace summaries.
+            </p>
+          </header>
+          <div data-slot="card-content" class="muted">
+            Three reports are ready to download.
+          </div>
+        </section>
+      </section>
+    </div>
+  </body>
+</html>

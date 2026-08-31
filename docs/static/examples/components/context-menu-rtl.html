@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="lastAction='لا شيء'"
+    data-example="context-menu-rtl"
+  >
+    <main class="context-menu-rtl-demo visual-example">
+      <div ng-context-menu>
+        <div ng-context-menu-trigger>انقر بزر الفأرة الأيمن هنا</div>
+        <div ng-context-menu-content aria-label="إجراءات المتصفح">
+          <div ng-context-menu-group>
+            <button ng-context-menu-item ng-click="lastAction='رجوع'">
+              رجوع
+              <span ng-context-menu-shortcut>Alt+Right</span>
+            </button>
+            <button ng-context-menu-item disabled>
+              للأمام
+              <span ng-context-menu-shortcut>Alt+Left</span>
+            </button>
+            <button ng-context-menu-item ng-click="lastAction='إعادة تحميل'">
+              إعادة تحميل
+              <span ng-context-menu-shortcut>Ctrl+R</span>
+            </button>
+          </div>
+          <div ng-context-menu-separator></div>
+          <div ng-context-menu-sub>
+            <button ng-context-menu-sub-trigger>المزيد من الأدوات</button>
+            <div ng-context-menu-sub-content>
+              <button ng-context-menu-item ng-click="lastAction='حفظ الصفحة'">
+                حفظ الصفحة...
+              </button>
+              <button ng-context-menu-item ng-click="lastAction='أدوات المطور'">
+                أدوات المطور
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <output class="context-menu-output" aria-live="polite">
+        الإجراء الأخير: <span ng-bind="lastAction"></span>
+      </output>
+    </main>
+  </body>
+</html>

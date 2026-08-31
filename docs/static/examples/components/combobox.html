@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="frameworks=['Next.js','SvelteKit','Nuxt.js','Remix','Astro']; basic={query:'',selected:''}; automatic={query:'',selected:''}"
+    data-example="combobox-auto-highlight combobox-basic combobox-demo"
+  >
+    <main class="combobox-demo visual-example">
+      <div
+        id="basic-combobox"
+        ng-combobox
+        ng-on-angularcss:combobox-select="basic.selected=$event.detail.value; basic.query=$event.detail.value"
+      >
+        <div ng-combobox-control>
+          <input
+            ng-combobox-input
+            aria-label="Framework"
+            ng-model="basic.query"
+            placeholder="Select a framework"
+          />
+          <button
+            ng-combobox-trigger
+            type="button"
+            aria-label="Show frameworks"
+          ></button>
+        </div>
+        <div ng-combobox-content aria-label="Framework options">
+          <div ng-combobox-empty>No items found.</div>
+          <div ng-combobox-list>
+            <div ng-combobox-collection>
+              <div
+                ng-combobox-item
+                ng-repeat="framework in frameworks | filter:basic.query"
+                data-value="{{ framework }}"
+                ng-attr-aria-selected="{{ basic.selected === framework }}"
+              >
+                {{ framework }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="auto-combobox"
+        ng-combobox
+        auto-highlight
+        ng-on-angularcss:combobox-select="automatic.selected=$event.detail.value; automatic.query=$event.detail.value"
+      >
+        <div ng-combobox-control>
+          <input
+            ng-combobox-input
+            aria-label="Auto-highlight framework"
+            ng-model="automatic.query"
+            placeholder="Select a framework"
+          />
+          <button
+            ng-combobox-trigger
+            type="button"
+            aria-label="Show auto-highlight frameworks"
+          ></button>
+        </div>
+        <div ng-combobox-content aria-label="Auto-highlight framework options">
+          <div ng-combobox-empty>No items found.</div>
+          <div ng-combobox-list>
+            <div ng-combobox-collection>
+              <div
+                ng-combobox-item
+                ng-repeat="framework in frameworks | filter:automatic.query"
+                data-value="{{ framework }}"
+                ng-attr-aria-selected="{{ automatic.selected === framework }}"
+              >
+                {{ framework }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <output class="output visually-hidden" aria-live="polite">
+        Basic: <span ng-bind="basic.selected || 'none'"></span>. Automatic:
+        <span ng-bind="automatic.selected || 'none'"></span>.
+      </output>
+    </main>
+  </body>
+</html>

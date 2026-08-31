@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AngularCSS Sidebar</title>
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak style="padding: 0">
+    <div ng-sidebar-layout style="height: 400px">
+      <aside id="docs-sidebar" ng-sidebar style="--sidebar-width: 14rem">
+        <header data-slot="sidebar-header">
+          <button
+            data-slot="button"
+            aria-controls="docs-sidebar"
+            style="justify-content: flex-start"
+          >
+            Acme Inc.
+          </button>
+        </header>
+        <div data-slot="sidebar-content">
+          <section data-slot="sidebar-group">
+            <div data-slot="sidebar-group-label">Workspace</div>
+            <ul data-slot="sidebar-menu">
+              <li data-slot="sidebar-menu-item">
+                <button data-slot="sidebar-menu-button" data-active="true">
+                  Dashboard
+                </button>
+              </li>
+              <li data-slot="sidebar-menu-item">
+                <button data-slot="sidebar-menu-button">Projects</button>
+              </li>
+              <li data-slot="sidebar-menu-item">
+                <button data-slot="sidebar-menu-button">Reports</button>
+              </li>
+            </ul>
+          </section>
+        </div>
+        <footer data-slot="sidebar-footer">
+          <button data-slot="sidebar-menu-button">Jane Doe</button>
+        </footer>
+      </aside>
+      <main data-slot="sidebar-inset">
+        <div style="padding: 24px" class="stack-sm">
+          <h3>Dashboard</h3>
+          <p class="muted">
+            A sidebar layout with scoped menu and inset regions.
+          </p>
+          <section data-slot="card">
+            <div data-slot="card-content">24 active projects</div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

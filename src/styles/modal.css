@@ -1,0 +1,116 @@
+[data-slot="dialog"],
+[ng-dialog],
+[data-slot="drawer"],
+[ng-drawer],
+[data-slot="sheet"],
+[ng-sheet] {
+  display: contents;
+}
+
+[data-slot="alert-dialog-overlay"],
+[ng-alert-dialog-overlay],
+[data-slot="dialog-overlay"],
+[ng-dialog-overlay],
+[data-slot="drawer-overlay"],
+[ng-drawer-overlay],
+[data-slot="sheet-overlay"],
+[ng-sheet-overlay] {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: color-mix(in srgb, black 10%, transparent);
+  backdrop-filter: blur(4px);
+}
+
+[data-slot="dialog-content"],
+[ng-dialog-content],
+[data-slot="drawer-content"],
+[ng-drawer-content],
+[data-slot="sheet-content"],
+[ng-sheet-content] {
+  position: fixed;
+  z-index: 51;
+  overflow: hidden;
+  background: var(--popover);
+  color: var(--popover-foreground);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+}
+
+[data-slot="drawer-content"],
+[ng-drawer-content],
+[data-slot="sheet-content"],
+[ng-sheet-content] {
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+}
+
+[data-slot="drawer-header"],
+[ng-drawer-header],
+[data-slot="sheet-header"],
+[ng-sheet-header] {
+  display: flex;
+  padding: calc(var(--spacing) * 4);
+  flex-direction: column;
+  gap: calc(var(--spacing) * 0.5);
+}
+
+[data-slot="drawer-footer"],
+[ng-drawer-footer],
+[data-slot="sheet-footer"],
+[ng-sheet-footer] {
+  display: flex;
+  margin-block-start: auto;
+  padding: calc(var(--spacing) * 4);
+  flex-direction: column;
+  gap: calc(var(--spacing) * 2);
+}
+
+[data-slot="dialog-title"],
+[ng-dialog-title],
+[data-slot="drawer-title"],
+[ng-drawer-title],
+[data-slot="sheet-title"],
+[ng-sheet-title] {
+  margin: 0;
+  color: var(--foreground);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.2;
+}
+
+[data-slot="dialog-description"],
+[ng-dialog-description],
+[data-slot="drawer-description"],
+[ng-drawer-description],
+[data-slot="sheet-description"],
+[ng-sheet-description] {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+}
+
+[data-slot="dialog-body"],
+[ng-dialog-body],
+[data-slot="drawer-body"],
+[ng-drawer-body],
+[data-slot="sheet-body"],
+[ng-sheet-body] {
+  min-height: 0;
+  overflow-y: auto;
+  padding-inline: calc(var(--spacing) * 4);
+  scrollbar-width: none;
+}
+
+:is(
+  [data-slot="dialog-body"],
+  [ng-dialog-body],
+  [data-slot="drawer-body"],
+  [ng-drawer-body],
+  [data-slot="sheet-body"],
+  [ng-sheet-body]
+)::-webkit-scrollbar {
+  display: none;
+}

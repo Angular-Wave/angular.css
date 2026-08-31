@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    data-example="dialog-scrollable-content dialog-sticky-footer"
+  >
+    <main class="dialog-workflow-grid visual-example">
+      <section class="dialog-workflow" aria-labelledby="scroll-heading">
+        <h2 id="scroll-heading">Scrollable content</h2>
+        <div id="scroll-dialog" ng-dialog>
+          <button ng-dialog-trigger ng-button variant="outline">
+            Read profile
+          </button>
+          <div ng-dialog-overlay></div>
+          <article ng-dialog-content data-size="wide">
+            <header ng-dialog-header>
+              <h3 ng-dialog-title>About Pedro Duarte</h3>
+              <p ng-dialog-description>A short professional biography.</p>
+            </header>
+            <div ng-dialog-body class="dialog-prose">
+              <p>
+                Pedro is a designer and developer focused on accessible design
+                systems and thoughtful product interfaces.
+              </p>
+              <p>
+                He works across interaction design, component architecture, and
+                documentation to make complex systems easier to use.
+              </p>
+              <p>
+                His projects explore how strong defaults and composable APIs can
+                support teams without limiting their visual language.
+              </p>
+              <p>
+                Outside product work, he studies typography, browser behavior,
+                and the details that make keyboard workflows feel dependable.
+              </p>
+              <p>
+                He has collaborated with distributed teams building tools for
+                creators, engineers, and operations specialists.
+              </p>
+              <p>
+                This final paragraph ensures the body has genuine overflow and
+                remains independently scrollable inside the viewport.
+              </p>
+            </div>
+            <button ng-dialog-close ng-button variant="ghost" size="icon-sm">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="M18 6 6 18"></path>
+                <path d="m6 6 12 12"></path>
+              </svg>
+              <span class="example-sr-only">Close</span>
+            </button>
+          </article>
+        </div>
+      </section>
+
+      <section class="dialog-workflow" aria-labelledby="sticky-heading">
+        <h2 id="sticky-heading">Sticky footer</h2>
+        <div id="sticky-dialog" ng-dialog>
+          <button ng-dialog-trigger ng-button variant="outline">
+            Review notes
+          </button>
+          <div ng-dialog-overlay></div>
+          <article ng-dialog-content data-size="wide">
+            <header ng-dialog-header>
+              <h3 ng-dialog-title>Release notes</h3>
+              <p ng-dialog-description>
+                Review the changes included in this release.
+              </p>
+            </header>
+            <div ng-dialog-body class="dialog-prose">
+              <p>
+                Focus is now contained inside modal dialogs while they are open.
+              </p>
+              <p>
+                Background content becomes inert and document scrolling is
+                restored when the dialog closes.
+              </p>
+              <p>
+                Internal triggers receive generated relationships to their
+                directly owned dialog content.
+              </p>
+              <p>
+                Nested overlays no longer acquire controls belonging to a child
+                overlay root.
+              </p>
+              <p>
+                Scrollable bodies retain the header and footer in stable
+                positions throughout keyboard and pointer interaction.
+              </p>
+              <p>
+                Logical positioning keeps the corner close control aligned in
+                both left-to-right and right-to-left layouts.
+              </p>
+            </div>
+            <footer ng-dialog-footer>
+              <button ng-button variant="outline" data-dialog-close>
+                Cancel
+              </button>
+              <button ng-button data-dialog-close>Confirm</button>
+            </footer>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

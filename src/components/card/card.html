@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak>
+    <section ng-card class="example-card">
+      <header data-slot="card-header">
+        <div>
+          <h3 data-slot="card-title">Login to your account</h3>
+          <p data-slot="card-description">
+            Enter your email below to continue.
+          </p>
+        </div>
+        <div data-slot="card-action">
+          <button ng-button variant="link">Sign up</button>
+        </div>
+      </header>
+      <div data-slot="card-content">
+        <div class="stack-sm">
+          <label ng-label for="card-email">Email</label>
+          <input
+            data-input
+            id="card-email"
+            type="email"
+            placeholder="m@example.com"
+          />
+          <label ng-label for="card-password">Password</label>
+          <input data-input id="card-password" type="password" />
+        </div>
+      </div>
+      <footer data-slot="card-footer" class="stack-sm">
+        <button ng-button>Login</button>
+        <button ng-button variant="outline">Login with provider</button>
+      </footer>
+    </section>
+  </body>
+</html>

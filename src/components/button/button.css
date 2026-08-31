@@ -1,0 +1,192 @@
+button[ng-button],
+button[data-slot="button"],
+input[type="button"][ng-button],
+input[type="button"][data-slot="button"],
+a[ng-button],
+a[data-slot="button"] {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--spacing) * 1.5);
+  border: 1px solid transparent;
+  border-radius: calc(var(--radius) - 2px);
+  background-clip: padding-box;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    box-shadow 120ms ease,
+    color 120ms ease,
+    transform 80ms ease;
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"]):focus-visible {
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"]):active:not([aria-haspopup]) {
+  transform: translateY(1px);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"]):disabled,
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[aria-disabled="true"] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"]):not([size]),
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[size="default"] {
+  height: calc(var(--spacing) * 9);
+  padding-inline: calc(var(--spacing) * 2.5);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"]):not([variant]),
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[variant="default"] {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"]):not([variant]):hover,
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[variant="default"]:hover {
+  background: color-mix(in srgb, var(--primary) 80%, transparent);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[variant="outline"] {
+  border-color: var(--border);
+  background: var(--background);
+  color: var(--foreground);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--foreground) 6%, transparent);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[variant="outline"]:hover {
+  background: var(--muted);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[variant="secondary"] {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[variant="secondary"]:hover {
+  background: color-mix(in srgb, var(--secondary) 80%, var(--foreground));
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[variant="ghost"] {
+  background: transparent;
+  color: var(--foreground);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[variant="ghost"]:hover {
+  background: var(--muted);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[variant="destructive"],
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[variant="error"] {
+  background: color-mix(in srgb, var(--error) 10%, transparent);
+  color: var(--error);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[variant="destructive"]:hover,
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[variant="error"]:hover {
+  background: color-mix(in srgb, var(--error) 20%, transparent);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[variant="warning"],
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[variant="info"],
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[variant="success"] {
+  color: white;
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[variant="warning"] {
+  background: var(--warning);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[variant="info"] {
+  background: var(--info);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[variant="success"] {
+  background: var(--success);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[variant="link"] {
+  background: transparent;
+  color: var(--primary);
+  text-underline-offset: 4px;
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[variant="link"]:hover {
+  text-decoration-line: underline;
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[size="xs"] {
+  height: calc(var(--spacing) * 6);
+  gap: calc(var(--spacing) * 1);
+  padding-inline: calc(var(--spacing) * 2);
+  font-size: var(--text-xs);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[size="sm"] {
+  height: calc(var(--spacing) * 8);
+  gap: calc(var(--spacing) * 1);
+  padding-inline: calc(var(--spacing) * 2.5);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[size="lg"] {
+  height: calc(var(--spacing) * 10);
+  padding-inline: calc(var(--spacing) * 2.5);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[size="icon-xs"] {
+  width: calc(var(--spacing) * 6);
+  height: calc(var(--spacing) * 6);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[size="icon-sm"] {
+  width: calc(var(--spacing) * 8);
+  height: calc(var(--spacing) * 8);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[size="icon"] {
+  width: calc(var(--spacing) * 9);
+  height: calc(var(--spacing) * 9);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[size="icon-lg"] {
+  width: calc(var(--spacing) * 10);
+  height: calc(var(--spacing) * 10);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"]):has(> [data-icon="inline-start"]) {
+  padding-inline-start: calc(var(--spacing) * 2);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"]):has(> [data-icon="inline-end"]) {
+  padding-inline-end: calc(var(--spacing) * 2);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"]) > svg {
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[size="xs"] > svg,
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[size="icon-xs"] > svg {
+  width: calc(var(--spacing) * 3);
+  height: calc(var(--spacing) * 3);
+}
+
+:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])[aria-invalid="true"] {
+  border-color: var(--error);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--error) 20%, transparent);
+}

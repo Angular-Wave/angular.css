@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="goal=350; submittedGoal=350"
+    data-example="drawer-demo"
+  >
+    <main class="drawer-demo visual-example">
+      <section id="goal-drawer" ng-drawer>
+        <button ng-drawer-trigger ng-button variant="outline">
+          Open Drawer
+        </button>
+        <div ng-drawer-overlay></div>
+        <section ng-drawer-content>
+          <div ng-drawer-handle></div>
+          <div class="drawer-goal-panel">
+            <header ng-drawer-header>
+              <h2 ng-drawer-title>Move Goal</h2>
+              <p ng-drawer-description>Set your daily activity goal.</p>
+            </header>
+            <div class="drawer-goal-body">
+              <div class="drawer-goal-control">
+                <button
+                  ng-button
+                  variant="outline"
+                  size="icon-sm"
+                  aria-label="Decrease"
+                  ng-disabled="goal <= 200"
+                  ng-click="goal=goal-10"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14"></path>
+                  </svg>
+                </button>
+                <div class="drawer-goal-value">
+                  <strong ng-bind="goal"></strong>
+                  <span>Calories/day</span>
+                </div>
+                <button
+                  ng-button
+                  variant="outline"
+                  size="icon-sm"
+                  aria-label="Increase"
+                  ng-disabled="goal >= 400"
+                  ng-click="goal=goal+10"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 5v14"></path>
+                    <path d="M5 12h14"></path>
+                  </svg>
+                </button>
+              </div>
+              <div class="drawer-goal-chart" aria-hidden="true">
+                <span data-height="80"></span><span data-height="60"></span>
+                <span data-height="40"></span><span data-height="60"></span>
+                <span data-height="40"></span><span data-height="56"></span>
+                <span data-height="38"></span><span data-height="48"></span>
+                <span data-height="60"></span><span data-height="40"></span>
+                <span data-height="56"></span><span data-height="38"></span>
+                <span data-height="70"></span>
+              </div>
+            </div>
+            <footer ng-drawer-footer>
+              <button ng-button ng-click="submittedGoal=goal">Submit</button>
+              <button ng-drawer-close ng-button variant="outline">
+                Cancel
+              </button>
+            </footer>
+          </div>
+        </section>
+      </section>
+      <output class="drawer-output" aria-live="polite">
+        Submitted goal: <span ng-bind="submittedGoal"></span>
+      </output>
+    </main>
+  </body>
+</html>

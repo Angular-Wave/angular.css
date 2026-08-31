@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="profile={name:'Pedro Duarte',username:'peduarte'}; savedName='Pedro Duarte'"
+    data-example="sheet-rtl"
+  >
+    <main class="sheet-demo visual-example">
+      <section id="rtl-profile-sheet" ng-sheet side="left">
+        <button ng-sheet-trigger ng-button variant="outline">فتح</button>
+        <div ng-sheet-overlay></div>
+        <aside ng-sheet-content>
+          <header ng-sheet-header>
+            <h2 ng-sheet-title>تعديل الملف الشخصي</h2>
+            <p ng-sheet-description>
+              قم بإجراء تغييرات على ملفك الشخصي هنا. انقر حفظ عند الانتهاء.
+            </p>
+          </header>
+          <form class="sheet-profile-form">
+            <div ng-sheet-body class="sheet-profile-fields">
+              <div class="sheet-profile-field">
+                <label ng-label for="sheet-rtl-name">الاسم</label>
+                <input
+                  id="sheet-rtl-name"
+                  data-input
+                  ng-model="profile.name"
+                  autofocus
+                />
+              </div>
+              <div class="sheet-profile-field">
+                <label ng-label for="sheet-rtl-username">اسم المستخدم</label>
+                <input
+                  id="sheet-rtl-username"
+                  data-input
+                  ng-model="profile.username"
+                />
+              </div>
+            </div>
+            <footer ng-sheet-footer>
+              <button
+                ng-button
+                data-sheet-close
+                ng-click="savedName=profile.name"
+              >
+                حفظ التغييرات
+              </button>
+              <button data-sheet-close ng-button variant="outline">
+                إغلاق
+              </button>
+            </footer>
+          </form>
+          <button ng-sheet-close ng-button variant="ghost" size="icon-sm">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="M18 6 6 18"></path>
+              <path d="m6 6 12 12"></path>
+            </svg>
+            <span class="example-sr-only">إغلاق اللوحة</span>
+          </button>
+        </aside>
+      </section>
+      <output class="sheet-output" aria-live="polite">
+        الملف المحفوظ: <span ng-bind="savedName"></span>
+      </output>
+    </main>
+  </body>
+</html>

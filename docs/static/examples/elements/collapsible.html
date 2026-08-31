@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    class="collapsible-example-body"
+    ng-init="orderOpen=false"
+    data-example="collapsible-demo"
+  >
+    <section ng-collapsible class="collapsible-order-demo visual-example">
+      <div class="collapsible-order-header">
+        <h4>Order #4189</h4>
+        <button
+          ng-collapsible-trigger
+          ng-click="orderOpen=!orderOpen"
+          class="collapsible-icon-button"
+        >
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="m7 15 5 5 5-5M7 9l5-5 5 5" />
+          </svg>
+          <span class="visually-hidden">Toggle details</span>
+        </button>
+      </div>
+      <div class="collapsible-order-status">
+        <span>Status</span><strong>Shipped</strong>
+      </div>
+      <div data-slot="collapsible-content" class="collapsible-order-content">
+        <div class="collapsible-order-panel">
+          <p><strong>Shipping address</strong></p>
+          <p>100 Market St, San Francisco</p>
+        </div>
+        <div class="collapsible-order-panel">
+          <p><strong>Items</strong></p>
+          <p>2x Studio Headphones</p>
+        </div>
+      </div>
+    </section>
+    <p class="visually-hidden" role="status" aria-live="polite">
+      Order details {{ orderOpen ? 'expanded' : 'collapsed' }}.
+    </p>
+  </body>
+</html>

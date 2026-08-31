@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    data-example="breadcrumb-basic breadcrumb-link"
+  >
+    <nav ng-breadcrumb aria-label="breadcrumb">
+      <ol data-slot="breadcrumb-list">
+        <li data-slot="breadcrumb-item">
+          <a data-slot="breadcrumb-link" href="#">Home</a>
+        </li>
+        <li data-slot="breadcrumb-separator"></li>
+        <li data-slot="breadcrumb-item">
+          <a data-slot="breadcrumb-link" href="#">Components</a>
+        </li>
+        <li data-slot="breadcrumb-separator"></li>
+        <li data-slot="breadcrumb-item">
+          <span data-slot="breadcrumb-page">Breadcrumb</span>
+        </li>
+      </ol>
+    </nav>
+  </body>
+</html>

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak data-example="popover-rtl">
+    <main class="popover-rtl-workflow" dir="rtl">
+      <header class="workflow-heading"><h2>الجوانب الفعلية</h2></header>
+      <div class="popover-side-grid">
+        <section class="popover-side-stage popover-side-stage-left">
+          <span ng-popover>
+            <button
+              ng-button
+              type="button"
+              variant="outline"
+              ng-popover-trigger
+            >
+              يسار
+            </button>
+            <section ng-popover-content side="left" aria-label="الأبعاد يسار">
+              <header ng-popover-header>
+                <h3 ng-popover-title>الأبعاد</h3>
+                <p ng-popover-description>تعيين الأبعاد للطبقة.</p>
+              </header>
+            </section>
+          </span>
+        </section>
+        <section class="popover-side-stage popover-side-stage-top">
+          <span ng-popover>
+            <button
+              ng-button
+              type="button"
+              variant="outline"
+              ng-popover-trigger
+            >
+              أعلى
+            </button>
+            <section ng-popover-content side="top" aria-label="الأبعاد أعلى">
+              <header ng-popover-header>
+                <h3 ng-popover-title>الأبعاد</h3>
+                <p ng-popover-description>تعيين الأبعاد للطبقة.</p>
+              </header>
+            </section>
+          </span>
+        </section>
+        <section class="popover-side-stage popover-side-stage-bottom">
+          <span ng-popover>
+            <button
+              ng-button
+              type="button"
+              variant="outline"
+              ng-popover-trigger
+            >
+              أسفل
+            </button>
+            <section ng-popover-content side="bottom" aria-label="الأبعاد أسفل">
+              <header ng-popover-header>
+                <h3 ng-popover-title>الأبعاد</h3>
+                <p ng-popover-description>تعيين الأبعاد للطبقة.</p>
+              </header>
+            </section>
+          </span>
+        </section>
+        <section class="popover-side-stage popover-side-stage-right">
+          <span ng-popover>
+            <button
+              ng-button
+              type="button"
+              variant="outline"
+              ng-popover-trigger
+            >
+              يمين
+            </button>
+            <section ng-popover-content side="right" aria-label="الأبعاد يمين">
+              <header ng-popover-header>
+                <h3 ng-popover-title>الأبعاد</h3>
+                <p ng-popover-description>تعيين الأبعاد للطبقة.</p>
+              </header>
+            </section>
+          </span>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

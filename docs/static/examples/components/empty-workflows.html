@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak ng-init="emptyQuery='';emptyAction='Ready'">
+    <main class="empty-workflow-grid" aria-label="Empty state workflows">
+      <section
+        ng-empty
+        data-example="empty-avatar"
+        class="empty-workflow"
+      >
+        <div data-slot="empty-header">
+          <div data-slot="empty-media">
+            <span ng-avatar class="empty-avatar-large"
+              ><img
+                data-slot="avatar-image"
+                src="../../images/avatars/01.png"
+                alt="Jane Doe"
+              /><span data-slot="avatar-fallback">JD</span></span
+            >
+          </div>
+          <h2 data-slot="empty-title">User Offline</h2>
+          <p data-slot="empty-description">
+            This user is currently offline. Leave a message or try again later.
+          </p>
+        </div>
+        <div data-slot="empty-content">
+          <button
+            ng-button
+            size="sm"
+            type="button"
+            ng-click="emptyAction='Message queued'"
+          >
+            Leave Message
+          </button>
+        </div>
+      </section>
+      <section
+        ng-empty
+        data-example="empty-avatar-group"
+        class="empty-workflow"
+      >
+        <div data-slot="empty-header">
+          <div data-slot="empty-media" class="empty-avatar-group">
+            <span ng-avatar
+              ><img
+                data-slot="avatar-image"
+                src="../../images/avatars/01.png"
+                alt="Jane" /></span
+            ><span ng-avatar
+              ><img
+                data-slot="avatar-image"
+                src="../../images/avatars/02.png"
+                alt="Alex" /></span
+            ><span ng-avatar
+              ><img
+                data-slot="avatar-image"
+                src="../../images/avatars/03.png"
+                alt="Sam"
+            /></span>
+          </div>
+          <h2 data-slot="empty-title">No Team Members</h2>
+          <p data-slot="empty-description">
+            Invite your team to collaborate on this project.
+          </p>
+        </div>
+        <div data-slot="empty-content">
+          <button
+            ng-button
+            size="sm"
+            type="button"
+            ng-click="emptyAction='Invite opened'"
+          >
+            + Invite Members
+          </button>
+        </div>
+      </section>
+      <section
+        ng-empty
+        data-example="empty-background"
+        class="empty-workflow empty-muted-demo"
+      >
+        <div data-slot="empty-header">
+          <div data-slot="empty-media" variant="icon">!</div>
+          <h2 data-slot="empty-title">No Notifications</h2>
+          <p data-slot="empty-description">
+            You're all caught up. New notifications will appear here.
+          </p>
+        </div>
+        <div data-slot="empty-content">
+          <button
+            ng-button
+            variant="outline"
+            type="button"
+            ng-click="emptyAction='Refreshed'"
+          >
+            Refresh
+          </button>
+        </div>
+      </section>
+      <section
+        ng-empty
+        data-example="empty-card"
+        class="empty-workflow empty-card-demo"
+      >
+        <div data-slot="empty-header">
+          <div data-slot="empty-media" variant="icon">□</div>
+          <h2 data-slot="empty-title">No projects yet</h2>
+          <p data-slot="empty-description">
+            You haven't created any projects yet. Create your first project.
+          </p>
+        </div>
+        <div data-slot="empty-content">
+          <div class="row">
+            <button
+              ng-button
+              type="button"
+              ng-click="emptyAction='Create project'"
+            >
+              Create project</button
+            ><button
+              ng-button
+              variant="outline"
+              type="button"
+              ng-click="emptyAction='Import project'"
+            >
+              Import project
+            </button>
+          </div>
+          <a href="#learn">Learn more</a>
+        </div>
+      </section>
+      <section
+        ng-empty
+        data-example="empty-input-group"
+        class="empty-workflow"
+      >
+        <div data-slot="empty-header">
+          <h2 data-slot="empty-title">404 - Not Found</h2>
+          <p data-slot="empty-description">
+            The page you're looking for doesn't exist. Try searching below.
+          </p>
+        </div>
+        <div data-slot="empty-content">
+          <div ng-input-group>
+            <input
+              data-input
+              data-slot="input-group-control"
+              ng-model="emptyQuery"
+              placeholder="Try searching for pages..."
+              aria-label="Search missing pages"
+            />
+            <div data-slot="input-group-addon">⌕</div>
+            <div data-slot="input-group-addon" data-align="inline-end">
+              <kbd ng-kbd>/</kbd>
+            </div>
+          </div>
+          <p data-slot="empty-description">
+            Need help? <a href="#support">Contact support</a>
+          </p>
+        </div>
+      </section>
+      <section
+        ng-empty
+        data-example="empty-outline"
+        class="empty-workflow empty-outline-demo"
+      >
+        <div data-slot="empty-header">
+          <div data-slot="empty-media" variant="icon">☁</div>
+          <h2 data-slot="empty-title">Cloud Storage Empty</h2>
+          <p data-slot="empty-description">
+            Upload files to access them anywhere.
+          </p>
+        </div>
+        <div data-slot="empty-content">
+          <button
+            ng-button
+            variant="outline"
+            size="sm"
+            type="button"
+            ng-click="emptyAction='Upload opened'"
+          >
+            Upload Files
+          </button>
+        </div>
+      </section>
+      <section
+        ng-empty
+        data-example="empty-rtl"
+        class="empty-workflow"
+        dir="rtl"
+        lang="ar"
+      >
+        <div data-slot="empty-header">
+          <div data-slot="empty-media" variant="icon">□</div>
+          <h2 data-slot="empty-title">لا توجد مشاريع بعد</h2>
+          <p data-slot="empty-description">
+            لم تقم بإنشاء أي مشاريع بعد. ابدأ بإنشاء مشروعك الأول.
+          </p>
+        </div>
+        <div data-slot="empty-content">
+          <div class="row">
+            <button
+              ng-button
+              type="button"
+              ng-click="emptyAction='إنشاء مشروع'"
+            >
+              إنشاء مشروع</button
+            ><button
+              ng-button
+              variant="outline"
+              type="button"
+              ng-click="emptyAction='استيراد مشروع'"
+            >
+              استيراد مشروع
+            </button>
+          </div>
+        </div>
+      </section>
+      <p class="empty-workflow-output" role="status">
+        {{ emptyAction }} · {{ emptyQuery }}
+      </p>
+    </main>
+  </body>
+</html>

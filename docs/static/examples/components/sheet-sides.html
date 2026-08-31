@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="paragraphs=[1,2,3,4,5,6,7,8,9,10]"
+    data-example="sheet-side"
+  >
+    <main class="sheet-sides-demo visual-example">
+      <section ng-sheet side="top">
+        <button ng-sheet-trigger ng-button variant="outline">Top</button>
+        <div ng-sheet-overlay></div>
+        <aside ng-sheet-content data-size="half">
+          <header ng-sheet-header>
+            <h2 ng-sheet-title>Edit profile</h2>
+            <p ng-sheet-description>
+              Make changes to your profile here. Click save when you're done.
+            </p>
+          </header>
+          <div ng-sheet-body class="sheet-side-copy">
+            <p ng-repeat="item in paragraphs">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+            </p>
+          </div>
+          <footer ng-sheet-footer>
+            <button ng-button>Save changes</button>
+            <button data-sheet-close ng-button variant="outline">Cancel</button>
+          </footer>
+        </aside>
+      </section>
+      <section ng-sheet side="right">
+        <button ng-sheet-trigger ng-button variant="outline">Right</button>
+        <div ng-sheet-overlay></div>
+        <aside ng-sheet-content>
+          <header ng-sheet-header>
+            <h2 ng-sheet-title>Edit profile</h2>
+            <p ng-sheet-description>
+              Make changes to your profile here. Click save when you're done.
+            </p>
+          </header>
+          <div ng-sheet-body class="sheet-side-copy">
+            <p ng-repeat="item in paragraphs">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+            </p>
+          </div>
+          <footer ng-sheet-footer>
+            <button ng-button>Save changes</button>
+            <button data-sheet-close ng-button variant="outline">Cancel</button>
+          </footer>
+        </aside>
+      </section>
+      <section ng-sheet side="bottom">
+        <button ng-sheet-trigger ng-button variant="outline">Bottom</button>
+        <div ng-sheet-overlay></div>
+        <aside ng-sheet-content data-size="half">
+          <header ng-sheet-header>
+            <h2 ng-sheet-title>Edit profile</h2>
+            <p ng-sheet-description>
+              Make changes to your profile here. Click save when you're done.
+            </p>
+          </header>
+          <div ng-sheet-body class="sheet-side-copy">
+            <p ng-repeat="item in paragraphs">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+            </p>
+          </div>
+          <footer ng-sheet-footer>
+            <button ng-button>Save changes</button>
+            <button data-sheet-close ng-button variant="outline">Cancel</button>
+          </footer>
+        </aside>
+      </section>
+      <section ng-sheet side="left">
+        <button ng-sheet-trigger ng-button variant="outline">Left</button>
+        <div ng-sheet-overlay></div>
+        <aside ng-sheet-content>
+          <header ng-sheet-header>
+            <h2 ng-sheet-title>Edit profile</h2>
+            <p ng-sheet-description>
+              Make changes to your profile here. Click save when you're done.
+            </p>
+          </header>
+          <div ng-sheet-body class="sheet-side-copy">
+            <p ng-repeat="item in paragraphs">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+            </p>
+          </div>
+          <footer ng-sheet-footer>
+            <button ng-button>Save changes</button>
+            <button data-sheet-close ng-button variant="outline">Cancel</button>
+          </footer>
+        </aside>
+      </section>
+    </main>
+  </body>
+</html>

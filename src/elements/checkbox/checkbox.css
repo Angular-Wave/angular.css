@@ -1,0 +1,38 @@
+input[type="checkbox"][ng-checkbox],
+input[type="checkbox"][data-slot="checkbox"] {
+  appearance: none;
+
+  @apply relative size-4 shrink-0 rounded-sm border border-input bg-background
+    shadow-xs transition-colors outline-none
+    disabled:cursor-not-allowed disabled:opacity-50
+    focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]
+    aria-invalid:border-error aria-invalid:ring-error/20
+    dark:aria-invalid:ring-error/40;
+
+  &::after {
+    content: "";
+
+    @apply pointer-events-none absolute left-1/2 top-1/2 hidden h-2.5 w-1.5
+      -translate-x-1/2 -translate-y-[60%] rotate-45 border-b-2 border-r-2
+      border-primary-foreground;
+  }
+
+  &:checked {
+    @apply border-primary bg-primary text-primary-foreground;
+
+    &::after {
+      @apply block;
+    }
+  }
+
+  &:indeterminate {
+    @apply border-primary bg-primary;
+
+    &::after {
+      content: "";
+
+      @apply left-1/2 top-1/2 block h-0 w-2 -translate-x-1/2
+        -translate-y-1/2 rotate-0 border-b-2 border-r-0;
+    }
+  }
+}

@@ -10,16 +10,16 @@
       href="https://cdn.jsdelivr.net/npm/@angular-wave/angular.ts/css/angular.css"
     />
     <script src="https://cdn.jsdelivr.net/npm/@angular-wave/angular.ts/dist/angular-ts.umd.min.js"></script>
-    <script type="module" src="../../index.js"></script>
+    <script type="module" src="../../index.ts"></script>
   </head>
 
   <body ng-app="ui" ng-cloak>
     <div class="grid w-full max-w-xl items-start gap-4">
-      <button>Button</button>
+      <button ng-button>Button</button>
 
       <div class="flex items-start gap-2">
-        <button variant="outline">Button</button
-        ><button variant="outline" size="icon">
+        <button ng-button variant="outline">Button</button
+        ><button ng-button variant="outline" size="icon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -38,12 +38,12 @@
       </div>
 
       <div class="flex items-start gap-2">
-        <button variant="secondary">Button</button>
+        <button ng-button variant="secondary">Button</button>
       </div>
 
       <div class="flex items-start gap-2">
-        <button size="sm" variant="outline">Small</button>
-        <button variant="outline" size="icon-sm">
+        <button ng-button size="sm" variant="outline">Small</button>
+        <button ng-button variant="outline" size="icon-sm">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -62,8 +62,8 @@
       </div>
 
       <div class="flex items-start gap-2">
-        <button variant="outline">Default</button>
-        <button variant="outline" size="icon">
+        <button ng-button variant="outline">Default</button>
+        <button ng-button variant="outline" size="icon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -82,8 +82,8 @@
       </div>
 
       <div class="flex items-start gap-2">
-        <button size="lg" variant="outline">Large</button>
-        <button variant="outline" size="icon-lg">
+        <button ng-button size="lg" variant="outline">Large</button>
+        <button ng-button variant="outline" size="icon-lg">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -102,31 +102,31 @@
       </div>
 
       <div class="flex items-start gap-2">
-        <button variant="ghost">Button</button>
+        <button ng-button variant="ghost">Button</button>
       </div>
 
       <div class="flex items-start gap-2">
-        <button variant="info">Info</button>
+        <button ng-button variant="info">Info</button>
       </div>
 
       <div class="flex items-start gap-2">
-        <button variant="success">Success</button>
+        <button ng-button variant="success">Success</button>
       </div>
 
       <div class="flex items-start gap-2">
-        <button variant="error">Error</button>
+        <button ng-button variant="error">Error</button>
       </div>
 
       <div class="flex items-start gap-2">
-        <button variant="warning">Warning</button>
+        <button ng-button variant="warning">Warning</button>
       </div>
 
       <div class="flex items-start gap-2">
-        <button variant="link">Link</button>
+        <button ng-button variant="link">Link</button>
       </div>
 
       <div class="flex items-start gap-2">
-        <button variant="outline">
+        <button ng-button variant="outline">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -145,7 +145,7 @@
       </div>
 
       <div class="flex items-start gap-2">
-        <button variant="outline" disabled>Submit</button>
+        <button ng-button variant="outline" disabled>Submit</button>
       </div>
     </div>
   </body>

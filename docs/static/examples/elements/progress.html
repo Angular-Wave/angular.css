@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+    <script src="../../js/progress-demo.umd.js"></script>
+  </head>
+  <body
+    ng-app="progressDemo"
+    ng-controller="ProgressDemoController"
+    ng-cloak
+    data-example="progress-demo progress-label"
+  >
+    <main class="progress-demo visual-example">
+      <section aria-labelledby="progress-timed-title">
+        <h2 id="progress-timed-title" class="example-sr-only">
+          Loading progress
+        </h2>
+        <div
+          ng-progress
+          value="{{ demoValue }}"
+          max="100"
+          aria-labelledby="progress-timed-title"
+          class="progress-demo-timed"
+        >
+          <span data-slot="progress-track">
+            <span data-slot="progress-indicator"></span>
+          </span>
+        </div>
+      </section>
+
+      <section>
+        <div ng-progress value="56" max="100" class="progress-demo-labeled">
+          <span data-slot="progress-label">Upload progress</span>
+          <span data-slot="progress-value"></span>
+          <span data-slot="progress-track">
+            <span data-slot="progress-indicator"></span>
+          </span>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

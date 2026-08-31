@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    data-example="avatar-badge avatar-basic avatar-demo avatar-group avatar-group-count"
+  >
+    <div class="avatar-demo visual-example">
+      <span ng-avatar>
+        <img
+          data-slot="avatar-image"
+          class="avatar-grayscale"
+          src="../../images/avatars/01.png"
+          alt="Profile portrait"
+        />
+        <span data-slot="avatar-fallback">CN</span>
+      </span>
+      <span ng-avatar>
+        <img
+          data-slot="avatar-image"
+          src="../../images/avatars/02.png"
+          alt="Profile portrait"
+        />
+        <span data-slot="avatar-fallback">ER</span>
+        <span data-slot="avatar-badge" data-variant="success"></span>
+      </span>
+      <span data-slot="avatar-group" class="avatar-grayscale">
+        <span ng-avatar>
+          <img
+            data-slot="avatar-image"
+            src="../../images/avatars/01.png"
+            alt="Profile portrait"
+          />
+          <span data-slot="avatar-fallback">CN</span>
+        </span>
+        <span ng-avatar>
+          <img
+            data-slot="avatar-image"
+            src="../../images/avatars/03.png"
+            alt="Profile portrait"
+          />
+          <span data-slot="avatar-fallback">LR</span>
+        </span>
+        <span ng-avatar>
+          <img
+            data-slot="avatar-image"
+            src="../../images/avatars/04.png"
+            alt="Profile portrait"
+          />
+          <span data-slot="avatar-fallback">ER</span>
+        </span>
+        <span data-slot="avatar-group-count">+3</span>
+      </span>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+[data-slot="sheet-content"],
+[ng-sheet-content] {
+  min-width: 0;
+  max-height: 100dvh;
+  gap: calc(var(--spacing) * 4);
+}
+
+:is([data-slot="sheet-content"], [ng-sheet-content])[data-side="right"] {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 75%;
+  max-width: 24rem;
+  border-left: 1px solid var(--border);
+}
+
+:is([data-slot="sheet-content"], [ng-sheet-content])[data-side="left"] {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 75%;
+  max-width: 24rem;
+  border-right: 1px solid var(--border);
+}
+
+:is([data-slot="sheet-content"], [ng-sheet-content])[data-side="top"] {
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: auto;
+  border-block-end: 1px solid var(--border);
+}
+
+:is([data-slot="sheet-content"], [ng-sheet-content])[data-side="bottom"] {
+  inset-block-end: 0;
+  inset-inline: 0;
+  height: auto;
+  border-block-start: 1px solid var(--border);
+}
+
+:is([data-slot="sheet-content"], [ng-sheet-content])[data-size="half"] {
+  max-height: 50dvh;
+}
+
+[data-slot="sheet-close"],
+[ng-sheet-close] {
+  position: absolute;
+  inset-block-start: calc(var(--spacing) * 3);
+  inset-inline-end: calc(var(--spacing) * 3);
+}

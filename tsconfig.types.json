@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "declaration": true,
-    "allowJs": true,
-    "allowImportingTsExtensions": true,
+    "allowJs": false,
     "emitDeclarationOnly": true,
     "outDir": "@types",
+    "rootDir": "src",
+    "skipLibCheck": true,
+    "strict": true,
     "target": "ES2023"
   },
-  "include": ["src/interface.ts"],
-  "exclude": ["**/*.test.js", "**/*.spec.js"]
+  "include": ["src/index.ts"],
+  "exclude": ["**/*.test.ts", "**/*.spec.ts"]
 }

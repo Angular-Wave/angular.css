@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="disabledState = true; rtlBookmark = false"
+    data-example="toggle-disabled toggle-rtl"
+  >
+    <main class="component-state-grid visual-example">
+      <section
+        class="component-state-section"
+        aria-labelledby="toggle-disabled-heading"
+      >
+        <h2 id="toggle-disabled-heading">Disabled</h2>
+        <div class="row">
+          <button ng-toggle type="button" ng-disabled="disabledState">
+            Disabled
+          </button>
+          <button
+            ng-toggle
+            type="button"
+            variant="outline"
+            ng-disabled="disabledState"
+          >
+            Disabled
+          </button>
+        </div>
+        <button
+          ng-button
+          type="button"
+          variant="outline"
+          size="sm"
+          ng-click="disabledState = !disabledState"
+        >
+          {{ disabledState ? 'Enable toggles' : 'Disable toggles' }}
+        </button>
+      </section>
+
+      <section
+        class="component-state-section"
+        aria-labelledby="toggle-rtl-heading"
+        dir="rtl"
+        lang="ar"
+      >
+        <h2 id="toggle-rtl-heading">إشارة مرجعية</h2>
+        <button
+          ng-toggle
+          type="button"
+          size="sm"
+          variant="outline"
+          aria-label="تبديل الإشارة المرجعية"
+          aria-pressed="{{ rtlBookmark }}"
+          ng-click="rtlBookmark = !rtlBookmark"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <path d="M6 3h12v18l-6-4-6 4z" />
+          </svg>
+          إشارة مرجعية
+        </button>
+        <p class="output" role="status">
+          الحالة: {{ rtlBookmark ? 'مفعلة' : 'غير مفعلة' }}
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

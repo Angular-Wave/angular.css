@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="paragraphs=[1,2,3,4,5,6,7,8,9,10]"
+    data-example="drawer-sides"
+  >
+    <main class="drawer-sides-demo visual-example">
+      <section ng-drawer side="top">
+        <button ng-drawer-trigger ng-button variant="outline">Top</button>
+        <div ng-drawer-overlay></div>
+        <section ng-drawer-content data-size="half">
+          <header ng-drawer-header>
+            <h2 ng-drawer-title>Top drawer</h2>
+            <p ng-drawer-description>Review activity from the top edge.</p>
+          </header>
+          <div ng-drawer-body class="drawer-side-copy">
+            <p ng-repeat="item in paragraphs">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+            </p>
+          </div>
+          <footer ng-drawer-footer>
+            <button ng-drawer-close ng-button variant="outline">Cancel</button>
+          </footer>
+        </section>
+      </section>
+
+      <section ng-drawer side="right">
+        <button ng-drawer-trigger ng-button variant="outline">Right</button>
+        <div ng-drawer-overlay></div>
+        <section ng-drawer-content>
+          <header ng-drawer-header>
+            <h2 ng-drawer-title>Right drawer</h2>
+            <p ng-drawer-description>Review activity from the right edge.</p>
+          </header>
+          <div ng-drawer-body class="drawer-side-copy">
+            <p ng-repeat="item in paragraphs">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+            </p>
+          </div>
+          <footer ng-drawer-footer>
+            <button ng-drawer-close ng-button variant="outline">Cancel</button>
+          </footer>
+        </section>
+      </section>
+
+      <section ng-drawer side="bottom">
+        <button ng-drawer-trigger ng-button variant="outline">Bottom</button>
+        <div ng-drawer-overlay></div>
+        <section ng-drawer-content data-size="half">
+          <div ng-drawer-handle></div>
+          <header ng-drawer-header>
+            <h2 ng-drawer-title>Bottom drawer</h2>
+            <p ng-drawer-description>Review activity from the bottom edge.</p>
+          </header>
+          <div ng-drawer-body class="drawer-side-copy">
+            <p ng-repeat="item in paragraphs">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+            </p>
+          </div>
+          <footer ng-drawer-footer>
+            <button ng-drawer-close ng-button variant="outline">Cancel</button>
+          </footer>
+        </section>
+      </section>
+
+      <section ng-drawer side="left">
+        <button ng-drawer-trigger ng-button variant="outline">Left</button>
+        <div ng-drawer-overlay></div>
+        <section ng-drawer-content>
+          <header ng-drawer-header>
+            <h2 ng-drawer-title>Left drawer</h2>
+            <p ng-drawer-description>Review activity from the left edge.</p>
+          </header>
+          <div ng-drawer-body class="drawer-side-copy">
+            <p ng-repeat="item in paragraphs">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+            </p>
+          </div>
+          <footer ng-drawer-footer>
+            <button ng-drawer-close ng-button variant="outline">Cancel</button>
+          </footer>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+{{ $sectionPath := .Get "section" -}}
+{{ $section := .Page -}}
+{{ with $sectionPath -}}
+  {{ $section = $.Site.GetPage . -}}
+{{ end -}}
+{{ $pages := $section.Pages.ByTitle -}}
+{{ range $group := $pages.GroupByParam "category" -}}
+  <section class="component-catalog-group">
+    <h2>{{ $group.Key | title }}</h2>
+    <ul class="component-catalog-list">
+      {{ range $group.Pages.ByTitle -}}
+        <li>
+          <a href="{{ .RelPermalink }}">
+            <span>{{ .Title }}</span>
+            <small>{{ .Description | plainify }}</small>
+          </a>
+        </li>
+      {{ end -}}
+    </ul>
+  </section>
+{{ end -}}

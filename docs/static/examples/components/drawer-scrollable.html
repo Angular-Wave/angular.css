@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="paragraphs=[1,2,3,4,5,6,7,8,9,10]"
+    data-example="drawer-scrollable-content"
+  >
+    <main class="drawer-scroll-demo visual-example">
+      <section id="scrollable-drawer" ng-drawer side="right">
+        <button ng-drawer-trigger ng-button variant="outline">
+          Scrollable Content
+        </button>
+        <div ng-drawer-overlay></div>
+        <section ng-drawer-content>
+          <header ng-drawer-header>
+            <h2 ng-drawer-title>Move Goal</h2>
+            <p ng-drawer-description>Set your daily activity goal.</p>
+          </header>
+          <div ng-drawer-body class="drawer-scroll-copy">
+            <p ng-repeat="item in paragraphs">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+            </p>
+          </div>
+          <footer ng-drawer-footer>
+            <button ng-button>Submit</button>
+            <button ng-drawer-close ng-button variant="outline">Cancel</button>
+          </footer>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

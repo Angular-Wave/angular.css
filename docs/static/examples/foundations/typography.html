@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Native HTML typography</title>
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <style>
+      .typography-demo {
+        display: grid;
+        gap: 1rem;
+        max-width: 42rem;
+      }
+
+      .typography-demo h1 {
+        font-size: 2.25rem;
+        font-weight: 800;
+        line-height: 1.1;
+      }
+
+      .typography-demo h2 {
+        border-bottom: 1px solid var(--border);
+        font-size: 1.5rem;
+        font-weight: 600;
+        padding-bottom: 0.5rem;
+      }
+
+      .typography-demo p,
+      .typography-demo li {
+        color: var(--foreground);
+        line-height: 1.75;
+      }
+
+      .typography-demo blockquote {
+        border-inline-start: 2px solid var(--border);
+        color: var(--muted-foreground);
+        font-style: italic;
+        padding-inline-start: 1rem;
+      }
+
+      .typography-demo code {
+        background: var(--muted);
+        border-radius: 0.25rem;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.875em;
+        padding: 0.15rem 0.3rem;
+      }
+    </style>
+  </head>
+  <body
+    ng-app="ui"
+    data-example="typography-blockquote typography-demo typography-h1 typography-h2 typography-h3 typography-h4 typography-inline-code typography-large typography-lead typography-list typography-muted typography-p typography-rtl typography-small typography-table"
+  >
+    <article
+      class="typography-demo"
+      aria-label="Native HTML typography example"
+    >
+      <h1>Design systems for the web</h1>
+      <p>
+        AngularCSS leaves headings, paragraphs, lists, tables, and quotations as
+        native HTML so applications can style them directly with Tailwind.
+      </p>
+      <h2>HTML-first composition</h2>
+      <blockquote>
+        Semantics remain useful even when the visual language changes.
+      </blockquote>
+      <p>
+        Use <code>data-slot</code> only when a stable styling hook is needed.
+      </p>
+    </article>
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </body>
+</html>

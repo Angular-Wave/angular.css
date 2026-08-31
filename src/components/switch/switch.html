@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak ng-init="mode=false">
+    <div class="stack-sm">
+      <div class="row" data-slot="field" orientation="horizontal">
+        <input
+          ng-switch-control
+          id="airplane-mode"
+          type="checkbox"
+          role="switch"
+          ng-model="mode"
+        />
+        <label ng-label for="airplane-mode">Airplane mode</label>
+      </div>
+      <div class="output">Mode enabled: <span ng-bind="mode"></span></div>
+
+      <button ng-switch-control aria-checked="false">Remote mode</button>
+      <button ng-switch-control size="sm" aria-checked="true">
+        Small switch
+      </button>
+    </div>
+  </body>
+</html>

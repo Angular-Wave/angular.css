@@ -1,0 +1,54 @@
+[data-slot="table-container"],
+[ng-table-container] {
+  width: 100%;
+  overflow-x: auto;
+}
+
+[data-slot="table"],
+[ng-table] {
+  width: 100%;
+  caption-side: bottom;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+[data-slot="table-caption"],
+[ng-table-caption] {
+  margin-top: calc(var(--spacing) * 4);
+  color: var(--muted-foreground);
+  font-size: var(--text-sm);
+}
+
+[data-slot="table-row"],
+[ng-table-row] {
+  border-bottom: 1px solid var(--border);
+  transition: background-color 150ms ease;
+}
+
+[data-slot="table-row"]:hover,
+[ng-table-row]:hover {
+  background: color-mix(in srgb, var(--muted) 50%, transparent);
+}
+
+[data-slot="table-head"],
+[ng-table-head] {
+  height: calc(var(--spacing) * 10);
+  padding-inline: calc(var(--spacing) * 2);
+  text-align: left;
+  vertical-align: middle;
+  color: var(--muted-foreground);
+  font-weight: var(--font-weight-medium);
+}
+
+[data-slot="table-cell"],
+[ng-table-cell] {
+  padding: calc(var(--spacing) * 2);
+  vertical-align: middle;
+}
+
+[data-slot="table-footer"],
+[ng-table-footer] {
+  border-top: 1px solid var(--border);
+  background: var(--muted);
+  font-weight: var(--font-weight-medium);
+}

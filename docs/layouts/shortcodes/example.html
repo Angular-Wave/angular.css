@@ -1,0 +1,15 @@
+{{ $src := .Get "src" | default (.Get 0) -}} {{ $title := .Get "title" | default
+"AngularCSS example" -}} {{ $height := .Get "height" | default "260" -}} {{
+$source := readFile (printf "static/%s" $src) -}}
+<iframe
+  class="angularcss-example-frame"
+  src="{{ $src | relURL }}"
+  title="{{ $title }}"
+  loading="lazy"
+  scrolling="no"
+  style="height: {{ $height }}px;"
+></iframe>
+<details class="angularcss-example-source">
+  <summary>View source</summary>
+  {{ highlight $source "html" "lineNos=false" }}
+</details>

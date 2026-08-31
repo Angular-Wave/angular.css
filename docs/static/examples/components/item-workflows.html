@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="ui" ng-cloak ng-init="itemState={message:'Ready'}">
+    <main class="item-workflow-grid" aria-label="Item workflows">
+      <section data-example="item-demo" class="item-workflow">
+        <div data-slot="item-group" role="list">
+          <div ng-item variant="outline" role="listitem">
+            <div data-slot="item-content">
+              <div data-slot="item-title">Basic Item</div>
+              <p data-slot="item-description">
+                A simple item with title and description.
+              </p>
+            </div>
+            <div data-slot="item-actions">
+              <button
+                ng-button
+                variant="outline"
+                size="sm"
+                type="button"
+                ng-click="itemState.message='Basic action'"
+              >
+                Action
+              </button>
+            </div>
+          </div>
+          <a
+            ng-item
+            variant="outline"
+            data-size="sm"
+            href="#verified"
+            role="listitem"
+            ><div data-slot="item-media">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 12.75 11.25 15 15 9.75"></path>
+                <circle cx="12" cy="12" r="9"></circle>
+              </svg>
+            </div>
+            <div data-slot="item-content">
+              <div data-slot="item-title">Your profile has been verified.</div>
+            </div>
+            <div data-slot="item-actions" aria-hidden="true">›</div></a
+          >
+        </div>
+      </section>
+
+      <section data-example="item-avatar" class="item-workflow">
+        <div data-slot="item-group" role="list">
+          <div ng-item variant="outline" role="listitem">
+            <div data-slot="item-media">
+              <span ng-avatar class="item-avatar-large"
+                ><img
+                  data-slot="avatar-image"
+                  src="../../images/avatars/01.png"
+                  alt="Evil Rabbit"
+              /></span>
+            </div>
+            <div data-slot="item-content">
+              <div data-slot="item-title">Evil Rabbit</div>
+              <p data-slot="item-description">Last seen 5 months ago</p>
+            </div>
+            <div data-slot="item-actions">
+              <button
+                ng-button
+                variant="outline"
+                size="icon-sm"
+                type="button"
+                aria-label="Invite Evil Rabbit"
+              >
+                +
+              </button>
+            </div>
+          </div>
+          <div ng-item variant="outline" role="listitem">
+            <div data-slot="item-media" class="item-avatar-stack">
+              <span ng-avatar
+                ><img
+                  data-slot="avatar-image"
+                  src="../../images/avatars/02.png"
+                  alt="shadcn" /></span
+              ><span ng-avatar
+                ><img
+                  data-slot="avatar-image"
+                  src="../../images/avatars/03.png"
+                  alt="maxleiter" /></span
+              ><span ng-avatar
+                ><img
+                  data-slot="avatar-image"
+                  src="../../images/avatars/01.png"
+                  alt="evilrabbit"
+              /></span>
+            </div>
+            <div data-slot="item-content">
+              <div data-slot="item-title">No Team Members</div>
+              <p data-slot="item-description">
+                Invite your team to collaborate on this project.
+              </p>
+            </div>
+            <div data-slot="item-actions">
+              <button
+                ng-button
+                variant="outline"
+                size="sm"
+                type="button"
+                ng-click="itemState.message='Invite opened'"
+              >
+                Invite
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section data-example="item-icon" class="item-workflow">
+        <div ng-item variant="outline">
+          <div data-slot="item-media" variant="icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 9v4m0 4h.01M10.3 3.7 2.5 17.2A2 2 0 0 0 4.2 20h15.6a2 2 0 0 0 1.7-2.8L13.7 3.7a2 2 0 0 0-3.4 0Z"
+              ></path>
+            </svg>
+          </div>
+          <div data-slot="item-content">
+            <div data-slot="item-title">Security Alert</div>
+            <p data-slot="item-description">
+              New login detected from unknown device.
+            </p>
+          </div>
+          <div data-slot="item-actions">
+            <button ng-button variant="outline" size="sm" type="button">
+              Review
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section data-example="item-image" class="item-workflow">
+        <div data-slot="item-group" role="list">
+          <a ng-item variant="outline" href="#midnight" role="listitem"
+            ><div data-slot="item-media" variant="image">
+              <img
+                src="../../images/avatars/01.png"
+                alt="Midnight City Lights"
+              />
+            </div>
+            <div data-slot="item-content">
+              <div data-slot="item-title">
+                Midnight City Lights - Electric Nights
+              </div>
+              <p data-slot="item-description">Neon Dreams</p>
+            </div>
+            <div data-slot="item-content">
+              <p data-slot="item-description">3:45</p>
+            </div></a
+          ><a ng-item variant="outline" href="#coffee" role="listitem"
+            ><div data-slot="item-media" variant="image">
+              <img
+                src="../../images/avatars/02.png"
+                alt="Coffee Shop Conversations"
+              />
+            </div>
+            <div data-slot="item-content">
+              <div data-slot="item-title">
+                Coffee Shop Conversations - Urban Stories
+              </div>
+              <p data-slot="item-description">The Morning Brew</p>
+            </div>
+            <div data-slot="item-content">
+              <p data-slot="item-description">4:05</p>
+            </div></a
+          ><a ng-item variant="outline" href="#digital" role="listitem"
+            ><div data-slot="item-media" variant="image">
+              <img src="../../images/avatars/03.png" alt="Digital Rain" />
+            </div>
+            <div data-slot="item-content">
+              <div data-slot="item-title">Digital Rain - Binary Beats</div>
+              <p data-slot="item-description">Cyber Symphony</p>
+            </div>
+            <div data-slot="item-content">
+              <p data-slot="item-description">3:30</p>
+            </div></a
+          >
+        </div>
+      </section>
+
+      <section
+        data-example="item-dropdown"
+        class="item-workflow item-dropdown-workflow"
+      >
+        <div ng-dropdown data-slot="dropdown-menu">
+          <button
+            ng-button
+            variant="outline"
+            type="button"
+            data-slot="dropdown-menu-trigger"
+          >
+            Select <span aria-hidden="true">⌄</span>
+          </button>
+          <div role="menu" data-slot="dropdown-menu-content">
+            <div data-slot="dropdown-menu-group">
+              <button
+                data-slot="dropdown-menu-item"
+                ng-click="itemState.message='Selected shadcn'"
+              >
+                <div ng-item data-size="xs">
+                  <div data-slot="item-media">
+                    <span ng-avatar
+                      ><img
+                        data-slot="avatar-image"
+                        src="../../images/avatars/02.png"
+                        alt=""
+                    /></span>
+                  </div>
+                  <div data-slot="item-content">
+                    <div data-slot="item-title">shadcn</div>
+                    <p data-slot="item-description">shadcn@vercel.com</p>
+                  </div>
+                </div></button
+              ><button
+                data-slot="dropdown-menu-item"
+                ng-click="itemState.message='Selected maxleiter'"
+              >
+                <div ng-item data-size="xs">
+                  <div data-slot="item-media">
+                    <span ng-avatar
+                      ><img
+                        data-slot="avatar-image"
+                        src="../../images/avatars/03.png"
+                        alt=""
+                    /></span>
+                  </div>
+                  <div data-slot="item-content">
+                    <div data-slot="item-title">maxleiter</div>
+                    <p data-slot="item-description">maxleiter@vercel.com</p>
+                  </div>
+                </div></button
+              ><button
+                data-slot="dropdown-menu-item"
+                ng-click="itemState.message='Selected evilrabbit'"
+              >
+                <div ng-item data-size="xs">
+                  <div data-slot="item-media">
+                    <span ng-avatar
+                      ><img
+                        data-slot="avatar-image"
+                        src="../../images/avatars/01.png"
+                        alt=""
+                    /></span>
+                  </div>
+                  <div data-slot="item-content">
+                    <div data-slot="item-title">evilrabbit</div>
+                    <p data-slot="item-description">evilrabbit@vercel.com</p>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section data-example="item-group" class="item-workflow">
+        <div data-slot="item-group" role="list">
+          <div ng-item variant="outline" role="listitem">
+            <div data-slot="item-media">
+              <span ng-avatar
+                ><img
+                  data-slot="avatar-image"
+                  src="../../images/avatars/02.png"
+                  alt="shadcn"
+              /></span>
+            </div>
+            <div data-slot="item-content">
+              <div data-slot="item-title">shadcn</div>
+              <p data-slot="item-description">shadcn@vercel.com</p>
+            </div>
+            <div data-slot="item-actions">
+              <button
+                ng-button
+                variant="ghost"
+                size="icon-sm"
+                type="button"
+                aria-label="Invite shadcn"
+              >
+                +
+              </button>
+            </div>
+          </div>
+          <div ng-item variant="outline" role="listitem">
+            <div data-slot="item-media">
+              <span ng-avatar
+                ><img
+                  data-slot="avatar-image"
+                  src="../../images/avatars/03.png"
+                  alt="maxleiter"
+              /></span>
+            </div>
+            <div data-slot="item-content">
+              <div data-slot="item-title">maxleiter</div>
+              <p data-slot="item-description">maxleiter@vercel.com</p>
+            </div>
+            <div data-slot="item-actions">
+              <button
+                ng-button
+                variant="ghost"
+                size="icon-sm"
+                type="button"
+                aria-label="Invite maxleiter"
+              >
+                +
+              </button>
+            </div>
+          </div>
+          <div ng-item variant="outline" role="listitem">
+            <div data-slot="item-media">
+              <span ng-avatar
+                ><img
+                  data-slot="avatar-image"
+                  src="../../images/avatars/01.png"
+                  alt="evilrabbit"
+              /></span>
+            </div>
+            <div data-slot="item-content">
+              <div data-slot="item-title">evilrabbit</div>
+              <p data-slot="item-description">evilrabbit@vercel.com</p>
+            </div>
+            <div data-slot="item-actions">
+              <button
+                ng-button
+                variant="ghost"
+                size="icon-sm"
+                type="button"
+                aria-label="Invite evilrabbit"
+              >
+                +
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        data-example="item-header"
+        class="item-workflow item-workflow-wide"
+      >
+        <div data-slot="item-group" role="list" class="item-header-grid">
+          <div ng-item variant="outline" role="listitem">
+            <div data-slot="item-header">
+              <img src="../../images/avatars/01.png" alt="v0-1.5-sm" />
+            </div>
+            <div data-slot="item-content">
+              <div data-slot="item-title">v0-1.5-sm</div>
+              <p data-slot="item-description">
+                Everyday tasks and UI generation.
+              </p>
+            </div>
+          </div>
+          <div ng-item variant="outline" role="listitem">
+            <div data-slot="item-header">
+              <img src="../../images/avatars/02.png" alt="v0-1.5-lg" />
+            </div>
+            <div data-slot="item-content">
+              <div data-slot="item-title">v0-1.5-lg</div>
+              <p data-slot="item-description">
+                Advanced thinking or reasoning.
+              </p>
+            </div>
+          </div>
+          <div ng-item variant="outline" role="listitem">
+            <div data-slot="item-header">
+              <img src="../../images/avatars/03.png" alt="v0-2.0-mini" />
+            </div>
+            <div data-slot="item-content">
+              <div data-slot="item-title">v0-2.0-mini</div>
+              <p data-slot="item-description">
+                Open Source model for everyone.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section data-example="item-link" class="item-workflow">
+        <div data-slot="item-group" role="list">
+          <a ng-item href="#documentation" role="listitem"
+            ><div data-slot="item-content">
+              <div data-slot="item-title">Visit our documentation</div>
+              <p data-slot="item-description">
+                Learn how to get started with our components.
+              </p>
+            </div>
+            <div data-slot="item-actions" aria-hidden="true">›</div></a
+          ><a ng-item variant="outline" href="#external" role="listitem"
+            ><div data-slot="item-content">
+              <div data-slot="item-title">External resource</div>
+              <p data-slot="item-description">
+                Opens in a new tab with security attributes.
+              </p>
+            </div>
+            <div data-slot="item-actions" aria-hidden="true">↗</div></a
+          >
+        </div>
+      </section>
+
+      <section data-example="item-size" class="item-workflow">
+        <div data-slot="item-group" role="list">
+          <div ng-item variant="outline" role="listitem">
+            <div data-slot="item-media" variant="icon">□</div>
+            <div data-slot="item-content">
+              <div data-slot="item-title">Default Size</div>
+              <p data-slot="item-description">
+                The standard size for most use cases.
+              </p>
+            </div>
+          </div>
+          <div ng-item variant="outline" data-size="sm" role="listitem">
+            <div data-slot="item-media" variant="icon">□</div>
+            <div data-slot="item-content">
+              <div data-slot="item-title">Small Size</div>
+              <p data-slot="item-description">
+                A compact size for dense layouts.
+              </p>
+            </div>
+          </div>
+          <div ng-item variant="outline" data-size="xs" role="listitem">
+            <div data-slot="item-media" variant="icon">□</div>
+            <div data-slot="item-content">
+              <div data-slot="item-title">Extra Small Size</div>
+              <p data-slot="item-description">
+                The most compact size available.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section data-example="item-variant" class="item-workflow">
+        <div data-slot="item-group" role="list">
+          <div ng-item role="listitem">
+            <div data-slot="item-media" variant="icon">□</div>
+            <div data-slot="item-content">
+              <div data-slot="item-title">Default Variant</div>
+              <p data-slot="item-description">
+                Transparent background with no border.
+              </p>
+            </div>
+          </div>
+          <div ng-item variant="outline" role="listitem">
+            <div data-slot="item-media" variant="icon">□</div>
+            <div data-slot="item-content">
+              <div data-slot="item-title">Outline Variant</div>
+              <p data-slot="item-description">
+                Outlined style with a visible border.
+              </p>
+            </div>
+          </div>
+          <div ng-item variant="muted" role="listitem">
+            <div data-slot="item-media" variant="icon">□</div>
+            <div data-slot="item-content">
+              <div data-slot="item-title">Muted Variant</div>
+              <p data-slot="item-description">
+                Muted background for secondary content.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section data-example="muted-item-group" class="item-workflow">
+        <div data-slot="item-group" role="list">
+          <div
+            ng-item
+            variant="muted"
+            role="listitem"
+            ng-repeat="number in [1,2,3]"
+          >
+            <div data-slot="item-content">
+              <div data-slot="item-title">Item {{ number }}</div>
+              <p data-slot="item-description">Item in muted group.</p>
+            </div>
+            <div data-slot="item-actions">
+              <button ng-button variant="outline" size="sm" type="button">
+                Action
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        data-example="outline-item-group"
+        class="item-workflow"
+      >
+        <div data-slot="item-group" role="list">
+          <div
+            ng-item
+            variant="outline"
+            role="listitem"
+            ng-repeat="number in [1,2,3]"
+          >
+            <div data-slot="item-media" variant="icon">□</div>
+            <div data-slot="item-content">
+              <div data-slot="item-title">Item {{ number }}</div>
+              <p data-slot="item-description">Item with icon.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        data-example="file-upload-list"
+        class="item-workflow item-workflow-wide"
+      >
+        <div data-slot="item-group" role="list">
+          <div
+            ng-item
+            data-size="xs"
+            role="listitem"
+            class="file-upload-item"
+            ng-repeat="file in [{name:'document.pdf',progress:45,time:'2m 30s'},{name:'presentation.pptx',progress:78,time:'45s'},{name:'spreadsheet.xlsx',progress:12,time:'5m 12s'},{name:'image.jpg',progress:100,time:'Complete'}]"
+          >
+            <div data-slot="item-media" variant="icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"
+                ></path>
+                <path d="M14 2v6h6"></path>
+              </svg>
+            </div>
+            <div data-slot="item-content">
+              <div data-slot="item-title">{{ file.name }}</div>
+            </div>
+            <div data-slot="item-content" class="file-upload-progress">
+              <div
+                ng-progress
+                value="{{ file.progress }}"
+                max="100"
+                aria-label="Upload progress for {{ file.name }}"
+              >
+                <span data-slot="progress-track">
+                  <span data-slot="progress-indicator"></span>
+                </span>
+              </div>
+            </div>
+            <div data-slot="item-actions" class="file-upload-time">
+              {{ file.time }}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        data-example="item-rtl"
+        class="item-workflow"
+        dir="rtl"
+        lang="ar"
+      >
+        <div data-slot="item-group" role="list">
+          <div ng-item variant="outline" role="listitem">
+            <div data-slot="item-content">
+              <div data-slot="item-title">عنصر أساسي</div>
+              <p data-slot="item-description">
+                عنصر بسيط يحتوي على عنوان ووصف.
+              </p>
+            </div>
+            <div data-slot="item-actions">
+              <button ng-button variant="outline" size="sm" type="button">
+                إجراء
+              </button>
+            </div>
+          </div>
+          <a
+            ng-item
+            variant="outline"
+            data-size="sm"
+            href="#verified-rtl"
+            role="listitem"
+            ><div data-slot="item-media">✓</div>
+            <div data-slot="item-content">
+              <div data-slot="item-title">تم التحقق من ملفك الشخصي.</div>
+            </div>
+            <div data-slot="item-actions" aria-hidden="true">‹</div></a
+          >
+        </div>
+      </section>
+
+      <p class="item-workflow-output" role="status">{{ itemState.message }}</p>
+    </main>
+  </body>
+</html>

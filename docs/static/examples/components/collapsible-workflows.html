@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    data-example="collapsible-basic collapsible-rtl collapsible-settings"
+  >
+    <main class="collapsible-workflow-grid" aria-label="Collapsible workflows">
+      <section
+        class="collapsible-workflow"
+        aria-labelledby="collapsible-basic-heading"
+      >
+        <h2 id="collapsible-basic-heading">Basic</h2>
+        <div data-slot="card" class="collapsible-basic-card">
+          <div data-slot="card-content">
+            <details ng-collapsible class="collapsible-product">
+              <summary data-slot="collapsible-trigger">
+                <span>Product details</span>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </summary>
+              <div data-slot="collapsible-content">
+                <p>
+                  This panel can be expanded or collapsed to reveal additional
+                  content.
+                </p>
+                <button ng-button size="xs">Learn More</button>
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="collapsible-workflow"
+        aria-labelledby="collapsible-settings-heading"
+      >
+        <h2 id="collapsible-settings-heading">Settings</h2>
+        <div data-slot="card" data-size="sm" class="collapsible-settings-card">
+          <div data-slot="card-header">
+            <div data-slot="card-title">Radius</div>
+            <p data-slot="card-description">
+              Set the corner radius of the element.
+            </p>
+          </div>
+          <div data-slot="card-content">
+            <section ng-collapsible class="collapsible-settings">
+              <div class="collapsible-settings-fields">
+                <label class="visually-hidden" for="radius-x">Radius X</label>
+                <input id="radius-x" data-input type="number" value="0" />
+                <label class="visually-hidden" for="radius-y">Radius Y</label>
+                <input id="radius-y" data-input type="number" value="0" />
+                <div
+                  data-slot="collapsible-content"
+                  class="collapsible-settings-more"
+                >
+                  <label class="visually-hidden" for="radius-bottom-x"
+                    >Bottom radius X</label
+                  >
+                  <input
+                    id="radius-bottom-x"
+                    data-input
+                    type="number"
+                    value="0"
+                  />
+                  <label class="visually-hidden" for="radius-bottom-y"
+                    >Bottom radius Y</label
+                  >
+                  <input
+                    id="radius-bottom-y"
+                    data-input
+                    type="number"
+                    value="0"
+                  />
+                </div>
+              </div>
+              <button
+                ng-collapsible-trigger
+                ng-button
+                variant="outline"
+                size="icon"
+                aria-label="Toggle additional radius settings"
+              >
+                <svg
+                  class="collapsible-maximize"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3m8 0h3a2 2 0 0 0 2-2v-3"
+                  />
+                </svg>
+                <svg
+                  class="collapsible-minimize"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3m8 0v-3a2 2 0 0 1 2-2h3"
+                  />
+                </svg>
+              </button>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="collapsible-workflow collapsible-workflow-wide"
+        aria-labelledby="collapsible-rtl-heading"
+        dir="rtl"
+        lang="ar"
+      >
+        <h2 id="collapsible-rtl-heading">من اليمين إلى اليسار</h2>
+        <section ng-collapsible class="collapsible-order-demo">
+          <div class="collapsible-order-header">
+            <h4>الطلب #4189</h4>
+            <button ng-collapsible-trigger class="collapsible-icon-button">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="m7 15 5 5 5-5M7 9l5-5 5 5" />
+              </svg>
+              <span class="visually-hidden">تبديل التفاصيل</span>
+            </button>
+          </div>
+          <div class="collapsible-order-status">
+            <span>الحالة</span><strong>تم الشحن</strong>
+          </div>
+          <div
+            data-slot="collapsible-content"
+            class="collapsible-order-content"
+          >
+            <div class="collapsible-order-panel">
+              <p><strong>عنوان الشحن</strong></p>
+              <p>100 Market St, San Francisco</p>
+            </div>
+            <div class="collapsible-order-panel">
+              <p><strong>العناصر</strong></p>
+              <p>2x سماعات الاستوديو</p>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

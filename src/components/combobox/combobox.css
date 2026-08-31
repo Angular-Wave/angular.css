@@ -1,0 +1,399 @@
+[data-slot="combobox"],
+[ng-combobox] {
+  position: relative;
+  display: grid;
+  width: min(100%, 20rem);
+  color: var(--foreground);
+  gap: calc(var(--spacing) * 2);
+}
+
+[data-slot="combobox-control"],
+[ng-combobox-control] {
+  display: flex;
+  width: 100%;
+  height: calc(var(--spacing) * 8);
+  align-items: center;
+  border: 1px solid var(--input);
+  border-radius: calc(var(--radius) - 2px);
+  background: transparent;
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+[data-slot="combobox-control"]:focus-within,
+[ng-combobox-control]:focus-within {
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+}
+
+[data-slot="combobox"][data-invalid="true"]
+  :is(
+    [data-slot="combobox-control"],
+    [ng-combobox-control],
+    [data-slot="combobox-chips"],
+    [ng-combobox-chips]
+  ),
+[ng-combobox][data-invalid="true"]
+  :is(
+    [data-slot="combobox-control"],
+    [ng-combobox-control],
+    [data-slot="combobox-chips"],
+    [ng-combobox-chips]
+  ) {
+  border-color: var(--error);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--error) 20%, transparent);
+}
+
+[data-slot="combobox"][data-disabled="true"]
+  :is([data-slot="combobox-control"], [ng-combobox-control]),
+[ng-combobox][data-disabled="true"]
+  :is([data-slot="combobox-control"], [ng-combobox-control]) {
+  opacity: 0.5;
+}
+
+[data-slot="combobox-input"],
+[ng-combobox-input] {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  flex: 1;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: var(--foreground);
+  padding-inline: calc(var(--spacing) * 2.5);
+  font: inherit;
+  font-size: var(--text-sm);
+  line-height: 1.25rem;
+  outline: none;
+  box-shadow: none;
+}
+
+[data-slot="combobox-input"]::placeholder,
+[ng-combobox-input]::placeholder,
+[data-slot="combobox-chip-input"]::placeholder,
+[ng-combobox-chip-input]::placeholder {
+  color: var(--muted-foreground);
+}
+
+[data-slot="combobox-trigger"],
+[ng-combobox-trigger],
+[data-slot="combobox-clear"],
+[ng-combobox-clear] {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--spacing) * 2);
+}
+
+:is([data-slot="combobox-control"], [ng-combobox-control])
+  > :is(
+    [data-slot="combobox-trigger"],
+    [ng-combobox-trigger],
+    [data-slot="combobox-clear"],
+    [ng-combobox-clear]
+  ) {
+  width: calc(var(--spacing) * 7);
+  height: calc(var(--spacing) * 7);
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: calc(var(--radius) - 4px);
+  background: transparent;
+  color: var(--muted-foreground);
+  padding: 0;
+  box-shadow: none;
+}
+
+[data-slot="combobox-trigger"]::after,
+[ng-combobox-trigger]::after {
+  width: calc(var(--spacing) * 2);
+  height: calc(var(--spacing) * 2);
+  border-right: 1.5px solid currentcolor;
+  border-bottom: 1.5px solid currentcolor;
+  content: "";
+  transform: translateY(-25%) rotate(45deg);
+}
+
+[data-slot="combobox-value"],
+[ng-combobox-value] {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-align: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+[data-slot="combobox-clear"]::before,
+[data-slot="combobox-clear"]::after,
+[ng-combobox-clear]::before,
+[ng-combobox-clear]::after,
+[data-slot="combobox-chip-remove"]::before,
+[data-slot="combobox-chip-remove"]::after,
+[ng-combobox-chip-remove]::before,
+[ng-combobox-chip-remove]::after {
+  position: absolute;
+  width: calc(var(--spacing) * 2.5);
+  height: 1px;
+  background: currentcolor;
+  content: "";
+  transform: rotate(45deg);
+}
+
+[data-slot="combobox-clear"]::after,
+[ng-combobox-clear]::after,
+[data-slot="combobox-chip-remove"]::after,
+[ng-combobox-chip-remove]::after {
+  transform: rotate(-45deg);
+}
+
+[data-slot="combobox-content"],
+[ng-combobox-content] {
+  position: absolute;
+  z-index: 50;
+  inset-block-start: var(--combobox-content-top, calc(100% + 6px));
+  inset-inline-start: 0;
+  display: block;
+  width: var(--combobox-anchor-width, 100%);
+  min-width: calc(var(--combobox-anchor-width, 100%) + 28px);
+  max-width: calc(100vw - 8px);
+  max-height: min(18rem, calc(100vh - 8px));
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--popover);
+  color: var(--popover-foreground);
+  box-shadow:
+    var(--shadow-md),
+    0 0 0 1px color-mix(in srgb, var(--foreground) 10%, transparent);
+  isolation: isolate;
+}
+
+[data-slot="combobox-content"][data-chips="true"],
+[ng-combobox-content][data-chips="true"] {
+  min-width: var(--combobox-anchor-width, 100%);
+}
+
+[data-slot="combobox-content"][data-direction="rtl"],
+[ng-combobox-content][data-direction="rtl"] {
+  direction: rtl;
+}
+
+:is([data-slot="combobox-content"], [ng-combobox-content])
+  > :is([data-slot="combobox-control"], [ng-combobox-control]) {
+  width: auto;
+  margin: calc(var(--spacing) * 1);
+  margin-block-end: 0;
+  border-color: color-mix(in srgb, var(--input) 30%, transparent);
+  background: color-mix(in srgb, var(--input) 30%, transparent);
+  box-shadow: none;
+}
+
+[data-slot="combobox-list"],
+[ng-combobox-list] {
+  display: grid;
+  max-height: min(15.75rem, calc(100vh - 2.75rem));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: calc(var(--spacing) * 1);
+  scroll-padding-block: calc(var(--spacing) * 1);
+  scrollbar-width: none;
+}
+
+[data-slot="combobox-list"]::-webkit-scrollbar,
+[ng-combobox-list]::-webkit-scrollbar {
+  display: none;
+}
+
+[data-slot="combobox-list"][data-empty="true"],
+[ng-combobox-list][data-empty="true"] {
+  padding: 0;
+}
+
+[data-slot="combobox-collection"],
+[ng-combobox-collection],
+[data-slot="combobox-group"],
+[ng-combobox-group] {
+  display: grid;
+}
+
+:is([data-slot="combobox-group"], [ng-combobox-group]):not(
+  :has(:is([data-slot="combobox-item"], [ng-combobox-item]))
+) {
+  display: none;
+}
+
+[data-slot="combobox-label"],
+[ng-combobox-label],
+[data-slot="combobox-group-label"],
+[ng-combobox-group-label] {
+  color: var(--muted-foreground);
+  padding-block: calc(var(--spacing) * 1.5);
+  padding-inline: calc(var(--spacing) * 2);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-normal);
+  line-height: 1rem;
+}
+
+[data-slot="combobox-item"],
+[ng-combobox-item] {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: calc(var(--spacing) * 7);
+  align-items: center;
+  gap: calc(var(--spacing) * 2);
+  border: 0;
+  border-radius: calc(var(--radius) - 4px);
+  background: transparent;
+  color: var(--foreground);
+  padding-block: calc(var(--spacing) * 1);
+  padding-inline: calc(var(--spacing) * 8) calc(var(--spacing) * 1.5);
+  font: inherit;
+  font-size: var(--text-sm);
+  line-height: 1.25rem;
+  text-align: start;
+  outline: none;
+  box-shadow: none;
+  cursor: default;
+  user-select: none;
+}
+
+[data-slot="combobox-item"]:not([aria-disabled="true"]):hover,
+[ng-combobox-item]:not([aria-disabled="true"]):hover,
+[data-slot="combobox-item"][data-highlighted="true"],
+[ng-combobox-item][data-highlighted="true"] {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+[data-slot="combobox-item"][aria-disabled="true"],
+[data-slot="combobox-item"][data-disabled="true"],
+[ng-combobox-item][aria-disabled="true"],
+[ng-combobox-item][data-disabled="true"] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+[data-slot="combobox-item"][aria-selected="true"]::after,
+[ng-combobox-item][aria-selected="true"]::after {
+  position: absolute;
+  inset-inline-end: calc(var(--spacing) * 2.5);
+  width: calc(var(--spacing) * 2.5);
+  height: calc(var(--spacing) * 1.5);
+  border-bottom: 1.5px solid currentcolor;
+  border-left: 1.5px solid currentcolor;
+  content: "";
+  transform: translateY(-15%) rotate(-45deg);
+}
+
+[data-slot="combobox-empty"],
+[ng-combobox-empty] {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  color: var(--muted-foreground);
+  padding-block: calc(var(--spacing) * 2);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+
+[data-slot="combobox-empty"][data-visible="false"],
+[ng-combobox-empty][data-visible="false"] {
+  display: none;
+}
+
+[data-slot="combobox-separator"],
+[ng-combobox-separator] {
+  height: 1px;
+  margin: calc(var(--spacing) * 1) calc(var(--spacing) * -1);
+  background: var(--border);
+}
+
+[data-slot="combobox-chips"],
+[ng-combobox-chips] {
+  display: flex;
+  width: 100%;
+  min-height: calc(var(--spacing) * 8);
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--spacing) * 1);
+  border: 1px solid var(--input);
+  border-radius: calc(var(--radius) - 2px);
+  background: transparent;
+  padding-block: calc(var(--spacing) * 1);
+  padding-inline: calc(var(--spacing) * 2.5);
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+[data-slot="combobox-chips"]:focus-within,
+[ng-combobox-chips]:focus-within {
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+}
+
+[data-slot="combobox-chips"]:has(
+  :is([data-slot="combobox-chip"], [ng-combobox-chip])
+),
+[ng-combobox-chips]:has(:is([data-slot="combobox-chip"], [ng-combobox-chip])) {
+  padding-inline-start: calc(var(--spacing) * 1);
+}
+
+[data-slot="combobox-chip"],
+[ng-combobox-chip] {
+  display: inline-flex;
+  width: fit-content;
+  height: 21px;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--spacing) * 1);
+  border-radius: calc(var(--radius) - 6px);
+  background: var(--muted);
+  color: var(--foreground);
+  padding-inline: calc(var(--spacing) * 1.5);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-medium);
+  line-height: 1rem;
+  white-space: nowrap;
+}
+
+[data-slot="combobox-chip-remove"],
+[ng-combobox-chip-remove] {
+  position: relative;
+  display: inline-grid;
+  width: calc(var(--spacing) * 5);
+  height: calc(var(--spacing) * 5);
+  place-items: center;
+  margin-inline-end: calc(var(--spacing) * -1.5);
+  border: 0;
+  border-radius: calc(var(--radius) - 6px);
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  opacity: 0.5;
+  box-shadow: none;
+}
+
+[data-slot="combobox-chip-remove"]:hover,
+[ng-combobox-chip-remove]:hover {
+  opacity: 1;
+}
+
+[data-slot="combobox-chip-input"],
+[ng-combobox-chip-input] {
+  min-width: 4rem;
+  height: 1.25rem;
+  flex: 1 1 4rem;
+  border: 0;
+  background: transparent;
+  color: var(--foreground);
+  padding: 0;
+  font: inherit;
+  font-size: var(--text-sm);
+  outline: none;
+  box-shadow: none;
+}

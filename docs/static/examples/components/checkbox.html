@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    class="checkbox-example-body"
+    ng-init="terms=false;termsDetails=true;wrappedNotifications=false"
+    data-example="checkbox-demo"
+  >
+    <div data-slot="field-group" class="checkbox-demo visual-example">
+      <div ng-field orientation="horizontal">
+        <input
+          ng-checkbox
+          id="terms-checkbox"
+          name="terms-checkbox"
+          type="checkbox"
+          ng-model="terms"
+        />
+        <label ng-label for="terms-checkbox">Accept terms and conditions</label>
+      </div>
+
+      <div ng-field orientation="horizontal">
+        <input
+          ng-checkbox
+          id="terms-checkbox-2"
+          name="terms-checkbox-2"
+          type="checkbox"
+          ng-model="termsDetails"
+        />
+        <div data-slot="field-content">
+          <label data-slot="field-label" ng-label for="terms-checkbox-2"
+            >Accept terms and conditions</label
+          >
+          <p data-slot="field-description">
+            By clicking this checkbox, you agree to the terms.
+          </p>
+        </div>
+      </div>
+
+      <div ng-field orientation="horizontal" data-disabled="true">
+        <input
+          ng-checkbox
+          id="toggle-checkbox"
+          name="toggle-checkbox"
+          type="checkbox"
+          disabled
+        />
+        <label data-slot="field-label" ng-label for="toggle-checkbox"
+          >Enable notifications</label
+        >
+      </div>
+
+      <label data-slot="field-label" ng-label>
+        <div data-slot="field" orientation="horizontal">
+          <input
+            ng-checkbox
+            id="toggle-checkbox-2"
+            name="toggle-checkbox-2"
+            type="checkbox"
+            ng-model="wrappedNotifications"
+          />
+          <div data-slot="field-content">
+            <span data-slot="field-title">Enable notifications</span>
+            <span data-slot="field-description">
+              You can enable or disable notifications at any time.
+            </span>
+          </div>
+        </div>
+      </label>
+
+      <p class="visually-hidden" role="status" aria-live="polite">
+        Terms {{ terms ? 'accepted' : 'not accepted' }}. Detailed terms {{
+        termsDetails ? 'accepted' : 'not accepted' }}. Notifications {{
+        wrappedNotifications ? 'enabled' : 'disabled' }}.
+      </p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="alpha={a:'',b:'',c:'',d:'',e:'',f:''};controlled={a:'',b:'',c:'',d:'',e:'',f:''};digits={a:'',b:'',c:'',d:'',e:'',f:''};rtl={a:'1',b:'2',c:'3',d:'4',e:'5',f:'6'}"
+    data-example="input-otp-alphanumeric input-otp-controlled input-otp-disabled input-otp-four-digits input-otp-invalid input-otp-pattern input-otp-rtl input-otp-separator"
+  >
+    <main class="input-otp-workflow-grid" aria-label="Input OTP workflows">
+      <section class="input-otp-workflow" aria-labelledby="otp-alpha-heading">
+        <h2 id="otp-alpha-heading">Alphanumeric</h2>
+        <div ng-input-otp aria-label="Alphanumeric code">
+          <div data-slot="input-otp-group">
+            <span data-slot="input-otp-slot"
+              ><input
+                ng-model="alpha.a"
+                inputmode="text"
+                pattern="[A-Za-z0-9]" /></span
+            ><span data-slot="input-otp-slot"
+              ><input
+                ng-model="alpha.b"
+                inputmode="text"
+                pattern="[A-Za-z0-9]" /></span
+            ><span data-slot="input-otp-slot"
+              ><input ng-model="alpha.c" inputmode="text" pattern="[A-Za-z0-9]"
+            /></span>
+          </div>
+          <span data-slot="input-otp-separator" role="separator"
+            ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12h14" /></svg
+          ></span>
+          <div data-slot="input-otp-group">
+            <span data-slot="input-otp-slot"
+              ><input
+                ng-model="alpha.d"
+                inputmode="text"
+                pattern="[A-Za-z0-9]" /></span
+            ><span data-slot="input-otp-slot"
+              ><input
+                ng-model="alpha.e"
+                inputmode="text"
+                pattern="[A-Za-z0-9]" /></span
+            ><span data-slot="input-otp-slot"
+              ><input ng-model="alpha.f" inputmode="text" pattern="[A-Za-z0-9]"
+            /></span>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="input-otp-workflow"
+        aria-labelledby="otp-controlled-heading"
+      >
+        <h2 id="otp-controlled-heading">Controlled</h2>
+        <div ng-input-otp aria-label="Controlled code">
+          <div data-slot="input-otp-group">
+            <span data-slot="input-otp-slot"
+              ><input ng-model="controlled.a" /></span
+            ><span data-slot="input-otp-slot"
+              ><input ng-model="controlled.b" /></span
+            ><span data-slot="input-otp-slot"
+              ><input ng-model="controlled.c" /></span
+            ><span data-slot="input-otp-slot"
+              ><input ng-model="controlled.d" /></span
+            ><span data-slot="input-otp-slot"
+              ><input ng-model="controlled.e" /></span
+            ><span data-slot="input-otp-slot"
+              ><input ng-model="controlled.f"
+            /></span>
+          </div>
+        </div>
+        <p class="input-otp-message">
+          {{ controlled.a + controlled.b + controlled.c + controlled.d +
+          controlled.e + controlled.f ? 'You entered: ' + controlled.a +
+          controlled.b + controlled.c + controlled.d + controlled.e +
+          controlled.f : 'Enter your one-time password.' }}
+        </p>
+      </section>
+
+      <section
+        class="input-otp-workflow"
+        aria-labelledby="otp-disabled-heading"
+      >
+        <h2 id="otp-disabled-heading">Disabled</h2>
+        <div ng-input-otp aria-label="Disabled code">
+          <div data-slot="input-otp-group">
+            <span data-slot="input-otp-slot"><input value="1" disabled /></span
+            ><span data-slot="input-otp-slot"><input value="2" disabled /></span
+            ><span data-slot="input-otp-slot"
+              ><input value="3" disabled
+            /></span>
+          </div>
+          <span data-slot="input-otp-separator" role="separator"
+            ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12h14" /></svg
+          ></span>
+          <div data-slot="input-otp-group">
+            <span data-slot="input-otp-slot"><input value="4" disabled /></span
+            ><span data-slot="input-otp-slot"><input value="5" disabled /></span
+            ><span data-slot="input-otp-slot"
+              ><input value="6" disabled
+            /></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="input-otp-workflow" aria-labelledby="otp-four-heading">
+        <h2 id="otp-four-heading">Four digits</h2>
+        <div ng-input-otp aria-label="Four digit code">
+          <div data-slot="input-otp-group">
+            <span data-slot="input-otp-slot"><input pattern="[0-9]" /></span
+            ><span data-slot="input-otp-slot"><input pattern="[0-9]" /></span
+            ><span data-slot="input-otp-slot"><input pattern="[0-9]" /></span
+            ><span data-slot="input-otp-slot"><input pattern="[0-9]" /></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="input-otp-workflow" aria-labelledby="otp-invalid-heading">
+        <h2 id="otp-invalid-heading">Invalid</h2>
+        <div ng-input-otp aria-label="Invalid code">
+          <div data-slot="input-otp-group">
+            <span data-slot="input-otp-slot"
+              ><input value="0" aria-invalid="true" /></span
+            ><span data-slot="input-otp-slot"
+              ><input value="0" aria-invalid="true"
+            /></span>
+          </div>
+          <span data-slot="input-otp-separator" role="separator"
+            ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12h14" /></svg
+          ></span>
+          <div data-slot="input-otp-group">
+            <span data-slot="input-otp-slot"
+              ><input value="0" aria-invalid="true" /></span
+            ><span data-slot="input-otp-slot"
+              ><input value="0" aria-invalid="true"
+            /></span>
+          </div>
+          <span data-slot="input-otp-separator" role="separator"
+            ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12h14" /></svg
+          ></span>
+          <div data-slot="input-otp-group">
+            <span data-slot="input-otp-slot"
+              ><input value="0" aria-invalid="true" /></span
+            ><span data-slot="input-otp-slot"
+              ><input value="0" aria-invalid="true"
+            /></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="input-otp-workflow" aria-labelledby="otp-pattern-heading">
+        <h2 id="otp-pattern-heading">Pattern</h2>
+        <label for="digits-only-1">Digits Only</label>
+        <div ng-input-otp aria-label="Digits only code">
+          <div data-slot="input-otp-group">
+            <span data-slot="input-otp-slot"
+              ><input
+                id="digits-only-1"
+                ng-model="digits.a"
+                pattern="[0-9]" /></span
+            ><span data-slot="input-otp-slot"
+              ><input ng-model="digits.b" pattern="[0-9]" /></span
+            ><span data-slot="input-otp-slot"
+              ><input ng-model="digits.c" pattern="[0-9]" /></span
+            ><span data-slot="input-otp-slot"
+              ><input ng-model="digits.d" pattern="[0-9]" /></span
+            ><span data-slot="input-otp-slot"
+              ><input ng-model="digits.e" pattern="[0-9]" /></span
+            ><span data-slot="input-otp-slot"
+              ><input ng-model="digits.f" pattern="[0-9]"
+            /></span>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="input-otp-workflow"
+        aria-labelledby="otp-rtl-heading"
+        dir="rtl"
+        lang="ar"
+      >
+        <h2 id="otp-rtl-heading">من اليمين إلى اليسار</h2>
+        <label for="rtl-otp-1">رمز التحقق</label>
+        <div ng-input-otp aria-label="رمز التحقق">
+          <div data-slot="input-otp-group">
+            <span data-slot="input-otp-slot"
+              ><input id="rtl-otp-1" ng-model="rtl.a" /></span
+            ><span data-slot="input-otp-slot"><input ng-model="rtl.b" /></span
+            ><span data-slot="input-otp-slot"><input ng-model="rtl.c" /></span
+            ><span data-slot="input-otp-slot"><input ng-model="rtl.d" /></span
+            ><span data-slot="input-otp-slot"><input ng-model="rtl.e" /></span
+            ><span data-slot="input-otp-slot"><input ng-model="rtl.f" /></span>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="input-otp-workflow"
+        aria-labelledby="otp-separator-heading"
+      >
+        <h2 id="otp-separator-heading">Separator</h2>
+        <div ng-input-otp aria-label="Separated code">
+          <div data-slot="input-otp-group">
+            <span data-slot="input-otp-slot"><input /></span
+            ><span data-slot="input-otp-slot"><input /></span>
+          </div>
+          <span data-slot="input-otp-separator" role="separator"
+            ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12h14" /></svg
+          ></span>
+          <div data-slot="input-otp-group">
+            <span data-slot="input-otp-slot"><input /></span
+            ><span data-slot="input-otp-slot"><input /></span>
+          </div>
+          <span data-slot="input-otp-separator" role="separator"
+            ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12h14" /></svg
+          ></span>
+          <div data-slot="input-otp-group">
+            <span data-slot="input-otp-slot"><input /></span
+            ><span data-slot="input-otp-slot"><input /></span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

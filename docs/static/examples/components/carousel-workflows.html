@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="apiState={index:0,count:5}; autoplayState={index:0,count:5}"
+    data-example="carousel-api carousel-multiple carousel-orientation carousel-plugin"
+  >
+    <main
+      class="carousel-workflow-grid"
+      aria-label="Carousel behavior workflows"
+    >
+      <section class="carousel-workflow" aria-labelledby="carousel-api-heading">
+        <h2 id="carousel-api-heading">API</h2>
+        <section
+          ng-carousel
+          class="carousel-api-demo"
+          aria-label="API numbered slides"
+          ng-on-angularcss:carousel-ready="apiState=$event.detail"
+          ng-on-angularcss:carousel-change="apiState=$event.detail"
+        >
+          <div data-slot="carousel-content">
+            <div data-slot="carousel-track">
+              <article data-slot="carousel-item">
+                <section ng-card>
+                  <div data-slot="card-content" class="carousel-square">
+                    <span>1</span>
+                  </div>
+                </section>
+              </article>
+              <article data-slot="carousel-item">
+                <section ng-card>
+                  <div data-slot="card-content" class="carousel-square">
+                    <span>2</span>
+                  </div>
+                </section>
+              </article>
+              <article data-slot="carousel-item">
+                <section ng-card>
+                  <div data-slot="card-content" class="carousel-square">
+                    <span>3</span>
+                  </div>
+                </section>
+              </article>
+              <article data-slot="carousel-item">
+                <section ng-card>
+                  <div data-slot="card-content" class="carousel-square">
+                    <span>4</span>
+                  </div>
+                </section>
+              </article>
+              <article data-slot="carousel-item">
+                <section ng-card>
+                  <div data-slot="card-content" class="carousel-square">
+                    <span>5</span>
+                  </div>
+                </section>
+              </article>
+            </div>
+          </div>
+          <button
+            data-slot="button"
+            ng-carousel-previous
+            size="icon-sm"
+            variant="outline"
+            type="button"
+            aria-label="Previous API slide"
+          >
+            <svg
+              class="icon-sm lucide lucide-chevron-left"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <button
+            data-slot="button"
+            ng-carousel-next
+            size="icon-sm"
+            variant="outline"
+            type="button"
+            aria-label="Next API slide"
+          >
+            <svg
+              class="icon-sm lucide lucide-chevron-right"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+        </section>
+        <p class="carousel-status" aria-live="polite">
+          Slide {{ apiState.index + 1 }} of {{ apiState.count }}
+        </p>
+      </section>
+
+      <section
+        class="carousel-workflow"
+        aria-labelledby="carousel-multiple-heading"
+      >
+        <h2 id="carousel-multiple-heading">Multiple items</h2>
+        <section
+          ng-carousel
+          align="start"
+          class="carousel-multiple-demo"
+          aria-label="Multiple numbered slides"
+        >
+          <div data-slot="carousel-content">
+            <div data-slot="carousel-track">
+              <article data-slot="carousel-item">
+                <div class="carousel-item-padding">
+                  <section ng-card>
+                    <div
+                      data-slot="card-content"
+                      class="carousel-square carousel-square-medium"
+                    >
+                      <span>1</span>
+                    </div>
+                  </section>
+                </div>
+              </article>
+              <article data-slot="carousel-item">
+                <div class="carousel-item-padding">
+                  <section ng-card>
+                    <div
+                      data-slot="card-content"
+                      class="carousel-square carousel-square-medium"
+                    >
+                      <span>2</span>
+                    </div>
+                  </section>
+                </div>
+              </article>
+              <article data-slot="carousel-item">
+                <div class="carousel-item-padding">
+                  <section ng-card>
+                    <div
+                      data-slot="card-content"
+                      class="carousel-square carousel-square-medium"
+                    >
+                      <span>3</span>
+                    </div>
+                  </section>
+                </div>
+              </article>
+              <article data-slot="carousel-item">
+                <div class="carousel-item-padding">
+                  <section ng-card>
+                    <div
+                      data-slot="card-content"
+                      class="carousel-square carousel-square-medium"
+                    >
+                      <span>4</span>
+                    </div>
+                  </section>
+                </div>
+              </article>
+              <article data-slot="carousel-item">
+                <div class="carousel-item-padding">
+                  <section ng-card>
+                    <div
+                      data-slot="card-content"
+                      class="carousel-square carousel-square-medium"
+                    >
+                      <span>5</span>
+                    </div>
+                  </section>
+                </div>
+              </article>
+            </div>
+          </div>
+          <button
+            data-slot="button"
+            ng-carousel-previous
+            size="icon-sm"
+            variant="outline"
+            type="button"
+            aria-label="Previous group"
+          >
+            <svg
+              class="icon-sm lucide lucide-chevron-left"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <button
+            data-slot="button"
+            ng-carousel-next
+            size="icon-sm"
+            variant="outline"
+            type="button"
+            aria-label="Next group"
+          >
+            <svg
+              class="icon-sm lucide lucide-chevron-right"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+        </section>
+      </section>
+
+      <section
+        class="carousel-workflow carousel-workflow-tall"
+        aria-labelledby="carousel-orientation-heading"
+      >
+        <h2 id="carousel-orientation-heading">Vertical orientation</h2>
+        <section
+          ng-carousel
+          orientation="vertical"
+          align="start"
+          class="carousel-vertical-demo"
+          aria-label="Vertical numbered slides"
+        >
+          <div data-slot="carousel-content">
+            <div data-slot="carousel-track">
+              <article data-slot="carousel-item">
+                <div class="carousel-item-padding">
+                  <section ng-card>
+                    <div
+                      data-slot="card-content"
+                      class="carousel-vertical-card"
+                    >
+                      <span>1</span>
+                    </div>
+                  </section>
+                </div>
+              </article>
+              <article data-slot="carousel-item">
+                <div class="carousel-item-padding">
+                  <section ng-card>
+                    <div
+                      data-slot="card-content"
+                      class="carousel-vertical-card"
+                    >
+                      <span>2</span>
+                    </div>
+                  </section>
+                </div>
+              </article>
+              <article data-slot="carousel-item">
+                <div class="carousel-item-padding">
+                  <section ng-card>
+                    <div
+                      data-slot="card-content"
+                      class="carousel-vertical-card"
+                    >
+                      <span>3</span>
+                    </div>
+                  </section>
+                </div>
+              </article>
+              <article data-slot="carousel-item">
+                <div class="carousel-item-padding">
+                  <section ng-card>
+                    <div
+                      data-slot="card-content"
+                      class="carousel-vertical-card"
+                    >
+                      <span>4</span>
+                    </div>
+                  </section>
+                </div>
+              </article>
+              <article data-slot="carousel-item">
+                <div class="carousel-item-padding">
+                  <section ng-card>
+                    <div
+                      data-slot="card-content"
+                      class="carousel-vertical-card"
+                    >
+                      <span>5</span>
+                    </div>
+                  </section>
+                </div>
+              </article>
+            </div>
+          </div>
+          <button
+            data-slot="button"
+            ng-carousel-previous
+            size="icon-sm"
+            variant="outline"
+            type="button"
+            aria-label="Previous vertical slide"
+          >
+            <svg
+              class="icon-sm lucide lucide-chevron-left"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <button
+            data-slot="button"
+            ng-carousel-next
+            size="icon-sm"
+            variant="outline"
+            type="button"
+            aria-label="Next vertical slide"
+          >
+            <svg
+              class="icon-sm lucide lucide-chevron-right"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+        </section>
+      </section>
+
+      <section
+        class="carousel-workflow"
+        aria-labelledby="carousel-plugin-heading"
+      >
+        <h2 id="carousel-plugin-heading">Autoplay plugin</h2>
+        <section
+          ng-carousel
+          autoplay
+          autoplay-delay="2000"
+          class="carousel-api-demo"
+          aria-label="Autoplay numbered slides"
+          ng-on-angularcss:carousel-ready="autoplayState=$event.detail"
+          ng-on-angularcss:carousel-change="autoplayState=$event.detail"
+        >
+          <div data-slot="carousel-content">
+            <div data-slot="carousel-track">
+              <article data-slot="carousel-item">
+                <div class="carousel-item-padding">
+                  <section ng-card>
+                    <div data-slot="card-content" class="carousel-square">
+                      <span>1</span>
+                    </div>
+                  </section>
+                </div>
+              </article>
+              <article data-slot="carousel-item">
+                <div class="carousel-item-padding">
+                  <section ng-card>
+                    <div data-slot="card-content" class="carousel-square">
+                      <span>2</span>
+                    </div>
+                  </section>
+                </div>
+              </article>
+              <article data-slot="carousel-item">
+                <div class="carousel-item-padding">
+                  <section ng-card>
+                    <div data-slot="card-content" class="carousel-square">
+                      <span>3</span>
+                    </div>
+                  </section>
+                </div>
+              </article>
+              <article data-slot="carousel-item">
+                <div class="carousel-item-padding">
+                  <section ng-card>
+                    <div data-slot="card-content" class="carousel-square">
+                      <span>4</span>
+                    </div>
+                  </section>
+                </div>
+              </article>
+              <article data-slot="carousel-item">
+                <div class="carousel-item-padding">
+                  <section ng-card>
+                    <div data-slot="card-content" class="carousel-square">
+                      <span>5</span>
+                    </div>
+                  </section>
+                </div>
+              </article>
+            </div>
+          </div>
+          <button
+            data-slot="button"
+            ng-carousel-previous
+            size="icon-sm"
+            variant="outline"
+            type="button"
+            aria-label="Previous autoplay slide"
+          >
+            <svg
+              class="icon-sm lucide lucide-chevron-left"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <button
+            data-slot="button"
+            ng-carousel-next
+            size="icon-sm"
+            variant="outline"
+            type="button"
+            aria-label="Next autoplay slide"
+          >
+            <svg
+              class="icon-sm lucide lucide-chevron-right"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+        </section>
+        <p class="carousel-status" aria-live="polite">
+          Autoplay slide {{ autoplayState.index + 1 }} of {{ autoplayState.count
+          }}
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

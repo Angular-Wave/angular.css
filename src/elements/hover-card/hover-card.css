@@ -1,0 +1,55 @@
+[data-slot="hover-card"],
+[ng-hover-card] {
+  position: relative;
+  display: inline-flex;
+  width: fit-content;
+}
+
+[data-slot="hover-card-trigger"],
+[ng-hover-card-trigger] {
+  display: inline-flex;
+}
+
+[data-slot="hover-card-content"],
+[ng-hover-card-content] {
+  position: absolute;
+  inset-block-start: calc(100% + var(--spacing) * 2);
+  inset-inline-start: 0;
+  z-index: 50;
+  display: grid;
+  width: 20rem;
+  gap: calc(var(--spacing) * 3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--popover);
+  color: var(--popover-foreground);
+  padding: calc(var(--spacing) * 4);
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(2px) scale(0.98);
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+
+:is([data-slot="hover-card"], [ng-hover-card]):hover > :is([data-slot="hover-card-content"], [ng-hover-card-content]),
+:is([data-slot="hover-card"], [ng-hover-card]):focus-within > :is([data-slot="hover-card-content"], [ng-hover-card-content]),
+[data-slot="hover-card-content"][data-open="true"],
+[ng-hover-card-content][data-open="true"] {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+[data-slot="hover-card-title"],
+[ng-hover-card-title] {
+  color: var(--foreground);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+[data-slot="hover-card-description"],
+[ng-hover-card-description] {
+  color: var(--muted-foreground);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}

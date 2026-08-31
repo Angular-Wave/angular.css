@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>AngularCSS</title>
+    <link rel="stylesheet" href="/docs/assets/angular.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@angular-wave/angular.ts/dist/angular-ts.umd.min.js"></script>
+    <script type="module" src="../../index.ts"></script>
+  </head>
+
+  <body ng-app="ui" ng-cloak>
+    <div class="grid w-full max-w-xl items-start gap-4 p-10">
+      <label ng-label for="email">Email</label>
+      <input data-input id="email" placeholder="Email" />
+
+      <label ng-label data-disabled="true" for="disabled-email">Disabled email</label>
+      <input data-input id="disabled-email" placeholder="Disabled" disabled />
+    </div>
+  </body>
+</html>

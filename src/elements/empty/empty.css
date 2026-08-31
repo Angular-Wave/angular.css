@@ -1,0 +1,78 @@
+[data-slot="empty"],
+[ng-empty] {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--spacing) * 4);
+  padding: calc(var(--spacing) * 12);
+  text-align: center;
+  text-wrap: balance;
+}
+
+[data-slot="empty-header"],
+[ng-empty-header] {
+  display: flex;
+  max-width: 24rem;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--spacing) * 2);
+}
+
+[data-slot="empty-media"],
+[ng-empty-media],
+[data-slot="empty-icon"],
+[ng-empty-icon] {
+  display: flex;
+  width: calc(var(--spacing) * 10);
+  height: calc(var(--spacing) * 10);
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
+  background: var(--muted);
+  color: var(--muted-foreground);
+  margin-block-end: calc(var(--spacing) * 2);
+}
+
+[data-slot="empty-media"][variant="icon"],
+[ng-empty-media][variant="icon"],
+[data-slot="empty-icon"][variant="icon"],
+[ng-empty-icon][variant="icon"] {
+  border-radius: var(--radius);
+}
+
+:is([data-slot="empty-media"], [ng-empty-media], [data-slot="empty-icon"], [ng-empty-icon])
+  > svg:not([data-slot="spinner"], [ng-spinner]) {
+  width: calc(var(--spacing) * 6);
+  height: calc(var(--spacing) * 6);
+}
+
+[data-slot="empty-title"],
+[ng-empty-title] {
+  color: var(--foreground);
+  font-size: 1.125rem;
+  line-height: 1.25;
+  font-weight: var(--font-weight-medium);
+}
+
+[data-slot="empty-description"],
+[ng-empty-description] {
+  color: var(--muted-foreground);
+  font-size: var(--text-sm);
+  line-height: 1.625;
+}
+
+[data-slot="empty-content"],
+[ng-empty-content] {
+  display: flex;
+  width: 100%;
+  max-width: 24rem;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--spacing) * 4);
+}

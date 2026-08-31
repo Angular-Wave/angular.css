@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="cardAction='No event selected'; rtl={email:'',password:'',status:'جاهز'}; smallCardAction='No report action'"
+    data-example="card-image card-rtl card-small"
+  >
+    <main class="card-workflows" aria-label="Card reference workflows">
+      <section class="card-workflow" aria-labelledby="card-image-heading">
+        <h2 id="card-image-heading">Image card</h2>
+        <article ng-card class="card-image-card">
+          <div class="card-image-overlay" aria-hidden="true"></div>
+          <img
+            class="card-cover-image"
+            src="../../images/avatars/01.png"
+            alt="Abstract event cover"
+          />
+          <header data-slot="card-header">
+            <div data-slot="card-action">
+              <span ng-badge variant="secondary">Featured</span>
+            </div>
+            <h3 data-slot="card-title">Design systems meetup</h3>
+            <p data-slot="card-description">
+              A practical talk on component APIs, accessibility, and shipping
+              faster.
+            </p>
+          </header>
+          <footer data-slot="card-footer">
+            <button
+              type="button"
+              ng-button
+              class="card-full-button"
+              ng-click="cardAction='Viewing Design systems meetup'"
+            >
+              View Event
+            </button>
+          </footer>
+        </article>
+        <p class="card-workflow-output" role="status">{{ cardAction }}</p>
+      </section>
+
+      <section
+        class="card-workflow"
+        aria-labelledby="card-rtl-heading"
+        dir="rtl"
+        lang="ar"
+      >
+        <h2 id="card-rtl-heading">بطاقة من اليمين إلى اليسار</h2>
+        <article ng-card class="card-rtl-card" dir="rtl">
+          <header data-slot="card-header">
+            <h3 data-slot="card-title">تسجيل الدخول إلى حسابك</h3>
+            <p data-slot="card-description">
+              أدخل بريدك الإلكتروني أدناه لتسجيل الدخول إلى حسابك
+            </p>
+            <div data-slot="card-action">
+              <button
+                ng-button
+                variant="link"
+                type="button"
+                ng-click="rtl.status='إنشاء حساب جديد'"
+              >
+                إنشاء حساب
+              </button>
+            </div>
+          </header>
+          <div data-slot="card-content">
+            <form
+              class="card-form"
+              id="rtl-login-form"
+              ng-submit="rtl.status='تم تسجيل الدخول باسم ' + rtl.email"
+            >
+              <div class="card-field">
+                <label ng-label for="card-email-rtl">البريد الإلكتروني</label>
+                <input
+                  data-input
+                  id="card-email-rtl"
+                  type="email"
+                  placeholder="m@example.com"
+                  ng-model="rtl.email"
+                  required
+                />
+              </div>
+              <div class="card-field">
+                <div class="card-label-row">
+                  <label ng-label for="card-password-rtl">كلمة المرور</label>
+                  <a href="#forgot-password-rtl">نسيت كلمة المرور؟</a>
+                </div>
+                <input
+                  data-input
+                  id="card-password-rtl"
+                  type="password"
+                  ng-model="rtl.password"
+                  required
+                />
+              </div>
+            </form>
+          </div>
+          <footer data-slot="card-footer" class="card-footer-stacked">
+            <button ng-button type="submit" form="rtl-login-form">
+              تسجيل الدخول
+            </button>
+            <button
+              ng-button
+              variant="outline"
+              type="button"
+              ng-click="rtl.status='متابعة باستخدام Google'"
+            >
+              تسجيل الدخول باستخدام Google
+            </button>
+          </footer>
+        </article>
+        <p class="card-workflow-output" role="status">
+          الحالة: {{ rtl.status }}
+        </p>
+      </section>
+
+      <section class="card-workflow" aria-labelledby="card-small-heading">
+        <h2 id="card-small-heading">Small card</h2>
+        <article ng-card size="sm" class="card-small-card">
+          <header data-slot="card-header">
+            <h3 data-slot="card-title">Scheduled reports</h3>
+            <p data-slot="card-description">
+              Weekly snapshots. No more manual exports.
+            </p>
+          </header>
+          <div data-slot="card-content">
+            <ul class="card-feature-list">
+              <li>
+                <svg
+                  class="icon-sm"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <path d="m9 18 6-6-6-6" /></svg
+                ><span>Choose a schedule (daily, or weekly).</span>
+              </li>
+              <li>
+                <svg
+                  class="icon-sm"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <path d="m9 18 6-6-6-6" /></svg
+                ><span>Send to channels or specific teammates.</span>
+              </li>
+              <li>
+                <svg
+                  class="icon-sm"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <path d="m9 18 6-6-6-6" /></svg
+                ><span>Include charts, tables, and key metrics.</span>
+              </li>
+            </ul>
+          </div>
+          <footer data-slot="card-footer" class="card-footer-stacked">
+            <button
+              ng-button
+              size="sm"
+              type="button"
+              ng-click="smallCardAction='Scheduled reports setup'"
+            >
+              Set up scheduled reports
+            </button>
+            <button
+              ng-button
+              variant="outline"
+              size="sm"
+              type="button"
+              ng-click="smallCardAction='Showing report updates'"
+            >
+              See what's new
+            </button>
+          </footer>
+        </article>
+        <p class="card-workflow-output" role="status">{{ smallCardAction }}</p>
+      </section>
+    </main>
+  </body>
+</html>

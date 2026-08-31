@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    data-example="accordion-borders accordion-card accordion-rtl"
+  >
+    <main class="accordion-workflow-grid accordion-layout-workflows">
+      <section
+        class="accordion-workflow-section"
+        aria-labelledby="accordion-borders-title"
+      >
+        <h2 id="accordion-borders-title">Billing questions</h2>
+        <div
+          ng-accordion
+          class="accordion-bordered"
+          aria-label="Billing questions"
+        >
+          <div data-slot="accordion-item" data-state="open">
+            <h3>
+              <button type="button" data-slot="accordion-trigger">
+                How does billing work?
+              </button>
+            </h3>
+            <div data-slot="accordion-content">
+              Billing is charged at the beginning of each monthly or annual
+              cycle, and you can cancel anytime.
+            </div>
+          </div>
+          <div data-slot="accordion-item">
+            <h3>
+              <button type="button" data-slot="accordion-trigger">
+                Is my data secure?
+              </button>
+            </h3>
+            <div data-slot="accordion-content">
+              Data is encrypted at rest and in transit using industry-standard
+              protocols.
+            </div>
+          </div>
+          <div data-slot="accordion-item">
+            <h3>
+              <button type="button" data-slot="accordion-trigger">
+                What integrations do you support?
+              </button>
+            </h3>
+            <div data-slot="accordion-content">
+              Connect popular tools or build custom integrations with our API.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        ng-card
+        class="accordion-card-demo"
+        aria-labelledby="accordion-card-title"
+      >
+        <header data-slot="card-header">
+          <h2 data-slot="card-title" id="accordion-card-title">
+            Subscription &amp; Billing
+          </h2>
+          <p data-slot="card-description">
+            Common questions about plans, payments, and cancellations.
+          </p>
+        </header>
+        <div data-slot="card-content">
+          <div ng-accordion aria-label="Subscription and billing questions">
+            <div data-slot="accordion-item" data-state="open">
+              <h3>
+                <button type="button" data-slot="accordion-trigger">
+                  What subscription plans do you offer?
+                </button>
+              </h3>
+              <div data-slot="accordion-content">
+                Choose Starter, Professional, or Enterprise based on storage,
+                API, and support needs.
+              </div>
+            </div>
+            <div data-slot="accordion-item">
+              <h3>
+                <button type="button" data-slot="accordion-trigger">
+                  How does billing work?
+                </button>
+              </h3>
+              <div data-slot="accordion-content">
+                Billing occurs automatically at the start of each cycle.
+              </div>
+            </div>
+            <div data-slot="accordion-item">
+              <h3>
+                <button type="button" data-slot="accordion-trigger">
+                  How do I cancel my subscription?
+                </button>
+              </h3>
+              <div data-slot="accordion-content">
+                Cancel from account settings with access through the current
+                billing period.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="accordion-workflow-section accordion-workflow-wide"
+        dir="rtl"
+        lang="ar"
+        aria-labelledby="accordion-rtl-title"
+      >
+        <h2 id="accordion-rtl-title">الأسئلة الشائعة</h2>
+        <div ng-accordion aria-label="الأسئلة الشائعة">
+          <div data-slot="accordion-item" data-state="open">
+            <h3>
+              <button type="button" data-slot="accordion-trigger">
+                كيف يمكنني إعادة تعيين كلمة المرور؟
+              </button>
+            </h3>
+            <div data-slot="accordion-content">
+              انقر على نسيت كلمة المرور في صفحة تسجيل الدخول، وسنرسل لك رابطًا
+              لإعادة تعيينها.
+            </div>
+          </div>
+          <div data-slot="accordion-item">
+            <h3>
+              <button type="button" data-slot="accordion-trigger">
+                هل يمكنني تغيير خطة الاشتراك الخاصة بي؟
+              </button>
+            </h3>
+            <div data-slot="accordion-content">
+              يمكنك ترقية خطتك أو تخفيضها في أي وقت من إعدادات الحساب.
+            </div>
+          </div>
+          <div data-slot="accordion-item">
+            <h3>
+              <button type="button" data-slot="accordion-trigger">
+                ما هي طرق الدفع التي تقبلونها؟
+              </button>
+            </h3>
+            <div data-slot="accordion-content">
+              نقبل بطاقات الائتمان وPayPal والتحويلات المصرفية.
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="sidebarAction='None'; projectsLoading=true"
+    data-example="sidebar-footer sidebar-group sidebar-group-action sidebar-header sidebar-menu sidebar-menu-action sidebar-menu-badge sidebar-menu-sub sidebar-rsc"
+    class="sidebar-example-body"
+  >
+    <div ng-sidebar-layout class="sidebar-anatomy-shell visual-example">
+      <aside
+        id="anatomy-sidebar"
+        ng-sidebar
+        collapsible="none"
+        class="sidebar-anatomy-panel"
+      >
+        <header ng-sidebar-header>
+          <ul ng-sidebar-menu>
+            <li ng-sidebar-menu-item>
+              <div ng-dropdown>
+                <button ng-dropdown-trigger ng-sidebar-menu-button size="lg">
+                  <span class="sidebar-brand-mark" aria-hidden="true">A</span>
+                  <span class="sidebar-brand-copy">
+                    <strong>Select Workspace</strong>
+                    <small>Acme Inc</small>
+                  </span>
+                </button>
+                <div ng-dropdown-content>
+                  <button
+                    ng-dropdown-item
+                    ng-click="sidebarAction='Workspace: Acme Inc'"
+                  >
+                    Acme Inc
+                  </button>
+                  <button
+                    ng-dropdown-item
+                    ng-click="sidebarAction='Workspace: Acme Corp.'"
+                  >
+                    Acme Corp.
+                  </button>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </header>
+        <div ng-sidebar-content>
+          <section ng-sidebar-group>
+            <div ng-sidebar-group-label>Projects</div>
+            <button
+              ng-sidebar-group-action
+              aria-label="Add Project"
+              ng-click="sidebarAction='Added project'"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="M12 5v14M5 12h14"></path>
+              </svg>
+            </button>
+            <div ng-sidebar-group-content>
+              <ul ng-sidebar-menu>
+                <li ng-sidebar-menu-item>
+                  <a ng-sidebar-menu-button href="#design">
+                    <span class="sidebar-menu-dot" aria-hidden="true"></span>
+                    <span>Design Engineering</span>
+                  </a>
+                  <div ng-dropdown>
+                    <button
+                      ng-dropdown-trigger
+                      ng-sidebar-menu-action
+                      aria-label="More actions for Design Engineering"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <circle cx="5" cy="12" r="1.5"></circle>
+                        <circle cx="12" cy="12" r="1.5"></circle>
+                        <circle cx="19" cy="12" r="1.5"></circle>
+                      </svg>
+                    </button>
+                    <div ng-dropdown-content side="right" align="start">
+                      <button
+                        ng-dropdown-item
+                        ng-click="sidebarAction='Edited Design Engineering'"
+                      >
+                        Edit Project
+                      </button>
+                      <button
+                        ng-dropdown-item
+                        ng-click="sidebarAction='Deleted Design Engineering'"
+                      >
+                        Delete Project
+                      </button>
+                    </div>
+                  </div>
+                </li>
+                <li ng-sidebar-menu-item>
+                  <a ng-sidebar-menu-button href="#sales">
+                    <span class="sidebar-menu-dot" aria-hidden="true"></span>
+                    <span>Sales &amp; Marketing</span>
+                  </a>
+                  <span ng-sidebar-menu-badge>12</span>
+                </li>
+                <li ng-sidebar-menu-item>
+                  <a ng-sidebar-menu-button href="#travel">
+                    <span class="sidebar-menu-dot" aria-hidden="true"></span>
+                    <span>Travel</span>
+                  </a>
+                  <span ng-sidebar-menu-badge>3</span>
+                </li>
+              </ul>
+            </div>
+          </section>
+          <section ng-sidebar-group>
+            <div ng-sidebar-group-label>Documentation</div>
+            <div ng-sidebar-group-content>
+              <ul ng-sidebar-menu>
+                <li ng-sidebar-menu-item>
+                  <a ng-sidebar-menu-button href="#getting-started"
+                    >Getting Started</a
+                  >
+                  <ul ng-sidebar-menu-sub>
+                    <li ng-sidebar-menu-sub-item>
+                      <a ng-sidebar-menu-sub-button href="#installation"
+                        >Installation</a
+                      >
+                    </li>
+                    <li ng-sidebar-menu-sub-item>
+                      <a
+                        ng-sidebar-menu-sub-button
+                        data-active="true"
+                        href="#structure"
+                        >Project Structure</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </section>
+          <section ng-sidebar-group>
+            <div ng-sidebar-group-label>Remote projects</div>
+            <button
+              ng-sidebar-group-action
+              aria-label="Toggle loading"
+              ng-click="projectsLoading=!projectsLoading"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v6h-6"></path>
+              </svg>
+            </button>
+            <div ng-sidebar-group-content>
+              <ul ng-sidebar-menu>
+                <li
+                  data-slot="sidebar-menu-skeleton"
+                  ng-if="projectsLoading"
+                  aria-label="Loading project"
+                ></li>
+                <li
+                  data-slot="sidebar-menu-skeleton"
+                  ng-if="projectsLoading"
+                  aria-label="Loading project"
+                ></li>
+                <li
+                  data-slot="sidebar-menu-skeleton"
+                  ng-if="projectsLoading"
+                  aria-label="Loading project"
+                ></li>
+                <li ng-sidebar-menu-item ng-if="!projectsLoading">
+                  <a ng-sidebar-menu-button href="#support">Support</a>
+                </li>
+                <li ng-sidebar-menu-item ng-if="!projectsLoading">
+                  <a ng-sidebar-menu-button href="#feedback">Feedback</a>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </div>
+        <footer ng-sidebar-footer>
+          <ul ng-sidebar-menu>
+            <li ng-sidebar-menu-item>
+              <div ng-dropdown>
+                <button ng-dropdown-trigger ng-sidebar-menu-button size="lg">
+                  <span ng-avatar><span ng-avatar-fallback>UN</span></span>
+                  <span class="sidebar-brand-copy"
+                    ><strong>Username</strong><small>Account menu</small></span
+                  >
+                </button>
+                <div ng-dropdown-content side="top">
+                  <button ng-dropdown-item ng-click="sidebarAction='Account'">
+                    Account
+                  </button>
+                  <button ng-dropdown-item ng-click="sidebarAction='Billing'">
+                    Billing
+                  </button>
+                  <button
+                    ng-dropdown-item
+                    ng-click="sidebarAction='Signed out'"
+                  >
+                    Sign out
+                  </button>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </footer>
+      </aside>
+      <main ng-sidebar-inset class="sidebar-anatomy-inset">
+        <div>
+          <span class="sidebar-dashboard-kicker">Component anatomy</span>
+          <h1>Sidebar primitives</h1>
+          <p>
+            Header, footer, groups, actions, badges, submenus, and loading
+            states compose independently.
+          </p>
+        </div>
+        <output
+          class="sidebar-anatomy-output"
+          aria-live="polite"
+          ng-bind="sidebarAction"
+        ></output>
+      </main>
+    </div>
+  </body>
+</html>

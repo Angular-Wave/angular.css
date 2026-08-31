@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="nativeSelectStatus=''"
+    data-example="native-select-demo"
+  >
+    <main class="native-select-demo visual-example">
+      <div data-slot="native-select-wrapper">
+        <select
+          ng-native-select
+          aria-label="Status"
+          ng-model="nativeSelectStatus"
+        >
+          <option value="">Select status</option>
+          <option value="todo">Todo</option>
+          <option value="in-progress">In Progress</option>
+          <option value="done">Done</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+        <svg
+          data-slot="native-select-icon"
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="m6 9 6 6 6-6"></path>
+        </svg>
+      </div>
+    </main>
+  </body>
+</html>

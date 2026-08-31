@@ -5,14 +5,15 @@ import { defineConfig, devices } from "@playwright/test";
  * https://github.com/motdotla/dotenv
  */
 // require('dotenv').config();
-const baseUrl = "http://localhost:4000";
+const port = process.env.PLAYWRIGHT_PORT ?? "4100";
+const baseUrl = `http://127.0.0.1:${port}`;
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: "./",
-  testMatch: "**/*.test.js",
+  testDir: "./src",
+  testMatch: "**/*.test.ts",
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -74,8 +75,8 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: "make serve",
+    command: `npm run build:test-artifacts && npx vite --host 127.0.0.1 --port ${port} --strictPort`,
     url: baseUrl,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
   },
 });
