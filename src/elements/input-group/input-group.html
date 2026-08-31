@@ -3,7 +3,9 @@
     <h2>Input group</h2>
 
     <div data-slot="field">
-      <label ng-label data-slot="field-label" for="input-group-search">Search</label>
+      <label ng-label data-slot="field-label" for="input-group-search"
+        >Search</label
+      >
       <div data-slot="input-group" role="group">
         <input
           data-input
@@ -29,9 +31,15 @@
         <div data-slot="input-group-addon" data-align="inline-start">
           <span data-slot="input-group-text">https://</span>
         </div>
-        <input data-input data-slot="input-group-control" id="input-group-url" />
+        <input
+          data-input
+          data-slot="input-group-control"
+          id="input-group-url"
+        />
         <div data-slot="input-group-addon" data-align="inline-end">
-          <button ng-button data-slot="input-group-button" variant="ghost">Copy</button>
+          <button ng-button data-slot="input-group-button" variant="ghost">
+            Copy
+          </button>
         </div>
       </div>
     </div>

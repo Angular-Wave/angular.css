@@ -62,7 +62,9 @@ export function drawerDirective(): ng.Directive {
         subtree: true,
       });
       syncSide();
-      onDestroy(scope, () => sideObserver.disconnect());
+      onDestroy(scope, () => {
+        sideObserver.disconnect();
+      });
     },
   };
 }

@@ -22,7 +22,7 @@ export function inputGroupDirective(): ng.Directive {
       const removeManagedDescriptions = (control: HTMLElement | null) => {
         if (!control || managedDescriptionIds.size === 0) return;
 
-        const remaining = (control.getAttribute("aria-describedby") || "")
+        const remaining = (control.getAttribute("aria-describedby") ?? "")
           .split(/\s+/)
           .filter((id) => id && !managedDescriptionIds.has(id));
 
@@ -35,11 +35,12 @@ export function inputGroupDirective(): ng.Directive {
 
       const sync = () => {
         const addons = queryAll<HTMLElement>(element, addonSelector);
-        const control = query<HTMLElement>(element, controlSelector);
+        const control = query(element, controlSelector, HTMLElement);
         const visibleAddonIds = addons
           .filter((addon) => addon.getAttribute("aria-hidden") !== "true")
           .map((addon) => {
-            addon.id = addon.id || `input-group-addon-${inputGroupIdCounter++}`;
+            addon.id =
+              addon.id || `input-group-addon-${String(inputGroupIdCounter++)}`;
             return addon.id;
           });
 
@@ -59,7 +60,7 @@ export function inputGroupDirective(): ng.Directive {
         if (!control) return;
 
         const current = control.getAttribute("aria-describedby");
-        const tokens = new Set((current || "").split(/\s+/).filter(Boolean));
+        const tokens = new Set((current ?? "").split(/\s+/).filter(Boolean));
         managedDescriptionIds.forEach((id) => tokens.delete(id));
         visibleAddonIds.forEach((id) => tokens.add(id));
         managedDescriptionIds = new Set(visibleAddonIds);
@@ -93,7 +94,7 @@ export function inputGroupDirective(): ng.Directive {
           return;
         }
 
-        query<HTMLElement>(element, controlSelector)?.focus();
+        query(element, controlSelector, HTMLElement)?.focus();
       };
 
       element.addEventListener("click", focusControlFromAddon);

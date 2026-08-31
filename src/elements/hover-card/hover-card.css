@@ -28,11 +28,15 @@
   opacity: 0;
   pointer-events: none;
   transform: translateY(2px) scale(0.98);
-  transition: opacity 150ms ease, transform 150ms ease;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease;
 }
 
-:is([data-slot="hover-card"], [ng-hover-card]):hover > :is([data-slot="hover-card-content"], [ng-hover-card-content]),
-:is([data-slot="hover-card"], [ng-hover-card]):focus-within > :is([data-slot="hover-card-content"], [ng-hover-card-content]),
+:is([data-slot="hover-card"], [ng-hover-card]):hover
+  > :is([data-slot="hover-card-content"], [ng-hover-card-content]),
+:is([data-slot="hover-card"], [ng-hover-card]):focus-within
+  > :is([data-slot="hover-card-content"], [ng-hover-card-content]),
 [data-slot="hover-card-content"][data-open="true"],
 [ng-hover-card-content][data-open="true"] {
   opacity: 1;

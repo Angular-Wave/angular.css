@@ -39,18 +39,27 @@ export function comboboxDirective(): ng.Directive {
     link(scope: ng.Scope, element: HTMLElement) {
       const isOwned = (candidate: Element) =>
         candidate.closest(rootSelector) === element;
-      const owned = <T extends HTMLElement>(selector: string): T | null =>
-        queryAll<T>(element, selector).find(isOwned) ?? null;
+      const owned = <T extends HTMLElement>(
+        selector: string,
+        constructor: abstract new (...args: never[]) => T,
+      ): T | null => {
+        const candidate = queryAll<HTMLElement>(element, selector).find(
+          isOwned,
+        );
+        return candidate instanceof constructor ? candidate : null;
+      };
       const ownedAll = <T extends HTMLElement>(selector: string): T[] =>
         queryAll<T>(element, selector).filter(isOwned);
 
-      const input = owned<HTMLInputElement>(inputSelector);
-      const content = owned<HTMLElement>(contentSelector);
+      const input = owned(inputSelector, HTMLInputElement);
+      const content = owned(contentSelector, HTMLElement);
       if (!input || !content) return;
 
-      const directionOwner = element.closest<HTMLElement>("[dir]") || element;
-      const contentId = content.id || `combobox-content-${comboboxIdCounter++}`;
-      const inputId = input.id || `combobox-input-${comboboxIdCounter++}`;
+      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
+      const contentId =
+        content.id || `combobox-content-${String(comboboxIdCounter++)}`;
+      const inputId =
+        input.id || `combobox-input-${String(comboboxIdCounter++)}`;
       content.id = contentId;
       input.id = inputId;
       setAttributeIfChanged(input, "role", "combobox");
@@ -59,7 +68,7 @@ export function comboboxDirective(): ng.Directive {
       setAttributeIfChanged(
         input,
         "aria-autocomplete",
-        input.getAttribute("aria-autocomplete") || "list",
+        input.getAttribute("aria-autocomplete") ?? "list",
       );
       setAttributeIfChanged(content, "role", "listbox");
       if (!content.hasAttribute("aria-label")) {
@@ -122,8 +131,9 @@ export function comboboxDirective(): ng.Directive {
           "data-chips",
           String(
             Boolean(
-              owned<HTMLElement>(
+              owned(
                 '[data-slot="combobox-chips"], [ng-combobox-chips]',
+                HTMLElement,
               ),
             ),
           ),
@@ -140,7 +150,7 @@ export function comboboxDirective(): ng.Directive {
             !content.contains(trigger) && !trigger.closest(anchorSelector),
         );
         const anchor =
-          externalTrigger ?? owned<HTMLElement>(anchorSelector) ?? input;
+          externalTrigger ?? owned(anchorSelector, HTMLElement) ?? input;
         const rootBox = element.getBoundingClientRect();
         const anchorBox = anchor.getBoundingClientRect();
         const contentHeight = Math.min(content.scrollHeight, 288);
@@ -154,11 +164,11 @@ export function comboboxDirective(): ng.Directive {
         }
         content.style.setProperty(
           "--combobox-content-top",
-          `${Math.round(top)}px`,
+          `${String(Math.round(top))}px`,
         );
         content.style.setProperty(
           "--combobox-anchor-width",
-          `${Math.round(anchorBox.width)}px`,
+          `${String(Math.round(anchorBox.width))}px`,
         );
       };
 
@@ -196,9 +206,9 @@ export function comboboxDirective(): ng.Directive {
 
       const clearHighlight = () => {
         activeItem = null;
-        items.forEach((item) =>
-          setAttributeIfChanged(item, "data-highlighted", "false"),
-        );
+        items.forEach((item) => {
+          setAttributeIfChanged(item, "data-highlighted", "false");
+        });
         input.removeAttribute("aria-activedescendant");
       };
 
@@ -208,13 +218,13 @@ export function comboboxDirective(): ng.Directive {
           return;
         }
         activeItem = item;
-        items.forEach((candidate) =>
+        items.forEach((candidate) => {
           setAttributeIfChanged(
             candidate,
             "data-highlighted",
             String(candidate === item),
-          ),
-        );
+          );
+        });
         setAttributeIfChanged(input, "aria-activedescendant", item.id);
         if (open) item.scrollIntoView({ block: "nearest" });
       };
@@ -226,7 +236,10 @@ export function comboboxDirective(): ng.Directive {
 
       const moveHighlight = (direction: 1 | -1) => {
         const visible = visibleItems();
-        if (!visible.length) return clearHighlight();
+        if (!visible.length) {
+          clearHighlight();
+          return;
+        }
         const current = activeItem ? visible.indexOf(activeItem) : -1;
         const next =
           current < 0
@@ -241,7 +254,7 @@ export function comboboxDirective(): ng.Directive {
         if (isDisabled(item)) return;
         const multiple = isMultiple();
         const value =
-          item.getAttribute("data-value") ?? item.textContent?.trim() ?? "";
+          item.getAttribute("data-value") ?? item.textContent.trim();
         setAttributeIfChanged(element, "data-value", value);
         element.dispatchEvent(
           new CustomEvent("angularcss:combobox-select", {
@@ -254,7 +267,7 @@ export function comboboxDirective(): ng.Directive {
       };
 
       const bindItem = (item: HTMLElement) => {
-        if (!item.id) item.id = `combobox-item-${comboboxIdCounter++}`;
+        if (!item.id) item.id = `combobox-item-${String(comboboxIdCounter++)}`;
         setAttributeIfChanged(item, "role", "option");
         setAttributeIfChanged(item, "tabindex", "-1");
         setAttributeIfChanged(item, "data-disabled", String(isDisabled(item)));
@@ -264,11 +277,13 @@ export function comboboxDirective(): ng.Directive {
         if (isDisabled(item))
           setAttributeIfChanged(item, "aria-disabled", "true");
         if (itemCleanups.has(item)) return;
-        const handleClick = () => selectItem(item);
+        const handleClick = () => {
+          selectItem(item);
+        };
         item.addEventListener("click", handleClick);
-        itemCleanups.set(item, () =>
-          item.removeEventListener("click", handleClick),
-        );
+        itemCleanups.set(item, () => {
+          item.removeEventListener("click", handleClick);
+        });
       };
 
       const bindControl = (control: HTMLElement, kind: "clear" | "trigger") => {
@@ -284,7 +299,7 @@ export function comboboxDirective(): ng.Directive {
           setAttributeIfChanged(control, "aria-haspopup", "listbox");
           if (
             !control.hasAttribute("aria-label") &&
-            !control.textContent?.trim()
+            !control.textContent.trim()
           ) {
             setAttributeIfChanged(control, "aria-label", "Show options");
           }
@@ -293,16 +308,16 @@ export function comboboxDirective(): ng.Directive {
             setOpen(!open, true, true);
           };
           control.addEventListener("click", handleClick);
-          controlCleanups.set(control, () =>
-            control.removeEventListener("click", handleClick),
-          );
+          controlCleanups.set(control, () => {
+            control.removeEventListener("click", handleClick);
+          });
           return;
         }
 
         setAttributeIfChanged(
           control,
           "aria-label",
-          control.getAttribute("aria-label") || "Clear selection",
+          control.getAttribute("aria-label") ?? "Clear selection",
         );
         const handleClick = () => {
           setAttributeIfChanged(element, "data-value", "");
@@ -312,9 +327,9 @@ export function comboboxDirective(): ng.Directive {
           input.focus({ preventScroll: true });
         };
         control.addEventListener("click", handleClick);
-        controlCleanups.set(control, () =>
-          control.removeEventListener("click", handleClick),
-        );
+        controlCleanups.set(control, () => {
+          control.removeEventListener("click", handleClick);
+        });
       };
 
       const syncStructure = () => {
@@ -322,19 +337,20 @@ export function comboboxDirective(): ng.Directive {
         const previousActive = activeItem;
         items = ownedAll<HTMLElement>(itemSelector);
         items.forEach(bindItem);
-        ownedAll<HTMLElement>(triggerSelector).forEach((control) =>
-          bindControl(control, "trigger"),
-        );
-        ownedAll<HTMLElement>(clearSelector).forEach((control) =>
-          bindControl(control, "clear"),
-        );
+        ownedAll<HTMLElement>(triggerSelector).forEach((control) => {
+          bindControl(control, "trigger");
+        });
+        ownedAll<HTMLElement>(clearSelector).forEach((control) => {
+          bindControl(control, "clear");
+        });
         ownedAll<HTMLElement>(groupSelector).forEach((group) => {
           setAttributeIfChanged(group, "role", "group");
           const label = queryAll<HTMLElement>(group, groupLabelSelector).find(
             (candidate) => candidate.closest(groupSelector) === group,
           );
           if (!label) return;
-          if (!label.id) label.id = `combobox-label-${comboboxIdCounter++}`;
+          if (!label.id)
+            label.id = `combobox-label-${String(comboboxIdCounter++)}`;
           setAttributeIfChanged(group, "aria-labelledby", label.id);
         });
         ownedAll<HTMLElement>(separatorSelector).forEach((separator) => {
@@ -389,8 +405,12 @@ export function comboboxDirective(): ng.Directive {
         setOpen(true, true);
         requestAnimationFrame(syncStructure);
       };
-      const handleFocus = () => setOpen(true, true);
-      const handleInvalid = () => syncChrome();
+      const handleFocus = () => {
+        setOpen(true, true);
+      };
+      const handleInvalid = () => {
+        syncChrome();
+      };
       const handleKeydown = (event: KeyboardEvent) => {
         if (event.key === "Tab") {
           setOpen(false, true);
@@ -526,9 +546,13 @@ export function comboboxDirective(): ng.Directive {
         document.removeEventListener("click", handleOutsideClick);
         document.removeEventListener("focusin", handleOutsideFocus);
         window.removeEventListener("resize", positionContent);
-        itemCleanups.forEach((cleanup) => cleanup());
+        itemCleanups.forEach((cleanup) => {
+          cleanup();
+        });
         itemCleanups.clear();
-        controlCleanups.forEach((cleanup) => cleanup());
+        controlCleanups.forEach((cleanup) => {
+          cleanup();
+        });
         controlCleanups.clear();
       });
     },

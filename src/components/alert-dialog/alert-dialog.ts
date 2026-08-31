@@ -6,8 +6,7 @@ export function alertDialogDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
       bindOverlay(scope, element, {
-        rootSelector:
-          '[data-slot="alert-dialog"], [ng-alert-dialog]',
+        rootSelector: '[data-slot="alert-dialog"], [ng-alert-dialog]',
         closeSelector:
           '[data-slot="alert-dialog-cancel"], [ng-alert-dialog-cancel], [data-slot="alert-dialog-action"], [ng-alert-dialog-action], [data-alert-dialog-close]',
         contentSelector:

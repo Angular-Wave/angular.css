@@ -30,7 +30,10 @@
   padding-inline: calc(var(--spacing) * 6);
 }
 
-:is([data-slot="card-header"], [ng-card-header]):has([data-slot="card-action"], [ng-card-action]) {
+:is([data-slot="card-header"], [ng-card-header]):has(
+  [data-slot="card-action"],
+  [ng-card-action]
+) {
   grid-template-columns: minmax(0, 1fr) auto;
 }
 

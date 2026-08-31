@@ -17,9 +17,9 @@ test("separator functional page uses the minimal directive-only API", async ({
     "data-orientation",
     "horizontal",
   );
-  await expect(page.locator('[ng-separator][orientation="vertical"]')).toHaveCount(
-    4,
-  );
+  await expect(
+    page.locator('[ng-separator][orientation="vertical"]'),
+  ).toHaveCount(4);
   await expect(
     page.locator('[ng-separator][orientation="vertical"]').first(),
   ).toHaveAttribute("aria-orientation", "vertical");
@@ -34,7 +34,10 @@ test("separator reference layouts retain horizontal, vertical, list, menu, and R
   await page.setViewportSize({ height: 520, width: 940 });
   await page.goto("/docs/static/examples/components/separator.html");
 
-  const horizontalBox = await page.locator("[ng-separator]").first().boundingBox();
+  const horizontalBox = await page
+    .locator("[ng-separator]")
+    .first()
+    .boundingBox();
   const verticalBox = await page
     .locator('[ng-separator][orientation="vertical"]')
     .first()

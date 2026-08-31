@@ -1,20 +1,13 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "noEmit": true,
-    "esModuleInterop": true,
-    "allowJs": false,
-    "allowSyntheticDefaultImports": true,
-    "ignoreDeprecations": "6.0",
-    "lib": ["ESNext", "DOM"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "skipLibCheck": true,
-    "strict": true,
-    "target": "ES2017",
-    "downlevelIteration": true,
+    "incremental": true,
     "sourceMap": false,
     "declaration": false,
-    "typeRoots": ["node_modules/@types"]
+    "target": "ES2023"
   },
   "include": ["src", "examples/**/*.ts"],
   "exclude": ["**/*.d.ts", "node_modules", "**/*.spec.ts", "**/*.test.ts"]

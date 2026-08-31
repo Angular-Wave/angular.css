@@ -131,16 +131,14 @@
       warning: TriangleAlert,
   };
   class SonnerDemoController {
-      constructor() {
-          this.descriptionVisible = false;
-          this.descriptionStatus = "Ready";
-          this.position = "bottom-right";
-          this.positionVisible = false;
-          this.type = "default";
-          this.typeMessage = "Event has been created";
-          this.typeVisible = false;
-          this.promiseVersion = 0;
-      }
+      descriptionVisible = false;
+      descriptionStatus = "Ready";
+      position = "bottom-right";
+      positionVisible = false;
+      type = "default";
+      typeMessage = "Event has been created";
+      typeVisible = false;
+      promiseVersion = 0;
       showDescription() {
           this.descriptionVisible = true;
           this.descriptionStatus = "Toast shown";

@@ -1,8 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 const canonicalUrl = "/docs/static/examples/components/dropdown.html";
-const workflowsUrl =
-  "/docs/static/examples/components/dropdown-workflows.html";
+const workflowsUrl = "/docs/static/examples/components/dropdown-workflows.html";
 
 test("canonical dropdown exposes semantic state and closes from selection or Escape", async ({
   page,
@@ -68,14 +67,9 @@ test("workflow HTML supplies dynamic items and AngularTS preference state", asyn
   await expect(archive).toHaveAttribute("role", "menuitem");
   await account.getByRole("button", { name: "Open" }).click();
   await archive.click();
-  await expect(account.getByRole("menu")).toHaveAttribute(
-    "data-open",
-    "false",
-  );
+  await expect(account.getByRole("menu")).toHaveAttribute("data-open", "false");
 
-  const preferences = page
-    .locator("#dropdown-preferences-title")
-    .locator("..");
+  const preferences = page.locator("#dropdown-preferences-title").locator("..");
   const preferencesTrigger = preferences.getByRole("button", {
     name: "Notifications",
   });
@@ -115,9 +109,7 @@ test("workflow HTML preserves icon triggers and submenu keyboard behavior", asyn
   const subTrigger = actions.getByRole("menuitem", { name: "Invite users" });
   await subTrigger.focus();
   await subTrigger.press("ArrowRight");
-  const subContent = actions.locator(
-    '[data-slot="dropdown-menu-sub-content"]',
-  );
+  const subContent = actions.locator('[data-slot="dropdown-menu-sub-content"]');
   await expect(subContent).toHaveAttribute("data-state", "open");
   await expect(actions.getByRole("menuitem", { name: "Email" })).toBeFocused();
   await page.keyboard.press("ArrowLeft");

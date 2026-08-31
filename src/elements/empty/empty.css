@@ -45,7 +45,12 @@
   border-radius: var(--radius);
 }
 
-:is([data-slot="empty-media"], [ng-empty-media], [data-slot="empty-icon"], [ng-empty-icon])
+:is(
+    [data-slot="empty-media"],
+    [ng-empty-media],
+    [data-slot="empty-icon"],
+    [ng-empty-icon]
+  )
   > svg:not([data-slot="spinner"], [ng-spinner]) {
   width: calc(var(--spacing) * 6);
   height: calc(var(--spacing) * 6);

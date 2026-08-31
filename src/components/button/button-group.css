@@ -6,8 +6,8 @@
 }
 
 :is([ng-button-group], [data-slot="button-group"]):has(
-    > :is([ng-button-group], [data-slot="button-group"])
-  ) {
+  > :is([ng-button-group], [data-slot="button-group"])
+) {
   gap: calc(var(--spacing) * 2);
 }
 
@@ -27,7 +27,13 @@
 }
 
 :is([ng-button-group], [data-slot="button-group"])
-  > :is([data-slot], [ng-button], [data-input], [ng-input-group], [ng-select]):last-child {
+  > :is(
+    [data-slot],
+    [ng-button],
+    [data-input],
+    [ng-input-group],
+    [ng-select]
+  ):last-child {
   border-start-end-radius: calc(var(--radius) - 2px);
   border-end-end-radius: calc(var(--radius) - 2px);
 }
@@ -56,16 +62,28 @@
 }
 
 :is([ng-button-group], [data-slot="button-group"])
-  > :is([data-slot], [ng-button], [data-input], [ng-input-group], [ng-select]):focus-visible,
+  > :is(
+    [data-slot],
+    [ng-button],
+    [data-input],
+    [ng-input-group],
+    [ng-select]
+  ):focus-visible,
 :is([ng-button-group], [data-slot="button-group"])
-  > :is([data-slot], [ng-button], [data-input], [ng-input-group], [ng-select]):focus-within {
+  > :is(
+    [data-slot],
+    [ng-button],
+    [data-input],
+    [ng-input-group],
+    [ng-select]
+  ):focus-within {
   z-index: 10;
 }
 
 :is([ng-button-group], [data-slot="button-group"]):is(
-    [orientation="vertical"],
-    [data-orientation="vertical"]
-  ) {
+  [orientation="vertical"],
+  [data-orientation="vertical"]
+) {
   flex-direction: column;
 }
 
@@ -94,7 +112,13 @@
     [orientation="vertical"],
     [data-orientation="vertical"]
   )
-  > :is([data-slot], [ng-button], [data-input], [ng-input-group], [ng-select]):last-child {
+  > :is(
+    [data-slot],
+    [ng-button],
+    [data-input],
+    [ng-input-group],
+    [ng-select]
+  ):last-child {
   border-end-start-radius: calc(var(--radius) - 2px);
   border-end-end-radius: calc(var(--radius) - 2px);
 }
@@ -143,18 +167,18 @@
 }
 
 :is([data-slot="button-group-separator"], [ng-button-group-separator]):is(
-    [orientation="vertical"],
-    [data-orientation="vertical"]
-  ) {
+  [orientation="vertical"],
+  [data-orientation="vertical"]
+) {
   width: 1px;
   height: auto;
   margin-block: 1px;
 }
 
 :is([data-slot="button-group-separator"], [ng-button-group-separator]):is(
-    [orientation="horizontal"],
-    [data-orientation="horizontal"]
-  ) {
+  [orientation="horizontal"],
+  [data-orientation="horizontal"]
+) {
   width: auto;
   height: 1px;
   margin-inline: 1px;

@@ -1,12 +1,13 @@
-/* Version: 0.0.1 - September 1, 2026 02:19:33 */
+/* Version: 0.0.1 - September 1, 2026 02:53:42 */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
     typeof define === 'function' && define.amd ? define(['exports'], factory) :
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.angularCss = {}));
 })(this, (function (exports) { 'use strict';
 
-    function query(root, selector) {
-        return root.querySelector(selector);
+    function query(root, selector, constructor) {
+        const result = root.querySelector(selector);
+        return constructor && !(result instanceof constructor) ? null : result;
     }
     function queryAll(root, selector) {
         return Array.from(root.querySelectorAll(selector));
@@ -33,7 +34,7 @@
         return (currentIndex + direction + length) % length;
     }
     function onDestroy(scope, cleanup) {
-        if (typeof (scope === null || scope === void 0 ? void 0 : scope.$on) === "function") {
+        if (typeof scope?.$on === "function") {
             scope.$on("$destroy", cleanup);
         }
     }
@@ -56,23 +57,24 @@
         return Array.from(element.children).filter((child) => child instanceof HTMLElement);
     };
     const resolveHeader = (item) => {
-        var _a;
-        return ((_a = item.querySelector("[data-slot='accordion-header']")) !== null && _a !== void 0 ? _a : (item.firstElementChild instanceof HTMLElement
-            ? item.firstElementChild
-            : null));
-    };
-    const resolvePanel = (item, header) => {
-        var _a, _b;
-        return ((_b = (_a = item.querySelector("[data-slot='accordion-content']")) !== null && _a !== void 0 ? _a : item.querySelector("[data-slot='accordion-panel']")) !== null && _b !== void 0 ? _b : (header.nextElementSibling instanceof HTMLElement
-            ? header.nextElementSibling
-            : item.lastElementChild instanceof HTMLElement
-                ? item.lastElementChild
+        return (item.querySelector("[data-slot='accordion-header']") ??
+            (item.firstElementChild instanceof HTMLElement
+                ? item.firstElementChild
                 : null));
     };
+    const resolvePanel = (item, header) => {
+        return (item.querySelector("[data-slot='accordion-content']") ??
+            item.querySelector("[data-slot='accordion-panel']") ??
+            (header.nextElementSibling instanceof HTMLElement
+                ? header.nextElementSibling
+                : item.lastElementChild instanceof HTMLElement
+                    ? item.lastElementChild
+                    : null));
+    };
     const resolveTrigger = (header) => {
-        var _a;
-        const slotTrigger = (_a = header.querySelector("[data-slot='accordion-trigger']")) !== null && _a !== void 0 ? _a : header.querySelector("button[data-slot='accordion-trigger']");
-        const trigger = slotTrigger !== null && slotTrigger !== void 0 ? slotTrigger : header.querySelector("button");
+        const slotTrigger = header.querySelector("[data-slot='accordion-trigger']") ??
+            header.querySelector("button[data-slot='accordion-trigger']");
+        const trigger = slotTrigger ?? header.querySelector("button");
         if (trigger instanceof HTMLButtonElement)
             return trigger;
         return header instanceof HTMLButtonElement ? header : null;
@@ -161,7 +163,7 @@
                     button.setAttribute("aria-controls", panelId);
                     panel.setAttribute("role", "region");
                     panel.setAttribute("aria-labelledby", id);
-                    item.setAttribute("data-slot", item.getAttribute("data-slot") || "accordion-item");
+                    item.setAttribute("data-slot", item.getAttribute("data-slot") ?? "accordion-item");
                     const initiallyOpen = isPanelOpen(item);
                     const isClosed = isElementClosed(item.getAttribute("data-state"));
                     const open = isClosed
@@ -178,7 +180,9 @@
                         const isOpen = isPanelOpen(item);
                         const nextOpen = !isOpen;
                         if (!allowsMultiple) {
-                            items.forEach((otherItem) => setItemStateFromDirective(otherItem, false));
+                            items.forEach((otherItem) => {
+                                setItemStateFromDirective(otherItem, false);
+                            });
                         }
                         setItemStateFromDirective(item, nextOpen);
                     };
@@ -213,7 +217,7 @@
                                     (event.key === "ArrowDown" ? 1 : -1) +
                                     buttons.length) %
                                     buttons.length];
-                        nextButton === null || nextButton === void 0 ? void 0 : nextButton.focus();
+                        nextButton.focus();
                     };
                     button.addEventListener("click", handleClick);
                     button.addEventListener("keydown", handleKeydown);
@@ -242,7 +246,9 @@
                 });
                 onDestroy(scope, () => {
                     stateObserver.disconnect();
-                    cleanupButtons.forEach((cleanup) => cleanup());
+                    cleanupButtons.forEach((cleanup) => {
+                        cleanup();
+                    });
                 });
             },
         };
@@ -258,15 +264,15 @@
         const bindSubmenu = (submenu) => {
             if (cleanups.has(submenu))
                 return;
-            const trigger = query(submenu, triggerSelector);
-            const content = query(submenu, contentSelector);
+            const trigger = query(submenu, triggerSelector, HTMLElement);
+            const content = query(submenu, contentSelector, HTMLElement);
             if (!trigger || !content)
                 return;
-            const contentId = content.id || `${prefix}-sub-content-${submenuId++}`;
+            const contentId = content.id || `${prefix}-sub-content-${String(submenuId++)}`;
             content.id = contentId;
             trigger.setAttribute("aria-controls", contentId);
             trigger.setAttribute("aria-haspopup", "menu");
-            content.setAttribute("role", content.getAttribute("role") || "menu");
+            content.setAttribute("role", content.getAttribute("role") ?? "menu");
             const getItems = () => queryAll(content, itemSelector$8).filter((item) => !isDisabled(item));
             const syncItems = () => {
                 getItems().forEach((item) => {
@@ -294,7 +300,7 @@
                     return;
                 }
                 const firstItem = getItems().find((item) => !item.closest("[hidden]"));
-                (firstItem || content).focus({ preventScroll: true });
+                (firstItem ?? content).focus({ preventScroll: true });
             };
             const handleClick = (event) => {
                 if (isDisabled(trigger))
@@ -307,7 +313,9 @@
                 if (!isDisabled(trigger))
                     setOpen(true);
             };
-            const handlePointerLeave = () => setOpen(false);
+            const handlePointerLeave = () => {
+                setOpen(false);
+            };
             const handleKeydown = (event) => {
                 const openKey = getDirection() === "rtl" ? "ArrowLeft" : "ArrowRight";
                 const closeKey = getDirection() === "rtl" ? "ArrowRight" : "ArrowLeft";
@@ -379,7 +387,9 @@
         sync();
         return () => {
             observer.disconnect();
-            cleanups.forEach((cleanup) => cleanup());
+            cleanups.forEach((cleanup) => {
+                cleanup();
+            });
             cleanups.clear();
         };
     }
@@ -395,7 +405,6 @@
     function dropdownDirective() {
         return {
             link(scope, element) {
-                var _a, _b, _c;
                 const button = element.querySelector("button");
                 const panel = element.querySelector('[role="menu"], [data-slot="dropdown-menu-content"], [ng-dropdown-content]');
                 if (!button || !panel)
@@ -405,13 +414,10 @@
                         target.setAttribute(name, value);
                     }
                 };
-                const directionOwner = element.closest("[dir]") || element;
-                const getDirection = () => {
-                    var _a;
-                    return ((_a = element.closest("[dir]")) === null || _a === void 0 ? void 0 : _a.getAttribute("dir")) === "rtl"
-                        ? "rtl"
-                        : "ltr";
-                };
+                const directionOwner = element.closest("[dir]") ?? element;
+                const getDirection = () => element.closest("[dir]")?.getAttribute("dir") === "rtl"
+                    ? "rtl"
+                    : "ltr";
                 const syncDirection = () => {
                     const direction = getDirection();
                     setAttribute(element, "data-direction", direction);
@@ -424,18 +430,18 @@
                     setAttribute(button, "aria-disabled", String(disabled));
                 };
                 const cleanupSubmenus = bindSemanticSubmenus(element, "dropdown-menu", getDirection);
-                const panelId = panel.id || `menu-${dropdownIdCounter++}`;
+                const panelId = panel.id || `menu-${String(dropdownIdCounter++)}`;
                 panel.id = panelId;
                 if (!button.id)
-                    button.id = `dropdown-btn-${dropdownIdCounter++}`;
+                    button.id = `dropdown-btn-${String(dropdownIdCounter++)}`;
                 button.setAttribute("aria-haspopup", "true");
                 button.setAttribute("aria-expanded", "false");
                 button.setAttribute("aria-controls", panelId);
-                panel.setAttribute("role", panel.getAttribute("role") || "menu");
-                panel.setAttribute("tabindex", panel.getAttribute("tabindex") || "-1");
+                panel.setAttribute("role", panel.getAttribute("role") ?? "menu");
+                panel.setAttribute("tabindex", panel.getAttribute("tabindex") ?? "-1");
                 panel.setAttribute("aria-labelledby", button.id);
-                const isIconTrigger = ((_a = button.getAttribute("size")) === null || _a === void 0 ? void 0 : _a.startsWith("icon")) ||
-                    ((_b = button.getAttribute("data-size")) === null || _b === void 0 ? void 0 : _b.startsWith("icon"));
+                const isIconTrigger = button.getAttribute("size")?.startsWith("icon") ??
+                    button.getAttribute("data-size")?.startsWith("icon");
                 if (!button.querySelector("svg") && !isIconTrigger) {
                     button.insertAdjacentHTML("beforeend", `
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
@@ -458,7 +464,7 @@
                         }
                     });
                 };
-                let openState = coerceBoolean((_c = element.getAttribute("data-open")) !== null && _c !== void 0 ? _c : panel.getAttribute("data-open"));
+                let openState = coerceBoolean(element.getAttribute("data-open") ?? panel.getAttribute("data-open"));
                 const syncState = (open, options = {}) => {
                     openState = open;
                     button.setAttribute("aria-expanded", String(open));
@@ -506,7 +512,6 @@
                 syncDisabled();
                 syncState(openState);
                 const observer = new MutationObserver((records) => {
-                    var _a;
                     if (records.some((record) => record.type === "childList" ||
                         (record.type === "attributes" && record.attributeName === "role"))) {
                         refreshMenuItemRoles();
@@ -523,7 +528,7 @@
                         record.attributeName === "data-open");
                     if (!shouldSyncOpen)
                         return;
-                    const nextOpen = coerceBoolean((_a = element.getAttribute("data-open")) !== null && _a !== void 0 ? _a : panel.getAttribute("data-open"));
+                    const nextOpen = coerceBoolean(element.getAttribute("data-open") ?? panel.getAttribute("data-open"));
                     if (nextOpen !== openState) {
                         syncState(nextOpen);
                     }
@@ -552,7 +557,7 @@
                     : new MutationObserver(() => {
                         syncDirection();
                     });
-                directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.observe(directionOwner, {
+                directionObserver?.observe(directionOwner, {
                     attributes: true,
                     attributeFilter: ["dir"],
                 });
@@ -643,7 +648,7 @@
                 document.addEventListener("keydown", handleKeyDown);
                 const destroy = () => {
                     observer.disconnect();
-                    directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.disconnect();
+                    directionObserver?.disconnect();
                     button.removeEventListener("click", handleButtonClick);
                     panel.removeEventListener("click", handlePanelClick);
                     document.removeEventListener("click", handleClickOutside);
@@ -659,11 +664,11 @@
     function alertDirective() {
         return {
             link(_scope, element) {
-                const variant = element.getAttribute("variant") ||
-                    element.getAttribute("data-variant") ||
+                const variant = element.getAttribute("variant") ??
+                    element.getAttribute("data-variant") ??
                     "default";
                 element.setAttribute("data-variant", variant);
-                const role = element.getAttribute("role") || "alert";
+                const role = element.getAttribute("role") ?? "alert";
                 element.setAttribute("role", role);
                 if (!element.hasAttribute("aria-live")) {
                     element.setAttribute("aria-live", role === "alert" ? "assertive" : "polite");
@@ -695,7 +700,7 @@
         }
     };
     function restoreFocus(element) {
-        if ((element === null || element === void 0 ? void 0 : element.isConnected) && !isDisabled(element)) {
+        if (element?.isConnected && !isDisabled(element)) {
             element.focus({ preventScroll: true });
         }
     }
@@ -706,8 +711,14 @@
             event.preventDefault();
             close();
         };
-        elements.forEach((element) => element.addEventListener("keydown", handleKeydown));
-        return () => elements.forEach((element) => element.removeEventListener("keydown", handleKeydown));
+        elements.forEach((element) => {
+            element.addEventListener("keydown", handleKeydown);
+        });
+        return () => {
+            elements.forEach((element) => {
+                element.removeEventListener("keydown", handleKeydown);
+            });
+        };
     }
     const lockDocumentScroll = () => {
         if (scrollLockCount === 0) {
@@ -726,21 +737,20 @@
         }
     };
     function bindOverlay(scope, element, parts) {
-        var _a;
         const rootSelector = parts.rootSelector;
         const isOwned = (candidate) => !rootSelector || candidate.closest(rootSelector) === element;
         const ownedAll = (selector) => queryAll(element, selector).filter(isOwned);
-        const owned = (selector) => { var _a; return selector ? ((_a = ownedAll(selector)[0]) !== null && _a !== void 0 ? _a : null) : null; };
+        const owned = (selector) => selector ? (ownedAll(selector)[0] ?? null) : null;
         if (!element.id) {
-            element.id = `overlay-${overlayIdCounter++}`;
+            element.id = `overlay-${String(overlayIdCounter++)}`;
         }
-        const directionOwner = element.closest("[dir]") || element;
+        const directionOwner = element.closest("[dir]") ?? element;
         const boundTriggers = new Set();
         const boundCloseButtons = new Set();
         const boundOverlays = new Set();
         const inertSnapshots = new Map();
         let internalOpen = element.getAttribute("data-open") === "true" ||
-            ((_a = owned(parts.contentSelector)) === null || _a === void 0 ? void 0 : _a.getAttribute("data-open")) === "true";
+            owned(parts.contentSelector)?.getAttribute("data-open") === "true";
         let initialized = false;
         let isolated = false;
         let activeTrigger = null;
@@ -823,12 +833,11 @@
             });
         };
         const focusClosest = () => {
-            var _a;
             const content = getContent();
             if (!content)
                 return;
             const autofocus = ownedAll("[autofocus]").find((candidate) => content.contains(candidate));
-            ((_a = autofocus !== null && autofocus !== void 0 ? autofocus : getFocusableItems()[0]) !== null && _a !== void 0 ? _a : content).focus({
+            (autofocus ?? getFocusableItems().at(0) ?? content).focus({
                 preventScroll: true,
             });
         };
@@ -855,7 +864,6 @@
             });
         };
         const setOpen = (nextOpen, restoreOnClose = true) => {
-            var _a;
             const wasOpen = initialized && internalOpen;
             const opening = nextOpen && !wasOpen;
             const closing = !nextOpen && wasOpen;
@@ -871,7 +879,7 @@
                 removeFromStack();
                 restoreBackground();
                 if (restoreOnClose) {
-                    restoreFocus((_a = activeTrigger !== null && activeTrigger !== void 0 ? activeTrigger : getTriggers()[0]) !== null && _a !== void 0 ? _a : null);
+                    restoreFocus(activeTrigger ?? getTriggers().at(0) ?? null);
                 }
             }
             initialized = true;
@@ -899,8 +907,7 @@
             setOpen(false);
         };
         const syncDirection = () => {
-            var _a;
-            const direction = ((_a = element.closest("[dir]")) === null || _a === void 0 ? void 0 : _a.getAttribute("dir")) === "rtl"
+            const direction = element.closest("[dir]")?.getAttribute("dir") === "rtl"
                 ? "rtl"
                 : "ltr";
             setAttributeIfChanged$g(element, "data-direction", direction);
@@ -912,12 +919,11 @@
                 setAttributeIfChanged$g(overlay, "data-direction", direction);
         };
         const syncInteractiveParts = () => {
-            var _a;
             const content = getContent();
             if (content) {
                 if (!content.id)
                     content.id = `${element.id}-content`;
-                setAttributeIfChanged$g(content, "role", (_a = parts.contentRole) !== null && _a !== void 0 ? _a : "dialog");
+                setAttributeIfChanged$g(content, "role", parts.contentRole ?? "dialog");
                 setAttributeIfChanged$g(content, "aria-modal", "true");
                 if (!content.hasAttribute("tabindex"))
                     content.tabIndex = -1;
@@ -1000,7 +1006,7 @@
             const focusableItems = getFocusableItems();
             if (!content || focusableItems.length === 0) {
                 event.preventDefault();
-                content === null || content === void 0 ? void 0 : content.focus({ preventScroll: true });
+                content?.focus({ preventScroll: true });
                 return;
             }
             const currentIndex = focusableItems.indexOf(document.activeElement);
@@ -1043,7 +1049,7 @@
         const partsObserver = new MutationObserver(syncInteractiveParts);
         partsObserver.observe(document.body, { childList: true, subtree: true });
         const directionObserver = directionOwner === element ? null : new MutationObserver(syncDirection);
-        directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.observe(directionOwner, {
+        directionObserver?.observe(directionOwner, {
             attributes: true,
             attributeFilter: ["dir"],
         });
@@ -1056,10 +1062,16 @@
         onDestroy(scope, () => {
             openObserver.disconnect();
             partsObserver.disconnect();
-            directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.disconnect();
-            boundTriggers.forEach((trigger) => trigger.removeEventListener("click", handleTriggerClick));
-            boundCloseButtons.forEach((closeButton) => closeButton.removeEventListener("click", handleCloseClick));
-            boundOverlays.forEach((overlay) => overlay.removeEventListener("click", handleOverlayClick));
+            directionObserver?.disconnect();
+            boundTriggers.forEach((trigger) => {
+                trigger.removeEventListener("click", handleTriggerClick);
+            });
+            boundCloseButtons.forEach((closeButton) => {
+                closeButton.removeEventListener("click", handleCloseClick);
+            });
+            boundOverlays.forEach((overlay) => {
+                overlay.removeEventListener("click", handleOverlayClick);
+            });
             document.removeEventListener("click", handleDocumentClick);
             document.removeEventListener("keydown", handleDocumentKeydown);
             document.removeEventListener("focusin", handleDocumentFocus);
@@ -1090,10 +1102,10 @@
     function aspectRatioDirective() {
         return {
             link(_scope, element) {
-                const ratio = element.getAttribute("ratio") ||
-                    element.getAttribute("data-ratio") ||
-                    element.style.getPropertyValue("--ratio") ||
-                    "16 / 9";
+                const authoredRatio = element.getAttribute("ratio") ??
+                    element.getAttribute("data-ratio") ??
+                    element.style.getPropertyValue("--ratio");
+                const ratio = authoredRatio === "" ? "16 / 9" : authoredRatio;
                 element.style.setProperty("--ratio", ratio);
                 element.setAttribute("data-ratio", ratio);
             },
@@ -1103,11 +1115,12 @@
     function avatarDirective() {
         return {
             link(scope, element) {
-                var _a, _b;
-                const size = (_b = (_a = element.getAttribute("size")) !== null && _a !== void 0 ? _a : element.getAttribute("data-size")) !== null && _b !== void 0 ? _b : "default";
+                const size = element.getAttribute("size") ??
+                    element.getAttribute("data-size") ??
+                    "default";
                 element.setAttribute("data-size", size);
-                const image = query(element, '[data-slot="avatar-image"], [ng-avatar-image]');
-                const fallback = query(element, '[data-slot="avatar-fallback"], [ng-avatar-fallback]');
+                const image = query(element, '[data-slot="avatar-image"], [ng-avatar-image]', HTMLImageElement);
+                const fallback = query(element, '[data-slot="avatar-fallback"], [ng-avatar-fallback]', HTMLElement);
                 const setState = (state) => {
                     element.setAttribute("data-state", state);
                     if (image)
@@ -1119,8 +1132,12 @@
                     setState("fallback");
                     return;
                 }
-                const handleLoad = () => setState("loaded");
-                const handleError = () => setState("fallback");
+                const handleLoad = () => {
+                    setState("loaded");
+                };
+                const handleError = () => {
+                    setState("fallback");
+                };
                 image.addEventListener("load", handleLoad);
                 image.addEventListener("error", handleError);
                 setState(image.complete && image.naturalWidth > 0 ? "loaded" : "fallback");
@@ -1135,8 +1152,8 @@
     function badgeDirective() {
         return {
             link(_scope, element) {
-                const variant = element.getAttribute("variant") ||
-                    element.getAttribute("data-variant") ||
+                const variant = element.getAttribute("variant") ??
+                    element.getAttribute("data-variant") ??
                     "default";
                 element.setAttribute("data-variant", variant);
             },
@@ -1174,7 +1191,7 @@
         return {
             link(scope, element) {
                 const ownedCurrentPages = new WeakSet();
-                setAttribute$5(element, "aria-label", element.getAttribute("aria-label") || "breadcrumb");
+                setAttribute$5(element, "aria-label", element.getAttribute("aria-label") ?? "breadcrumb");
                 const sync = () => {
                     const pages = queryAll(element, pageSelector);
                     const lists = queryAll(element, listSelector$3);
@@ -1184,29 +1201,29 @@
                     const lastPage = pages.at(-1);
                     const userCurrentPages = pages.filter((page) => page.hasAttribute("aria-current") && !ownedCurrentPages.has(page));
                     lists.forEach((list) => {
-                        setAttribute$5(list, "role", list.getAttribute("role") || "list");
+                        setAttribute$5(list, "role", list.getAttribute("role") ?? "list");
                     });
                     items.forEach((item) => {
-                        setAttribute$5(item, "role", item.getAttribute("role") || "listitem");
+                        setAttribute$5(item, "role", item.getAttribute("role") ?? "listitem");
                     });
                     separators.forEach((separator) => {
-                        var _a;
-                        setAttribute$5(separator, "role", separator.getAttribute("role") || "presentation");
+                        setAttribute$5(separator, "role", separator.getAttribute("role") ?? "presentation");
                         setAttribute$5(separator, "aria-hidden", "true");
-                        if (!((_a = separator.textContent) === null || _a === void 0 ? void 0 : _a.trim()) && separator.childElementCount === 0) {
+                        if (!separator.textContent.trim() &&
+                            separator.childElementCount === 0) {
                             separator.insertAdjacentHTML("beforeend", defaultSeparatorIcon);
                         }
                     });
                     ellipses.forEach((ellipsis) => {
-                        setAttribute$5(ellipsis, "role", ellipsis.getAttribute("role") || "presentation");
+                        setAttribute$5(ellipsis, "role", ellipsis.getAttribute("role") ?? "presentation");
                         setAttribute$5(ellipsis, "aria-hidden", "true");
                         if (!ellipsis.querySelector("svg")) {
                             ellipsis.insertAdjacentHTML("afterbegin", defaultEllipsisIcon);
                         }
                     });
                     pages.forEach((page) => {
-                        setAttribute$5(page, "role", page.getAttribute("role") || "link");
-                        setAttribute$5(page, "aria-disabled", page.getAttribute("aria-disabled") || "true");
+                        setAttribute$5(page, "role", page.getAttribute("role") ?? "link");
+                        setAttribute$5(page, "aria-disabled", page.getAttribute("aria-disabled") ?? "true");
                         if (ownedCurrentPages.has(page) &&
                             (page !== lastPage || userCurrentPages.length > 0)) {
                             removeAttribute$2(page, "aria-current");
@@ -1236,12 +1253,14 @@
     }
 
     const normalizeVariant = (element) => {
-        var _a, _b;
-        return ((_b = (_a = element.getAttribute("variant")) !== null && _a !== void 0 ? _a : element.getAttribute("data-variant")) !== null && _b !== void 0 ? _b : "default");
+        return (element.getAttribute("variant") ??
+            element.getAttribute("data-variant") ??
+            "default");
     };
     const normalizeSize = (element) => {
-        var _a, _b;
-        return ((_b = (_a = element.getAttribute("size")) !== null && _a !== void 0 ? _a : element.getAttribute("data-size")) !== null && _b !== void 0 ? _b : "default");
+        return (element.getAttribute("size") ??
+            element.getAttribute("data-size") ??
+            "default");
     };
     function buttonDirective() {
         return {
@@ -1280,14 +1299,16 @@
     function buttonGroupDirective() {
         return {
             link(_scope, element) {
-                var _a;
-                const orientation = normalizeOrientation((_a = element.getAttribute("orientation")) !== null && _a !== void 0 ? _a : element.getAttribute("data-orientation"), "horizontal");
-                element.setAttribute("role", element.getAttribute("role") || "group");
+                const orientation = normalizeOrientation(element.getAttribute("orientation") ??
+                    element.getAttribute("data-orientation"), "horizontal");
+                element.setAttribute("role", element.getAttribute("role") ?? "group");
                 element.setAttribute("data-orientation", orientation);
-                element.querySelectorAll(separatorSelector$4).forEach((separator) => {
-                    var _a;
-                    const separatorOrientation = normalizeOrientation((_a = separator.getAttribute("orientation")) !== null && _a !== void 0 ? _a : separator.getAttribute("data-orientation"), "vertical");
-                    separator.setAttribute("role", separator.getAttribute("role") || "separator");
+                element
+                    .querySelectorAll(separatorSelector$4)
+                    .forEach((separator) => {
+                    const separatorOrientation = normalizeOrientation(separator.getAttribute("orientation") ??
+                        separator.getAttribute("data-orientation"), "vertical");
+                    separator.setAttribute("role", separator.getAttribute("role") ?? "separator");
                     separator.setAttribute("data-orientation", separatorOrientation);
                     separator.setAttribute("aria-orientation", separatorOrientation);
                 });
@@ -1991,9 +2012,9 @@
         }
     };
     const padDatePart = (value) => String(value).padStart(2, "0");
-    const formatDateValue = (date) => `${date.getFullYear()}-${padDatePart(date.getMonth() + 1)}-${padDatePart(date.getDate())}`;
+    const formatDateValue = (date) => `${String(date.getFullYear())}-${padDatePart(date.getMonth() + 1)}-${padDatePart(date.getDate())}`;
     const parseDateValue = (value) => {
-        const match = value === null || value === void 0 ? void 0 : value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+        const match = value?.match(/^(\d{4})-(\d{2})-(\d{2})$/);
         if (!match)
             return null;
         const [, yearPart, monthPart, dayPart] = match;
@@ -2007,20 +2028,17 @@
             ? date
             : null;
     };
-    const parseDateList = (value) => new Set((value || "")
+    const parseDateList = (value) => new Set((value ?? "")
         .split(",")
         .map((entry) => entry.trim())
         .filter((entry) => parseDateValue(entry)));
     function calendarDirective() {
         return {
             link(scope, element) {
-                const directionOwner = element.closest("[dir]") || element;
-                const getDirection = () => {
-                    var _a;
-                    return ((_a = element.closest("[dir]")) === null || _a === void 0 ? void 0 : _a.getAttribute("dir")) === "rtl"
-                        ? "rtl"
-                        : "ltr";
-                };
+                const directionOwner = element.closest("[dir]") ?? element;
+                const getDirection = () => element.closest("[dir]")?.getAttribute("dir") === "rtl"
+                    ? "rtl"
+                    : "ltr";
                 const syncDirection = () => {
                     const direction = getDirection();
                     if (element.getAttribute("data-direction") !== direction) {
@@ -2028,25 +2046,22 @@
                     }
                 };
                 let days = queryAll(element, '[data-slot="calendar-day"], [ng-calendar-day]');
-                const columns = Number(element.getAttribute("data-columns") || 7);
+                const columns = Number(element.getAttribute("data-columns") ?? 7);
                 const cleanupDays = new WeakMap();
                 const cleanupControls = new WeakMap();
                 const generatedLabels = new WeakMap();
                 const generatedCurrent = new WeakSet();
                 let renderedMonth = "";
-                element.setAttribute("role", element.getAttribute("role") || "grid");
+                element.setAttribute("role", element.getAttribute("role") ?? "grid");
                 syncDirection();
-                const getLocale = () => {
-                    var _a;
-                    return ((_a = element.closest("[lang]")) === null || _a === void 0 ? void 0 : _a.getAttribute("lang")) ||
-                        document.documentElement.lang ||
-                        undefined;
-                };
+                const getLocale = () => (element.closest("[lang]")?.getAttribute("lang") ??
+                    document.documentElement.lang) ||
+                    undefined;
                 const createFormatter = (options) => {
                     try {
                         return new Intl.DateTimeFormat(getLocale(), options);
                     }
-                    catch (_a) {
+                    catch {
                         return new Intl.DateTimeFormat(undefined, options);
                     }
                 };
@@ -2054,34 +2069,33 @@
                     try {
                         return new Intl.NumberFormat(getLocale(), { useGrouping: false });
                     }
-                    catch (_a) {
+                    catch {
                         return new Intl.NumberFormat(undefined, { useGrouping: false });
                     }
                 };
                 const renderGeneratedMonth = () => {
-                    var _a, _b;
                     if (!element.hasAttribute("data-calendar-generated"))
                         return;
                     const grid = element.querySelector('[data-slot="calendar-grid"], [ng-calendar-grid]');
                     if (!grid)
                         return;
                     const selectedDate = parseDateValue(element.getAttribute("data-value"));
-                    const requestedMonth = parseDateValue(`${element.getAttribute("data-month") || ""}-01`);
-                    const month = startOfMonth(requestedMonth || selectedDate || new Date());
+                    const requestedMonth = parseDateValue(`${element.getAttribute("data-month") ?? ""}-01`);
+                    const month = startOfMonth(requestedMonth ?? selectedDate ?? new Date());
                     const monthValue = formatDateValue(month).slice(0, 7);
-                    const numberOfMonths = Math.max(1, Math.min(3, Number(element.getAttribute("data-number-of-months") || 1)));
+                    const numberOfMonths = Math.max(1, Math.min(3, Number(element.getAttribute("data-number-of-months") ?? 1)));
                     const showWeekNumbers = element.getAttribute("data-show-week-numbers") === "true";
                     const renderKey = [
                         monthValue,
                         numberOfMonths,
                         showWeekNumbers,
-                        element.getAttribute("data-caption-layout") || "label",
-                        element.getAttribute("data-disabled-dates") || "",
-                        element.getAttribute("data-booked-dates") || "",
-                        element.getAttribute("data-disabled-before") || "",
-                        element.getAttribute("data-disabled-after") || "",
-                        element.getAttribute("data-show-outside-days") || "",
-                        element.getAttribute("data-week-start") || "",
+                        element.getAttribute("data-caption-layout") ?? "label",
+                        element.getAttribute("data-disabled-dates") ?? "",
+                        element.getAttribute("data-booked-dates") ?? "",
+                        element.getAttribute("data-disabled-before") ?? "",
+                        element.getAttribute("data-disabled-after") ?? "",
+                        element.getAttribute("data-show-outside-days") ?? "",
+                        element.getAttribute("data-week-start") ?? "",
                     ].join("|");
                     if (renderKey === renderedMonth && grid.childElementCount > 0)
                         return;
@@ -2089,7 +2103,7 @@
                     setAttributeIfChanged$f(element, "data-month", monthValue);
                     const title = element.querySelector('[data-slot="calendar-title"], [ng-calendar-title]');
                     if (title) {
-                        const captionLayout = element.getAttribute("data-caption-layout") || "label";
+                        const captionLayout = element.getAttribute("data-caption-layout") ?? "label";
                         if (captionLayout === "dropdown") {
                             const monthSelect = document.createElement("select");
                             const yearSelect = document.createElement("select");
@@ -2107,9 +2121,9 @@
                                 }
                                 monthSelect.append(option);
                             }
-                            const startYear = Number(element.getAttribute("data-start-year") ||
+                            const startYear = Number(element.getAttribute("data-start-year") ??
                                 month.getFullYear() - 10);
-                            const endYear = Number(element.getAttribute("data-end-year") || month.getFullYear() + 10);
+                            const endYear = Number(element.getAttribute("data-end-year") ?? month.getFullYear() + 10);
                             for (let year = startYear; year <= endYear; year += 1) {
                                 const option = document.createElement("option");
                                 option.setAttribute("value", String(year));
@@ -2119,7 +2133,9 @@
                                 }
                                 yearSelect.append(option);
                             }
-                            const changeCaption = () => showMonth(new Date(Number(yearSelect.value), Number(monthSelect.value), 1));
+                            const changeCaption = () => {
+                                showMonth(new Date(Number(yearSelect.value), Number(monthSelect.value), 1));
+                            };
                             monthSelect.addEventListener("change", changeCaption);
                             yearSelect.addEventListener("change", changeCaption);
                             title.replaceChildren(monthSelect, yearSelect);
@@ -2141,7 +2157,7 @@
                         }
                         title.setAttribute("aria-live", "polite");
                     }
-                    const configuredWeekStart = Number(element.getAttribute("data-week-start") || "0");
+                    const configuredWeekStart = Number(element.getAttribute("data-week-start") ?? "0");
                     const weekStartsOn = (Number.isInteger(configuredWeekStart) &&
                         configuredWeekStart >= 0 &&
                         configuredWeekStart <= 6
@@ -2151,17 +2167,17 @@
                     const narrowWeekdayFormatter = createFormatter({ weekday: "narrow" });
                     const dateFormatter = createFormatter({ dateStyle: "long" });
                     const numberFormatter = createNumberFormatter();
-                    const language = (_b = (_a = getLocale()) === null || _a === void 0 ? void 0 : _a.split("-")[0]) === null || _b === void 0 ? void 0 : _b.toLowerCase();
-                    const useNarrowWeekdays = ["ar", "fa", "ur"].includes(language || "");
+                    const language = getLocale()?.split("-")[0]?.toLowerCase();
+                    const useNarrowWeekdays = ["ar", "fa", "ur"].includes(language ?? "");
                     const todayValue = formatDateValue(new Date());
                     const selectedValue = element.getAttribute("data-value");
                     const selectedValues = parseDateList(element.getAttribute("data-values"));
-                    const rangeStart = element.getAttribute("data-range-start-value") || "";
-                    const rangeEnd = element.getAttribute("data-range-end-value") || "";
+                    const rangeStart = element.getAttribute("data-range-start-value") ?? "";
+                    const rangeEnd = element.getAttribute("data-range-end-value") ?? "";
                     const disabledDates = parseDateList(element.getAttribute("data-disabled-dates"));
                     const bookedDates = parseDateList(element.getAttribute("data-booked-dates"));
-                    const disabledBefore = element.getAttribute("data-disabled-before") || "";
-                    const disabledAfter = element.getAttribute("data-disabled-after") || "";
+                    const disabledBefore = element.getAttribute("data-disabled-before") ?? "";
+                    const disabledAfter = element.getAttribute("data-disabled-after") ?? "";
                     const showOutsideDays = element.getAttribute("data-show-outside-days") !== "false";
                     const buildMonthGrid = (visibleMonth) => {
                         const monthGrid = document.createElement("div");
@@ -2261,14 +2277,14 @@
                     grid.replaceChildren(fragment);
                 };
                 const syncSelectionState = (selectionMode, values, rangeStart, rangeEnd, activeDay) => {
-                    const singleValue = (activeDay === null || activeDay === void 0 ? void 0 : activeDay.getAttribute("data-value")) ||
-                        element.getAttribute("data-value") ||
+                    const singleValue = activeDay?.getAttribute("data-value") ??
+                        element.getAttribute("data-value") ??
                         "";
-                    const focusedDay = activeDay ||
-                        days.find((day) => day === document.activeElement) ||
+                    const focusedDay = activeDay ??
+                        days.find((day) => day === document.activeElement) ??
                         days.find((day) => day.getAttribute("tabindex") === "0");
                     days.forEach((day) => {
-                        const value = day.getAttribute("data-value") || "";
+                        const value = day.getAttribute("data-value") ?? "";
                         const selected = selectionMode === "multiple"
                             ? values.includes(value)
                             : selectionMode === "range"
@@ -2304,14 +2320,13 @@
                     });
                 };
                 const selectDay = (selectedDay, emit = true) => {
-                    var _a;
-                    const selectionMode = element.getAttribute("data-selection-mode") || "single";
-                    const selectedValue = selectedDay.getAttribute("data-value") ||
-                        ((_a = selectedDay.textContent) === null || _a === void 0 ? void 0 : _a.trim()) ||
+                    const selectionMode = element.getAttribute("data-selection-mode") ?? "single";
+                    const selectedValue = (selectedDay.getAttribute("data-value") ??
+                        selectedDay.textContent.trim()) ||
                         "";
                     let values = [];
-                    let rangeStart = element.getAttribute("data-range-start-value") || "";
-                    let rangeEnd = element.getAttribute("data-range-end-value") || "";
+                    let rangeStart = element.getAttribute("data-range-start-value") ?? "";
+                    let rangeEnd = element.getAttribute("data-range-end-value") ?? "";
                     if (selectionMode === "multiple") {
                         const selectedValues = parseDateList(element.getAttribute("data-values"));
                         if (selectedValues.has(selectedValue)) {
@@ -2334,7 +2349,7 @@
                             rangeEnd = "";
                         }
                         else {
-                            const minNights = Math.max(0, Number(element.getAttribute("data-min-nights") || 0));
+                            const minNights = Math.max(0, Number(element.getAttribute("data-min-nights") ?? 0));
                             if (differenceInCalendarDays(selectedDate, startDate) < minNights) {
                                 setAttributeIfChanged$f(element, "data-range-invalid", "true");
                                 element.dispatchEvent(new CustomEvent("angularcss:calendar-range-invalid", {
@@ -2362,7 +2377,7 @@
                             bubbles: true,
                             detail: {
                                 day: selectedDay,
-                                value: element.getAttribute("data-value") || "",
+                                value: element.getAttribute("data-value") ?? "",
                                 values,
                                 range: { start: rangeStart, end: rangeEnd },
                                 selectionMode,
@@ -2371,8 +2386,8 @@
                     }
                 };
                 const bindDay = (day) => {
-                    setAttributeIfChanged$f(day, "role", day.getAttribute("role") || "gridcell");
-                    setAttributeIfChanged$f(day, "tabindex", day.getAttribute("tabindex") || "-1");
+                    setAttributeIfChanged$f(day, "role", day.getAttribute("role") ?? "gridcell");
+                    setAttributeIfChanged$f(day, "tabindex", day.getAttribute("tabindex") ?? "-1");
                     const disabled = isDisabled(day);
                     setAttributeIfChanged$f(day, "data-disabled", String(disabled));
                     setAttributeIfChanged$f(day, "aria-disabled", String(disabled));
@@ -2390,7 +2405,7 @@
                         day.getAttribute("data-selected") === "true"
                         ? "selected"
                         : "idle");
-                    const label = day.getAttribute("data-label") || day.getAttribute("data-value");
+                    const label = day.getAttribute("data-label") ?? day.getAttribute("data-value");
                     const currentLabel = day.getAttribute("aria-label");
                     if (label &&
                         (!currentLabel || currentLabel === generatedLabels.get(day))) {
@@ -2400,7 +2415,7 @@
                     if (day.getAttribute("data-today") === "true") {
                         if (!day.hasAttribute("aria-current"))
                             generatedCurrent.add(day);
-                        setAttributeIfChanged$f(day, "aria-current", day.getAttribute("aria-current") || "date");
+                        setAttributeIfChanged$f(day, "aria-current", day.getAttribute("aria-current") ?? "date");
                     }
                     else if (generatedCurrent.has(day)) {
                         day.removeAttribute("aria-current");
@@ -2417,7 +2432,7 @@
                             const value = day.getAttribute("data-value");
                             const date = parseDateValue(value);
                             if (date)
-                                showMonth(date, value || undefined);
+                                showMonth(date, value ?? undefined);
                         }
                     };
                     const handleKeydown = (event) => {
@@ -2509,11 +2524,13 @@
                     const handleClick = () => {
                         if (isDisabled(control))
                             return;
-                        const month = parseDateValue(`${element.getAttribute("data-month") || ""}-01`);
-                        showMonth(addMonths(month || new Date(), direction));
+                        const month = parseDateValue(`${element.getAttribute("data-month") ?? ""}-01`);
+                        showMonth(addMonths(month ?? new Date(), direction));
                     };
                     control.addEventListener("click", handleClick);
-                    cleanupControls.set(control, () => control.removeEventListener("click", handleClick));
+                    cleanupControls.set(control, () => {
+                        control.removeEventListener("click", handleClick);
+                    });
                 };
                 const bindPresetControl = (control) => {
                     if (cleanupControls.has(control))
@@ -2528,29 +2545,30 @@
                         showMonth(date, value, true);
                     };
                     control.addEventListener("click", handleClick);
-                    cleanupControls.set(control, () => control.removeEventListener("click", handleClick));
+                    cleanupControls.set(control, () => {
+                        control.removeEventListener("click", handleClick);
+                    });
                 };
                 function syncCalendar() {
-                    var _a;
                     renderGeneratedMonth();
                     const title = element.querySelector('[data-slot="calendar-title"], [ng-calendar-title]');
                     if (title && !element.hasAttribute("aria-label")) {
                         if (!title.id)
-                            title.id = `calendar-title-${calendarIdCounter++}`;
+                            title.id = `calendar-title-${String(calendarIdCounter++)}`;
                         setAttributeIfChanged$f(element, "aria-labelledby", title.id);
                     }
                     queryAll(element, '[data-slot="calendar-row"], [ng-calendar-row]').forEach((row) => {
-                        row.setAttribute("role", row.getAttribute("role") || "row");
+                        row.setAttribute("role", row.getAttribute("role") ?? "row");
                     });
                     queryAll(element, '[data-slot="calendar-weekday"], [ng-calendar-weekday]').forEach((weekday) => {
-                        weekday.setAttribute("role", weekday.getAttribute("role") || "columnheader");
+                        weekday.setAttribute("role", weekday.getAttribute("role") ?? "columnheader");
                     });
                     queryAll(element, '[data-slot="calendar-week-number"], [ng-calendar-week-number]').forEach((weekNumber) => {
-                        setAttributeIfChanged$f(weekNumber, "role", weekNumber.getAttribute("role") || "rowheader");
+                        setAttributeIfChanged$f(weekNumber, "role", weekNumber.getAttribute("role") ?? "rowheader");
                     });
                     days = queryAll(element, '[data-slot="calendar-day"], [ng-calendar-day]');
                     days.forEach(bindDay);
-                    const selectionMode = element.getAttribute("data-selection-mode") || "single";
+                    const selectionMode = element.getAttribute("data-selection-mode") ?? "single";
                     const hasRootSelection = selectionMode === "multiple"
                         ? element.hasAttribute("data-values")
                         : selectionMode === "range"
@@ -2558,23 +2576,26 @@
                                 element.hasAttribute("data-range-end-value")
                             : element.hasAttribute("data-value");
                     if (hasRootSelection) {
-                        syncSelectionState(selectionMode, [...parseDateList(element.getAttribute("data-values"))], element.getAttribute("data-range-start-value") || "", element.getAttribute("data-range-end-value") || "");
+                        syncSelectionState(selectionMode, [...parseDateList(element.getAttribute("data-values"))], element.getAttribute("data-range-start-value") ?? "", element.getAttribute("data-range-end-value") ?? "");
                     }
-                    queryAll(element, '[data-slot="calendar-previous"], [ng-calendar-previous]').forEach((control) => bindMonthControl(control, -1));
-                    queryAll(element, '[data-slot="calendar-next"], [ng-calendar-next]').forEach((control) => bindMonthControl(control, 1));
+                    queryAll(element, '[data-slot="calendar-previous"], [ng-calendar-previous]').forEach((control) => {
+                        bindMonthControl(control, -1);
+                    });
+                    queryAll(element, '[data-slot="calendar-next"], [ng-calendar-next]').forEach((control) => {
+                        bindMonthControl(control, 1);
+                    });
                     queryAll(element, "[data-calendar-preset]").forEach(bindPresetControl);
                     const requestedValue = element.getAttribute("data-value");
-                    const selected = days.find((day) => day.getAttribute("data-value") === requestedValue) ||
+                    const selected = days.find((day) => day.getAttribute("data-value") === requestedValue) ??
                         days.find((day) => day.getAttribute("aria-selected") === "true" ||
                             day.getAttribute("data-selected") === "true");
-                    if (selected &&
-                        selectionMode === "single") {
+                    if (selected && selectionMode === "single") {
                         selectDay(selected, false);
                     }
                     else if (!days.some((day) => day.getAttribute("tabindex") === "0")) {
-                        (_a = (selected ||
-                            days.find((day) => day.getAttribute("data-outside") !== "true" && !isDisabled(day)) ||
-                            days.find((day) => !isDisabled(day)))) === null || _a === void 0 ? void 0 : _a.setAttribute("tabindex", "0");
+                        (selected ??
+                            days.find((day) => day.getAttribute("data-outside") !== "true" && !isDisabled(day)) ??
+                            days.find((day) => !isDisabled(day)))?.setAttribute("tabindex", "0");
                     }
                 }
                 syncCalendar();
@@ -2583,7 +2604,7 @@
                     : new MutationObserver(() => {
                         syncDirection();
                     });
-                directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.observe(directionOwner, {
+                directionObserver?.observe(directionOwner, {
                     attributes: true,
                     attributeFilter: ["dir"],
                 });
@@ -2630,14 +2651,13 @@
                     subtree: true,
                 });
                 onDestroy(scope, () => {
-                    directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.disconnect();
+                    directionObserver?.disconnect();
                     elementObserver.disconnect();
                     days.forEach((day) => {
-                        var _a;
-                        (_a = cleanupDays.get(day)) === null || _a === void 0 ? void 0 : _a();
+                        cleanupDays.get(day)?.();
                     });
-                    queryAll(element, '[data-slot="calendar-previous"], [ng-calendar-previous], [data-slot="calendar-next"], [ng-calendar-next]').forEach((control) => { var _a; return (_a = cleanupControls.get(control)) === null || _a === void 0 ? void 0 : _a(); });
-                    queryAll(element, "[data-calendar-preset]").forEach((control) => { var _a; return (_a = cleanupControls.get(control)) === null || _a === void 0 ? void 0 : _a(); });
+                    queryAll(element, '[data-slot="calendar-previous"], [ng-calendar-previous], [data-slot="calendar-next"], [ng-calendar-next]').forEach((control) => cleanupControls.get(control)?.());
+                    queryAll(element, "[data-calendar-preset]").forEach((control) => cleanupControls.get(control)?.());
                 });
             },
         };
@@ -4520,15 +4540,15 @@
         return value !== null && value !== "false";
     };
     const parsePositiveInteger = (element, name) => {
-        const value = Number.parseInt(element.getAttribute(name) || "", 10);
+        const value = Number.parseInt(element.getAttribute(name) ?? "", 10);
         return Number.isFinite(value) && value > 0 ? value : undefined;
     };
     function carouselDirective() {
         return {
             link(scope, element) {
-                const viewport = query(element, '[data-slot="carousel-content"], [ng-carousel-content]');
-                const track = query(element, '[data-slot="carousel-track"], [ng-carousel-track]');
-                if (!viewport || !track || track.parentElement !== viewport)
+                const viewport = query(element, '[data-slot="carousel-content"], [ng-carousel-content]', HTMLElement);
+                const track = query(element, '[data-slot="carousel-track"], [ng-carousel-track]', HTMLElement);
+                if (!viewport || track?.parentElement !== viewport)
                     return;
                 const belongsToThisCarousel = (candidate) => candidate.closest(ROOT_SELECTOR) === element;
                 const getItems = () => queryAll(track, ITEM_SELECTOR).filter(belongsToThisCarousel);
@@ -4538,9 +4558,8 @@
                     ? "vertical"
                     : "horizontal";
                 const getDirection = () => {
-                    var _a;
-                    const direction = element.getAttribute("dir") ||
-                        ((_a = element.closest("[dir]")) === null || _a === void 0 ? void 0 : _a.getAttribute("dir"));
+                    const direction = element.getAttribute("dir") ??
+                        element.closest("[dir]")?.getAttribute("dir");
                     return direction === "rtl" ? "rtl" : "ltr";
                 };
                 const getOptions = () => {
@@ -4560,7 +4579,7 @@
                         dragFree: hasEnabledAttribute(element, "drag-free"),
                         loop: hasEnabledAttribute(element, "loop"),
                         skipSnaps: hasEnabledAttribute(element, "skip-snaps"),
-                        slidesToScroll: parsePositiveInteger(element, "slides-to-scroll") || 1,
+                        slidesToScroll: parsePositiveInteger(element, "slides-to-scroll") ?? 1,
                         startIndex: Math.max(0, getItems().findIndex((item) => item.getAttribute("data-active") === "true")),
                         watchDrag: element.getAttribute("draggable") !== "false",
                     };
@@ -4570,7 +4589,7 @@
                         return [];
                     return [
                         Autoplay({
-                            delay: parsePositiveInteger(element, "autoplay-delay") || 2000,
+                            delay: parsePositiveInteger(element, "autoplay-delay") ?? 2000,
                             stopOnFocusIn: true,
                             stopOnInteraction: true,
                             stopOnMouseEnter: true,
@@ -4580,32 +4599,32 @@
                 const api = EmblaCarousel(viewport, getOptions(), getPlugins());
                 let destroyed = false;
                 let reinitializeQueued = false;
-                const directionOwner = element.closest("[dir]") || element;
+                const directionOwner = element.closest("[dir]") ?? element;
                 const syncStaticSemantics = () => {
                     const items = getItems();
                     const dots = getDots();
-                    setAttributeIfChanged$e(element, "role", element.getAttribute("role") || "region");
+                    setAttributeIfChanged$e(element, "role", element.getAttribute("role") ?? "region");
                     setAttributeIfChanged$e(element, "aria-roledescription", "carousel");
-                    setAttributeIfChanged$e(element, "tabindex", element.getAttribute("tabindex") || "0");
+                    setAttributeIfChanged$e(element, "tabindex", element.getAttribute("tabindex") ?? "0");
                     setAttributeIfChanged$e(element, "data-orientation", getOrientation());
                     setAttributeIfChanged$e(element, "data-direction", getDirection());
                     setAttributeIfChanged$e(element, "data-item-count", String(items.length));
                     items.forEach((item, index) => {
-                        setAttributeIfChanged$e(item, "role", item.getAttribute("role") || "group");
+                        setAttributeIfChanged$e(item, "role", item.getAttribute("role") ?? "group");
                         setAttributeIfChanged$e(item, "aria-roledescription", "slide");
-                        setAttributeIfChanged$e(item, "aria-label", item.getAttribute("aria-label") ||
-                            `${index + 1} of ${items.length}`);
+                        setAttributeIfChanged$e(item, "aria-label", item.getAttribute("aria-label") ??
+                            `${String(index + 1)} of ${String(items.length)}`);
                         setAttributeIfChanged$e(item, "data-index", String(index));
                     });
                     dots.forEach((dot, index) => {
-                        setAttributeIfChanged$e(dot, "aria-label", dot.getAttribute("aria-label") || `Go to slide ${index + 1}`);
+                        setAttributeIfChanged$e(dot, "aria-label", dot.getAttribute("aria-label") ??
+                            `Go to slide ${String(index + 1)}`);
                         setAttributeIfChanged$e(dot, "data-index", String(index));
                     });
                 };
                 const getSelectedItemIndex = () => {
-                    var _a, _b;
                     const selectedSnap = api.selectedScrollSnap();
-                    return (_b = (_a = api.internalEngine().slideRegistry[selectedSnap]) === null || _a === void 0 ? void 0 : _a[0]) !== null && _b !== void 0 ? _b : 0;
+                    return api.internalEngine().slideRegistry[selectedSnap]?.[0] ?? 0;
                 };
                 const createDetail = () => {
                     const items = getItems();
@@ -4637,8 +4656,8 @@
                         setAttributeIfChanged$e(dot, "aria-current", active ? "true" : "false");
                         dot.toggleAttribute("hidden", index >= detail.count);
                     });
-                    const previous = query(element, PREVIOUS_SELECTOR);
-                    const next = query(element, NEXT_SELECTOR);
+                    const previous = query(element, PREVIOUS_SELECTOR, HTMLElement);
+                    const next = query(element, NEXT_SELECTOR, HTMLElement);
                     if (previous && belongsToThisCarousel(previous)) {
                         previous.setAttribute("aria-disabled", String(!api.canScrollPrev()));
                         previous.toggleAttribute("disabled", !api.canScrollPrev());
@@ -4676,7 +4695,7 @@
                         api.scrollNext();
                     }
                     else {
-                        const index = Number.parseInt(control.getAttribute("data-index") || "", 10);
+                        const index = Number.parseInt(control.getAttribute("data-index") ?? "", 10);
                         if (Number.isFinite(index))
                             api.scrollTo(index);
                     }
@@ -4732,7 +4751,7 @@
                 const directionObserver = directionOwner === element
                     ? null
                     : new MutationObserver(queueReinitialize);
-                directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.observe(directionOwner, {
+                directionObserver?.observe(directionOwner, {
                     attributes: true,
                     attributeFilter: ["dir"],
                 });
@@ -4745,7 +4764,7 @@
                 onDestroy(scope, () => {
                     destroyed = true;
                     carouselObserver.disconnect();
-                    directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.disconnect();
+                    directionObserver?.disconnect();
                     element.removeEventListener("click", handleClick);
                     element.removeEventListener("keydown", handleKeydown);
                     api.destroy();
@@ -4795,8 +4814,7 @@
             element.style.removeProperty("--chart-color");
     };
     const syncDirection = (element) => {
-        var _a;
-        const direction = ((_a = element.closest("[dir]")) === null || _a === void 0 ? void 0 : _a.getAttribute("dir")) === "rtl"
+        const direction = element.closest("[dir]")?.getAttribute("dir") === "rtl"
             ? "rtl"
             : "ltr";
         if (element.getAttribute("data-direction") !== direction) {
@@ -4815,7 +4833,7 @@
         const value = element.getAttribute("data-value");
         if (label && value)
             return `${label}: ${value}`;
-        return label || value;
+        return label ?? value;
     };
     const syncBarSemantics = (element, generatedLabels) => {
         if (!element.getAttribute("role"))
@@ -4840,14 +4858,16 @@
     function chartDirective() {
         return {
             link(scope, element) {
-                const directionOwner = element.closest("[dir]") || element;
+                const directionOwner = element.closest("[dir]") ?? element;
                 const generatedLabels = new WeakMap();
                 const sync = () => {
                     syncChartSemantics(element);
                     syncDirection(element);
                     queryAll(element, valueSelector$2).forEach(syncValue);
                     queryAll(element, colorSelector).forEach(syncColor);
-                    queryAll(element, valueSelector$2).forEach((bar) => syncBarSemantics(bar, generatedLabels));
+                    queryAll(element, valueSelector$2).forEach((bar) => {
+                        syncBarSemantics(bar, generatedLabels);
+                    });
                     queryAll(element, semanticSlots.axis).forEach((axis) => {
                         if (!axis.hasAttribute("role"))
                             axis.setAttribute("role", "list");
@@ -4906,14 +4926,14 @@
                     subtree: true,
                 });
                 const directionObserver = directionOwner === element ? null : new MutationObserver(sync);
-                directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.observe(directionOwner, {
+                directionObserver?.observe(directionOwner, {
                     attributes: true,
                     attributeFilter: ["dir"],
                 });
                 sync();
                 onDestroy(scope, () => {
                     observer.disconnect();
-                    directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.disconnect();
+                    directionObserver?.disconnect();
                 });
             },
         };
@@ -4977,12 +4997,12 @@
     function collapsibleDirective() {
         return {
             link(scope, element) {
-                const trigger = query(element, '[data-slot="collapsible-trigger"], [ng-collapsible-trigger], button');
-                const content = query(element, '[data-slot="collapsible-content"], [ng-collapsible-content]');
+                const trigger = query(element, '[data-slot="collapsible-trigger"], [ng-collapsible-trigger], button', HTMLElement);
+                const content = query(element, '[data-slot="collapsible-content"], [ng-collapsible-content]', HTMLElement);
                 if (!trigger || !content)
                     return;
-                const contentId = content.id || `collapsible-content-${collapsibleIdCounter++}`;
-                const triggerId = trigger.id || `collapsible-trigger-${collapsibleIdCounter++}`;
+                const contentId = content.id || `collapsible-content-${String(collapsibleIdCounter++)}`;
+                const triggerId = trigger.id || `collapsible-trigger-${String(collapsibleIdCounter++)}`;
                 content.id = contentId;
                 trigger.id = triggerId;
                 trigger.setAttribute("aria-controls", contentId);
@@ -5031,7 +5051,7 @@
                 }
                 onDestroy(scope, () => {
                     observer.disconnect();
-                    details === null || details === void 0 ? void 0 : details.removeEventListener("toggle", handleToggle);
+                    details?.removeEventListener("toggle", handleToggle);
                     if (!details)
                         trigger.removeEventListener("click", handleClick);
                 });
@@ -5060,21 +5080,24 @@
         return {
             link(scope, element) {
                 const isOwned = (candidate) => candidate.closest(rootSelector$3) === element;
-                const owned = (selector) => { var _a; return (_a = queryAll(element, selector).find(isOwned)) !== null && _a !== void 0 ? _a : null; };
+                const owned = (selector, constructor) => {
+                    const candidate = queryAll(element, selector).find(isOwned);
+                    return candidate instanceof constructor ? candidate : null;
+                };
                 const ownedAll = (selector) => queryAll(element, selector).filter(isOwned);
-                const input = owned(inputSelector$1);
-                const content = owned(contentSelector$6);
+                const input = owned(inputSelector$1, HTMLInputElement);
+                const content = owned(contentSelector$6, HTMLElement);
                 if (!input || !content)
                     return;
-                const directionOwner = element.closest("[dir]") || element;
-                const contentId = content.id || `combobox-content-${comboboxIdCounter++}`;
-                const inputId = input.id || `combobox-input-${comboboxIdCounter++}`;
+                const directionOwner = element.closest("[dir]") ?? element;
+                const contentId = content.id || `combobox-content-${String(comboboxIdCounter++)}`;
+                const inputId = input.id || `combobox-input-${String(comboboxIdCounter++)}`;
                 content.id = contentId;
                 input.id = inputId;
                 setAttributeIfChanged$d(input, "role", "combobox");
                 setAttributeIfChanged$d(input, "aria-controls", contentId);
                 setAttributeIfChanged$d(input, "aria-haspopup", "listbox");
-                setAttributeIfChanged$d(input, "aria-autocomplete", input.getAttribute("aria-autocomplete") || "list");
+                setAttributeIfChanged$d(input, "aria-autocomplete", input.getAttribute("aria-autocomplete") ?? "list");
                 setAttributeIfChanged$d(content, "role", "listbox");
                 if (!content.hasAttribute("aria-label")) {
                     setAttributeIfChanged$d(content, "aria-labelledby", inputId);
@@ -5091,12 +5114,9 @@
                     element.getAttribute("data-multiple") === "true";
                 const hasAutoHighlight = () => element.hasAttribute("auto-highlight") ||
                     element.getAttribute("data-auto-highlight") === "true";
-                const getDirection = () => {
-                    var _a;
-                    return ((_a = element.closest("[dir]")) === null || _a === void 0 ? void 0 : _a.getAttribute("dir")) === "rtl"
-                        ? "rtl"
-                        : "ltr";
-                };
+                const getDirection = () => element.closest("[dir]")?.getAttribute("dir") === "rtl"
+                    ? "rtl"
+                    : "ltr";
                 const isInvalid = () => ownsAriaInvalid
                     ? !input.validity.valid
                     : input.getAttribute("aria-invalid") === "true";
@@ -5117,17 +5137,16 @@
                     setAttributeIfChanged$d(element, "data-invalid", String(invalid));
                     setAttributeIfChanged$d(element, "data-multiple", String(multiple));
                     setAttributeIfChanged$d(content, "aria-multiselectable", String(multiple));
-                    setAttributeIfChanged$d(content, "data-chips", String(Boolean(owned('[data-slot="combobox-chips"], [ng-combobox-chips]'))));
+                    setAttributeIfChanged$d(content, "data-chips", String(Boolean(owned('[data-slot="combobox-chips"], [ng-combobox-chips]', HTMLElement))));
                     if (ownsAriaInvalid) {
                         setAttributeIfChanged$d(input, "aria-invalid", String(invalid));
                     }
                 };
                 const positionContent = () => {
-                    var _a;
                     if (!open)
                         return;
                     const externalTrigger = ownedAll(triggerSelector$5).find((trigger) => !content.contains(trigger) && !trigger.closest(anchorSelector));
-                    const anchor = (_a = externalTrigger !== null && externalTrigger !== void 0 ? externalTrigger : owned(anchorSelector)) !== null && _a !== void 0 ? _a : input;
+                    const anchor = externalTrigger ?? owned(anchorSelector, HTMLElement) ?? input;
                     const rootBox = element.getBoundingClientRect();
                     const anchorBox = anchor.getBoundingClientRect();
                     const contentHeight = Math.min(content.scrollHeight, 288);
@@ -5140,8 +5159,8 @@
                     else {
                         setAttributeIfChanged$d(content, "data-side", "bottom");
                     }
-                    content.style.setProperty("--combobox-content-top", `${Math.round(top)}px`);
-                    content.style.setProperty("--combobox-anchor-width", `${Math.round(anchorBox.width)}px`);
+                    content.style.setProperty("--combobox-content-top", `${String(Math.round(top))}px`);
+                    content.style.setProperty("--combobox-anchor-width", `${String(Math.round(anchorBox.width))}px`);
                 };
                 const notifyOpenChange = () => {
                     element.dispatchEvent(new CustomEvent("angularcss:combobox-open-change", {
@@ -5173,7 +5192,9 @@
                 };
                 const clearHighlight = () => {
                     activeItem = null;
-                    items.forEach((item) => setAttributeIfChanged$d(item, "data-highlighted", "false"));
+                    items.forEach((item) => {
+                        setAttributeIfChanged$d(item, "data-highlighted", "false");
+                    });
                     input.removeAttribute("aria-activedescendant");
                 };
                 const highlight = (item) => {
@@ -5182,20 +5203,23 @@
                         return;
                     }
                     activeItem = item;
-                    items.forEach((candidate) => setAttributeIfChanged$d(candidate, "data-highlighted", String(candidate === item)));
+                    items.forEach((candidate) => {
+                        setAttributeIfChanged$d(candidate, "data-highlighted", String(candidate === item));
+                    });
                     setAttributeIfChanged$d(input, "aria-activedescendant", item.id);
                     if (open)
                         item.scrollIntoView({ block: "nearest" });
                 };
                 const highlightBoundary = (end) => {
-                    var _a;
                     const visible = visibleItems();
-                    highlight(end === "first" ? visible[0] : ((_a = visible.at(-1)) !== null && _a !== void 0 ? _a : null));
+                    highlight(end === "first" ? visible[0] : (visible.at(-1) ?? null));
                 };
                 const moveHighlight = (direction) => {
                     const visible = visibleItems();
-                    if (!visible.length)
-                        return clearHighlight();
+                    if (!visible.length) {
+                        clearHighlight();
+                        return;
+                    }
                     const current = activeItem ? visible.indexOf(activeItem) : -1;
                     const next = current < 0
                         ? direction === 1
@@ -5205,11 +5229,10 @@
                     highlight(visible[next]);
                 };
                 const selectItem = (item) => {
-                    var _a, _b, _c;
                     if (isDisabled(item))
                         return;
                     const multiple = isMultiple();
-                    const value = (_c = (_a = item.getAttribute("data-value")) !== null && _a !== void 0 ? _a : (_b = item.textContent) === null || _b === void 0 ? void 0 : _b.trim()) !== null && _c !== void 0 ? _c : "";
+                    const value = item.getAttribute("data-value") ?? item.textContent.trim();
                     setAttributeIfChanged$d(element, "data-value", value);
                     element.dispatchEvent(new CustomEvent("angularcss:combobox-select", {
                         bubbles: true,
@@ -5221,7 +5244,7 @@
                 };
                 const bindItem = (item) => {
                     if (!item.id)
-                        item.id = `combobox-item-${comboboxIdCounter++}`;
+                        item.id = `combobox-item-${String(comboboxIdCounter++)}`;
                     setAttributeIfChanged$d(item, "role", "option");
                     setAttributeIfChanged$d(item, "tabindex", "-1");
                     setAttributeIfChanged$d(item, "data-disabled", String(isDisabled(item)));
@@ -5232,12 +5255,15 @@
                         setAttributeIfChanged$d(item, "aria-disabled", "true");
                     if (itemCleanups.has(item))
                         return;
-                    const handleClick = () => selectItem(item);
+                    const handleClick = () => {
+                        selectItem(item);
+                    };
                     item.addEventListener("click", handleClick);
-                    itemCleanups.set(item, () => item.removeEventListener("click", handleClick));
+                    itemCleanups.set(item, () => {
+                        item.removeEventListener("click", handleClick);
+                    });
                 };
                 const bindControl = (control, kind) => {
-                    var _a;
                     if (controlCleanups.has(control))
                         return;
                     if (control instanceof HTMLButtonElement &&
@@ -5248,7 +5274,7 @@
                         setAttributeIfChanged$d(control, "aria-controls", contentId);
                         setAttributeIfChanged$d(control, "aria-haspopup", "listbox");
                         if (!control.hasAttribute("aria-label") &&
-                            !((_a = control.textContent) === null || _a === void 0 ? void 0 : _a.trim())) {
+                            !control.textContent.trim()) {
                             setAttributeIfChanged$d(control, "aria-label", "Show options");
                         }
                         const handleClick = (event) => {
@@ -5256,32 +5282,40 @@
                             setOpen(!open, true, true);
                         };
                         control.addEventListener("click", handleClick);
-                        controlCleanups.set(control, () => control.removeEventListener("click", handleClick));
+                        controlCleanups.set(control, () => {
+                            control.removeEventListener("click", handleClick);
+                        });
                         return;
                     }
-                    setAttributeIfChanged$d(control, "aria-label", control.getAttribute("aria-label") || "Clear selection");
+                    setAttributeIfChanged$d(control, "aria-label", control.getAttribute("aria-label") ?? "Clear selection");
                     const handleClick = () => {
                         setAttributeIfChanged$d(element, "data-value", "");
                         element.dispatchEvent(new CustomEvent("angularcss:combobox-clear", { bubbles: true }));
                         input.focus({ preventScroll: true });
                     };
                     control.addEventListener("click", handleClick);
-                    controlCleanups.set(control, () => control.removeEventListener("click", handleClick));
+                    controlCleanups.set(control, () => {
+                        control.removeEventListener("click", handleClick);
+                    });
                 };
                 const syncStructure = () => {
                     syncChrome();
                     const previousActive = activeItem;
                     items = ownedAll(itemSelector$6);
                     items.forEach(bindItem);
-                    ownedAll(triggerSelector$5).forEach((control) => bindControl(control, "trigger"));
-                    ownedAll(clearSelector).forEach((control) => bindControl(control, "clear"));
+                    ownedAll(triggerSelector$5).forEach((control) => {
+                        bindControl(control, "trigger");
+                    });
+                    ownedAll(clearSelector).forEach((control) => {
+                        bindControl(control, "clear");
+                    });
                     ownedAll(groupSelector$3).forEach((group) => {
                         setAttributeIfChanged$d(group, "role", "group");
                         const label = queryAll(group, groupLabelSelector).find((candidate) => candidate.closest(groupSelector$3) === group);
                         if (!label)
                             return;
                         if (!label.id)
-                            label.id = `combobox-label-${comboboxIdCounter++}`;
+                            label.id = `combobox-label-${String(comboboxIdCounter++)}`;
                         setAttributeIfChanged$d(group, "aria-labelledby", label.id);
                     });
                     ownedAll(separatorSelector$3).forEach((separator) => {
@@ -5333,8 +5367,12 @@
                     setOpen(true, true);
                     requestAnimationFrame(syncStructure);
                 };
-                const handleFocus = () => setOpen(true, true);
-                const handleInvalid = () => syncChrome();
+                const handleFocus = () => {
+                    setOpen(true, true);
+                };
+                const handleInvalid = () => {
+                    syncChrome();
+                };
                 const handleKeydown = (event) => {
                     if (event.key === "Tab") {
                         setOpen(false, true);
@@ -5429,7 +5467,7 @@
                         syncChrome();
                         requestAnimationFrame(positionContent);
                     });
-                directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.observe(directionOwner, {
+                directionObserver?.observe(directionOwner, {
                     attributes: true,
                     attributeFilter: ["dir"],
                 });
@@ -5445,7 +5483,7 @@
                 setOpen(open);
                 onDestroy(scope, () => {
                     observer.disconnect();
-                    directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.disconnect();
+                    directionObserver?.disconnect();
                     input.removeEventListener("input", handleInput);
                     input.removeEventListener("focus", handleFocus);
                     input.removeEventListener("invalid", handleInvalid);
@@ -5454,9 +5492,13 @@
                     document.removeEventListener("click", handleOutsideClick);
                     document.removeEventListener("focusin", handleOutsideFocus);
                     window.removeEventListener("resize", positionContent);
-                    itemCleanups.forEach((cleanup) => cleanup());
+                    itemCleanups.forEach((cleanup) => {
+                        cleanup();
+                    });
                     itemCleanups.clear();
-                    controlCleanups.forEach((cleanup) => cleanup());
+                    controlCleanups.forEach((cleanup) => {
+                        cleanup();
+                    });
                     controlCleanups.clear();
                 });
             },
@@ -5481,24 +5523,23 @@
         return {
             link(scope, element) {
                 const isOwned = (candidate) => candidate.closest(rootSelector$2) === element;
-                const owned = (selector) => { var _a; return (_a = queryAll(element, selector).find(isOwned)) !== null && _a !== void 0 ? _a : null; };
+                const owned = (selector, constructor) => {
+                    const candidate = queryAll(element, selector).find(isOwned);
+                    return candidate instanceof constructor ? candidate : null;
+                };
                 const ownedAll = (selector) => queryAll(element, selector).filter(isOwned);
-                const input = owned(inputSelector);
+                const input = owned(inputSelector, HTMLInputElement);
                 if (!input)
                     return;
-                const directionOwner = element.closest("[dir]") || element;
+                const directionOwner = element.closest("[dir]") ?? element;
                 const itemCleanups = new Map();
                 let items = [];
                 let activeItem = null;
-                const getDirection = () => {
-                    var _a;
-                    return ((_a = element.closest("[dir]")) === null || _a === void 0 ? void 0 : _a.getAttribute("dir")) === "rtl"
-                        ? "rtl"
-                        : "ltr";
-                };
+                const getDirection = () => element.closest("[dir]")?.getAttribute("dir") === "rtl"
+                    ? "rtl"
+                    : "ltr";
                 const isVisible = (item) => {
-                    var _a;
-                    const hiddenAncestor = (_a = item.parentElement) === null || _a === void 0 ? void 0 : _a.closest("[hidden]");
+                    const hiddenAncestor = item.parentElement?.closest("[hidden]");
                     const hiddenInsideCommand = Boolean(hiddenAncestor &&
                         hiddenAncestor !== element &&
                         element.contains(hiddenAncestor));
@@ -5532,8 +5573,10 @@
                 };
                 const move = (delta) => {
                     const enabled = enabledItems();
-                    if (!enabled.length)
-                        return selectItem(null);
+                    if (!enabled.length) {
+                        selectItem(null);
+                        return;
+                    }
                     const current = activeItem ? enabled.indexOf(activeItem) : -1;
                     const next = current < 0
                         ? delta === 1
@@ -5544,7 +5587,7 @@
                 };
                 const bindItem = (item) => {
                     if (!item.id)
-                        item.id = `command-item-${commandIdCounter++}`;
+                        item.id = `command-item-${String(commandIdCounter++)}`;
                     setAttributeIfChanged$c(item, "role", "option");
                     setAttributeIfChanged$c(item, "tabindex", "-1");
                     setAttributeIfChanged$c(item, "data-disabled", String(isDisabled(item)));
@@ -5569,7 +5612,6 @@
                     });
                 };
                 const syncStructure = () => {
-                    var _a;
                     const previousActive = activeItem;
                     items = ownedAll(itemSelector$5);
                     items.forEach(bindItem);
@@ -5579,10 +5621,10 @@
                             itemCleanups.delete(item);
                         }
                     });
-                    const list = owned(listSelector$2);
+                    const list = owned(listSelector$2, HTMLElement);
                     if (list) {
                         if (!list.id)
-                            list.id = `command-list-${commandIdCounter++}`;
+                            list.id = `command-list-${String(commandIdCounter++)}`;
                         setAttributeIfChanged$c(list, "role", "listbox");
                         setAttributeIfChanged$c(input, "aria-controls", list.id);
                     }
@@ -5592,7 +5634,7 @@
                         if (!heading)
                             return;
                         if (!heading.id) {
-                            heading.id = `command-group-heading-${commandIdCounter++}`;
+                            heading.id = `command-group-heading-${String(commandIdCounter++)}`;
                         }
                         setAttributeIfChanged$c(group, "aria-labelledby", heading.id);
                     });
@@ -5619,11 +5661,10 @@
                         selectItem(previousActive);
                     }
                     else {
-                        selectItem((_a = authoredSelected !== null && authoredSelected !== void 0 ? authoredSelected : enabled[0]) !== null && _a !== void 0 ? _a : null);
+                        selectItem(authoredSelected ?? enabled.at(0) ?? null);
                     }
                 };
                 const handleKeydown = (event) => {
-                    var _a, _b;
                     if (event.key === "ArrowDown" || event.key === "ArrowUp") {
                         event.preventDefault();
                         move(event.key === "ArrowDown" ? 1 : -1);
@@ -5633,8 +5674,8 @@
                         event.preventDefault();
                         const enabled = enabledItems();
                         selectItem(event.key === "Home"
-                            ? ((_a = enabled[0]) !== null && _a !== void 0 ? _a : null)
-                            : ((_b = enabled.at(-1)) !== null && _b !== void 0 ? _b : null), true);
+                            ? (enabled[0] ?? null)
+                            : (enabled.at(-1) ?? null), true);
                         return;
                     }
                     if (event.key === "Enter" && activeItem) {
@@ -5643,7 +5684,7 @@
                     }
                 };
                 setAttributeIfChanged$c(input, "role", "combobox");
-                setAttributeIfChanged$c(input, "aria-autocomplete", input.getAttribute("aria-autocomplete") || "list");
+                setAttributeIfChanged$c(input, "aria-autocomplete", input.getAttribute("aria-autocomplete") ?? "list");
                 const observer = new MutationObserver(syncStructure);
                 observer.observe(element, {
                     attributes: true,
@@ -5659,7 +5700,7 @@
                     subtree: true,
                 });
                 const directionObserver = directionOwner === element ? null : new MutationObserver(syncStructure);
-                directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.observe(directionOwner, {
+                directionObserver?.observe(directionOwner, {
                     attributes: true,
                     attributeFilter: ["dir"],
                 });
@@ -5667,8 +5708,10 @@
                 syncStructure();
                 onDestroy(scope, () => {
                     observer.disconnect();
-                    directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.disconnect();
-                    itemCleanups.forEach((cleanup) => cleanup());
+                    directionObserver?.disconnect();
+                    itemCleanups.forEach((cleanup) => {
+                        cleanup();
+                    });
                     itemCleanups.clear();
                     input.removeEventListener("keydown", handleKeydown);
                 });
@@ -5718,19 +5761,19 @@
         return {
             link(scope, element) {
                 const isOwned = (candidate) => candidate.closest(rootSelector$1) === element;
-                const owned = (selector) => { var _a; return (_a = queryAll(element, selector).find(isOwned)) !== null && _a !== void 0 ? _a : null; };
+                const owned = (selector, constructor) => {
+                    const candidate = queryAll(element, selector).find(isOwned);
+                    return candidate instanceof constructor ? candidate : null;
+                };
                 const ownedAll = (selector) => queryAll(element, selector).filter(isOwned);
-                const trigger = owned(triggerSelector$4);
-                const content = owned(contentSelector$5);
+                const trigger = owned(triggerSelector$4, HTMLElement);
+                const content = owned(contentSelector$5, HTMLElement);
                 if (!trigger || !content)
                     return;
-                const directionOwner = element.closest("[dir]") || element;
-                const getDirection = () => {
-                    var _a;
-                    return ((_a = element.closest("[dir]")) === null || _a === void 0 ? void 0 : _a.getAttribute("dir")) === "rtl"
-                        ? "rtl"
-                        : "ltr";
-                };
+                const directionOwner = element.closest("[dir]") ?? element;
+                const getDirection = () => element.closest("[dir]")?.getAttribute("dir") === "rtl"
+                    ? "rtl"
+                    : "ltr";
                 const getPhysicalSide = (side) => {
                     if (side === "inline-start") {
                         return getDirection() === "rtl" ? "right" : "left";
@@ -5741,27 +5784,25 @@
                     return side;
                 };
                 const getAuthoredSide = () => {
-                    var _a;
-                    const value = (_a = content.getAttribute("side")) !== null && _a !== void 0 ? _a : content.dataset.side;
+                    const value = content.getAttribute("side") ?? content.dataset.side;
                     return value && sides$3.has(value)
                         ? value
                         : "right";
                 };
                 const getAlign = () => {
-                    var _a;
-                    const value = (_a = content.getAttribute("align")) !== null && _a !== void 0 ? _a : content.dataset.align;
+                    const value = content.getAttribute("align") ?? content.dataset.align;
                     return value && alignments$1.has(value)
                         ? value
                         : "start";
                 };
-                const contentId = content.id || `context-menu-content-${contextMenuIdCounter++}`;
+                const contentId = content.id || `context-menu-content-${String(contextMenuIdCounter++)}`;
                 content.id = contentId;
                 trigger.setAttribute("aria-haspopup", "menu");
                 trigger.setAttribute("aria-controls", contentId);
                 if (!trigger.hasAttribute("tabindex"))
                     trigger.tabIndex = 0;
-                setAttributeIfChanged$b(content, "role", content.getAttribute("role") || "menu");
-                setAttributeIfChanged$b(content, "tabindex", content.getAttribute("tabindex") || "-1");
+                setAttributeIfChanged$b(content, "role", content.getAttribute("role") ?? "menu");
+                setAttributeIfChanged$b(content, "tabindex", content.getAttribute("tabindex") ?? "-1");
                 const menuItems = (surface) => queryAll(surface, itemSelector$4).filter((item) => {
                     if (!isOwned(item))
                         return false;
@@ -5777,9 +5818,15 @@
                         if (!surface.hasAttribute("tabindex"))
                             surface.tabIndex = -1;
                     });
-                    ownedAll(groupSelector$1).forEach((group) => setAttributeIfChanged$b(group, "role", "group"));
-                    ownedAll(labelSelector$2).forEach((label) => setAttributeIfChanged$b(label, "role", "presentation"));
-                    ownedAll(separatorSelector$1).forEach((separator) => setAttributeIfChanged$b(separator, "role", "separator"));
+                    ownedAll(groupSelector$1).forEach((group) => {
+                        setAttributeIfChanged$b(group, "role", "group");
+                    });
+                    ownedAll(labelSelector$2).forEach((label) => {
+                        setAttributeIfChanged$b(label, "role", "presentation");
+                    });
+                    ownedAll(separatorSelector$1).forEach((separator) => {
+                        setAttributeIfChanged$b(separator, "role", "separator");
+                    });
                     ownedAll(itemSelector$4).forEach((item) => {
                         const role = item.matches(checkboxSelector)
                             ? "menuitemcheckbox"
@@ -5816,17 +5863,16 @@
                     };
                 };
                 const positionContent = () => {
-                    var _a, _b;
                     if (!open)
                         return;
-                    const point = anchorPoint !== null && anchorPoint !== void 0 ? anchorPoint : keyboardAnchor();
+                    const point = anchorPoint ?? keyboardAnchor();
                     const rootRect = element.getBoundingClientRect();
                     const menuRect = content.getBoundingClientRect();
                     const authoredSide = getAuthoredSide();
                     const side = getPhysicalSide(authoredSide);
                     const align = getAlign();
-                    const offset = Number((_a = content.getAttribute("side-offset")) !== null && _a !== void 0 ? _a : 4) || 0;
-                    const alignOffset = Number((_b = content.getAttribute("align-offset")) !== null && _b !== void 0 ? _b : 0) || 0;
+                    const offset = Number(content.getAttribute("side-offset") ?? 4) || 0;
+                    const alignOffset = Number(content.getAttribute("align-offset") ?? 0) || 0;
                     const margin = 4;
                     let left = point.x;
                     let top = point.y;
@@ -5854,9 +5900,9 @@
                     }
                     left = Math.min(Math.max(left, margin), Math.max(margin, window.innerWidth - menuRect.width - margin));
                     top = Math.min(Math.max(top, margin), Math.max(margin, window.innerHeight - menuRect.height - margin));
-                    content.style.setProperty("--context-menu-left", `${Math.round(left - rootRect.left + element.scrollLeft)}px`);
-                    content.style.setProperty("--context-menu-top", `${Math.round(top - rootRect.top + element.scrollTop)}px`);
-                    content.style.setProperty("--context-menu-available-height", `${Math.max(0, Math.round(window.innerHeight - margin * 2))}px`);
+                    content.style.setProperty("--context-menu-left", `${String(Math.round(left - rootRect.left + element.scrollLeft))}px`);
+                    content.style.setProperty("--context-menu-top", `${String(Math.round(top - rootRect.top + element.scrollTop))}px`);
+                    content.style.setProperty("--context-menu-available-height", `${String(Math.max(0, Math.round(window.innerHeight - margin * 2)))}px`);
                     setAttributeIfChanged$b(content, "data-side", authoredSide);
                     setAttributeIfChanged$b(content, "data-align", align);
                 };
@@ -5923,7 +5969,9 @@
                     syncSemantics();
                     setOpen(true, { focusFirst });
                 };
-                const close = (restoreFocus = false) => setOpen(false, { restoreFocus });
+                const close = (restoreFocus = false) => {
+                    setOpen(false, { restoreFocus });
+                };
                 const handleContextMenu = (event) => {
                     if (isDisabled(trigger))
                         return;
@@ -5953,7 +6001,7 @@
                         close(true);
                         return;
                     }
-                    const surface = target === null || target === void 0 ? void 0 : target.closest(menuSurfaceSelector);
+                    const surface = target?.closest(menuSurfaceSelector);
                     if (!surface || !isOwned(surface))
                         return;
                     if (event.key === "ArrowDown") {
@@ -5973,14 +6021,14 @@
                         focusBoundary(surface, "last");
                     }
                     else if ((event.key === "Enter" || event.key === " ") &&
-                        (target === null || target === void 0 ? void 0 : target.matches(itemSelector$4))) {
+                        target?.matches(itemSelector$4)) {
                         event.preventDefault();
                         target.click();
                     }
                 };
                 const handleItemClick = (event) => {
                     const target = event.target instanceof Element ? event.target : null;
-                    const item = target === null || target === void 0 ? void 0 : target.closest(itemSelector$4);
+                    const item = target?.closest(itemSelector$4);
                     if (!item || !isOwned(item) || isDisabled(item))
                         return;
                     if (item.matches(subTriggerSelector))
@@ -5993,11 +6041,13 @@
                 };
                 const handlePointerMove = (event) => {
                     const target = event.target instanceof Element ? event.target : null;
-                    const item = target === null || target === void 0 ? void 0 : target.closest(itemSelector$4);
-                    const surface = item === null || item === void 0 ? void 0 : item.closest(menuSurfaceSelector);
+                    const item = target?.closest(itemSelector$4);
+                    const surface = item?.closest(menuSurfaceSelector);
                     if (!item || !surface || !isOwned(item) || isDisabled(item))
                         return;
-                    menuItems(surface).forEach((candidate) => setAttributeIfChanged$b(candidate, "data-highlighted", String(candidate === item)));
+                    menuItems(surface).forEach((candidate) => {
+                        setAttributeIfChanged$b(candidate, "data-highlighted", String(candidate === item));
+                    });
                 };
                 const handlePointerDownOutside = (event) => {
                     if (open &&
@@ -6008,7 +6058,6 @@
                 };
                 const cleanupSubmenus = bindSemanticSubmenus(element, "context-menu", getDirection);
                 const observer = new MutationObserver((records) => {
-                    var _a;
                     if (records.some((record) => record.type === "childList")) {
                         syncSemantics();
                     }
@@ -6025,11 +6074,11 @@
                     if (records.some((record) => record.type === "attributes" &&
                         record.attributeName === "data-open" &&
                         (record.target === element || record.target === content))) {
-                        const source = (_a = records
+                        const source = records
                             .filter((record) => record.type === "attributes" &&
                             record.attributeName === "data-open" &&
                             (record.target === element || record.target === content))
-                            .at(-1)) === null || _a === void 0 ? void 0 : _a.target;
+                            .at(-1)?.target;
                         const nextOpen = source instanceof HTMLElement &&
                             source.getAttribute("data-open") === "true";
                         if (nextOpen !== open)
@@ -6053,7 +6102,7 @@
                     ],
                 });
                 const directionObserver = directionOwner === element ? null : new MutationObserver(syncDirection);
-                directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.observe(directionOwner, {
+                directionObserver?.observe(directionOwner, {
                     attributes: true,
                     attributeFilter: ["dir"],
                 });
@@ -6070,7 +6119,7 @@
                 onDestroy(scope, () => {
                     cleanupSubmenus();
                     observer.disconnect();
-                    directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.disconnect();
+                    directionObserver?.disconnect();
                     trigger.removeEventListener("contextmenu", handleContextMenu);
                     element.removeEventListener("keydown", handleKeydown);
                     content.removeEventListener("click", handleItemClick);
@@ -6108,14 +6157,13 @@
             return null;
         };
         const resolveDirection = (element) => {
-            var _a, _b, _c;
             const own = normalize(element.getAttribute("dir"));
             if (own)
                 return own;
             const fromData = normalize(element.getAttribute("data-direction"));
             if (fromData)
                 return fromData;
-            const ancestor = (_a = element.parentElement) === null || _a === void 0 ? void 0 : _a.closest("[dir], [data-direction], [ng-direction], [data-slot='direction']");
+            const ancestor = element.parentElement?.closest("[dir], [data-direction], [ng-direction], [data-slot='direction']");
             if (ancestor instanceof HTMLElement) {
                 const ancestorDir = normalize(ancestor.getAttribute("dir"));
                 if (ancestorDir)
@@ -6124,9 +6172,9 @@
                 if (ancestorData)
                     return ancestorData;
             }
-            return (normalize((_b = document.documentElement) === null || _b === void 0 ? void 0 : _b.getAttribute("dir")) ||
-                normalize((_c = document.documentElement) === null || _c === void 0 ? void 0 : _c.getAttribute("data-direction")) ||
-                normalize(document.dir) ||
+            return (normalize(document.documentElement.getAttribute("dir")) ??
+                normalize(document.documentElement.getAttribute("data-direction")) ??
+                normalize(document.dir) ??
                 "ltr");
         };
         return {
@@ -6148,14 +6196,13 @@
     function drawerDirective() {
         return {
             link(scope, element) {
-                const getContent = () => {
-                    var _a;
-                    return (_a = queryAll(element, '[data-slot="drawer-content"], [ng-drawer-content]').find((candidate) => candidate.closest('[data-slot="drawer"], [ng-drawer]') === element)) !== null && _a !== void 0 ? _a : null;
-                };
+                const getContent = () => queryAll(element, '[data-slot="drawer-content"], [ng-drawer-content]').find((candidate) => candidate.closest('[data-slot="drawer"], [ng-drawer]') === element) ?? null;
                 const syncSide = () => {
-                    var _a, _b, _c;
                     const content = getContent();
-                    const authoredSide = (_c = (_b = (_a = element.getAttribute("side")) !== null && _a !== void 0 ? _a : element.getAttribute("direction")) !== null && _b !== void 0 ? _b : content === null || content === void 0 ? void 0 : content.getAttribute("side")) !== null && _c !== void 0 ? _c : content === null || content === void 0 ? void 0 : content.getAttribute("direction");
+                    const authoredSide = element.getAttribute("side") ??
+                        element.getAttribute("direction") ??
+                        content?.getAttribute("side") ??
+                        content?.getAttribute("direction");
                     const side = authoredSide && drawerSides.has(authoredSide)
                         ? authoredSide
                         : "bottom";
@@ -6181,7 +6228,9 @@
                     subtree: true,
                 });
                 syncSide();
-                onDestroy(scope, () => sideObserver.disconnect());
+                onDestroy(scope, () => {
+                    sideObserver.disconnect();
+                });
             },
         };
     }
@@ -6189,21 +6238,21 @@
     function emptyDirective() {
         return {
             link(_scope, element) {
-                element.setAttribute("role", element.getAttribute("role") || "status");
-                element.setAttribute("aria-live", element.getAttribute("aria-live") || "polite");
+                element.setAttribute("role", element.getAttribute("role") ?? "status");
+                element.setAttribute("aria-live", element.getAttribute("aria-live") ?? "polite");
             },
         };
     }
 
     let fieldIdCounter = 0;
     const findControl = (element) => {
-        return query(element, "input, textarea, select, button, [role='combobox'], [role='switch']");
+        return query(element, "input, textarea, select, button, [role='combobox'], [role='switch']", HTMLElement);
     };
     const findDescription = (element) => {
-        return query(element, '[data-slot="field-description"], [ng-field-description]');
+        return query(element, '[data-slot="field-description"], [ng-field-description]', HTMLElement);
     };
     const findError = (element) => {
-        return query(element, '[data-slot="field-error"], [ng-field-error]');
+        return query(element, '[data-slot="field-error"], [ng-field-error]', HTMLElement);
     };
     const isElementVisible = (node) => {
         return node instanceof HTMLElement && !node.hidden;
@@ -6222,11 +6271,11 @@
                 const bindControl = (control) => {
                     if (control === currentControl)
                         return;
-                    currentControl === null || currentControl === void 0 ? void 0 : currentControl.removeEventListener("input", handleFormStateChange);
-                    currentControl === null || currentControl === void 0 ? void 0 : currentControl.removeEventListener("change", handleFormStateChange);
+                    currentControl?.removeEventListener("input", handleFormStateChange);
+                    currentControl?.removeEventListener("change", handleFormStateChange);
                     currentControl = control;
-                    currentControl === null || currentControl === void 0 ? void 0 : currentControl.addEventListener("input", handleFormStateChange);
-                    currentControl === null || currentControl === void 0 ? void 0 : currentControl.addEventListener("change", handleFormStateChange);
+                    currentControl?.addEventListener("input", handleFormStateChange);
+                    currentControl?.addEventListener("change", handleFormStateChange);
                 };
                 const sync = () => {
                     const control = resolveControl();
@@ -6234,17 +6283,17 @@
                     const description = findDescription(element);
                     const error = findError(element);
                     const visibleError = isElementVisible(error);
-                    const nativeInvalid = (control === null || control === void 0 ? void 0 : control.matches(":invalid")) || false;
+                    const nativeInvalid = control?.matches(":invalid") ?? false;
                     const invalid = visibleError ||
                         nativeInvalid ||
-                        (control === null || control === void 0 ? void 0 : control.getAttribute("aria-invalid")) === "true";
+                        control?.getAttribute("aria-invalid") === "true";
                     element.setAttribute("data-invalid", String(invalid));
                     if (!control)
                         return;
                     const describedBy = [description, error]
                         .filter(isElementVisible)
                         .map((part) => {
-                        part.id = part.id || `field-message-${fieldIdCounter++}`;
+                        part.id = part.id || `field-message-${String(fieldIdCounter++)}`;
                         return part.id;
                     });
                     const nextAriaDescribedBy = describedBy.join(" ");
@@ -6293,35 +6342,31 @@
     function hoverCardDirective() {
         return {
             link(scope, element) {
-                const trigger = query(element, '[data-slot="hover-card-trigger"], [ng-hover-card-trigger]');
-                const content = query(element, '[data-slot="hover-card-content"], [ng-hover-card-content]');
+                const trigger = query(element, '[data-slot="hover-card-trigger"], [ng-hover-card-trigger]', HTMLElement);
+                const content = query(element, '[data-slot="hover-card-content"], [ng-hover-card-content]', HTMLElement);
                 if (!trigger || !content)
                     return;
-                const directionOwner = element.closest("[dir]") || element;
-                const getDirection = () => {
-                    var _a;
-                    return ((_a = element.closest("[dir]")) === null || _a === void 0 ? void 0 : _a.getAttribute("dir")) === "rtl"
-                        ? "rtl"
-                        : "ltr";
-                };
+                const directionOwner = element.closest("[dir]") ?? element;
+                const getDirection = () => element.closest("[dir]")?.getAttribute("dir") === "rtl"
+                    ? "rtl"
+                    : "ltr";
                 const syncDirection = () => {
                     const direction = getDirection();
                     element.setAttribute("data-direction", direction);
                     content.setAttribute("data-direction", direction);
                 };
                 const syncSide = () => {
-                    var _a;
-                    const authored = (_a = content.getAttribute("side")) !== null && _a !== void 0 ? _a : content.getAttribute("data-side");
+                    const authored = content.getAttribute("side") ?? content.getAttribute("data-side");
                     const side = authored && sides$2.has(authored) ? authored : "bottom";
                     if (content.getAttribute("data-side") !== side) {
                         content.setAttribute("data-side", side);
                     }
                 };
-                const contentId = content.id || `hover-card-content-${hoverCardIdCounter++}`;
+                const contentId = content.id || `hover-card-content-${String(hoverCardIdCounter++)}`;
                 content.id = contentId;
                 trigger.setAttribute("aria-controls", contentId);
                 trigger.setAttribute("aria-expanded", "false");
-                content.setAttribute("role", content.getAttribute("role") || "dialog");
+                content.setAttribute("role", content.getAttribute("role") ?? "dialog");
                 let openState = element.getAttribute("data-open") === "true" ||
                     content.getAttribute("data-open") === "true";
                 const setOpen = (open) => {
@@ -6345,7 +6390,7 @@
                     syncDirection();
                     syncSide();
                     const record = records.find((entry) => entry.attributeName === "data-open");
-                    if (!((record === null || record === void 0 ? void 0 : record.target) instanceof HTMLElement))
+                    if (!(record?.target instanceof HTMLElement))
                         return;
                     syncFromAttribute(record.target);
                 });
@@ -6362,7 +6407,7 @@
                     : new MutationObserver(() => {
                         syncDirection();
                     });
-                directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.observe(directionOwner, {
+                directionObserver?.observe(directionOwner, {
                     attributes: true,
                     attributeFilter: ["dir"],
                 });
@@ -6447,7 +6492,7 @@
                     clearOpenTimer();
                     clearCloseTimer();
                     openObserver.disconnect();
-                    directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.disconnect();
+                    directionObserver?.disconnect();
                     trigger.removeEventListener("mouseenter", scheduleOpen);
                     trigger.removeEventListener("mouseleave", scheduleClose);
                     trigger.removeEventListener("focus", handleFocus);
@@ -6477,7 +6522,7 @@
                 const removeManagedDescriptions = (control) => {
                     if (!control || managedDescriptionIds.size === 0)
                         return;
-                    const remaining = (control.getAttribute("aria-describedby") || "")
+                    const remaining = (control.getAttribute("aria-describedby") ?? "")
                         .split(/\s+/)
                         .filter((id) => id && !managedDescriptionIds.has(id));
                     if (remaining.length) {
@@ -6489,11 +6534,12 @@
                 };
                 const sync = () => {
                     const addons = queryAll(element, addonSelector);
-                    const control = query(element, controlSelector$1);
+                    const control = query(element, controlSelector$1, HTMLElement);
                     const visibleAddonIds = addons
                         .filter((addon) => addon.getAttribute("aria-hidden") !== "true")
                         .map((addon) => {
-                        addon.id = addon.id || `input-group-addon-${inputGroupIdCounter++}`;
+                        addon.id =
+                            addon.id || `input-group-addon-${String(inputGroupIdCounter++)}`;
                         return addon.id;
                     });
                     element.setAttribute("data-has-addon", String(addons.length > 0));
@@ -6507,7 +6553,7 @@
                     if (!control)
                         return;
                     const current = control.getAttribute("aria-describedby");
-                    const tokens = new Set((current || "").split(/\s+/).filter(Boolean));
+                    const tokens = new Set((current ?? "").split(/\s+/).filter(Boolean));
                     managedDescriptionIds.forEach((id) => tokens.delete(id));
                     visibleAddonIds.forEach((id) => tokens.add(id));
                     managedDescriptionIds = new Set(visibleAddonIds);
@@ -6527,7 +6573,6 @@
                 });
                 sync();
                 const focusControlFromAddon = (event) => {
-                    var _a;
                     const target = event.target;
                     if (!(target instanceof Element))
                         return;
@@ -6535,7 +6580,7 @@
                     if (!addon || !element.contains(addon) || target.closest("button")) {
                         return;
                     }
-                    (_a = query(element, controlSelector$1)) === null || _a === void 0 ? void 0 : _a.focus();
+                    query(element, controlSelector$1, HTMLElement)?.focus();
                 };
                 element.addEventListener("click", focusControlFromAddon);
                 onDestroy(scope, () => {
@@ -6558,7 +6603,7 @@
                 let inputs = queryAll(element, "input");
                 const cleanupInputs = new WeakMap();
                 const focusInput = (index) => {
-                    const input = inputs[index];
+                    const input = inputs.at(index);
                     if (input)
                         input.focus();
                 };
@@ -6574,12 +6619,12 @@
                     if (cleanupInputs.has(input))
                         return;
                     input.setAttribute("autocomplete", input.autocomplete || "one-time-code");
-                    input.setAttribute("inputmode", input.getAttribute("inputmode") || "numeric");
+                    input.setAttribute("inputmode", input.getAttribute("inputmode") ?? "numeric");
                     if (!input.hasAttribute("maxlength")) {
                         input.setAttribute("maxlength", "1");
                     }
-                    input.setAttribute("aria-label", input.getAttribute("aria-label") ||
-                        `Digit ${inputs.indexOf(input) + 1}`);
+                    input.setAttribute("aria-label", input.getAttribute("aria-label") ??
+                        `Digit ${String(inputs.indexOf(input) + 1)}`);
                     const handleInput = () => {
                         input.value = input.value.slice(-1);
                         syncValue();
@@ -6592,8 +6637,7 @@
                         }
                     };
                     const handlePaste = (event) => {
-                        var _a;
-                        const pasted = (_a = event.clipboardData) === null || _a === void 0 ? void 0 : _a.getData("text").trim();
+                        const pasted = event.clipboardData?.getData("text").trim();
                         if (!pasted)
                             return;
                         event.preventDefault();
@@ -6636,7 +6680,7 @@
                     inputs = queryAll(element, "input");
                     inputs.forEach((input, index) => {
                         bindInput(input);
-                        input.setAttribute("aria-label", input.getAttribute("aria-label") || `Digit ${index + 1}`);
+                        input.setAttribute("aria-label", input.getAttribute("aria-label") ?? `Digit ${String(index + 1)}`);
                     });
                     syncValue();
                 };
@@ -6658,8 +6702,7 @@
                 onDestroy(scope, () => {
                     observer.disconnect();
                     queryAll(element, "input").forEach((input) => {
-                        var _a;
-                        (_a = cleanupInputs.get(input)) === null || _a === void 0 ? void 0 : _a();
+                        cleanupInputs.get(input)?.();
                     });
                 });
             },
@@ -6669,12 +6712,12 @@
     function itemDirective() {
         return {
             link(_scope, element) {
-                const variant = element.getAttribute("variant") ||
-                    element.getAttribute("data-variant") ||
+                const variant = element.getAttribute("variant") ??
+                    element.getAttribute("data-variant") ??
                     "default";
                 element.setAttribute("data-variant", variant);
-                const size = element.getAttribute("size") ||
-                    element.getAttribute("data-size") ||
+                const size = element.getAttribute("size") ??
+                    element.getAttribute("data-size") ??
                     "default";
                 element.setAttribute("data-size", size);
                 element.setAttribute("data-disabled", String(element.hasAttribute("disabled") ||
@@ -6691,8 +6734,7 @@
     function kbdDirective() {
         return {
             link(_scope, element) {
-                var _a;
-                const label = (_a = element.textContent) === null || _a === void 0 ? void 0 : _a.trim();
+                const label = element.textContent.trim();
                 if (label && !element.hasAttribute("aria-label")) {
                     element.setAttribute("aria-label", `Keyboard shortcut ${label}`);
                 }
@@ -6704,26 +6746,25 @@
         const htmlFor = label.getAttribute("for");
         const control = htmlFor
             ? document.getElementById(htmlFor)
-            : query(label, "input, textarea, select");
+            : query(label, "input, textarea, select", HTMLElement);
         return control instanceof HTMLElement ? control : null;
     };
     const syncState = (label, control) => {
         label.setAttribute("data-associated", String(Boolean(control)));
-        label.setAttribute("data-required", String(Boolean((control === null || control === void 0 ? void 0 : control.hasAttribute("required")) ||
-            (control === null || control === void 0 ? void 0 : control.getAttribute("aria-required")) === "true")));
-        label.setAttribute("data-disabled", String(Boolean((control === null || control === void 0 ? void 0 : control.hasAttribute("disabled")) ||
-            (control === null || control === void 0 ? void 0 : control.getAttribute("aria-disabled")) === "true")));
+        label.setAttribute("data-required", String(control?.hasAttribute("required") ??
+            control?.getAttribute("aria-required") === "true"));
+        label.setAttribute("data-disabled", String(control?.hasAttribute("disabled") ??
+            control?.getAttribute("aria-disabled") === "true"));
     };
     function labelDirective() {
         return {
             link(_scope, element) {
-                var _a;
                 let control = null;
                 let controlObserver = null;
                 const sync = () => {
                     const nextControl = resolveControl(element);
                     if (nextControl !== control) {
-                        controlObserver === null || controlObserver === void 0 ? void 0 : controlObserver.disconnect();
+                        controlObserver?.disconnect();
                         control = nextControl;
                         if (control) {
                             controlObserver = new MutationObserver(sync);
@@ -6751,13 +6792,13 @@
                     attributeFilter: ["for"],
                 });
                 const associationObserver = new MutationObserver(sync);
-                associationObserver.observe((_a = element.parentElement) !== null && _a !== void 0 ? _a : element.ownerDocument, {
+                associationObserver.observe(element.parentElement ?? element.ownerDocument, {
                     childList: true,
                     subtree: true,
                 });
                 sync();
                 onDestroy(_scope, () => {
-                    controlObserver === null || controlObserver === void 0 ? void 0 : controlObserver.disconnect();
+                    controlObserver?.disconnect();
                     labelObserver.disconnect();
                     associationObserver.disconnect();
                 });
@@ -6781,13 +6822,10 @@
                 const entries = [];
                 const triggers = [];
                 const boundMenus = new WeakSet();
-                const directionOwner = element.closest("[dir]") || element;
-                const getDirection = () => {
-                    var _a;
-                    return ((_a = element.closest("[dir]")) === null || _a === void 0 ? void 0 : _a.getAttribute("dir")) === "rtl"
-                        ? "rtl"
-                        : "ltr";
-                };
+                const directionOwner = element.closest("[dir]") ?? element;
+                const getDirection = () => element.closest("[dir]")?.getAttribute("dir") === "rtl"
+                    ? "rtl"
+                    : "ltr";
                 const getHorizontalDirection = (key) => (key === "ArrowRight") === (getDirection() === "ltr") ? 1 : -1;
                 const syncDirection = () => {
                     const direction = getDirection();
@@ -6809,16 +6847,17 @@
                 const getContentItems = (content) => getAllContentItems(content).filter((item) => !isDisabled(item));
                 const syncContentItems = () => {
                     queryAll(element, contentSelector$4).forEach((content) => {
-                        getAllContentItems(content).forEach((item) => setAttribute$4(item, "role", item.getAttribute("role") || "menuitem"));
+                        getAllContentItems(content).forEach((item) => {
+                            setAttribute$4(item, "role", item.getAttribute("role") ?? "menuitem");
+                        });
                     });
                 };
                 const setActiveTrigger = (index, focus = false) => {
-                    var _a;
                     triggers.forEach((trigger, triggerIndex) => {
                         setAttribute$4(trigger, "tabindex", triggerIndex === index ? "0" : "-1");
                     });
                     if (focus)
-                        (_a = triggers[index]) === null || _a === void 0 ? void 0 : _a.focus({ preventScroll: true });
+                        triggers[index]?.focus({ preventScroll: true });
                 };
                 const syncActiveTrigger = () => {
                     const current = triggers.findIndex((trigger) => trigger.getAttribute("tabindex") === "0" && !isDisabled(trigger));
@@ -6826,7 +6865,7 @@
                     setActiveTrigger(current >= 0 ? current : firstEnabled);
                 };
                 const setMenuState = (index, open, focus = false) => {
-                    const entry = entries[index];
+                    const entry = entries.at(index);
                     if (!entry)
                         return;
                     const wasOpen = entry.open;
@@ -6842,7 +6881,7 @@
                     syncRootState();
                     if (wasOpen === open) {
                         if (open && focus) {
-                            const focusTarget = getContentItems(entry.content)[0];
+                            const focusTarget = getContentItems(entry.content).at(0);
                             if (focusTarget) {
                                 focusTarget.focus();
                             }
@@ -6853,7 +6892,7 @@
                         return;
                     }
                     if (open && focus) {
-                        const focusTarget = getContentItems(entry.content)[0];
+                        const focusTarget = getContentItems(entry.content).at(0);
                         if (focusTarget) {
                             focusTarget.focus();
                         }
@@ -6866,7 +6905,11 @@
                         entry.trigger.focus();
                     }
                 };
-                const closeAll = () => entries.forEach((_, index) => setMenuState(index, false));
+                const closeAll = () => {
+                    entries.forEach((_, index) => {
+                        setMenuState(index, false);
+                    });
+                };
                 const openMenu = (index, focus = false) => {
                     if (index < 0)
                         return;
@@ -6885,35 +6928,36 @@
                     return isDisabled(triggers[next]) ? -1 : next;
                 };
                 const getBoundaryTriggerIndex = (fromEnd) => {
-                    var _a;
                     const indexes = triggers.map((_, index) => index);
                     if (fromEnd)
                         indexes.reverse();
-                    return (_a = indexes.find((index) => !isDisabled(triggers[index]))) !== null && _a !== void 0 ? _a : -1;
+                    return indexes.find((index) => !isDisabled(triggers[index])) ?? -1;
                 };
                 const cleanupEntries = [];
                 const bindMenu = (menu) => {
                     if (boundMenus.has(menu))
                         return;
-                    const trigger = query(menu, triggerSelector$3);
-                    const content = query(menu, contentSelector$4);
+                    const trigger = query(menu, triggerSelector$3, HTMLElement);
+                    const content = query(menu, contentSelector$4, HTMLElement);
                     if (!trigger || !content)
                         return;
                     boundMenus.add(menu);
-                    const triggerId = trigger.id || `menubar-trigger-${menubarIdCounter++}`;
+                    const triggerId = trigger.id || `menubar-trigger-${String(menubarIdCounter++)}`;
                     const contentId = content.id || `${triggerId}-content`;
                     trigger.id = triggerId;
                     content.id = contentId;
-                    setAttribute$4(trigger, "role", trigger.getAttribute("role") || "menuitem");
+                    setAttribute$4(trigger, "role", trigger.getAttribute("role") ?? "menuitem");
                     setAttribute$4(trigger, "aria-haspopup", "menu");
                     setAttribute$4(trigger, "aria-controls", contentId);
-                    setAttribute$4(content, "role", content.getAttribute("role") || "menu");
+                    setAttribute$4(content, "role", content.getAttribute("role") ?? "menu");
                     setAttribute$4(content, "aria-labelledby", triggerId);
                     setAttribute$4(content, "aria-hidden", "true");
                     if (!content.hasAttribute("tabindex")) {
                         setAttribute$4(content, "tabindex", "-1");
                     }
-                    getContentItems(content).forEach((item) => setAttribute$4(item, "role", item.getAttribute("role") || "menuitem"));
+                    getContentItems(content).forEach((item) => {
+                        setAttribute$4(item, "role", item.getAttribute("role") ?? "menuitem");
+                    });
                     const entry = {
                         menu,
                         trigger,
@@ -6940,7 +6984,9 @@
                         attributes: true,
                         attributeFilter: ["data-open", "data-state"],
                     });
-                    cleanupEntries.push(() => openObserver.disconnect());
+                    cleanupEntries.push(() => {
+                        openObserver.disconnect();
+                    });
                     setMenuState(getEntryIndex(), entry.open, false);
                     const handleTriggerClick = () => {
                         if (isDisabled(trigger))
@@ -6992,7 +7038,9 @@
                             }
                         }
                     };
-                    const handleTriggerFocus = () => setActiveTrigger(getEntryIndex());
+                    const handleTriggerFocus = () => {
+                        setActiveTrigger(getEntryIndex());
+                    };
                     trigger.addEventListener("click", handleTriggerClick);
                     trigger.addEventListener("keydown", handleTriggerKeydown);
                     trigger.addEventListener("focus", handleTriggerFocus);
@@ -7087,7 +7135,7 @@
                         }
                     }
                 };
-                setAttribute$4(element, "role", element.getAttribute("role") || "menubar");
+                setAttribute$4(element, "role", element.getAttribute("role") ?? "menubar");
                 const handleDocumentClick = (event) => {
                     if (event.target instanceof Node && !element.contains(event.target)) {
                         closeAll();
@@ -7097,8 +7145,7 @@
                     const target = event.target instanceof Element
                         ? event.target.closest(itemSelector$3)
                         : null;
-                    if (!target ||
-                        !target.closest(contentSelector$4) ||
+                    if (!target?.closest(contentSelector$4) ||
                         target.matches('[data-slot="menubar-sub-trigger"], [ng-menubar-sub-trigger]') ||
                         isDisabled(target)) {
                         return;
@@ -7120,7 +7167,7 @@
                     : new MutationObserver(() => {
                         syncDirection();
                     });
-                directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.observe(directionOwner, {
+                directionObserver?.observe(directionOwner, {
                     attributes: true,
                     attributeFilter: ["dir"],
                 });
@@ -7134,11 +7181,13 @@
                 });
                 onDestroy(scope, () => {
                     structureObserver.disconnect();
-                    directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.disconnect();
+                    directionObserver?.disconnect();
                     element.removeEventListener("keydown", handleKeydown);
                     element.removeEventListener("click", handleItemClick);
                     document.removeEventListener("click", handleDocumentClick);
-                    cleanupEntries.forEach((cleanup) => cleanup());
+                    cleanupEntries.forEach((cleanup) => {
+                        cleanup();
+                    });
                     cleanupSubmenus();
                 });
             },
@@ -7206,22 +7255,25 @@
         return {
             link(scope, element) {
                 const isOwned = (candidate) => candidate.closest(rootSelector) === element;
-                const owned = (selector) => { var _a; return (_a = queryAll(element, selector).find(isOwned)) !== null && _a !== void 0 ? _a : null; };
+                const owned = (selector, constructor) => {
+                    const candidate = queryAll(element, selector).find(isOwned);
+                    return candidate instanceof constructor ? candidate : null;
+                };
                 const ownedAll = (selector) => queryAll(element, selector).filter(isOwned);
-                const directionOwner = element.closest("[dir]") || element;
-                const trigger = owned(triggerSelector$2);
-                const content = owned(contentSelector$3);
+                const directionOwner = element.closest("[dir]") ?? element;
+                const trigger = owned(triggerSelector$2, HTMLElement);
+                const content = owned(contentSelector$3, HTMLElement);
                 if (!trigger || !content)
                     return;
-                const contentId = content.id || `select-content-${selectIdCounter++}`;
-                const triggerId = trigger.id || `select-trigger-${selectIdCounter++}`;
+                const contentId = content.id || `select-content-${String(selectIdCounter++)}`;
+                const triggerId = trigger.id || `select-trigger-${String(selectIdCounter++)}`;
                 content.id = contentId;
                 trigger.id = triggerId;
-                setAttributeIfChanged$8(trigger, "role", trigger.getAttribute("role") || "combobox");
+                setAttributeIfChanged$8(trigger, "role", trigger.getAttribute("role") ?? "combobox");
                 setAttributeIfChanged$8(trigger, "aria-haspopup", "listbox");
                 setAttributeIfChanged$8(trigger, "aria-controls", contentId);
                 setAttributeIfChanged$8(trigger, "aria-autocomplete", "none");
-                setAttributeIfChanged$8(content, "role", content.getAttribute("role") || "listbox");
+                setAttributeIfChanged$8(content, "role", content.getAttribute("role") ?? "listbox");
                 setAttributeIfChanged$8(content, "aria-labelledby", triggerId);
                 setAttributeIfChanged$8(content, "tabindex", "-1");
                 let items = [];
@@ -7234,15 +7286,12 @@
                 let openAtPointerDown = false;
                 const cleanupItems = new Map();
                 const cleanupScrollControls = new Map();
-                const getDirection = () => {
-                    var _a;
-                    return ((_a = element.closest("[dir]")) === null || _a === void 0 ? void 0 : _a.getAttribute("dir")) === "rtl"
-                        ? "rtl"
-                        : "ltr";
-                };
+                const getDirection = () => element.closest("[dir]")?.getAttribute("dir") === "rtl"
+                    ? "rtl"
+                    : "ltr";
                 const alignItemWithTrigger = () => {
-                    var _a;
-                    const value = (_a = content.getAttribute("align-item-with-trigger")) !== null && _a !== void 0 ? _a : content.getAttribute("data-align-trigger");
+                    const value = content.getAttribute("align-item-with-trigger") ??
+                        content.getAttribute("data-align-trigger");
                     return value !== "false";
                 };
                 const syncChrome = () => {
@@ -7273,7 +7322,7 @@
                         return;
                     const triggerBox = trigger.getBoundingClientRect();
                     const selected = items.find((item) => item.getAttribute("aria-selected") === "true");
-                    const selectedBox = selected === null || selected === void 0 ? void 0 : selected.getBoundingClientRect();
+                    const selectedBox = selected?.getBoundingClientRect();
                     let top = trigger.offsetTop + triggerBox.height + 4;
                     if (alignItemWithTrigger() && selected && selectedBox) {
                         top =
@@ -7287,7 +7336,7 @@
                     const viewportTop = rootBox.top + top;
                     top += Math.max(4 - viewportTop, 0);
                     top -= Math.max(viewportTop + contentHeight - (window.innerHeight - 4), 0);
-                    content.style.setProperty("--select-content-top", `${Math.round(top)}px`);
+                    content.style.setProperty("--select-content-top", `${String(Math.round(top))}px`);
                     syncScrollState();
                 };
                 const setOpen = (nextOpen, restoreFocus = false, notifyApplication = false) => {
@@ -7323,7 +7372,9 @@
                         nextIndex = (nextIndex + 1) % items.length;
                     }
                     activeIndex = nextIndex;
-                    items.forEach((item, itemIndex) => setAttributeIfChanged$8(item, "data-highlighted", String(itemIndex === activeIndex)));
+                    items.forEach((item, itemIndex) => {
+                        setAttributeIfChanged$8(item, "data-highlighted", String(itemIndex === activeIndex));
+                    });
                     setAttributeIfChanged$8(trigger, "aria-activedescendant", items[activeIndex].id);
                     if (open) {
                         items[activeIndex].scrollIntoView({ block: "nearest" });
@@ -7332,17 +7383,18 @@
                 };
                 const selectedIndex = () => items.findIndex((item) => item.getAttribute("aria-selected") === "true");
                 const selectItem = (item) => {
-                    var _a, _b;
                     if (isDisabled(item))
                         return;
-                    items.forEach((option) => setAttributeIfChanged$8(option, "aria-selected", String(option === item)));
+                    items.forEach((option) => {
+                        setAttributeIfChanged$8(option, "aria-selected", String(option === item));
+                    });
                     highlightItem(items.indexOf(item));
-                    const itemText = ((_a = item.textContent) === null || _a === void 0 ? void 0 : _a.trim()) || "";
-                    const value = (_b = item.getAttribute("data-value")) !== null && _b !== void 0 ? _b : itemText;
-                    const valueSlot = owned(valueSelector$1);
-                    const applicationOwnsValue = Boolean((valueSlot === null || valueSlot === void 0 ? void 0 : valueSlot.hasAttribute("ng-bind")) ||
-                        (valueSlot === null || valueSlot === void 0 ? void 0 : valueSlot.hasAttribute("ng-model")) ||
-                        (valueSlot === null || valueSlot === void 0 ? void 0 : valueSlot.hasAttribute("data-application-value")));
+                    const itemText = item.textContent.trim() || "";
+                    const value = item.getAttribute("data-value") ?? itemText;
+                    const valueSlot = owned(valueSelector$1, HTMLElement);
+                    const applicationOwnsValue = Boolean(valueSlot?.hasAttribute("ng-bind") ??
+                        valueSlot?.hasAttribute("ng-model") ??
+                        valueSlot?.hasAttribute("data-application-value"));
                     if (valueSlot && !applicationOwnsValue) {
                         valueSlot.textContent = itemText;
                     }
@@ -7372,17 +7424,21 @@
                 };
                 const bindItem = (item) => {
                     if (!item.id)
-                        item.id = `select-item-${selectIdCounter++}`;
-                    setAttributeIfChanged$8(item, "role", item.getAttribute("role") || "option");
+                        item.id = `select-item-${String(selectIdCounter++)}`;
+                    setAttributeIfChanged$8(item, "role", item.getAttribute("role") ?? "option");
                     setAttributeIfChanged$8(item, "tabindex", "-1");
                     if (isDisabled(item)) {
                         setAttributeIfChanged$8(item, "aria-disabled", "true");
                     }
                     if (cleanupItems.has(item))
                         return;
-                    const handleItemClick = () => selectItem(item);
+                    const handleItemClick = () => {
+                        selectItem(item);
+                    };
                     item.addEventListener("click", handleItemClick);
-                    cleanupItems.set(item, () => item.removeEventListener("click", handleItemClick));
+                    cleanupItems.set(item, () => {
+                        item.removeEventListener("click", handleItemClick);
+                    });
                 };
                 const bindScrollControl = (control, direction) => {
                     if (cleanupScrollControls.has(control))
@@ -7401,12 +7457,13 @@
                         });
                     };
                     control.addEventListener("click", scroll);
-                    cleanupScrollControls.set(control, () => control.removeEventListener("click", scroll));
+                    cleanupScrollControls.set(control, () => {
+                        control.removeEventListener("click", scroll);
+                    });
                 };
                 const syncStructure = () => {
-                    var _a, _b, _c;
                     syncChrome();
-                    const previousActiveItem = items[activeIndex];
+                    const previousActiveItem = activeIndex < 0 ? undefined : items.at(activeIndex);
                     items = ownedAll(itemSelector$2);
                     items.forEach(bindItem);
                     ownedAll(groupSelector).forEach((group) => {
@@ -7414,7 +7471,7 @@
                         const label = queryAll(group, labelSelector$1).find((candidate) => candidate.closest(groupSelector) === group);
                         if (label) {
                             if (!label.id)
-                                label.id = `select-label-${selectIdCounter++}`;
+                                label.id = `select-label-${String(selectIdCounter++)}`;
                             setAttributeIfChanged$8(group, "aria-labelledby", label.id);
                         }
                     });
@@ -7422,8 +7479,12 @@
                         setAttributeIfChanged$8(separator, "role", "separator");
                         setAttributeIfChanged$8(separator, "aria-orientation", "horizontal");
                     });
-                    ownedAll(scrollUpSelector).forEach((control) => bindScrollControl(control, -1));
-                    ownedAll(scrollDownSelector).forEach((control) => bindScrollControl(control, 1));
+                    ownedAll(scrollUpSelector).forEach((control) => {
+                        bindScrollControl(control, -1);
+                    });
+                    ownedAll(scrollDownSelector).forEach((control) => {
+                        bindScrollControl(control, 1);
+                    });
                     cleanupItems.forEach((cleanup, item) => {
                         if (!item.isConnected || !isOwned(item)) {
                             cleanup();
@@ -7444,7 +7505,8 @@
                     if (items.length)
                         highlightItem(next);
                     if (selected >= 0) {
-                        setAttributeIfChanged$8(element, "data-value", (_c = (_a = items[selected].getAttribute("data-value")) !== null && _a !== void 0 ? _a : (_b = items[selected].textContent) === null || _b === void 0 ? void 0 : _b.trim()) !== null && _c !== void 0 ? _c : "");
+                        setAttributeIfChanged$8(element, "data-value", items[selected].getAttribute("data-value") ??
+                            items[selected].textContent.trim());
                     }
                     if (open)
                         requestAnimationFrame(positionContent);
@@ -7481,11 +7543,8 @@
                     }, 500);
                     const start = Math.max(activeIndex + 1, 0);
                     const ordered = [...items.slice(start), ...items.slice(0, start)];
-                    const match = ordered.find((item) => {
-                        var _a;
-                        return !isDisabled(item) &&
-                            ((_a = item.textContent) === null || _a === void 0 ? void 0 : _a.trim().toLocaleLowerCase().startsWith(typeahead));
-                    });
+                    const match = ordered.find((item) => !isDisabled(item) &&
+                        item.textContent.trim().toLocaleLowerCase().startsWith(typeahead));
                     if (match)
                         highlightItem(items.indexOf(match));
                 };
@@ -7518,7 +7577,7 @@
                             setOpen(true, false, true);
                             return;
                         }
-                        const activeItem = items[activeIndex];
+                        const activeItem = activeIndex < 0 ? undefined : items.at(activeIndex);
                         if (activeItem)
                             selectItem(activeItem);
                         return;
@@ -7563,7 +7622,7 @@
                         syncChrome();
                         requestAnimationFrame(positionContent);
                     });
-                directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.observe(directionOwner, {
+                directionObserver?.observe(directionOwner, {
                     attributes: true,
                     attributeFilter: ["dir"],
                 });
@@ -7578,7 +7637,7 @@
                 setOpen(open);
                 onDestroy(scope, () => {
                     observer.disconnect();
-                    directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.disconnect();
+                    directionObserver?.disconnect();
                     window.clearTimeout(typeaheadTimer);
                     trigger.removeEventListener("click", handleTriggerClick);
                     element.removeEventListener("keydown", handleKeydown);
@@ -7587,9 +7646,13 @@
                     document.removeEventListener("click", handleDocumentClick);
                     document.removeEventListener("focusin", handleFocusOutside);
                     window.removeEventListener("resize", positionContent);
-                    cleanupItems.forEach((cleanup) => cleanup());
+                    cleanupItems.forEach((cleanup) => {
+                        cleanup();
+                    });
                     cleanupItems.clear();
-                    cleanupScrollControls.forEach((cleanup) => cleanup());
+                    cleanupScrollControls.forEach((cleanup) => {
+                        cleanup();
+                    });
                     cleanupScrollControls.clear();
                 });
             },
@@ -7607,31 +7670,27 @@
             element.setAttribute(name, value);
         }
     };
-    const directChild = (element, selector) => {
-        var _a;
-        return (_a = Array.from(element.children).find((child) => child instanceof HTMLElement && child.matches(selector))) !== null && _a !== void 0 ? _a : null;
-    };
+    const directChild = (element, selector) => Array.from(element.children).find((child) => child instanceof HTMLElement && child.matches(selector)) ?? null;
     function navigationMenuDirective() {
         return {
             link(scope, element) {
-                const list = query(element, listSelector$1);
+                const list = query(element, listSelector$1, HTMLElement);
                 const entries = [];
                 const triggers = [];
                 const topLevelControls = [];
                 const boundEntries = new Map();
-                const directionOwner = element.closest("[dir]") || element;
+                const directionOwner = element.closest("[dir]") ?? element;
                 let initialized = false;
-                const getDirection = () => {
-                    var _a;
-                    return ((_a = element.closest("[dir]")) === null || _a === void 0 ? void 0 : _a.getAttribute("dir")) === "rtl"
-                        ? "rtl"
-                        : "ltr";
-                };
+                const getDirection = () => element.closest("[dir]")?.getAttribute("dir") === "rtl"
+                    ? "rtl"
+                    : "ltr";
                 const getHorizontalDirection = (key) => (key === "ArrowRight") === (getDirection() === "ltr") ? 1 : -1;
                 const syncDirection = () => {
                     const direction = getDirection();
                     setAttribute$3(element, "data-direction", direction);
-                    entries.forEach(({ content }) => setAttribute$3(content, "data-direction", direction));
+                    entries.forEach(({ content }) => {
+                        setAttribute$3(content, "data-direction", direction);
+                    });
                 };
                 const syncRootState = () => {
                     const open = entries.some((entry) => entry.open);
@@ -7650,11 +7709,10 @@
                         : bounds.right > window.innerWidth - viewportPadding
                             ? window.innerWidth - viewportPadding - bounds.right
                             : 0;
-                    content.style.setProperty("--navigation-menu-content-offset", `${offset}px`);
+                    content.style.setProperty("--navigation-menu-content-offset", `${String(offset)}px`);
                 };
                 const setMenuState = (index, open, focus = false) => {
-                    var _a;
-                    const entry = entries[index];
+                    const entry = entries.at(index);
                     if (!entry)
                         return;
                     entry.open = open;
@@ -7676,16 +7734,17 @@
                     if (open)
                         positionContent(entry.content);
                     if (open && focus) {
-                        (_a = getContentItems(entry.content)[0]) === null || _a === void 0 ? void 0 : _a.focus({ preventScroll: true });
+                        getContentItems(entry.content)[0]?.focus({ preventScroll: true });
                     }
                 };
-                const closeAll = () => entries.forEach((entry, index) => {
-                    if (!entry.controlledBy)
-                        setMenuState(index, false);
-                });
+                const closeAll = () => {
+                    entries.forEach((entry, index) => {
+                        if (!entry.controlledBy)
+                            setMenuState(index, false);
+                    });
+                };
                 const openMenu = (index, focus = false) => {
-                    var _a;
-                    if (index < 0 || isDisabled((_a = entries[index]) === null || _a === void 0 ? void 0 : _a.trigger))
+                    if (index < 0 || isDisabled(entries[index]?.trigger))
                         return;
                     closeAll();
                     setMenuState(index, true, focus);
@@ -7706,11 +7765,10 @@
                     return isDisabled(topLevelControls[candidate]) ? -1 : candidate;
                 };
                 const getBoundaryControlIndex = (fromEnd) => {
-                    var _a;
                     const indexes = topLevelControls.map((_, index) => index);
                     if (fromEnd)
                         indexes.reverse();
-                    return ((_a = indexes.find((index) => !isDisabled(topLevelControls[index]))) !== null && _a !== void 0 ? _a : -1);
+                    return (indexes.find((index) => !isDisabled(topLevelControls[index])) ?? -1);
                 };
                 const activateTopLevelControl = (control, keepDisclosureOpen) => {
                     control.focus({ preventScroll: true });
@@ -7731,7 +7789,7 @@
                     const content = directChild(item, contentSelector$2);
                     if (!trigger || !content)
                         return;
-                    const triggerId = trigger.id || `navigation-menu-trigger-${navigationMenuId++}`;
+                    const triggerId = trigger.id || `navigation-menu-trigger-${String(navigationMenuId++)}`;
                     const contentId = content.id || `${triggerId}-content`;
                     trigger.id = triggerId;
                     content.id = contentId;
@@ -7774,7 +7832,7 @@
                         ? new MutationObserver(syncFromAttribute)
                         : null;
                     if (entry.controlledBy) {
-                        observer === null || observer === void 0 ? void 0 : observer.observe(content, {
+                        observer?.observe(content, {
                             attributes: true,
                             attributeFilter: [entry.controlledBy],
                         });
@@ -7825,14 +7883,16 @@
                             openMenu(getEntryIndex(entry));
                         }
                     };
-                    const handlePointerLeave = () => scheduleClose();
+                    const handlePointerLeave = () => {
+                        scheduleClose();
+                    };
                     trigger.addEventListener("click", handleTriggerClick);
                     trigger.addEventListener("keydown", handleTriggerKeydown);
                     item.addEventListener("pointerenter", handlePointerEnter);
                     item.addEventListener("pointerleave", handlePointerLeave);
                     entry.disconnect = () => {
                         cancelClose();
-                        observer === null || observer === void 0 ? void 0 : observer.disconnect();
+                        observer?.disconnect();
                         trigger.removeEventListener("click", handleTriggerClick);
                         trigger.removeEventListener("keydown", handleTriggerKeydown);
                         item.removeEventListener("pointerenter", handlePointerEnter);
@@ -7854,7 +7914,7 @@
                         if (!(child instanceof HTMLElement) || !child.matches(itemSelector$1)) {
                             return [];
                         }
-                        const control = directChild(child, triggerSelector$1) ||
+                        const control = directChild(child, triggerSelector$1) ??
                             directChild(child, linkSelector$1);
                         return control ? [control] : [];
                     });
@@ -7897,7 +7957,7 @@
                             ? getEntryForContent(activeContent)
                             : entries.find((candidate) => candidate.open);
                         closeAll();
-                        entry === null || entry === void 0 ? void 0 : entry.trigger.focus({ preventScroll: true });
+                        entry?.trigger.focus({ preventScroll: true });
                         return;
                     }
                     if (activeContent) {
@@ -7968,7 +8028,9 @@
                 const handleResize = () => {
                     entries
                         .filter((entry) => entry.open)
-                        .forEach((entry) => positionContent(entry.content));
+                        .forEach((entry) => {
+                        positionContent(entry.content);
+                    });
                 };
                 if (element.tagName !== "NAV" && !element.hasAttribute("role")) {
                     setAttribute$3(element, "role", "navigation");
@@ -7986,7 +8048,7 @@
                     subtree: true,
                 });
                 const directionObserver = directionOwner === element ? null : new MutationObserver(syncDirection);
-                directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.observe(directionOwner, {
+                directionObserver?.observe(directionOwner, {
                     attributes: true,
                     attributeFilter: ["dir"],
                 });
@@ -8001,13 +8063,15 @@
                 initialized = true;
                 onDestroy(scope, () => {
                     structureObserver.disconnect();
-                    directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.disconnect();
+                    directionObserver?.disconnect();
                     element.removeEventListener("keydown", handleKeydown);
                     element.removeEventListener("click", handleClick);
                     document.removeEventListener("click", handleDocumentClick);
                     document.removeEventListener("focusin", handleDocumentFocus);
                     window.removeEventListener("resize", handleResize);
-                    entries.forEach((entry) => entry.disconnect());
+                    entries.forEach((entry) => {
+                        entry.disconnect();
+                    });
                 });
             },
         };
@@ -8034,7 +8098,7 @@
         return {
             link(scope, element) {
                 const activeSources = new WeakMap();
-                setAttribute$2(element, "aria-label", element.getAttribute("aria-label") || "pagination");
+                setAttribute$2(element, "aria-label", element.getAttribute("aria-label") ?? "pagination");
                 if (element.tagName !== "NAV" && !element.hasAttribute("role")) {
                     setAttribute$2(element, "role", "navigation");
                 }
@@ -8105,46 +8169,42 @@
     function popoverDirective() {
         return {
             link(scope, element) {
-                const directionOwner = element.closest("[dir]") || element;
-                const trigger = query(element, '[data-slot="popover-trigger"], [ng-popover-trigger]');
-                const content = query(element, '[data-slot="popover-content"], [ng-popover-content]');
+                const directionOwner = element.closest("[dir]") ?? element;
+                const trigger = query(element, '[data-slot="popover-trigger"], [ng-popover-trigger]', HTMLElement);
+                const content = query(element, '[data-slot="popover-content"], [ng-popover-content]', HTMLElement);
                 if (!trigger || !content)
                     return;
-                const getDirection = () => {
-                    var _a;
-                    return ((_a = element.closest("[dir]")) === null || _a === void 0 ? void 0 : _a.getAttribute("dir")) === "rtl"
-                        ? "rtl"
-                        : "ltr";
-                };
+                const getDirection = () => element.closest("[dir]")?.getAttribute("dir") === "rtl"
+                    ? "rtl"
+                    : "ltr";
                 const syncDirection = () => {
                     const direction = getDirection();
                     setAttributeIfChanged$7(element, "data-direction", direction);
                     setAttributeIfChanged$7(content, "data-direction", direction);
                 };
                 const syncPlacement = () => {
-                    var _a, _b;
-                    const authoredSide = (_a = content.getAttribute("side")) !== null && _a !== void 0 ? _a : content.getAttribute("data-side");
+                    const authoredSide = content.getAttribute("side") ?? content.getAttribute("data-side");
                     const side = authoredSide && sides$1.has(authoredSide) ? authoredSide : "bottom";
-                    const authoredAlign = (_b = content.getAttribute("align")) !== null && _b !== void 0 ? _b : content.getAttribute("data-align");
+                    const authoredAlign = content.getAttribute("align") ?? content.getAttribute("data-align");
                     const align = authoredAlign && alignments.has(authoredAlign)
                         ? authoredAlign
                         : "center";
                     setAttributeIfChanged$7(content, "data-side", side);
                     setAttributeIfChanged$7(content, "data-align", align);
                 };
-                const contentId = content.id || `popover-content-${popoverIdCounter++}`;
+                const contentId = content.id || `popover-content-${String(popoverIdCounter++)}`;
                 content.id = contentId;
                 trigger.setAttribute("aria-haspopup", "dialog");
                 trigger.setAttribute("aria-controls", contentId);
-                content.setAttribute("role", content.getAttribute("role") || "dialog");
-                content.setAttribute("aria-modal", content.getAttribute("aria-modal") || "false");
-                content.setAttribute("tabindex", content.getAttribute("tabindex") || "-1");
+                content.setAttribute("role", content.getAttribute("role") ?? "dialog");
+                content.setAttribute("aria-modal", content.getAttribute("aria-modal") ?? "false");
+                content.setAttribute("tabindex", content.getAttribute("tabindex") ?? "-1");
                 let open = element.getAttribute("data-open") === "true" ||
                     content.getAttribute("data-open") === "true";
                 let initialized = false;
                 const focusContent = () => {
                     const firstFocusable = content.querySelector(focusableSelector);
-                    (firstFocusable !== null && firstFocusable !== void 0 ? firstFocusable : content).focus({ preventScroll: true });
+                    (firstFocusable ?? content).focus({ preventScroll: true });
                 };
                 const setOpen = (nextOpen, restoreOnClose = true) => {
                     const wasOpen = open;
@@ -8218,21 +8278,23 @@
                     attributeFilter: ["data-open", "dir"],
                 });
                 const directionObserver = directionOwner === element ? null : new MutationObserver(syncDirection);
-                directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.observe(directionOwner, {
+                directionObserver?.observe(directionOwner, {
                     attributes: true,
                     attributeFilter: ["dir"],
                 });
                 syncDirection();
                 syncPlacement();
                 setOpen(open);
-                const cleanupEscapeClose = bindEscapeClose([trigger, content], () => open, () => setOpen(false));
+                const cleanupEscapeClose = bindEscapeClose([trigger, content], () => open, () => {
+                    setOpen(false);
+                });
                 trigger.addEventListener("click", handleTriggerClick);
                 document.addEventListener("click", closeOnOutsideClick);
                 document.addEventListener("focusin", closeOnFocusOutside);
                 onDestroy(scope, () => {
                     openObserver.disconnect();
                     rootOpenObserver.disconnect();
-                    directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.disconnect();
+                    directionObserver?.disconnect();
                     cleanupEscapeClose();
                     trigger.removeEventListener("click", handleTriggerClick);
                     document.removeEventListener("click", closeOnOutsideClick);
@@ -8267,7 +8329,6 @@
             link(scope, element) {
                 let generatedLabelledBy = null;
                 const sync = () => {
-                    var _a;
                     const authoredMax = numericAttribute(element, "max");
                     const max = authoredMax !== null && authoredMax > 0 ? authoredMax : 100;
                     const authoredValue = numericAttribute(element, "value");
@@ -8276,10 +8337,10 @@
                         ? Math.min(max, Math.max(0, authoredValue))
                         : 0;
                     const rawPercent = max === 0 ? 0 : (value / max) * 100;
-                    const percent = Math.round(rawPercent * 1000000) / 1000000;
-                    const formattedPercent = `${percent}%`;
+                    const percent = Math.round(rawPercent * 1_000_000) / 1_000_000;
+                    const formattedPercent = `${String(percent)}%`;
                     element.style.setProperty("--value", formattedPercent);
-                    setAttribute$1(element, "role", element.getAttribute("role") || "progressbar");
+                    setAttribute$1(element, "role", element.getAttribute("role") ?? "progressbar");
                     setAttribute$1(element, "aria-valuemin", "0");
                     setAttribute$1(element, "aria-valuemax", String(max));
                     if (determinate) {
@@ -8290,10 +8351,10 @@
                         removeAttribute(element, "aria-valuenow");
                         removeAttribute(element, "data-value");
                     }
-                    (_a = query(element, indicatorSelector)) === null || _a === void 0 ? void 0 : _a.style.setProperty("--value", formattedPercent);
-                    const label = query(element, labelSelector);
+                    query(element, indicatorSelector, HTMLElement)?.style.setProperty("--value", formattedPercent);
+                    const label = query(element, labelSelector, HTMLElement);
                     if (label && !element.hasAttribute("aria-label")) {
-                        label.id = label.id || `progress-label-${progressId++}`;
+                        label.id = label.id || `progress-label-${String(progressId++)}`;
                         if (!element.hasAttribute("aria-labelledby") ||
                             element.getAttribute("aria-labelledby") === generatedLabelledBy) {
                             generatedLabelledBy = label.id;
@@ -8305,7 +8366,7 @@
                         removeAttribute(element, "aria-labelledby");
                         generatedLabelledBy = null;
                     }
-                    const valueElement = query(element, valueSelector);
+                    const valueElement = query(element, valueSelector, HTMLElement);
                     if (valueElement &&
                         !valueElement.hasAttribute("ng-bind") &&
                         valueElement.getAttribute("data-value-format") !== "custom") {
@@ -8323,7 +8384,9 @@
                 });
                 sync();
                 queueMicrotask(sync);
-                onDestroy(scope, () => observer.disconnect());
+                onDestroy(scope, () => {
+                    observer.disconnect();
+                });
             },
         };
     }
@@ -8340,7 +8403,7 @@
                     radios.forEach((radio) => {
                         bindRadio(radio);
                         const checked = radio.checked;
-                        radio.setAttribute("role", radio.getAttribute("role") || "radio");
+                        radio.setAttribute("role", radio.getAttribute("role") ?? "radio");
                         radio.setAttribute("data-state", checked ? "checked" : "unchecked");
                         radio.setAttribute("aria-checked", String(checked));
                     });
@@ -8351,7 +8414,7 @@
                     boundRadios.add(radio);
                     radio.addEventListener("change", sync);
                 };
-                element.setAttribute("role", element.getAttribute("role") || "radiogroup");
+                element.setAttribute("role", element.getAttribute("role") ?? "radiogroup");
                 const handleKeydown = (event) => {
                     if (!event.key.startsWith("Arrow"))
                         return;
@@ -8374,7 +8437,9 @@
                     if (initialSyncFrame !== null)
                         cancelAnimationFrame(initialSyncFrame);
                     observer.disconnect();
-                    boundRadios.forEach((radio) => radio.removeEventListener("change", sync));
+                    boundRadios.forEach((radio) => {
+                        radio.removeEventListener("change", sync);
+                    });
                     boundRadios.clear();
                     element.removeEventListener("keydown", handleKeydown);
                 });
@@ -8410,7 +8475,7 @@
                 const ownedHandleOrientations = new WeakSet();
                 const cleanupHandles = new WeakMap();
                 const knownHandles = new Set();
-                const directionOwner = element.closest("[dir]") || element;
+                const directionOwner = element.closest("[dir]") ?? element;
                 const panelSize = (panel) => Number(panel.style.getPropertyValue("--panel-size")) || 1;
                 const getGroupOrientation = () => {
                     const orientation = element.getAttribute("orientation");
@@ -8424,10 +8489,9 @@
                 };
                 const getDefaultHandleOrientation = () => getGroupOrientation() === "vertical" ? "horizontal" : "vertical";
                 const syncOrientation = () => {
-                    var _a;
                     const groupOrientation = getGroupOrientation();
                     setAttributeIfChanged$6(element, "data-orientation", groupOrientation);
-                    setAttributeIfChanged$6(element, "data-direction", ((_a = element.closest("[dir]")) === null || _a === void 0 ? void 0 : _a.getAttribute("dir")) === "rtl"
+                    setAttributeIfChanged$6(element, "data-direction", element.closest("[dir]")?.getAttribute("dir") === "rtl"
                         ? "rtl"
                         : "ltr");
                     handles.forEach((handle) => {
@@ -8436,7 +8500,7 @@
                             setAttributeIfChanged$6(handle, "aria-orientation", getDefaultHandleOrientation());
                             ownedHandleOrientations.add(handle);
                         }
-                        setAttributeIfChanged$6(handle, "data-orientation", handle.getAttribute("aria-orientation") || "vertical");
+                        setAttributeIfChanged$6(handle, "data-orientation", handle.getAttribute("aria-orientation") ?? "vertical");
                     });
                 };
                 const syncHandle = (handle, before) => {
@@ -8450,8 +8514,8 @@
                 const bindHandle = (handle) => {
                     if (cleanupHandles.has(handle))
                         return;
-                    handle.setAttribute("tabindex", handle.getAttribute("tabindex") || "0");
-                    handle.setAttribute("role", handle.getAttribute("role") || "separator");
+                    handle.setAttribute("tabindex", handle.getAttribute("tabindex") ?? "0");
+                    handle.setAttribute("role", handle.getAttribute("role") ?? "separator");
                     let stopPointerResize = null;
                     const handlePointerDown = (event) => {
                         if (event.button !== 0 ||
@@ -8459,8 +8523,8 @@
                             return;
                         }
                         const index = handles.indexOf(handle);
-                        const before = panels[index];
-                        const after = panels[index + 1];
+                        const before = panels.at(index);
+                        const after = panels.at(index + 1);
                         if (!before || !after)
                             return;
                         event.preventDefault();
@@ -8499,7 +8563,7 @@
                             after.style.setProperty("--panel-size", String(totalSize - nextBeforeSize));
                             syncHandle(handle, before);
                         };
-                        stopPointerResize === null || stopPointerResize === void 0 ? void 0 : stopPointerResize();
+                        stopPointerResize?.();
                         stopPointerResize = finish;
                         handle.setAttribute("data-resizing", "true");
                         element.setAttribute("data-resizing", "true");
@@ -8516,8 +8580,8 @@
                             : ["ArrowLeft", "ArrowRight", "Home", "End"];
                         if (!supportedKeys.includes(event.key))
                             return;
-                        const before = panels[index];
-                        const after = panels[index + 1];
+                        const before = panels.at(index);
+                        const after = panels.at(index + 1);
                         if (!before || !after)
                             return;
                         event.preventDefault();
@@ -8553,7 +8617,7 @@
                     handle.addEventListener("keydown", handleKeydown);
                     handle.addEventListener("pointerdown", handlePointerDown);
                     cleanupHandles.set(handle, () => {
-                        stopPointerResize === null || stopPointerResize === void 0 ? void 0 : stopPointerResize();
+                        stopPointerResize?.();
                         handle.removeEventListener("keydown", handleKeydown);
                         handle.removeEventListener("pointerdown", handlePointerDown);
                     });
@@ -8565,20 +8629,22 @@
                     syncOrientation();
                     handles.forEach((handle, index) => {
                         bindHandle(handle);
-                        const before = panels[index];
-                        const after = panels[index + 1];
+                        const before = panels.at(index);
+                        const after = panels.at(index + 1);
                         if (before) {
                             if (!before.id)
-                                before.id = `resizable-panel-${resizableIdCounter++}`;
+                                before.id = `resizable-panel-${String(resizableIdCounter++)}`;
                             setAttributeIfChanged$6(before, "data-index", String(index));
                             setAttributeIfChanged$6(before, "data-size", String(panelSize(before)));
                             syncHandle(handle, before);
                         }
                         if (after) {
                             if (!after.id)
-                                after.id = `resizable-panel-${resizableIdCounter++}`;
+                                after.id = `resizable-panel-${String(resizableIdCounter++)}`;
                             setAttributeIfChanged$6(after, "data-index", String(index + 1));
                             setAttributeIfChanged$6(after, "data-size", String(panelSize(after)));
+                        }
+                        if (before && after) {
                             setAttributeIfChanged$6(handle, "aria-controls", `${before.id} ${after.id}`);
                         }
                     });
@@ -8598,17 +8664,16 @@
                     subtree: true,
                 });
                 const directionObserver = directionOwner === element ? null : new MutationObserver(syncHandles);
-                directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.observe(directionOwner, {
+                directionObserver?.observe(directionOwner, {
                     attributes: true,
                     attributeFilter: ["dir"],
                 });
                 syncHandles();
                 onDestroy(scope, () => {
                     panelObserver.disconnect();
-                    directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.disconnect();
+                    directionObserver?.disconnect();
                     knownHandles.forEach((handle) => {
-                        var _a;
-                        (_a = cleanupHandles.get(handle)) === null || _a === void 0 ? void 0 : _a();
+                        cleanupHandles.get(handle)?.();
                     });
                 });
             },
@@ -8622,20 +8687,17 @@
     function scrollAreaDirective() {
         return {
             link(scope, element) {
-                const viewport = query(element, '[data-slot="scroll-area-viewport"], [ng-scroll-area-viewport]');
+                const viewport = query(element, '[data-slot="scroll-area-viewport"], [ng-scroll-area-viewport]', HTMLElement);
                 if (!viewport)
                     return;
-                viewport.setAttribute("tabindex", viewport.getAttribute("tabindex") || "0");
-                viewport.setAttribute("role", viewport.getAttribute("role") || "region");
-                viewport.setAttribute("aria-label", viewport.getAttribute("aria-label") ||
-                    element.getAttribute("aria-label") ||
+                viewport.setAttribute("tabindex", viewport.getAttribute("tabindex") ?? "0");
+                viewport.setAttribute("role", viewport.getAttribute("role") ?? "region");
+                viewport.setAttribute("aria-label", viewport.getAttribute("aria-label") ??
+                    element.getAttribute("aria-label") ??
                     "Scrollable content");
-                const getDirection = () => {
-                    var _a;
-                    return ((_a = viewport.closest("[dir]")) === null || _a === void 0 ? void 0 : _a.getAttribute("dir")) === "rtl"
-                        ? "rtl"
-                        : "ltr";
-                };
+                const getDirection = () => viewport.closest("[dir]")?.getAttribute("dir") === "rtl"
+                    ? "rtl"
+                    : "ltr";
                 const syncDirection = () => {
                     const direction = getDirection();
                     element.setAttribute("data-direction", direction);
@@ -8714,7 +8776,7 @@
                         ? scrollbar.clientWidth
                         : scrollbar.clientHeight;
                     const maxScroll = Math.max(0, scrollSize - viewportSize);
-                    const thumb = query(scrollbar, '[data-slot="scroll-area-thumb"], [ng-scroll-area-thumb]');
+                    const thumb = query(scrollbar, '[data-slot="scroll-area-thumb"], [ng-scroll-area-thumb]', HTMLElement);
                     if (!thumb || trackSize <= 0 || scrollSize <= 0)
                         return;
                     const thumbSize = Math.max(18, trackSize * Math.min(1, viewportSize / scrollSize));
@@ -8722,8 +8784,10 @@
                         ? (Math.min(maxScroll, scrollPosition) / maxScroll) *
                             (trackSize - thumbSize)
                         : 0;
-                    thumb.style.setProperty(horizontal ? "width" : "height", `${thumbSize}px`);
-                    thumb.style.setProperty("transform", horizontal ? `translateX(${offset}px)` : `translateY(${offset}px)`);
+                    thumb.style.setProperty(horizontal ? "width" : "height", `${String(thumbSize)}px`);
+                    thumb.style.setProperty("transform", horizontal
+                        ? `translateX(${String(offset)}px)`
+                        : `translateY(${String(offset)}px)`);
                     thumb.setAttribute("data-size", String(Math.round(thumbSize)));
                     thumb.setAttribute("data-offset", String(Math.round(offset)));
                     bindScrollbar(scrollbar, orientation);
@@ -8743,11 +8807,13 @@
                         scrollbar.setAttribute("data-orientation", orientation);
                         scrollbar.setAttribute("aria-hidden", "true");
                         scrollbar.setAttribute("data-visible", orientation === "horizontal"
-                            ? element.getAttribute("data-scrollable-x") || "false"
-                            : element.getAttribute("data-scrollable-y") || "false");
+                            ? (element.getAttribute("data-scrollable-x") ?? "false")
+                            : (element.getAttribute("data-scrollable-y") ?? "false"));
                         syncScrollbar(scrollbar, orientation);
                     });
-                    queryAll(element, '[data-slot="scroll-area-thumb"], [ng-scroll-area-thumb]').forEach((thumb) => thumb.setAttribute("aria-hidden", "true"));
+                    queryAll(element, '[data-slot="scroll-area-thumb"], [ng-scroll-area-thumb]').forEach((thumb) => {
+                        thumb.setAttribute("aria-hidden", "true");
+                    });
                 };
                 const observedElements = new Set();
                 const resizeObserver = typeof ResizeObserver === "function"
@@ -8787,8 +8853,10 @@
                     viewport.removeEventListener("scroll", syncState);
                     mutationObserver.disconnect();
                     directionObserver.disconnect();
-                    resizeObserver === null || resizeObserver === void 0 ? void 0 : resizeObserver.disconnect();
-                    scrollbarCleanups.forEach((cleanup) => cleanup());
+                    resizeObserver?.disconnect();
+                    scrollbarCleanups.forEach((cleanup) => {
+                        cleanup();
+                    });
                     scrollbarCleanups.clear();
                 });
             },
@@ -8798,8 +8866,8 @@
     function separatorDirective() {
         return {
             link(_scope, element) {
-                const orientation = element.getAttribute("orientation") || "horizontal";
-                element.setAttribute("role", element.getAttribute("role") || "separator");
+                const orientation = element.getAttribute("orientation") ?? "horizontal";
+                element.setAttribute("role", element.getAttribute("role") ?? "separator");
                 element.setAttribute("aria-orientation", orientation);
                 element.setAttribute("data-orientation", orientation);
             },
@@ -8815,14 +8883,10 @@
     function sheetDirective() {
         return {
             link(scope, element) {
-                const getContent = () => {
-                    var _a;
-                    return (_a = queryAll(element, '[data-slot="sheet-content"], [ng-sheet-content]').find((candidate) => candidate.closest('[data-slot="sheet"], [ng-sheet]') === element)) !== null && _a !== void 0 ? _a : null;
-                };
+                const getContent = () => queryAll(element, '[data-slot="sheet-content"], [ng-sheet-content]').find((candidate) => candidate.closest('[data-slot="sheet"], [ng-sheet]') === element) ?? null;
                 const syncSide = () => {
-                    var _a;
                     const content = getContent();
-                    const authoredSide = (_a = element.getAttribute("side")) !== null && _a !== void 0 ? _a : content === null || content === void 0 ? void 0 : content.getAttribute("side");
+                    const authoredSide = element.getAttribute("side") ?? content?.getAttribute("side");
                     const side = authoredSide && sheetSides.has(authoredSide) ? authoredSide : "right";
                     setAttributeIfChanged$5(element, "data-side", side);
                     if (content)
@@ -8846,7 +8910,9 @@
                     subtree: true,
                 });
                 syncSide();
-                onDestroy(scope, () => sideObserver.disconnect());
+                onDestroy(scope, () => {
+                    sideObserver.disconnect();
+                });
             },
         };
     }
@@ -8880,15 +8946,12 @@
                     ? `[aria-controls="${element.id}"], [data-sidebar-target="${element.id}"]`
                     : "[ng-sidebar-trigger], [data-slot='sidebar-trigger']";
                 const cleanupTriggers = new Map();
-                const directionOwner = element.closest("[dir]") || element;
+                const directionOwner = element.closest("[dir]") ?? element;
                 const mobileQuery = window.matchMedia("(max-width: 767px)");
                 const ownedCurrent = new WeakSet();
-                const getDirection = () => {
-                    var _a;
-                    return ((_a = element.closest("[dir]")) === null || _a === void 0 ? void 0 : _a.getAttribute("dir")) === "rtl"
-                        ? "rtl"
-                        : "ltr";
-                };
+                const getDirection = () => element.closest("[dir]")?.getAttribute("dir") === "rtl"
+                    ? "rtl"
+                    : "ltr";
                 const syncDirection = () => {
                     setAttributeIfChanged$4(element, "data-direction", getDirection());
                 };
@@ -8908,7 +8971,6 @@
                     reflect("variant", "sidebar");
                 };
                 const setCollapsed = (collapsed) => {
-                    var _a;
                     if (element.getAttribute("data-collapsible") === "none") {
                         collapsed = false;
                     }
@@ -8922,7 +8984,7 @@
                         setAttributeIfChanged$4(trigger, "data-state", collapsed ? "closed" : "open");
                     });
                     if (hidden && element.contains(document.activeElement)) {
-                        (_a = cleanupTriggers.keys().next().value) === null || _a === void 0 ? void 0 : _a.focus();
+                        cleanupTriggers.keys().next().value?.focus();
                     }
                 };
                 const syncFromState = () => {
@@ -8937,7 +8999,7 @@
                         if (!label)
                             return;
                         if (!label.id)
-                            label.id = `sidebar-group-label-${sidebarIdCounter++}`;
+                            label.id = `sidebar-group-label-${String(sidebarIdCounter++)}`;
                         setAttributeIfChanged$4(group, "aria-labelledby", label.id);
                     });
                     queryAll(element, selectors.menuButton).forEach((button) => {
@@ -8986,7 +9048,9 @@
                         setCollapsed(!getCollapsed());
                     };
                     trigger.addEventListener("click", handleClick);
-                    cleanupTriggers.set(trigger, () => trigger.removeEventListener("click", handleClick));
+                    cleanupTriggers.set(trigger, () => {
+                        trigger.removeEventListener("click", handleClick);
+                    });
                 };
                 const syncTriggers = () => {
                     queryAll(document, triggerSelector).forEach(bindTrigger);
@@ -8998,7 +9062,7 @@
                     });
                     setCollapsed(getCollapsed());
                 };
-                element.setAttribute("role", element.getAttribute("role") || "complementary");
+                element.setAttribute("role", element.getAttribute("role") ?? "complementary");
                 syncFromState();
                 syncStructure();
                 syncTriggers();
@@ -9014,7 +9078,7 @@
                     ],
                 });
                 const directionObserver = directionOwner === element ? null : new MutationObserver(syncFromState);
-                directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.observe(directionOwner, {
+                directionObserver?.observe(directionOwner, {
                     attributes: true,
                     attributeFilter: ["dir"],
                 });
@@ -9035,11 +9099,13 @@
                 mobileQuery.addEventListener("change", syncResponsive);
                 onDestroy(scope, () => {
                     stateObserver.disconnect();
-                    directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.disconnect();
+                    directionObserver?.disconnect();
                     triggerObserver.disconnect();
                     structureObserver.disconnect();
                     mobileQuery.removeEventListener("change", syncResponsive);
-                    cleanupTriggers.forEach((cleanup) => cleanup());
+                    cleanupTriggers.forEach((cleanup) => {
+                        cleanup();
+                    });
                     cleanupTriggers.clear();
                 });
             },
@@ -9050,7 +9116,7 @@
         return {
             link(_scope, element) {
                 if (!element.hasAttribute("aria-label")) {
-                    element.setAttribute("aria-hidden", element.getAttribute("aria-hidden") || "true");
+                    element.setAttribute("aria-hidden", element.getAttribute("aria-hidden") ?? "true");
                 }
                 element.setAttribute("data-loading", "true");
             },
@@ -9065,8 +9131,8 @@
         }
     };
     const orientationFor = (element) => {
-        var _a;
-        const authored = (_a = element.getAttribute("orientation")) !== null && _a !== void 0 ? _a : element.getAttribute("data-orientation");
+        const authored = element.getAttribute("orientation") ??
+            element.getAttribute("data-orientation");
         return authored && orientations.has(authored)
             ? authored
             : "horizontal";
@@ -9089,7 +9155,7 @@
     const syncInput = (element, orientation = orientationFor(element)) => {
         const state = sliderValue(element);
         syncNativeControlState(element);
-        setAttributeIfChanged$3(element, "role", element.getAttribute("role") || "slider");
+        setAttributeIfChanged$3(element, "role", element.getAttribute("role") ?? "slider");
         setAttributeIfChanged$3(element, "aria-orientation", orientation);
         setAttributeIfChanged$3(element, "data-orientation", orientation);
         setAttributeIfChanged$3(element, "aria-valuemin", String(state.min));
@@ -9097,7 +9163,7 @@
         setAttributeIfChanged$3(element, "aria-valuenow", String(state.value));
         setAttributeIfChanged$3(element, "data-invalid", String(element.getAttribute("aria-invalid") === "true" ||
             element.matches(":invalid")));
-        element.style.setProperty("--value", `${state.percent}%`);
+        element.style.setProperty("--value", `${String(state.percent)}%`);
         setAttributeIfChanged$3(element, "data-value", String(state.value));
         return state;
     };
@@ -9130,10 +9196,9 @@
     const bindCompositeSlider = (element) => {
         const inputs = () => queryAll(element, thumbSelector);
         const sync = () => {
-            var _a;
             const orientation = orientationFor(element);
             const thumbs = inputs();
-            const direction = ((_a = element.closest("[dir]")) === null || _a === void 0 ? void 0 : _a.getAttribute("dir")) === "rtl" ||
+            const direction = element.closest("[dir]")?.getAttribute("dir") === "rtl" ||
                 getComputedStyle(element).direction === "rtl"
                 ? "rtl"
                 : "ltr";
@@ -9168,8 +9233,8 @@
             setAttributeIfChanged$3(element, "data-orientation", orientation);
             setAttributeIfChanged$3(element, "data-disabled", String(thumbs.length > 0 && thumbs.every((input) => input.disabled)));
             setAttributeIfChanged$3(element, "data-values", states.map(({ value }) => value).join(","));
-            element.style.setProperty("--range-start", `${start}%`);
-            element.style.setProperty("--range-end", `${end}%`);
+            element.style.setProperty("--range-start", `${String(start)}%`);
+            element.style.setProperty("--range-end", `${String(end)}%`);
         };
         const handleFocus = (event) => {
             inputs().forEach((input) => input.toggleAttribute("data-active", input === event.target));
@@ -9266,17 +9331,17 @@
                     }
                 };
                 const bindToast = (toast) => {
-                    setAttributeIfChanged$2(toast, "role", toast.getAttribute("role") || "status");
-                    setAttributeIfChanged$2(toast, "aria-live", toast.getAttribute("aria-live") || "polite");
-                    setAttributeIfChanged$2(toast, "aria-atomic", toast.getAttribute("aria-atomic") || "true");
-                    const relationships = generatedRelationships.get(toast) || {};
+                    setAttributeIfChanged$2(toast, "role", toast.getAttribute("role") ?? "status");
+                    setAttributeIfChanged$2(toast, "aria-live", toast.getAttribute("aria-live") ?? "polite");
+                    setAttributeIfChanged$2(toast, "aria-atomic", toast.getAttribute("aria-atomic") ?? "true");
+                    const relationships = generatedRelationships.get(toast) ?? {};
                     const title = toast.querySelector(titleSelector);
                     const description = toast.querySelector(descriptionSelector);
                     const labelledby = toast.getAttribute("aria-labelledby");
                     const describedby = toast.getAttribute("aria-describedby");
                     if (title) {
                         if (!title.id)
-                            title.id = `toast-title-${toastIdCounter++}`;
+                            title.id = `toast-title-${String(toastIdCounter++)}`;
                         if (!labelledby || labelledby === relationships.labelledby) {
                             setAttributeIfChanged$2(toast, "aria-labelledby", title.id);
                             relationships.labelledby = title.id;
@@ -9289,7 +9354,7 @@
                     }
                     if (description) {
                         if (!description.id) {
-                            description.id = `toast-description-${toastIdCounter++}`;
+                            description.id = `toast-description-${String(toastIdCounter++)}`;
                         }
                         if (!describedby || describedby === relationships.describedby) {
                             setAttributeIfChanged$2(toast, "aria-describedby", description.id);
@@ -9341,7 +9406,7 @@
                     if (cleanupButtons.has(button))
                         return;
                     bindActionButton(button);
-                    setAttributeIfChanged$2(button, "aria-label", button.getAttribute("aria-label") || "Close toast");
+                    setAttributeIfChanged$2(button, "aria-label", button.getAttribute("aria-label") ?? "Close toast");
                     const handleClick = () => {
                         const toast = button.closest('[data-slot="toast"], [ng-toast]');
                         if (toast) {
@@ -9352,7 +9417,9 @@
                         }
                     };
                     button.addEventListener("click", handleClick);
-                    cleanupButtons.set(button, () => button.removeEventListener("click", handleClick));
+                    cleanupButtons.set(button, () => {
+                        button.removeEventListener("click", handleClick);
+                    });
                 };
                 const bindToaster = () => {
                     syncPosition();
@@ -9386,7 +9453,9 @@
                 bindToaster();
                 onDestroy(scope, () => {
                     observer.disconnect();
-                    cleanupButtons.forEach((cleanup) => cleanup());
+                    cleanupButtons.forEach((cleanup) => {
+                        cleanup();
+                    });
                     cleanupButtons.clear();
                 });
             },
@@ -9396,9 +9465,9 @@
     function spinnerDirective() {
         return {
             link(_scope, element) {
-                element.setAttribute("role", element.getAttribute("role") || "status");
-                element.setAttribute("aria-live", element.getAttribute("aria-live") || "polite");
-                element.setAttribute("aria-label", element.getAttribute("aria-label") || "Loading");
+                element.setAttribute("role", element.getAttribute("role") ?? "status");
+                element.setAttribute("aria-live", element.getAttribute("aria-live") ?? "polite");
+                element.setAttribute("aria-label", element.getAttribute("aria-label") ?? "Loading");
                 element.setAttribute("aria-busy", "true");
                 element.setAttribute("data-loading", "true");
             },
@@ -9520,10 +9589,10 @@
                     element.setAttribute("data-row-count", String(rows.length));
                     element.setAttribute("data-column-count", String(firstRowCells.length));
                     heads.forEach((head) => {
-                        head.setAttribute("scope", head.getAttribute("scope") || "col");
+                        head.setAttribute("scope", head.getAttribute("scope") ?? "col");
                     });
                     rowHeads.forEach((head) => {
-                        head.setAttribute("scope", head.getAttribute("scope") || "row");
+                        head.setAttribute("scope", head.getAttribute("scope") ?? "row");
                     });
                 };
                 const observer = new MutationObserver(sync);
@@ -9548,7 +9617,7 @@
     function tabsDirective() {
         return {
             link(scope, element) {
-                const directionOwner = element.closest("[dir]") || element;
+                const directionOwner = element.closest("[dir]") ?? element;
                 let triggers = [];
                 let contents = [];
                 let orientation = "horizontal";
@@ -9556,12 +9625,9 @@
                 const cleanupTriggers = new WeakMap();
                 const isTriggerDisabled = (trigger) => trigger.hasAttribute("disabled") ||
                     trigger.getAttribute("aria-disabled") === "true";
-                const getDirection = () => {
-                    var _a;
-                    return ((_a = element.closest("[dir]")) === null || _a === void 0 ? void 0 : _a.getAttribute("dir")) === "rtl"
-                        ? "rtl"
-                        : "ltr";
-                };
+                const getDirection = () => element.closest("[dir]")?.getAttribute("dir") === "rtl"
+                    ? "rtl"
+                    : "ltr";
                 const firstEnabledIndex = () => Math.max(0, triggers.findIndex((trigger) => !isTriggerDisabled(trigger)));
                 const lastEnabledIndex = () => {
                     for (let index = triggers.length - 1; index >= 0; index -= 1) {
@@ -9600,7 +9666,7 @@
                         const selected = contentIndex === nextActiveIndex;
                         content.hidden = !selected;
                         setAttribute(content, "data-active", String(selected));
-                        setAttribute(content, "role", content.getAttribute("role") || "tabpanel");
+                        setAttribute(content, "role", content.getAttribute("role") ?? "tabpanel");
                         setAttribute(content, "aria-hidden", String(!selected));
                         setAttribute(content, "tabindex", selected ? "0" : "-1");
                     });
@@ -9656,27 +9722,27 @@
                     contents = queryAll(element, contentSelector);
                     const list = element.querySelector(listSelector);
                     orientation =
-                        element.getAttribute("orientation") ||
-                            element.getAttribute("aria-orientation") ||
-                            (list === null || list === void 0 ? void 0 : list.getAttribute("aria-orientation")) ||
+                        element.getAttribute("orientation") ??
+                            element.getAttribute("aria-orientation") ??
+                            list?.getAttribute("aria-orientation") ??
                             "horizontal";
                     orientation = orientation === "vertical" ? "vertical" : "horizontal";
                     setAttribute(element, "data-direction", getDirection());
                     setAttribute(element, "data-orientation", orientation);
                     if (list) {
-                        setAttribute(list, "role", list.getAttribute("role") || "tablist");
+                        setAttribute(list, "role", list.getAttribute("role") ?? "tablist");
                         setAttribute(list, "aria-orientation", orientation);
                     }
                     triggers.forEach((trigger, index) => {
-                        const content = contents[index];
-                        const triggerId = trigger.id || `tabs-trigger-${tabsIdCounter++}`;
+                        const content = contents.at(index);
+                        const triggerId = trigger.id || `tabs-trigger-${String(tabsIdCounter++)}`;
                         trigger.id = triggerId;
-                        setAttribute(trigger, "role", trigger.getAttribute("role") || "tab");
+                        setAttribute(trigger, "role", trigger.getAttribute("role") ?? "tab");
                         if (content) {
                             const contentId = content.id || `${triggerId}-content`;
                             content.id = contentId;
                             setAttribute(trigger, "aria-controls", contentId);
-                            setAttribute(content, "role", content.getAttribute("role") || "tabpanel");
+                            setAttribute(content, "role", content.getAttribute("role") ?? "tabpanel");
                             setAttribute(content, "aria-labelledby", triggerId);
                         }
                         bindTrigger(trigger);
@@ -9712,14 +9778,14 @@
                 });
                 sync();
                 const directionObserver = directionOwner === element ? null : new MutationObserver(sync);
-                directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.observe(directionOwner, {
+                directionObserver?.observe(directionOwner, {
                     attributes: true,
                     attributeFilter: ["dir"],
                 });
                 onDestroy(scope, () => {
                     observer.disconnect();
-                    directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.disconnect();
-                    triggers.forEach((trigger) => { var _a; return (_a = cleanupTriggers.get(trigger)) === null || _a === void 0 ? void 0 : _a(); });
+                    directionObserver?.disconnect();
+                    triggers.forEach((trigger) => cleanupTriggers.get(trigger)?.());
                 });
             },
         };
@@ -9736,7 +9802,9 @@
                     element.setAttribute("data-invalid", String(element.getAttribute("aria-invalid") === "true" ||
                         element.matches(":invalid")));
                 };
-                const onChange = () => sync();
+                const onChange = () => {
+                    sync();
+                };
                 element.addEventListener("input", sync);
                 element.addEventListener("change", onChange);
                 const observer = new MutationObserver(sync);
@@ -9821,24 +9889,21 @@
     function toggleGroupDirective() {
         return {
             link(scope, element) {
-                const directionOwner = element.closest("[dir]") || element;
+                const directionOwner = element.closest("[dir]") ?? element;
                 const itemSelector = '[data-slot="toggle-group-item"], [ng-toggle-group-item], button[aria-pressed]';
                 let items = [];
                 const allowsMultiple = element.hasAttribute("multiple") ||
                     element.getAttribute("type") === "multiple";
                 const cleanupItems = new Map();
-                element.setAttribute("role", element.getAttribute("role") || "group");
+                element.setAttribute("role", element.getAttribute("role") ?? "group");
                 const isGroupDisabled = () => element.hasAttribute("disabled") ||
                     element.getAttribute("aria-disabled") === "true";
                 const isItemDisabled = (item) => isGroupDisabled() ||
                     item.hasAttribute("disabled") ||
                     item.getAttribute("aria-disabled") === "true";
-                const getDirection = () => {
-                    var _a;
-                    return ((_a = element.closest("[dir]")) === null || _a === void 0 ? void 0 : _a.getAttribute("dir")) === "rtl"
-                        ? "rtl"
-                        : "ltr";
-                };
+                const getDirection = () => element.closest("[dir]")?.getAttribute("dir") === "rtl"
+                    ? "rtl"
+                    : "ltr";
                 const getOrientation = () => element.getAttribute("orientation") === "vertical"
                     ? "vertical"
                     : "horizontal";
@@ -9854,8 +9919,8 @@
                         element.style.removeProperty("--gap");
                     }
                     const enabled = items.filter((item) => !isItemDisabled(item));
-                    const tabStop = enabled.find((item) => item.getAttribute("tabindex") === "0") ||
-                        enabled.find((item) => item.getAttribute("aria-pressed") === "true") ||
+                    const tabStop = enabled.find((item) => item.getAttribute("tabindex") === "0") ??
+                        enabled.find((item) => item.getAttribute("aria-pressed") === "true") ??
                         enabled[0];
                     items.forEach((item) => {
                         setAttributeIfChanged$1(item, "data-disabled", String(isItemDisabled(item)));
@@ -9883,7 +9948,9 @@
                             });
                         }
                         setPressed(item, nextPressed);
-                        items.forEach((otherItem) => otherItem.setAttribute("tabindex", otherItem === item ? "0" : "-1"));
+                        items.forEach((otherItem) => {
+                            otherItem.setAttribute("tabindex", otherItem === item ? "0" : "-1");
+                        });
                     };
                     const handleKeydown = (event) => {
                         if (event.key !== "ArrowRight" &&
@@ -9901,10 +9968,14 @@
                         const rtlHorizontal = getOrientation() === "horizontal" && getDirection() === "rtl";
                         const direction = forward === !rtlHorizontal ? 1 : -1;
                         const nextItem = enabled[nextIndex(currentIndex, enabled.length, direction)];
-                        items.forEach((otherItem) => otherItem.setAttribute("tabindex", otherItem === nextItem ? "0" : "-1"));
+                        items.forEach((otherItem) => {
+                            otherItem.setAttribute("tabindex", otherItem === nextItem ? "0" : "-1");
+                        });
                         nextItem.focus();
                         if (!allowsMultiple) {
-                            items.forEach((otherItem) => setPressed(otherItem, false));
+                            items.forEach((otherItem) => {
+                                setPressed(otherItem, false);
+                            });
                             setPressed(nextItem, true);
                         }
                     };
@@ -9937,14 +10008,16 @@
                 });
                 sync();
                 const directionObserver = directionOwner === element ? null : new MutationObserver(sync);
-                directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.observe(directionOwner, {
+                directionObserver?.observe(directionOwner, {
                     attributes: true,
                     attributeFilter: ["dir"],
                 });
                 onDestroy(scope, () => {
                     observer.disconnect();
-                    directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.disconnect();
-                    cleanupItems.forEach((cleanup) => cleanup());
+                    directionObserver?.disconnect();
+                    cleanupItems.forEach((cleanup) => {
+                        cleanup();
+                    });
                     cleanupItems.clear();
                 });
             },
@@ -9961,32 +10034,28 @@
     function tooltipDirective() {
         return {
             link(scope, element) {
-                const directionOwner = element.closest("[dir]") || element;
-                const trigger = query(element, '[data-slot="tooltip-trigger"], [ng-tooltip-trigger]');
-                const content = query(element, '[data-slot="tooltip-content"], [ng-tooltip-content]');
+                const directionOwner = element.closest("[dir]") ?? element;
+                const trigger = query(element, '[data-slot="tooltip-trigger"], [ng-tooltip-trigger]', HTMLElement);
+                const content = query(element, '[data-slot="tooltip-content"], [ng-tooltip-content]', HTMLElement);
                 if (!trigger || !content)
                     return;
-                const getDirection = () => {
-                    var _a;
-                    return ((_a = element.closest("[dir]")) === null || _a === void 0 ? void 0 : _a.getAttribute("dir")) === "rtl"
-                        ? "rtl"
-                        : "ltr";
-                };
+                const getDirection = () => element.closest("[dir]")?.getAttribute("dir") === "rtl"
+                    ? "rtl"
+                    : "ltr";
                 const syncDirection = () => {
                     const direction = getDirection();
                     setAttributeIfChanged(element, "data-direction", direction);
                     setAttributeIfChanged(content, "data-direction", direction);
                 };
                 const syncSide = () => {
-                    var _a;
-                    const authored = (_a = content.getAttribute("side")) !== null && _a !== void 0 ? _a : content.getAttribute("data-side");
+                    const authored = content.getAttribute("side") ?? content.getAttribute("data-side");
                     const side = authored && sides.has(authored) ? authored : "top";
                     setAttributeIfChanged(content, "data-side", side);
                 };
-                const contentId = content.id || `tooltip-content-${tooltipIdCounter++}`;
+                const contentId = content.id || `tooltip-content-${String(tooltipIdCounter++)}`;
                 content.id = contentId;
                 trigger.setAttribute("aria-describedby", contentId);
-                content.setAttribute("role", content.getAttribute("role") || "tooltip");
+                content.setAttribute("role", content.getAttribute("role") ?? "tooltip");
                 let controlledOpen = element.getAttribute("data-open") === "true" ||
                     content.getAttribute("data-open") === "true";
                 let keepOpen = false;
@@ -10031,7 +10100,7 @@
                     attributeFilter: ["data-open", "data-side", "side"],
                 });
                 const directionObserver = directionOwner === element ? null : new MutationObserver(syncDirection);
-                directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.observe(directionOwner, {
+                directionObserver?.observe(directionOwner, {
                     attributes: true,
                     attributeFilter: ["dir"],
                 });
@@ -10070,7 +10139,7 @@
                 trigger.addEventListener("keydown", handleKeydown);
                 onDestroy(scope, () => {
                     openObserver.disconnect();
-                    directionObserver === null || directionObserver === void 0 ? void 0 : directionObserver.disconnect();
+                    directionObserver?.disconnect();
                     elementObserver.disconnect();
                     trigger.removeEventListener("mouseenter", handleOpen);
                     trigger.removeEventListener("mouseleave", handleClose);
@@ -10143,7 +10212,7 @@
         ["ngTooltip", tooltipDirective],
     ];
     function registerAngularCss(ng = angular) {
-        if (!(ng === null || ng === void 0 ? void 0 : ng.module))
+        if (!ng?.module)
             return undefined;
         const module = ng.module(angularCssModuleName, []);
         angularCssDirectives.forEach(([name, factory]) => {

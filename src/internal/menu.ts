@@ -19,15 +19,16 @@ export function bindSemanticSubmenus(
   const bindSubmenu = (submenu: HTMLElement) => {
     if (cleanups.has(submenu)) return;
 
-    const trigger = query<HTMLElement>(submenu, triggerSelector);
-    const content = query<HTMLElement>(submenu, contentSelector);
+    const trigger = query(submenu, triggerSelector, HTMLElement);
+    const content = query(submenu, contentSelector, HTMLElement);
     if (!trigger || !content) return;
 
-    const contentId = content.id || `${prefix}-sub-content-${submenuId++}`;
+    const contentId =
+      content.id || `${prefix}-sub-content-${String(submenuId++)}`;
     content.id = contentId;
     trigger.setAttribute("aria-controls", contentId);
     trigger.setAttribute("aria-haspopup", "menu");
-    content.setAttribute("role", content.getAttribute("role") || "menu");
+    content.setAttribute("role", content.getAttribute("role") ?? "menu");
     const getItems = () =>
       queryAll<HTMLElement>(content, itemSelector).filter(
         (item) => !isDisabled(item),
@@ -61,7 +62,7 @@ export function bindSemanticSubmenus(
       }
 
       const firstItem = getItems().find((item) => !item.closest("[hidden]"));
-      (firstItem || content).focus({ preventScroll: true });
+      (firstItem ?? content).focus({ preventScroll: true });
     };
 
     const handleClick = (event: MouseEvent) => {
@@ -73,7 +74,9 @@ export function bindSemanticSubmenus(
     const handlePointerEnter = () => {
       if (!isDisabled(trigger)) setOpen(true);
     };
-    const handlePointerLeave = () => setOpen(false);
+    const handlePointerLeave = () => {
+      setOpen(false);
+    };
     const handleKeydown = (event: KeyboardEvent) => {
       const openKey = getDirection() === "rtl" ? "ArrowLeft" : "ArrowRight";
       const closeKey = getDirection() === "rtl" ? "ArrowRight" : "ArrowLeft";
@@ -153,7 +156,9 @@ export function bindSemanticSubmenus(
 
   return () => {
     observer.disconnect();
-    cleanups.forEach((cleanup) => cleanup());
+    cleanups.forEach((cleanup) => {
+      cleanup();
+    });
     cleanups.clear();
   };
 }

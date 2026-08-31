@@ -13,7 +13,10 @@ describe("index", () => {
   });
 
   it("exports the detected angular global", () => {
-    expect(angular).toEqual(globalThis.angular);
+    const angularGlobal = globalThis as typeof globalThis & {
+      angular?: typeof angular;
+    };
+    expect(angular).toEqual(angularGlobal.angular);
   });
 
   it("registers directives when an angular-compatible object is provided", () => {
@@ -31,7 +34,9 @@ describe("index", () => {
       },
     } as unknown as typeof angular;
 
-    const module = registerAngularCss(ng);
+    const module = registerAngularCss(ng) as
+      | (ng.NgModule & { dependencies: string[] })
+      | undefined;
 
     expect(module?.name).toEqual("ui");
     expect(module?.dependencies).toEqual([]);

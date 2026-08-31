@@ -1,8 +1,20 @@
+type ElementConstructor<T extends Element> = abstract new (
+  ...args: never[]
+) => T;
+
+export function query(root: ParentNode, selector: string): Element | null;
 export function query<T extends Element>(
   root: ParentNode,
   selector: string,
-): T | null {
-  return root.querySelector<T>(selector);
+  constructor: ElementConstructor<T>,
+): T | null;
+export function query<T extends Element>(
+  root: ParentNode,
+  selector: string,
+  constructor?: ElementConstructor<T>,
+): Element | T | null {
+  const result = root.querySelector(selector);
+  return constructor && !(result instanceof constructor) ? null : result;
 }
 
 export function queryAll<T extends Element>(

@@ -19,7 +19,7 @@ export function inputOtpDirective(): ng.Directive {
       const cleanupInputs = new WeakMap<HTMLInputElement, () => void>();
 
       const focusInput = (index: number) => {
-        const input = inputs[index];
+        const input = inputs.at(index);
         if (input) input.focus();
       };
 
@@ -58,15 +58,15 @@ export function inputOtpDirective(): ng.Directive {
         );
         input.setAttribute(
           "inputmode",
-          input.getAttribute("inputmode") || "numeric",
+          input.getAttribute("inputmode") ?? "numeric",
         );
         if (!input.hasAttribute("maxlength")) {
           input.setAttribute("maxlength", "1");
         }
         input.setAttribute(
           "aria-label",
-          input.getAttribute("aria-label") ||
-            `Digit ${inputs.indexOf(input) + 1}`,
+          input.getAttribute("aria-label") ??
+            `Digit ${String(inputs.indexOf(input) + 1)}`,
         );
 
         const handleInput = () => {
@@ -139,7 +139,7 @@ export function inputOtpDirective(): ng.Directive {
           bindInput(input);
           input.setAttribute(
             "aria-label",
-            input.getAttribute("aria-label") || `Digit ${index + 1}`,
+            input.getAttribute("aria-label") ?? `Digit ${String(index + 1)}`,
           );
         });
         syncValue();

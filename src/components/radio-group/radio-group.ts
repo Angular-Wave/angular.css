@@ -16,7 +16,7 @@ export function radioGroupDirective(): ng.Directive {
         radios.forEach((radio) => {
           bindRadio(radio);
           const checked = radio.checked;
-          radio.setAttribute("role", radio.getAttribute("role") || "radio");
+          radio.setAttribute("role", radio.getAttribute("role") ?? "radio");
           radio.setAttribute("data-state", checked ? "checked" : "unchecked");
           radio.setAttribute("aria-checked", String(checked));
         });
@@ -30,7 +30,7 @@ export function radioGroupDirective(): ng.Directive {
 
       element.setAttribute(
         "role",
-        element.getAttribute("role") || "radiogroup",
+        element.getAttribute("role") ?? "radiogroup",
       );
 
       const handleKeydown = (event: KeyboardEvent) => {
@@ -56,9 +56,9 @@ export function radioGroupDirective(): ng.Directive {
       onDestroy(scope, () => {
         if (initialSyncFrame !== null) cancelAnimationFrame(initialSyncFrame);
         observer.disconnect();
-        boundRadios.forEach((radio) =>
-          radio.removeEventListener("change", sync),
-        );
+        boundRadios.forEach((radio) => {
+          radio.removeEventListener("change", sync);
+        });
         boundRadios.clear();
         element.removeEventListener("keydown", handleKeydown);
       });

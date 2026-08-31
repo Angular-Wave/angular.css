@@ -1,7 +1,6 @@
 import type {} from "@angular-wave/angular.ts";
 
-import { query } from "../../internal/dom";
-import { onDestroy } from "../../internal/dom";
+import { query, onDestroy } from "../../internal/dom";
 
 let fieldIdCounter = 0;
 
@@ -10,23 +9,26 @@ type FieldScope = ng.Scope & {
 };
 
 const findControl = (element: HTMLElement): HTMLElement | null => {
-  return query<HTMLElement>(
+  return query(
     element,
     "input, textarea, select, button, [role='combobox'], [role='switch']",
+    HTMLElement,
   );
 };
 
 const findDescription = (element: HTMLElement): HTMLElement | null => {
-  return query<HTMLElement>(
+  return query(
     element,
     '[data-slot="field-description"], [ng-field-description]',
+    HTMLElement,
   );
 };
 
 const findError = (element: HTMLElement): HTMLElement | null => {
-  return query<HTMLElement>(
+  return query(
     element,
     '[data-slot="field-error"], [ng-field-error]',
+    HTMLElement,
   );
 };
 
@@ -65,7 +67,7 @@ export function fieldDirective(): ng.Directive {
         const error = findError(element);
 
         const visibleError = isElementVisible(error);
-        const nativeInvalid = control?.matches(":invalid") || false;
+        const nativeInvalid = control?.matches(":invalid") ?? false;
         const invalid =
           visibleError ||
           nativeInvalid ||
@@ -78,7 +80,7 @@ export function fieldDirective(): ng.Directive {
         const describedBy = [description, error]
           .filter(isElementVisible)
           .map((part) => {
-            part.id = part.id || `field-message-${fieldIdCounter++}`;
+            part.id = part.id || `field-message-${String(fieldIdCounter++)}`;
             return part.id;
           });
 

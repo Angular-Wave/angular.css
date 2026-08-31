@@ -36,7 +36,7 @@ test("AngularCSS registry excludes AngularTS ngInput ownership", async ({
   await page.goto("/docs/static/examples/components/input.html");
   expect(
     await page.evaluate(() => {
-      const runtime = window.angular as typeof window.angular & {
+      const runtime = window.angular as unknown as {
         module: (name: string) => {
           _invokeQueue?: Array<[string, string, [string]]>;
         };
@@ -89,17 +89,16 @@ test("input workflows preserve native states, compositions, forms, and RTL", asy
     "Search semantic inputs",
   );
 
-  const fieldGroup = page.locator(
-    "[data-example='input-fieldgroup']",
-  );
+  const fieldGroup = page.locator("[data-example='input-fieldgroup']");
   await fieldGroup.getByLabel("Name").fill("Jordan Lee");
   await fieldGroup.getByRole("button", { name: "Submit" }).click();
   await expect(page.locator(".input-workflow-output")).toHaveText(
     "Submitted Jordan Lee",
   );
-  await expect(
-    page.locator("[data-example='input-rtl']"),
-  ).toHaveAttribute("dir", "rtl");
+  await expect(page.locator("[data-example='input-rtl']")).toHaveAttribute(
+    "dir",
+    "rtl",
+  );
 
   await page.mouse.move(1090, 1890);
   await expect(page.locator(".input-workflow-grid")).toHaveScreenshot(

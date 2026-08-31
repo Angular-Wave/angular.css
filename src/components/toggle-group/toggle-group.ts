@@ -15,7 +15,7 @@ const setAttributeIfChanged = (
 export function toggleGroupDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
-      const directionOwner = element.closest<HTMLElement>("[dir]") || element;
+      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
       const itemSelector =
         '[data-slot="toggle-group-item"], [ng-toggle-group-item], button[aria-pressed]';
       let items: HTMLElement[] = [];
@@ -24,7 +24,7 @@ export function toggleGroupDirective(): ng.Directive {
         element.getAttribute("type") === "multiple";
       const cleanupItems = new Map<HTMLElement, () => void>();
 
-      element.setAttribute("role", element.getAttribute("role") || "group");
+      element.setAttribute("role", element.getAttribute("role") ?? "group");
       const isGroupDisabled = () =>
         element.hasAttribute("disabled") ||
         element.getAttribute("aria-disabled") === "true";
@@ -56,10 +56,10 @@ export function toggleGroupDirective(): ng.Directive {
         }
         const enabled = items.filter((item) => !isItemDisabled(item));
         const tabStop =
-          enabled.find((item) => item.getAttribute("tabindex") === "0") ||
+          enabled.find((item) => item.getAttribute("tabindex") === "0") ??
           enabled.find(
             (item) => item.getAttribute("aria-pressed") === "true",
-          ) ||
+          ) ??
           enabled[0];
         items.forEach((item) => {
           setAttributeIfChanged(
@@ -96,9 +96,9 @@ export function toggleGroupDirective(): ng.Directive {
             });
           }
           setPressed(item, nextPressed);
-          items.forEach((otherItem) =>
-            otherItem.setAttribute("tabindex", otherItem === item ? "0" : "-1"),
-          );
+          items.forEach((otherItem) => {
+            otherItem.setAttribute("tabindex", otherItem === item ? "0" : "-1");
+          });
         };
 
         const handleKeydown = (event: KeyboardEvent) => {
@@ -123,16 +123,18 @@ export function toggleGroupDirective(): ng.Directive {
           const direction = forward === !rtlHorizontal ? 1 : -1;
           const nextItem =
             enabled[nextIndex(currentIndex, enabled.length, direction)];
-          items.forEach((otherItem) =>
+          items.forEach((otherItem) => {
             otherItem.setAttribute(
               "tabindex",
               otherItem === nextItem ? "0" : "-1",
-            ),
-          );
+            );
+          });
           nextItem.focus();
 
           if (!allowsMultiple) {
-            items.forEach((otherItem) => setPressed(otherItem, false));
+            items.forEach((otherItem) => {
+              setPressed(otherItem, false);
+            });
             setPressed(nextItem, true);
           }
         };
@@ -177,7 +179,9 @@ export function toggleGroupDirective(): ng.Directive {
       onDestroy(scope, () => {
         observer.disconnect();
         directionObserver?.disconnect();
-        cleanupItems.forEach((cleanup) => cleanup());
+        cleanupItems.forEach((cleanup) => {
+          cleanup();
+        });
         cleanupItems.clear();
       });
     },

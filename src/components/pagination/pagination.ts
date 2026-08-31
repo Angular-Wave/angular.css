@@ -36,7 +36,7 @@ export function paginationDirective(): ng.Directive {
       setAttribute(
         element,
         "aria-label",
-        element.getAttribute("aria-label") || "pagination",
+        element.getAttribute("aria-label") ?? "pagination",
       );
       if (element.tagName !== "NAV" && !element.hasAttribute("role")) {
         setAttribute(element, "role", "navigation");

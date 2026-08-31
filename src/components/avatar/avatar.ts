@@ -11,13 +11,15 @@ export function avatarDirective(): ng.Directive {
         "default";
       element.setAttribute("data-size", size);
 
-      const image = query<HTMLImageElement>(
+      const image = query(
         element,
         '[data-slot="avatar-image"], [ng-avatar-image]',
+        HTMLImageElement,
       );
-      const fallback = query<HTMLElement>(
+      const fallback = query(
         element,
         '[data-slot="avatar-fallback"], [ng-avatar-fallback]',
+        HTMLElement,
       );
 
       const setState = (state: "loaded" | "fallback") => {
@@ -31,8 +33,12 @@ export function avatarDirective(): ng.Directive {
         return;
       }
 
-      const handleLoad = () => setState("loaded");
-      const handleError = () => setState("fallback");
+      const handleLoad = () => {
+        setState("loaded");
+      };
+      const handleError = () => {
+        setState("fallback");
+      };
 
       image.addEventListener("load", handleLoad);
       image.addEventListener("error", handleError);

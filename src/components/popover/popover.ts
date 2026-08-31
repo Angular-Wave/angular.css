@@ -23,14 +23,16 @@ const setAttributeIfChanged = (
 export function popoverDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
-      const directionOwner = element.closest<HTMLElement>("[dir]") || element;
-      const trigger = query<HTMLElement>(
+      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
+      const trigger = query(
         element,
         '[data-slot="popover-trigger"], [ng-popover-trigger]',
+        HTMLElement,
       );
-      const content = query<HTMLElement>(
+      const content = query(
         element,
         '[data-slot="popover-content"], [ng-popover-content]',
+        HTMLElement,
       );
 
       if (!trigger || !content) return;
@@ -58,18 +60,19 @@ export function popoverDirective(): ng.Directive {
         setAttributeIfChanged(content, "data-side", side);
         setAttributeIfChanged(content, "data-align", align);
       };
-      const contentId = content.id || `popover-content-${popoverIdCounter++}`;
+      const contentId =
+        content.id || `popover-content-${String(popoverIdCounter++)}`;
       content.id = contentId;
       trigger.setAttribute("aria-haspopup", "dialog");
       trigger.setAttribute("aria-controls", contentId);
-      content.setAttribute("role", content.getAttribute("role") || "dialog");
+      content.setAttribute("role", content.getAttribute("role") ?? "dialog");
       content.setAttribute(
         "aria-modal",
-        content.getAttribute("aria-modal") || "false",
+        content.getAttribute("aria-modal") ?? "false",
       );
       content.setAttribute(
         "tabindex",
-        content.getAttribute("tabindex") || "-1",
+        content.getAttribute("tabindex") ?? "-1",
       );
 
       let open =
@@ -173,7 +176,9 @@ export function popoverDirective(): ng.Directive {
       const cleanupEscapeClose = bindEscapeClose(
         [trigger, content],
         () => open,
-        () => setOpen(false),
+        () => {
+          setOpen(false);
+        },
       );
 
       trigger.addEventListener("click", handleTriggerClick);

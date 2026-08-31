@@ -43,23 +43,25 @@ const parsePositiveInteger = (
   element: HTMLElement,
   name: string,
 ): number | undefined => {
-  const value = Number.parseInt(element.getAttribute(name) || "", 10);
+  const value = Number.parseInt(element.getAttribute(name) ?? "", 10);
   return Number.isFinite(value) && value > 0 ? value : undefined;
 };
 
 export function carouselDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
-      const viewport = query<HTMLElement>(
+      const viewport = query(
         element,
         '[data-slot="carousel-content"], [ng-carousel-content]',
+        HTMLElement,
       );
-      const track = query<HTMLElement>(
+      const track = query(
         element,
         '[data-slot="carousel-track"], [ng-carousel-track]',
+        HTMLElement,
       );
 
-      if (!viewport || !track || track.parentElement !== viewport) return;
+      if (!viewport || track?.parentElement !== viewport) return;
 
       const belongsToThisCarousel = (candidate: Element): boolean =>
         candidate.closest(ROOT_SELECTOR) === element;
@@ -78,7 +80,7 @@ export function carouselDirective(): ng.Directive {
           : "horizontal";
       const getDirection = (): "ltr" | "rtl" => {
         const direction =
-          element.getAttribute("dir") ||
+          element.getAttribute("dir") ??
           element.closest<HTMLElement>("[dir]")?.getAttribute("dir");
         return direction === "rtl" ? "rtl" : "ltr";
       };
@@ -103,7 +105,7 @@ export function carouselDirective(): ng.Directive {
           loop: hasEnabledAttribute(element, "loop"),
           skipSnaps: hasEnabledAttribute(element, "skip-snaps"),
           slidesToScroll:
-            parsePositiveInteger(element, "slides-to-scroll") || 1,
+            parsePositiveInteger(element, "slides-to-scroll") ?? 1,
           startIndex: Math.max(
             0,
             getItems().findIndex(
@@ -118,7 +120,7 @@ export function carouselDirective(): ng.Directive {
 
         return [
           Autoplay({
-            delay: parsePositiveInteger(element, "autoplay-delay") || 2000,
+            delay: parsePositiveInteger(element, "autoplay-delay") ?? 2000,
             stopOnFocusIn: true,
             stopOnInteraction: true,
             stopOnMouseEnter: true,
@@ -129,7 +131,7 @@ export function carouselDirective(): ng.Directive {
       const api = EmblaCarousel(viewport, getOptions(), getPlugins());
       let destroyed = false;
       let reinitializeQueued = false;
-      const directionOwner = element.closest<HTMLElement>("[dir]") || element;
+      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
 
       const syncStaticSemantics = () => {
         const items = getItems();
@@ -137,13 +139,13 @@ export function carouselDirective(): ng.Directive {
         setAttributeIfChanged(
           element,
           "role",
-          element.getAttribute("role") || "region",
+          element.getAttribute("role") ?? "region",
         );
         setAttributeIfChanged(element, "aria-roledescription", "carousel");
         setAttributeIfChanged(
           element,
           "tabindex",
-          element.getAttribute("tabindex") || "0",
+          element.getAttribute("tabindex") ?? "0",
         );
         setAttributeIfChanged(element, "data-orientation", getOrientation());
         setAttributeIfChanged(element, "data-direction", getDirection());
@@ -153,14 +155,14 @@ export function carouselDirective(): ng.Directive {
           setAttributeIfChanged(
             item,
             "role",
-            item.getAttribute("role") || "group",
+            item.getAttribute("role") ?? "group",
           );
           setAttributeIfChanged(item, "aria-roledescription", "slide");
           setAttributeIfChanged(
             item,
             "aria-label",
-            item.getAttribute("aria-label") ||
-              `${index + 1} of ${items.length}`,
+            item.getAttribute("aria-label") ??
+              `${String(index + 1)} of ${String(items.length)}`,
           );
           setAttributeIfChanged(item, "data-index", String(index));
         });
@@ -168,7 +170,8 @@ export function carouselDirective(): ng.Directive {
           setAttributeIfChanged(
             dot,
             "aria-label",
-            dot.getAttribute("aria-label") || `Go to slide ${index + 1}`,
+            dot.getAttribute("aria-label") ??
+              `Go to slide ${String(index + 1)}`,
           );
           setAttributeIfChanged(dot, "data-index", String(index));
         });
@@ -229,8 +232,8 @@ export function carouselDirective(): ng.Directive {
           dot.toggleAttribute("hidden", index >= detail.count);
         });
 
-        const previous = query<HTMLElement>(element, PREVIOUS_SELECTOR);
-        const next = query<HTMLElement>(element, NEXT_SELECTOR);
+        const previous = query(element, PREVIOUS_SELECTOR, HTMLElement);
+        const next = query(element, NEXT_SELECTOR, HTMLElement);
         if (previous && belongsToThisCarousel(previous)) {
           previous.setAttribute("aria-disabled", String(!api.canScrollPrev()));
           previous.toggleAttribute("disabled", !api.canScrollPrev());
@@ -271,7 +274,7 @@ export function carouselDirective(): ng.Directive {
           api.scrollNext();
         } else {
           const index = Number.parseInt(
-            control.getAttribute("data-index") || "",
+            control.getAttribute("data-index") ?? "",
             10,
           );
           if (Number.isFinite(index)) api.scrollTo(index);

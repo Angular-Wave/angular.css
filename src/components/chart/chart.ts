@@ -51,7 +51,7 @@ const barLabel = (element: HTMLElement): string | null => {
   const label = element.getAttribute("data-label");
   const value = element.getAttribute("data-value");
   if (label && value) return `${label}: ${value}`;
-  return label || value;
+  return label ?? value;
 };
 
 const syncBarSemantics = (
@@ -80,16 +80,16 @@ const syncBarSemantics = (
 export function chartDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
-      const directionOwner = element.closest<HTMLElement>("[dir]") || element;
+      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
       const generatedLabels = new WeakMap<HTMLElement, string>();
       const sync = () => {
         syncChartSemantics(element);
         syncDirection(element);
         queryAll<HTMLElement>(element, valueSelector).forEach(syncValue);
         queryAll<HTMLElement>(element, colorSelector).forEach(syncColor);
-        queryAll<HTMLElement>(element, valueSelector).forEach((bar) =>
-          syncBarSemantics(bar, generatedLabels),
-        );
+        queryAll<HTMLElement>(element, valueSelector).forEach((bar) => {
+          syncBarSemantics(bar, generatedLabels);
+        });
         queryAll<HTMLElement>(element, semanticSlots.axis).forEach((axis) => {
           if (!axis.hasAttribute("role")) axis.setAttribute("role", "list");
         });

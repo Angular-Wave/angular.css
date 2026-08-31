@@ -44,24 +44,33 @@ export function selectDirective(): ng.Directive {
     link(scope: ng.Scope, element: HTMLElement) {
       const isOwned = (candidate: Element) =>
         candidate.closest(rootSelector) === element;
-      const owned = <T extends HTMLElement>(selector: string): T | null =>
-        queryAll<T>(element, selector).find(isOwned) ?? null;
+      const owned = <T extends HTMLElement>(
+        selector: string,
+        constructor: abstract new (...args: never[]) => T,
+      ): T | null => {
+        const candidate = queryAll<HTMLElement>(element, selector).find(
+          isOwned,
+        );
+        return candidate instanceof constructor ? candidate : null;
+      };
       const ownedAll = <T extends HTMLElement>(selector: string): T[] =>
         queryAll<T>(element, selector).filter(isOwned);
 
-      const directionOwner = element.closest<HTMLElement>("[dir]") || element;
-      const trigger = owned<HTMLElement>(triggerSelector);
-      const content = owned<HTMLElement>(contentSelector);
+      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
+      const trigger = owned(triggerSelector, HTMLElement);
+      const content = owned(contentSelector, HTMLElement);
       if (!trigger || !content) return;
 
-      const contentId = content.id || `select-content-${selectIdCounter++}`;
-      const triggerId = trigger.id || `select-trigger-${selectIdCounter++}`;
+      const contentId =
+        content.id || `select-content-${String(selectIdCounter++)}`;
+      const triggerId =
+        trigger.id || `select-trigger-${String(selectIdCounter++)}`;
       content.id = contentId;
       trigger.id = triggerId;
       setAttributeIfChanged(
         trigger,
         "role",
-        trigger.getAttribute("role") || "combobox",
+        trigger.getAttribute("role") ?? "combobox",
       );
       setAttributeIfChanged(trigger, "aria-haspopup", "listbox");
       setAttributeIfChanged(trigger, "aria-controls", contentId);
@@ -69,7 +78,7 @@ export function selectDirective(): ng.Directive {
       setAttributeIfChanged(
         content,
         "role",
-        content.getAttribute("role") || "listbox",
+        content.getAttribute("role") ?? "listbox",
       );
       setAttributeIfChanged(content, "aria-labelledby", triggerId);
       setAttributeIfChanged(content, "tabindex", "-1");
@@ -156,7 +165,7 @@ export function selectDirective(): ng.Directive {
         );
         content.style.setProperty(
           "--select-content-top",
-          `${Math.round(top)}px`,
+          `${String(Math.round(top))}px`,
         );
         syncScrollState();
       };
@@ -200,13 +209,13 @@ export function selectDirective(): ng.Directive {
           nextIndex = (nextIndex + 1) % items.length;
         }
         activeIndex = nextIndex;
-        items.forEach((item, itemIndex) =>
+        items.forEach((item, itemIndex) => {
           setAttributeIfChanged(
             item,
             "data-highlighted",
             String(itemIndex === activeIndex),
-          ),
-        );
+          );
+        });
         setAttributeIfChanged(
           trigger,
           "aria-activedescendant",
@@ -225,20 +234,20 @@ export function selectDirective(): ng.Directive {
 
       const selectItem = (item: HTMLElement) => {
         if (isDisabled(item)) return;
-        items.forEach((option) =>
+        items.forEach((option) => {
           setAttributeIfChanged(
             option,
             "aria-selected",
             String(option === item),
-          ),
-        );
+          );
+        });
         highlightItem(items.indexOf(item));
-        const itemText = item.textContent?.trim() || "";
+        const itemText = item.textContent.trim() || "";
         const value = item.getAttribute("data-value") ?? itemText;
-        const valueSlot = owned<HTMLElement>(valueSelector);
+        const valueSlot = owned(valueSelector, HTMLElement);
         const applicationOwnsValue = Boolean(
-          valueSlot?.hasAttribute("ng-bind") ||
-          valueSlot?.hasAttribute("ng-model") ||
+          valueSlot?.hasAttribute("ng-bind") ??
+          valueSlot?.hasAttribute("ng-model") ??
           valueSlot?.hasAttribute("data-application-value"),
         );
         if (valueSlot && !applicationOwnsValue) {
@@ -273,11 +282,11 @@ export function selectDirective(): ng.Directive {
       };
 
       const bindItem = (item: HTMLElement) => {
-        if (!item.id) item.id = `select-item-${selectIdCounter++}`;
+        if (!item.id) item.id = `select-item-${String(selectIdCounter++)}`;
         setAttributeIfChanged(
           item,
           "role",
-          item.getAttribute("role") || "option",
+          item.getAttribute("role") ?? "option",
         );
         setAttributeIfChanged(item, "tabindex", "-1");
         if (isDisabled(item)) {
@@ -285,11 +294,13 @@ export function selectDirective(): ng.Directive {
         }
         if (cleanupItems.has(item)) return;
 
-        const handleItemClick = () => selectItem(item);
+        const handleItemClick = () => {
+          selectItem(item);
+        };
         item.addEventListener("click", handleItemClick);
-        cleanupItems.set(item, () =>
-          item.removeEventListener("click", handleItemClick),
-        );
+        cleanupItems.set(item, () => {
+          item.removeEventListener("click", handleItemClick);
+        });
       };
 
       const bindScrollControl = (control: HTMLElement, direction: 1 | -1) => {
@@ -313,14 +324,15 @@ export function selectDirective(): ng.Directive {
           });
         };
         control.addEventListener("click", scroll);
-        cleanupScrollControls.set(control, () =>
-          control.removeEventListener("click", scroll),
-        );
+        cleanupScrollControls.set(control, () => {
+          control.removeEventListener("click", scroll);
+        });
       };
 
       const syncStructure = () => {
         syncChrome();
-        const previousActiveItem = items[activeIndex];
+        const previousActiveItem =
+          activeIndex < 0 ? undefined : items.at(activeIndex);
         items = ownedAll<HTMLElement>(itemSelector);
         items.forEach(bindItem);
 
@@ -330,7 +342,8 @@ export function selectDirective(): ng.Directive {
             (candidate) => candidate.closest(groupSelector) === group,
           );
           if (label) {
-            if (!label.id) label.id = `select-label-${selectIdCounter++}`;
+            if (!label.id)
+              label.id = `select-label-${String(selectIdCounter++)}`;
             setAttributeIfChanged(group, "aria-labelledby", label.id);
           }
         });
@@ -338,12 +351,12 @@ export function selectDirective(): ng.Directive {
           setAttributeIfChanged(separator, "role", "separator");
           setAttributeIfChanged(separator, "aria-orientation", "horizontal");
         });
-        ownedAll<HTMLElement>(scrollUpSelector).forEach((control) =>
-          bindScrollControl(control, -1),
-        );
-        ownedAll<HTMLElement>(scrollDownSelector).forEach((control) =>
-          bindScrollControl(control, 1),
-        );
+        ownedAll<HTMLElement>(scrollUpSelector).forEach((control) => {
+          bindScrollControl(control, -1);
+        });
+        ownedAll<HTMLElement>(scrollDownSelector).forEach((control) => {
+          bindScrollControl(control, 1);
+        });
 
         cleanupItems.forEach((cleanup, item) => {
           if (!item.isConnected || !isOwned(item)) {
@@ -369,8 +382,7 @@ export function selectDirective(): ng.Directive {
             element,
             "data-value",
             items[selected].getAttribute("data-value") ??
-              items[selected].textContent?.trim() ??
-              "",
+              items[selected].textContent.trim(),
           );
         }
         if (open) requestAnimationFrame(positionContent);
@@ -418,7 +430,7 @@ export function selectDirective(): ng.Directive {
         const match = ordered.find(
           (item) =>
             !isDisabled(item) &&
-            item.textContent?.trim().toLocaleLowerCase().startsWith(typeahead),
+            item.textContent.trim().toLocaleLowerCase().startsWith(typeahead),
         );
         if (match) highlightItem(items.indexOf(match));
       };
@@ -451,7 +463,8 @@ export function selectDirective(): ng.Directive {
             setOpen(true, false, true);
             return;
           }
-          const activeItem = items[activeIndex];
+          const activeItem =
+            activeIndex < 0 ? undefined : items.at(activeIndex);
           if (activeItem) selectItem(activeItem);
           return;
         }
@@ -531,9 +544,13 @@ export function selectDirective(): ng.Directive {
         document.removeEventListener("click", handleDocumentClick);
         document.removeEventListener("focusin", handleFocusOutside);
         window.removeEventListener("resize", positionContent);
-        cleanupItems.forEach((cleanup) => cleanup());
+        cleanupItems.forEach((cleanup) => {
+          cleanup();
+        });
         cleanupItems.clear();
-        cleanupScrollControls.forEach((cleanup) => cleanup());
+        cleanupScrollControls.forEach((cleanup) => {
+          cleanup();
+        });
         cleanupScrollControls.clear();
       });
     },

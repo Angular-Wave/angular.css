@@ -28,9 +28,9 @@ export function directionDirective(): ng.Directive {
     }
 
     return (
-      normalize(document.documentElement?.getAttribute("dir")) ||
-      normalize(document.documentElement?.getAttribute("data-direction")) ||
-      normalize(document.dir) ||
+      normalize(document.documentElement.getAttribute("dir")) ??
+      normalize(document.documentElement.getAttribute("data-direction")) ??
+      normalize(document.dir) ??
       "ltr"
     );
   };

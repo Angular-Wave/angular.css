@@ -53,12 +53,12 @@ const directChild = (
 export function navigationMenuDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
-      const list = query<HTMLElement>(element, listSelector);
+      const list = query(element, listSelector, HTMLElement);
       const entries: NavigationMenuEntry[] = [];
       const triggers: HTMLElement[] = [];
       const topLevelControls: HTMLElement[] = [];
       const boundEntries = new Map<HTMLElement, NavigationMenuEntry>();
-      const directionOwner = element.closest<HTMLElement>("[dir]") || element;
+      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
       let initialized = false;
 
       const getDirection = () =>
@@ -72,9 +72,9 @@ export function navigationMenuDirective(): ng.Directive {
       const syncDirection = () => {
         const direction = getDirection();
         setAttribute(element, "data-direction", direction);
-        entries.forEach(({ content }) =>
-          setAttribute(content, "data-direction", direction),
-        );
+        entries.forEach(({ content }) => {
+          setAttribute(content, "data-direction", direction);
+        });
       };
 
       const syncRootState = () => {
@@ -107,12 +107,12 @@ export function navigationMenuDirective(): ng.Directive {
               : 0;
         content.style.setProperty(
           "--navigation-menu-content-offset",
-          `${offset}px`,
+          `${String(offset)}px`,
         );
       };
 
       const setMenuState = (index: number, open: boolean, focus = false) => {
-        const entry = entries[index];
+        const entry = entries.at(index);
         if (!entry) return;
 
         entry.open = open;
@@ -137,10 +137,11 @@ export function navigationMenuDirective(): ng.Directive {
         }
       };
 
-      const closeAll = () =>
+      const closeAll = () => {
         entries.forEach((entry, index) => {
           if (!entry.controlledBy) setMenuState(index, false);
         });
+      };
 
       const openMenu = (index: number, focus = false) => {
         if (index < 0 || isDisabled(entries[index]?.trigger)) return;
@@ -206,7 +207,7 @@ export function navigationMenuDirective(): ng.Directive {
         if (!trigger || !content) return;
 
         const triggerId =
-          trigger.id || `navigation-menu-trigger-${navigationMenuId++}`;
+          trigger.id || `navigation-menu-trigger-${String(navigationMenuId++)}`;
         const contentId = content.id || `${triggerId}-content`;
         trigger.id = triggerId;
         content.id = contentId;
@@ -304,7 +305,9 @@ export function navigationMenuDirective(): ng.Directive {
             openMenu(getEntryIndex(entry));
           }
         };
-        const handlePointerLeave = () => scheduleClose();
+        const handlePointerLeave = () => {
+          scheduleClose();
+        };
 
         trigger.addEventListener("click", handleTriggerClick);
         trigger.addEventListener("keydown", handleTriggerKeydown);
@@ -336,7 +339,7 @@ export function navigationMenuDirective(): ng.Directive {
             return [];
           }
           const control =
-            directChild(child, triggerSelector) ||
+            directChild(child, triggerSelector) ??
             directChild(child, linkSelector);
           return control ? [control] : [];
         });
@@ -479,7 +482,9 @@ export function navigationMenuDirective(): ng.Directive {
       const handleResize = () => {
         entries
           .filter((entry) => entry.open)
-          .forEach((entry) => positionContent(entry.content));
+          .forEach((entry) => {
+            positionContent(entry.content);
+          });
       };
 
       if (element.tagName !== "NAV" && !element.hasAttribute("role")) {
@@ -522,7 +527,9 @@ export function navigationMenuDirective(): ng.Directive {
         document.removeEventListener("click", handleDocumentClick);
         document.removeEventListener("focusin", handleDocumentFocus);
         window.removeEventListener("resize", handleResize);
-        entries.forEach((entry) => entry.disconnect());
+        entries.forEach((entry) => {
+          entry.disconnect();
+        });
       });
     },
   };

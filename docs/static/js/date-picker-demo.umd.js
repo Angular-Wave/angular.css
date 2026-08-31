@@ -2996,21 +2996,19 @@
             : "";
     };
     class DatePickerDemoController {
-        constructor() {
-            this.basicDate = "";
-            this.demoDate = "";
-            this.dobDate = "";
-            this.dropdownDate = "";
-            this.inputDate = "2025-06-01";
-            this.inputValue = formatDate(this.inputDate, "en-US", "2-digit");
-            this.naturalDate = toIsoDate(parseDate("In 2 days", demoReferenceDate));
-            this.naturalValue = "In 2 days";
-            this.rangeEnd = "2026-09-15";
-            this.rangeStart = "2026-09-10";
-            this.rtlDate = "";
-            this.time = "10:30:00";
-            this.timeDate = "";
-        }
+        basicDate = "";
+        demoDate = "";
+        dobDate = "";
+        dropdownDate = "";
+        inputDate = "2025-06-01";
+        inputValue = formatDate(this.inputDate, "en-US", "2-digit");
+        naturalDate = toIsoDate(parseDate("In 2 days", demoReferenceDate));
+        naturalValue = "In 2 days";
+        rangeEnd = "2026-09-15";
+        rangeStart = "2026-09-10";
+        rtlDate = "";
+        time = "10:30:00";
+        timeDate = "";
         format(value) {
             return formatDate(value);
         }
@@ -3027,11 +3025,10 @@
             return value.slice(0, 7) || "2026-09";
         }
         openPopover(id, event) {
-            var _a;
             if (event && event.key !== "ArrowDown")
                 return;
-            event === null || event === void 0 ? void 0 : event.preventDefault();
-            (_a = document.getElementById(id)) === null || _a === void 0 ? void 0 : _a.setAttribute("data-open", "true");
+            event?.preventDefault();
+            document.getElementById(id)?.setAttribute("data-open", "true");
         }
         selectBasic(value) {
             this.basicDate = value;
@@ -3085,8 +3082,7 @@
             this.closePopover("date-picker-time-popover");
         }
         closePopover(id) {
-            var _a;
-            (_a = document.getElementById(id)) === null || _a === void 0 ? void 0 : _a.setAttribute("data-open", "false");
+            document.getElementById(id)?.setAttribute("data-open", "false");
         }
     }
     window.angular

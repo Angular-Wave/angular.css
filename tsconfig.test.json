@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "target": "ES2023",
+    "sourceMap": false,
+    "declaration": false,
+    "noUnusedLocals": false,
+    "types": ["jasmine", "node"]
+  },
+  "include": ["src/**/*.spec.ts", "src/**/*.test.ts"]
+}

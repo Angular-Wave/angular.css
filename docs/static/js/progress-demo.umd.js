@@ -2,6 +2,8 @@
     'use strict';
 
     class ProgressDemoController {
+        static $inject = ["$scope"];
+        timer;
         constructor(scope) {
             scope.demoValue = 13;
             this.timer = window.setTimeout(() => {
@@ -10,7 +12,6 @@
             scope.$on("$destroy", () => window.clearTimeout(this.timer));
         }
     }
-    ProgressDemoController.$inject = ["$scope"];
     window.angular
         .module("progressDemo", ["ui"])
         .controller("ProgressDemoController", ProgressDemoController);

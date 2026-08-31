@@ -32,9 +32,10 @@ test("empty workflows preserve reference compositions, interaction, and RTL", as
   );
   await page.getByLabel("Search missing pages").fill("billing");
   await expect(page.locator(".empty-workflow-output")).toContainText("billing");
-  await expect(
-    page.locator("[data-example='empty-rtl']"),
-  ).toHaveAttribute("dir", "rtl");
+  await expect(page.locator("[data-example='empty-rtl']")).toHaveAttribute(
+    "dir",
+    "rtl",
+  );
   await expect(page.locator(".empty-workflow-grid")).toHaveScreenshot(
     "empty-workflows-desktop.png",
     { animations: "disabled" },

@@ -13,9 +13,7 @@
 [data-slot="carousel-track"],
 [ng-carousel-track] {
   display: flex;
-  margin-inline-start: calc(
-    var(--carousel-gap, calc(var(--spacing) * 4)) * -1
-  );
+  margin-inline-start: calc(var(--carousel-gap, calc(var(--spacing) * 4)) * -1);
   backface-visibility: hidden;
 }
 
@@ -24,9 +22,7 @@
 [ng-carousel][data-orientation="vertical"] [ng-carousel-track],
 [ng-carousel][data-orientation="vertical"] [data-slot="carousel-track"] {
   flex-direction: column;
-  margin-block-start: calc(
-    var(--carousel-gap, calc(var(--spacing) * 4)) * -1
-  );
+  margin-block-start: calc(var(--carousel-gap, calc(var(--spacing) * 4)) * -1);
   margin-inline-start: 0;
 }
 

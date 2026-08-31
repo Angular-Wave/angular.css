@@ -37,7 +37,7 @@ test("canonical artifact exposes the Nova command anatomy and packaged runtime",
   await expect(input).toHaveAttribute("aria-autocomplete", "list");
   await expect(input).toHaveAttribute(
     "aria-controls",
-    await list.getAttribute("id"),
+    (await list.getAttribute("id")) ?? "",
   );
   await expect(list).toHaveAttribute("role", "listbox");
   await expect(root.getByRole("option")).toHaveCount(6);
@@ -106,7 +106,7 @@ test("keyboard and pointer navigation preserve active descendant and disabled sk
   await expect(options.nth(4)).toHaveAttribute("data-selected", "true");
   await expect(input).toHaveAttribute(
     "aria-activedescendant",
-    await options.nth(4).getAttribute("id"),
+    (await options.nth(4).getAttribute("id")) ?? "",
   );
 });
 
@@ -151,7 +151,7 @@ test("grouped and shortcut dialogs preserve labels, separators, and shortcut sem
   const heading = group.locator("[ng-command-group-heading]");
   await expect(group).toHaveAttribute(
     "aria-labelledby",
-    await heading.getAttribute("id"),
+    (await heading.getAttribute("id")) ?? "",
   );
   await expect(grouped.locator("[ng-command-shortcut]:visible")).toHaveText(
     "⌘B",

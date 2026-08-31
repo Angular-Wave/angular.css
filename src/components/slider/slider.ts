@@ -62,7 +62,7 @@ const syncInput = (
   setAttributeIfChanged(
     element,
     "role",
-    element.getAttribute("role") || "slider",
+    element.getAttribute("role") ?? "slider",
   );
   setAttributeIfChanged(element, "aria-orientation", orientation);
   setAttributeIfChanged(element, "data-orientation", orientation);
@@ -77,7 +77,7 @@ const syncInput = (
         element.matches(":invalid"),
     ),
   );
-  element.style.setProperty("--value", `${state.percent}%`);
+  element.style.setProperty("--value", `${String(state.percent)}%`);
   setAttributeIfChanged(element, "data-value", String(state.value));
 
   return state;
@@ -166,8 +166,8 @@ const bindCompositeSlider = (element: HTMLElement): (() => void) => {
       "data-values",
       states.map(({ value }) => value).join(","),
     );
-    element.style.setProperty("--range-start", `${start}%`);
-    element.style.setProperty("--range-end", `${end}%`);
+    element.style.setProperty("--range-start", `${String(start)}%`);
+    element.style.setProperty("--range-end", `${String(end)}%`);
   };
 
   const handleFocus = (event: FocusEvent) => {

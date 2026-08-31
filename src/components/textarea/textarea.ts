@@ -20,7 +20,9 @@ export function textareaDirective(): ng.Directive {
         );
       };
 
-      const onChange = () => sync();
+      const onChange = () => {
+        sync();
+      };
 
       element.addEventListener("input", sync);
       element.addEventListener("change", onChange);

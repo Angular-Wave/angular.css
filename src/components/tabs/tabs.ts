@@ -21,7 +21,7 @@ const setAttribute = (
 export function tabsDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
-      const directionOwner = element.closest<HTMLElement>("[dir]") || element;
+      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
       let triggers: HTMLElement[] = [];
       let contents: HTMLElement[] = [];
       let orientation = "horizontal";
@@ -81,7 +81,7 @@ export function tabsDirective(): ng.Directive {
           setAttribute(
             content,
             "role",
-            content.getAttribute("role") || "tabpanel",
+            content.getAttribute("role") ?? "tabpanel",
           );
           setAttribute(content, "aria-hidden", String(!selected));
           setAttribute(content, "tabindex", selected ? "0" : "-1");
@@ -150,23 +150,24 @@ export function tabsDirective(): ng.Directive {
 
         const list = element.querySelector<HTMLElement>(listSelector);
         orientation =
-          element.getAttribute("orientation") ||
-          element.getAttribute("aria-orientation") ||
-          list?.getAttribute("aria-orientation") ||
+          element.getAttribute("orientation") ??
+          element.getAttribute("aria-orientation") ??
+          list?.getAttribute("aria-orientation") ??
           "horizontal";
         orientation = orientation === "vertical" ? "vertical" : "horizontal";
         setAttribute(element, "data-direction", getDirection());
         setAttribute(element, "data-orientation", orientation);
         if (list) {
-          setAttribute(list, "role", list.getAttribute("role") || "tablist");
+          setAttribute(list, "role", list.getAttribute("role") ?? "tablist");
           setAttribute(list, "aria-orientation", orientation);
         }
 
         triggers.forEach((trigger, index) => {
-          const content = contents[index];
-          const triggerId = trigger.id || `tabs-trigger-${tabsIdCounter++}`;
+          const content = contents.at(index);
+          const triggerId =
+            trigger.id || `tabs-trigger-${String(tabsIdCounter++)}`;
           trigger.id = triggerId;
-          setAttribute(trigger, "role", trigger.getAttribute("role") || "tab");
+          setAttribute(trigger, "role", trigger.getAttribute("role") ?? "tab");
           if (content) {
             const contentId = content.id || `${triggerId}-content`;
             content.id = contentId;
@@ -174,7 +175,7 @@ export function tabsDirective(): ng.Directive {
             setAttribute(
               content,
               "role",
-              content.getAttribute("role") || "tabpanel",
+              content.getAttribute("role") ?? "tabpanel",
             );
             setAttribute(content, "aria-labelledby", triggerId);
           }

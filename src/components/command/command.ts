@@ -30,15 +30,22 @@ export function commandDirective(): ng.Directive {
     link(scope: ng.Scope, element: HTMLElement) {
       const isOwned = (candidate: Element) =>
         candidate.closest(rootSelector) === element;
-      const owned = <T extends HTMLElement>(selector: string): T | null =>
-        queryAll<T>(element, selector).find(isOwned) ?? null;
+      const owned = <T extends HTMLElement>(
+        selector: string,
+        constructor: abstract new (...args: never[]) => T,
+      ): T | null => {
+        const candidate = queryAll<HTMLElement>(element, selector).find(
+          isOwned,
+        );
+        return candidate instanceof constructor ? candidate : null;
+      };
       const ownedAll = <T extends HTMLElement>(selector: string): T[] =>
         queryAll<T>(element, selector).filter(isOwned);
 
-      const input = owned<HTMLInputElement>(inputSelector);
+      const input = owned(inputSelector, HTMLInputElement);
       if (!input) return;
 
-      const directionOwner = element.closest<HTMLElement>("[dir]") || element;
+      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
       const itemCleanups = new Map<HTMLElement, () => void>();
       let items: HTMLElement[] = [];
       let activeItem: HTMLElement | null = null;
@@ -88,7 +95,10 @@ export function commandDirective(): ng.Directive {
 
       const move = (delta: 1 | -1) => {
         const enabled = enabledItems();
-        if (!enabled.length) return selectItem(null);
+        if (!enabled.length) {
+          selectItem(null);
+          return;
+        }
         const current = activeItem ? enabled.indexOf(activeItem) : -1;
         const next =
           current < 0
@@ -100,7 +110,7 @@ export function commandDirective(): ng.Directive {
       };
 
       const bindItem = (item: HTMLElement) => {
-        if (!item.id) item.id = `command-item-${commandIdCounter++}`;
+        if (!item.id) item.id = `command-item-${String(commandIdCounter++)}`;
         setAttributeIfChanged(item, "role", "option");
         setAttributeIfChanged(item, "tabindex", "-1");
         setAttributeIfChanged(item, "data-disabled", String(isDisabled(item)));
@@ -135,9 +145,9 @@ export function commandDirective(): ng.Directive {
           }
         });
 
-        const list = owned<HTMLElement>(listSelector);
+        const list = owned(listSelector, HTMLElement);
         if (list) {
-          if (!list.id) list.id = `command-list-${commandIdCounter++}`;
+          if (!list.id) list.id = `command-list-${String(commandIdCounter++)}`;
           setAttributeIfChanged(list, "role", "listbox");
           setAttributeIfChanged(input, "aria-controls", list.id);
         }
@@ -150,7 +160,7 @@ export function commandDirective(): ng.Directive {
           ).find((candidate) => candidate.closest(groupSelector) === group);
           if (!heading) return;
           if (!heading.id) {
-            heading.id = `command-group-heading-${commandIdCounter++}`;
+            heading.id = `command-group-heading-${String(commandIdCounter++)}`;
           }
           setAttributeIfChanged(group, "aria-labelledby", heading.id);
         });
@@ -181,7 +191,7 @@ export function commandDirective(): ng.Directive {
         if (previousActive && enabled.includes(previousActive)) {
           selectItem(previousActive);
         } else {
-          selectItem(authoredSelected ?? enabled[0] ?? null);
+          selectItem(authoredSelected ?? enabled.at(0) ?? null);
         }
       };
 
@@ -212,7 +222,7 @@ export function commandDirective(): ng.Directive {
       setAttributeIfChanged(
         input,
         "aria-autocomplete",
-        input.getAttribute("aria-autocomplete") || "list",
+        input.getAttribute("aria-autocomplete") ?? "list",
       );
 
       const observer = new MutationObserver(syncStructure);
@@ -242,7 +252,9 @@ export function commandDirective(): ng.Directive {
       onDestroy(scope, () => {
         observer.disconnect();
         directionObserver?.disconnect();
-        itemCleanups.forEach((cleanup) => cleanup());
+        itemCleanups.forEach((cleanup) => {
+          cleanup();
+        });
         itemCleanups.clear();
         input.removeEventListener("keydown", handleKeydown);
       });

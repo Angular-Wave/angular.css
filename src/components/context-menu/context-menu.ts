@@ -78,16 +78,23 @@ export function contextMenuDirective(): ng.Directive {
     link(scope: ng.Scope, element: HTMLElement) {
       const isOwned = (candidate: Element): boolean =>
         candidate.closest(rootSelector) === element;
-      const owned = <T extends HTMLElement>(selector: string): T | null =>
-        queryAll<T>(element, selector).find(isOwned) ?? null;
+      const owned = <T extends HTMLElement>(
+        selector: string,
+        constructor: abstract new (...args: never[]) => T,
+      ): T | null => {
+        const candidate = queryAll<HTMLElement>(element, selector).find(
+          isOwned,
+        );
+        return candidate instanceof constructor ? candidate : null;
+      };
       const ownedAll = <T extends HTMLElement>(selector: string): T[] =>
         queryAll<T>(element, selector).filter(isOwned);
 
-      const trigger = owned<HTMLElement>(triggerSelector);
-      const content = owned<HTMLElement>(contentSelector);
+      const trigger = owned(triggerSelector, HTMLElement);
+      const content = owned(contentSelector, HTMLElement);
       if (!trigger || !content) return;
 
-      const directionOwner = element.closest<HTMLElement>("[dir]") || element;
+      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
       const getDirection = (): Direction =>
         element.closest<HTMLElement>("[dir]")?.getAttribute("dir") === "rtl"
           ? "rtl"
@@ -115,7 +122,7 @@ export function contextMenuDirective(): ng.Directive {
       };
 
       const contentId =
-        content.id || `context-menu-content-${contextMenuIdCounter++}`;
+        content.id || `context-menu-content-${String(contextMenuIdCounter++)}`;
       content.id = contentId;
       trigger.setAttribute("aria-haspopup", "menu");
       trigger.setAttribute("aria-controls", contentId);
@@ -123,12 +130,12 @@ export function contextMenuDirective(): ng.Directive {
       setAttributeIfChanged(
         content,
         "role",
-        content.getAttribute("role") || "menu",
+        content.getAttribute("role") ?? "menu",
       );
       setAttributeIfChanged(
         content,
         "tabindex",
-        content.getAttribute("tabindex") || "-1",
+        content.getAttribute("tabindex") ?? "-1",
       );
 
       const menuItems = (surface: HTMLElement): HTMLElement[] =>
@@ -150,15 +157,15 @@ export function contextMenuDirective(): ng.Directive {
           setAttributeIfChanged(surface, "role", "menu");
           if (!surface.hasAttribute("tabindex")) surface.tabIndex = -1;
         });
-        ownedAll<HTMLElement>(groupSelector).forEach((group) =>
-          setAttributeIfChanged(group, "role", "group"),
-        );
-        ownedAll<HTMLElement>(labelSelector).forEach((label) =>
-          setAttributeIfChanged(label, "role", "presentation"),
-        );
-        ownedAll<HTMLElement>(separatorSelector).forEach((separator) =>
-          setAttributeIfChanged(separator, "role", "separator"),
-        );
+        ownedAll<HTMLElement>(groupSelector).forEach((group) => {
+          setAttributeIfChanged(group, "role", "group");
+        });
+        ownedAll<HTMLElement>(labelSelector).forEach((label) => {
+          setAttributeIfChanged(label, "role", "presentation");
+        });
+        ownedAll<HTMLElement>(separatorSelector).forEach((separator) => {
+          setAttributeIfChanged(separator, "role", "separator");
+        });
         ownedAll<HTMLElement>(itemSelector).forEach((item) => {
           const role = item.matches(checkboxSelector)
             ? "menuitemcheckbox"
@@ -241,15 +248,15 @@ export function contextMenuDirective(): ng.Directive {
 
         content.style.setProperty(
           "--context-menu-left",
-          `${Math.round(left - rootRect.left + element.scrollLeft)}px`,
+          `${String(Math.round(left - rootRect.left + element.scrollLeft))}px`,
         );
         content.style.setProperty(
           "--context-menu-top",
-          `${Math.round(top - rootRect.top + element.scrollTop)}px`,
+          `${String(Math.round(top - rootRect.top + element.scrollTop))}px`,
         );
         content.style.setProperty(
           "--context-menu-available-height",
-          `${Math.max(0, Math.round(window.innerHeight - margin * 2))}px`,
+          `${String(Math.max(0, Math.round(window.innerHeight - margin * 2)))}px`,
         );
         setAttributeIfChanged(content, "data-side", authoredSide);
         setAttributeIfChanged(content, "data-align", align);
@@ -330,8 +337,9 @@ export function contextMenuDirective(): ng.Directive {
         syncSemantics();
         setOpen(true, { focusFirst });
       };
-      const close = (restoreFocus = false): void =>
+      const close = (restoreFocus = false): void => {
         setOpen(false, { restoreFocus });
+      };
 
       const handleContextMenu = (event: MouseEvent): void => {
         if (isDisabled(trigger)) return;
@@ -407,13 +415,13 @@ export function contextMenuDirective(): ng.Directive {
         const item = target?.closest<HTMLElement>(itemSelector);
         const surface = item?.closest<HTMLElement>(menuSurfaceSelector);
         if (!item || !surface || !isOwned(item) || isDisabled(item)) return;
-        menuItems(surface).forEach((candidate) =>
+        menuItems(surface).forEach((candidate) => {
           setAttributeIfChanged(
             candidate,
             "data-highlighted",
             String(candidate === item),
-          ),
-        );
+          );
+        });
       };
 
       const handlePointerDownOutside = (event: PointerEvent): void => {

@@ -95,7 +95,11 @@ test("input group examples match canonical geometry, state, and addon focus beha
   );
 
   const commandInput = page.locator("#ig-command-search");
-  await commandInput.locator("..").locator("[data-slot=input-group-addon]").first().click();
+  await commandInput
+    .locator("..")
+    .locator("[data-slot=input-group-addon]")
+    .first()
+    .click();
   await expect(commandInput).toBeFocused();
 
   await page.getByLabel("Search documentation").fill("angular");
@@ -177,7 +181,9 @@ test("input group textarea examples preserve AngularTS state and native autosizi
   );
   await autosize.fill("One\nTwo\nThree\nFour\nFive");
   expect(
-    await autosize.evaluate((element) => element.getBoundingClientRect().height),
+    await autosize.evaluate(
+      (element) => element.getBoundingClientRect().height,
+    ),
   ).toBeGreaterThan(initialHeight);
 
   await expect(page.locator(".input-group-textarea-grid")).toHaveScreenshot(

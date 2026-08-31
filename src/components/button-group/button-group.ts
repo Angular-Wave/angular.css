@@ -21,22 +21,24 @@ export function buttonGroupDirective(): ng.Directive {
         "horizontal",
       );
 
-      element.setAttribute("role", element.getAttribute("role") || "group");
+      element.setAttribute("role", element.getAttribute("role") ?? "group");
       element.setAttribute("data-orientation", orientation);
 
-      element.querySelectorAll<HTMLElement>(separatorSelector).forEach((separator) => {
-        const separatorOrientation = normalizeOrientation(
-          separator.getAttribute("orientation") ??
-            separator.getAttribute("data-orientation"),
-          "vertical",
-        );
-        separator.setAttribute(
-          "role",
-          separator.getAttribute("role") || "separator",
-        );
-        separator.setAttribute("data-orientation", separatorOrientation);
-        separator.setAttribute("aria-orientation", separatorOrientation);
-      });
+      element
+        .querySelectorAll<HTMLElement>(separatorSelector)
+        .forEach((separator) => {
+          const separatorOrientation = normalizeOrientation(
+            separator.getAttribute("orientation") ??
+              separator.getAttribute("data-orientation"),
+            "vertical",
+          );
+          separator.setAttribute(
+            "role",
+            separator.getAttribute("role") ?? "separator",
+          );
+          separator.setAttribute("data-orientation", separatorOrientation);
+          separator.setAttribute("aria-orientation", separatorOrientation);
+        });
     },
   };
 }

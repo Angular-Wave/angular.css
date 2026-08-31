@@ -48,11 +48,11 @@ test("canonical artifact supplies modal semantics and direct trigger ownership",
   await expect(overlay).toHaveAttribute("data-state", "open");
   await expect(content).toHaveAttribute(
     "aria-labelledby",
-    await root.locator("[ng-dialog-title]").getAttribute("id"),
+    (await root.locator("[ng-dialog-title]").getAttribute("id")) ?? "",
   );
   await expect(content).toHaveAttribute(
     "aria-describedby",
-    await root.locator("[ng-dialog-description]").getAttribute("id"),
+    (await root.locator("[ng-dialog-description]").getAttribute("id")) ?? "",
   );
   await expect(page.locator("#dialog-name")).toBeFocused();
 });

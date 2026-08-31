@@ -20,18 +20,20 @@ const delayFor = (
 export function hoverCardDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
-      const trigger = query<HTMLElement>(
+      const trigger = query(
         element,
         '[data-slot="hover-card-trigger"], [ng-hover-card-trigger]',
+        HTMLElement,
       );
-      const content = query<HTMLElement>(
+      const content = query(
         element,
         '[data-slot="hover-card-content"], [ng-hover-card-content]',
+        HTMLElement,
       );
 
       if (!trigger || !content) return;
 
-      const directionOwner = element.closest<HTMLElement>("[dir]") || element;
+      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
       const getDirection = () =>
         element.closest<HTMLElement>("[dir]")?.getAttribute("dir") === "rtl"
           ? "rtl"
@@ -51,11 +53,11 @@ export function hoverCardDirective(): ng.Directive {
       };
 
       const contentId =
-        content.id || `hover-card-content-${hoverCardIdCounter++}`;
+        content.id || `hover-card-content-${String(hoverCardIdCounter++)}`;
       content.id = contentId;
       trigger.setAttribute("aria-controls", contentId);
       trigger.setAttribute("aria-expanded", "false");
-      content.setAttribute("role", content.getAttribute("role") || "dialog");
+      content.setAttribute("role", content.getAttribute("role") ?? "dialog");
 
       let openState =
         element.getAttribute("data-open") === "true" ||

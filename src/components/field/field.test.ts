@@ -93,17 +93,16 @@ test("field workflows compose controls, responsive layout, and RTL", async ({
   await select.getByRole("option", { name: "Engineering" }).click();
   await expect(select.locator("[ng-select-value]")).toHaveText("Engineering");
 
-  const responsive = page.locator(
-    "[data-example='field-responsive']",
-  );
+  const responsive = page.locator("[data-example='field-responsive']");
   await responsive.getByLabel("Name").fill("Jane Doe");
   await responsive.getByRole("button", { name: "Submit" }).click();
   await expect(page.locator(".field-workflow-output")).toHaveText(
     "Profile submitted Jane Doe",
   );
-  await expect(
-    page.locator("[data-example='field-rtl']"),
-  ).toHaveAttribute("dir", "rtl");
+  await expect(page.locator("[data-example='field-rtl']")).toHaveAttribute(
+    "dir",
+    "rtl",
+  );
 
   await page.mouse.move(1090, 2490);
   await expect(page.locator(".field-workflow-grid")).toHaveScreenshot(

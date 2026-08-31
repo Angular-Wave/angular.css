@@ -6,7 +6,7 @@ const resolveControl = (label: HTMLElement): HTMLElement | null => {
   const htmlFor = label.getAttribute("for");
   const control = htmlFor
     ? document.getElementById(htmlFor)
-    : query<HTMLElement>(label, "input, textarea, select");
+    : query(label, "input, textarea, select", HTMLElement);
 
   return control instanceof HTMLElement ? control : null;
 };
@@ -16,19 +16,15 @@ const syncState = (label: HTMLElement, control: HTMLElement | null): void => {
   label.setAttribute(
     "data-required",
     String(
-      Boolean(
-        control?.hasAttribute("required") ||
+      control?.hasAttribute("required") ??
         control?.getAttribute("aria-required") === "true",
-      ),
     ),
   );
   label.setAttribute(
     "data-disabled",
     String(
-      Boolean(
-        control?.hasAttribute("disabled") ||
+      control?.hasAttribute("disabled") ??
         control?.getAttribute("aria-disabled") === "true",
-      ),
     ),
   );
 };

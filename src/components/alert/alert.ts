@@ -4,13 +4,13 @@ export function alertDirective(): ng.Directive {
   return {
     link(_scope: ng.Scope, element: HTMLElement) {
       const variant =
-        element.getAttribute("variant") ||
-        element.getAttribute("data-variant") ||
+        element.getAttribute("variant") ??
+        element.getAttribute("data-variant") ??
         "default";
 
       element.setAttribute("data-variant", variant);
 
-      const role = element.getAttribute("role") || "alert";
+      const role = element.getAttribute("role") ?? "alert";
       element.setAttribute("role", role);
 
       if (!element.hasAttribute("aria-live")) {

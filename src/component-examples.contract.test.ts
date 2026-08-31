@@ -649,7 +649,7 @@ const contracts: Record<string, Contract> = {
     await expect(label).toHaveAttribute("id", /progress-label-\d+/);
     await expect(labeled).toHaveAttribute(
       "aria-labelledby",
-      await label.getAttribute("id"),
+      (await label.getAttribute("id")) ?? "",
     );
     await expect(labeled.locator('[data-slot="progress-value"]')).toHaveText(
       "56%",

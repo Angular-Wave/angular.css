@@ -11,21 +11,22 @@ type ScrollAreaScope = ng.Scope;
 export function scrollAreaDirective(): ng.Directive {
   return {
     link(scope: ScrollAreaScope, element: HTMLElement) {
-      const viewport = query<HTMLElement>(
+      const viewport = query(
         element,
         '[data-slot="scroll-area-viewport"], [ng-scroll-area-viewport]',
+        HTMLElement,
       );
       if (!viewport) return;
 
       viewport.setAttribute(
         "tabindex",
-        viewport.getAttribute("tabindex") || "0",
+        viewport.getAttribute("tabindex") ?? "0",
       );
-      viewport.setAttribute("role", viewport.getAttribute("role") || "region");
+      viewport.setAttribute("role", viewport.getAttribute("role") ?? "region");
       viewport.setAttribute(
         "aria-label",
-        viewport.getAttribute("aria-label") ||
-          element.getAttribute("aria-label") ||
+        viewport.getAttribute("aria-label") ??
+          element.getAttribute("aria-label") ??
           "Scrollable content",
       );
 
@@ -124,9 +125,10 @@ export function scrollAreaDirective(): ng.Directive {
           ? scrollbar.clientWidth
           : scrollbar.clientHeight;
         const maxScroll = Math.max(0, scrollSize - viewportSize);
-        const thumb = query<HTMLElement>(
+        const thumb = query(
           scrollbar,
           '[data-slot="scroll-area-thumb"], [ng-scroll-area-thumb]',
+          HTMLElement,
         );
         if (!thumb || trackSize <= 0 || scrollSize <= 0) return;
 
@@ -141,11 +143,13 @@ export function scrollAreaDirective(): ng.Directive {
             : 0;
         thumb.style.setProperty(
           horizontal ? "width" : "height",
-          `${thumbSize}px`,
+          `${String(thumbSize)}px`,
         );
         thumb.style.setProperty(
           "transform",
-          horizontal ? `translateX(${offset}px)` : `translateY(${offset}px)`,
+          horizontal
+            ? `translateX(${String(offset)}px)`
+            : `translateY(${String(offset)}px)`,
         );
         thumb.setAttribute("data-size", String(Math.round(thumbSize)));
         thumb.setAttribute("data-offset", String(Math.round(offset)));
@@ -186,15 +190,17 @@ export function scrollAreaDirective(): ng.Directive {
           scrollbar.setAttribute(
             "data-visible",
             orientation === "horizontal"
-              ? element.getAttribute("data-scrollable-x") || "false"
-              : element.getAttribute("data-scrollable-y") || "false",
+              ? (element.getAttribute("data-scrollable-x") ?? "false")
+              : (element.getAttribute("data-scrollable-y") ?? "false"),
           );
           syncScrollbar(scrollbar, orientation);
         });
         queryAll<HTMLElement>(
           element,
           '[data-slot="scroll-area-thumb"], [ng-scroll-area-thumb]',
-        ).forEach((thumb) => thumb.setAttribute("aria-hidden", "true"));
+        ).forEach((thumb) => {
+          thumb.setAttribute("aria-hidden", "true");
+        });
       };
 
       const observedElements = new Set<Element>();
@@ -238,7 +244,9 @@ export function scrollAreaDirective(): ng.Directive {
         mutationObserver.disconnect();
         directionObserver.disconnect();
         resizeObserver?.disconnect();
-        scrollbarCleanups.forEach((cleanup) => cleanup());
+        scrollbarCleanups.forEach((cleanup) => {
+          cleanup();
+        });
         scrollbarCleanups.clear();
       });
     },

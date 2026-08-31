@@ -175,7 +175,7 @@ export function accordionDirective(): ng.Directive {
         panel.setAttribute("aria-labelledby", id);
         item.setAttribute(
           "data-slot",
-          item.getAttribute("data-slot") || "accordion-item",
+          item.getAttribute("data-slot") ?? "accordion-item",
         );
 
         const initiallyOpen = isPanelOpen(item);
@@ -195,9 +195,9 @@ export function accordionDirective(): ng.Directive {
           const nextOpen = !isOpen;
 
           if (!allowsMultiple) {
-            items.forEach((otherItem) =>
-              setItemStateFromDirective(otherItem, false),
-            );
+            items.forEach((otherItem) => {
+              setItemStateFromDirective(otherItem, false);
+            });
           }
 
           setItemStateFromDirective(item, nextOpen);
@@ -243,7 +243,7 @@ export function accordionDirective(): ng.Directive {
                       buttons.length
                   ];
 
-          nextButton?.focus();
+          nextButton.focus();
         };
 
         button.addEventListener("click", handleClick);
@@ -274,7 +274,9 @@ export function accordionDirective(): ng.Directive {
 
       onDestroy(scope, () => {
         stateObserver.disconnect();
-        cleanupButtons.forEach((cleanup) => cleanup());
+        cleanupButtons.forEach((cleanup) => {
+          cleanup();
+        });
       });
     },
   };

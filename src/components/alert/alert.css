@@ -13,15 +13,12 @@
   text-align: start;
 }
 
-:is([ng-alert], [data-slot="alert"]):has(
-    > [data-slot="alert-icon"]
-  ) {
+:is([ng-alert], [data-slot="alert"]):has(> [data-slot="alert-icon"]) {
   grid-template-columns: auto minmax(0, 1fr);
   column-gap: calc(var(--spacing) * 2.5);
 }
 
-:is([ng-alert], [data-slot="alert"])
-  > [data-slot="alert-icon"] {
+:is([ng-alert], [data-slot="alert"]) > [data-slot="alert-icon"] {
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
   grid-row: span 2;
@@ -29,16 +26,12 @@
   transform: translateY(2px);
 }
 
-:is([ng-alert], [data-slot="alert"]):has(
-    > [data-slot="alert-icon"]
-  )
+:is([ng-alert], [data-slot="alert"]):has(> [data-slot="alert-icon"])
   > :is([data-slot="alert-title"], [data-slot="alert-description"]) {
   grid-column-start: 2;
 }
 
-:is([ng-alert], [data-slot="alert"]):has(
-    > [data-slot="alert-action"]
-  ) {
+:is([ng-alert], [data-slot="alert"]):has(> [data-slot="alert-action"]) {
   padding-inline-end: calc(var(--spacing) * 18);
 }
 

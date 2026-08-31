@@ -48,13 +48,13 @@ export function progressDirective(): ng.Directive {
           : 0;
         const rawPercent = max === 0 ? 0 : (value / max) * 100;
         const percent = Math.round(rawPercent * 1_000_000) / 1_000_000;
-        const formattedPercent = `${percent}%`;
+        const formattedPercent = `${String(percent)}%`;
 
         element.style.setProperty("--value", formattedPercent);
         setAttribute(
           element,
           "role",
-          element.getAttribute("role") || "progressbar",
+          element.getAttribute("role") ?? "progressbar",
         );
         setAttribute(element, "aria-valuemin", "0");
         setAttribute(element, "aria-valuemax", String(max));
@@ -66,14 +66,14 @@ export function progressDirective(): ng.Directive {
           removeAttribute(element, "data-value");
         }
 
-        query<HTMLElement>(element, indicatorSelector)?.style.setProperty(
+        query(element, indicatorSelector, HTMLElement)?.style.setProperty(
           "--value",
           formattedPercent,
         );
 
-        const label = query<HTMLElement>(element, labelSelector);
+        const label = query(element, labelSelector, HTMLElement);
         if (label && !element.hasAttribute("aria-label")) {
-          label.id = label.id || `progress-label-${progressId++}`;
+          label.id = label.id || `progress-label-${String(progressId++)}`;
           if (
             !element.hasAttribute("aria-labelledby") ||
             element.getAttribute("aria-labelledby") === generatedLabelledBy
@@ -89,7 +89,7 @@ export function progressDirective(): ng.Directive {
           generatedLabelledBy = null;
         }
 
-        const valueElement = query<HTMLElement>(element, valueSelector);
+        const valueElement = query(element, valueSelector, HTMLElement);
         if (
           valueElement &&
           !valueElement.hasAttribute("ng-bind") &&
@@ -112,7 +112,9 @@ export function progressDirective(): ng.Directive {
       sync();
       queueMicrotask(sync);
 
-      onDestroy(scope, () => observer.disconnect());
+      onDestroy(scope, () => {
+        observer.disconnect();
+      });
     },
   };
 }

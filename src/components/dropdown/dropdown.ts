@@ -50,7 +50,7 @@ export function dropdownDirective(): ng.Directive {
           target.setAttribute(name, value);
         }
       };
-      const directionOwner = element.closest<HTMLElement>("[dir]") || element;
+      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
       const getDirection = () =>
         element.closest<HTMLElement>("[dir]")?.getAttribute("dir") === "rtl"
           ? "rtl"
@@ -73,18 +73,18 @@ export function dropdownDirective(): ng.Directive {
         getDirection,
       );
 
-      const panelId = panel.id || `menu-${dropdownIdCounter++}`;
+      const panelId = panel.id || `menu-${String(dropdownIdCounter++)}`;
       panel.id = panelId;
-      if (!button.id) button.id = `dropdown-btn-${dropdownIdCounter++}`;
+      if (!button.id) button.id = `dropdown-btn-${String(dropdownIdCounter++)}`;
       button.setAttribute("aria-haspopup", "true");
       button.setAttribute("aria-expanded", "false");
       button.setAttribute("aria-controls", panelId);
-      panel.setAttribute("role", panel.getAttribute("role") || "menu");
-      panel.setAttribute("tabindex", panel.getAttribute("tabindex") || "-1");
+      panel.setAttribute("role", panel.getAttribute("role") ?? "menu");
+      panel.setAttribute("tabindex", panel.getAttribute("tabindex") ?? "-1");
       panel.setAttribute("aria-labelledby", button.id);
 
       const isIconTrigger =
-        button.getAttribute("size")?.startsWith("icon") ||
+        button.getAttribute("size")?.startsWith("icon") ??
         button.getAttribute("data-size")?.startsWith("icon");
       if (!button.querySelector("svg") && !isIconTrigger) {
         button.insertAdjacentHTML(

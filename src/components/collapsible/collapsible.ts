@@ -7,21 +7,23 @@ let collapsibleIdCounter = 0;
 export function collapsibleDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
-      const trigger = query<HTMLElement>(
+      const trigger = query(
         element,
         '[data-slot="collapsible-trigger"], [ng-collapsible-trigger], button',
+        HTMLElement,
       );
-      const content = query<HTMLElement>(
+      const content = query(
         element,
         '[data-slot="collapsible-content"], [ng-collapsible-content]',
+        HTMLElement,
       );
 
       if (!trigger || !content) return;
 
       const contentId =
-        content.id || `collapsible-content-${collapsibleIdCounter++}`;
+        content.id || `collapsible-content-${String(collapsibleIdCounter++)}`;
       const triggerId =
-        trigger.id || `collapsible-trigger-${collapsibleIdCounter++}`;
+        trigger.id || `collapsible-trigger-${String(collapsibleIdCounter++)}`;
       content.id = contentId;
       trigger.id = triggerId;
       trigger.setAttribute("aria-controls", contentId);

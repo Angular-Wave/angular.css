@@ -1,4 +1,5 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "module": "ESNext",
     "moduleResolution": "Bundler",
@@ -7,8 +8,6 @@
     "emitDeclarationOnly": true,
     "outDir": "@types",
     "rootDir": "src",
-    "skipLibCheck": true,
-    "strict": true,
     "target": "ES2023"
   },
   "include": ["src/index.ts"],

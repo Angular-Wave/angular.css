@@ -6,7 +6,7 @@ export function skeletonDirective(): ng.Directive {
       if (!element.hasAttribute("aria-label")) {
         element.setAttribute(
           "aria-hidden",
-          element.getAttribute("aria-hidden") || "true",
+          element.getAttribute("aria-hidden") ?? "true",
         );
       }
       element.setAttribute("data-loading", "true");

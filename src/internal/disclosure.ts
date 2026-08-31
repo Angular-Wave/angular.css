@@ -43,13 +43,14 @@ export function bindEscapeClose(
     close();
   };
 
-  elements.forEach((element) =>
-    element.addEventListener("keydown", handleKeydown),
-  );
-  return () =>
-    elements.forEach((element) =>
-      element.removeEventListener("keydown", handleKeydown),
-    );
+  elements.forEach((element) => {
+    element.addEventListener("keydown", handleKeydown);
+  });
+  return () => {
+    elements.forEach((element) => {
+      element.removeEventListener("keydown", handleKeydown);
+    });
+  };
 }
 
 export interface OverlayParts {
@@ -98,14 +99,14 @@ export function bindOverlay(
     !rootSelector || candidate.closest(rootSelector) === element;
   const ownedAll = <T extends HTMLElement>(selector: string): T[] =>
     queryAll<T>(element, selector).filter(isOwned);
-  const owned = <T extends HTMLElement>(selector?: string): T | null =>
-    selector ? (ownedAll<T>(selector)[0] ?? null) : null;
+  const owned = (selector?: string): HTMLElement | null =>
+    selector ? (ownedAll<HTMLElement>(selector)[0] ?? null) : null;
 
   if (!element.id) {
-    element.id = `overlay-${overlayIdCounter++}`;
+    element.id = `overlay-${String(overlayIdCounter++)}`;
   }
 
-  const directionOwner = element.closest<HTMLElement>("[dir]") || element;
+  const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
   const boundTriggers = new Set<HTMLElement>();
   const boundCloseButtons = new Set<HTMLElement>();
   const boundOverlays = new Set<HTMLElement>();
@@ -215,7 +216,7 @@ export function bindOverlay(
     const autofocus = ownedAll<HTMLElement>("[autofocus]").find((candidate) =>
       content.contains(candidate),
     );
-    (autofocus ?? getFocusableItems()[0] ?? content).focus({
+    (autofocus ?? getFocusableItems().at(0) ?? content).focus({
       preventScroll: true,
     });
   };
@@ -260,7 +261,7 @@ export function bindOverlay(
       removeFromStack();
       restoreBackground();
       if (restoreOnClose) {
-        restoreFocus(activeTrigger ?? getTriggers()[0] ?? null);
+        restoreFocus(activeTrigger ?? getTriggers().at(0) ?? null);
       }
     }
     initialized = true;
@@ -466,15 +467,15 @@ export function bindOverlay(
     openObserver.disconnect();
     partsObserver.disconnect();
     directionObserver?.disconnect();
-    boundTriggers.forEach((trigger) =>
-      trigger.removeEventListener("click", handleTriggerClick),
-    );
-    boundCloseButtons.forEach((closeButton) =>
-      closeButton.removeEventListener("click", handleCloseClick),
-    );
-    boundOverlays.forEach((overlay) =>
-      overlay.removeEventListener("click", handleOverlayClick),
-    );
+    boundTriggers.forEach((trigger) => {
+      trigger.removeEventListener("click", handleTriggerClick);
+    });
+    boundCloseButtons.forEach((closeButton) => {
+      closeButton.removeEventListener("click", handleCloseClick);
+    });
+    boundOverlays.forEach((overlay) => {
+      overlay.removeEventListener("click", handleOverlayClick);
+    });
     document.removeEventListener("click", handleDocumentClick);
     document.removeEventListener("keydown", handleDocumentKeydown);
     document.removeEventListener("focusin", handleDocumentFocus);

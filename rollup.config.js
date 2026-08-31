@@ -21,7 +21,7 @@ const basePlugins = [
     declarationMap: false,
     noEmit: false,
     sourceMap: false,
-    tsconfig: "./tsconfig.json",
+    tsconfig: "./tsconfig.rollup.json",
   }),
   versionInjector(),
 ];
@@ -36,7 +36,7 @@ const applicationPlugins = [
     declarationMap: false,
     noEmit: false,
     sourceMap: false,
-    tsconfig: "./tsconfig.json",
+    tsconfig: "./tsconfig.rollup.json",
   }),
 ];
 
@@ -70,7 +70,10 @@ export default [
         format: "es",
       },
     ],
-    plugins: [typescript({ tsconfig: "./tsconfig.json" }), versionInjector()],
+    plugins: [
+      typescript({ tsconfig: "./tsconfig.rollup.json" }),
+      versionInjector(),
+    ],
   },
 
   {

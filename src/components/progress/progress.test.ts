@@ -61,7 +61,7 @@ test("canonical progress synchronizes timed and labeled built artifacts", async 
   await expect(label).toHaveAttribute("id", /progress-label-\d+/);
   await expect(labeled).toHaveAttribute(
     "aria-labelledby",
-    await label.getAttribute("id"),
+    (await label.getAttribute("id")) ?? "",
   );
 });
 
@@ -115,7 +115,7 @@ test("RTL progress preserves localized text and anchors the indicator inline-sta
   await expect(value).toHaveText("٥٦%");
   await expect(progress).toHaveAttribute(
     "aria-labelledby",
-    await label.getAttribute("id"),
+    (await label.getAttribute("id")) ?? "",
   );
 
   const geometry = await progress.evaluate((element) => {

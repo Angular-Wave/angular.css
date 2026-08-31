@@ -42,7 +42,7 @@ export function menubarDirective(): ng.Directive {
       const entries: MenubarEntry[] = [];
       const triggers: HTMLElement[] = [];
       const boundMenus = new WeakSet<HTMLElement>();
-      const directionOwner = element.closest<HTMLElement>("[dir]") || element;
+      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
 
       const getDirection = () =>
         element.closest<HTMLElement>("[dir]")?.getAttribute("dir") === "rtl"
@@ -81,9 +81,9 @@ export function menubarDirective(): ng.Directive {
 
       const syncContentItems = () => {
         queryAll<HTMLElement>(element, contentSelector).forEach((content) => {
-          getAllContentItems(content).forEach((item) =>
-            setAttribute(item, "role", item.getAttribute("role") || "menuitem"),
-          );
+          getAllContentItems(content).forEach((item) => {
+            setAttribute(item, "role", item.getAttribute("role") ?? "menuitem");
+          });
         });
       };
 
@@ -110,7 +110,7 @@ export function menubarDirective(): ng.Directive {
       };
 
       const setMenuState = (index: number, open: boolean, focus = false) => {
-        const entry = entries[index];
+        const entry = entries.at(index);
         if (!entry) return;
 
         const wasOpen = entry.open;
@@ -126,7 +126,7 @@ export function menubarDirective(): ng.Directive {
 
         if (wasOpen === open) {
           if (open && focus) {
-            const focusTarget = getContentItems(entry.content)[0];
+            const focusTarget = getContentItems(entry.content).at(0);
             if (focusTarget) {
               focusTarget.focus();
             } else {
@@ -137,7 +137,7 @@ export function menubarDirective(): ng.Directive {
         }
 
         if (open && focus) {
-          const focusTarget = getContentItems(entry.content)[0];
+          const focusTarget = getContentItems(entry.content).at(0);
           if (focusTarget) {
             focusTarget.focus();
           } else {
@@ -151,8 +151,11 @@ export function menubarDirective(): ng.Directive {
         }
       };
 
-      const closeAll = () =>
-        entries.forEach((_, index) => setMenuState(index, false));
+      const closeAll = () => {
+        entries.forEach((_, index) => {
+          setMenuState(index, false);
+        });
+      };
       const openMenu = (index: number, focus = false) => {
         if (index < 0) return;
         closeAll();
@@ -180,31 +183,32 @@ export function menubarDirective(): ng.Directive {
       const bindMenu = (menu: HTMLElement) => {
         if (boundMenus.has(menu)) return;
 
-        const trigger = query<HTMLElement>(menu, triggerSelector);
-        const content = query<HTMLElement>(menu, contentSelector);
+        const trigger = query(menu, triggerSelector, HTMLElement);
+        const content = query(menu, contentSelector, HTMLElement);
         if (!trigger || !content) return;
 
         boundMenus.add(menu);
-        const triggerId = trigger.id || `menubar-trigger-${menubarIdCounter++}`;
+        const triggerId =
+          trigger.id || `menubar-trigger-${String(menubarIdCounter++)}`;
         const contentId = content.id || `${triggerId}-content`;
         trigger.id = triggerId;
         content.id = contentId;
         setAttribute(
           trigger,
           "role",
-          trigger.getAttribute("role") || "menuitem",
+          trigger.getAttribute("role") ?? "menuitem",
         );
         setAttribute(trigger, "aria-haspopup", "menu");
         setAttribute(trigger, "aria-controls", contentId);
-        setAttribute(content, "role", content.getAttribute("role") || "menu");
+        setAttribute(content, "role", content.getAttribute("role") ?? "menu");
         setAttribute(content, "aria-labelledby", triggerId);
         setAttribute(content, "aria-hidden", "true");
         if (!content.hasAttribute("tabindex")) {
           setAttribute(content, "tabindex", "-1");
         }
-        getContentItems(content).forEach((item) =>
-          setAttribute(item, "role", item.getAttribute("role") || "menuitem"),
-        );
+        getContentItems(content).forEach((item) => {
+          setAttribute(item, "role", item.getAttribute("role") ?? "menuitem");
+        });
 
         const entry: MenubarEntry = {
           menu,
@@ -235,7 +239,9 @@ export function menubarDirective(): ng.Directive {
           attributes: true,
           attributeFilter: ["data-open", "data-state"],
         });
-        cleanupEntries.push(() => openObserver.disconnect());
+        cleanupEntries.push(() => {
+          openObserver.disconnect();
+        });
 
         setMenuState(getEntryIndex(), entry.open, false);
 
@@ -295,7 +301,9 @@ export function menubarDirective(): ng.Directive {
           }
         };
 
-        const handleTriggerFocus = () => setActiveTrigger(getEntryIndex());
+        const handleTriggerFocus = () => {
+          setActiveTrigger(getEntryIndex());
+        };
 
         trigger.addEventListener("click", handleTriggerClick);
         trigger.addEventListener("keydown", handleTriggerKeydown);
@@ -424,7 +432,7 @@ export function menubarDirective(): ng.Directive {
         }
       };
 
-      setAttribute(element, "role", element.getAttribute("role") || "menubar");
+      setAttribute(element, "role", element.getAttribute("role") ?? "menubar");
 
       const handleDocumentClick = (event: MouseEvent) => {
         if (event.target instanceof Node && !element.contains(event.target)) {
@@ -437,8 +445,7 @@ export function menubarDirective(): ng.Directive {
             ? event.target.closest<HTMLElement>(itemSelector)
             : null;
         if (
-          !target ||
-          !target.closest(contentSelector) ||
+          !target?.closest(contentSelector) ||
           target.matches(
             '[data-slot="menubar-sub-trigger"], [ng-menubar-sub-trigger]',
           ) ||
@@ -482,7 +489,9 @@ export function menubarDirective(): ng.Directive {
         element.removeEventListener("keydown", handleKeydown);
         element.removeEventListener("click", handleItemClick);
         document.removeEventListener("click", handleDocumentClick);
-        cleanupEntries.forEach((cleanup) => cleanup());
+        cleanupEntries.forEach((cleanup) => {
+          cleanup();
+        });
         cleanupSubmenus();
       });
     },

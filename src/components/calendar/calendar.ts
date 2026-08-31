@@ -25,7 +25,7 @@ const setAttributeIfChanged = (
 const padDatePart = (value: number) => String(value).padStart(2, "0");
 
 const formatDateValue = (date: Date) =>
-  `${date.getFullYear()}-${padDatePart(date.getMonth() + 1)}-${padDatePart(date.getDate())}`;
+  `${String(date.getFullYear())}-${padDatePart(date.getMonth() + 1)}-${padDatePart(date.getDate())}`;
 
 const parseDateValue = (value: string | null) => {
   const match = value?.match(/^(\d{4})-(\d{2})-(\d{2})$/);
@@ -45,7 +45,7 @@ const parseDateValue = (value: string | null) => {
 
 const parseDateList = (value: string | null) =>
   new Set(
-    (value || "")
+    (value ?? "")
       .split(",")
       .map((entry) => entry.trim())
       .filter((entry) => parseDateValue(entry)),
@@ -54,7 +54,7 @@ const parseDateList = (value: string | null) =>
 export function calendarDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
-      const directionOwner = element.closest<HTMLElement>("[dir]") || element;
+      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
       const getDirection = () =>
         element.closest<HTMLElement>("[dir]")?.getAttribute("dir") === "rtl"
           ? "rtl"
@@ -69,19 +69,19 @@ export function calendarDirective(): ng.Directive {
         element,
         '[data-slot="calendar-day"], [ng-calendar-day]',
       );
-      const columns = Number(element.getAttribute("data-columns") || 7);
+      const columns = Number(element.getAttribute("data-columns") ?? 7);
       const cleanupDays = new WeakMap<HTMLElement, () => void>();
       const cleanupControls = new WeakMap<HTMLElement, () => void>();
       const generatedLabels = new WeakMap<HTMLElement, string>();
       const generatedCurrent = new WeakSet<HTMLElement>();
       let renderedMonth = "";
 
-      element.setAttribute("role", element.getAttribute("role") || "grid");
+      element.setAttribute("role", element.getAttribute("role") ?? "grid");
       syncDirection();
 
       const getLocale = () =>
-        element.closest<HTMLElement>("[lang]")?.getAttribute("lang") ||
-        document.documentElement.lang ||
+        (element.closest<HTMLElement>("[lang]")?.getAttribute("lang") ??
+          document.documentElement.lang) ||
         undefined;
 
       const createFormatter = (options: Intl.DateTimeFormatOptions) => {
@@ -110,17 +110,17 @@ export function calendarDirective(): ng.Directive {
 
         const selectedDate = parseDateValue(element.getAttribute("data-value"));
         const requestedMonth = parseDateValue(
-          `${element.getAttribute("data-month") || ""}-01`,
+          `${element.getAttribute("data-month") ?? ""}-01`,
         );
         const month = startOfMonth(
-          requestedMonth || selectedDate || new Date(),
+          requestedMonth ?? selectedDate ?? new Date(),
         );
         const monthValue = formatDateValue(month).slice(0, 7);
         const numberOfMonths = Math.max(
           1,
           Math.min(
             3,
-            Number(element.getAttribute("data-number-of-months") || 1),
+            Number(element.getAttribute("data-number-of-months") ?? 1),
           ),
         );
         const showWeekNumbers =
@@ -129,13 +129,13 @@ export function calendarDirective(): ng.Directive {
           monthValue,
           numberOfMonths,
           showWeekNumbers,
-          element.getAttribute("data-caption-layout") || "label",
-          element.getAttribute("data-disabled-dates") || "",
-          element.getAttribute("data-booked-dates") || "",
-          element.getAttribute("data-disabled-before") || "",
-          element.getAttribute("data-disabled-after") || "",
-          element.getAttribute("data-show-outside-days") || "",
-          element.getAttribute("data-week-start") || "",
+          element.getAttribute("data-caption-layout") ?? "label",
+          element.getAttribute("data-disabled-dates") ?? "",
+          element.getAttribute("data-booked-dates") ?? "",
+          element.getAttribute("data-disabled-before") ?? "",
+          element.getAttribute("data-disabled-after") ?? "",
+          element.getAttribute("data-show-outside-days") ?? "",
+          element.getAttribute("data-week-start") ?? "",
         ].join("|");
         if (renderKey === renderedMonth && grid.childElementCount > 0) return;
 
@@ -147,7 +147,7 @@ export function calendarDirective(): ng.Directive {
         );
         if (title) {
           const captionLayout =
-            element.getAttribute("data-caption-layout") || "label";
+            element.getAttribute("data-caption-layout") ?? "label";
           if (captionLayout === "dropdown") {
             const monthSelect = document.createElement("select");
             const yearSelect = document.createElement("select");
@@ -169,11 +169,11 @@ export function calendarDirective(): ng.Directive {
               monthSelect.append(option);
             }
             const startYear = Number(
-              element.getAttribute("data-start-year") ||
+              element.getAttribute("data-start-year") ??
                 month.getFullYear() - 10,
             );
             const endYear = Number(
-              element.getAttribute("data-end-year") || month.getFullYear() + 10,
+              element.getAttribute("data-end-year") ?? month.getFullYear() + 10,
             );
             for (let year = startYear; year <= endYear; year += 1) {
               const option = document.createElement("option");
@@ -184,7 +184,7 @@ export function calendarDirective(): ng.Directive {
               }
               yearSelect.append(option);
             }
-            const changeCaption = () =>
+            const changeCaption = () => {
               showMonth(
                 new Date(
                   Number(yearSelect.value),
@@ -192,6 +192,7 @@ export function calendarDirective(): ng.Directive {
                   1,
                 ),
               );
+            };
             monthSelect.addEventListener("change", changeCaption);
             yearSelect.addEventListener("change", changeCaption);
             title.replaceChildren(monthSelect, yearSelect);
@@ -216,7 +217,7 @@ export function calendarDirective(): ng.Directive {
         }
 
         const configuredWeekStart = Number(
-          element.getAttribute("data-week-start") || "0",
+          element.getAttribute("data-week-start") ?? "0",
         );
         const weekStartsOn = (
           Number.isInteger(configuredWeekStart) &&
@@ -230,14 +231,14 @@ export function calendarDirective(): ng.Directive {
         const dateFormatter = createFormatter({ dateStyle: "long" });
         const numberFormatter = createNumberFormatter();
         const language = getLocale()?.split("-")[0]?.toLowerCase();
-        const useNarrowWeekdays = ["ar", "fa", "ur"].includes(language || "");
+        const useNarrowWeekdays = ["ar", "fa", "ur"].includes(language ?? "");
         const todayValue = formatDateValue(new Date());
         const selectedValue = element.getAttribute("data-value");
         const selectedValues = parseDateList(
           element.getAttribute("data-values"),
         );
-        const rangeStart = element.getAttribute("data-range-start-value") || "";
-        const rangeEnd = element.getAttribute("data-range-end-value") || "";
+        const rangeStart = element.getAttribute("data-range-start-value") ?? "";
+        const rangeEnd = element.getAttribute("data-range-end-value") ?? "";
         const disabledDates = parseDateList(
           element.getAttribute("data-disabled-dates"),
         );
@@ -245,8 +246,8 @@ export function calendarDirective(): ng.Directive {
           element.getAttribute("data-booked-dates"),
         );
         const disabledBefore =
-          element.getAttribute("data-disabled-before") || "";
-        const disabledAfter = element.getAttribute("data-disabled-after") || "";
+          element.getAttribute("data-disabled-before") ?? "";
+        const disabledAfter = element.getAttribute("data-disabled-after") ?? "";
         const showOutsideDays =
           element.getAttribute("data-show-outside-days") !== "false";
         const buildMonthGrid = (visibleMonth: Date) => {
@@ -366,16 +367,16 @@ export function calendarDirective(): ng.Directive {
         activeDay?: HTMLElement,
       ) => {
         const singleValue =
-          activeDay?.getAttribute("data-value") ||
-          element.getAttribute("data-value") ||
+          activeDay?.getAttribute("data-value") ??
+          element.getAttribute("data-value") ??
           "";
         const focusedDay =
-          activeDay ||
-          days.find((day) => day === document.activeElement) ||
+          activeDay ??
+          days.find((day) => day === document.activeElement) ??
           days.find((day) => day.getAttribute("tabindex") === "0");
 
         days.forEach((day) => {
-          const value = day.getAttribute("data-value") || "";
+          const value = day.getAttribute("data-value") ?? "";
           const selected =
             selectionMode === "multiple"
               ? values.includes(value)
@@ -434,20 +435,24 @@ export function calendarDirective(): ng.Directive {
                     : "none",
             );
           }
-          setAttributeIfChanged(day, "tabindex", day === focusedDay ? "0" : "-1");
+          setAttributeIfChanged(
+            day,
+            "tabindex",
+            day === focusedDay ? "0" : "-1",
+          );
         });
       };
 
       const selectDay = (selectedDay: HTMLElement, emit = true) => {
         const selectionMode =
-          element.getAttribute("data-selection-mode") || "single";
+          element.getAttribute("data-selection-mode") ?? "single";
         const selectedValue =
-          selectedDay.getAttribute("data-value") ||
-          selectedDay.textContent?.trim() ||
+          (selectedDay.getAttribute("data-value") ??
+            selectedDay.textContent.trim()) ||
           "";
         let values: string[] = [];
-        let rangeStart = element.getAttribute("data-range-start-value") || "";
-        let rangeEnd = element.getAttribute("data-range-end-value") || "";
+        let rangeStart = element.getAttribute("data-range-start-value") ?? "";
+        let rangeEnd = element.getAttribute("data-range-end-value") ?? "";
 
         if (selectionMode === "multiple") {
           const selectedValues = parseDateList(
@@ -474,7 +479,7 @@ export function calendarDirective(): ng.Directive {
           } else {
             const minNights = Math.max(
               0,
-              Number(element.getAttribute("data-min-nights") || 0),
+              Number(element.getAttribute("data-min-nights") ?? 0),
             );
             if (differenceInCalendarDays(selectedDate, startDate) < minNights) {
               setAttributeIfChanged(element, "data-range-invalid", "true");
@@ -513,7 +518,7 @@ export function calendarDirective(): ng.Directive {
               bubbles: true,
               detail: {
                 day: selectedDay,
-                value: element.getAttribute("data-value") || "",
+                value: element.getAttribute("data-value") ?? "",
                 values,
                 range: { start: rangeStart, end: rangeEnd },
                 selectionMode,
@@ -527,12 +532,12 @@ export function calendarDirective(): ng.Directive {
         setAttributeIfChanged(
           day,
           "role",
-          day.getAttribute("role") || "gridcell",
+          day.getAttribute("role") ?? "gridcell",
         );
         setAttributeIfChanged(
           day,
           "tabindex",
-          day.getAttribute("tabindex") || "-1",
+          day.getAttribute("tabindex") ?? "-1",
         );
         const disabled = isDisabled(day);
         setAttributeIfChanged(day, "data-disabled", String(disabled));
@@ -557,7 +562,7 @@ export function calendarDirective(): ng.Directive {
             : "idle",
         );
         const label =
-          day.getAttribute("data-label") || day.getAttribute("data-value");
+          day.getAttribute("data-label") ?? day.getAttribute("data-value");
         const currentLabel = day.getAttribute("aria-label");
         if (
           label &&
@@ -571,7 +576,7 @@ export function calendarDirective(): ng.Directive {
           setAttributeIfChanged(
             day,
             "aria-current",
-            day.getAttribute("aria-current") || "date",
+            day.getAttribute("aria-current") ?? "date",
           );
         } else if (generatedCurrent.has(day)) {
           day.removeAttribute("aria-current");
@@ -589,7 +594,7 @@ export function calendarDirective(): ng.Directive {
           ) {
             const value = day.getAttribute("data-value");
             const date = parseDateValue(value);
-            if (date) showMonth(date, value || undefined);
+            if (date) showMonth(date, value ?? undefined);
           }
         };
         const handleKeydown = (event: KeyboardEvent) => {
@@ -707,14 +712,14 @@ export function calendarDirective(): ng.Directive {
         const handleClick = () => {
           if (isDisabled(control)) return;
           const month = parseDateValue(
-            `${element.getAttribute("data-month") || ""}-01`,
+            `${element.getAttribute("data-month") ?? ""}-01`,
           );
-          showMonth(addMonths(month || new Date(), direction));
+          showMonth(addMonths(month ?? new Date(), direction));
         };
         control.addEventListener("click", handleClick);
-        cleanupControls.set(control, () =>
-          control.removeEventListener("click", handleClick),
-        );
+        cleanupControls.set(control, () => {
+          control.removeEventListener("click", handleClick);
+        });
       };
 
       const bindPresetControl = (control: HTMLElement) => {
@@ -728,9 +733,9 @@ export function calendarDirective(): ng.Directive {
           showMonth(date, value, true);
         };
         control.addEventListener("click", handleClick);
-        cleanupControls.set(control, () =>
-          control.removeEventListener("click", handleClick),
-        );
+        cleanupControls.set(control, () => {
+          control.removeEventListener("click", handleClick);
+        });
       };
 
       function syncCalendar() {
@@ -739,14 +744,15 @@ export function calendarDirective(): ng.Directive {
           '[data-slot="calendar-title"], [ng-calendar-title]',
         );
         if (title && !element.hasAttribute("aria-label")) {
-          if (!title.id) title.id = `calendar-title-${calendarIdCounter++}`;
+          if (!title.id)
+            title.id = `calendar-title-${String(calendarIdCounter++)}`;
           setAttributeIfChanged(element, "aria-labelledby", title.id);
         }
         queryAll<HTMLElement>(
           element,
           '[data-slot="calendar-row"], [ng-calendar-row]',
         ).forEach((row) => {
-          row.setAttribute("role", row.getAttribute("role") || "row");
+          row.setAttribute("role", row.getAttribute("role") ?? "row");
         });
         queryAll<HTMLElement>(
           element,
@@ -754,7 +760,7 @@ export function calendarDirective(): ng.Directive {
         ).forEach((weekday) => {
           weekday.setAttribute(
             "role",
-            weekday.getAttribute("role") || "columnheader",
+            weekday.getAttribute("role") ?? "columnheader",
           );
         });
         queryAll<HTMLElement>(
@@ -764,7 +770,7 @@ export function calendarDirective(): ng.Directive {
           setAttributeIfChanged(
             weekNumber,
             "role",
-            weekNumber.getAttribute("role") || "rowheader",
+            weekNumber.getAttribute("role") ?? "rowheader",
           );
         });
         days = queryAll<HTMLElement>(
@@ -773,7 +779,7 @@ export function calendarDirective(): ng.Directive {
         );
         days.forEach(bindDay);
         const selectionMode =
-          element.getAttribute("data-selection-mode") || "single";
+          element.getAttribute("data-selection-mode") ?? "single";
         const hasRootSelection =
           selectionMode === "multiple"
             ? element.hasAttribute("data-values")
@@ -785,18 +791,22 @@ export function calendarDirective(): ng.Directive {
           syncSelectionState(
             selectionMode,
             [...parseDateList(element.getAttribute("data-values"))],
-            element.getAttribute("data-range-start-value") || "",
-            element.getAttribute("data-range-end-value") || "",
+            element.getAttribute("data-range-start-value") ?? "",
+            element.getAttribute("data-range-end-value") ?? "",
           );
         }
         queryAll<HTMLElement>(
           element,
           '[data-slot="calendar-previous"], [ng-calendar-previous]',
-        ).forEach((control) => bindMonthControl(control, -1));
+        ).forEach((control) => {
+          bindMonthControl(control, -1);
+        });
         queryAll<HTMLElement>(
           element,
           '[data-slot="calendar-next"], [ng-calendar-next]',
-        ).forEach((control) => bindMonthControl(control, 1));
+        ).forEach((control) => {
+          bindMonthControl(control, 1);
+        });
         queryAll<HTMLElement>(element, "[data-calendar-preset]").forEach(
           bindPresetControl,
         );
@@ -804,24 +814,21 @@ export function calendarDirective(): ng.Directive {
         const selected =
           days.find(
             (day) => day.getAttribute("data-value") === requestedValue,
-          ) ||
+          ) ??
           days.find(
             (day) =>
               day.getAttribute("aria-selected") === "true" ||
               day.getAttribute("data-selected") === "true",
           );
-        if (
-          selected &&
-          selectionMode === "single"
-        ) {
+        if (selected && selectionMode === "single") {
           selectDay(selected, false);
         } else if (!days.some((day) => day.getAttribute("tabindex") === "0")) {
           (
-            selected ||
+            selected ??
             days.find(
               (day) =>
                 day.getAttribute("data-outside") !== "true" && !isDisabled(day),
-            ) ||
+            ) ??
             days.find((day) => !isDisabled(day))
           )?.setAttribute("tabindex", "0");
         }

@@ -48,7 +48,7 @@ export function breadcrumbDirective(): ng.Directive {
       setAttribute(
         element,
         "aria-label",
-        element.getAttribute("aria-label") || "breadcrumb",
+        element.getAttribute("aria-label") ?? "breadcrumb",
       );
 
       const sync = () => {
@@ -64,19 +64,22 @@ export function breadcrumbDirective(): ng.Directive {
         );
 
         lists.forEach((list) => {
-          setAttribute(list, "role", list.getAttribute("role") || "list");
+          setAttribute(list, "role", list.getAttribute("role") ?? "list");
         });
         items.forEach((item) => {
-          setAttribute(item, "role", item.getAttribute("role") || "listitem");
+          setAttribute(item, "role", item.getAttribute("role") ?? "listitem");
         });
         separators.forEach((separator) => {
           setAttribute(
             separator,
             "role",
-            separator.getAttribute("role") || "presentation",
+            separator.getAttribute("role") ?? "presentation",
           );
           setAttribute(separator, "aria-hidden", "true");
-          if (!separator.textContent?.trim() && separator.childElementCount === 0) {
+          if (
+            !separator.textContent.trim() &&
+            separator.childElementCount === 0
+          ) {
             separator.insertAdjacentHTML("beforeend", defaultSeparatorIcon);
           }
         });
@@ -84,7 +87,7 @@ export function breadcrumbDirective(): ng.Directive {
           setAttribute(
             ellipsis,
             "role",
-            ellipsis.getAttribute("role") || "presentation",
+            ellipsis.getAttribute("role") ?? "presentation",
           );
           setAttribute(ellipsis, "aria-hidden", "true");
           if (!ellipsis.querySelector("svg")) {
@@ -93,11 +96,11 @@ export function breadcrumbDirective(): ng.Directive {
         });
 
         pages.forEach((page) => {
-          setAttribute(page, "role", page.getAttribute("role") || "link");
+          setAttribute(page, "role", page.getAttribute("role") ?? "link");
           setAttribute(
             page,
             "aria-disabled",
-            page.getAttribute("aria-disabled") || "true",
+            page.getAttribute("aria-disabled") ?? "true",
           );
           if (
             ownedCurrentPages.has(page) &&

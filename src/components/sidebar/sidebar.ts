@@ -42,7 +42,7 @@ export function sidebarDirective(): ng.Directive {
         ? `[aria-controls="${element.id}"], [data-sidebar-target="${element.id}"]`
         : "[ng-sidebar-trigger], [data-slot='sidebar-trigger']";
       const cleanupTriggers = new Map<HTMLElement, () => void>();
-      const directionOwner = element.closest<HTMLElement>("[dir]") || element;
+      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
       const mobileQuery = window.matchMedia("(max-width: 767px)");
       const ownedCurrent = new WeakSet<HTMLElement>();
       const getDirection = () =>
@@ -115,7 +115,8 @@ export function sidebarDirective(): ng.Directive {
         queryAll<HTMLElement>(element, selectors.group).forEach((group) => {
           const label = group.querySelector<HTMLElement>(selectors.groupLabel);
           if (!label) return;
-          if (!label.id) label.id = `sidebar-group-label-${sidebarIdCounter++}`;
+          if (!label.id)
+            label.id = `sidebar-group-label-${String(sidebarIdCounter++)}`;
           setAttributeIfChanged(group, "aria-labelledby", label.id);
         });
         queryAll<HTMLElement>(element, selectors.menuButton).forEach(
@@ -187,9 +188,9 @@ export function sidebarDirective(): ng.Directive {
           setCollapsed(!getCollapsed());
         };
         trigger.addEventListener("click", handleClick);
-        cleanupTriggers.set(trigger, () =>
-          trigger.removeEventListener("click", handleClick),
-        );
+        cleanupTriggers.set(trigger, () => {
+          trigger.removeEventListener("click", handleClick);
+        });
       };
 
       const syncTriggers = () => {
@@ -205,7 +206,7 @@ export function sidebarDirective(): ng.Directive {
 
       element.setAttribute(
         "role",
-        element.getAttribute("role") || "complementary",
+        element.getAttribute("role") ?? "complementary",
       );
 
       syncFromState();
@@ -251,7 +252,9 @@ export function sidebarDirective(): ng.Directive {
         triggerObserver.disconnect();
         structureObserver.disconnect();
         mobileQuery.removeEventListener("change", syncResponsive);
-        cleanupTriggers.forEach((cleanup) => cleanup());
+        cleanupTriggers.forEach((cleanup) => {
+          cleanup();
+        });
         cleanupTriggers.clear();
       });
     },

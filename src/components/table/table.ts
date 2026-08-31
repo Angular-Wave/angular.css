@@ -17,10 +17,10 @@ export function tableDirective(): ng.Directive {
         element.setAttribute("data-row-count", String(rows.length));
         element.setAttribute("data-column-count", String(firstRowCells.length));
         heads.forEach((head) => {
-          head.setAttribute("scope", head.getAttribute("scope") || "col");
+          head.setAttribute("scope", head.getAttribute("scope") ?? "col");
         });
         rowHeads.forEach((head) => {
-          head.setAttribute("scope", head.getAttribute("scope") || "row");
+          head.setAttribute("scope", head.getAttribute("scope") ?? "row");
         });
       };
 

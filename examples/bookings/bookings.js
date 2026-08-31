@@ -470,17 +470,20 @@
       home: House,
   };
   class BookingsController {
+      query = "";
+      status = "All";
+      bookings = bookings.map((booking) => ({
+          ...booking,
+          visible: true,
+      }));
+      selected = this.bookings[0];
+      visibleCount = this.bookings.length;
+      empty = false;
       constructor() {
-          this.query = "";
-          this.status = "All";
-          this.bookings = bookings.map((booking) => (Object.assign(Object.assign({}, booking), { visible: true })));
-          this.selected = this.bookings[0];
-          this.visibleCount = this.bookings.length;
-          this.empty = false;
           const mobile = window.matchMedia("(max-width: 760px)");
           const syncSidebar = () => {
               const sidebar = document.querySelector("#booking-sidebar");
-              sidebar === null || sidebar === void 0 ? void 0 : sidebar.setAttribute("data-state", mobile.matches ? "collapsed" : "expanded");
+              sidebar?.setAttribute("data-state", mobile.matches ? "collapsed" : "expanded");
           };
           requestAnimationFrame(syncSidebar);
           mobile.addEventListener("change", syncSidebar);

@@ -182,8 +182,9 @@ test("RTL artifact anchors right and preserves usable icon collapse", async ({
   await expect(sidebar).toHaveAttribute("data-side", "right");
   await expect(sidebar).toHaveAttribute("data-variant", "floating");
   const expandedBox = await sidebar.boundingBox();
-  expect(expandedBox?.x).toBeCloseTo(604, 0);
-  expect(expandedBox?.x + (expandedBox?.width ?? 0)).toBeCloseTo(892, 0);
+  expect(expandedBox).not.toBeNull();
+  expect(expandedBox!.x).toBeCloseTo(604, 0);
+  expect(expandedBox!.x + expandedBox!.width).toBeCloseTo(892, 0);
 
   await page.getByRole("button", { name: "إغلاق الشريط" }).click();
   await expect(sidebar).toHaveAttribute("data-state", "collapsed");
@@ -192,8 +193,9 @@ test("RTL artifact anchors right and preserves usable icon collapse", async ({
     .poll(async () => (await sidebar.boundingBox())?.width)
     .toBeCloseTo(56, 0);
   const collapsedBox = await sidebar.boundingBox();
-  expect(collapsedBox?.width).toBeCloseTo(56, 0);
-  expect(collapsedBox?.x + (collapsedBox?.width ?? 0)).toBeCloseTo(892, 0);
+  expect(collapsedBox).not.toBeNull();
+  expect(collapsedBox!.width).toBeCloseTo(56, 0);
+  expect(collapsedBox!.x + collapsedBox!.width).toBeCloseTo(892, 0);
 
   await page.getByRole("button", { name: "فتح الشريط" }).click();
   await page.getByRole("button", { name: "المزيد" }).click();

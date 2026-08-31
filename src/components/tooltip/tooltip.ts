@@ -19,14 +19,16 @@ const setAttributeIfChanged = (
 export function tooltipDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
-      const directionOwner = element.closest<HTMLElement>("[dir]") || element;
-      const trigger = query<HTMLElement>(
+      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
+      const trigger = query(
         element,
         '[data-slot="tooltip-trigger"], [ng-tooltip-trigger]',
+        HTMLElement,
       );
-      const content = query<HTMLElement>(
+      const content = query(
         element,
         '[data-slot="tooltip-content"], [ng-tooltip-content]',
+        HTMLElement,
       );
 
       if (!trigger || !content) return;
@@ -46,10 +48,11 @@ export function tooltipDirective(): ng.Directive {
         const side = authored && sides.has(authored) ? authored : "top";
         setAttributeIfChanged(content, "data-side", side);
       };
-      const contentId = content.id || `tooltip-content-${tooltipIdCounter++}`;
+      const contentId =
+        content.id || `tooltip-content-${String(tooltipIdCounter++)}`;
       content.id = contentId;
       trigger.setAttribute("aria-describedby", contentId);
-      content.setAttribute("role", content.getAttribute("role") || "tooltip");
+      content.setAttribute("role", content.getAttribute("role") ?? "tooltip");
 
       let controlledOpen =
         element.getAttribute("data-open") === "true" ||

@@ -17,15 +17,18 @@
 }
 
 :is([data-slot="input-group"], [ng-input-group]):has(
-    > :is([data-slot="input-group-control"], [ng-input-group-control]):focus-visible
-  ) {
+  > :is(
+      [data-slot="input-group-control"],
+      [ng-input-group-control]
+    ):focus-visible
+) {
   border-color: var(--ring);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
 :is([data-slot="input-group"], [ng-input-group]):has(
-    > :is(textarea, [data-align="block-start"], [data-align="block-end"])
-  ) {
+  > :is(textarea, [data-align="block-start"], [data-align="block-end"])
+) {
   height: auto;
   flex-direction: column;
   align-items: stretch;
@@ -37,9 +40,7 @@
   opacity: 0.5;
 }
 
-:is([data-slot="input-group"], [ng-input-group]):has(
-    [aria-invalid="true"]
-  ) {
+:is([data-slot="input-group"], [ng-input-group]):has([aria-invalid="true"]) {
   border-color: var(--error);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--error) 20%, transparent);
 }
@@ -101,9 +102,7 @@
   padding-block-end: calc(var(--spacing) * 3);
 }
 
-:is([data-slot="input-group"], [ng-input-group]):has(
-    > [data-align="block-end"]
-  )
+:is([data-slot="input-group"], [ng-input-group]):has(> [data-align="block-end"])
   > input:is([data-slot="input-group-control"], [ng-input-group-control]) {
   padding-block-start: calc(var(--spacing) * 3);
 }
@@ -161,16 +160,25 @@
   padding-block-end: calc(var(--spacing) * 2);
 }
 
-:is([data-slot="input-group-addon"], [ng-input-group-addon])[data-border="true"] {
+:is(
+  [data-slot="input-group-addon"],
+  [ng-input-group-addon]
+)[data-border="true"] {
   border-color: var(--border);
 }
 
-:is([data-slot="input-group-addon"], [ng-input-group-addon])[data-align="block-start"][data-border="true"] {
+:is(
+    [data-slot="input-group-addon"],
+    [ng-input-group-addon]
+  )[data-align="block-start"][data-border="true"] {
   border-block-end: 1px solid var(--border);
   padding-block-end: calc(var(--spacing) * 2);
 }
 
-:is([data-slot="input-group-addon"], [ng-input-group-addon])[data-align="block-end"][data-border="true"] {
+:is(
+    [data-slot="input-group-addon"],
+    [ng-input-group-addon]
+  )[data-align="block-end"][data-border="true"] {
   border-block-start: 1px solid var(--border);
   padding-block-start: calc(var(--spacing) * 2);
 }

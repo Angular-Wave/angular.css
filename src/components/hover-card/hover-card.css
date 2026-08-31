@@ -30,10 +30,15 @@
   transform: translate(var(--hover-card-x, 0), var(--hover-card-y, 0))
     translate(var(--hover-card-motion-x, 0), var(--hover-card-motion-y, 2px))
     scale(0.98);
-  transition: opacity 150ms ease, transform 150ms ease;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease;
 }
 
-:is([data-slot="hover-card-content"], [ng-hover-card-content])[data-side="bottom"] {
+:is(
+  [data-slot="hover-card-content"],
+  [ng-hover-card-content]
+)[data-side="bottom"] {
   inset-block-start: calc(100% + var(--spacing));
   left: 50%;
 
@@ -42,7 +47,10 @@
   --hover-card-motion-y: -2px;
 }
 
-:is([data-slot="hover-card-content"], [ng-hover-card-content])[data-side="top"] {
+:is(
+  [data-slot="hover-card-content"],
+  [ng-hover-card-content]
+)[data-side="top"] {
   inset-block-end: calc(100% + var(--spacing));
   left: 50%;
 
@@ -51,7 +59,10 @@
   --hover-card-motion-y: 2px;
 }
 
-:is([data-slot="hover-card-content"], [ng-hover-card-content])[data-side="left"] {
+:is(
+  [data-slot="hover-card-content"],
+  [ng-hover-card-content]
+)[data-side="left"] {
   inset-block-start: 50%;
   right: calc(100% + var(--spacing));
 
@@ -61,7 +72,10 @@
   --hover-card-motion-y: 0;
 }
 
-:is([data-slot="hover-card-content"], [ng-hover-card-content])[data-side="right"] {
+:is(
+  [data-slot="hover-card-content"],
+  [ng-hover-card-content]
+)[data-side="right"] {
   inset-block-start: 50%;
   left: calc(100% + var(--spacing));
 
@@ -71,8 +85,10 @@
   --hover-card-motion-y: 0;
 }
 
-:is([data-slot="hover-card"], [ng-hover-card]):hover > :is([data-slot="hover-card-content"], [ng-hover-card-content]),
-:is([data-slot="hover-card"], [ng-hover-card]):focus-within > :is([data-slot="hover-card-content"], [ng-hover-card-content]),
+:is([data-slot="hover-card"], [ng-hover-card]):hover
+  > :is([data-slot="hover-card-content"], [ng-hover-card-content]),
+:is([data-slot="hover-card"], [ng-hover-card]):focus-within
+  > :is([data-slot="hover-card-content"], [ng-hover-card-content]),
 [data-slot="hover-card-content"][data-open="true"],
 [ng-hover-card-content][data-open="true"] {
   opacity: 1;

@@ -67,12 +67,14 @@ test("table workflows preserve invoices, actions, data controls, and RTL", async
     dataTable.getByRole("columnheader", { name: "Amount" }),
   ).toHaveCount(1);
 
-  await expect(
-    page.locator("[data-example='table-rtl']"),
-  ).toHaveAttribute("dir", "rtl");
-  await expect(
-    page.locator("[data-example='data-table-rtl']"),
-  ).toHaveAttribute("dir", "rtl");
+  await expect(page.locator("[data-example='table-rtl']")).toHaveAttribute(
+    "dir",
+    "rtl",
+  );
+  await expect(page.locator("[data-example='data-table-rtl']")).toHaveAttribute(
+    "dir",
+    "rtl",
+  );
   await page.mouse.move(1090, 2390);
   await expect(page.locator(".table-workflow-grid")).toHaveScreenshot(
     "table-workflows-desktop.png",

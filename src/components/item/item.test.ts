@@ -69,17 +69,16 @@ test("item workflows preserve media, groups, variants, uploads, and RTL", async 
     "Selected shadcn",
   );
 
-  await expect(
-    page.locator("[data-example='item-link'] a"),
-  ).toHaveCount(2);
+  await expect(page.locator("[data-example='item-link'] a")).toHaveCount(2);
   const uploads = page.locator(
     "[data-example='file-upload-list'] [ng-progress]",
   );
   await expect(uploads).toHaveCount(4);
   await expect(uploads.first()).toHaveAttribute("aria-valuenow", "45");
-  await expect(
-    page.locator("[data-example='item-rtl']"),
-  ).toHaveAttribute("dir", "rtl");
+  await expect(page.locator("[data-example='item-rtl']")).toHaveAttribute(
+    "dir",
+    "rtl",
+  );
 
   await page.mouse.move(1090, 2590);
   await expect(page.locator(".item-workflow-grid")).toHaveScreenshot(

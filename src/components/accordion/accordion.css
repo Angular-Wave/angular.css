@@ -70,7 +70,10 @@
 }
 
 :is([ng-accordion], [data-slot="accordion"])
-  :is([data-slot="accordion-trigger"], [ng-accordion-trigger])[aria-expanded="true"]
+  :is(
+    [data-slot="accordion-trigger"],
+    [ng-accordion-trigger]
+  )[aria-expanded="true"]
   [data-slot="accordion-trigger-icon"] {
   transform: translateY(2px) rotate(180deg);
 }
@@ -91,7 +94,10 @@
 }
 
 :is([ng-accordion], [data-slot="accordion"])
-  :is([data-slot="accordion-content"], [data-slot="accordion-panel"])[data-open="true"] {
+  :is(
+    [data-slot="accordion-content"],
+    [data-slot="accordion-panel"]
+  )[data-open="true"] {
   max-height: 100vh;
   padding-block-end: calc(var(--spacing) * 4);
   transition:

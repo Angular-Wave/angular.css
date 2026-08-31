@@ -76,20 +76,20 @@ export function toasterDirective(): ng.Directive {
         setAttributeIfChanged(
           toast,
           "role",
-          toast.getAttribute("role") || "status",
+          toast.getAttribute("role") ?? "status",
         );
         setAttributeIfChanged(
           toast,
           "aria-live",
-          toast.getAttribute("aria-live") || "polite",
+          toast.getAttribute("aria-live") ?? "polite",
         );
         setAttributeIfChanged(
           toast,
           "aria-atomic",
-          toast.getAttribute("aria-atomic") || "true",
+          toast.getAttribute("aria-atomic") ?? "true",
         );
 
-        const relationships = generatedRelationships.get(toast) || {};
+        const relationships = generatedRelationships.get(toast) ?? {};
         const title = toast.querySelector<HTMLElement>(titleSelector);
         const description =
           toast.querySelector<HTMLElement>(descriptionSelector);
@@ -97,7 +97,7 @@ export function toasterDirective(): ng.Directive {
         const describedby = toast.getAttribute("aria-describedby");
 
         if (title) {
-          if (!title.id) title.id = `toast-title-${toastIdCounter++}`;
+          if (!title.id) title.id = `toast-title-${String(toastIdCounter++)}`;
           if (!labelledby || labelledby === relationships.labelledby) {
             setAttributeIfChanged(toast, "aria-labelledby", title.id);
             relationships.labelledby = title.id;
@@ -112,7 +112,7 @@ export function toasterDirective(): ng.Directive {
 
         if (description) {
           if (!description.id) {
-            description.id = `toast-description-${toastIdCounter++}`;
+            description.id = `toast-description-${String(toastIdCounter++)}`;
           }
           if (!describedby || describedby === relationships.describedby) {
             setAttributeIfChanged(toast, "aria-describedby", description.id);
@@ -175,7 +175,7 @@ export function toasterDirective(): ng.Directive {
         setAttributeIfChanged(
           button,
           "aria-label",
-          button.getAttribute("aria-label") || "Close toast",
+          button.getAttribute("aria-label") ?? "Close toast",
         );
 
         const handleClick = () => {
@@ -191,9 +191,9 @@ export function toasterDirective(): ng.Directive {
         };
 
         button.addEventListener("click", handleClick);
-        cleanupButtons.set(button, () =>
-          button.removeEventListener("click", handleClick),
-        );
+        cleanupButtons.set(button, () => {
+          button.removeEventListener("click", handleClick);
+        });
       };
 
       const bindToaster = () => {
@@ -233,7 +233,9 @@ export function toasterDirective(): ng.Directive {
 
       onDestroy(scope, () => {
         observer.disconnect();
-        cleanupButtons.forEach((cleanup) => cleanup());
+        cleanupButtons.forEach((cleanup) => {
+          cleanup();
+        });
         cleanupButtons.clear();
       });
     },

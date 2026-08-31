@@ -47,7 +47,7 @@ export function resizablePanelGroupDirective(): ng.Directive {
       const ownedHandleOrientations = new WeakSet<HTMLElement>();
       const cleanupHandles = new WeakMap<HTMLElement, () => void>();
       const knownHandles = new Set<HTMLElement>();
-      const directionOwner = element.closest<HTMLElement>("[dir]") || element;
+      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
 
       const panelSize = (panel: HTMLElement) =>
         Number(panel.style.getPropertyValue("--panel-size")) || 1;
@@ -86,7 +86,7 @@ export function resizablePanelGroupDirective(): ng.Directive {
           setAttributeIfChanged(
             handle,
             "data-orientation",
-            handle.getAttribute("aria-orientation") || "vertical",
+            handle.getAttribute("aria-orientation") ?? "vertical",
           );
         });
       };
@@ -109,8 +109,8 @@ export function resizablePanelGroupDirective(): ng.Directive {
 
       const bindHandle = (handle: HTMLElement) => {
         if (cleanupHandles.has(handle)) return;
-        handle.setAttribute("tabindex", handle.getAttribute("tabindex") || "0");
-        handle.setAttribute("role", handle.getAttribute("role") || "separator");
+        handle.setAttribute("tabindex", handle.getAttribute("tabindex") ?? "0");
+        handle.setAttribute("role", handle.getAttribute("role") ?? "separator");
         let stopPointerResize: (() => void) | null = null;
 
         const handlePointerDown = (event: PointerEvent) => {
@@ -122,8 +122,8 @@ export function resizablePanelGroupDirective(): ng.Directive {
           }
 
           const index = handles.indexOf(handle);
-          const before = panels[index];
-          const after = panels[index + 1];
+          const before = panels.at(index);
+          const after = panels.at(index + 1);
           if (!before || !after) return;
 
           event.preventDefault();
@@ -202,8 +202,8 @@ export function resizablePanelGroupDirective(): ng.Directive {
             : ["ArrowLeft", "ArrowRight", "Home", "End"];
           if (!supportedKeys.includes(event.key)) return;
 
-          const before = panels[index];
-          const after = panels[index + 1];
+          const before = panels.at(index);
+          const after = panels.at(index + 1);
           if (!before || !after) return;
 
           event.preventDefault();
@@ -270,11 +270,11 @@ export function resizablePanelGroupDirective(): ng.Directive {
         syncOrientation();
         handles.forEach((handle, index) => {
           bindHandle(handle);
-          const before = panels[index];
-          const after = panels[index + 1];
+          const before = panels.at(index);
+          const after = panels.at(index + 1);
           if (before) {
             if (!before.id)
-              before.id = `resizable-panel-${resizableIdCounter++}`;
+              before.id = `resizable-panel-${String(resizableIdCounter++)}`;
             setAttributeIfChanged(before, "data-index", String(index));
             setAttributeIfChanged(
               before,
@@ -284,9 +284,12 @@ export function resizablePanelGroupDirective(): ng.Directive {
             syncHandle(handle, before);
           }
           if (after) {
-            if (!after.id) after.id = `resizable-panel-${resizableIdCounter++}`;
+            if (!after.id)
+              after.id = `resizable-panel-${String(resizableIdCounter++)}`;
             setAttributeIfChanged(after, "data-index", String(index + 1));
             setAttributeIfChanged(after, "data-size", String(panelSize(after)));
+          }
+          if (before && after) {
             setAttributeIfChanged(
               handle,
               "aria-controls",
