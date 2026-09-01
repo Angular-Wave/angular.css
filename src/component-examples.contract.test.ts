@@ -28,6 +28,7 @@ const elementNames = new Set([
   "pagination",
   "progress",
   "radio-group",
+  "select",
   "separator",
   "skeleton",
   "spinner",
@@ -695,17 +696,12 @@ const contracts: Record<string, Contract> = {
     await expect(root).toHaveAttribute("data-scrollable-x", "true");
   },
   select: async (page) => {
-    await expect(slot(page, "select-value")).toContainText("Select a fruit");
-    await slot(page, "select-trigger").click();
-    await expect(slot(page, "select-group")).toBeVisible();
-    await expect(slot(page, "select-item")).toHaveCount(6);
-    await page.getByRole("option", { name: "Banana", exact: true }).click();
+    const select = page.getByRole("combobox", { name: "Fruit" });
+    await expect(select).toHaveValue("");
+    await expect(select.locator("option")).toHaveCount(6);
+    await select.selectOption("banana");
     await expect(page.locator(".output")).toContainText("Selected: banana");
-    await expect(page.locator("[ng-select]")).toHaveAttribute(
-      "data-value",
-      "banana",
-    );
-    await expect(slot(page, "select-value")).toContainText("Banana");
+    await expect(select).toHaveValue("banana");
   },
   separator: async (page) => {
     await expect(page.getByRole("separator")).not.toHaveCount(0);

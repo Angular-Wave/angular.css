@@ -3,25 +3,24 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
-    <link rel="stylesheet" href="../../css/angular.css" />
-    <link rel="stylesheet" href="../example.css" />
-    <script src="../../js/angular-ts.umd.js"></script>
-    <script src="../../js/angular-css.umd.js"></script>
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
   </head>
-  <body ng-app="ui" ng-cloak>
-    <div class="stack-sm" ng-init="status='Todo'">
-      <div class="output">Current: <span ng-bind="status"></span></div>
-      <div ng-select data-open="false">
-        <button type="button" class="select-trigger">Todo</button>
-        <ul class="select-content">
-          <li data-value="Todo" aria-selected="true" class="select-item">
-            Todo
-          </li>
-          <li data-value="In progress" class="select-item">In progress</li>
-          <li data-value="Done" class="select-item">Done</li>
-        </ul>
+  <body ng-app="ui" ng-cloak ng-init="status=''">
+    <main class="stack-sm visual-example">
+      <label for="status">Status</label>
+      <div class="select-wrapper">
+        <select id="status" class="select" ng-model="status" required>
+          <option value="">Select a status</option>
+          <option>Todo</option>
+          <option>In progress</option>
+          <option>Done</option>
+        </select>
       </div>
-    </div>
+      <output class="output">Current: {{ status || 'none' }}</output>
+    </main>
   </body>
 </html>

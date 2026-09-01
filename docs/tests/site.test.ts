@@ -138,23 +138,18 @@ test('published iframe interactions update component and AngularTS state', async
   );
 
   frame = await openExample(page, 'select');
-  await frame.locator('.select-trigger').click();
-  await frame.locator(".select-item[data-value='pineapple']").click();
+  await frame.getByRole('combobox').selectOption('pineapple');
   await expect(frame.locator('.output').first()).toContainText(
     'Selected: pineapple',
   );
 
   frame = await openExample(page, 'calendar');
-  await expect(frame.locator(".calendar-day")).toHaveCount(42);
-  await frame
-    .locator(".calendar-day[data-value='2026-05-20']")
-    .click();
+  await expect(frame.locator('.calendar-day')).toHaveCount(42);
+  await frame.locator(".calendar-day[data-value='2026-05-20']").click();
   await expect(frame.locator('.output')).toContainText('Selected: 2026-05-20');
-  await frame.locator(".calendar-next").click();
+  await frame.locator('.calendar-next').click();
   await expect(
-    frame
-      .locator(".calendar-title")
-      .getByRole('combobox', { name: 'Month' }),
+    frame.locator('.calendar-title').getByRole('combobox', { name: 'Month' }),
   ).toHaveValue('5');
   const calendarViewport = await frame.evaluate(() => ({
     contentHeight: document.body.scrollHeight,

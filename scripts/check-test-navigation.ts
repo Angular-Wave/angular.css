@@ -13,6 +13,7 @@ const testFiles = ["src", "docs/tests"]
   .flatMap(listTestFiles);
 const failures: string[] = [];
 const checkedArtifactPages = new Set<string>();
+const checkedSourcePages = new Set<string>();
 const canonicalComponents = readdirSync("src/components")
   .filter((entry) => statSync(join("src/components", entry)).isDirectory())
   .filter((entry) => existsSync(join("src/components", entry, `${entry}.ts`)));
@@ -56,15 +57,52 @@ const checkArtifactPage = (testFile: string, target: string): void => {
   }
 };
 
+const checkSourcePage = (testFile: string, target: string): void => {
+  if (!/^\/src\/(?:components|elements)\/[^?#]+\.html$/.test(target)) return;
+
+  const pagePath = target.slice(1);
+  if (!existsSync(pagePath)) {
+    failures.push(
+      `${testFile}: source HTML navigation target does not exist ${target}`,
+    );
+    return;
+  }
+  if (checkedSourcePages.has(pagePath)) return;
+  checkedSourcePages.add(pagePath);
+
+  const html = readFileSync(pagePath, "utf8");
+  const requiredBundles = [
+    "/docs/static/js/angular-ts.umd.js",
+    "/docs/static/js/angular-css.umd.js",
+  ];
+
+  for (const bundle of requiredBundles) {
+    if (!html.includes(`<script src="${bundle}"></script>`)) {
+      failures.push(
+        `${testFile}: tested source page ${target} must load local built bundle ${bundle}`,
+      );
+    }
+  }
+
+  if (
+    /<script\b[^>]*\bsrc=["'][^"']*(?:\/src\/|\.tsx?(?:[?#][^"']*)?)["']/i.test(
+      html,
+    ) ||
+    /\bimport\s*\(\s*["'`][^"'`]*\/src\/(?:components|elements)\//.test(html)
+  ) {
+    failures.push(
+      `${testFile}: tested source page ${target} references TypeScript component source`,
+    );
+  }
+};
+
 for (const file of testFiles) {
   const source = readFileSync(file, "utf8");
 
   for (const match of source.matchAll(
     /["'`](\/src\/(?:components|elements)\/[^"'`?#]+\.html)["'`]/g,
   )) {
-    failures.push(
-      `${file}: browser tests must navigate the packaged HTML artifact instead of ${match[1]}`,
-    );
+    checkSourcePage(file, match[1]);
   }
 
   for (const match of source.matchAll(
@@ -103,6 +141,7 @@ for (const file of testFiles) {
         `${file}: browser navigation target does not exist ${target}`,
       );
     }
+    checkSourcePage(file, target);
     checkArtifactPage(file, target);
   }
 }
@@ -113,5 +152,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `Test navigation check passed for ${testFiles.length} browser test files and ${checkedArtifactPages.size} built HTML artifacts.`,
+  `Test navigation check passed for ${testFiles.length} browser test files, ${checkedSourcePages.size} source HTML pages, and ${checkedArtifactPages.size} built HTML artifacts.`,
 );

@@ -632,41 +632,6 @@ test("resizable examples preserve Nova nested, visible-handle, vertical, RTL, an
   );
 });
 
-test("select examples preserve Nova popup, grouped, invalid, scrollable, mobile, and RTL visuals", async ({
-  page,
-}) => {
-  await page.setViewportSize({ height: 360, width: 900 });
-  await page.goto("/docs/static/examples/components/select.html");
-  await page.getByRole("combobox", { name: "Fruit" }).click();
-  await expect(page.locator(".select-demo")).toHaveScreenshot(
-    "select-demo-open-desktop.png",
-    { animations: "disabled" },
-  );
-
-  await page.setViewportSize({ height: 820, width: 900 });
-  await page.goto("/docs/static/examples/components/select-workflows.html");
-  await page.getByRole("combobox", { name: "Produce" }).click();
-  await expect(page.locator(".select-workflows")).toHaveScreenshot(
-    "select-workflows-desktop.png",
-    { animations: "disabled" },
-  );
-
-  await page.setViewportSize({ height: 1420, width: 390 });
-  await page.reload();
-  await page.getByRole("combobox", { name: "Timezone" }).click();
-  await expect(page.locator(".select-workflows")).toHaveScreenshot(
-    "select-workflows-mobile.png",
-    { animations: "disabled" },
-  );
-
-  await page.setViewportSize({ height: 820, width: 900 });
-  await page.goto("/docs/static/examples/components/select-workflows.html");
-  await page.getByRole("combobox", { name: "الفاكهة" }).click();
-  await expect(page).toHaveScreenshot("select-rtl-open-desktop.png", {
-    animations: "disabled",
-  });
-});
-
 test("combobox examples preserve Nova search, grouped, multiple, state, mobile, and RTL visuals", async ({
   page,
 }) => {
@@ -1481,9 +1446,8 @@ test("button group workflows preserve command, form, overlay, nested, and RTL co
   await expect(popoverTrigger).toBeFocused();
 
   const currency = page.getByRole("combobox", { name: "Currency" });
-  await currency.click();
-  await page.getByRole("option", { name: "€ Euro" }).click();
-  await expect(currency).toContainText("€");
+  await currency.selectOption("€");
+  await expect(currency).toHaveValue("€");
 
   const rtlGroup = page.getByRole("group", { name: "إجراءات الرسالة" });
   const rtlMore = rtlGroup.getByRole("button", { name: "المزيد من الخيارات" });
@@ -2370,16 +2334,6 @@ test("workflow iframes fit compact viewports without scrolling or clipping", asy
         "resizable-state-workflows",
         "/docs/static/examples/components/resizable-state-workflows.html",
         760,
-      ],
-      [
-        "select-workflows",
-        "/docs/static/examples/components/select-workflows.html",
-        1420,
-      ],
-      [
-        "select-state-workflows",
-        "/docs/static/examples/components/select-state-workflows.html",
-        480,
       ],
       [
         "combobox-workflows",

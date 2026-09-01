@@ -19,28 +19,29 @@
         <fieldset class="field-set">
           <div class="field-group">
             <fieldset ng-field>
-              <label for="field-username"
-                 class="field-label">Username</label><input
-
+              <label for="field-username" class="field-label">Username</label
+              ><input
                 id="field-username"
                 ng-model="fieldState.username"
-                placeholder="Max Leiter" class="input" />
+                placeholder="Max Leiter"
+                class="input"
+              />
               <p class="field-description">
                 Choose a unique username for your account.
               </p>
             </fieldset>
             <fieldset ng-field>
-              <label for="field-password"
-                 class="field-label">Password</label>
+              <label for="field-password" class="field-label">Password</label>
               <p class="field-description">
                 Must be at least 8 characters long.
               </p>
               <input
-
                 id="field-password"
                 type="password"
                 ng-model="fieldState.password"
-                placeholder="••••••••" class="input" />
+                placeholder="••••••••"
+                class="input"
+              />
             </fieldset>
           </div>
         </fieldset>
@@ -50,13 +51,14 @@
         <fieldset class="field-set">
           <div class="field-group">
             <fieldset ng-field>
-              <label for="field-feedback"
-                 class="field-label">Feedback</label><textarea
-
+              <label for="field-feedback" class="field-label">Feedback</label
+              ><textarea
                 id="field-feedback"
                 ng-model="fieldState.feedback"
                 placeholder="Your feedback helps us improve..."
-                rows="4" class="textarea"></textarea>
+                rows="4"
+                class="textarea"
+              ></textarea>
               <p class="field-description">
                 Share your thoughts about our service.
               </p>
@@ -67,34 +69,20 @@
 
       <section data-example="field-select" class="field-workflow">
         <fieldset ng-field>
-          <label for="field-department"
-             class="field-label">Department</label>
-          <div
-            ng-select
-            ng-on-angularcss:select="fieldState.department=$event.detail.value"
-          >
-            <button
-
+          <label for="field-department" class="field-label">Department</label>
+          <div class="select-wrapper">
+            <select
               id="field-department"
-              type="button"
-              data-placeholder="{{ fieldState.department === '' }}"
-             class="select-trigger">
-              <span
-
-                ng-bind="fieldState.department || 'Choose department'"
-               class="select-value"></span>
-            </button>
-            <ul class="select-content">
-              <div class="select-group">
-                <li data-value="Engineering" class="select-item">Engineering</li>
-                <li data-value="Design" class="select-item">Design</li>
-                <li data-value="Marketing" class="select-item">Marketing</li>
-                <li data-value="Sales" class="select-item">Sales</li>
-                <li data-value="Customer Support" class="select-item">
-                  Customer Support
-                </li>
-              </div>
-            </ul>
+              class="select"
+              ng-model="fieldState.department"
+            >
+              <option value="">Choose department</option>
+              <option>Engineering</option>
+              <option>Design</option>
+              <option>Marketing</option>
+              <option>Sales</option>
+              <option>Customer Support</option>
+            </select>
           </div>
           <p class="field-description">
             Select your department or area of work.
@@ -114,48 +102,58 @@
             <div class="field-choice-list checkbox-group">
               <fieldset ng-field orientation="horizontal">
                 <input
-
                   id="field-hard-disks"
                   type="checkbox"
-                  ng-model="fieldState.hardDisks" class="checkbox" /><label for="field-hard-disks"
-                   class="field-label">Hard disks</label>
+                  ng-model="fieldState.hardDisks"
+                  class="checkbox"
+                /><label for="field-hard-disks" class="field-label"
+                  >Hard disks</label
+                >
               </fieldset>
               <fieldset ng-field orientation="horizontal">
                 <input
-
                   id="field-external-disks"
                   type="checkbox"
-                  ng-model="fieldState.externalDisks" class="checkbox" /><label for="field-external-disks"
-                   class="field-label">External disks</label>
+                  ng-model="fieldState.externalDisks"
+                  class="checkbox"
+                /><label for="field-external-disks" class="field-label"
+                  >External disks</label
+                >
               </fieldset>
               <fieldset ng-field orientation="horizontal">
                 <input
-
                   id="field-cds"
                   type="checkbox"
-                  ng-model="fieldState.cds" class="checkbox" /><label for="field-cds"
-                   class="field-label">CDs, DVDs, and iPods</label>
+                  ng-model="fieldState.cds"
+                  class="checkbox"
+                /><label for="field-cds" class="field-label"
+                  >CDs, DVDs, and iPods</label
+                >
               </fieldset>
               <fieldset ng-field orientation="horizontal">
                 <input
-
                   id="field-servers"
                   type="checkbox"
-                  ng-model="fieldState.servers" class="checkbox" /><label for="field-servers"
-                   class="field-label">Connected servers</label>
+                  ng-model="fieldState.servers"
+                  class="checkbox"
+                /><label for="field-servers" class="field-label"
+                  >Connected servers</label
+                >
               </fieldset>
             </div>
           </fieldset>
           <div class="field-separator"></div>
           <fieldset ng-field orientation="horizontal">
             <input
-
               id="field-sync"
               type="checkbox"
-              ng-model="fieldState.sync" class="checkbox" />
+              ng-model="fieldState.sync"
+              class="checkbox"
+            />
             <div class="field-content">
-              <label for="field-sync"
-                 class="field-label">Sync Desktop &amp; Documents folders</label>
+              <label for="field-sync" class="field-label"
+                >Sync Desktop &amp; Documents folders</label
+              >
               <p class="field-description">
                 Access these folders from your other devices.
               </p>
@@ -166,13 +164,14 @@
 
       <section data-example="field-switch" class="field-workflow">
         <fieldset ng-field orientation="horizontal" class="field-switch-demo">
-          <label for="field-2fa"
-             class="field-label">Multi-factor authentication</label><input
-
+          <label for="field-2fa" class="field-label"
+            >Multi-factor authentication</label
+          ><input
             id="field-2fa"
             type="checkbox"
-
-            ng-model="fieldState.twoFactor" class="switch" />
+            ng-model="fieldState.twoFactor"
+            class="switch"
+          />
         </fieldset>
       </section>
 
@@ -187,33 +186,39 @@
           <fieldset class="field-choice-list radio-group">
             <fieldset ng-field orientation="horizontal">
               <input
-
                 id="field-monthly"
                 name="field-plan"
                 type="radio"
                 value="monthly"
-                ng-model="fieldState.plan"  class="radio-group-item"/><label for="field-monthly"
-                 class="field-label">Monthly ($9.99/month)</label>
+                ng-model="fieldState.plan"
+                class="radio-group-item"
+              /><label for="field-monthly" class="field-label"
+                >Monthly ($9.99/month)</label
+              >
             </fieldset>
             <fieldset ng-field orientation="horizontal">
               <input
-
                 id="field-yearly"
                 name="field-plan"
                 type="radio"
                 value="yearly"
-                ng-model="fieldState.plan"  class="radio-group-item"/><label for="field-yearly"
-                 class="field-label">Yearly ($99.99/year)</label>
+                ng-model="fieldState.plan"
+                class="radio-group-item"
+              /><label for="field-yearly" class="field-label"
+                >Yearly ($99.99/year)</label
+              >
             </fieldset>
             <fieldset ng-field orientation="horizontal">
               <input
-
                 id="field-lifetime"
                 name="field-plan"
                 type="radio"
                 value="lifetime"
-                ng-model="fieldState.plan"  class="radio-group-item"/><label for="field-lifetime"
-                 class="field-label">Lifetime ($299.99)</label>
+                ng-model="fieldState.plan"
+                class="radio-group-item"
+              /><label for="field-lifetime" class="field-label"
+                >Lifetime ($299.99)</label
+              >
             </fieldset>
           </fieldset>
         </fieldset>
@@ -235,20 +240,22 @@
           >
             <div class="slider-track"><div class="slider-range"></div></div>
             <input
-
               type="range"
               min="0"
               max="1000"
               step="10"
               ng-model="fieldState.minimum"
-              aria-label="Minimum budget"  class="slider-thumb"/><input
-
+              aria-label="Minimum budget"
+              class="slider-thumb"
+            /><input
               type="range"
               min="0"
               max="1000"
               step="10"
               ng-model="fieldState.maximum"
-              aria-label="Maximum budget"  class="slider-thumb"/>
+              aria-label="Maximum budget"
+              class="slider-thumb"
+            />
           </div>
         </fieldset>
       </section>
@@ -263,8 +270,8 @@
               Select the compute environment for your cluster.
             </p>
             <fieldset class="field-card-list radio-group">
-              <label for="field-kubernetes"
-                 class="field-label"><fieldset ng-field orientation="horizontal">
+              <label for="field-kubernetes" class="field-label"
+                ><fieldset ng-field orientation="horizontal">
                   <div class="field-content">
                     <div class="field-title">Kubernetes</div>
                     <p class="field-description">
@@ -272,13 +279,15 @@
                     </p>
                   </div>
                   <input
-
                     id="field-kubernetes"
                     name="environment"
                     type="radio"
                     value="kubernetes"
-                    ng-model="fieldState.environment"  class="radio-group-item"/></fieldset></label><label for="field-vm"
-                 class="field-label"><fieldset ng-field orientation="horizontal">
+                    ng-model="fieldState.environment"
+                    class="radio-group-item"
+                  /></fieldset></label
+              ><label for="field-vm" class="field-label"
+                ><fieldset ng-field orientation="horizontal">
                   <div class="field-content">
                     <div class="field-title">Virtual Machine</div>
                     <p class="field-description">
@@ -286,12 +295,14 @@
                     </p>
                   </div>
                   <input
-
                     id="field-vm"
                     name="environment"
                     type="radio"
                     value="vm"
-                    ng-model="fieldState.environment"  class="radio-group-item"/></fieldset></label>
+                    ng-model="fieldState.environment"
+                    class="radio-group-item"
+                  /></fieldset
+              ></label>
             </fieldset>
           </fieldset>
         </div>
@@ -305,28 +316,33 @@
           </p>
           <div class="field-group">
             <fieldset ng-field>
-              <label for="field-street"
-                 class="field-label">Street Address</label><input
-
+              <label for="field-street" class="field-label"
+                >Street Address</label
+              ><input
                 id="field-street"
                 ng-model="fieldState.street"
-                placeholder="123 Main St" class="input" />
+                placeholder="123 Main St"
+                class="input"
+              />
             </fieldset>
             <div class="field-two-column">
               <fieldset ng-field>
-                <label for="field-city" class="field-label">City</label><input
-
+                <label for="field-city" class="field-label">City</label
+                ><input
                   id="field-city"
                   ng-model="fieldState.city"
-                  placeholder="New York" class="input" />
+                  placeholder="New York"
+                  class="input"
+                />
               </fieldset>
               <fieldset ng-field>
-                <label for="field-zip"
-                   class="field-label">Postal Code</label><input
-
+                <label for="field-zip" class="field-label">Postal Code</label
+                ><input
                   id="field-zip"
                   ng-model="fieldState.zip"
-                  placeholder="90502" class="input" />
+                  placeholder="90502"
+                  class="input"
+                />
               </fieldset>
             </div>
           </div>
@@ -342,12 +358,14 @@
             </p>
             <fieldset ng-field orientation="horizontal">
               <input
-
                 id="field-push"
                 type="checkbox"
                 ng-model="fieldState.push"
-                disabled class="checkbox" /><label for="field-push"
-                 class="field-label">Push notifications</label>
+                disabled
+                class="checkbox"
+              /><label for="field-push" class="field-label"
+                >Push notifications</label
+              >
             </fieldset>
           </fieldset>
           <div class="field-separator"></div>
@@ -360,19 +378,23 @@
             <div class="field-choice-list">
               <fieldset ng-field orientation="horizontal">
                 <input
-
                   id="field-push-tasks"
                   type="checkbox"
-                  ng-model="fieldState.pushTasks" class="checkbox" /><label for="field-push-tasks"
-                   class="field-label">Push notifications</label>
+                  ng-model="fieldState.pushTasks"
+                  class="checkbox"
+                /><label for="field-push-tasks" class="field-label"
+                  >Push notifications</label
+                >
               </fieldset>
               <fieldset ng-field orientation="horizontal">
                 <input
-
                   id="field-email-tasks"
                   type="checkbox"
-                  ng-model="fieldState.emailTasks" class="checkbox" /><label for="field-email-tasks"
-                   class="field-label">Email notifications</label>
+                  ng-model="fieldState.emailTasks"
+                  class="checkbox"
+                /><label for="field-email-tasks" class="field-label"
+                  >Email notifications</label
+                >
               </fieldset>
             </div>
           </fieldset>
@@ -388,31 +410,37 @@
         >
           <fieldset class="field-set">
             <legend class="field-legend">Profile</legend>
-            <p class="field-description">
-              Fill in your profile information.
-            </p>
+            <p class="field-description">Fill in your profile information.</p>
             <div class="field-group">
               <fieldset ng-field orientation="responsive">
                 <div class="field-content">
-                  <label for="field-profile-name"
-                     class="field-label">Name</label>
+                  <label for="field-profile-name" class="field-label"
+                    >Name</label
+                  >
                   <p class="field-description">
                     Provide your full name for identification
                   </p>
                 </div>
                 <input
-
                   id="field-profile-name"
                   ng-model="fieldState.profileName"
                   placeholder="Evil Rabbit"
-                  required class="input" />
+                  required
+                  class="input"
+                />
               </fieldset>
-              <fieldset ng-field orientation="responsive" class="field-form-actions">
-                <button type="submit" class="button">Submit</button><button
-
+              <fieldset
+                ng-field
+                orientation="responsive"
+                class="field-form-actions"
+              >
+                <button type="submit" class="button">Submit</button
+                ><button
                   type="button"
                   variant="outline"
-                  ng-click="fieldState.message='Cancelled'" class="button">
+                  ng-click="fieldState.message='Cancelled'"
+                  class="button"
+                >
                   Cancel
                 </button>
               </fieldset>
@@ -434,38 +462,45 @@
               </p>
               <div class="field-group">
                 <fieldset ng-field>
-                  <label for="field-card-name"
-                     class="field-label">Name on Card</label><input
-
+                  <label for="field-card-name" class="field-label"
+                    >Name on Card</label
+                  ><input
                     id="field-card-name"
                     placeholder="Evil Rabbit"
-                    required class="input" />
+                    required
+                    class="input"
+                  />
                 </fieldset>
                 <fieldset ng-field>
-                  <label for="field-card-number"
-                     class="field-label">Card Number</label><input
-
+                  <label for="field-card-number" class="field-label"
+                    >Card Number</label
+                  ><input
                     id="field-card-number"
                     placeholder="1234 5678 9012 3456"
-                    required class="input" />
+                    required
+                    class="input"
+                  />
                   <p class="field-description">
                     Enter your 16-digit card number
                   </p>
                 </fieldset>
                 <div class="field-three-column">
                   <fieldset ng-field>
-                    <label for="field-month"
-                       class="field-label">Month</label><input id="field-month" placeholder="MM" class="input" />
+                    <label for="field-month" class="field-label">Month</label
+                    ><input id="field-month" placeholder="MM" class="input" />
                   </fieldset>
                   <fieldset ng-field>
-                    <label for="field-year" class="field-label">Year</label><input id="field-year" placeholder="YYYY" class="input" />
+                    <label for="field-year" class="field-label">Year</label
+                    ><input id="field-year" placeholder="YYYY" class="input" />
                   </fieldset>
                   <fieldset ng-field>
-                    <label for="field-cvv" class="field-label">CVV</label><input
-
+                    <label for="field-cvv" class="field-label">CVV</label
+                    ><input
                       id="field-cvv"
                       placeholder="123"
-                      required class="input" />
+                      required
+                      class="input"
+                    />
                   </fieldset>
                 </div>
               </div>
@@ -478,24 +513,34 @@
               </p>
               <fieldset ng-field orientation="horizontal">
                 <input
-
                   id="field-same-shipping"
                   type="checkbox"
-                  ng-model="fieldState.sameAsShipping" class="checkbox" /><label for="field-same-shipping"
-                   class="field-label">Same as shipping address</label>
+                  ng-model="fieldState.sameAsShipping"
+                  class="checkbox"
+                /><label for="field-same-shipping" class="field-label"
+                  >Same as shipping address</label
+                >
               </fieldset>
             </fieldset>
             <fieldset class="field-set">
               <fieldset ng-field>
-                <label for="field-comments"
-                   class="field-label">Comments</label><textarea
-
+                <label for="field-comments" class="field-label">Comments</label
+                ><textarea
                   id="field-comments"
-                  placeholder="Add any additional comments" class="textarea"></textarea>
+                  placeholder="Add any additional comments"
+                  class="textarea"
+                ></textarea>
               </fieldset>
             </fieldset>
-            <fieldset ng-field orientation="horizontal" class="field-form-actions">
-              <button type="submit" class="button">Submit</button><button type="button" variant="outline" class="button">Cancel</button>
+            <fieldset
+              ng-field
+              orientation="horizontal"
+              class="field-form-actions"
+            >
+              <button type="submit" class="button">Submit</button
+              ><button type="button" variant="outline" class="button">
+                Cancel
+              </button>
             </fieldset>
           </div>
         </form>
@@ -514,31 +559,38 @@
               <p class="field-description">جميع المعاملات آمنة ومشفرة</p>
               <div class="field-group">
                 <fieldset ng-field>
-                  <label for="field-card-name-rtl"
-                     class="field-label">الاسم على البطاقة</label><input
-
+                  <label for="field-card-name-rtl" class="field-label"
+                    >الاسم على البطاقة</label
+                  ><input
                     id="field-card-name-rtl"
-                    placeholder="Evil Rabbit" class="input" />
+                    placeholder="Evil Rabbit"
+                    class="input"
+                  />
                 </fieldset>
                 <fieldset ng-field>
-                  <label for="field-card-number-rtl"
-                     class="field-label">رقم البطاقة</label><input
-
+                  <label for="field-card-number-rtl" class="field-label"
+                    >رقم البطاقة</label
+                  ><input
                     id="field-card-number-rtl"
-                    placeholder="1234 5678 9012 3456" class="input" />
+                    placeholder="1234 5678 9012 3456"
+                    class="input"
+                  />
                   <p class="field-description">
                     أدخل رقم البطاقة المكون من 16 رقمًا
                   </p>
                 </fieldset>
                 <div class="field-three-column">
                   <fieldset ng-field>
-                    <label class="field-label">الشهر</label><input placeholder="ش.ش" class="input" />
+                    <label class="field-label">الشهر</label
+                    ><input placeholder="ش.ش" class="input" />
                   </fieldset>
                   <fieldset ng-field>
-                    <label class="field-label">السنة</label><input placeholder="YYYY" class="input" />
+                    <label class="field-label">السنة</label
+                    ><input placeholder="YYYY" class="input" />
                   </fieldset>
                   <fieldset ng-field>
-                    <label class="field-label">CVV</label><input placeholder="123" class="input" />
+                    <label class="field-label">CVV</label
+                    ><input placeholder="123" class="input" />
                   </fieldset>
                 </div>
               </div>
@@ -546,28 +598,36 @@
             <div class="field-separator"></div>
             <fieldset ng-field orientation="horizontal">
               <input
-
                 id="field-same-shipping-rtl"
                 type="checkbox"
-                checked class="checkbox" /><label for="field-same-shipping-rtl"
-                 class="field-label">نفس عنوان الشحن</label>
+                checked
+                class="checkbox"
+              /><label for="field-same-shipping-rtl" class="field-label"
+                >نفس عنوان الشحن</label
+              >
             </fieldset>
             <fieldset ng-field>
-              <label for="field-comments-rtl"
-                 class="field-label">تعليقات</label><textarea
-
+              <label for="field-comments-rtl" class="field-label">تعليقات</label
+              ><textarea
                 id="field-comments-rtl"
-                placeholder="أضف أي تعليقات إضافية" class="textarea"></textarea>
+                placeholder="أضف أي تعليقات إضافية"
+                class="textarea"
+              ></textarea>
             </fieldset>
-            <fieldset ng-field orientation="horizontal" class="field-form-actions">
-              <button type="button" class="button">إرسال</button><button type="button" variant="outline" class="button">إلغاء</button>
+            <fieldset
+              ng-field
+              orientation="horizontal"
+              class="field-form-actions"
+            >
+              <button type="button" class="button">إرسال</button
+              ><button type="button" variant="outline" class="button">
+                إلغاء
+              </button>
             </fieldset>
           </div>
         </form>
       </section>
-      <output class="field-workflow-output">
-        {{ fieldState.message }}
-      </output>
+      <output class="field-workflow-output"> {{ fieldState.message }} </output>
     </main>
   </body>
 </html>

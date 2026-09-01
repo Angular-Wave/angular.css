@@ -22,9 +22,10 @@
           <label for="native-department" class="label">Department</label>
           <div class="native-select-wrapper">
             <select
-
               id="native-department"
-              ng-model="nativeSelectWorkflow.department" class="native-select">
+              ng-model="nativeSelectWorkflow.department"
+              class="native-select"
+            >
               <option value="">Select department</option>
               <optgroup label="Engineering">
                 <option value="frontend">Frontend</option>
@@ -73,10 +74,11 @@
             <label for="native-invalid" class="label">Invalid</label>
             <div class="native-select-wrapper">
               <select
-
                 id="native-invalid"
                 aria-invalid="true"
-                ng-model="nativeSelectWorkflow.fruit" class="native-select">
+                ng-model="nativeSelectWorkflow.fruit"
+                class="native-select"
+              >
                 <option value="">Error state</option>
                 <option value="apple">Apple</option>
                 <option value="banana">Banana</option>
@@ -86,12 +88,12 @@
           </div>
           <div class="native-select-field">
             <label for="native-compact" class="label">Small</label>
-            <div data-size="sm" class="native-select-wrapper">
+            <div class="native-select-wrapper">
               <select
-
                 id="native-compact"
-                data-size="sm"
-                ng-model="nativeSelectWorkflow.compact" class="native-select">
+                ng-model="nativeSelectWorkflow.compact"
+                class="native-select native-select-sm"
+              >
                 <option value="todo">Todo</option>
                 <option value="done">Done</option>
               </select>
@@ -107,19 +109,21 @@
           <h2>Dynamic AngularTS options</h2>
         </header>
         <button
-
           type="button"
           variant="outline"
-          ng-click="nativeSelectWorkflow.showArchived=true" class="button">
+          ng-click="nativeSelectWorkflow.showArchived=true"
+          class="button"
+        >
           Add archived option
         </button>
         <div class="native-select-field">
           <label for="native-dynamic" class="label">Project status</label>
           <div class="native-select-wrapper">
             <select
-
               id="native-dynamic"
-              ng-model="nativeSelectWorkflow.dynamic" class="native-select">
+              ng-model="nativeSelectWorkflow.dynamic"
+              class="native-select"
+            >
               <option value="">Select status</option>
               <option value="active">Active</option>
               <option

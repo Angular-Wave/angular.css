@@ -9,41 +9,20 @@
     <script src="../../js/angular-ts.umd.js"></script>
     <script src="../../js/angular-css.umd.js"></script>
   </head>
-  <body ng-app="ui" ng-cloak ng-init="fruit=''" data-example="select-demo">
-    <div class="select-demo visual-example">
-      <div
-        ng-select
-        data-open="false"
-        ng-on-angularcss:select="fruit=$event.detail.value"
-      >
-        <button
-
-          type="button"
-          aria-label="Fruit"
-          data-placeholder="{{ fruit === '' }}"
-         class="select-trigger">
-          <span
-
-            ng-bind="fruit === 'apple' ? 'Apple' : fruit === 'banana' ? 'Banana' : fruit === 'blueberry' ? 'Blueberry' : fruit === 'grapes' ? 'Grapes' : fruit === 'pineapple' ? 'Pineapple' : 'Select a fruit'"
-           class="select-value"></span>
-        </button>
-        <ul class="select-content">
-          <div class="select-group">
-            <div class="select-label">Fruits</div>
-            <li data-value="" aria-selected="true" class="select-item">
-              Select a fruit
-            </li>
-            <li data-value="apple" class="select-item">Apple</li>
-            <li data-value="banana" class="select-item">Banana</li>
-            <li data-value="blueberry" class="select-item">Blueberry</li>
-            <li data-value="grapes" class="select-item">Grapes</li>
-            <li data-value="pineapple" class="select-item">Pineapple</li>
-          </div>
-        </ul>
+  <body ng-app="ui" ng-cloak ng-init="fruit=''">
+    <main class="select-demo visual-example">
+      <label for="fruit" class="label">Fruit</label>
+      <div class="select-wrapper">
+        <select id="fruit" class="select" ng-model="fruit">
+          <option value="">Select a fruit</option>
+          <option value="apple">Apple</option>
+          <option value="banana">Banana</option>
+          <option value="blueberry">Blueberry</option>
+          <option value="grapes">Grapes</option>
+          <option value="pineapple">Pineapple</option>
+        </select>
       </div>
-      <output class="output visually-hidden" aria-live="polite">
-        Selected: <span ng-bind="fruit || 'none'"></span>
-      </output>
-    </div>
+      <output class="output">Selected: {{ fruit || 'none' }}</output>
+    </main>
   </body>
 </html>

@@ -47,7 +47,6 @@ Apply `.native-select` directly to a native `select` inside an optional wrapper.
 | Attribute | Access | Purpose |
 | --- | --- | --- |
 | `aria-invalid` | Input | Validation state mirrored from the control. |
-| `data-size` | Input | Stable component state or styling hook. |
 | `disabled` | Input | Disables native or component interaction. |
 | `required` | Input | Marks a native form value as required. |
 

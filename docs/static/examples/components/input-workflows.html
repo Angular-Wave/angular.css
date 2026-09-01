@@ -17,22 +17,23 @@
     <main class="input-workflow-grid" aria-label="Input workflows">
       <section data-example="input-basic" class="input-workflow">
         <input
-
           ng-model="inputState.basic"
           placeholder="Enter text"
-          aria-label="Basic input" class="input" />
+          aria-label="Basic input"
+          class="input"
+        />
       </section>
 
       <section data-example="input-demo" class="input-workflow">
         <div class="field">
-          <label for="input-demo-api-key"
-             class="field-label">API Key</label>
+          <label for="input-demo-api-key" class="field-label">API Key</label>
           <input
-
             id="input-demo-api-key"
             type="password"
             ng-model="inputState.apiKey"
-            placeholder="sk-..." class="input" />
+            placeholder="sk-..."
+            class="input"
+          />
           <p class="field-description">
             Your API key is encrypted and stored securely.
           </p>
@@ -43,24 +44,27 @@
         <div data-disabled="true" class="field">
           <label for="input-demo-disabled" class="field-label">Email</label>
           <input
-
             id="input-demo-disabled"
             type="email"
             placeholder="Email"
-            disabled class="input" />
+            disabled
+            class="input"
+          />
           <p class="field-description">This field is currently disabled.</p>
         </div>
       </section>
 
       <section data-example="input-invalid" class="input-workflow">
         <div data-invalid="true" class="field">
-          <label for="input-invalid-workflow"
-             class="field-label">Invalid Input</label>
+          <label for="input-invalid-workflow" class="field-label"
+            >Invalid Input</label
+          >
           <input
-
             id="input-invalid-workflow"
             placeholder="Error"
-            aria-invalid="true" class="input" />
+            aria-invalid="true"
+            class="input"
+          />
           <p class="field-description">
             This field contains validation errors.
           </p>
@@ -69,14 +73,16 @@
 
       <section data-example="input-required" class="input-workflow">
         <div class="field">
-          <label for="input-required-workflow"
-             class="field-label">Required Field <span class="input-required-mark">*</span></label>
+          <label for="input-required-workflow" class="field-label"
+            >Required Field <span class="input-required-mark">*</span></label
+          >
           <input
-
             id="input-required-workflow"
             ng-model="inputState.required"
             placeholder="This field is required"
-            required class="input" />
+            required
+            class="input"
+          />
           <p class="field-description">This field must be filled out.</p>
         </div>
       </section>
@@ -91,13 +97,13 @@
 
       <section data-example="input-field" class="input-workflow">
         <div class="field">
-          <label for="input-field-username"
-             class="field-label">Username</label>
+          <label for="input-field-username" class="field-label">Username</label>
           <input
-
             id="input-field-username"
             ng-model="inputState.username"
-            placeholder="Enter your username" class="input" />
+            placeholder="Enter your username"
+            class="input"
+          />
           <p class="field-description">
             Choose a unique username for your account.
           </p>
@@ -106,15 +112,18 @@
 
       <section data-example="input-badge" class="input-workflow">
         <div class="field">
-          <label for="input-webhook"
-             class="field-label">Webhook URL
+          <label for="input-webhook" class="field-label"
+            >Webhook URL
             <span variant="secondary" class="input-label-badge badge"
-              >Beta</span></label>
+              >Beta</span
+            ></label
+          >
           <input
-
             id="input-webhook"
             type="url"
-            placeholder="https://api.example.com/webhook" class="input" />
+            placeholder="https://api.example.com/webhook"
+            class="input"
+          />
         </div>
       </section>
 
@@ -124,20 +133,22 @@
       >
         <div class="input-name-grid field-group">
           <div class="field">
-            <label for="input-first-name"
-               class="field-label">First Name</label><input
-
+            <label for="input-first-name" class="field-label">First Name</label
+            ><input
               id="input-first-name"
               ng-model="inputState.firstName"
-              placeholder="Jordan" class="input" />
+              placeholder="Jordan"
+              class="input"
+            />
           </div>
           <div class="field">
-            <label for="input-last-name"
-               class="field-label">Last Name</label><input
-
+            <label for="input-last-name" class="field-label">Last Name</label
+            ><input
               id="input-last-name"
               ng-model="inputState.lastName"
-              placeholder="Lee" class="input" />
+              placeholder="Lee"
+              class="input"
+            />
           </div>
         </div>
       </section>
@@ -146,21 +157,19 @@
         data-example="input-inline"
         class="input-workflow input-workflow-wide"
       >
-        <div
-
-          orientation="horizontal"
-          class="input-inline-demo field"
-        >
+        <div orientation="horizontal" class="input-inline-demo field">
           <input
-
             type="search"
             ng-model="inputState.search"
             placeholder="Search..."
-            aria-label="Inline search" class="input" />
+            aria-label="Inline search"
+            class="input"
+          />
           <button
-
             type="button"
-            ng-click="inputState.message='Search '+inputState.search" class="button">
+            ng-click="inputState.message='Search '+inputState.search"
+            class="button"
+          >
             Search
           </button>
         </div>
@@ -168,17 +177,20 @@
 
       <section data-example="input-button-group" class="input-workflow">
         <div class="field">
-          <label for="input-button-group-workflow"
-             class="field-label">Search</label>
+          <label for="input-button-group-workflow" class="field-label"
+            >Search</label
+          >
           <div class="button-group">
             <input
-
               id="input-button-group-workflow"
-              placeholder="Type to search..." class="input" /><button
-
+              placeholder="Type to search..."
+              class="input"
+            /><button
               variant="outline"
               type="button"
-              ng-click="inputState.message='Button group search'" class="button">
+              ng-click="inputState.message='Button group search'"
+              class="button"
+            >
               Search
             </button>
           </div>
@@ -187,22 +199,20 @@
 
       <section data-example="input-input-group" class="input-workflow">
         <div class="field">
-          <label for="input-group-url"
-             class="field-label">Website URL</label>
+          <label for="input-group-url" class="field-label">Website URL</label>
           <div ng-input-group class="input-group">
             <input
-
-
               id="input-group-url"
               ng-model="inputState.website"
               placeholder="example.com"
-             class="input-group-control input" />
+              class="input-group-control input"
+            />
             <div class="input-group-addon">https://</div>
             <div
-
               data-align="inline-end"
               aria-label="Website URL information"
-             class="input-group-addon">
+              class="input-group-addon"
+            >
               ⓘ
             </div>
           </div>
@@ -216,34 +226,34 @@
       >
         <div class="field-group">
           <div class="field">
-            <label for="fieldgroup-name" class="field-label">Name</label><input
-
+            <label for="fieldgroup-name" class="field-label">Name</label
+            ><input
               id="fieldgroup-name"
               ng-model="inputState.name"
-              placeholder="Jordan Lee" class="input" />
+              placeholder="Jordan Lee"
+              class="input"
+            />
           </div>
           <div class="field">
-            <label for="fieldgroup-email" class="field-label">Email</label><input
-
+            <label for="fieldgroup-email" class="field-label">Email</label
+            ><input
               id="fieldgroup-email"
               type="email"
               ng-model="inputState.email"
-              placeholder="name@example.com" class="input" />
-            <p class="field-description">
-              We'll send updates to this address.
-            </p>
+              placeholder="name@example.com"
+              class="input"
+            />
+            <p class="field-description">We'll send updates to this address.</p>
           </div>
-          <div
-
-            orientation="horizontal"
-            class="input-form-actions field"
-          >
+          <div orientation="horizontal" class="input-form-actions field">
             <button
-
               type="reset"
               variant="outline"
-              ng-click="inputState.name='';inputState.email=''" class="button">
-              Reset</button><button type="submit" class="button">Submit</button>
+              ng-click="inputState.name='';inputState.email=''"
+              class="button"
+            >
+              Reset</button
+            ><button type="submit" class="button">Submit</button>
           </div>
         </div>
       </form>
@@ -255,75 +265,72 @@
       >
         <div class="field-group">
           <div class="field">
-            <label for="form-name" class="field-label">Name</label><input
-
+            <label for="form-name" class="field-label">Name</label
+            ><input
               id="form-name"
               ng-model="inputState.formName"
               placeholder="Evil Rabbit"
-              required class="input" />
+              required
+              class="input"
+            />
           </div>
           <div class="field">
-            <label for="form-email" class="field-label">Email</label><input
-
+            <label for="form-email" class="field-label">Email</label
+            ><input
               id="form-email"
               type="email"
               ng-model="inputState.formEmail"
-              placeholder="john@example.com" class="input" />
+              placeholder="john@example.com"
+              class="input"
+            />
             <p class="field-description">
               We'll never share your email with anyone.
             </p>
           </div>
           <div class="input-name-grid">
             <div class="field">
-              <label for="form-phone" class="field-label">Phone</label><input
-
+              <label for="form-phone" class="field-label">Phone</label
+              ><input
                 id="form-phone"
                 type="tel"
                 ng-model="inputState.phone"
-                placeholder="+1 (555) 123-4567" class="input" />
+                placeholder="+1 (555) 123-4567"
+                class="input"
+              />
             </div>
             <div class="field">
               <label for="form-country" class="field-label">Country</label>
-              <div
-                ng-select
-                ng-on-angularcss:select="inputState.country=$event.detail.value"
-              >
-                <button id="form-country" type="button" class="select-trigger">
-                  <span
-
-                    ng-bind="inputState.country === 'uk' ? 'United Kingdom' : inputState.country === 'ca' ? 'Canada' : 'United States'"
-                   class="select-value"></span>
-                </button>
-                <ul class="select-content">
-                  <div class="select-group">
-                    <li data-value="us" aria-selected="true" class="select-item">
-                      United States
-                    </li>
-                    <li data-value="uk" class="select-item">United Kingdom</li>
-                    <li data-value="ca" class="select-item">Canada</li>
-                  </div>
-                </ul>
+              <div class="select-wrapper">
+                <select
+                  id="form-country"
+                  class="select"
+                  ng-model="inputState.country"
+                >
+                  <option value="us">United States</option>
+                  <option value="uk">United Kingdom</option>
+                  <option value="ca">Canada</option>
+                </select>
               </div>
             </div>
           </div>
           <div class="field">
-            <label for="form-address" class="field-label">Address</label><input
-
+            <label for="form-address" class="field-label">Address</label
+            ><input
               id="form-address"
               ng-model="inputState.address"
-              placeholder="123 Main St" class="input" />
+              placeholder="123 Main St"
+              class="input"
+            />
           </div>
-          <div
-
-            orientation="horizontal"
-            class="input-form-actions field"
-          >
+          <div orientation="horizontal" class="input-form-actions field">
             <button
-
               type="button"
               variant="outline"
-              ng-click="inputState.message='Cancelled'" class="button">
-              Cancel</button><button type="submit" class="button">Submit</button>
+              ng-click="inputState.message='Cancelled'"
+              class="button"
+            >
+              Cancel</button
+            ><button type="submit" class="button">Submit</button>
           </div>
         </div>
       </form>
@@ -335,22 +342,19 @@
         lang="ar"
       >
         <div class="field">
-          <label for="input-rtl-api-key"
-             class="field-label">مفتاح API</label><input
-
+          <label for="input-rtl-api-key" class="field-label">مفتاح API</label
+          ><input
             id="input-rtl-api-key"
             type="password"
             dir="rtl"
-            placeholder="sk-..." class="input" />
-          <p class="field-description">
-            مفتاح API الخاص بك مشفر ومخزن بأمان.
-          </p>
+            placeholder="sk-..."
+            class="input"
+          />
+          <p class="field-description">مفتاح API الخاص بك مشفر ومخزن بأمان.</p>
         </div>
       </section>
 
-      <output class="input-workflow-output">
-        {{ inputState.message }}
-      </output>
+      <output class="input-workflow-output"> {{ inputState.message }} </output>
     </main>
   </body>
 </html>

@@ -205,9 +205,9 @@ export const componentPolicy = {
       "Coordinates custom scrollbars, viewport geometry, and scroll state.",
   },
   select: {
-    kind: "component",
+    kind: "element",
     rationale:
-      "Coordinates a custom listbox popup, option focus, typeahead, and selection signals.",
+      "Native select owns values, option groups, validation, keyboard behavior, and AngularTS models.",
   },
   separator: {
     kind: "element",

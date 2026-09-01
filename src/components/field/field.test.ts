@@ -95,9 +95,8 @@ test("field workflows compose controls, responsive layout, and RTL", async ({
   ).toContainText("$300 - $800");
 
   const select = page.locator("[data-example='field-select']");
-  await select.locator(".select-trigger").click();
-  await select.getByRole("option", { name: "Engineering" }).click();
-  await expect(select.locator(".select-value")).toHaveText("Engineering");
+  await select.getByRole("combobox").selectOption({ label: "Engineering" });
+  await expect(select.getByRole("combobox")).toHaveValue("Engineering");
 
   const responsive = page.locator("[data-example='field-responsive']");
   await responsive.getByLabel("Name").fill("Jane Doe");

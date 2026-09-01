@@ -606,8 +606,7 @@ test("form examples preserve AngularTS ng-model ownership", async ({
   );
 
   await page.goto("/docs/static/examples/components/select.html");
-  await page.locator(".select-trigger").click();
-  await page.locator(".select-item[data-value='pineapple']").click();
+  await page.getByRole("combobox").selectOption("pineapple");
   await expect(page.locator(".output").first()).toContainText(
     "Selected: pineapple",
   );

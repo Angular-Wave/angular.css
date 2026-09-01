@@ -2,18 +2,18 @@
 title: select
 notoc: true
 description: >
-  Custom select trigger and option list
+  Native select styling for AngularTS forms
 ---
 
-Use custom select parts when you need an overlay-style select surface. Prefer
-`native-select` for native form submission.
+Apply `.select` directly to native `select`. AngularTS owns models, option
+registration, validation, and form state; AngularCSS only supplies styling.
 
 ```html
-<div class="select">
-  <button class="select-trigger">Status</button>
-  <ul class="select-content">
-    <li class="select-item">Active</li>
-  </ul>
+<div class="select-wrapper">
+  <select class="select" ng-model="status">
+    <option>Active</option>
+    <option>Paused</option>
+  </select>
 </div>
 ```
 

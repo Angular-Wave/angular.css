@@ -17,7 +17,6 @@ import { hoverCardDirective } from "./components/hover-card/hover-card";
 import { inputGroupDirective } from "./components/input-group/input-group";
 import { inputOtpDirective } from "./components/input-otp/input-otp";
 import { menubarDirective } from "./components/menubar/menubar";
-import { selectDirective } from "./components/select/select";
 import { navigationMenuDirective } from "./components/navigation-menu/navigation-menu";
 import { popoverDirective } from "./components/popover/popover";
 import { resizablePanelGroupDirective } from "./components/resizable/resizable";
@@ -56,7 +55,6 @@ export const angularCssDirectives: AngularCssDirective[] = [
   ["ngInputGroup", inputGroupDirective],
   ["ngInputOtp", inputOtpDirective],
   ["ngMenubar", menubarDirective],
-  ["ngSelect", selectDirective],
   ["ngNavigationMenu", navigationMenuDirective],
   ["ngPopover", popoverDirective],
   ["ngResizablePanelGroup", resizablePanelGroupDirective],

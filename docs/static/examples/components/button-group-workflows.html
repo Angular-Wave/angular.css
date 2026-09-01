@@ -288,44 +288,11 @@
         <h2 id="button-group-select-heading">Currency select</h2>
         <div class="button-group">
           <div class="button-group">
-            <div ng-select>
-              <button
-                type="button"
-                aria-label="Currency"
-                class="select-trigger"
-              >
-                <span class="select-value">{{ currency }}</span>
-              </button>
-              <ul class="select-content">
-                <li
-                  aria-label="$ US Dollar"
-                  data-description="US Dollar"
-                  data-value="$"
-                  ng-click="currency = '$'"
-                  class="select-item"
-                >
-                  $
-                </li>
-                <li
-                  aria-label="€ Euro"
-                  data-description="Euro"
-                  data-value="€"
-                  ng-click="currency = '€'"
-                  class="select-item"
-                >
-                  €
-                </li>
-                <li
-                  aria-label="£ British Pound"
-                  data-description="British Pound"
-                  data-value="£"
-                  ng-click="currency = '£'"
-                  class="select-item"
-                >
-                  £
-                </li>
-              </ul>
-            </div>
+            <select class="select" aria-label="Currency" ng-model="currency">
+              <option value="$">$ US Dollar</option>
+              <option value="€">€ Euro</option>
+              <option value="£">£ British Pound</option>
+            </select>
             <input
               placeholder="10.00"
               inputmode="numeric"

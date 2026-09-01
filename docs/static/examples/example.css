@@ -1581,12 +1581,6 @@ body .visually-hidden {
   width: min(16rem, 48vw);
 }
 
-.button-group-select-stage .select-item::after {
-  content: attr(data-description);
-  color: var(--muted-foreground);
-  margin-inline-start: calc(var(--spacing) * 2);
-}
-
 .button-group-toolbar-menu {
   width: 10rem;
   min-width: 10rem;
@@ -5155,85 +5149,6 @@ kbd {
   display: grid;
   min-height: 20rem;
   place-items: center;
-}
-
-.select-workflows {
-  display: grid;
-  width: min(100%, 46rem);
-  min-height: 48rem;
-  margin-inline: auto;
-  padding: 2rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-content: start;
-  gap: 5rem 4rem;
-}
-
-.select-workflow {
-  display: grid;
-  min-width: 0;
-  min-height: 8rem;
-  align-content: start;
-  justify-items: start;
-}
-
-.select-workflow > [ng-select],
-.select-invalid-field,
-.select-align-workflow .field-group {
-  width: min(100%, 12rem);
-}
-
-.select-scrollable-workflow [ng-select] {
-  width: min(100%, 16rem);
-}
-
-.select-workflow[dir='rtl'] {
-  justify-items: end;
-}
-
-.select-workflow[dir='rtl'] [ng-select] {
-  width: 8rem;
-}
-
-.select-state-workflows {
-  display: grid;
-  width: min(100%, 28rem);
-  min-height: 18rem;
-  margin-inline: auto;
-  align-content: start;
-  justify-items: start;
-  gap: 1.5rem;
-}
-
-.select-state-controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.select-state-output {
-  color: var(--muted-foreground);
-  font-size: var(--text-xs);
-}
-
-@media (width <= 640px) {
-  .select-workflows {
-    min-height: 84rem;
-    padding: 1.5rem 0;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 4rem;
-  }
-
-  .select-workflow {
-    justify-items: center;
-  }
-
-  .select-workflow[dir='rtl'] {
-    justify-items: center;
-  }
-
-  .select-state-workflows {
-    min-height: 22rem;
-  }
 }
 
 .combobox-demo {

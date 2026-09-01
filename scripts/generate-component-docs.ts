@@ -73,12 +73,13 @@ const componentsByCategory: Record<string, readonly string[]> = {
     "input-otp",
     "label",
     "native-select",
+    "select",
     "radio-group",
     "slider",
     "switch",
     "textarea",
   ],
-  "form overlay": ["combobox", "select"],
+  "form overlay": ["combobox"],
   layout: [
     "aspect-ratio",
     "card",
@@ -192,7 +193,7 @@ const behaviorByComponent: Record<string, string> = {
   resizable:
     "The directive owns pairwise pointer and keyboard resizing, minimum and maximum bounds, direct-child panel/handle ownership, direction-aware deltas, and synchronized separator state. AngularTS or the application owns authored orientation, initial/external sizes, structural insertion, persistence, and business layout decisions.",
   select:
-    "The directive owns popup disclosure, collision-aware placement, active-option navigation, typeahead, disabled-option skipping, scrolling, ARIA option state, and selection signaling. AngularTS remains responsible for application values through `ng-on-angularcss:select`, controlled `open` input, validation, and structural bindings such as `ng-if`.",
+    "The native `select` owns values, option groups, keyboard interaction, disabled state, validation, and form submission. AngularTS supplies option registration, `ng-model`, validators, and form-state classes. AngularCSS registers no select directive.",
   sheet:
     "The directive owns modal disclosure, physical side reflection, direct-child ownership, focus containment, Escape and exact-overlay dismissal, background isolation, document scroll locking, and focus restoration. AngularTS remains responsible for form values, validation, submission, language, authored content, and controlled application state.",
   sidebar:
@@ -273,7 +274,7 @@ const accessibilityByComponent: Record<string, string> = {
   resizable:
     "Give each resize handle a concise accessible name. Handles expose separator semantics, the physical resize axis through `aria-orientation`, current and bounded values, and `aria-controls` relationships to both adjacent panels. Keyboard resizing follows text direction and preserves visible focus.",
   select:
-    "Give the native button trigger an accessible name. The trigger exposes combobox and active-descendant relationships to a listbox whose enabled options participate in Arrow, Home, End, Enter, Space, typeahead, and Escape interaction. Groups are connected to visible labels and disabled options are skipped.",
+    "Use a visible `label` connected by `for` and `id`, or provide another accessible name. Preserve native option, optgroup, multiple, disabled, required, invalid, and direction semantics; AngularTS reflects model and validation state without replacing them.",
   popover:
     "Use a native button trigger and give the non-modal dialog an accessible name through a visible title or `aria-label`. Focus enters the first interactive descendant, outside focus and Escape dismiss the panel, and Escape restores trigger focus.",
   tooltip:
@@ -338,7 +339,7 @@ const readAttributesByComponent: Record<string, string[]> = {
   drawer: ["data-open", "dir", "direction", "disabled", "side"],
   sheet: ["data-open", "dir", "disabled", "side"],
   "hover-card": ["close-delay", "open-delay"],
-  "native-select": ["aria-invalid", "data-size", "disabled", "required"],
+  "native-select": ["aria-invalid", "disabled", "required"],
   "navigation-menu": ["align", "data-open", "data-state", "dir", "disabled"],
   pagination: ["aria-current", "aria-disabled", "data-active", "dir"],
   popover: ["align", "side"],
@@ -361,18 +362,7 @@ const readAttributesByComponent: Record<string, string[]> = {
     "dir",
     "orientation",
   ],
-  select: [
-    "align-item-with-trigger",
-    "aria-disabled",
-    "aria-invalid",
-    "aria-selected",
-    "data-align-trigger",
-    "data-open",
-    "data-value",
-    "dir",
-    "disabled",
-    "open",
-  ],
+  select: ["aria-invalid", "dir", "disabled", "multiple", "name", "required"],
   tooltip: ["side"],
 };
 
@@ -492,7 +482,7 @@ const slotGuidanceByComponent: Record<string, string> = {
   resizable:
     "Alternate direct `.resizable-panel` and `.resizable-handle` children inside each panel group. The root directive inspects those children; no child directives are required. Nested groups belong inside a panel.",
   select:
-    "A native button trigger and one listbox content element are required. The root directive inspects semantic descendants through select part classes; no child directives are required. Optional groups, separators, and scroll controls may be included.",
+    "Apply `.select` directly to a native `select` inside an optional `.select-wrapper`. Native `option` and `optgroup` elements need no additional attributes. Use AngularTS `ng-model`, validators, and form directives directly on the select.",
   tooltip:
     "One trigger and one plain-text content element are required. Prefer a native button or link trigger. Tooltip content is descriptive and non-interactive; use Popover when the floating content needs controls or focus.",
 };
