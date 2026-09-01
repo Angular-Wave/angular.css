@@ -61,6 +61,11 @@
     var(--shadow-md);
 }
 
+.menubar-content[data-state="open"],
+.menubar-sub-content[data-state="open"] {
+  animation: angularcss-surface-enter 120ms ease-out;
+}
+
 .menubar-group,
 .menubar-radio-group {
   display: grid;
@@ -219,4 +224,11 @@
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--foreground) 10%, transparent),
     var(--shadow-lg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menubar-content[data-state="open"],
+  .menubar-sub-content[data-state="open"] {
+    animation: none;
+  }
 }

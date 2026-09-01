@@ -91,3 +91,9 @@
   font-size: var(--text-sm);
   line-height: 1.45;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .hover-card-content {
+    transition-duration: 0s;
+  }
+}

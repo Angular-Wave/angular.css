@@ -1,4 +1,4 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
 
 const canonicalUrl = "/docs/static/examples/components/drawer.html";
 const dialogUrl = "/docs/static/examples/components/drawer-dialog.html";
@@ -20,6 +20,14 @@ const expectBuiltArtifactRuntime = async (page: Page): Promise<void> => {
       .filter((url) => /\/src\/(?:components|elements)\/.*\.ts$/.test(url)),
   );
   expect(sourceRequests).toEqual([]);
+};
+
+const waitForMotion = async (element: Locator): Promise<void> => {
+  await element.evaluate(async (node) => {
+    await Promise.allSettled(
+      node.getAnimations().map((animation) => animation.finished),
+    );
+  });
 };
 
 test("canonical drawer is a native bottom modal with focus restoration", async ({
@@ -77,6 +85,7 @@ test("four authored sides anchor to their physical viewport edges", async ({
     const content = root.locator("dialog");
     await root.locator(".drawer-trigger").click();
     await expect(content).toHaveAttribute("data-side", side);
+    await waitForMotion(content);
     const box = await content.boundingBox();
     if (side === "top") expect(box!.y).toBeCloseTo(0, 0);
     if (side === "bottom") expect(box!.y + box!.height).toBeCloseTo(620, 0);

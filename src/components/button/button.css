@@ -187,3 +187,9 @@ a.button {
 :is(button, input[type="button"], a).button:active:not([aria-haspopup]) {
   transform: translateY(1px);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  :is(button, input[type="button"], a).button {
+    transition-duration: 0s;
+  }
+}

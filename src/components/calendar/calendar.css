@@ -159,6 +159,10 @@
   line-height: 1;
   cursor: pointer;
   user-select: none;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease,
+    transform 90ms ease-out;
 }
 
 .calendar-day > span > span {
@@ -188,6 +192,10 @@
 .calendar-day:disabled {
   opacity: 0.45;
   cursor: not-allowed;
+}
+
+.calendar-day:active:not(:disabled, [aria-disabled="true"]) {
+  transform: translateY(1px);
 }
 
 .calendar-day:not(:disabled, [aria-disabled="true"]):hover:not(
@@ -240,5 +248,11 @@
 @media (width <= 48rem) {
   .calendar-grid[data-months]:not([data-months="1"]) {
     flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .calendar-day {
+    transition-duration: 0s;
   }
 }

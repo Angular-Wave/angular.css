@@ -67,6 +67,49 @@ test("canonical accordion delegates keyboard behavior to summary", async ({
   await expect(triggers.nth(2)).toBeFocused();
 });
 
+test("accordion disclosure motion preserves control size and respects reduced motion", async ({
+  browser,
+}) => {
+  const animatedPage = await browser.newPage({
+    reducedMotion: "no-preference",
+  });
+  await animatedPage.goto(canonicalUrl);
+  const item = animatedPage.locator(".accordion > details").nth(1);
+  const trigger = item.locator("summary");
+  const triggerBox = await trigger.boundingBox();
+  if (!triggerBox) throw new Error("Accordion trigger is not rendered");
+
+  await animatedPage.mouse.move(
+    triggerBox.x + triggerBox.width - 8,
+    triggerBox.y + triggerBox.height / 2,
+  );
+  await animatedPage.mouse.down();
+  await expect
+    .poll(() =>
+      trigger.evaluate(
+        (element) => getComputedStyle(element, "::after").translate,
+      ),
+    )
+    .toBe("0px 1px");
+  await animatedPage.mouse.up();
+  const contentDuration = await item.evaluate(
+    (element) =>
+      getComputedStyle(element, "::details-content").transitionDuration,
+  );
+  expect(contentDuration).not.toBe("0s");
+  await animatedPage.close();
+
+  const reducedPage = await browser.newPage({ reducedMotion: "reduce" });
+  await reducedPage.goto(canonicalUrl);
+  const reducedItem = reducedPage.locator(".accordion > details").nth(1);
+  const reducedDuration = await reducedItem.evaluate(
+    (element) =>
+      getComputedStyle(element, "::details-content").transitionDuration,
+  );
+  expect(reducedDuration).toBe("0s");
+  await reducedPage.close();
+});
+
 test("accordion workflow covers independent and inert disclosures", async ({
   page,
 }) => {

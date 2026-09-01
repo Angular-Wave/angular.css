@@ -176,3 +176,10 @@
 [data-direction="rtl"] .dropdown-menu-sub-content {
   inset-inline: auto calc(100% + var(--spacing) * 1);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  [ng-dropdown] > menu,
+  .dropdown-menu-content {
+    transition-duration: 0s;
+  }
+}

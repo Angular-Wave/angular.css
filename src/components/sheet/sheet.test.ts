@@ -1,4 +1,4 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
 
 const canonicalUrl = "/docs/static/examples/components/sheet.html";
 const noCloseUrl = "/docs/static/examples/components/sheet-no-close.html";
@@ -19,6 +19,14 @@ const expectBuiltArtifactRuntime = async (page: Page): Promise<void> => {
       .filter((url) => /\/src\/(?:components|elements)\/.*\.ts$/.test(url)),
   );
   expect(sourceRequests).toEqual([]);
+};
+
+const waitForMotion = async (element: Locator): Promise<void> => {
+  await element.evaluate(async (node) => {
+    await Promise.allSettled(
+      node.getAnimations().map((animation) => animation.finished),
+    );
+  });
 };
 
 test("canonical sheet uses native modal focus and AngularTS profile state", async ({
@@ -96,6 +104,7 @@ test("all authored sides anchor physically and retain real overflow", async ({
     const footer = root.locator(".sheet-footer");
     await root.locator(".sheet-trigger").click();
     await expect(content).toHaveAttribute("data-side", side);
+    await waitForMotion(content);
     const box = await content.boundingBox();
     if (side === "top") expect(box!.y).toBeCloseTo(0, 0);
     if (side === "bottom") expect(box!.y + box!.height).toBeCloseTo(620, 0);
@@ -126,6 +135,7 @@ test("RTL sheet inherits content direction on the physical left edge", async ({
   const content = root.locator("dialog");
   await expect(content).toHaveCSS("direction", "rtl");
   await expect(content).toHaveAttribute("data-side", "left");
+  await waitForMotion(content);
   const box = await content.boundingBox();
   expect(box!.x).toBeCloseTo(0, 0);
   await page.locator("#sheet-rtl-name").fill("ليلى منصور");

@@ -24,27 +24,27 @@
         >
           <div class="combobox-control">
             <input
-
               aria-label="Country with details"
               ng-model="custom.query"
               placeholder="Search countries..."
-             class="combobox-input"/>
+              class="combobox-input"
+            />
             <button
-
               type="button"
               aria-label="Show detailed countries"
-             class="combobox-trigger"></button>
+              class="combobox-trigger"
+            ></button>
           </div>
           <ul aria-label="Detailed country options" class="combobox-content">
             <div class="combobox-empty">No countries found.</div>
             <div class="combobox-list">
               <ul class="combobox-collection">
                 <li
-
                   ng-repeat="country in countries | filter:custom.query"
                   data-value="{{ country.label }}"
                   ng-attr-aria-selected="{{ custom.selected === country.label }}"
-                 class="combobox-item">
+                  class="combobox-item"
+                >
                   <article data-size="xs" class="combobox-custom-item item">
                     <section class="item-content">
                       <h3 class="item-title">{{ country.label }}</h3>
@@ -70,68 +70,68 @@
           ng-on-angularcss:combobox-remove-last="multi.astro ? multi.astro=false : multi.remix ? multi.remix=false : multi.nuxt ? multi.nuxt=false : multi.svelte ? multi.svelte=false : multi.next=false"
         >
           <div class="combobox-chips">
-            <span ng-if="multi.next" class="combobox-chip">
+            <span ng-if="multi.next" animate class="combobox-chip">
               Next.js
               <button
-
                 type="button"
                 aria-label="Remove Next.js"
                 ng-click="multi.next=false"
-               class="combobox-chip-remove"></button>
+                class="combobox-chip-remove"
+              ></button>
             </span>
-            <span ng-if="multi.svelte" class="combobox-chip">
+            <span ng-if="multi.svelte" animate class="combobox-chip">
               SvelteKit
               <button
-
                 type="button"
                 aria-label="Remove SvelteKit"
                 ng-click="multi.svelte=false"
-               class="combobox-chip-remove"></button>
+                class="combobox-chip-remove"
+              ></button>
             </span>
-            <span ng-if="multi.nuxt" class="combobox-chip">
+            <span ng-if="multi.nuxt" animate class="combobox-chip">
               Nuxt.js
               <button
-
                 type="button"
                 aria-label="Remove Nuxt.js"
                 ng-click="multi.nuxt=false"
-               class="combobox-chip-remove"></button>
+                class="combobox-chip-remove"
+              ></button>
             </span>
-            <span ng-if="multi.remix" class="combobox-chip">
+            <span ng-if="multi.remix" animate class="combobox-chip">
               Remix
               <button
-
                 type="button"
                 aria-label="Remove Remix"
                 ng-click="multi.remix=false"
-               class="combobox-chip-remove"></button>
+                class="combobox-chip-remove"
+              ></button>
             </span>
-            <span ng-if="multi.astro" class="combobox-chip">
+            <span ng-if="multi.astro" animate class="combobox-chip">
               Astro
               <button
-
                 type="button"
                 aria-label="Remove Astro"
                 ng-click="multi.astro=false"
-               class="combobox-chip-remove"></button>
+                class="combobox-chip-remove"
+              ></button>
             </span>
             <input
-
               aria-label="Frameworks"
               ng-model="multi.query"
               placeholder="Add framework"
-             class="combobox-chip-input"/>
+              class="combobox-chip-input"
+            />
           </div>
           <ul aria-label="Multiple framework options" class="combobox-content">
             <div class="combobox-empty">No items found.</div>
             <div class="combobox-list">
               <ul class="combobox-collection">
                 <li
-
                   ng-repeat="framework in frameworks | filter:multi.query"
                   data-value="{{ framework }}"
                   ng-attr-aria-selected="{{ framework === 'Next.js' ? multi.next : framework === 'SvelteKit' ? multi.svelte : framework === 'Nuxt.js' ? multi.nuxt : framework === 'Remix' ? multi.remix : multi.astro }}"
-                 class="combobox-item">
+                  class="combobox-item"
+                >
                   {{ framework }}
                 </li>
               </ul>
@@ -156,78 +156,82 @@
             ng-on-angularcss:combobox-remove-last="rtl.health ? rtl.health=false : rtl.education ? rtl.education=false : rtl.marketing ? rtl.marketing=false : rtl.business ? rtl.business=false : rtl.design ? rtl.design=false : rtl.technology=false"
           >
             <div class="combobox-chips">
-              <span ng-if="rtl.technology" class="combobox-chip">
+              <span ng-if="rtl.technology" animate class="combobox-chip">
                 التكنولوجيا
                 <button
-
                   type="button"
                   aria-label="إزالة التكنولوجيا"
                   ng-click="rtl.technology=false"
-                 class="combobox-chip-remove"></button>
+                  class="combobox-chip-remove"
+                ></button>
               </span>
-              <span ng-if="rtl.design" class="combobox-chip">
+              <span ng-if="rtl.design" animate class="combobox-chip">
                 التصميم
                 <button
-
                   type="button"
                   aria-label="إزالة التصميم"
                   ng-click="rtl.design=false"
-                 class="combobox-chip-remove"></button>
+                  class="combobox-chip-remove"
+                ></button>
               </span>
-              <span ng-if="rtl.business" class="combobox-chip">
+              <span ng-if="rtl.business" animate class="combobox-chip">
                 الأعمال
                 <button
-
                   type="button"
                   aria-label="إزالة الأعمال"
                   ng-click="rtl.business=false"
-                 class="combobox-chip-remove"></button>
+                  class="combobox-chip-remove"
+                ></button>
               </span>
-              <span ng-if="rtl.marketing" class="combobox-chip">
+              <span ng-if="rtl.marketing" animate class="combobox-chip">
                 التسويق
                 <button
-
                   type="button"
                   aria-label="إزالة التسويق"
                   ng-click="rtl.marketing=false"
-                 class="combobox-chip-remove"></button>
+                  class="combobox-chip-remove"
+                ></button>
               </span>
-              <span ng-if="rtl.education" class="combobox-chip">
+              <span ng-if="rtl.education" animate class="combobox-chip">
                 التعليم
                 <button
-
                   type="button"
                   aria-label="إزالة التعليم"
                   ng-click="rtl.education=false"
-                 class="combobox-chip-remove"></button>
+                  class="combobox-chip-remove"
+                ></button>
               </span>
-              <span ng-if="rtl.health" class="combobox-chip">
+              <span ng-if="rtl.health" animate class="combobox-chip">
                 الصحة
                 <button
-
                   type="button"
                   aria-label="إزالة الصحة"
                   ng-click="rtl.health=false"
-                 class="combobox-chip-remove"></button>
+                  class="combobox-chip-remove"
+                ></button>
               </span>
               <input
                 id="rtl-combobox-input"
-
                 aria-label="الفئات"
                 ng-model="rtl.query"
                 placeholder="أضف فئات"
-               class="combobox-chip-input"/>
+                class="combobox-chip-input"
+              />
             </div>
-            <ul data-lang="ar" aria-label="خيارات الفئات" class="combobox-content">
+            <ul
+              data-lang="ar"
+              aria-label="خيارات الفئات"
+              class="combobox-content"
+            >
               <div class="combobox-empty">لم يتم العثور على فئات.</div>
               <div class="combobox-list">
                 <ul class="combobox-collection">
                   <li
-
                     ng-repeat="category in categories | filter:rtl.query"
                     data-value="{{ category }}"
                     ng-attr-aria-selected="{{ category === 'التكنولوجيا' ? rtl.technology : category === 'التصميم' ? rtl.design : category === 'الأعمال' ? rtl.business : category === 'التسويق' ? rtl.marketing : category === 'التعليم' ? rtl.education : rtl.health }}"
-                   class="combobox-item">
+                    class="combobox-item"
+                  >
                     {{ category }}
                   </li>
                 </ul>

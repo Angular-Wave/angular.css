@@ -122,3 +122,9 @@
   font-size: var(--text-sm);
   line-height: 1.45;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .popover-content {
+    transition-duration: 0s;
+  }
+}

@@ -15,15 +15,22 @@ input[type="radio"].radio-group-item {
   &::after {
     content: "";
 
-    @apply absolute left-1/2 top-1/2 hidden size-2 -translate-x-1/2
-      -translate-y-1/2 rounded-full bg-primary-foreground;
+    @apply absolute left-1/2 top-1/2 size-2 -translate-x-1/2
+      -translate-y-1/2 rounded-full bg-primary-foreground opacity-0
+      transition-opacity;
   }
 
   &:checked {
     @apply border-primary bg-primary;
 
     &::after {
-      @apply block;
+      @apply opacity-100;
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  input[type="radio"].radio-group-item::after {
+    transition-duration: 0s;
   }
 }

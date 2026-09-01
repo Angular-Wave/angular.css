@@ -31,6 +31,7 @@
   cursor: col-resize;
   touch-action: none;
   user-select: none;
+  transition: background-color 120ms ease;
 }
 
 .resizable-handle::before {
@@ -45,6 +46,10 @@
 .resizable-handle:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
+}
+
+.resizable-handle:is(:hover, :focus-visible, :active) {
+  background: var(--ring);
 }
 
 :is(
@@ -79,8 +84,20 @@
   flex: none;
   border-radius: var(--radius);
   background: var(--border);
+  transition: background-color 120ms ease;
 }
 
 [data-orientation="horizontal"] > .resizable-handle-grip {
   transform: rotate(90deg);
+}
+
+.resizable-handle:is(:hover, :focus-visible, :active) > .resizable-handle-grip {
+  background: var(--foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resizable-handle,
+  .resizable-handle-grip {
+    transition-duration: 0s;
+  }
 }

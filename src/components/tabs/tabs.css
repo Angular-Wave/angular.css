@@ -50,6 +50,10 @@
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
   cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease,
+    transform 90ms ease-out;
 }
 
 .tabs-trigger:focus-visible {
@@ -64,6 +68,10 @@
 
 .tabs-trigger:hover {
   color: var(--foreground);
+}
+
+.tabs-trigger:active:not(:disabled, [aria-disabled="true"]) {
+  transform: translateY(1px);
 }
 
 .tabs-trigger[aria-selected="true"],
@@ -95,7 +103,27 @@
   outline: none;
 }
 
+.tabs-content[data-active="true"] {
+  animation: angularcss-tabs-content-enter 100ms ease-out;
+}
+
 .tabs-trigger > svg {
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
+}
+
+@keyframes angularcss-tabs-content-enter {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tabs-trigger {
+    transition-duration: 0s;
+  }
+
+  .tabs-content[data-active="true"] {
+    animation: none;
+  }
 }

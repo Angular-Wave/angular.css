@@ -107,6 +107,7 @@
 
 :is(.navigation-menu-content)[data-state="open"] {
   display: block;
+  animation: angularcss-surface-enter 120ms ease-out;
 }
 
 .navigation-menu-content ul {
@@ -181,4 +182,19 @@
 :is(.navigation-menu, [ng-navigation-menu])[align="end"]
   .navigation-menu-content {
   inset-inline: auto 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.navigation-menu-content)[data-state="open"] {
+    animation: none;
+  }
+
+  :is(
+    .navigation-menu-trigger,
+    .navigation-menu-item > .navigation-menu-link,
+    .navigation-menu-content .navigation-menu-link
+  ),
+  :is(.navigation-menu-trigger)::after {
+    transition-duration: 0s;
+  }
 }

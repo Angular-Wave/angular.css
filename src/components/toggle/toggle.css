@@ -13,6 +13,11 @@
   font-weight: var(--font-weight-medium);
   white-space: nowrap;
   cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    color 120ms ease,
+    transform 90ms ease-out;
 }
 
 .toggle:hover {
@@ -34,6 +39,10 @@
   color: var(--accent-foreground);
 }
 
+.toggle:active:not(:disabled, [aria-disabled="true"], [data-disabled="true"]) {
+  transform: translateY(1px);
+}
+
 .toggle[size="sm"] {
   height: calc(var(--spacing) * 8);
   padding-inline: calc(var(--spacing) * 2);
@@ -47,4 +56,10 @@
 :is(.toggle) > svg {
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toggle {
+    transition-duration: 0s;
+  }
 }

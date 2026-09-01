@@ -44,6 +44,11 @@
   outline: none;
 }
 
+.context-menu-content[data-state="open"],
+.context-menu-sub-content[data-state="open"] {
+  animation: angularcss-surface-enter 120ms ease-out;
+}
+
 :is(.context-menu-group, .context-menu-radio-group) {
   display: grid;
   gap: 0;
@@ -206,4 +211,11 @@
 
 [data-direction="rtl"] .context-menu-sub-content {
   inset-inline: auto calc(100% + var(--spacing) * 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .context-menu-content[data-state="open"],
+  .context-menu-sub-content[data-state="open"] {
+    animation: none;
+  }
 }

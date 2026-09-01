@@ -40,7 +40,8 @@
     background-color 120ms ease,
     border-color 120ms ease,
     box-shadow 120ms ease,
-    color 120ms ease;
+    color 120ms ease,
+    transform 90ms ease-out;
 }
 
 :is(.pagination-previous, .pagination-next) {
@@ -59,6 +60,13 @@
 
 :is(.pagination-link, .pagination-previous, .pagination-next):hover {
   background: var(--muted);
+}
+
+:is(.pagination-link, .pagination-previous, .pagination-next):active:not(
+    [aria-disabled="true"],
+    [data-disabled="true"]
+  ) {
+  transform: translateY(1px);
 }
 
 :is(.pagination-link, .pagination-previous, .pagination-next):focus-visible {
@@ -116,5 +124,11 @@
 @media (width <= 40rem) {
   :is(.pagination-previous-text, .pagination-next-text) {
     display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.pagination-link, .pagination-previous, .pagination-next) {
+    transition-duration: 0s;
   }
 }

@@ -6,6 +6,9 @@
 }
 
 .sheet-content[data-side="right"] {
+  --modal-enter-x: 100%;
+  --modal-enter-y: 0;
+
   inset-block: 0;
   right: 0;
   left: auto;
@@ -15,6 +18,9 @@
 }
 
 .sheet-content[data-side="left"] {
+  --modal-enter-x: -100%;
+  --modal-enter-y: 0;
+
   inset-block: 0;
   right: auto;
   left: 0;
@@ -24,6 +30,8 @@
 }
 
 .sheet-content[data-side="top"] {
+  --modal-enter-y: -100%;
+
   inset-block: 0 auto;
   inset-inline: 0;
   height: auto;
@@ -31,6 +39,8 @@
 }
 
 .sheet-content[data-side="bottom"] {
+  --modal-enter-y: 100%;
+
   inset-block: auto 0;
   inset-inline: 0;
   height: auto;

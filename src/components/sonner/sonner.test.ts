@@ -17,6 +17,7 @@ test("canonical Sonner demo creates accessible toast feedback from built HTML", 
 
   await page.getByRole("button", { name: "Show Toast" }).click();
   await expect(toast).toHaveCount(1);
+  await expect(toast).toHaveAttribute("animate", "");
   await expect(toast).toHaveAttribute("role", "status");
   await expect(toast).toHaveAttribute("aria-live", "polite");
   await expect(toast).toHaveAttribute("aria-atomic", "true");

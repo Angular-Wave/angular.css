@@ -88,9 +88,18 @@
   border-radius: 999px;
   background: var(--muted-foreground);
   opacity: 0.35;
+  transition:
+    background-color 120ms ease,
+    opacity 120ms ease;
 }
 
 .carousel-dot[data-active="true"] {
   background: var(--foreground);
   opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-dot {
+    transition-duration: 0s;
+  }
 }

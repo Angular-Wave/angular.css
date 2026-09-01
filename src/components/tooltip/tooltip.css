@@ -118,3 +118,9 @@
   left: calc(var(--spacing) * -1);
   transform: translateY(-50%) rotate(45deg);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .tooltip-content {
+    transition-duration: 0s;
+  }
+}

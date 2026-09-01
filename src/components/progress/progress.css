@@ -47,6 +47,12 @@ progress.progress {
   background: var(--muted);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .progress-indicator {
+    transition-duration: 0s;
+  }
+}
+
 progress.progress::-webkit-progress-bar {
   background: var(--muted);
 }

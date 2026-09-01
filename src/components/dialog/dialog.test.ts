@@ -48,6 +48,37 @@ test("canonical dialog uses native modal behavior and invoker commands", async (
   await expect(trigger).toBeFocused();
 });
 
+test("native dialog motion uses CSS and respects reduced motion", async ({
+  browser,
+}) => {
+  const animatedPage = await browser.newPage({
+    reducedMotion: "no-preference",
+  });
+  await animatedPage.goto(canonicalUrl);
+  const animatedContent = animatedPage.locator(".dialog-content");
+  await animatedPage.locator(".dialog-trigger").click();
+  const animatedDuration = await animatedContent.evaluate(
+    (element) => getComputedStyle(element).transitionDuration,
+  );
+  expect(animatedDuration).not.toBe("0s");
+  const backdropDuration = await animatedContent.evaluate(
+    (element) => getComputedStyle(element, "::backdrop").transitionDuration,
+  );
+  expect(backdropDuration).not.toBe("0s");
+  await animatedPage.close();
+
+  const reducedPage = await browser.newPage({ reducedMotion: "reduce" });
+  await reducedPage.goto(canonicalUrl);
+  const reducedContent = reducedPage.locator(".dialog-content");
+  await reducedPage.locator(".dialog-trigger").click();
+  await expect(reducedContent).toHaveCSS("transition-duration", "0s");
+  const reducedBackdropDuration = await reducedContent.evaluate(
+    (element) => getComputedStyle(element, "::backdrop").transitionDuration,
+  );
+  expect(reducedBackdropDuration).toBe("0s");
+  await reducedPage.close();
+});
+
 test("native dialog exposes focusable close controls and restores the trigger", async ({
   page,
 }) => {

@@ -48,7 +48,13 @@
   content: "";
   pointer-events: none;
   transform: translateY(1px) rotate(45deg) scale(0.55);
-  transition: transform 200ms ease;
+  transition:
+    transform 200ms ease,
+    translate 90ms ease-out;
+}
+
+.accordion summary:active::after {
+  translate: 0 1px;
 }
 
 .accordion summary:hover {
@@ -79,4 +85,35 @@
   font-size: var(--text-sm);
   line-height: 1.5;
   text-wrap: balance;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports selector(details::details-content) {
+    .accordion > details::details-content {
+      block-size: 0;
+      overflow: clip;
+      opacity: 0;
+      transition:
+        block-size 180ms ease-out,
+        content-visibility 180ms allow-discrete,
+        opacity 140ms ease-out;
+    }
+
+    .accordion > details[open]::details-content {
+      block-size: auto;
+      opacity: 1;
+    }
+
+    @supports (interpolate-size: allow-keywords) {
+      .accordion > details {
+        interpolate-size: allow-keywords;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion summary::after {
+    transition: none;
+  }
 }

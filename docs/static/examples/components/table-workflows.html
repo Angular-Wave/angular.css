@@ -34,13 +34,11 @@
               </tr>
             </thead>
             <tbody class="table-body">
-              <tr ng-repeat="invoice in invoices" class="table-row">
+              <tr ng-repeat="invoice in invoices" animate class="table-row">
                 <th class="table-cell">{{ invoice.id }}</th>
                 <td class="table-cell">{{ invoice.status }}</td>
                 <td class="table-cell">{{ invoice.method }}</td>
-                <td class="text-right table-cell">
-                  {{ invoice.amount }}
-                </td>
+                <td class="text-right table-cell">{{ invoice.amount }}</td>
               </tr>
             </tbody>
             <tfoot class="table-footer">
@@ -68,23 +66,18 @@
               </tr>
             </thead>
             <tbody class="table-body">
-              <tr ng-repeat="product in products" class="table-row">
+              <tr ng-repeat="product in products" animate class="table-row">
                 <th class="table-cell">{{ product.name }}</th>
                 <td class="table-cell">{{ product.price }}</td>
                 <td class="text-right table-cell">
-                  <div
-                    ng-dropdown
-
-                    class="table-action-menu dropdown-menu"
-                  >
+                  <div ng-dropdown class="table-action-menu dropdown-menu">
                     <button
-
                       variant="ghost"
                       size="icon-xs"
                       type="button"
-
                       aria-label="Open menu for {{ product.name }}"
-                     class="dropdown-menu-trigger button">
+                      class="dropdown-menu-trigger button"
+                    >
                       <svg viewBox="0 0 24 24" aria-hidden="true">
                         <circle cx="5" cy="12" r="1"></circle>
                         <circle cx="12" cy="12" r="1"></circle>
@@ -93,26 +86,23 @@
                     </button>
                     <menu class="dropdown-menu-content">
                       <button
-
                         ng-click="tableState.action='Edit '+product.name"
-                       class="dropdown-menu-item">
+                        class="dropdown-menu-item"
+                      >
                         Edit
                       </button>
                       <button
-
                         ng-click="tableState.action='Duplicate '+product.name"
-                       class="dropdown-menu-item">
+                        class="dropdown-menu-item"
+                      >
                         Duplicate
                       </button>
-                      <hr
-
-
-                       class="dropdown-menu-separator" />
+                      <hr class="dropdown-menu-separator" />
                       <button
-
                         data-variant="destructive"
                         ng-click="tableState.action='Delete '+product.name"
-                       class="dropdown-menu-item">
+                        class="dropdown-menu-item"
+                      >
                         Delete
                       </button>
                     </menu>
@@ -181,56 +171,52 @@
       >
         <div class="data-table-toolbar">
           <input
-
             ng-model="dataState.query"
             placeholder="Filter emails..."
-            aria-label="Filter payment emails" class="input" />
+            aria-label="Filter payment emails"
+            class="input"
+          />
           <div ng-dropdown class="dropdown-menu">
             <button
-
               variant="outline"
               type="button"
-
-             class="dropdown-menu-trigger button">
+              class="dropdown-menu-trigger button"
+            >
               Columns <span aria-hidden="true">⌄</span>
             </button>
-            <menu
-
-
-              class="data-table-column-menu dropdown-menu-content"
-            >
+            <menu class="data-table-column-menu dropdown-menu-content">
               <button
-
-
                 aria-checked="{{ dataState.showStatus }}"
                 ng-click="dataState.showStatus=!dataState.showStatus"
-               class="dropdown-menu-checkbox-item">
+                class="dropdown-menu-checkbox-item"
+              >
                 <span
-
                   ng-if="dataState.showStatus"
-                   class="dropdown-menu-checkbox-item-indicator">✓</span>Status
+                  class="dropdown-menu-checkbox-item-indicator"
+                  >✓</span
+                >Status
               </button>
               <button
-
-
                 aria-checked="{{ dataState.showEmail }}"
                 ng-click="dataState.showEmail=!dataState.showEmail"
-               class="dropdown-menu-checkbox-item">
+                class="dropdown-menu-checkbox-item"
+              >
                 <span
-
                   ng-if="dataState.showEmail"
-                   class="dropdown-menu-checkbox-item-indicator">✓</span>Email
+                  class="dropdown-menu-checkbox-item-indicator"
+                  >✓</span
+                >Email
               </button>
               <button
-
-
                 aria-checked="{{ dataState.showAmount }}"
                 ng-click="dataState.showAmount=!dataState.showAmount"
-               class="dropdown-menu-checkbox-item">
+                class="dropdown-menu-checkbox-item"
+              >
                 <span
-
                   ng-if="dataState.showAmount"
-                   class="dropdown-menu-checkbox-item-indicator">✓</span>Amount
+                  class="dropdown-menu-checkbox-item-indicator"
+                  >✓</span
+                >Amount
               </button>
             </menu>
           </div>
@@ -241,29 +227,25 @@
               <tr class="table-row">
                 <th class="data-table-select table-head">
                   <input
-
                     type="checkbox"
                     ng-model="dataState.all"
                     ng-change="payments[0].selected=dataState.all;payments[1].selected=dataState.all;payments[2].selected=dataState.all;payments[3].selected=dataState.all;payments[4].selected=dataState.all"
-                    aria-label="Select all payments" class="checkbox" />
+                    aria-label="Select all payments"
+                    class="checkbox"
+                  />
                 </th>
-                <th ng-if="dataState.showStatus" class="table-head">
-                  Status
-                </th>
+                <th ng-if="dataState.showStatus" class="table-head">Status</th>
                 <th ng-if="dataState.showEmail" class="table-head">
                   <button
-
                     variant="ghost"
                     type="button"
-                    ng-click="dataState.order=dataState.order==='email' ? '-email' : 'email'" class="button">
+                    ng-click="dataState.order=dataState.order==='email' ? '-email' : 'email'"
+                    class="button"
+                  >
                     Email <span aria-hidden="true">↕</span>
                   </button>
                 </th>
-                <th
-
-                  ng-if="dataState.showAmount"
-                  class="text-right table-head"
-                >
+                <th ng-if="dataState.showAmount" class="text-right table-head">
                   Amount
                 </th>
                 <th class="table-head">
@@ -273,34 +255,27 @@
             </thead>
             <tbody class="table-body">
               <tr
-
                 ng-repeat="payment in payments | filter:dataState.query | orderBy:dataState.order"
+                animate
                 data-state="{{ payment.selected ? 'selected' : '' }}"
-               class="table-row">
+                class="table-row"
+              >
                 <td class="data-table-select table-cell">
                   <input
-
                     type="checkbox"
                     ng-model="payment.selected"
                     ng-change="dataState.selected=payment.selected ? 1 : 0"
-                    aria-label="Select {{ payment.email }}" class="checkbox" />
+                    aria-label="Select {{ payment.email }}"
+                    class="checkbox"
+                  />
                 </td>
-                <td
-
-                  ng-if="dataState.showStatus"
-                  class="capitalize table-cell"
-                >
+                <td ng-if="dataState.showStatus" class="capitalize table-cell">
                   {{ payment.status }}
                 </td>
-                <td
-
-                  ng-if="dataState.showEmail"
-                  class="lowercase table-cell"
-                >
+                <td ng-if="dataState.showEmail" class="lowercase table-cell">
                   {{ payment.email }}
                 </td>
                 <td
-
                   ng-if="dataState.showAmount"
                   class="text-right table-cell-medium table-cell"
                 >
@@ -308,20 +283,22 @@
                 </td>
                 <td class="text-right table-cell">
                   <button
-
                     variant="ghost"
                     size="icon-xs"
                     type="button"
                     ng-click="tableState.action='Open '+payment.id"
-                    aria-label="Open menu for {{ payment.email }}" class="button">
+                    aria-label="Open menu for {{ payment.email }}"
+                    class="button"
+                  >
                     •••
                   </button>
                 </td>
               </tr>
               <tr
-
                 ng-if="!(payments | filter:dataState.query).length"
-               class="table-row">
+                animate
+                class="table-row"
+              >
                 <td colspan="5" class="data-table-empty table-cell">
                   No results.
                 </td>
@@ -333,17 +310,20 @@
           <p>{{ dataState.selected }} of 5 row(s) selected.</p>
           <div class="row">
             <button
-
               variant="outline"
               size="sm"
               type="button"
-              disabled class="button">
-              Previous</button><button
-
+              disabled
+              class="button"
+            >
+              Previous</button
+            ><button
               variant="outline"
               size="sm"
               type="button"
-              disabled class="button">
+              disabled
+              class="button"
+            >
               Next
             </button>
           </div>
@@ -360,39 +340,41 @@
       >
         <div class="data-table-toolbar">
           <input
-
             ng-model="rtlDataState.query"
             placeholder="تصفية البريد الإلكتروني..."
-            aria-label="تصفية البريد الإلكتروني" class="input" />
+            aria-label="تصفية البريد الإلكتروني"
+            class="input"
+          />
           <div ng-dropdown class="dropdown-menu">
             <button
-
               variant="outline"
               type="button"
-
-             class="dropdown-menu-trigger button">
+              class="dropdown-menu-trigger button"
+            >
               الأعمدة <span aria-hidden="true">⌄</span>
             </button>
             <menu class="dropdown-menu-content">
               <button
-
-
                 aria-checked="{{ rtlDataState.showStatus }}"
                 ng-click="rtlDataState.showStatus=!rtlDataState.showStatus"
-               class="dropdown-menu-checkbox-item">
-                <span class="dropdown-menu-checkbox-item-indicator">✓</span>الحالة</button><button
-
-
+                class="dropdown-menu-checkbox-item"
+              >
+                <span class="dropdown-menu-checkbox-item-indicator">✓</span
+                >الحالة</button
+              ><button
                 aria-checked="{{ rtlDataState.showEmail }}"
                 ng-click="rtlDataState.showEmail=!rtlDataState.showEmail"
-               class="dropdown-menu-checkbox-item">
-                <span class="dropdown-menu-checkbox-item-indicator">✓</span>البريد الإلكتروني</button><button
-
-
+                class="dropdown-menu-checkbox-item"
+              >
+                <span class="dropdown-menu-checkbox-item-indicator">✓</span
+                >البريد الإلكتروني</button
+              ><button
                 aria-checked="{{ rtlDataState.showAmount }}"
                 ng-click="rtlDataState.showAmount=!rtlDataState.showAmount"
-               class="dropdown-menu-checkbox-item">
-                <span class="dropdown-menu-checkbox-item-indicator">✓</span>المبلغ
+                class="dropdown-menu-checkbox-item"
+              >
+                <span class="dropdown-menu-checkbox-item-indicator">✓</span
+                >المبلغ
               </button>
             </menu>
           </div>
@@ -403,20 +385,22 @@
               <tr class="table-row">
                 <th class="data-table-select table-head">
                   <input
-
                     type="checkbox"
                     ng-model="rtlDataState.all"
-                    aria-label="تحديد الكل" class="checkbox" />
+                    aria-label="تحديد الكل"
+                    class="checkbox"
+                  />
                 </th>
                 <th ng-if="rtlDataState.showStatus" class="table-head">
                   الحالة
                 </th>
                 <th ng-if="rtlDataState.showEmail" class="table-head">
                   <button
-
                     variant="ghost"
                     type="button"
-                    ng-click="rtlDataState.order=rtlDataState.order==='email' ? '-email' : 'email'" class="button">
+                    ng-click="rtlDataState.order=rtlDataState.order==='email' ? '-email' : 'email'"
+                    class="button"
+                  >
                     البريد الإلكتروني <span aria-hidden="true">↕</span>
                   </button>
                 </th>
@@ -430,28 +414,25 @@
             </thead>
             <tbody class="table-body">
               <tr
-
                 ng-repeat="payment in rtlPayments | filter:rtlDataState.query | orderBy:rtlDataState.order"
-               class="table-row">
+                animate
+                class="table-row"
+              >
                 <td class="data-table-select table-cell">
                   <input
-
                     type="checkbox"
                     ng-model="payment.selected"
-                    aria-label="تحديد {{ payment.email }}" class="checkbox" />
+                    aria-label="تحديد {{ payment.email }}"
+                    class="checkbox"
+                  />
                 </td>
                 <td ng-if="rtlDataState.showStatus" class="table-cell">
                   {{ payment.statusAr }}
                 </td>
-                <td
-
-                  ng-if="rtlDataState.showEmail"
-                  class="lowercase table-cell"
-                >
+                <td ng-if="rtlDataState.showEmail" class="lowercase table-cell">
                   {{ payment.email }}
                 </td>
                 <td
-
                   ng-if="rtlDataState.showAmount"
                   class="table-cell-medium table-cell"
                 >
@@ -459,19 +440,21 @@
                 </td>
                 <td class="table-cell">
                   <button
-
                     variant="ghost"
                     size="icon-xs"
                     type="button"
-                    aria-label="فتح القائمة" class="button">
+                    aria-label="فتح القائمة"
+                    class="button"
+                  >
                     •••
                   </button>
                 </td>
               </tr>
               <tr
-
                 ng-if="!(rtlPayments | filter:rtlDataState.query).length"
-               class="table-row">
+                animate
+                class="table-row"
+              >
                 <td colspan="5" class="data-table-empty table-cell">
                   لا توجد نتائج.
                 </td>
@@ -483,17 +466,20 @@
           <p>0 من 5 صف(وف) محدد.</p>
           <div class="row">
             <button
-
               variant="outline"
               size="sm"
               type="button"
-              disabled class="button">
-              السابق</button><button
-
+              disabled
+              class="button"
+            >
+              السابق</button
+            ><button
               variant="outline"
               size="sm"
               type="button"
-              disabled class="button">
+              disabled
+              class="button"
+            >
               التالي
             </button>
           </div>

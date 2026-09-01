@@ -29,6 +29,17 @@
   background: var(--muted);
 }
 
+.table-row:is(.ng-enter, .ng-move) {
+  animation: angularcss-structural-enter 140ms ease-out;
+}
+
+.table-row.ng-leave-active {
+  opacity: 0;
+  transition:
+    background-color 150ms ease,
+    opacity 100ms ease;
+}
+
 .table-body > .table-row:last-child {
   border-bottom: 0;
 }
@@ -58,4 +69,12 @@
   border-top: 1px solid var(--border);
   background: var(--muted);
   font-weight: var(--font-weight-medium);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .table-row,
+  .table-row.ng-leave-active {
+    animation: none;
+    transition-duration: 0s;
+  }
 }

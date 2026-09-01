@@ -144,6 +144,10 @@
   isolation: isolate;
 }
 
+.combobox-content[data-state="open"] {
+  animation: angularcss-surface-enter 120ms ease-out;
+}
+
 .combobox-content[data-chips="true"] {
   min-width: var(--combobox-anchor-width, 100%);
 }
@@ -297,6 +301,15 @@
   white-space: nowrap;
 }
 
+.combobox-chip.ng-enter {
+  animation: angularcss-structural-enter 140ms ease-out;
+}
+
+.combobox-chip.ng-leave-active {
+  opacity: 0;
+  transition: opacity 100ms ease;
+}
+
 .combobox-chip-remove {
   position: relative;
   display: inline-grid;
@@ -311,6 +324,17 @@
   padding: 0;
   opacity: 0.5;
   box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .combobox-content[data-state="open"],
+  .combobox-chip.ng-enter {
+    animation: none;
+  }
+
+  .combobox-chip.ng-leave-active {
+    transition: none;
+  }
 }
 
 .combobox-chip-remove:hover {
