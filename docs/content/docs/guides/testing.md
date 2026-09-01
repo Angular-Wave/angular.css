@@ -56,5 +56,5 @@ npm run generate-docs:components
 ```
 
 The generator reads canonical TypeScript implementations and updates selectors,
-slots, attributes, states, CSS variables, and events on all component pages.
+parts, attributes, states, CSS variables, and events on all component pages.
 `npm run check:docs-content` fails when generated reference content is stale.

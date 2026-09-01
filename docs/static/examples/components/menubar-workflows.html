@@ -20,42 +20,42 @@
         <header class="workflow-heading"><h2>Checkbox items</h2></header>
         <div class="menubar-stage">
           <nav ng-menubar aria-label="View preferences">
-            <section ng-menubar-menu>
-              <button type="button" ng-menubar-trigger>View</button>
-              <div ng-menubar-content class="menubar-wide-content">
+            <section class="menubar-menu">
+              <button type="button" class="menubar-trigger">View</button>
+              <menu class="menubar-wide-content menubar-content">
                 <button
                   type="button"
-                  ng-menubar-checkbox-item
-                  role="menuitemcheckbox"
+
+
                   aria-checked="{{ menubarWorkflow.fullUrls }}"
                   ng-click="menubarWorkflow.fullUrls=!menubarWorkflow.fullUrls"
-                >
+                 class="menubar-checkbox-item">
                   Always Show Full URLs
                 </button>
                 <button
                   type="button"
-                  ng-menubar-checkbox-item
-                  role="menuitemcheckbox"
+
+
                   aria-checked="{{ menubarWorkflow.code }}"
                   ng-click="menubarWorkflow.code=!menubarWorkflow.code"
-                >
+                 class="menubar-checkbox-item">
                   Code
                 </button>
-                <div ng-menubar-separator role="separator"></div>
-                <button type="button" ng-menubar-item inset>
-                  Reload <span ng-menubar-shortcut>⌘R</span>
+                <hr  class="menubar-separator"/>
+                <button type="button" inset class="menubar-item">
+                  Reload <span class="menubar-shortcut">⌘R</span>
                 </button>
-                <button type="button" ng-menubar-item inset disabled>
-                  Force Reload <span ng-menubar-shortcut>⇧⌘R</span>
+                <button type="button" inset disabled class="menubar-item">
+                  Force Reload <span class="menubar-shortcut">⇧⌘R</span>
                 </button>
-              </div>
+              </menu>
             </section>
-            <section ng-menubar-menu>
-              <button type="button" ng-menubar-trigger>Format</button>
-              <div ng-menubar-content>
-                <button type="button" ng-menubar-item>Strikethrough</button>
-                <button type="button" ng-menubar-item>Superscript</button>
-              </div>
+            <section class="menubar-menu">
+              <button type="button" class="menubar-trigger">Format</button>
+              <menu class="menubar-content">
+                <button type="button" class="menubar-item">Strikethrough</button>
+                <button type="button" class="menubar-item">Superscript</button>
+              </menu>
             </section>
           </nav>
         </div>
@@ -65,73 +65,73 @@
         <header class="workflow-heading"><h2>Radio items</h2></header>
         <div class="menubar-stage">
           <nav ng-menubar aria-label="Profile and theme">
-            <section ng-menubar-menu>
-              <button type="button" ng-menubar-trigger>Profiles</button>
-              <div ng-menubar-content>
-                <div ng-menubar-radio-group role="group" aria-label="User">
+            <section class="menubar-menu">
+              <button type="button" class="menubar-trigger">Profiles</button>
+              <menu class="menubar-content">
+                <fieldset aria-label="User" class="menubar-radio-group">
                   <button
                     type="button"
-                    ng-menubar-radio-item
-                    role="menuitemradio"
+
+
                     aria-checked="{{ menubarWorkflow.user === 'andy' }}"
                     ng-click="menubarWorkflow.user='andy'"
-                  >
+                   class="menubar-radio-item">
                     Andy
                   </button>
                   <button
                     type="button"
-                    ng-menubar-radio-item
-                    role="menuitemradio"
+
+
                     aria-checked="{{ menubarWorkflow.user === 'benoit' }}"
                     ng-click="menubarWorkflow.user='benoit'"
-                  >
+                   class="menubar-radio-item">
                     Benoit
                   </button>
                   <button
                     type="button"
-                    ng-menubar-radio-item
-                    role="menuitemradio"
+
+
                     aria-checked="{{ menubarWorkflow.user === 'luis' }}"
                     ng-click="menubarWorkflow.user='luis'"
-                  >
+                   class="menubar-radio-item">
                     Luis
                   </button>
-                </div>
-              </div>
+                </fieldset>
+              </menu>
             </section>
-            <section ng-menubar-menu>
-              <button type="button" ng-menubar-trigger>Theme</button>
-              <div ng-menubar-content>
-                <div ng-menubar-radio-group role="group" aria-label="Theme">
+            <section class="menubar-menu">
+              <button type="button" class="menubar-trigger">Theme</button>
+              <menu class="menubar-content">
+                <fieldset aria-label="Theme" class="menubar-radio-group">
                   <button
                     type="button"
-                    ng-menubar-radio-item
-                    role="menuitemradio"
+
+
                     aria-checked="{{ menubarWorkflow.theme === 'light' }}"
                     ng-click="menubarWorkflow.theme='light'"
-                  >
+                   class="menubar-radio-item">
                     Light
                   </button>
                   <button
                     type="button"
-                    ng-menubar-radio-item
-                    role="menuitemradio"
+
+
                     aria-checked="{{ menubarWorkflow.theme === 'dark' }}"
                     ng-click="menubarWorkflow.theme='dark'"
-                  >
+                   class="menubar-radio-item">
                     Dark
                   </button>
                   <button
                     type="button"
-                    ng-menubar-radio-item
-                    role="menuitemradio"
+
+
                     aria-checked="{{ menubarWorkflow.theme === 'system' }}"
                     ng-click="menubarWorkflow.theme='system'"
-                  >
+                   class="menubar-radio-item">
                     System
                   </button>
-                </div>
-              </div>
+                </fieldset>
+              </menu>
             </section>
           </nav>
         </div>
@@ -141,40 +141,40 @@
         <header class="workflow-heading"><h2>Icons</h2></header>
         <div class="menubar-stage">
           <nav ng-menubar aria-label="File tools">
-            <section ng-menubar-menu>
-              <button type="button" ng-menubar-trigger>File</button>
-              <div ng-menubar-content>
-                <button type="button" ng-menubar-item>
+            <section class="menubar-menu">
+              <button type="button" class="menubar-trigger">File</button>
+              <menu class="menubar-content">
+                <button type="button" class="menubar-item">
                   <svg aria-hidden="true" viewBox="0 0 24 24">
                     <path d="M6 2h9l3 3v17H6zM14 2v5h4" />
                   </svg>
-                  New File <span ng-menubar-shortcut>⌘N</span>
+                  New File <span class="menubar-shortcut">⌘N</span>
                 </button>
-                <button type="button" ng-menubar-item>
+                <button type="button" class="menubar-item">
                   <svg aria-hidden="true" viewBox="0 0 24 24">
                     <path d="M3 7h7l2 2h9l-2 11H5z" />
                   </svg>
                   Open Folder
                 </button>
-                <div ng-menubar-separator role="separator"></div>
-                <button type="button" ng-menubar-item>
+                <hr  class="menubar-separator"/>
+                <button type="button" class="menubar-item">
                   <svg aria-hidden="true" viewBox="0 0 24 24">
                     <path d="M5 3h12l2 2v16H5zM8 3v6h8V3M8 21v-8h8v8" />
                   </svg>
-                  Save <span ng-menubar-shortcut>⌘S</span>
+                  Save <span class="menubar-shortcut">⌘S</span>
                 </button>
-              </div>
+              </menu>
             </section>
-            <section ng-menubar-menu>
-              <button type="button" ng-menubar-trigger>More</button>
-              <div ng-menubar-content>
-                <button type="button" ng-menubar-item>Settings</button>
-                <button type="button" ng-menubar-item>Help</button>
-                <div ng-menubar-separator role="separator"></div>
-                <button type="button" ng-menubar-item variant="destructive">
+            <section class="menubar-menu">
+              <button type="button" class="menubar-trigger">More</button>
+              <menu class="menubar-content">
+                <button type="button" class="menubar-item">Settings</button>
+                <button type="button" class="menubar-item">Help</button>
+                <hr  class="menubar-separator"/>
+                <button type="button" variant="destructive" class="menubar-item">
                   Delete
                 </button>
-              </div>
+              </menu>
             </section>
           </nav>
         </div>
@@ -184,38 +184,38 @@
         <header class="workflow-heading"><h2>Submenus</h2></header>
         <div class="menubar-stage">
           <nav ng-menubar aria-label="Editing commands">
-            <section ng-menubar-menu>
-              <button type="button" ng-menubar-trigger>File</button>
-              <div ng-menubar-content>
-                <div ng-menubar-sub>
-                  <button type="button" ng-menubar-sub-trigger>Share</button>
-                  <div ng-menubar-sub-content>
-                    <button type="button" ng-menubar-item>Email link</button>
-                    <button type="button" ng-menubar-item>Messages</button>
-                    <button type="button" ng-menubar-item>Notes</button>
+            <section class="menubar-menu">
+              <button type="button" class="menubar-trigger">File</button>
+              <menu class="menubar-content">
+                <div class="menubar-sub">
+                  <button type="button" class="menubar-sub-trigger">Share</button>
+                  <div class="menubar-sub-content">
+                    <button type="button" class="menubar-item">Email link</button>
+                    <button type="button" class="menubar-item">Messages</button>
+                    <button type="button" class="menubar-item">Notes</button>
                   </div>
                 </div>
-                <div ng-menubar-separator role="separator"></div>
-                <button type="button" ng-menubar-item>
-                  Print... <span ng-menubar-shortcut>⌘P</span>
+                <hr  class="menubar-separator"/>
+                <button type="button" class="menubar-item">
+                  Print... <span class="menubar-shortcut">⌘P</span>
                 </button>
-              </div>
+              </menu>
             </section>
-            <section ng-menubar-menu>
-              <button type="button" ng-menubar-trigger>Edit</button>
-              <div ng-menubar-content>
-                <button type="button" ng-menubar-item>Undo</button>
-                <button type="button" ng-menubar-item>Redo</button>
-                <div ng-menubar-separator role="separator"></div>
-                <div ng-menubar-sub>
-                  <button type="button" ng-menubar-sub-trigger>Find</button>
-                  <div ng-menubar-sub-content>
-                    <button type="button" ng-menubar-item>Find...</button>
-                    <button type="button" ng-menubar-item>Find Next</button>
-                    <button type="button" ng-menubar-item>Find Previous</button>
+            <section class="menubar-menu">
+              <button type="button" class="menubar-trigger">Edit</button>
+              <menu class="menubar-content">
+                <button type="button" class="menubar-item">Undo</button>
+                <button type="button" class="menubar-item">Redo</button>
+                <hr  class="menubar-separator"/>
+                <div class="menubar-sub">
+                  <button type="button" class="menubar-sub-trigger">Find</button>
+                  <div class="menubar-sub-content">
+                    <button type="button" class="menubar-item">Find...</button>
+                    <button type="button" class="menubar-item">Find Next</button>
+                    <button type="button" class="menubar-item">Find Previous</button>
                   </div>
                 </div>
-              </div>
+              </menu>
             </section>
           </nav>
         </div>
@@ -227,55 +227,53 @@
         </header>
         <div class="menubar-dynamic-actions">
           <button
-            ng-button
+
             type="button"
             variant="outline"
-            ng-click="menubarWorkflow.showMenu=true"
-          >
+            ng-click="menubarWorkflow.showMenu=true" class="button">
             Add View menu
           </button>
           <button
-            ng-button
+
             type="button"
             variant="outline"
-            ng-click="menubarWorkflow.showItem=true"
-          >
+            ng-click="menubarWorkflow.showItem=true" class="button">
             Add Zoom item
           </button>
         </div>
         <div class="menubar-stage menubar-dynamic-stage">
           <nav ng-menubar aria-label="Dynamic menu">
-            <section ng-menubar-menu>
-              <button type="button" ng-menubar-trigger>File</button>
-              <div ng-menubar-content>
-                <button type="button" ng-menubar-item>New</button>
+            <section class="menubar-menu">
+              <button type="button" class="menubar-trigger">File</button>
+              <menu class="menubar-content">
+                <button type="button" class="menubar-item">New</button>
                 <button
                   ng-if="menubarWorkflow.showItem"
                   type="button"
-                  ng-menubar-item
+
                   id="dynamic-zoom-item"
-                >
+                 class="menubar-item">
                   Zoom in
                 </button>
-              </div>
+              </menu>
             </section>
             <section
               ng-if="menubarWorkflow.showMenu"
-              ng-menubar-menu
+
               id="dynamic-view-menu"
-            >
-              <button type="button" ng-menubar-trigger>View</button>
-              <div ng-menubar-content>
-                <button type="button" ng-menubar-item>Actual size</button>
-              </div>
+             class="menubar-menu">
+              <button type="button" class="menubar-trigger">View</button>
+              <menu class="menubar-content">
+                <button type="button" class="menubar-item">Actual size</button>
+              </menu>
             </section>
-            <section ng-menubar-menu>
-              <button type="button" ng-menubar-trigger disabled>
+            <section class="menubar-menu">
+              <button type="button" disabled class="menubar-trigger">
                 Disabled
               </button>
-              <div ng-menubar-content>
-                <button type="button" ng-menubar-item>Unavailable</button>
-              </div>
+              <menu class="menubar-content">
+                <button type="button" class="menubar-item">Unavailable</button>
+              </menu>
             </section>
           </nav>
         </div>

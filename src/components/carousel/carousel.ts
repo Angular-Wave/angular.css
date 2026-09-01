@@ -8,12 +8,11 @@ import Autoplay from "embla-carousel-autoplay";
 
 import { onDestroy, query, queryAll } from "../../internal/dom";
 
-const ROOT_SELECTOR = '[data-slot="carousel"], [ng-carousel]';
-const ITEM_SELECTOR = '[data-slot="carousel-item"], [ng-carousel-item]';
-const DOT_SELECTOR = '[data-slot="carousel-dot"], [ng-carousel-dot]';
-const PREVIOUS_SELECTOR =
-  '[data-slot="carousel-previous"], [ng-carousel-previous]';
-const NEXT_SELECTOR = '[data-slot="carousel-next"], [ng-carousel-next]';
+const ROOT_SELECTOR = ".carousel, [ng-carousel]";
+const ITEM_SELECTOR = ".carousel-item";
+const DOT_SELECTOR = ".carousel-dot";
+const PREVIOUS_SELECTOR = ".carousel-previous";
+const NEXT_SELECTOR = ".carousel-next";
 
 export interface CarouselChangeDetail {
   api: EmblaCarouselType;
@@ -50,16 +49,8 @@ const parsePositiveInteger = (
 export function carouselDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
-      const viewport = query(
-        element,
-        '[data-slot="carousel-content"], [ng-carousel-content]',
-        HTMLElement,
-      );
-      const track = query(
-        element,
-        '[data-slot="carousel-track"], [ng-carousel-track]',
-        HTMLElement,
-      );
+      const viewport = query(element, ".carousel-content", HTMLElement);
+      const track = query(element, ".carousel-track", HTMLElement);
 
       if (!viewport || track?.parentElement !== viewport) return;
 
@@ -136,11 +127,9 @@ export function carouselDirective(): ng.Directive {
       const syncStaticSemantics = () => {
         const items = getItems();
         const dots = getDots();
-        setAttributeIfChanged(
-          element,
-          "role",
-          element.getAttribute("role") ?? "region",
-        );
+        if (element.tagName !== "SECTION" && !element.hasAttribute("role")) {
+          setAttributeIfChanged(element, "role", "region");
+        }
         setAttributeIfChanged(element, "aria-roledescription", "carousel");
         setAttributeIfChanged(
           element,
@@ -152,11 +141,7 @@ export function carouselDirective(): ng.Directive {
         setAttributeIfChanged(element, "data-item-count", String(items.length));
 
         items.forEach((item, index) => {
-          setAttributeIfChanged(
-            item,
-            "role",
-            item.getAttribute("role") ?? "group",
-          );
+          setAttributeIfChanged(item, "role", "group");
           setAttributeIfChanged(item, "aria-roledescription", "slide");
           setAttributeIfChanged(
             item,

@@ -39,16 +39,16 @@ Complex components are composed from named parts rather than hidden templates:
 
 ```html
 <div ng-collapsible>
-  <button ng-collapsible-trigger>Account settings</button>
-  <section ng-collapsible-content>
+  <button class="collapsible-trigger">Account settings</button>
+  <section class="collapsible-content">
     <label for="display-name">Display name</label>
-    <input id="display-name" data-input ng-model="profile.name" />
+    <input id="display-name" ng-model="profile.name" class="input" />
   </section>
 </div>
 ```
 
 You control the elements, content, AngularTS expressions, and Tailwind classes.
-The component page lists every supported directive, slot, state, and event.
+The component page lists every supported directive, part, state, and event.
 
 ## What is included
 

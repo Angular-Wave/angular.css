@@ -15,16 +15,16 @@
         ng-context-menu
         ng-repeat="side in ['inline-start','left','top','bottom','right','inline-end']"
       >
-        <div ng-context-menu-trigger ng-bind="side"></div>
-        <div
-          ng-context-menu-content
+        <div ng-bind="side" class="context-menu-trigger"></div>
+        <menu
+
           side="{{ side }}"
           aria-label="{{ side }} actions"
-        >
-          <button ng-context-menu-item>Back</button>
-          <button ng-context-menu-item>Forward</button>
-          <button ng-context-menu-item>Reload</button>
-        </div>
+         class="context-menu-content">
+          <button class="context-menu-item">Back</button>
+          <button class="context-menu-item">Forward</button>
+          <button class="context-menu-item">Reload</button>
+        </menu>
       </div>
     </main>
   </body>

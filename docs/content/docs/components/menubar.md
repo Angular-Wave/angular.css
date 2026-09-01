@@ -13,16 +13,16 @@ Use `ng-menubar` around a strip of menu groups. Menu triggers support:
 - `Home`/`End` shortcuts when a trigger is focused
 
 ```html
-<nav ng-menubar role="menubar" aria-label="Application menu">
-  <div data-slot="menubar-menu">
-    <button data-slot="menubar-trigger" role="menuitem">File</button>
-    <div data-slot="menubar-content" role="menu">
-      <button data-slot="menubar-item" role="menuitem">New</button>
-      <button data-slot="menubar-item" role="menuitem">Open</button>
-    </div>
+<nav ng-menubar aria-label="Application menu">
+  <div class="menubar-menu">
+    <button class="menubar-trigger">File</button>
+    <menu class="menubar-content">
+      <button class="menubar-item">New</button>
+      <button class="menubar-item">Open</button>
+    </menu>
   </div>
-  <div data-slot="menubar-menu">
-    <button data-slot="menubar-trigger" role="menuitem">Edit</button>
+  <div class="menubar-menu">
+    <button class="menubar-trigger">Edit</button>
   </div>
 </nav>
 ```
@@ -45,32 +45,10 @@ This component's root directive is `[ng-menubar]`. Importing the package registe
 ### Directive selectors
 
 - `ng-menubar`
-- `ng-menubar-content`
-- `ng-menubar-item`
-- `ng-menubar-menu`
-- `ng-menubar-sub-trigger`
-- `ng-menubar-trigger`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="menubar"]`
-- `[data-slot="menubar-checkbox-item"]`
-- `[data-slot="menubar-content"]`
-- `[data-slot="menubar-group"]`
-- `[data-slot="menubar-item"]`
-- `[data-slot="menubar-label"]`
-- `[data-slot="menubar-menu"]`
-- `[data-slot="menubar-radio-group"]`
-- `[data-slot="menubar-radio-item"]`
-- `[data-slot="menubar-separator"]`
-- `[data-slot="menubar-shortcut"]`
-- `[data-slot="menubar-sub"]`
-- `[data-slot="menubar-sub-content"]`
-- `[data-slot="menubar-sub-trigger"]`
-- `[data-slot="menubar-trigger"]`
-
-Each menu requires one native button trigger and one content element. Groups, separators, shortcuts, checkbox items, radio groups, and nested submenus are optional. Use either `ng-menubar-*` attributes for semantic behavior and styling or `data-slot` hooks when behavior is already supplied; do not duplicate both on one element.
-Use the named slots as stable Tailwind and CSS selectors.
+Each menu requires one native button trigger and one menu content element. The root directive inspects semantic descendants through menubar part classes; no child directives are required. Groups, separators, shortcuts, checked items, and submenus are optional.
 
 ## API
 
@@ -78,10 +56,10 @@ Use the named slots as stable Tailwind and CSS selectors.
 
 | Attribute | Access | Purpose |
 | --- | --- | --- |
+| `aria-checked` | Input | ARIA relationship or state. |
 | `data-open` | Input | Stable component state or styling hook. |
 | `data-state` | Input | Stable component state or styling hook. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
-| `role` | Input | Explicit semantic role when native HTML does not provide one. |
 | `tabindex` | Input | Keyboard focus order for composite descendants. |
 
 `Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
@@ -114,7 +92,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-menubar]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-menubar]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

@@ -5,11 +5,11 @@ description: >
   Pressed-state button primitive with `aria-pressed` state.
 ---
 
-Use `ng-toggle` on buttons to get `aria-pressed` and `data-state` updates.
+Use a native button with `class="toggle"` and authored `aria-pressed` state.
 
 ```html
-<button ng-toggle aria-pressed="true">Bold</button>
-<button ng-toggle variant="outline">Italic</button>
+<button aria-pressed="true" class="toggle">Bold</button>
+<button variant="outline" class="toggle">Italic</button>
 ```
 
 ## Example
@@ -33,14 +33,11 @@ This is a styling-only HTML element or pattern. AngularCSS registers no runtime 
 
 ### Root styling selector
 
-- `data-slot="toggle"`
+- `.toggle`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="toggle"]`
-
-Slots are optional unless the usage example or behavior description identifies a required relationship.
-Use the named slots as stable Tailwind and CSS selectors.
+Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough.
 
 ## API
 
@@ -78,7 +75,7 @@ content come from the application.
 
 ## Customization
 
-Target semantic elements, styling slots, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

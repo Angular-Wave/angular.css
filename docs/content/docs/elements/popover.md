@@ -5,13 +5,13 @@ description: >
   Floating rich content panels
 ---
 
-Use slot attributes for the trigger and content. Set `data-open="true"` when a
+Use part classes for the trigger and content. Set `data-open="true"` when a
 controller should render the panel open.
 
 ```html
-<span data-slot="popover">
-  <button data-slot="popover-trigger">Open</button>
-  <div data-slot="popover-content" data-open="true">Content</div>
+<span class="popover">
+  <button class="popover-trigger">Open</button>
+  <aside data-open="true" class="popover-content">Content</aside>
 </span>
 ```
 

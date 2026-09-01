@@ -3,11 +3,9 @@ import type {} from "@angular-wave/angular.ts";
 import { onDestroy, query, queryAll } from "../../internal/dom";
 
 let inputGroupIdCounter = 0;
-const addonSelector = '[data-slot="input-group-addon"], [ng-input-group-addon]';
-const buttonSelector =
-  '[data-slot="input-group-button"], [ng-input-group-button]';
-const controlSelector =
-  'input, textarea, select, [role="combobox"], [role="spinbutton"]';
+const addonSelector = ".input-group-addon";
+const buttonSelector = ".input-group-button";
+const controlSelector = "input, textarea, select, .combobox-input";
 
 export function inputGroupDirective(): ng.Directive {
   return {
@@ -15,7 +13,7 @@ export function inputGroupDirective(): ng.Directive {
       let describedControl: HTMLElement | null = null;
       let managedDescriptionIds = new Set<string>();
 
-      if (!element.hasAttribute("role")) {
+      if (element.tagName !== "FIELDSET" && !element.hasAttribute("role")) {
         element.setAttribute("role", "group");
       }
 

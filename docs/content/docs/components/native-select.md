@@ -6,12 +6,11 @@ description: >
   behavior.
 ---
 
-Use `ng-native-select` directly on select controls and style via `data-slot`
-selectors.
+Use `class="native-select"` directly on native select controls.
 
 ```html
-<div data-slot="native-select-wrapper">
-  <select ng-native-select aria-label="Status">
+<div class="native-select-wrapper">
+  <select aria-label="Status" class="native-select">
     <option value="">Select status</option>
     <option value="todo">Todo</option>
   </select>
@@ -35,18 +34,11 @@ This is a styling-only HTML element or pattern. AngularCSS registers no runtime 
 
 ### Root styling selector
 
-- `data-slot="native-select"`
+- `.native-select`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="native-select"]`
-- `[data-slot="native-select-icon"]`
-- `[data-slot="native-select-optgroup"]`
-- `[data-slot="native-select-option"]`
-- `[data-slot="native-select-wrapper"]`
-
-Apply `ng-native-select` directly to a native `select` inside the wrapper slot. Native `option` and `optgroup` elements need no additional attributes. The icon slot is optional because the wrapper supplies a CSS chevron fallback.
-Use the named slots as stable Tailwind and CSS selectors.
+Apply `.native-select` directly to a native `select` inside an optional wrapper. Native `option` and `optgroup` elements need no additional attributes. A wrapper may provide a custom icon.
 
 ## API
 
@@ -74,7 +66,7 @@ Native DOM events continue to work normally. AngularTS event directives such as
 
 ## Behavior
 
-The native `select` owns value selection, keyboard interaction, option groups, disabled behavior, validation, and form submission. AngularTS `ng-model` remains the application source of truth. The directive only mirrors native value, empty, required, disabled, and invalid state into stable `data-*` hooks.
+The native `select` owns value selection, keyboard interaction, option groups, disabled behavior, validation, and form submission. AngularTS `ng-model` remains the application source of truth. AngularCSS registers no native-select directive.
 
 AngularCSS does not replace AngularTS interpolation, bindings, structural
 directives, form controllers, validation, or application state.
@@ -89,7 +81,7 @@ content come from the application.
 
 ## Customization
 
-Target semantic elements, styling slots, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

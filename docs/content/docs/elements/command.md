@@ -5,17 +5,17 @@ description: >
   Command palette layout
 ---
 
-Use command slots for the input, grouped result list, items, shortcuts, and
+Use command parts for the input, grouped result list, items, shortcuts, and
 empty state.
 
 ```html
-<section data-slot="command">
-  <div data-slot="command-input-wrapper">
-    <input data-slot="command-input" />
+<section class="command">
+  <div class="command-input-wrapper">
+    <input  class="command-input"/>
   </div>
-  <div data-slot="command-list">
-    <div data-slot="command-item">Open file</div>
-  </div>
+  <ul class="command-list">
+    <li class="command-item">Open file</li>
+  </ul>
 </section>
 ```
 

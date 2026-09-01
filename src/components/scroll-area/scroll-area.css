@@ -1,12 +1,11 @@
-[data-slot="scroll-area"],
+.scroll-area,
 [ng-scroll-area] {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius);
 }
 
-[data-slot="scroll-area-viewport"],
-[ng-scroll-area-viewport] {
+.scroll-area-viewport {
   width: 100%;
   height: 100%;
   overflow: auto;
@@ -15,15 +14,11 @@
   scrollbar-width: none;
 }
 
-:is(
-  [data-slot="scroll-area-viewport"],
-  [ng-scroll-area-viewport]
-)::-webkit-scrollbar {
+:is(.scroll-area-viewport)::-webkit-scrollbar {
   display: none;
 }
 
-[data-slot="scroll-area-scrollbar"],
-[ng-scroll-area-scrollbar] {
+.scroll-area-scrollbar {
   display: flex;
   touch-action: none;
   padding: 1px;
@@ -31,13 +26,11 @@
   cursor: pointer;
 }
 
-[data-slot="scroll-area-scrollbar"][data-visible="false"],
-[ng-scroll-area-scrollbar][data-visible="false"] {
+.scroll-area-scrollbar[data-visible="false"] {
   display: none;
 }
 
-[data-slot="scroll-area-scrollbar"][data-orientation="vertical"],
-[ng-scroll-area-scrollbar][data-orientation="vertical"] {
+.scroll-area-scrollbar[data-orientation="vertical"] {
   position: absolute;
   top: 0;
   right: 0;
@@ -45,18 +38,15 @@
   height: 100%;
 }
 
-[data-slot="scroll-area"][data-direction="rtl"]
-  [data-slot="scroll-area-scrollbar"][data-orientation="vertical"],
+.scroll-area[data-direction="rtl"]
+  .scroll-area-scrollbar[data-orientation="vertical"],
 [ng-scroll-area][data-direction="rtl"]
-  [ng-scroll-area-scrollbar][data-orientation="vertical"],
-[ng-scroll-area][data-direction="rtl"]
-  [data-slot="scroll-area-scrollbar"][data-orientation="vertical"] {
+  .scroll-area-scrollbar[data-orientation="vertical"] {
   right: auto;
   left: 0;
 }
 
-[data-slot="scroll-area-scrollbar"][data-orientation="horizontal"],
-[ng-scroll-area-scrollbar][data-orientation="horizontal"] {
+.scroll-area-scrollbar[data-orientation="horizontal"] {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -64,8 +54,7 @@
   height: calc(var(--spacing) * 2.5);
 }
 
-[data-slot="scroll-area-thumb"],
-[ng-scroll-area-thumb] {
+.scroll-area-thumb {
   position: relative;
   flex: 0 0 auto;
   border-radius: 9999px;
@@ -74,23 +63,15 @@
   will-change: transform;
 }
 
-:is([data-slot="scroll-area-scrollbar"], [ng-scroll-area-scrollbar]):hover
-  :is([data-slot="scroll-area-thumb"], [ng-scroll-area-thumb]) {
+.scroll-area-scrollbar:hover .scroll-area-thumb {
   background: var(--muted-foreground);
 }
 
-:is(
-    [data-slot="scroll-area-scrollbar"],
-    [ng-scroll-area-scrollbar]
-  )[data-orientation="vertical"]
-  > :is([data-slot="scroll-area-thumb"], [ng-scroll-area-thumb]) {
+:is(.scroll-area-scrollbar)[data-orientation="vertical"] > .scroll-area-thumb {
   width: 100%;
 }
 
-:is(
-    [data-slot="scroll-area-scrollbar"],
-    [ng-scroll-area-scrollbar]
-  )[data-orientation="horizontal"]
-  > :is([data-slot="scroll-area-thumb"], [ng-scroll-area-thumb]) {
+:is(.scroll-area-scrollbar)[data-orientation="horizontal"]
+  > .scroll-area-thumb {
   height: 100%;
 }

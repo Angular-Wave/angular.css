@@ -21,7 +21,7 @@ const expectBuiltArtifactRuntime = async (page: Page): Promise<void> => {
 };
 
 const directContent = (trigger: Locator): Locator =>
-  trigger.locator("..").locator(":scope > [ng-menubar-content]");
+  trigger.locator("..").locator(":scope > .menubar-content");
 
 test("canonical menubar uses built bundles and a roving trigger tab stop", async ({
   page,
@@ -30,8 +30,8 @@ test("canonical menubar uses built bundles and a roving trigger tab stop", async
   await expectBuiltArtifactRuntime(page);
 
   const menubar = page.locator("[ng-menubar]");
-  const triggers = menubar.locator("[ng-menubar-trigger]");
-  const contents = menubar.locator("[ng-menubar-content]");
+  const triggers = menubar.locator(".menubar-trigger");
+  const contents = menubar.locator(".menubar-content");
   await expect(menubar).toHaveAttribute("role", "menubar");
   await expect(menubar).toHaveAttribute("data-state", "closed");
   await expect(triggers).toHaveCount(4);
@@ -53,7 +53,7 @@ test("closed trigger navigation moves focus without opening a menu", async ({
   page,
 }) => {
   await page.goto(canonicalUrl);
-  const triggers = page.locator("[ng-menubar-trigger]");
+  const triggers = page.locator(".menubar-trigger");
   await triggers.nth(0).focus();
   await triggers.nth(0).press("ArrowRight");
   await expect(triggers.nth(1)).toBeFocused();
@@ -115,7 +115,7 @@ test("horizontal movement switches an open menu and submenus own their arrow key
   await page.keyboard.press("Escape");
   await file.press("Enter");
   const share = fileContent.getByRole("menuitem", { name: "Share" });
-  const subContent = share.locator("..").locator("[ng-menubar-sub-content]");
+  const subContent = share.locator("..").locator(".menubar-sub-content");
   await share.focus();
   await share.press("ArrowRight");
   await expect(subContent).toBeVisible();
@@ -150,7 +150,7 @@ test("controlled open state and AngularTS-owned item state remain functional", a
   await expect(viewContent).toBeVisible();
   await expect(view).toHaveAttribute("aria-expanded", "true");
   const fullUrls = viewContent
-    .locator("[ng-menubar-checkbox-item]")
+    .locator(".menubar-checkbox-item")
     .filter({ hasText: "Full URLs" });
   await expect(fullUrls).toHaveAttribute("aria-checked", "true");
   await fullUrls.click();
@@ -164,10 +164,10 @@ test("controlled open state and AngularTS-owned item state remain functional", a
   await profiles.click();
   const profilesContent = directContent(profiles);
   const luis = profilesContent
-    .locator("[ng-menubar-radio-item]")
+    .locator(".menubar-radio-item")
     .filter({ hasText: "Luis" });
   const benoit = profilesContent
-    .locator("[ng-menubar-radio-item]")
+    .locator(".menubar-radio-item")
     .filter({ hasText: "Benoit" });
   await expect(benoit).toHaveAttribute("aria-checked", "true");
   await luis.click();
@@ -183,7 +183,7 @@ test("workflow artifact binds dynamically inserted menus and items in DOM order"
   await page.getByRole("button", { name: "Add View menu" }).click();
   await page.getByRole("button", { name: "Add Zoom item" }).click();
   const dynamicMenu = page.locator("#dynamic-view-menu");
-  const dynamicView = dynamicMenu.locator("[ng-menubar-trigger]");
+  const dynamicView = dynamicMenu.locator(".menubar-trigger");
   const dynamicZoom = page.locator("#dynamic-zoom-item");
   await expect(dynamicMenu).toBeVisible();
   await expect(dynamicView).toHaveAttribute("role", "menuitem");
@@ -217,7 +217,7 @@ test("workflow variants expose checkbox, radio, icon, and submenu compositions",
   const preferences = page.getByRole("menubar", { name: "View preferences" });
   await preferences.getByRole("menuitem", { name: "View" }).click();
   const fullUrls = preferences
-    .locator("[ng-menubar-checkbox-item]")
+    .locator(".menubar-checkbox-item")
     .filter({ hasText: "Always Show Full URLs" });
   await expect(fullUrls).toHaveAttribute("aria-checked", "true");
   await fullUrls.click();
@@ -226,14 +226,14 @@ test("workflow variants expose checkbox, radio, icon, and submenu compositions",
   const profiles = page.getByRole("menubar", { name: "Profile and theme" });
   await profiles.getByRole("menuitem", { name: "Profiles" }).click();
   const luis = profiles
-    .locator("[ng-menubar-radio-item]")
+    .locator(".menubar-radio-item")
     .filter({ hasText: "Luis" });
   await luis.click();
   await expect(luis).toHaveAttribute("aria-checked", "true");
 
   const fileTools = page.getByRole("menubar", { name: "File tools" });
   await fileTools.getByRole("menuitem", { name: "File" }).click();
-  await expect(fileTools.locator("[ng-menubar-item] svg")).toHaveCount(3);
+  await expect(fileTools.locator(".menubar-item svg")).toHaveCount(3);
 
   const commands = page.getByRole("menubar", { name: "Editing commands" });
   await commands.getByRole("menuitem", { name: "File" }).click();
@@ -260,7 +260,7 @@ test("RTL reverses top-level and submenu horizontal navigation", async ({
   const share = directContent(file).getByRole("menuitem", { name: "مشاركة" });
   await share.focus();
   await share.press("ArrowLeft");
-  const subContent = share.locator("..").locator("[ng-menubar-sub-content]");
+  const subContent = share.locator("..").locator(".menubar-sub-content");
   await expect(subContent).toBeVisible();
   const shareBox = await share.boundingBox();
   const subContentBox = await subContent.boundingBox();

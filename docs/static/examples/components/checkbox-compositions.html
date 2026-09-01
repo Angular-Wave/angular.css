@@ -16,58 +16,56 @@
     data-example="checkbox-table"
   >
     <main class="checkbox-table-demo" aria-label="Checkbox table composition">
-      <div data-slot="table-container">
-        <table ng-table aria-label="Team members">
-          <thead data-slot="table-header">
-            <tr data-slot="table-row">
-              <th data-slot="table-head" class="checkbox-table-select">
+      <figure class="table-container">
+        <table aria-label="Team members" class="table">
+          <thead class="table-header">
+            <tr class="table-row">
+              <th class="checkbox-table-select table-head">
                 <input
-                  ng-checkbox
+
                   id="select-all-checkbox"
                   name="select-all-checkbox"
                   type="checkbox"
                   ng-model="selection.allRows"
                   ng-change="rows[0].selected=selection.allRows;rows[1].selected=selection.allRows;rows[2].selected=selection.allRows;rows[3].selected=selection.allRows"
-                  aria-label="Select all rows"
-                />
+                  aria-label="Select all rows" class="checkbox" />
               </th>
-              <th data-slot="table-head">Name</th>
-              <th data-slot="table-head">Email</th>
-              <th data-slot="table-head">Role</th>
+              <th class="table-head">Name</th>
+              <th class="table-head">Email</th>
+              <th class="table-head">Role</th>
             </tr>
           </thead>
-          <tbody data-slot="table-body">
+          <tbody class="table-body">
             <tr
-              data-slot="table-row"
+
               ng-repeat="row in rows"
               data-state="{{ row.selected ? 'selected' : '' }}"
-            >
-              <td data-slot="table-cell" class="checkbox-table-select">
+             class="table-row">
+              <td class="checkbox-table-select table-cell">
                 <input
-                  ng-checkbox
+
                   id="row-{{ row.id }}-checkbox"
                   name="row-{{ row.id }}-checkbox"
                   type="checkbox"
                   ng-model="row.selected"
                   ng-change="selection.allRows=rows[0].selected && rows[1].selected && rows[2].selected && rows[3].selected"
-                  aria-label="Select {{ row.name }}"
-                />
+                  aria-label="Select {{ row.name }}" class="checkbox" />
               </td>
-              <td data-slot="table-cell" class="checkbox-table-name">
+              <td class="checkbox-table-name table-cell">
                 {{ row.name }}
               </td>
-              <td data-slot="table-cell">{{ row.email }}</td>
-              <td data-slot="table-cell">{{ row.role }}</td>
+              <td class="table-cell">{{ row.email }}</td>
+              <td class="table-cell">{{ row.role }}</td>
             </tr>
           </tbody>
         </table>
-      </div>
-      <p class="visually-hidden" role="status" aria-live="polite">
+      </figure>
+      <output class="visually-hidden" aria-live="polite">
         Sarah Chen {{ rows[0].selected ? 'selected' : 'not selected' }}. Marcus
         Rodriguez {{ rows[1].selected ? 'selected' : 'not selected' }}. Priya
         Patel {{ rows[2].selected ? 'selected' : 'not selected' }}. David Kim {{
         rows[3].selected ? 'selected' : 'not selected' }}.
-      </p>
+      </output>
     </main>
   </body>
 </html>

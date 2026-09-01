@@ -5,19 +5,19 @@ description: >
   Group labels, helper text, and errors with semantic field wrapper selectors.
 ---
 
-Use the field wrapper and field slots to define standard form structure.
+Use the field wrapper and field parts to define standard form structure.
 
 ```html
-<div data-slot="field">
-  <label ng-label data-slot="field-label" for="email">Email</label>
-  <input data-input id="email" type="email" placeholder="Email" />
-  <p data-slot="field-description">Use your work email.</p>
+<div class="field">
+  <label for="email" class="field-label label">Email</label>
+  <input id="email" type="email" placeholder="Email" class="input" />
+  <p class="field-description">Use your work email.</p>
 </div>
 
-<div data-slot="field" data-invalid>
-  <label ng-label data-slot="field-label" for="invalid-email">Email</label>
-  <input data-input id="invalid-email" aria-invalid="true" />
-  <p data-slot="field-error" role="alert">Enter a valid email.</p>
+<div data-invalid class="field">
+  <label for="invalid-email" class="field-label label">Email</label>
+  <input id="invalid-email" aria-invalid="true" class="input" />
+  <p class="field-error">Enter a valid email.</p>
 </div>
 ```
 
@@ -50,27 +50,10 @@ This component's root directive is `[ng-field]`. Importing the package registers
 ### Directive selectors
 
 - `ng-field`
-- `ng-field-description`
-- `ng-field-error`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="checkbox-group"]`
-- `[data-slot="field"]`
-- `[data-slot="field-content"]`
-- `[data-slot="field-description"]`
-- `[data-slot="field-error"]`
-- `[data-slot="field-group"]`
-- `[data-slot="field-label"]`
-- `[data-slot="field-legend"]`
-- `[data-slot="field-separator"]`
-- `[data-slot="field-separator-content"]`
-- `[data-slot="field-set"]`
-- `[data-slot="field-title"]`
-- `[data-slot="radio-group"]`
-
-Slots are optional unless the usage example or behavior description identifies a required relationship.
-Use the named slots as stable Tailwind and CSS selectors.
+Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough.
 
 ## API
 
@@ -113,7 +96,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-field]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-field]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

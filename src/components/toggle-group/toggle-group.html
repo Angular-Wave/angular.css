@@ -11,32 +11,32 @@
   </head>
   <body ng-app="ui" ng-cloak ng-init="alignment='center'">
     <div class="stack-sm">
-      <div class="row" ng-toggle-group role="group" variant="outline">
+      <fieldset ng-toggle-group class="row toggle-group" variant="outline">
         <button
-          data-slot="toggle-group-item"
           aria-pressed="false"
           ng-click="alignment='left'"
           type="button"
+          class="toggle-group-item"
         >
           Left
         </button>
         <button
-          data-slot="toggle-group-item"
           aria-pressed="true"
           ng-click="alignment='center'"
           type="button"
+          class="toggle-group-item"
         >
           Center
         </button>
         <button
-          data-slot="toggle-group-item"
           aria-pressed="false"
           ng-click="alignment='right'"
           type="button"
+          class="toggle-group-item"
         >
           Right
         </button>
-      </div>
+      </fieldset>
 
       <div class="output">Alignment: <span ng-bind="alignment"></span></div>
     </div>

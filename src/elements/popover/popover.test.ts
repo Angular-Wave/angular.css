@@ -5,8 +5,8 @@ test("popover element example exercises the built functional artifact", async ({
 }) => {
   await page.goto("/docs/static/examples/elements/popover.html");
 
-  const trigger = page.locator("[ng-popover-trigger]");
-  const content = page.locator("[ng-popover-content]");
+  const trigger = page.locator(".popover-trigger");
+  const content = page.locator(".popover-content");
   await expect(content).toBeHidden();
   await trigger.click();
   await expect(content).toBeVisible();

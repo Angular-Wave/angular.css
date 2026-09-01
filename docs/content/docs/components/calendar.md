@@ -19,12 +19,12 @@ application state remains responsible for the selected value.
   data-value="{{ selectedDate }}"
   ng-on-angularcss:calendar-select="selectedDate = $event.detail.value"
 >
-  <header data-slot="calendar-header">
-    <button type="button" data-slot="calendar-previous">Previous</button>
-    <h2 data-slot="calendar-title"></h2>
-    <button type="button" data-slot="calendar-next">Next</button>
+  <header class="calendar-header">
+    <button type="button" class="calendar-previous">Previous</button>
+    <h2 class="calendar-title"></h2>
+    <button type="button" class="calendar-next">Next</button>
   </header>
-  <div data-slot="calendar-grid"></div>
+  <div class="calendar-grid"></div>
 </section>
 ```
 
@@ -43,7 +43,7 @@ native date or text `input` with `ng-model`, a `field` and `label`, a `popover`,
 and this calendar grid. Use native `input[type="time"]` for time values and
 ordinary buttons for presets. Booked dates use `disabled` plus
 `data-booked="true"`; custom day content can be nested inside a calendar-day
-button; week numbers use `data-slot="calendar-week-number"`.
+button; week numbers use `class="calendar-week-number"`.
 
 The generated calendar is a Gregorian local-date UI backed by `date-fns`.
 Non-Gregorian engines, natural-language parsing, and IANA time-zone conversion
@@ -107,37 +107,10 @@ This component's root directive is `[ng-calendar]`. Importing the package regist
 ### Directive selectors
 
 - `ng-calendar`
-- `ng-calendar-day`
-- `ng-calendar-grid`
-- `ng-calendar-next`
-- `ng-calendar-previous`
-- `ng-calendar-row`
-- `ng-calendar-title`
-- `ng-calendar-week-number`
-- `ng-calendar-weekday`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="calendar"]`
-- `[data-slot="calendar-day"]`
-- `[data-slot="calendar-grid"]`
-- `[data-slot="calendar-header"]`
-- `[data-slot="calendar-month"]`
-- `[data-slot="calendar-month-grid"]`
-- `[data-slot="calendar-month-select"]`
-- `[data-slot="calendar-month-title"]`
-- `[data-slot="calendar-nav"]`
-- `[data-slot="calendar-next"]`
-- `[data-slot="calendar-previous"]`
-- `[data-slot="calendar-row"]`
-- `[data-slot="calendar-title"]`
-- `[data-slot="calendar-week-number"]`
-- `[data-slot="calendar-week-number-header"]`
-- `[data-slot="calendar-weekday"]`
-- `[data-slot="calendar-year-select"]`
-
-Slots are optional unless the usage example or behavior description identifies a required relationship.
-Use the named slots as stable Tailwind and CSS selectors.
+Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough.
 
 ## API
 
@@ -188,7 +161,7 @@ Use the named slots as stable Tailwind and CSS selectors.
 | `data-week-start` | Input | Stable component state or styling hook. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
 | `lang` | Input | Authored option or semantic HTML attribute observed by the directive. |
-| `role` | Input/output | Explicit semantic role when native HTML does not provide one. |
+| `role` | Output | Explicit semantic role when native HTML does not provide one. |
 | `selected` | Output | Authored option or semantic HTML attribute observed by the directive. |
 | `tabindex` | Input/output | Keyboard focus order for composite descendants. |
 | `value` | Output | Native value or authored component value. |
@@ -225,7 +198,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-calendar]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-calendar]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

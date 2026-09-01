@@ -1,4 +1,4 @@
-[data-slot="command"],
+.command,
 [ng-command] {
   display: flex;
   width: min(100%, 24rem);
@@ -11,22 +11,20 @@
   padding: calc(var(--spacing) * 1);
 }
 
-:is([data-slot="command"], [ng-command])[data-variant="surface"] {
+:is(.command, [ng-command])[data-variant="surface"] {
   border: 1px solid var(--border);
 }
 
-:is([data-slot="command"], [ng-command])[data-direction="rtl"] {
+:is(.command, [ng-command])[data-direction="rtl"] {
   direction: rtl;
 }
 
-[data-slot="command-input-wrapper"],
-[ng-command-input-wrapper] {
+.command-input-wrapper {
   padding: calc(var(--spacing) * 1);
   padding-block-end: 0;
 }
 
-[data-slot="command-input-group"],
-[ng-command-input-group] {
+.command-input-group {
   position: relative;
   display: flex;
   width: 100%;
@@ -39,13 +37,12 @@
   box-shadow: none;
 }
 
-:is([data-slot="command-input-group"], [ng-command-input-group]):focus-within {
+.command-input-group:focus-within {
   border-color: var(--ring);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 35%, transparent);
 }
 
-[data-slot="command-input-icon"],
-[ng-command-input-icon] {
+.command-input-icon {
   display: inline-flex;
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
@@ -55,13 +52,12 @@
   opacity: 0.5;
 }
 
-:is([data-slot="command-input-icon"], [ng-command-input-icon]) > svg {
+.command-input-icon > svg {
   width: 100%;
   height: 100%;
 }
 
-[data-slot="command-input"],
-[ng-command-input] {
+.command-input {
   width: 100%;
   min-width: 0;
   height: 100%;
@@ -76,17 +72,16 @@
   box-shadow: none;
 }
 
-:is([data-slot="command-input"], [ng-command-input])::placeholder {
+.command-input::placeholder {
   color: var(--muted-foreground);
 }
 
-:is([data-slot="command-input"], [ng-command-input]):disabled {
+.command-input:disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
 
-[data-slot="command-list"],
-[ng-command-list] {
+.command-list {
   display: block;
   max-height: calc(var(--spacing) * 72);
   overflow: hidden auto;
@@ -95,26 +90,21 @@
   scrollbar-width: none;
 }
 
-[data-slot="command-list"]::-webkit-scrollbar,
-[ng-command-list]::-webkit-scrollbar {
+.command-list::-webkit-scrollbar {
   display: none;
 }
 
-[data-slot="command-group"],
-[ng-command-group] {
+.command-group {
   display: grid;
   overflow: hidden;
   padding: calc(var(--spacing) * 1);
 }
 
-:is([data-slot="command-group"], [ng-command-group]):not(
-  :has(:is([data-slot="command-item"], [ng-command-item]))
-) {
+.command-group:not(:has(.command-item)) {
   display: none;
 }
 
-[data-slot="command-group-heading"],
-[ng-command-group-heading] {
+.command-group-heading {
   color: var(--muted-foreground);
   padding-block: calc(var(--spacing) * 1.5);
   padding-inline: calc(var(--spacing) * 2);
@@ -123,15 +113,13 @@
   line-height: 1rem;
 }
 
-[data-slot="command-separator"],
-[ng-command-separator] {
+.command-separator {
   height: 1px;
   margin-inline: calc(var(--spacing) * -1);
   background: var(--border);
 }
 
-[data-slot="command-item"],
-[ng-command-item] {
+.command-item {
   position: relative;
   display: flex;
   width: 100%;
@@ -149,8 +137,8 @@
   user-select: none;
 }
 
-:is([data-slot="command-item"], [ng-command-item]) > svg,
-:is([data-slot="command-item-icon"], [ng-command-item-icon]) {
+.command-item > svg,
+.command-item-icon {
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
   flex: 0 0 auto;
@@ -158,54 +146,41 @@
   pointer-events: none;
 }
 
-[data-slot="command-item"][data-selected="true"],
-[ng-command-item][data-selected="true"],
-[data-slot="command-item"][aria-selected="true"],
-[ng-command-item][aria-selected="true"] {
+.command-item[data-selected="true"],
+.command-item[aria-selected="true"] {
   background: var(--muted);
   color: var(--foreground);
 }
 
-:is(
-    [data-slot="command-item"][data-selected="true"],
-    [ng-command-item][data-selected="true"]
-  )
-  > svg {
+:is(.command-item[data-selected="true"]) > svg {
   color: var(--foreground);
 }
 
-[data-slot="command-item"][data-disabled="true"],
-[ng-command-item][data-disabled="true"],
-[data-slot="command-item"][aria-disabled="true"],
-[ng-command-item][aria-disabled="true"] {
+.command-item[data-disabled="true"],
+.command-item[aria-disabled="true"] {
   pointer-events: none;
   opacity: 0.5;
 }
 
-[data-slot="command-shortcut"],
-[ng-command-shortcut] {
+.command-shortcut {
   margin-inline-start: auto;
   color: var(--muted-foreground);
   font-size: var(--text-xs);
   letter-spacing: 0;
 }
 
-[data-slot="command-empty"],
-[ng-command-empty] {
+.command-empty {
   color: var(--muted-foreground);
   padding-block: calc(var(--spacing) * 6);
   font-size: var(--text-sm);
   text-align: center;
 }
 
-[data-slot="command-empty"][data-visible="false"],
-[ng-command-empty][data-visible="false"] {
+.command-empty[data-visible="false"] {
   display: none;
 }
 
-:is([data-slot="dialog-content"], [ng-dialog-content]):has(
-  > :is([data-slot="command"], [ng-command])
-) {
+.dialog-content:has(> :is(.command, [ng-command])) {
   inset-block-start: 33.333%;
   width: min(calc(100% - calc(var(--spacing) * 8)), 32rem);
   overflow: hidden;
@@ -214,14 +189,12 @@
   transform: translate(-50%, 0);
 }
 
-:is([data-slot="dialog-content"], [ng-dialog-content])
-  > :is([data-slot="command"], [ng-command]) {
+.dialog-content > :is(.command, [ng-command]) {
   width: 100%;
   border: 0;
   border-radius: inherit;
 }
 
-:is([data-slot="dialog-content"], [ng-dialog-content])
-  :is([data-slot="command-item"], [ng-command-item]) {
+.dialog-content .command-item {
   border-radius: var(--radius);
 }

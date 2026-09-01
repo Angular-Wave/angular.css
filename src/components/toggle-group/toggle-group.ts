@@ -16,15 +16,16 @@ export function toggleGroupDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
       const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
-      const itemSelector =
-        '[data-slot="toggle-group-item"], [ng-toggle-group-item], button[aria-pressed]';
+      const itemSelector = ".toggle-group-item, button[aria-pressed]";
       let items: HTMLElement[] = [];
       const allowsMultiple =
         element.hasAttribute("multiple") ||
         element.getAttribute("type") === "multiple";
       const cleanupItems = new Map<HTMLElement, () => void>();
 
-      element.setAttribute("role", element.getAttribute("role") ?? "group");
+      if (element.tagName !== "FIELDSET" && !element.hasAttribute("role")) {
+        element.setAttribute("role", "group");
+      }
       const isGroupDisabled = () =>
         element.hasAttribute("disabled") ||
         element.getAttribute("aria-disabled") === "true";

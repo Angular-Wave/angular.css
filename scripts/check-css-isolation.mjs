@@ -1,48 +1,27 @@
 import { readFileSync } from "node:fs";
 
+import selectorParser from "postcss-selector-parser";
+
 const cssFiles = ["dist/angular.css", "docs/assets/angular.css"];
-
-const bootstrapClassNames = [
-  "accordion",
-  "alert",
-  "badge",
-  "breadcrumb",
-  "btn",
-  "card",
-  "carousel",
-  "collapse",
-  "container",
-  "dropdown",
-  "form-check",
-  "form-control",
-  "form-select",
-  "input-group",
-  "list-group",
-  "modal",
-  "nav",
-  "navbar",
-  "offcanvas",
-  "pagination",
-  "popover",
-  "progress",
-  "row",
-  "show",
-  "toast",
-  "tooltip",
-];
-
-const broadSelectorPatterns = [
-  /(^|,)\s*button(?!\[ng-button\]|\[data-slot=button\]|\[ng-switch-control\])/,
-  /(^|,)\s*input(?!\[.*(?:data-input|ng-checkbox|ng-radio-group-item|ng-slider|ng-switch-control|data-slot=))/,
-  /(^|,)\s*label(?!\[ng-label\]|\[data-slot=label\]|\[data-slot=field-label\])/,
-  /(^|,)\s*select(?!\[ng-native-select\]|\[data-slot=native-select\])/,
-  /(^|,)\s*textarea(?!\[ng-textarea\]|\[data-slot=textarea\])/,
-  /(^|,)\s*(?:html|body|ol|ul|menu|img|svg|video|canvas|audio|iframe|object)\b/,
-];
-
-const classPattern = new RegExp(
-  `\\.(${bootstrapClassNames.join("|")})(?=[\\s.#:[>{,+~]|$)`,
-);
+const guardedElements = new Set([
+  "audio",
+  "body",
+  "button",
+  "canvas",
+  "html",
+  "iframe",
+  "img",
+  "input",
+  "label",
+  "menu",
+  "object",
+  "ol",
+  "select",
+  "svg",
+  "textarea",
+  "ul",
+  "video",
+]);
 
 const extractSelectorBlocks = (css) =>
   css
@@ -55,16 +34,23 @@ const failures = [];
 
 for (const file of cssFiles) {
   const css = readFileSync(file, "utf8");
-  const selectors = extractSelectorBlocks(css);
 
-  for (const selector of selectors) {
-    const classMatch = selector.match(classPattern);
-    if (classMatch) {
-      failures.push(`${file}: Bootstrap class selector ".${classMatch[1]}" in "${selector}"`);
-    }
+  for (const selectorText of extractSelectorBlocks(css)) {
+    const selectors = selectorParser().astSync(selectorText);
+    for (const selector of selectors.nodes) {
+      const first = selector.nodes[0];
+      if (first?.type !== "tag" || !guardedElements.has(first.value)) continue;
 
-    for (const pattern of broadSelectorPatterns) {
-      if (pattern.test(selector)) {
+      const compound = selector.nodes.slice(
+        0,
+        selector.nodes.findIndex((node) => node.type === "combinator") < 0
+          ? undefined
+          : selector.nodes.findIndex((node) => node.type === "combinator"),
+      );
+      const optedIn = compound.some(
+        (node) => node.type === "class" || node.type === "attribute",
+      );
+      if (!optedIn) {
         failures.push(`${file}: broad element selector "${selector}"`);
       }
     }

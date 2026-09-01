@@ -2,12 +2,12 @@
 title: Styling with Tailwind
 weight: 40
 description:
-  Customize AngularCSS with Tailwind utilities, Radix color tokens, slots, and
-  state selectors.
+  Customize AngularCSS with Tailwind utilities, Radix color tokens, semantic
+  parts, and state selectors.
 ---
 
 AngularCSS ships a usable visual baseline, but its public styling contract is
-made for application overrides. Target semantic roots, named `data-slot`
+made for application overrides. Target semantic roots, named `class`
 elements, and generated state attributes from Tailwind or ordinary CSS.
 
 ## Load order
@@ -19,7 +19,7 @@ Compile Tailwind first, AngularCSS second, and application overrides last:
 @import '@angular-wave/angular.css/dist/angular.css';
 
 @layer components {
-  [ng-card] {
+  .card {
     @apply border-slate-200 bg-white;
   }
 }
@@ -31,47 +31,47 @@ changing component box sizing, typography, buttons, and form controls.
 
 ## Root selectors
 
-Use directive selectors for component-wide changes:
+Use classes for styling-only elements and root directives for behavioral
+components:
 
 ```css
-[ng-button] {
+.button {
   @apply font-semibold;
 }
 
-[ng-button][size='lg'] {
+.button[size='lg'] {
   @apply h-11 px-6;
 }
 ```
 
-The component reference lists the exact root directive for every component.
+The component reference lists the exact root selector for every entry.
 
-## Slots
+## Semantic parts
 
 Complex components expose named parts without rendering a hidden template:
 
 ```css
-[ng-dialog] [data-slot='dialog-content'] {
+[ng-dialog] .dialog-content {
   @apply max-w-xl;
 }
 
-[ng-dialog] [data-slot='dialog-footer'] {
+[ng-dialog] .dialog-footer {
   @apply justify-between;
 }
 ```
 
-Slots remain stable selectors even when you add application classes or nested
-content.
+Part classes remain stable selectors while the elements retain native meaning.
 
 ## State attributes
 
 Directives mirror behavior into `data-*` and ARIA attributes:
 
 ```css
-[ng-tabs-trigger][aria-selected='true'] {
+[ng-tabs] .tabs-trigger[aria-selected='true'] {
   @apply border-slate-900 text-slate-950;
 }
 
-[data-slot='combobox-item'][data-highlighted='true'] {
+.combobox-item[data-highlighted='true'] {
   @apply bg-slate-100;
 }
 ```
@@ -105,7 +105,7 @@ uses logical properties where direction matters:
 
 ```html
 <body class="dark">
-  <button ng-button>Continue</button>
+  <button class="button">Continue</button>
 </body>
 ```
 

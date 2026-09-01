@@ -31,8 +31,7 @@ test("canonical artifact exposes the Nova command anatomy and packaged runtime",
   await expectBuiltArtifactRuntime(page);
   const root = page.locator("#command-demo");
   const input = root.getByRole("combobox");
-  const list = root.locator("[ng-command-list]");
-  await expect(root).not.toHaveAttribute("data-slot");
+  const list = root.locator(".command-list");
   await expect(root).toHaveAttribute("data-variant", "surface");
   await expect(input).toHaveAttribute("aria-autocomplete", "list");
   await expect(input).toHaveAttribute(
@@ -41,12 +40,12 @@ test("canonical artifact exposes the Nova command anatomy and packaged runtime",
   );
   await expect(list).toHaveAttribute("role", "listbox");
   await expect(root.getByRole("option")).toHaveCount(6);
-  await expect(root.locator("[ng-command-group]")).toHaveCount(2);
-  await expect(root.locator("[ng-command-separator]")).toHaveAttribute(
+  await expect(root.locator(".command-group")).toHaveCount(2);
+  await expect(root.locator(".command-separator")).toHaveAttribute(
     "role",
     "separator",
   );
-  await expect(root.locator("[ng-command-input-group]")).toHaveCSS(
+  await expect(root.locator(".command-input-group")).toHaveCSS(
     "height",
     "32px",
   );
@@ -71,8 +70,8 @@ test("AngularTS filtering owns result and empty state while Command follows the 
   await input.fill("not-a-command");
   await expect(root.getByRole("option")).toHaveCount(0);
   await expect(root).toHaveAttribute("data-empty", "true");
-  await expect(root.locator("[ng-command-empty]")).toBeVisible();
-  await expect(root.locator("[ng-command-empty]")).toHaveAttribute(
+  await expect(root.locator(".command-empty")).toBeVisible();
+  await expect(root.locator(".command-empty")).toHaveAttribute(
     "role",
     "status",
   );
@@ -117,7 +116,7 @@ test("basic dialog composes focus, filtering, activation, close, and restore beh
   await expectBuiltArtifactRuntime(page);
   const trigger = page.getByRole("button", { name: "Open Menu", exact: true });
   const dialog = page.locator("#basic-command-dialog");
-  const content = dialog.locator("[ng-dialog-content]");
+  const content = dialog.locator(".dialog-content");
   await expect(content).toBeHidden();
 
   await trigger.click();
@@ -146,28 +145,24 @@ test("grouped and shortcut dialogs preserve labels, separators, and shortcut sem
   const grouped = page.locator("#groups-command-dialog");
   const groupedInput = grouped.getByRole("combobox");
   await groupedInput.fill("Billing");
-  await expect(grouped.locator("[ng-command-group]:visible")).toHaveCount(1);
-  const group = grouped.locator("[ng-command-group]:visible");
-  const heading = group.locator("[ng-command-group-heading]");
+  await expect(grouped.locator(".command-group:visible")).toHaveCount(1);
+  const group = grouped.locator(".command-group:visible");
+  const heading = group.locator(".command-group-heading");
   await expect(group).toHaveAttribute(
     "aria-labelledby",
     (await heading.getAttribute("id")) ?? "",
   );
-  await expect(grouped.locator("[ng-command-shortcut]:visible")).toHaveText(
-    "⌘B",
-  );
+  await expect(grouped.locator(".command-shortcut:visible")).toHaveText("⌘B");
   await groupedInput.press("Enter");
-  await expect(grouped.locator("[ng-dialog-content]")).toBeHidden();
+  await expect(grouped.locator(".dialog-content")).toBeHidden();
   await expect(page.locator(".command-workflow-output").nth(1)).toContainText(
     "Grouped: Billing",
   );
 
   await page.getByRole("button", { name: "Open Shortcuts" }).click();
   const shortcuts = page.locator("#shortcuts-command-dialog");
-  await expect(shortcuts.locator("[ng-command-shortcut]")).toHaveCount(3);
-  for (const shortcut of await shortcuts
-    .locator("[ng-command-shortcut]")
-    .all()) {
+  await expect(shortcuts.locator(".command-shortcut")).toHaveCount(3);
+  for (const shortcut of await shortcuts.locator(".command-shortcut").all()) {
     await expect(shortcut).toHaveAttribute("aria-hidden", "true");
   }
 });
@@ -177,7 +172,7 @@ test("application-owned Ctrl+J state opens the composed command dialog", async (
 }) => {
   await page.goto(dialogsUrl);
   const dialog = page.locator("#keyboard-command-dialog");
-  const content = dialog.locator("[ng-dialog-content]");
+  const content = dialog.locator(".dialog-content");
   await expect(content).toBeHidden();
   await page.keyboard.press("Control+j");
   await expect(dialog).toHaveAttribute("data-open", "true");
@@ -194,7 +189,7 @@ test("scrollable dialog constrains a complete command inventory and scrolls acti
   await page.goto(scrollableUrl);
   await expectBuiltArtifactRuntime(page);
   await page.getByRole("button", { name: "Open Menu" }).click();
-  const list = page.locator("[ng-command-list]");
+  const list = page.locator(".command-list");
   await expect(page.getByRole("option")).toHaveCount(23);
   const dimensions = await list.evaluate((element) => ({
     clientHeight: element.clientHeight,
@@ -211,7 +206,7 @@ test("scrollable dialog constrains a complete command inventory and scrolls acti
   await expect(page.locator(".command-workflow-output")).toContainText(
     "Selected: Code Editor",
   );
-  await expect(page.locator("[ng-dialog-content]")).toBeHidden();
+  await expect(page.locator(".dialog-content")).toBeHidden();
 });
 
 test("RTL artifact keeps logical icon, text, shortcut, and keyboard order", async ({
@@ -230,8 +225,8 @@ test("RTL artifact keeps logical icon, text, shortcut, and keyboard order", asyn
 
   const item = root.getByRole("option", { name: /الملف الشخصي/ });
   const itemBox = await item.boundingBox();
-  const iconBox = await item.locator("[ng-command-item-icon]").boundingBox();
-  const shortcutBox = await item.locator("[ng-command-shortcut]").boundingBox();
+  const iconBox = await item.locator(".command-item-icon").boundingBox();
+  const shortcutBox = await item.locator(".command-shortcut").boundingBox();
   expect(itemBox).not.toBeNull();
   expect(iconBox!.x).toBeGreaterThan(itemBox!.x + itemBox!.width / 2);
   expect(shortcutBox!.x).toBeLessThan(itemBox!.x + itemBox!.width / 2);

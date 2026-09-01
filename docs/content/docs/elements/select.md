@@ -5,15 +5,15 @@ description: >
   Custom select trigger and option list
 ---
 
-Use custom select slots when you need an overlay-style select surface. Prefer
+Use custom select parts when you need an overlay-style select surface. Prefer
 `native-select` for native form submission.
 
 ```html
-<div data-slot="select">
-  <button data-slot="select-trigger">Status</button>
-  <div data-slot="select-content" role="listbox">
-    <div data-slot="select-item" role="option">Active</div>
-  </div>
+<div class="select">
+  <button class="select-trigger">Status</button>
+  <ul class="select-content">
+    <li class="select-item">Active</li>
+  </ul>
 </div>
 ```
 

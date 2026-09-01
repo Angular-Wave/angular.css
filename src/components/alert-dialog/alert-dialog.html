@@ -13,20 +13,18 @@
     <button aria-controls="delete-dialog" style="margin: 1rem">
       Delete project
     </button>
-    <section id="delete-dialog" ng-alert-dialog>
-      <div data-slot="alert-dialog-overlay"></div>
-      <section data-slot="alert-dialog-content">
-        <header data-slot="alert-dialog-header">
-          <h2 data-slot="alert-dialog-title">Delete this item?</h2>
-          <p data-slot="alert-dialog-description">
-            This action cannot be undone.
-          </p>
+    <section id="delete-dialog" ng-alert-dialog class="alert-dialog">
+      <div class="alert-dialog-overlay"></div>
+      <dialog class="alert-dialog-content">
+        <header class="alert-dialog-header">
+          <h2 class="alert-dialog-title">Delete this item?</h2>
+          <p class="alert-dialog-description">This action cannot be undone.</p>
         </header>
-        <footer data-slot="alert-dialog-footer">
-          <button data-slot="alert-dialog-cancel">Cancel</button>
-          <button data-slot="alert-dialog-action">Continue</button>
+        <footer class="alert-dialog-footer">
+          <button class="alert-dialog-cancel">Cancel</button>
+          <button class="alert-dialog-action">Continue</button>
         </footer>
-      </section>
+      </dialog>
     </section>
   </body>
 </html>

@@ -17,287 +17,272 @@
   >
     <main class="radio-group-workflows">
       <section class="radio-workflow-section" aria-label="Plan choice cards">
-        <div ng-radio-group class="radio-choice-list">
-          <label ng-label for="plus-plan" class="radio-choice">
-            <span ng-field orientation="horizontal" role="group">
-              <span data-slot="field-content">
-                <span data-slot="field-title">Plus</span>
-                <span data-slot="field-description">
+        <fieldset class="radio-choice-list radio-group">
+          <label for="plus-plan" class="radio-choice label">
+            <fieldset ng-field orientation="horizontal">
+              <span class="field-content">
+                <span class="field-title">Plus</span>
+                <span class="field-description">
                   For individuals and small teams.
                 </span>
               </span>
               <input
-                ng-radio-group-item
+
                 id="plus-plan"
                 name="plan-type"
                 type="radio"
                 value="plus"
-                ng-model="planType"
-              />
-            </span>
+                ng-model="planType"  class="radio-group-item"/>
+            </fieldset>
           </label>
-          <label ng-label for="pro-plan" class="radio-choice">
-            <span ng-field orientation="horizontal" role="group">
-              <span data-slot="field-content">
-                <span data-slot="field-title">Pro</span>
-                <span data-slot="field-description">
+          <label for="pro-plan" class="radio-choice label">
+            <fieldset ng-field orientation="horizontal">
+              <span class="field-content">
+                <span class="field-title">Pro</span>
+                <span class="field-description">
                   For growing businesses.
                 </span>
               </span>
               <input
-                ng-radio-group-item
+
                 id="pro-plan"
                 name="plan-type"
                 type="radio"
                 value="pro"
-                ng-model="planType"
-              />
-            </span>
+                ng-model="planType"  class="radio-group-item"/>
+            </fieldset>
           </label>
-          <label ng-label for="enterprise-plan" class="radio-choice">
-            <span ng-field orientation="horizontal" role="group">
-              <span data-slot="field-content">
-                <span data-slot="field-title">Enterprise</span>
-                <span data-slot="field-description">
+          <label for="enterprise-plan" class="radio-choice label">
+            <fieldset ng-field orientation="horizontal">
+              <span class="field-content">
+                <span class="field-title">Enterprise</span>
+                <span class="field-description">
                   For large teams and enterprises.
                 </span>
               </span>
               <input
-                ng-radio-group-item
+
                 id="enterprise-plan"
                 name="plan-type"
                 type="radio"
                 value="enterprise"
-                ng-model="planType"
-              />
-            </span>
+                ng-model="planType"  class="radio-group-item"/>
+            </fieldset>
           </label>
-        </div>
+        </fieldset>
       </section>
 
       <section class="radio-workflow-section" aria-label="Density descriptions">
-        <div ng-radio-group class="radio-description-list">
-          <div ng-field orientation="horizontal" role="group">
+        <fieldset class="radio-description-list radio-group">
+          <fieldset ng-field orientation="horizontal">
             <input
-              ng-radio-group-item
+
               id="desc-r1"
               name="density-description"
               type="radio"
               value="default"
-              ng-model="densityDescription"
-            />
-            <div data-slot="field-content">
-              <label ng-label for="desc-r1">Default</label>
-              <p data-slot="field-description">
+              ng-model="densityDescription"  class="radio-group-item"/>
+            <div class="field-content">
+              <label for="desc-r1" class="label">Default</label>
+              <p class="field-description">
                 Standard spacing for most use cases.
               </p>
             </div>
-          </div>
-          <div ng-field orientation="horizontal" role="group">
+          </fieldset>
+          <fieldset ng-field orientation="horizontal">
             <input
-              ng-radio-group-item
+
               id="desc-r2"
               name="density-description"
               type="radio"
               value="comfortable"
-              ng-model="densityDescription"
-            />
-            <div data-slot="field-content">
-              <label ng-label for="desc-r2">Comfortable</label>
-              <p data-slot="field-description">More space between elements.</p>
+              ng-model="densityDescription"  class="radio-group-item"/>
+            <div class="field-content">
+              <label for="desc-r2" class="label">Comfortable</label>
+              <p class="field-description">More space between elements.</p>
             </div>
-          </div>
-          <div ng-field orientation="horizontal" role="group">
+          </fieldset>
+          <fieldset ng-field orientation="horizontal">
             <input
-              ng-radio-group-item
+
               id="desc-r3"
               name="density-description"
               type="radio"
               value="compact"
-              ng-model="densityDescription"
-            />
-            <div data-slot="field-content">
-              <label ng-label for="desc-r3">Compact</label>
-              <p data-slot="field-description">
+              ng-model="densityDescription"  class="radio-group-item"/>
+            <div class="field-content">
+              <label for="desc-r3" class="label">Compact</label>
+              <p class="field-description">
                 Minimal spacing for dense layouts.
               </p>
             </div>
-          </div>
-        </div>
+          </fieldset>
+        </fieldset>
       </section>
 
       <section class="radio-workflow-section" aria-label="Disabled radio">
-        <div ng-radio-group class="radio-simple-list">
-          <div
+        <fieldset class="radio-simple-list radio-group">
+          <fieldset
             ng-field
             orientation="horizontal"
-            role="group"
+
             data-disabled="true"
           >
             <input
-              ng-radio-group-item
+
               id="disabled-1"
               name="disabled-choice"
               type="radio"
               value="option1"
               disabled
-              ng-model="disabledChoice"
-            />
-            <label ng-label for="disabled-1" class="radio-plain-label">
+              ng-model="disabledChoice"  class="radio-group-item"/>
+            <label for="disabled-1" class="radio-plain-label label">
               Disabled
             </label>
-          </div>
-          <div ng-field orientation="horizontal" role="group">
+          </fieldset>
+          <fieldset ng-field orientation="horizontal">
             <input
-              ng-radio-group-item
+
               id="disabled-2"
               name="disabled-choice"
               type="radio"
               value="option2"
-              ng-model="disabledChoice"
-            />
-            <label ng-label for="disabled-2" class="radio-plain-label">
+              ng-model="disabledChoice"  class="radio-group-item"/>
+            <label for="disabled-2" class="radio-plain-label label">
               Option 2
             </label>
-          </div>
-          <div ng-field orientation="horizontal" role="group">
+          </fieldset>
+          <fieldset ng-field orientation="horizontal">
             <input
-              ng-radio-group-item
+
               id="disabled-3"
               name="disabled-choice"
               type="radio"
               value="option3"
-              ng-model="disabledChoice"
-            />
-            <label ng-label for="disabled-3" class="radio-plain-label">
+              ng-model="disabledChoice"  class="radio-group-item"/>
+            <label for="disabled-3" class="radio-plain-label label">
               Option 3
             </label>
-          </div>
-        </div>
+          </fieldset>
+        </fieldset>
       </section>
 
       <section
         class="radio-workflow-section"
         aria-label="Subscription fieldset"
       >
-        <fieldset data-slot="field-set" class="radio-fieldset">
-          <legend data-slot="field-legend" data-variant="label">
+        <fieldset class="radio-fieldset field-set">
+          <legend data-variant="label" class="field-legend">
             Subscription Plan
           </legend>
-          <p data-slot="field-description">
+          <p class="field-description">
             Yearly and lifetime plans offer significant savings.
           </p>
-          <div ng-radio-group>
-            <div ng-field orientation="horizontal" role="group">
+          <fieldset class="radio-group">
+            <fieldset ng-field orientation="horizontal">
               <input
-                ng-radio-group-item
+
                 id="plan-monthly"
                 name="subscription"
                 type="radio"
                 value="monthly"
-                ng-model="subscription"
-              />
-              <label ng-label for="plan-monthly" class="radio-plain-label">
+                ng-model="subscription"  class="radio-group-item"/>
+              <label for="plan-monthly" class="radio-plain-label label">
                 Monthly ($9.99/month)
               </label>
-            </div>
-            <div ng-field orientation="horizontal" role="group">
+            </fieldset>
+            <fieldset ng-field orientation="horizontal">
               <input
-                ng-radio-group-item
+
                 id="plan-yearly"
                 name="subscription"
                 type="radio"
                 value="yearly"
-                ng-model="subscription"
-              />
-              <label ng-label for="plan-yearly" class="radio-plain-label">
+                ng-model="subscription"  class="radio-group-item"/>
+              <label for="plan-yearly" class="radio-plain-label label">
                 Yearly ($99.99/year)
               </label>
-            </div>
-            <div ng-field orientation="horizontal" role="group">
+            </fieldset>
+            <fieldset ng-field orientation="horizontal">
               <input
-                ng-radio-group-item
+
                 id="plan-lifetime"
                 name="subscription"
                 type="radio"
                 value="lifetime"
-                ng-model="subscription"
-              />
-              <label ng-label for="plan-lifetime" class="radio-plain-label">
+                ng-model="subscription"  class="radio-group-item"/>
+              <label for="plan-lifetime" class="radio-plain-label label">
                 Lifetime ($299.99)
               </label>
-            </div>
-          </div>
+            </fieldset>
+          </fieldset>
         </fieldset>
       </section>
 
       <section class="radio-workflow-section" aria-label="Invalid radio group">
-        <fieldset data-slot="field-set" class="radio-fieldset">
-          <legend data-slot="field-legend" data-variant="label">
+        <fieldset class="radio-fieldset field-set">
+          <legend data-variant="label" class="field-legend">
             Notification Preferences
           </legend>
-          <p data-slot="field-description">
+          <p class="field-description">
             Choose how you want to receive notifications.
           </p>
-          <div ng-radio-group>
-            <div
+          <fieldset class="radio-group">
+            <fieldset
               ng-field
               orientation="horizontal"
-              role="group"
+
               data-invalid="true"
             >
               <input
-                ng-radio-group-item
+
                 id="invalid-email"
                 name="notification"
                 type="radio"
                 value="email"
                 aria-invalid="true"
-                ng-model="notification"
-              />
-              <label ng-label for="invalid-email" class="radio-plain-label">
+                ng-model="notification"  class="radio-group-item"/>
+              <label for="invalid-email" class="radio-plain-label label">
                 Email only
               </label>
-            </div>
-            <div
+            </fieldset>
+            <fieldset
               ng-field
               orientation="horizontal"
-              role="group"
+
               data-invalid="true"
             >
               <input
-                ng-radio-group-item
+
                 id="invalid-sms"
                 name="notification"
                 type="radio"
                 value="sms"
                 aria-invalid="true"
-                ng-model="notification"
-              />
-              <label ng-label for="invalid-sms" class="radio-plain-label">
+                ng-model="notification"  class="radio-group-item"/>
+              <label for="invalid-sms" class="radio-plain-label label">
                 SMS only
               </label>
-            </div>
-            <div
+            </fieldset>
+            <fieldset
               ng-field
               orientation="horizontal"
-              role="group"
+
               data-invalid="true"
             >
               <input
-                ng-radio-group-item
+
                 id="invalid-both"
                 name="notification"
                 type="radio"
                 value="both"
                 aria-invalid="true"
-                ng-model="notification"
-              />
-              <label ng-label for="invalid-both" class="radio-plain-label">
+                ng-model="notification"  class="radio-group-item"/>
+              <label for="invalid-both" class="radio-plain-label label">
                 Both Email &amp; SMS
               </label>
-            </div>
-          </div>
+            </fieldset>
+          </fieldset>
         </fieldset>
       </section>
 
@@ -307,59 +292,56 @@
         dir="rtl"
         lang="ar"
       >
-        <div ng-radio-group class="radio-description-list" dir="rtl">
-          <div ng-field orientation="horizontal" role="group">
+        <fieldset class="radio-description-list radio-group" dir="rtl">
+          <fieldset ng-field orientation="horizontal">
             <input
-              ng-radio-group-item
+
               id="r1-rtl"
               name="rtl-density"
               type="radio"
               value="default"
               dir="rtl"
-              ng-model="rtlDensity"
-            />
-            <div data-slot="field-content">
-              <label ng-label for="r1-rtl" dir="rtl">افتراضي</label>
-              <p data-slot="field-description" dir="rtl">
+              ng-model="rtlDensity"  class="radio-group-item"/>
+            <div class="field-content">
+              <label for="r1-rtl" dir="rtl" class="label">افتراضي</label>
+              <p dir="rtl" class="field-description">
                 تباعد قياسي لمعظم حالات الاستخدام.
               </p>
             </div>
-          </div>
-          <div ng-field orientation="horizontal" role="group">
+          </fieldset>
+          <fieldset ng-field orientation="horizontal">
             <input
-              ng-radio-group-item
+
               id="r2-rtl"
               name="rtl-density"
               type="radio"
               value="comfortable"
               dir="rtl"
-              ng-model="rtlDensity"
-            />
-            <div data-slot="field-content">
-              <label ng-label for="r2-rtl" dir="rtl">مريح</label>
-              <p data-slot="field-description" dir="rtl">
+              ng-model="rtlDensity"  class="radio-group-item"/>
+            <div class="field-content">
+              <label for="r2-rtl" dir="rtl" class="label">مريح</label>
+              <p dir="rtl" class="field-description">
                 مساحة أكبر بين العناصر.
               </p>
             </div>
-          </div>
-          <div ng-field orientation="horizontal" role="group">
+          </fieldset>
+          <fieldset ng-field orientation="horizontal">
             <input
-              ng-radio-group-item
+
               id="r3-rtl"
               name="rtl-density"
               type="radio"
               value="compact"
               dir="rtl"
-              ng-model="rtlDensity"
-            />
-            <div data-slot="field-content">
-              <label ng-label for="r3-rtl" dir="rtl">مضغوط</label>
-              <p data-slot="field-description" dir="rtl">
+              ng-model="rtlDensity"  class="radio-group-item"/>
+            <div class="field-content">
+              <label for="r3-rtl" dir="rtl" class="label">مضغوط</label>
+              <p dir="rtl" class="field-description">
                 تباعد أدنى للتخطيطات الكثيفة.
               </p>
             </div>
-          </div>
-        </div>
+          </fieldset>
+        </fieldset>
       </section>
     </main>
   </body>

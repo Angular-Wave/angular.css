@@ -1,58 +1,48 @@
-[data-slot="carousel"],
+.carousel,
 [ng-carousel] {
   position: relative;
   width: 100%;
 }
 
-[data-slot="carousel-content"],
-[ng-carousel-content] {
+.carousel-content {
   overflow: hidden;
   touch-action: pan-y pinch-zoom;
 }
 
-[data-slot="carousel-track"],
-[ng-carousel-track] {
+.carousel-track {
   display: flex;
   margin-inline-start: calc(var(--carousel-gap, calc(var(--spacing) * 4)) * -1);
   backface-visibility: hidden;
 }
 
-[data-slot="carousel"][data-orientation="vertical"]
-  [data-slot="carousel-track"],
-[ng-carousel][data-orientation="vertical"] [ng-carousel-track],
-[ng-carousel][data-orientation="vertical"] [data-slot="carousel-track"] {
+.carousel[data-orientation="vertical"] .carousel-track,
+[ng-carousel][data-orientation="vertical"] .carousel-track {
   flex-direction: column;
   margin-block-start: calc(var(--carousel-gap, calc(var(--spacing) * 4)) * -1);
   margin-inline-start: 0;
 }
 
-[data-slot="carousel"][data-orientation="vertical"]
-  [data-slot="carousel-content"],
-[ng-carousel][data-orientation="vertical"] [ng-carousel-content],
-[ng-carousel][data-orientation="vertical"] [data-slot="carousel-content"] {
+.carousel[data-orientation="vertical"] .carousel-content,
+[ng-carousel][data-orientation="vertical"] .carousel-content {
   touch-action: pan-x pinch-zoom;
 }
 
-[data-slot="carousel-item"],
-[ng-carousel-item] {
+.carousel-item {
   flex: 0 0 var(--carousel-item-size, 100%);
   min-width: 0;
   padding-inline-start: var(--carousel-gap, calc(var(--spacing) * 4));
   transform: translate3d(0, 0, 0);
 }
 
-[data-slot="carousel"][data-orientation="vertical"] [data-slot="carousel-item"],
-[ng-carousel][data-orientation="vertical"] [ng-carousel-item],
-[ng-carousel][data-orientation="vertical"] [data-slot="carousel-item"] {
+.carousel[data-orientation="vertical"] .carousel-item,
+[ng-carousel][data-orientation="vertical"] .carousel-item {
   min-height: 0;
   padding-block-start: var(--carousel-gap, calc(var(--spacing) * 4));
   padding-inline-start: 0;
 }
 
-[data-slot="carousel-previous"],
-[ng-carousel-previous],
-[data-slot="carousel-next"],
-[ng-carousel-next] {
+.carousel-previous,
+.carousel-next {
   position: absolute;
   inset-block-start: 50%;
   z-index: 10;
@@ -61,43 +51,36 @@
   touch-action: manipulation;
 }
 
-[data-slot="carousel-previous"],
-[ng-carousel-previous] {
+.carousel-previous {
   inset-inline-start: calc(var(--spacing) * -12);
 }
 
-[data-slot="carousel-next"],
-[ng-carousel-next] {
+.carousel-next {
   inset-inline-end: calc(var(--spacing) * -12);
 }
 
-[data-slot="carousel"][data-orientation="vertical"]
-  [data-slot="carousel-previous"],
-[ng-carousel][data-orientation="vertical"] [ng-carousel-previous],
-[ng-carousel][data-orientation="vertical"] [data-slot="carousel-previous"] {
+.carousel[data-orientation="vertical"] .carousel-previous,
+[ng-carousel][data-orientation="vertical"] .carousel-previous {
   inset-block-start: calc(var(--spacing) * -12);
   inset-inline-start: 50%;
   transform: translateX(-50%) rotate(90deg);
 }
 
-[data-slot="carousel"][data-orientation="vertical"] [data-slot="carousel-next"],
-[ng-carousel][data-orientation="vertical"] [ng-carousel-next],
-[ng-carousel][data-orientation="vertical"] [data-slot="carousel-next"] {
+.carousel[data-orientation="vertical"] .carousel-next,
+[ng-carousel][data-orientation="vertical"] .carousel-next {
   inset-block: auto calc(var(--spacing) * -12);
   inset-inline: 50% auto;
   transform: translateX(-50%) rotate(90deg);
 }
 
-[data-slot="carousel-dots"],
-[ng-carousel-dots] {
+.carousel-dots {
   display: flex;
   justify-content: center;
   gap: calc(var(--spacing) * 2);
   margin-block-start: calc(var(--spacing) * 4);
 }
 
-[data-slot="carousel-dot"],
-[ng-carousel-dot] {
+.carousel-dot {
   display: inline-flex;
   flex: 0 0 auto;
   width: calc(var(--spacing) * 2);
@@ -107,8 +90,7 @@
   opacity: 0.35;
 }
 
-[data-slot="carousel-dot"][data-active="true"],
-[ng-carousel-dot][data-active="true"] {
+.carousel-dot[data-active="true"] {
   background: var(--foreground);
   opacity: 1;
 }

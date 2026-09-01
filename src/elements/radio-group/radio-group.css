@@ -1,10 +1,8 @@
-[ng-radio-group],
-[data-slot="radio-group"] {
+.radio-group {
   @apply grid w-full gap-3;
 }
 
-input[type="radio"][ng-radio-group-item],
-input[type="radio"][data-slot="radio-group-item"] {
+input[type="radio"].radio-group-item {
   appearance: none;
 
   @apply relative size-4 shrink-0 rounded-full border border-input

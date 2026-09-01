@@ -5,10 +5,10 @@ HTML owns semantics and browser behavior, AngularTS owns application state, and
 AngularCSS adds TypeScript only for interactions those layers cannot provide.
 
 ```html
-<button ng-button variant="outline">Save changes</button>
+<button class="button" variant="outline">Save changes</button>
 
 <label for="email">Email</label>
-<input id="email" data-input type="email" ng-model="profile.email" />
+<input id="email" class="input" type="email" ng-model="profile.email" />
 ```
 
 The button and input are styling-only entries. They do not register AngularCSS

@@ -10,9 +10,9 @@ Before adding or changing an AngularCSS catalog entry, use this ownership order:
 4. AngularCSS TypeScript is allowed only for a remaining composite interaction
    such as coordinated focus, keyboard navigation, disclosure, or geometry.
 
-Do not add a directive merely to set `data-slot`, copy authored attributes,
-mirror native state, generate semantics that can be written in HTML, or wrap
-existing AngularTS functionality. Add each catalog entry to
+Do not add a directive merely to create styling hooks, copy authored
+attributes, mirror native state, generate semantics that native HTML already
+provides, or wrap existing AngularTS functionality. Add each catalog entry to
 `scripts/component-policy.ts` with its classification and rationale. The
 registry check requires styling-only TypeScript entrypoints to remain empty.
 

@@ -14,7 +14,7 @@ Each reference page answers:
 
 1. What the component does and where to use it.
 2. What semantic HTML and directive selectors it requires.
-3. Which slots, attributes, state hooks, CSS variables, and events it exposes.
+3. Which parts, attributes, state hooks, CSS variables, and events it exposes.
 4. Which behavior belongs to AngularCSS, AngularTS, native HTML, or application
    code.
 5. What accessibility and customization constraints apply.

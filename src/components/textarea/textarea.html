@@ -11,12 +11,12 @@
   </head>
   <body ng-app="ui" ng-cloak>
     <div class="stack">
-      <textarea ng-textarea placeholder="Add a message"></textarea>
-      <textarea ng-textarea placeholder="Disabled" disabled></textarea>
+      <textarea placeholder="Add a message" class="textarea"></textarea>
+      <textarea placeholder="Disabled" disabled class="textarea"></textarea>
       <textarea
-        ng-textarea
         placeholder="Invalid"
         aria-invalid="true"
+        class="textarea"
       ></textarea>
     </div>
   </body>

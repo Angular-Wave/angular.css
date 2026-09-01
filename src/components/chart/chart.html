@@ -10,53 +10,53 @@
     <script src="../../js/angular-css.umd.js"></script>
   </head>
   <body ng-app="ui" ng-cloak>
-    <section ng-chart style="max-width: 32rem">
-      <header data-slot="chart-header">
+    <figure style="max-width: 32rem" class="chart">
+      <header class="chart-header">
         <div>
-          <h3 data-slot="chart-title">Visitors</h3>
-          <p data-slot="chart-description">Preview target: 72%</p>
+          <h2 class="chart-title">Visitors</h2>
+          <figcaption class="chart-description">Preview target: 72%</figcaption>
         </div>
       </header>
-      <div data-slot="chart-plot">
-        <div data-slot="chart-bars">
+      <div class="chart-plot">
+        <div class="chart-bars">
           <span
-            data-slot="chart-bar"
             data-value="46%"
             style="--chart-color: var(--chart-1)"
+            class="chart-bar"
           ></span>
           <span
-            data-slot="chart-bar"
             data-value="58%"
             style="--chart-color: var(--chart-2)"
+            class="chart-bar"
           ></span>
           <span
-            data-slot="chart-bar"
             data-value="72%"
             style="--chart-color: var(--chart-3)"
+            class="chart-bar"
           ></span>
           <span
-            data-slot="chart-bar"
             data-value="88%"
             style="--chart-color: var(--chart-4)"
+            class="chart-bar"
           ></span>
         </div>
       </div>
-      <div data-slot="chart-legend">
-        <span data-slot="chart-legend-item"
-          ><span
-            data-slot="chart-swatch"
+      <ul class="chart-legend">
+        <li class="chart-legend-item">
+          <span
             style="--chart-color: var(--chart-1)"
+            class="chart-swatch"
           ></span
-          >Desktop</span
-        >
-        <span data-slot="chart-legend-item"
-          ><span
-            data-slot="chart-swatch"
+          >Desktop
+        </li>
+        <li class="chart-legend-item">
+          <span
             style="--chart-color: var(--chart-2)"
+            class="chart-swatch"
           ></span
-          >Mobile</span
-        >
-      </div>
-    </section>
+          >Mobile
+        </li>
+      </ul>
+    </figure>
   </body>
 </html>

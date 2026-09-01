@@ -10,9 +10,9 @@
     <script src="../../js/angular-css.umd.js"></script>
   </head>
   <body ng-app="ui" ng-cloak>
-    <div data-slot="item-group" style="max-width: 32rem">
-      <div ng-item variant="outline">
-        <div data-slot="item-media" variant="icon">
+    <ul style="max-width: 32rem" class="item-group">
+      <li variant="outline" class="item">
+        <div variant="icon" class="item-media">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -27,27 +27,27 @@
             />
           </svg>
         </div>
-        <div data-slot="item-content">
-          <div data-slot="item-title">Profile verified</div>
-          <p data-slot="item-description">
+        <section class="item-content">
+          <h3 class="item-title">Profile verified</h3>
+          <p class="item-description">
             Your public display name and email have been confirmed.
           </p>
-        </div>
-        <div data-slot="item-actions">
-          <button ng-button variant="outline" size="sm">Review</button>
-        </div>
-      </div>
-      <div ng-item variant="muted" data-size="sm">
-        <div data-slot="item-content">
-          <div data-slot="item-title">Scheduled reports</div>
-          <p data-slot="item-description">
+        </section>
+        <menu class="item-actions">
+          <button variant="outline" size="sm" class="button">Review</button>
+        </menu>
+      </li>
+      <li variant="muted" data-size="sm" class="item">
+        <section class="item-content">
+          <h3 class="item-title">Scheduled reports</h3>
+          <p class="item-description">
             Weekly snapshots are ready for your team.
           </p>
-        </div>
-        <div data-slot="item-actions">
-          <span ng-badge variant="secondary">New</span>
-        </div>
-      </div>
-    </div>
+        </section>
+        <menu class="item-actions">
+          <span variant="secondary" class="badge">New</span>
+        </menu>
+      </li>
+    </ul>
   </body>
 </html>

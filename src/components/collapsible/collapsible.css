@@ -1,8 +1,7 @@
-details:is([data-slot="collapsible"], [ng-collapsible]) > summary {
+details:is(.collapsible, [ng-collapsible]) > summary {
   list-style: none;
 }
 
-details:is([data-slot="collapsible"], [ng-collapsible])
-  > summary::-webkit-details-marker {
+details:is(.collapsible, [ng-collapsible]) > summary::-webkit-details-marker {
   display: none;
 }

@@ -1,10 +1,10 @@
-:is([data-slot="context-menu"], [ng-context-menu]) {
+:is(.context-menu, [ng-context-menu]) {
   position: relative;
   display: block;
   min-width: 0;
 }
 
-:is([data-slot="context-menu-trigger"], [ng-context-menu-trigger]) {
+.context-menu-trigger {
   display: grid;
   width: 100%;
   min-height: 5rem;
@@ -19,16 +19,13 @@
   user-select: none;
 }
 
-:is(
-  [data-slot="context-menu-trigger"],
-  [ng-context-menu-trigger]
-):focus-visible {
+:is(.context-menu-trigger):focus-visible {
   border-color: var(--ring);
   outline: 3px solid color-mix(in srgb, var(--ring) 35%, transparent);
   outline-offset: 0;
 }
 
-:is([data-slot="context-menu-content"], [ng-context-menu-content]) {
+.context-menu-content {
   position: absolute;
   top: var(--context-menu-top, 0);
   left: var(--context-menu-left, 0);
@@ -47,17 +44,12 @@
   outline: none;
 }
 
-:is(
-  [data-slot="context-menu-group"],
-  [ng-context-menu-group],
-  [data-slot="context-menu-radio-group"],
-  [ng-context-menu-radio-group]
-) {
+:is(.context-menu-group, .context-menu-radio-group) {
   display: grid;
   gap: 0;
 }
 
-:is([data-slot="context-menu-label"], [ng-context-menu-label]) {
+.context-menu-label {
   color: var(--muted-foreground);
   padding-block: calc(var(--spacing) * 1.5);
   padding-inline: calc(var(--spacing) * 2);
@@ -65,22 +57,15 @@
   font-weight: var(--font-weight-medium);
 }
 
-:is(
-  [data-slot="context-menu-label"],
-  [ng-context-menu-label]
-)[data-inset="true"] {
+:is(.context-menu-label)[data-inset="true"] {
   padding-inline-start: calc(var(--spacing) * 8);
 }
 
 :is(
-  [data-slot="context-menu-item"],
-  [ng-context-menu-item],
-  [data-slot="context-menu-checkbox-item"],
-  [ng-context-menu-checkbox-item],
-  [data-slot="context-menu-radio-item"],
-  [ng-context-menu-radio-item],
-  [data-slot="context-menu-sub-trigger"],
-  [ng-context-menu-sub-trigger]
+  .context-menu-item,
+  .context-menu-checkbox-item,
+  .context-menu-radio-item,
+  .context-menu-sub-trigger
 ) {
   position: relative;
   display: flex;
@@ -103,30 +88,20 @@
 }
 
 :is(
-  [data-slot="context-menu-item"],
-  [ng-context-menu-item],
-  [data-slot="context-menu-checkbox-item"],
-  [ng-context-menu-checkbox-item],
-  [data-slot="context-menu-radio-item"],
-  [ng-context-menu-radio-item],
-  [data-slot="context-menu-sub-trigger"],
-  [ng-context-menu-sub-trigger]
+  .context-menu-item,
+  .context-menu-checkbox-item,
+  .context-menu-radio-item,
+  .context-menu-sub-trigger
 ):is(:hover, :focus-visible, [data-highlighted="true"], [data-state="open"]) {
   background: var(--accent);
   color: var(--accent-foreground);
 }
 
-:is(
-  [data-slot="context-menu-item"],
-  [ng-context-menu-item]
-)[data-variant="destructive"] {
+:is(.context-menu-item)[data-variant="destructive"] {
   color: var(--error);
 }
 
-:is(
-    [data-slot="context-menu-item"],
-    [ng-context-menu-item]
-  )[data-variant="destructive"]:is(
+:is(.context-menu-item)[data-variant="destructive"]:is(
     :hover,
     :focus-visible,
     [data-highlighted="true"]
@@ -135,30 +110,15 @@
   color: var(--error);
 }
 
-:is(
-  [data-slot="context-menu-item"],
-  [ng-context-menu-item],
-  [data-slot="context-menu-sub-trigger"],
-  [ng-context-menu-sub-trigger]
-)[data-inset="true"] {
+:is(.context-menu-item, .context-menu-sub-trigger)[data-inset="true"] {
   padding-inline-start: calc(var(--spacing) * 8);
 }
 
-:is(
-  [data-slot="context-menu-checkbox-item"],
-  [ng-context-menu-checkbox-item],
-  [data-slot="context-menu-radio-item"],
-  [ng-context-menu-radio-item]
-) {
+:is(.context-menu-checkbox-item, .context-menu-radio-item) {
   padding-inline-start: calc(var(--spacing) * 8);
 }
 
-:is(
-  [data-slot="context-menu-checkbox-item"],
-  [ng-context-menu-checkbox-item],
-  [data-slot="context-menu-radio-item"],
-  [ng-context-menu-radio-item]
-)::before {
+:is(.context-menu-checkbox-item, .context-menu-radio-item)::before {
   position: absolute;
   inset-inline-start: calc(var(--spacing) * 2.5);
   display: grid;
@@ -170,42 +130,26 @@
   line-height: 1;
 }
 
-:is(
-    [data-slot="context-menu-checkbox-item"],
-    [ng-context-menu-checkbox-item]
-  )[aria-checked="true"]::before {
+:is(.context-menu-checkbox-item)[aria-checked="true"]::before {
   content: "✓";
 }
 
-:is(
-    [data-slot="context-menu-radio-item"],
-    [ng-context-menu-radio-item]
-  )[aria-checked="true"]::before {
+:is(.context-menu-radio-item)[aria-checked="true"]::before {
   content: "●";
   font-size: 0.5rem;
 }
 
 :is(
-  [data-slot="context-menu-item"],
-  [ng-context-menu-item],
-  [data-slot="context-menu-checkbox-item"],
-  [ng-context-menu-checkbox-item],
-  [data-slot="context-menu-radio-item"],
-  [ng-context-menu-radio-item],
-  [data-slot="context-menu-sub-trigger"],
-  [ng-context-menu-sub-trigger]
+  .context-menu-item,
+  .context-menu-checkbox-item,
+  .context-menu-radio-item,
+  .context-menu-sub-trigger
 ):is([data-disabled="true"], [aria-disabled="true"], :disabled) {
   pointer-events: none;
   opacity: 0.5;
 }
 
-:is(
-    [data-slot="context-menu-item"],
-    [ng-context-menu-item],
-    [data-slot="context-menu-sub-trigger"],
-    [ng-context-menu-sub-trigger]
-  )
-  > svg {
+:is(.context-menu-item, .context-menu-sub-trigger) > svg {
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
   flex: 0 0 auto;
@@ -213,28 +157,25 @@
   pointer-events: none;
 }
 
-:is([data-slot="context-menu-separator"], [ng-context-menu-separator]) {
+.context-menu-separator {
   height: 1px;
   margin-block: calc(var(--spacing) * 1);
   margin-inline: calc(var(--spacing) * -1);
   background: var(--border);
 }
 
-:is([data-slot="context-menu-shortcut"], [ng-context-menu-shortcut]) {
+.context-menu-shortcut {
   margin-inline-start: auto;
   color: var(--muted-foreground);
   font-size: var(--text-xs);
   letter-spacing: 0;
 }
 
-:is([data-slot="context-menu-sub"], [ng-context-menu-sub]) {
+.context-menu-sub {
   position: relative;
 }
 
-:is(
-  [data-slot="context-menu-sub-trigger"],
-  [ng-context-menu-sub-trigger]
-)::after {
+:is(.context-menu-sub-trigger)::after {
   content: "\203a";
   display: inline-block;
   margin-inline-start: auto;
@@ -242,15 +183,11 @@
   line-height: 1;
 }
 
-[data-direction="rtl"]
-  :is(
-    [data-slot="context-menu-sub-trigger"],
-    [ng-context-menu-sub-trigger]
-  )::after {
+[data-direction="rtl"] :is(.context-menu-sub-trigger)::after {
   transform: scaleX(-1);
 }
 
-:is([data-slot="context-menu-sub-content"], [ng-context-menu-sub-content]) {
+.context-menu-sub-content {
   position: absolute;
   inset-block-start: calc(var(--spacing) * -1);
   inset-inline-start: calc(100% + var(--spacing) * 1);
@@ -267,7 +204,6 @@
   outline: none;
 }
 
-[data-direction="rtl"]
-  :is([data-slot="context-menu-sub-content"], [ng-context-menu-sub-content]) {
+[data-direction="rtl"] .context-menu-sub-content {
   inset-inline: auto calc(100% + var(--spacing) * 1);
 }

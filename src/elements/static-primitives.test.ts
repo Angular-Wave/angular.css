@@ -22,12 +22,9 @@ test("static feedback and display primitives run from packaged artifacts", async
   page,
 }) => {
   await openElementArtifact(page, "alert");
-  await expect(page.locator("[ng-alert]")).toHaveCount(2);
-  await expect(page.locator("[ng-alert]").first()).toHaveAttribute(
-    "role",
-    "alert",
-  );
-  await expect(page.locator("[ng-alert]").first()).toHaveAttribute(
+  await expect(page.locator(".alert")).toHaveCount(2);
+  expect(await page.locator(".alert").first().getAttribute("role")).toBeNull();
+  await expect(page.locator(".alert").first()).toHaveAttribute(
     "aria-live",
     "assertive",
   );
@@ -57,7 +54,7 @@ test("media and layout primitives expose their packaged state", async ({
   page,
 }) => {
   await openElementArtifact(page, "aspect-ratio");
-  const ratio = page.locator("[ng-aspect-ratio]");
+  const ratio = page.locator(".aspect-ratio");
   await expect(ratio).toHaveAttribute("ratio", "16 / 9");
   await expect(ratio).toHaveCSS("--ratio", "16 / 9");
   await expect(ratio.getByRole("img", { name: "Photo" })).toBeVisible();
@@ -66,9 +63,7 @@ test("media and layout primitives expose their packaged state", async ({
   const avatars = page.locator("[ng-avatar]");
   await expect(avatars).toHaveCount(5);
   await expect(avatars.first()).toHaveAttribute("data-state", "loaded");
-  await expect(page.locator('[data-slot="avatar-group-count"]')).toHaveText(
-    "+3",
-  );
+  await expect(page.locator(".avatar-group-count")).toHaveText("+3");
 
   await openElementArtifact(page, "direction");
   await expect(page.locator("#direction-default")).toHaveCSS(
@@ -83,39 +78,38 @@ test("navigation and data-display artifacts preserve generated semantics", async
   page,
 }) => {
   await openElementArtifact(page, "breadcrumb");
-  const breadcrumb = page.locator("[ng-breadcrumb]");
+  const breadcrumb = page.locator(".breadcrumb");
   await expect(breadcrumb).toHaveAttribute("aria-label", "breadcrumb");
-  await expect(
-    breadcrumb.locator('[data-slot="breadcrumb-page"]'),
-  ).toHaveAttribute("aria-current", "page");
-  await expect(
-    breadcrumb.locator('[data-slot="breadcrumb-separator"]'),
-  ).toHaveCount(2);
+  await expect(breadcrumb.locator(".breadcrumb-page")).toHaveAttribute(
+    "aria-current",
+    "page",
+  );
+  await expect(breadcrumb.locator(".breadcrumb-separator")).toHaveCount(2);
 
   await openElementArtifact(page, "calendar");
   const calendar = page.locator("[ng-calendar]");
-  await expect(
-    calendar.locator(':is([data-slot="calendar-day"], [ng-calendar-day])'),
-  ).toHaveCount(42);
+  await expect(calendar.locator(".calendar-day")).toHaveCount(42);
   await calendar.locator('[data-value="2026-05-20"]').click();
   await expect(calendar).toHaveAttribute("data-value", "2026-05-20");
 
   await openElementArtifact(page, "chart");
-  const chart = page.locator("[ng-chart]");
-  await expect(chart).toHaveAttribute("role", "img");
-  await expect(chart.locator('[data-slot="chart-bar"]')).toHaveCount(12);
-  await expect(
-    chart.locator('[data-slot="chart-bar"]').first(),
-  ).toHaveAttribute("data-value", "61%");
+  const chart = page.locator(".chart");
+  expect(await chart.getAttribute("role")).toBeNull();
+  await expect(chart).toHaveRole("figure");
+  await expect(chart.locator(".chart-bar")).toHaveCount(12);
+  await expect(chart.locator(".chart-bar").first()).toHaveAttribute(
+    "data-value",
+    "61%",
+  );
 });
 
 test("card artifact exposes its authored anatomy", async ({ page }) => {
   await openElementArtifact(page, "card");
-  const card = page.locator("[ng-card]");
-  await expect(card.locator('[data-slot="card-header"]')).toHaveCount(1);
-  await expect(card.locator('[data-slot="card-content"]')).toHaveCount(1);
-  await expect(card.locator('[data-slot="card-footer"]')).toHaveCount(1);
-  await expect(card.locator('[data-slot="card-action"]')).toHaveCount(1);
+  const card = page.locator(".card");
+  await expect(card.locator(".card-header")).toHaveCount(1);
+  await expect(card.locator(".card-content")).toHaveCount(1);
+  await expect(card.locator(".card-footer")).toHaveCount(1);
+  await expect(card.locator(".card-action")).toHaveCount(1);
   await expect(
     page.getByRole("heading", { name: "Login to your account" }),
   ).toBeVisible();

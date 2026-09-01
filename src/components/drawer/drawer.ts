@@ -19,12 +19,8 @@ export function drawerDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
       const getContent = (): HTMLElement | null =>
-        queryAll<HTMLElement>(
-          element,
-          '[data-slot="drawer-content"], [ng-drawer-content]',
-        ).find(
-          (candidate) =>
-            candidate.closest('[data-slot="drawer"], [ng-drawer]') === element,
+        queryAll<HTMLElement>(element, ".drawer-content").find(
+          (candidate) => candidate.closest(".drawer, [ng-drawer]") === element,
         ) ?? null;
       const syncSide = (): void => {
         const content = getContent();
@@ -42,15 +38,13 @@ export function drawerDirective(): ng.Directive {
       };
 
       bindOverlay(scope, element, {
-        rootSelector: '[data-slot="drawer"], [ng-drawer]',
-        closeSelector:
-          '[data-slot="drawer-close"], [ng-drawer-close], [data-drawer-close]',
-        contentSelector: '[data-slot="drawer-content"], [ng-drawer-content]',
-        descriptionSelector:
-          '[data-slot="drawer-description"], [ng-drawer-description]',
-        overlaySelector: '[data-slot="drawer-overlay"], [ng-drawer-overlay]',
-        titleSelector: '[data-slot="drawer-title"], [ng-drawer-title]',
-        triggerSelector: '[data-slot="drawer-trigger"], [ng-drawer-trigger]',
+        rootSelector: ".drawer, [ng-drawer]",
+        closeSelector: ".drawer-close, [data-drawer-close]",
+        contentSelector: ".drawer-content",
+        descriptionSelector: ".drawer-description",
+        overlaySelector: ".drawer-overlay",
+        titleSelector: ".drawer-title",
+        triggerSelector: ".drawer-trigger",
         closeOnOutsideClick: true,
       });
 

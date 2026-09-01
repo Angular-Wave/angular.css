@@ -160,7 +160,7 @@ const behaviorByComponent: Record<string, string> = {
   carousel:
     "The directive uses Embla to own drag gestures, snap selection, orientation, loop boundaries, control availability, and optional autoplay. AngularTS remains responsible for counters, business actions, and other application state consumed from the carousel DOM events.",
   chart:
-    "The directive synchronizes authored values and colors into CSS custom properties and supplies chart, axis, legend, bar, and tooltip semantics. Authored HTML, SVG, canvas, or an application-selected chart library owns plotting, scales, data, formatting, hover selection, and active-series state; AngularTS remains the source of truth for reactive application state.",
+    "Semantic figure, heading, list, and data markup owns chart meaning. CSS variables provide visual values and colors; authored HTML, SVG, canvas, or an application-selected chart library owns plotting, scales, data, formatting, and interaction. AngularCSS registers no chart directive.",
   combobox:
     "The directive owns disclosure, collision-aware placement, active-descendant navigation, enabled-option boundaries, Escape and outside dismissal, and selection, clear, remove-last, and open-change signaling. AngularTS remains responsible for query filtering, selected values and collections, controlled open state, validation, and structural bindings such as `ng-repeat`, `ng-if`, and `ng-model`.",
   command:
@@ -176,19 +176,19 @@ const behaviorByComponent: Record<string, string> = {
   "hover-card":
     "The directive owns delayed pointer and focus disclosure, physical side placement, Escape closure, and synchronized open state. It is non-modal and does not trap focus. Applications own preview content and may control the authored `data-open` attribute.",
   input:
-    "Input is a styling-only native HTML component selected by `data-input`. AngularTS and the browser own the value, input events, model synchronization, validation, disabled state, required state, and form submission. AngularCSS registers no Input directive and does not mirror or replace that state.",
+    "Input is a styling-only native control selected by `.input`. AngularTS and the browser own value, events, model synchronization, validation, disabled and required state, and form submission. AngularCSS registers no input directive.",
   menubar:
     "The directive owns top-level roving focus, menu and submenu disclosure, enabled-item navigation, Escape and outside-click closure, DOM-order synchronization for dynamically inserted menus, and direction-aware horizontal keys. AngularTS remains responsible for command execution, checkbox and radio values, and structural content such as `ng-if`.",
   "native-select":
-    "The native `select` owns value selection, keyboard interaction, option groups, disabled behavior, validation, and form submission. AngularTS `ng-model` remains the application source of truth. The directive only mirrors native value, empty, required, disabled, and invalid state into stable `data-*` hooks.",
+    "The native `select` owns value selection, keyboard interaction, option groups, disabled behavior, validation, and form submission. AngularTS `ng-model` remains the application source of truth. AngularCSS registers no native-select directive.",
   "navigation-menu":
     "The directive owns site-navigation disclosure, focus restoration, direction-aware arrow movement, dynamic DOM-order synchronization, outside dismissal, and flyout collision handling. Native links continue to own navigation. URLs, routing, current-page state, authored controlled state, and application commands remain AngularTS or application concerns.",
   pagination:
-    "The directive preserves native navigation, list, list-item, and link semantics while synchronizing authored `aria-current`, `data-active`, `aria-disabled`, and dynamically inserted controls into stable state hooks. Native links own navigation; URLs, routing, page counts, rows-per-page values, and current-page application state remain AngularTS or application concerns.",
+    "Native navigation, lists, list items, and links own pagination semantics and navigation. URLs, routing, page counts, rows-per-page values, and current-page application state remain AngularTS or application concerns. AngularCSS registers no pagination directive.",
   progress:
-    "The directive synchronizes authored `value` and `max` attributes into progressbar ARIA state, `data-value`, the `--value` CSS property, and standard label/value slots. AngularTS models, native form controls, timers, and application workflows remain the source of truth for when and how progress changes.",
+    "The native `progress` element owns progressbar semantics and determinate or indeterminate state. Native `label` and `output` elements provide optional context. AngularTS may bind `value`; AngularCSS registers no progress directive.",
   "radio-group":
-    "Native radio inputs own selection, arrow-key behavior, disabled state, validation, and form submission. AngularTS `ng-model` remains the application source of truth. The directive only groups the controls and mirrors native checked state into stable `aria-checked` and `data-state` hooks, including radios inserted by structural bindings.",
+    "A native `fieldset` and `legend` group radio inputs sharing one `name`. The browser owns selection, arrow-key behavior, disabled state, validation, and form submission; AngularTS `ng-model` owns application state. AngularCSS registers no radio-group directive.",
   resizable:
     "The directive owns pairwise pointer and keyboard resizing, minimum and maximum bounds, direct-child panel/handle ownership, direction-aware deltas, and synchronized separator state. AngularTS or the application owns authored orientation, initial/external sizes, structural insertion, persistence, and business layout decisions.",
   select:
@@ -267,7 +267,7 @@ const accessibilityByComponent: Record<string, string> = {
   pagination:
     'Use a native `nav` landmark with an accessible label, a native list, and native links. Expose exactly one current destination with `aria-current="page"`. Previous and next links need destination-specific accessible names; ellipsis is decorative and removed from the accessibility tree.',
   progress:
-    "Give every progressbar an accessible name. A progress label slot is connected automatically unless the root already has `aria-label` or an authored `aria-labelledby`. Determinate values expose `aria-valuenow`; omit `value` for indeterminate progress.",
+    "Give every native progress element an accessible name with `label`, `aria-label`, or `aria-labelledby`. Set `value` and `max` for determinate progress; omit `value` for indeterminate progress.",
   "radio-group":
     "Use native radio inputs with a shared `name` and an explicit label for every control. Use `fieldset` and `legend` for a visible group label when appropriate. Preserve native disabled and invalid semantics, and connect supporting descriptions with `aria-describedby`.",
   resizable:
@@ -342,7 +342,7 @@ const readAttributesByComponent: Record<string, string[]> = {
   "navigation-menu": ["align", "data-open", "data-state", "dir", "disabled"],
   pagination: ["aria-current", "aria-disabled", "data-active", "dir"],
   popover: ["align", "side"],
-  progress: ["data-value-format", "dir", "max", "value"],
+  progress: ["dir", "max", "value"],
   "radio-group": [
     "aria-invalid",
     "checked",
@@ -456,19 +456,19 @@ const slotGuidanceByComponent: Record<string, string> = {
   chart:
     "The chart root requires an accessible name. Plot, bar, axis, grid, legend, and tooltip slots are optional composition primitives; place them inside the chart root so synchronized CSS properties and semantics apply.",
   combobox:
-    "A combobox root requires one input and one listbox content element. Control, trigger, clear, empty, list, collection, labeled group, separator, chips, chip, and chip-remove selectors are optional composition primitives. Prefer semantic `ng-combobox-*` attributes when AngularCSS supplies behavior and styling; use `data-slot` only as a styling hook when behavior is supplied elsewhere, and never duplicate both on one element.",
+    "A combobox root requires one input and one listbox content element. The root directive inspects semantic descendants through combobox part classes; no child directives are required. Control, trigger, clear, empty, groups, separators, and chips are optional.",
   command:
-    "A command root requires one input and one list. Empty state, labeled groups, separators, item icons, and shortcuts are optional composition primitives. Prefer semantic `ng-command-*` attributes when AngularCSS supplies behavior and styling; use `data-slot` only as a styling hook when behavior is supplied elsewhere, and never duplicate both on one element. Compose modal palettes from the existing Dialog primitives and use `data-dialog-close` when an option should close that dialog without acquiring Dialog close-button styling.",
+    "A command root requires one input and one list. The root directive inspects semantic descendants through command part classes; no child directives are required. Empty state, labeled groups, separators, item icons, and shortcuts are optional. Compose modal palettes from Dialog.",
   "context-menu":
-    "A context menu root requires one focusable trigger and one content element. Groups, labels, separators, shortcuts, checkbox items, radio groups, destructive or inset items, and nested submenus are optional. Prefer semantic `ng-context-menu-*` attributes when AngularCSS supplies behavior and styling; use `data-slot` only when behavior is supplied elsewhere, and never duplicate both on one element. Checked and radio values must come from AngularTS bindings rather than component-owned state.",
+    "A context menu root requires one focusable trigger and one menu element. The root directive inspects semantic descendants through context-menu part classes; no child directives are required. Groups, separators, shortcuts, checked items, and submenus are optional.",
   dialog:
-    "A dialog root requires one native button trigger, one overlay, and one content element. Title and description are strongly recommended; header, body, and footer are optional layout selectors. Use semantic `ng-dialog-*` attributes when AngularCSS supplies behavior and styling, and do not duplicate them with `data-slot`. Use `data-dialog-close` for footer actions that close without acquiring corner-close styling.",
+    "A dialog root requires one native button trigger, one overlay, and one native dialog content element. The root directive inspects descendants through dialog part classes; no child directives are required. Title and description are strongly recommended; header, body, and footer are optional.",
   drawer:
-    "A drawer root requires one native button trigger, one overlay, and one content element. Use `side` or `direction` on the root for `bottom`, `top`, `left`, or `right`; bottom is the default. Title and description are strongly recommended; handle, header, body, and footer are optional layout selectors. Prefer semantic `ng-drawer-*` attributes and do not duplicate them with `data-slot`. AngularTS owns all values and application actions inside the drawer.",
+    "A drawer root requires one native button trigger, one overlay, and one native dialog content element. The root directive inspects descendants through drawer part classes; no child directives are required. Use `side` for placement. Title, description, handle, header, body, and footer are optional.",
   sheet:
-    "A sheet root requires one native button trigger, one overlay, and one content element. Use `side` on the root or content for physical `right`, `left`, `top`, or `bottom` placement; right is the default. Title and description are strongly recommended; header, body, and footer are optional layout selectors. Prefer semantic `ng-sheet-*` attributes and do not duplicate them with `data-slot`. Use `data-sheet-close` only for an action that closes without acquiring close-button styling.",
+    "A sheet root requires one native button trigger, one overlay, and one native dialog content element. The root directive inspects descendants through sheet part classes; no child directives are required. Use `side` for placement. Title, description, header, body, and footer are optional.",
   sidebar:
-    "Place `ng-sidebar` inside `ng-sidebar-layout` and connect native button triggers with `aria-controls` or `data-sidebar-target`. Author `side=left|right`, `variant=sidebar|floating|inset`, and `collapsible=offcanvas|icon|none` on the root. Header, content, footer, inset, groups, menus, actions, badges, submenus, rail, separator, input, and skeleton are optional composition selectors. Prefer semantic `ng-sidebar-*` attributes when behavior or styling is supplied and do not duplicate them with `data-slot`; use `data-slot` only for styling-only primitives. Compose collapsible groups with `ng-collapsible` and action menus with `ng-dropdown`.",
+    "Place `aside[ng-sidebar]` inside `.sidebar-layout` and connect native button triggers with `aria-controls`. The root directive inspects semantic descendants through sidebar part classes; no child sidebar directives are required. Author side, variant, and collapse mode on the root. Compose nested disclosure with Collapsible and action menus with Dropdown.",
   collapsible:
     "A trigger and content panel are required. Prefer direct `summary` and panel children of native `details`; use a native button trigger only when the composition cannot be represented by `details`.",
   "hover-card":
@@ -476,23 +476,23 @@ const slotGuidanceByComponent: Record<string, string> = {
   "input-group":
     "Use one native input, textarea, select, combobox, or spinbutton control per root. Addons may be placed at inline-start, inline-end, block-start, or block-end with `data-align`. Clicking non-button addon content focuses the control; buttons, menus, tooltips, and popovers retain their existing component behavior. AngularTS owns values, validation, counters, submission, and all application actions.",
   menubar:
-    "Each menu requires one native button trigger and one content element. Groups, separators, shortcuts, checkbox items, radio groups, and nested submenus are optional. Use either `ng-menubar-*` attributes for semantic behavior and styling or `data-slot` hooks when behavior is already supplied; do not duplicate both on one element.",
+    "Each menu requires one native button trigger and one menu content element. The root directive inspects semantic descendants through menubar part classes; no child directives are required. Groups, separators, shortcuts, checked items, and submenus are optional.",
   "native-select":
-    "Apply `ng-native-select` directly to a native `select` inside the wrapper slot. Native `option` and `optgroup` elements need no additional attributes. The icon slot is optional because the wrapper supplies a CSS chevron fallback.",
+    "Apply `.native-select` directly to a native `select` inside an optional wrapper. Native `option` and `optgroup` elements need no additional attributes. A wrapper may provide a custom icon.",
   "navigation-menu":
-    "Use a native `nav` containing one direct list. Each list item may contain either a native link or a native button trigger followed by its flyout content. The indicator is optional. Use either `ng-navigation-menu-*` selectors for behavior and styling or `data-slot` hooks when behavior is supplied elsewhere; do not duplicate both on one element.",
+    "Use a native `nav` containing one direct list. Each list item may contain either a native link or a native button trigger followed by flyout content. The root directive inspects descendants through navigation-menu part classes; no child directives are required.",
   pagination:
     "Use a native `nav` containing a `ul` or `ol` with direct `li` children. Page, previous, and next controls remain native links. Ellipsis is optional. Compose rows-per-page controls beside Pagination with existing native form components; Pagination does not own that model.",
   popover:
     "A native button trigger and one content element are required. Header, title, and description selectors are optional semantic styling hooks. Use native form controls inside the content; AngularTS owns their values and validation.",
   progress:
-    'The root may contain optional label and value slots followed by one track containing one indicator. Use `data-value-format="custom"` on the value slot when application-authored localized text must be preserved. Use either `ng-progress-*` selectors or `data-slot` hooks on each element; do not duplicate both.',
+    "Use a native `progress.progress` element. For a visible label and value, compose it with native `label` and `output` elements inside `.progress-group`.",
   "radio-group":
-    'Place native `input type="radio"` controls inside the group and give related controls the same `name`. Compose labels, descriptions, and validation with native fieldsets and existing Field primitives. Use either `ng-radio-group-*` selectors or `data-slot` hooks on each element; do not duplicate both.',
+    'Use `fieldset.radio-group` with a native `legend`. Place labeled `input type="radio"` controls inside it and give related controls the same `name`.',
   resizable:
-    "Alternate direct panel and handle children inside each panel group. Nested groups belong inside a panel. The visible grip is optional. Use either `ng-resizable-*` selectors or `data-slot` hooks on each element; do not duplicate both.",
+    "Alternate direct `.resizable-panel` and `.resizable-handle` children inside each panel group. The root directive inspects those children; no child directives are required. Nested groups belong inside a panel.",
   select:
-    "A native button trigger and one listbox content element are required. Put options inside optional labeled groups and separators; scroll controls are optional. Use either semantic `ng-select-*` attributes or `data-slot` hooks on each element; do not duplicate both. Bind application values from `angularcss:select` with AngularTS.",
+    "A native button trigger and one listbox content element are required. The root directive inspects semantic descendants through select part classes; no child directives are required. Optional groups, separators, and scroll controls may be included.",
   tooltip:
     "One trigger and one plain-text content element are required. Prefer a native button or link trigger. Tooltip content is descriptive and non-interactive; use Popover when the floating content needs controls or focus.",
 };
@@ -583,26 +583,17 @@ const referenceFor = (component: string): string => {
   const directive = directiveByComponent.get(component);
   const stylingOnly = componentPolicy[component]?.kind === "element";
   const rootSelector = stylingOnly
-    ? component === "input"
-      ? "data-input"
-      : `data-slot=\"${component}\"`
+    ? `.${component}`
     : directive
       ? toSelector(directive)
       : `ng-${component}`;
   const childSelectors = matches(source, /\b(ng-[a-z][a-z0-9-]+)/g).filter(
     (selector) => selector !== rootSelector,
   );
-  const composedStateSlots = new Set(
-    composedStateSlotsByComponent[component] ?? [],
-  );
-  const slots = matches(
-    `${source}\n${styles}`,
-    /data-slot=["']([^"']+)["']/g,
-  ).filter((slot) => !composedStateSlots.has(slot));
   const readAttributes = unique([
     ...matches(source, /(?:getAttribute|hasAttribute)\(["']([^"']+)["']\)/g),
     ...(readAttributesByComponent[component] || []),
-  ]).filter((attribute) => attribute !== "data-slot");
+  ]);
   const writtenAttributes = unique([
     ...matches(
       source,
@@ -613,7 +604,7 @@ const referenceFor = (component: string): string => {
       ? ["aria-disabled", "aria-required", "data-disabled", "data-required"]
       : []),
     ...(writtenAttributesByComponent[component] || []),
-  ]).filter((attribute) => attribute !== "data-slot");
+  ]);
   const cssVariables = unique([
     ...matches(source, /["'](--[a-z][a-z0-9-]+)["']/g).filter(
       (variable) => !variable.startsWith("--tw-"),
@@ -645,10 +636,10 @@ const referenceFor = (component: string): string => {
     ? "This styling hook does not define component-specific CSS custom properties."
     : "This directive does not write component-specific CSS custom properties.";
   const customization = stylingOnly
-    ? "Target semantic elements, styling slots, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet."
+    ? "Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet."
     : "Target `[" +
       rootSelector +
-      "]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.";
+      "]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.";
 
   const selectorList = [rootSelector, ...childSelectors];
 
@@ -667,15 +658,9 @@ ${selectorHeading}
 
 ${renderList(selectorList, "This component uses semantic HTML without child directives.")}
 
-### Styling slots
+### Semantic structure
 
-${renderList(
-  slots.map((slot) => `[data-slot="${slot}"]`),
-  "This component styles its semantic root without named child slots.",
-)}
-
-${slotGuidanceByComponent[component] ?? "Slots are optional unless the usage example or behavior description identifies a required relationship."}
-Use the named slots as stable Tailwind and CSS selectors.
+${slotGuidanceByComponent[component] ?? "Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough."}
 
 ## API
 

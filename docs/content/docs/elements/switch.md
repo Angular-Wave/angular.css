@@ -5,18 +5,17 @@ description: >
   Native checkbox rendered as a switch
 ---
 
-Use a checkbox with `ng-switch-control` when you need switch ARIA and styling
-hooks. Keep value ownership with native HTML and AngularTS `ng-model`.
+Use a checkbox with `class="switch"`. Keep value ownership with native HTML and
+AngularTS `ng-model`.
 
 ```html
-<div data-slot="field" orientation="horizontal">
+<div orientation="horizontal" class="field">
   <input
-    ng-switch-control
+
     id="airplane-mode"
     type="checkbox"
-    ng-model="airplaneMode"
-  />
-  <label ng-label for="airplane-mode">Airplane Mode</label>
+    ng-model="airplaneMode" class="switch" />
+  <label for="airplane-mode" class="label">Airplane Mode</label>
 </div>
 <span>Airplane mode: <span ng-bind="airplaneMode"></span></span>
 ```

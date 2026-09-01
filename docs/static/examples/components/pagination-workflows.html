@@ -21,79 +21,72 @@
           <h2 id="pagination-dynamic-heading">Application state</h2>
           <div class="component-state-actions">
             <button
-              ng-button
+
               type="button"
               variant="outline"
               size="sm"
-              ng-click="paginationWorkflow.showPage4=!paginationWorkflow.showPage4; paginationWorkflow.activePage=paginationWorkflow.showPage4 ? 4 : 2"
-            >
+              ng-click="paginationWorkflow.showPage4=!paginationWorkflow.showPage4; paginationWorkflow.activePage=paginationWorkflow.showPage4 ? 4 : 2" class="button">
               {{ paginationWorkflow.showPage4 ? 'Remove page 4' : 'Add page 4'
               }}
             </button>
             <button
-              ng-button
+
               type="button"
               variant="outline"
               size="sm"
-              ng-click="paginationWorkflow.nextDisabled=!paginationWorkflow.nextDisabled"
-            >
+              ng-click="paginationWorkflow.nextDisabled=!paginationWorkflow.nextDisabled" class="button">
               {{ paginationWorkflow.nextDisabled ? 'Enable next' : 'Disable
               next' }}
             </button>
           </div>
         </header>
         <nav
-          ng-pagination
+
           aria-label="Dynamic pagination"
-          id="dynamic-pagination"
-        >
-          <ul data-slot="pagination-content">
-            <li data-slot="pagination-item">
+          id="dynamic-pagination" class="pagination">
+          <ul class="pagination-content">
+            <li class="pagination-item">
               <a
-                data-slot="pagination-link"
+
                 href="#page-1"
                 ng-click="paginationWorkflow.activePage=1"
                 data-active="{{ paginationWorkflow.activePage === 1 }}"
-                >1</a
-              >
+                 class="pagination-link">1</a>
             </li>
-            <li data-slot="pagination-item">
+            <li class="pagination-item">
               <a
-                data-slot="pagination-link"
+
                 href="#page-2"
                 ng-click="paginationWorkflow.activePage=2"
                 data-active="{{ paginationWorkflow.activePage === 2 }}"
-                >2</a
-              >
+                 class="pagination-link">2</a>
             </li>
-            <li data-slot="pagination-item">
+            <li class="pagination-item">
               <a
-                data-slot="pagination-link"
+
                 href="#page-3"
                 ng-click="paginationWorkflow.activePage=3"
                 data-active="{{ paginationWorkflow.activePage === 3 }}"
-                >3</a
-              >
+                 class="pagination-link">3</a>
             </li>
             <li
-              data-slot="pagination-item"
+
               ng-if="paginationWorkflow.showPage4"
-            >
+             class="pagination-item">
               <a
-                data-slot="pagination-link"
+
                 href="#page-4"
                 ng-click="paginationWorkflow.activePage=4"
                 data-active="{{ paginationWorkflow.activePage === 4 }}"
-                >4</a
-              >
+                 class="pagination-link">4</a>
             </li>
-            <li data-slot="pagination-item">
+            <li class="pagination-item">
               <a
-                data-slot="pagination-next"
+
                 href="#next"
                 aria-label="Go to next page"
                 aria-disabled="{{ paginationWorkflow.nextDisabled }}"
-              >
+               class="pagination-next">
                 <span class="pagination-next-text">Next</span>
                 <svg
                   data-icon="inline-end"
@@ -115,27 +108,26 @@
         <header>
           <h2 id="pagination-simple-heading">Simple</h2>
         </header>
-        <nav ng-pagination aria-label="Simple pagination">
-          <ul data-slot="pagination-content">
-            <li data-slot="pagination-item">
-              <a data-slot="pagination-link" href="#simple-1">1</a>
+        <nav aria-label="Simple pagination" class="pagination">
+          <ul class="pagination-content">
+            <li class="pagination-item">
+              <a href="#simple-1" class="pagination-link">1</a>
             </li>
-            <li data-slot="pagination-item">
+            <li class="pagination-item">
               <a
-                data-slot="pagination-link"
+
                 href="#simple-2"
                 aria-current="page"
-                >2</a
-              >
+                 class="pagination-link">2</a>
             </li>
-            <li data-slot="pagination-item">
-              <a data-slot="pagination-link" href="#simple-3">3</a>
+            <li class="pagination-item">
+              <a href="#simple-3" class="pagination-link">3</a>
             </li>
-            <li data-slot="pagination-item">
-              <a data-slot="pagination-link" href="#simple-4">4</a>
+            <li class="pagination-item">
+              <a href="#simple-4" class="pagination-link">4</a>
             </li>
-            <li data-slot="pagination-item">
-              <a data-slot="pagination-link" href="#simple-5">5</a>
+            <li class="pagination-item">
+              <a href="#simple-5" class="pagination-link">5</a>
             </li>
           </ul>
         </nav>
@@ -151,12 +143,11 @@
         <div class="pagination-compact-row">
           <label class="pagination-rows-field" for="pagination-rows-per-page">
             <span>Rows per page</span>
-            <span data-slot="native-select-wrapper">
+            <span class="native-select-wrapper">
               <select
-                ng-native-select
+
                 id="pagination-rows-per-page"
-                ng-model="paginationWorkflow.rows"
-              >
+                ng-model="paginationWorkflow.rows" class="native-select">
                 <option value="10">10</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
@@ -165,17 +156,17 @@
             </span>
           </label>
           <nav
-            ng-pagination
+
             aria-label="Compact pagination"
-            class="pagination-compact"
+            class="pagination-compact pagination"
           >
-            <ul data-slot="pagination-content">
-              <li data-slot="pagination-item">
+            <ul class="pagination-content">
+              <li class="pagination-item">
                 <a
-                  data-slot="pagination-previous"
+
                   href="#compact-previous"
                   aria-label="Go to previous page"
-                >
+                 class="pagination-previous">
                   <svg
                     data-icon="inline-start"
                     aria-hidden="true"
@@ -188,12 +179,12 @@
                   </svg>
                 </a>
               </li>
-              <li data-slot="pagination-item">
+              <li class="pagination-item">
                 <a
-                  data-slot="pagination-next"
+
                   href="#compact-next"
                   aria-label="Go to next page"
-                >
+                 class="pagination-next">
                   <svg
                     data-icon="inline-end"
                     aria-hidden="true"
@@ -219,18 +210,17 @@
           <h2 id="pagination-rtl-heading">الصفحات</h2>
         </header>
         <nav
-          ng-pagination
+
           dir="rtl"
           aria-label="ترقيم الصفحات"
-          id="rtl-pagination"
-        >
-          <ul data-slot="pagination-content">
-            <li data-slot="pagination-item">
+          id="rtl-pagination" class="pagination">
+          <ul class="pagination-content">
+            <li class="pagination-item">
               <a
-                data-slot="pagination-previous"
+
                 href="#rtl-previous"
                 aria-label="الانتقال إلى الصفحة السابقة"
-              >
+               class="pagination-previous">
                 <svg
                   data-icon="inline-start"
                   aria-hidden="true"
@@ -244,19 +234,18 @@
                 <span class="pagination-previous-text">السابق</span>
               </a>
             </li>
-            <li data-slot="pagination-item">
-              <a data-slot="pagination-link" href="#rtl-1">١</a>
+            <li class="pagination-item">
+              <a href="#rtl-1" class="pagination-link">١</a>
             </li>
-            <li data-slot="pagination-item">
-              <a data-slot="pagination-link" href="#rtl-2" aria-current="page"
-                >٢</a
-              >
+            <li class="pagination-item">
+              <a href="#rtl-2" aria-current="page"
+                 class="pagination-link">٢</a>
             </li>
-            <li data-slot="pagination-item">
-              <a data-slot="pagination-link" href="#rtl-3">٣</a>
+            <li class="pagination-item">
+              <a href="#rtl-3" class="pagination-link">٣</a>
             </li>
-            <li data-slot="pagination-item">
-              <span data-slot="pagination-ellipsis">
+            <li class="pagination-item">
+              <span class="pagination-ellipsis">
                 <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
                   <circle cx="5" cy="12" r="1.5"></circle>
                   <circle cx="12" cy="12" r="1.5"></circle>
@@ -265,12 +254,12 @@
                 <span class="pagination-sr-only">صفحات إضافية</span>
               </span>
             </li>
-            <li data-slot="pagination-item">
+            <li class="pagination-item">
               <a
-                data-slot="pagination-next"
+
                 href="#rtl-next"
                 aria-label="الانتقال إلى الصفحة التالية"
-              >
+               class="pagination-next">
                 <span class="pagination-next-text">التالي</span>
                 <svg
                   data-icon="inline-end"

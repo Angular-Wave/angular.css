@@ -5,22 +5,21 @@ description: >
   Native radio input grouping with role and focus behavior.
 ---
 
-Attach `ng-radio-group` to a wrapper element and use `ng-radio-group-item` on
-each native radio input.
+Use `fieldset.radio-group` with a native `legend`, then use
+`class="radio-group-item"` on each radio input.
 
 ```html
-<div ng-radio-group role="radiogroup">
-  <div ng-field orientation="horizontal">
+<fieldset class="radio-group">
+  <fieldset ng-field orientation="horizontal">
     <input
-      ng-radio-group-item
+
       id="default"
       name="density"
       type="radio"
-      value="default"
-    />
-    <label ng-label for="default">Default</label>
-  </div>
-</div>
+      value="default"  class="radio-group-item"/>
+    <label for="default" class="label">Default</label>
+  </fieldset>
+</fieldset>
 ```
 
 ## Example
@@ -48,15 +47,11 @@ This is a styling-only HTML element or pattern. AngularCSS registers no runtime 
 
 ### Root styling selector
 
-- `data-slot="radio-group"`
+- `.radio-group`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="radio-group"]`
-- `[data-slot="radio-group-item"]`
-
-Place native `input type="radio"` controls inside the group and give related controls the same `name`. Compose labels, descriptions, and validation with native fieldsets and existing Field primitives. Use either `ng-radio-group-*` selectors or `data-slot` hooks on each element; do not duplicate both.
-Use the named slots as stable Tailwind and CSS selectors.
+Use `fieldset.radio-group` with a native `legend`. Place labeled `input type="radio"` controls inside it and give related controls the same `name`.
 
 ## API
 
@@ -87,7 +82,7 @@ Native DOM events continue to work normally. AngularTS event directives such as
 
 ## Behavior
 
-Native radio inputs own selection, arrow-key behavior, disabled state, validation, and form submission. AngularTS `ng-model` remains the application source of truth. The directive only groups the controls and mirrors native checked state into stable `aria-checked` and `data-state` hooks, including radios inserted by structural bindings.
+A native `fieldset` and `legend` group radio inputs sharing one `name`. The browser owns selection, arrow-key behavior, disabled state, validation, and form submission; AngularTS `ng-model` owns application state. AngularCSS registers no radio-group directive.
 
 AngularCSS does not replace AngularTS interpolation, bindings, structural
 directives, form controllers, validation, or application state.
@@ -102,7 +97,7 @@ content come from the application.
 
 ## Customization
 
-Target semantic elements, styling slots, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

@@ -1,12 +1,10 @@
-[data-slot="pagination"],
-[ng-pagination] {
+.pagination {
   display: flex;
   width: 100%;
   justify-content: center;
 }
 
-[data-slot="pagination-content"],
-[ng-pagination-content] {
+.pagination-content {
   display: flex;
   align-items: center;
   gap: calc(var(--spacing) * 0.5);
@@ -15,19 +13,14 @@
   list-style: none;
 }
 
-[data-slot="pagination-item"],
-[ng-pagination-item] {
+.pagination-item {
   display: inline-flex;
 }
 
-[data-slot="pagination-link"],
-[ng-pagination-link],
-[data-slot="pagination-previous"],
-[ng-pagination-previous],
-[data-slot="pagination-next"],
-[ng-pagination-next],
-[data-slot="pagination-ellipsis"],
-[ng-pagination-ellipsis] {
+.pagination-link,
+.pagination-previous,
+.pagination-next,
+.pagination-ellipsis {
   display: inline-flex;
   width: calc(var(--spacing) * 8);
   height: calc(var(--spacing) * 8);
@@ -50,81 +43,53 @@
     color 120ms ease;
 }
 
-:is(
-  [data-slot="pagination-previous"],
-  [ng-pagination-previous],
-  [data-slot="pagination-next"],
-  [ng-pagination-next]
-) {
+:is(.pagination-previous, .pagination-next) {
   width: auto;
   min-width: calc(var(--spacing) * 8);
   padding-inline: calc(var(--spacing) * 2.5);
 }
 
-:is([data-slot="pagination-previous"], [ng-pagination-previous]) {
+.pagination-previous {
   padding-inline-start: calc(var(--spacing) * 1.5);
 }
 
-:is([data-slot="pagination-next"], [ng-pagination-next]) {
+.pagination-next {
   padding-inline-end: calc(var(--spacing) * 1.5);
 }
 
-:is(
-  [data-slot="pagination-link"],
-  [ng-pagination-link],
-  [data-slot="pagination-previous"],
-  [ng-pagination-previous],
-  [data-slot="pagination-next"],
-  [ng-pagination-next]
-):hover {
+:is(.pagination-link, .pagination-previous, .pagination-next):hover {
   background: var(--muted);
 }
 
-:is(
-  [data-slot="pagination-link"],
-  [ng-pagination-link],
-  [data-slot="pagination-previous"],
-  [ng-pagination-previous],
-  [data-slot="pagination-next"],
-  [ng-pagination-next]
-):focus-visible {
+:is(.pagination-link, .pagination-previous, .pagination-next):focus-visible {
   border-color: var(--ring);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
-[data-slot="pagination-link"][aria-current="page"],
-[ng-pagination-link][aria-current="page"],
-[data-slot="pagination-link"][data-active="true"],
-[ng-pagination-link][data-active="true"] {
+.pagination-link[aria-current="page"],
+.pagination-link[data-active="true"] {
   border-color: var(--border);
   background: var(--background);
 }
 
-:is(
-  [data-slot="pagination-previous"],
-  [ng-pagination-previous],
-  [data-slot="pagination-next"],
-  [ng-pagination-next]
-):is([aria-disabled="true"], [data-disabled="true"]) {
+:is(.pagination-previous, .pagination-next):is(
+  [aria-disabled="true"],
+  [data-disabled="true"]
+) {
   pointer-events: none;
   opacity: 0.5;
 }
 
-[data-slot="pagination-ellipsis"],
-[ng-pagination-ellipsis] {
+.pagination-ellipsis {
   color: var(--muted-foreground);
   pointer-events: none;
 }
 
 :is(
-    [data-slot="pagination-link"],
-    [ng-pagination-link],
-    [data-slot="pagination-previous"],
-    [ng-pagination-previous],
-    [data-slot="pagination-next"],
-    [ng-pagination-next],
-    [data-slot="pagination-ellipsis"],
-    [ng-pagination-ellipsis]
+    .pagination-link,
+    .pagination-previous,
+    .pagination-next,
+    .pagination-ellipsis
   )
   > svg {
   width: calc(var(--spacing) * 4);
@@ -133,13 +98,8 @@
   pointer-events: none;
 }
 
-:is([data-slot="pagination"], [ng-pagination])[dir="rtl"]
-  :is(
-    [data-slot="pagination-previous"],
-    [ng-pagination-previous],
-    [data-slot="pagination-next"],
-    [ng-pagination-next]
-  )
+:is(.pagination)[dir="rtl"]
+  :is(.pagination-previous, .pagination-next)
   > svg[data-icon] {
   transform: rotate(180deg);
 }

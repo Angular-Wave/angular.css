@@ -12,14 +12,14 @@ AngularTS.
 
 ```html
 <div ng-select ng-on-angularcss:select="status=$event.detail.value">
-  <button ng-select-trigger type="button">
-    <span ng-select-value ng-bind="status"></span>
+  <button type="button" class="select-trigger">
+    <span ng-bind="status" class="select-value"></span>
   </button>
-  <div ng-select-content>
-    <div ng-select-group>
-      <div ng-select-item data-value="todo">Todo</div>
+  <ul class="select-content">
+    <div class="select-group">
+      <li data-value="todo" class="select-item">Todo</li>
     </div>
-  </div>
+  </ul>
 </div>
 ```
 
@@ -51,31 +51,10 @@ This component's root directive is `[ng-select]`. Importing the package register
 - `ng-select`
 - `ng-bind`
 - `ng-model`
-- `ng-select-content`
-- `ng-select-group`
-- `ng-select-item`
-- `ng-select-label`
-- `ng-select-scroll-down-button`
-- `ng-select-scroll-up-button`
-- `ng-select-separator`
-- `ng-select-trigger`
-- `ng-select-value`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="select"]`
-- `[data-slot="select-content"]`
-- `[data-slot="select-group"]`
-- `[data-slot="select-item"]`
-- `[data-slot="select-label"]`
-- `[data-slot="select-scroll-down-button"]`
-- `[data-slot="select-scroll-up-button"]`
-- `[data-slot="select-separator"]`
-- `[data-slot="select-trigger"]`
-- `[data-slot="select-value"]`
-
-A native button trigger and one listbox content element are required. Put options inside optional labeled groups and separators; scroll controls are optional. Use either semantic `ng-select-*` attributes or `data-slot` hooks on each element; do not duplicate both. Bind application values from `angularcss:select` with AngularTS.
-Use the named slots as stable Tailwind and CSS selectors.
+A native button trigger and one listbox content element are required. The root directive inspects semantic descendants through select part classes; no child directives are required. Optional groups, separators, and scroll controls may be included.
 
 ## API
 
@@ -111,7 +90,7 @@ Use the named slots as stable Tailwind and CSS selectors.
 | `ng-bind` | Input | Authored option or semantic HTML attribute observed by the directive. |
 | `ng-model` | Input | Authored option or semantic HTML attribute observed by the directive. |
 | `open` | Input | Initial or controlled open state. |
-| `role` | Input/output | Explicit semantic role when native HTML does not provide one. |
+| `role` | Output | Explicit semantic role when native HTML does not provide one. |
 | `tabindex` | Output | Keyboard focus order for composite descendants. |
 | `type` | Input | Component or native behavior variant. |
 
@@ -146,7 +125,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-select]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-select]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

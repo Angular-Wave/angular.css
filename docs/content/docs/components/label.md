@@ -5,10 +5,10 @@ description: >
   Label helper that mirrors required/disabled state from its associated control.
 ---
 
-Use `ng-label` to opt into state attributes for the associated control.
+Use a native `label` with `class="label"` and connect it with `for`.
 
 ```html
-<label ng-label for="email">Email</label> <input data-input id="email" required />
+<label for="email" class="label">Email</label> <input id="email" required class="input" />
 ```
 
 ## Example
@@ -28,14 +28,11 @@ This is a styling-only HTML element or pattern. AngularCSS registers no runtime 
 
 ### Root styling selector
 
-- `data-slot="label"`
+- `.label`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="label"]`
-
-Slots are optional unless the usage example or behavior description identifies a required relationship.
-Use the named slots as stable Tailwind and CSS selectors.
+Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough.
 
 ## API
 
@@ -73,7 +70,7 @@ content come from the application.
 
 ## Customization
 
-Target semantic elements, styling slots, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

@@ -6,15 +6,13 @@ export function dialogDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
       bindOverlay(scope, element, {
-        rootSelector: '[data-slot="dialog"], [ng-dialog]',
-        closeSelector:
-          '[data-slot="dialog-close"], [ng-dialog-close], [data-dialog-close]',
-        contentSelector: '[data-slot="dialog-content"], [ng-dialog-content]',
-        descriptionSelector:
-          '[data-slot="dialog-description"], [ng-dialog-description]',
-        overlaySelector: '[data-slot="dialog-overlay"], [ng-dialog-overlay]',
-        titleSelector: '[data-slot="dialog-title"], [ng-dialog-title]',
-        triggerSelector: '[data-slot="dialog-trigger"], [ng-dialog-trigger]',
+        rootSelector: ".dialog, [ng-dialog]",
+        closeSelector: ".dialog-close, [data-dialog-close]",
+        contentSelector: ".dialog-content",
+        descriptionSelector: ".dialog-description",
+        overlaySelector: ".dialog-overlay",
+        titleSelector: ".dialog-title",
+        triggerSelector: ".dialog-trigger",
         closeOnOutsideClick: true,
       });
     },

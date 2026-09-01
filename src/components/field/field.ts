@@ -7,25 +7,17 @@ let fieldIdCounter = 0;
 const findControl = (element: HTMLElement): HTMLElement | null => {
   return query(
     element,
-    "input, textarea, select, button, [role='combobox'], [role='switch']",
+    "input, textarea, select, button, .combobox-input",
     HTMLElement,
   );
 };
 
 const findDescription = (element: HTMLElement): HTMLElement | null => {
-  return query(
-    element,
-    '[data-slot="field-description"], [ng-field-description]',
-    HTMLElement,
-  );
+  return query(element, ".field-description", HTMLElement);
 };
 
 const findError = (element: HTMLElement): HTMLElement | null => {
-  return query(
-    element,
-    '[data-slot="field-error"], [ng-field-error]',
-    HTMLElement,
-  );
+  return query(element, ".field-error", HTMLElement);
 };
 
 const isElementVisible = (node: Element | null): node is HTMLElement => {
@@ -35,7 +27,7 @@ const isElementVisible = (node: Element | null): node is HTMLElement => {
 export function fieldDirective(): ng.Directive {
   return {
     link(_scope: ng.Scope, element: HTMLElement) {
-      if (!element.hasAttribute("role")) {
+      if (element.tagName !== "FIELDSET" && !element.hasAttribute("role")) {
         element.setAttribute("role", "group");
       }
 

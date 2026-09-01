@@ -109,7 +109,7 @@ test("workflow HTML preserves icon triggers and submenu keyboard behavior", asyn
   const subTrigger = actions.getByRole("menuitem", { name: "Invite users" });
   await subTrigger.focus();
   await subTrigger.press("ArrowRight");
-  const subContent = actions.locator('[data-slot="dropdown-menu-sub-content"]');
+  const subContent = actions.locator(".dropdown-menu-sub-content");
   await expect(subContent).toHaveAttribute("data-state", "open");
   await expect(actions.getByRole("menuitem", { name: "Email" })).toBeFocused();
   await page.keyboard.press("ArrowLeft");

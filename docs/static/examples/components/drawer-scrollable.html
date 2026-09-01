@@ -17,27 +17,27 @@
   >
     <main class="drawer-scroll-demo visual-example">
       <section id="scrollable-drawer" ng-drawer side="right">
-        <button ng-drawer-trigger ng-button variant="outline">
+        <button variant="outline" class="drawer-trigger button">
           Scrollable Content
         </button>
-        <div ng-drawer-overlay></div>
-        <section ng-drawer-content>
-          <header ng-drawer-header>
-            <h2 ng-drawer-title>Move Goal</h2>
-            <p ng-drawer-description>Set your daily activity goal.</p>
+        <div class="drawer-overlay"></div>
+        <dialog class="drawer-content">
+          <header class="drawer-header">
+            <h2 class="drawer-title">Move Goal</h2>
+            <p class="drawer-description">Set your daily activity goal.</p>
           </header>
-          <div ng-drawer-body class="drawer-scroll-copy">
+          <div class="drawer-scroll-copy drawer-body">
             <p ng-repeat="item in paragraphs">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris.
             </p>
           </div>
-          <footer ng-drawer-footer>
-            <button ng-button>Submit</button>
-            <button ng-drawer-close ng-button variant="outline">Cancel</button>
+          <footer class="drawer-footer">
+            <button class="button">Submit</button>
+            <button variant="outline" class="drawer-close button">Cancel</button>
           </footer>
-        </section>
+        </dialog>
       </section>
     </main>
   </body>

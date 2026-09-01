@@ -3,10 +3,9 @@ import type {} from "@angular-wave/angular.ts";
 import { nextIndex, onDestroy, queryAll } from "../../internal/dom";
 
 let tabsIdCounter = 0;
-const triggerSelector = '[data-slot="tabs-trigger"], [ng-tabs-trigger]';
-const contentSelector = '[data-slot="tabs-content"], [ng-tabs-content]';
-const listSelector =
-  '[data-slot="tabs-list"], [ng-tabs-list], [role="tablist"]';
+const triggerSelector = ".tabs-trigger";
+const contentSelector = ".tabs-content";
+const listSelector = '.tabs-list, [role="tablist"]';
 
 const setAttribute = (
   element: HTMLElement,
@@ -78,11 +77,7 @@ export function tabsDirective(): ng.Directive {
           const selected = contentIndex === nextActiveIndex;
           content.hidden = !selected;
           setAttribute(content, "data-active", String(selected));
-          setAttribute(
-            content,
-            "role",
-            content.getAttribute("role") ?? "tabpanel",
-          );
+          setAttribute(content, "role", "tabpanel");
           setAttribute(content, "aria-hidden", String(!selected));
           setAttribute(content, "tabindex", selected ? "0" : "-1");
         });
@@ -158,7 +153,7 @@ export function tabsDirective(): ng.Directive {
         setAttribute(element, "data-direction", getDirection());
         setAttribute(element, "data-orientation", orientation);
         if (list) {
-          setAttribute(list, "role", list.getAttribute("role") ?? "tablist");
+          setAttribute(list, "role", "tablist");
           setAttribute(list, "aria-orientation", orientation);
         }
 
@@ -167,16 +162,12 @@ export function tabsDirective(): ng.Directive {
           const triggerId =
             trigger.id || `tabs-trigger-${String(tabsIdCounter++)}`;
           trigger.id = triggerId;
-          setAttribute(trigger, "role", trigger.getAttribute("role") ?? "tab");
+          setAttribute(trigger, "role", "tab");
           if (content) {
             const contentId = content.id || `${triggerId}-content`;
             content.id = contentId;
             setAttribute(trigger, "aria-controls", contentId);
-            setAttribute(
-              content,
-              "role",
-              content.getAttribute("role") ?? "tabpanel",
-            );
+            setAttribute(content, "role", "tabpanel");
             setAttribute(content, "aria-labelledby", triggerId);
           }
           bindTrigger(trigger);
@@ -208,7 +199,6 @@ export function tabsDirective(): ng.Directive {
           "aria-selected",
           "data-active",
           "data-disabled",
-          "data-slot",
           "disabled",
           "orientation",
           "dir",

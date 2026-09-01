@@ -11,37 +11,34 @@
   </head>
   <body ng-app="ui" ng-cloak ng-init="name='Jane Doe'; email=''">
     <form class="stack">
-      <fieldset data-slot="field-set">
-        <legend data-slot="field-legend">Profile</legend>
-        <div data-slot="field-group">
-          <div ng-field>
-            <label ng-label data-slot="field-label" for="demo-profile-name"
-              >Name</label
-            >
+      <fieldset class="field-set">
+        <legend class="field-legend">Profile</legend>
+        <div class="field-group">
+          <fieldset ng-field>
+            <label for="demo-profile-name"
+               class="field-label label">Name</label>
             <input
-              data-input
+
               id="demo-profile-name"
               placeholder="Jane Doe"
-              ng-model="name"
-            />
-            <p data-slot="field-description">Use your public display name.</p>
-          </div>
-          <div data-invalid ng-field>
-            <label ng-label data-slot="field-label" for="demo-profile-email">
+              ng-model="name" class="input" />
+            <p class="field-description">Use your public display name.</p>
+          </fieldset>
+          <fieldset data-invalid ng-field>
+            <label for="demo-profile-email" class="field-label label">
               Email
             </label>
             <input
-              data-input
+
               id="demo-profile-email"
               type="email"
               placeholder="Enter an email"
               required
-              ng-model="email"
-            />
-            <p data-slot="field-error" role="alert" ng-if="!email">
+              ng-model="email" class="input" />
+            <p ng-if="!email" class="field-error">
               Enter a valid email.
             </p>
-          </div>
+          </fieldset>
         </div>
       </fieldset>
       <div class="output">

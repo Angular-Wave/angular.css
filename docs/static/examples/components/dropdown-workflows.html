@@ -20,36 +20,35 @@
         <h2 id="dropdown-basic-title">Basic and dynamic items</h2>
         <div class="dropdown-workflow-actions">
           <button
-            ng-button
+
             type="button"
             variant="outline"
             ng-click="dropdownDemo.archive=true"
-            ng-disabled="dropdownDemo.archive"
-          >
+            ng-disabled="dropdownDemo.archive" class="button">
             {{ dropdownDemo.archive ? 'Archive added' : 'Add archive item' }}
           </button>
           <div ng-dropdown aria-label="Account commands">
-            <button type="button" data-slot="dropdown-menu-trigger">
+            <button type="button" class="dropdown-menu-trigger">
               Open
             </button>
-            <div data-slot="dropdown-menu-content">
-              <div data-slot="dropdown-menu-group">
-                <div data-slot="dropdown-menu-label">My Account</div>
-                <button data-slot="dropdown-menu-item">Profile</button>
-                <button data-slot="dropdown-menu-item">Billing</button>
-                <button data-slot="dropdown-menu-item">Settings</button>
+            <menu class="dropdown-menu-content">
+              <div class="dropdown-menu-group">
+                <div class="dropdown-menu-label">My Account</div>
+                <button class="dropdown-menu-item">Profile</button>
+                <button class="dropdown-menu-item">Billing</button>
+                <button class="dropdown-menu-item">Settings</button>
               </div>
-              <div data-slot="dropdown-menu-separator" role="separator"></div>
-              <button data-slot="dropdown-menu-item">Support</button>
-              <button data-slot="dropdown-menu-item" disabled>API</button>
+              <hr class="dropdown-menu-separator" />
+              <button class="dropdown-menu-item">Support</button>
+              <button disabled class="dropdown-menu-item">API</button>
               <button
                 id="dropdown-archive-item"
-                data-slot="dropdown-menu-item"
+
                 ng-if="dropdownDemo.archive"
-              >
+               class="dropdown-menu-item">
                 Archive
               </button>
-            </div>
+            </menu>
           </div>
         </div>
       </section>
@@ -65,28 +64,28 @@
             size="icon"
             variant="ghost"
             aria-label="Open account menu"
-            data-slot="dropdown-menu-trigger"
-          >
+
+           class="dropdown-menu-trigger">
             <span ng-avatar>
               <img
-                data-slot="avatar-image"
+
                 src="../../images/avatars/01.png"
                 alt="Jane Doe"
-              />
-              <span data-slot="avatar-fallback">JD</span>
+               class="avatar-image" />
+              <span class="avatar-fallback">JD</span>
             </span>
           </button>
-          <div data-slot="dropdown-menu-content" data-align="end">
-            <div data-slot="dropdown-menu-group">
-              <button data-slot="dropdown-menu-item">Account</button>
-              <button data-slot="dropdown-menu-item">Billing</button>
-              <button data-slot="dropdown-menu-item">Notifications</button>
+          <menu data-align="end" class="dropdown-menu-content">
+            <div class="dropdown-menu-group">
+              <button class="dropdown-menu-item">Account</button>
+              <button class="dropdown-menu-item">Billing</button>
+              <button class="dropdown-menu-item">Notifications</button>
             </div>
-            <div data-slot="dropdown-menu-separator" role="separator"></div>
-            <button data-slot="dropdown-menu-item" data-variant="destructive">
+            <hr class="dropdown-menu-separator" />
+            <button data-variant="destructive" class="dropdown-menu-item">
               Sign Out
             </button>
-          </div>
+          </menu>
         </div>
       </section>
 
@@ -96,21 +95,21 @@
       >
         <h2 id="dropdown-preferences-title">Preferences</h2>
         <div ng-dropdown>
-          <button type="button" data-slot="dropdown-menu-trigger">
+          <button type="button" class="dropdown-menu-trigger">
             Notifications
           </button>
-          <div data-slot="dropdown-menu-content" class="dropdown-menu-wide">
-            <div data-slot="dropdown-menu-group">
-              <div data-slot="dropdown-menu-label">
+          <menu class="dropdown-menu-wide dropdown-menu-content">
+            <div class="dropdown-menu-group">
+              <div class="dropdown-menu-label">
                 Notification Preferences
               </div>
               <button
-                data-slot="dropdown-menu-checkbox-item"
-                role="menuitemcheckbox"
+
+
                 aria-checked="{{ dropdownDemo.email }}"
                 ng-click="dropdownDemo.email=!dropdownDemo.email"
-              >
-                <span data-slot="dropdown-menu-checkbox-item-indicator">
+               class="dropdown-menu-checkbox-item">
+                <span class="dropdown-menu-checkbox-item-indicator">
                   <svg
                     ng-if="dropdownDemo.email"
                     viewBox="0 0 16 16"
@@ -122,12 +121,12 @@
                 Email notifications
               </button>
               <button
-                data-slot="dropdown-menu-checkbox-item"
-                role="menuitemcheckbox"
+
+
                 aria-checked="{{ dropdownDemo.sms }}"
                 ng-click="dropdownDemo.sms=!dropdownDemo.sms"
-              >
-                <span data-slot="dropdown-menu-checkbox-item-indicator">
+               class="dropdown-menu-checkbox-item">
+                <span class="dropdown-menu-checkbox-item-indicator">
                   <svg
                     ng-if="dropdownDemo.sms"
                     viewBox="0 0 16 16"
@@ -139,20 +138,20 @@
                 SMS notifications
               </button>
             </div>
-            <div data-slot="dropdown-menu-separator" role="separator"></div>
-            <div
-              data-slot="dropdown-menu-radio-group"
-              role="group"
+            <hr class="dropdown-menu-separator" />
+            <fieldset
+
+
               aria-label="Menu position"
-            >
-              <div data-slot="dropdown-menu-label">Position</div>
+             class="dropdown-menu-radio-group">
+              <div class="dropdown-menu-label">Position</div>
               <button
-                data-slot="dropdown-menu-radio-item"
-                role="menuitemradio"
+
+
                 aria-checked="{{ dropdownDemo.position === 'top' }}"
                 ng-click="dropdownDemo.position='top'"
-              >
-                <span data-slot="dropdown-menu-radio-item-indicator">
+               class="dropdown-menu-radio-item">
+                <span class="dropdown-menu-radio-item-indicator">
                   <svg
                     ng-if="dropdownDemo.position === 'top'"
                     viewBox="0 0 16 16"
@@ -164,12 +163,12 @@
                 Top
               </button>
               <button
-                data-slot="dropdown-menu-radio-item"
-                role="menuitemradio"
+
+
                 aria-checked="{{ dropdownDemo.position === 'bottom' }}"
                 ng-click="dropdownDemo.position='bottom'"
-              >
-                <span data-slot="dropdown-menu-radio-item-indicator">
+               class="dropdown-menu-radio-item">
+                <span class="dropdown-menu-radio-item-indicator">
                   <svg
                     ng-if="dropdownDemo.position === 'bottom'"
                     viewBox="0 0 16 16"
@@ -180,8 +179,8 @@
                 </span>
                 Bottom
               </button>
-            </div>
-          </div>
+            </fieldset>
+          </menu>
         </div>
       </section>
 
@@ -191,39 +190,39 @@
       >
         <h2 id="dropdown-actions-title">Actions and submenu</h2>
         <div ng-dropdown>
-          <button type="button" data-slot="dropdown-menu-trigger">
+          <button type="button" class="dropdown-menu-trigger">
             Actions
           </button>
-          <div data-slot="dropdown-menu-content" class="dropdown-menu-wide">
-            <div data-slot="dropdown-menu-group">
-              <button data-slot="dropdown-menu-item">
+          <menu class="dropdown-menu-wide dropdown-menu-content">
+            <div class="dropdown-menu-group">
+              <button class="dropdown-menu-item">
                 Edit
-                <span data-slot="dropdown-menu-shortcut">Ctrl+E</span>
+                <span class="dropdown-menu-shortcut">Ctrl+E</span>
               </button>
-              <button data-slot="dropdown-menu-item">
+              <button class="dropdown-menu-item">
                 Share
-                <span data-slot="dropdown-menu-shortcut">Ctrl+S</span>
+                <span class="dropdown-menu-shortcut">Ctrl+S</span>
               </button>
-              <div data-slot="dropdown-menu-sub">
-                <button data-slot="dropdown-menu-sub-trigger">
+              <div class="dropdown-menu-sub">
+                <button class="dropdown-menu-sub-trigger">
                   Invite users
                 </button>
-                <div data-slot="dropdown-menu-sub-content">
-                  <button data-slot="dropdown-menu-item">Email</button>
-                  <button data-slot="dropdown-menu-item">Message</button>
-                  <div
-                    data-slot="dropdown-menu-separator"
-                    role="separator"
-                  ></div>
-                  <button data-slot="dropdown-menu-item">More options</button>
+                <div class="dropdown-menu-sub-content">
+                  <button class="dropdown-menu-item">Email</button>
+                  <button class="dropdown-menu-item">Message</button>
+                  <hr
+
+
+                   class="dropdown-menu-separator" />
+                  <button class="dropdown-menu-item">More options</button>
                 </div>
               </div>
             </div>
-            <div data-slot="dropdown-menu-separator" role="separator"></div>
-            <button data-slot="dropdown-menu-item" data-variant="destructive">
+            <hr class="dropdown-menu-separator" />
+            <button data-variant="destructive" class="dropdown-menu-item">
               Delete
             </button>
-          </div>
+          </menu>
         </div>
       </section>
 
@@ -235,32 +234,31 @@
       >
         <div class="dropdown-workflow-heading">
           <h2 id="dropdown-rtl-title">اتجاه من اليمين إلى اليسار</h2>
-          <label ng-label>
+          <label class="label">
             <input
-              ng-checkbox
+
               type="checkbox"
-              ng-model="dropdownDemo.disabled"
-            />
+              ng-model="dropdownDemo.disabled" class="checkbox" />
             تعطيل القائمة
           </label>
         </div>
         <div ng-dropdown aria-label="Arabic account menu">
           <button
             type="button"
-            data-slot="dropdown-menu-trigger"
+
             ng-disabled="dropdownDemo.disabled"
-          >
+           class="dropdown-menu-trigger">
             افتح القائمة
           </button>
-          <div data-slot="dropdown-menu-content">
-            <div data-slot="dropdown-menu-label">الحساب</div>
-            <button data-slot="dropdown-menu-item">الملف الشخصي</button>
-            <button data-slot="dropdown-menu-item">الإعدادات</button>
-            <div data-slot="dropdown-menu-separator" role="separator"></div>
-            <button data-slot="dropdown-menu-item" data-variant="destructive">
+          <menu class="dropdown-menu-content">
+            <div class="dropdown-menu-label">الحساب</div>
+            <button class="dropdown-menu-item">الملف الشخصي</button>
+            <button class="dropdown-menu-item">الإعدادات</button>
+            <hr class="dropdown-menu-separator" />
+            <button data-variant="destructive" class="dropdown-menu-item">
               تسجيل الخروج
             </button>
-          </div>
+          </menu>
         </div>
       </section>
     </main>

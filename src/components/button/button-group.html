@@ -11,38 +11,38 @@
   </head>
   <body ng-app="ui" ng-cloak ng-init="selected='Two'">
     <div class="stack">
-      <div ng-button-group role="group">
+      <div class="button-group">
         <button
-          ng-button
           type="button"
           variant="outline"
           ng-click="selected='One'"
+          class="button"
         >
           One
         </button>
         <button
-          ng-button
           type="button"
           variant="outline"
           ng-click="selected='Two'"
+          class="button"
         >
           Two
         </button>
         <button
-          ng-button
           type="button"
           variant="outline"
           ng-click="selected='Three'"
+          class="button"
         >
           Three
         </button>
       </div>
       <div class="output">Selected: {{ selected }}</div>
 
-      <div ng-button-group role="group" orientation="vertical">
-        <button ng-button type="button" variant="outline">A</button>
-        <button ng-button type="button" variant="outline">B</button>
-        <button ng-button type="button" variant="outline">C</button>
+      <div orientation="vertical" class="button-group">
+        <button type="button" variant="outline" class="button">A</button>
+        <button type="button" variant="outline" class="button">B</button>
+        <button type="button" variant="outline" class="button">C</button>
       </div>
     </div>
   </body>

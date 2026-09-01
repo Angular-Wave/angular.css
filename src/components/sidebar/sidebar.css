@@ -1,6 +1,5 @@
-[data-slot="sidebar-layout"],
-[data-slot="sidebar-wrapper"],
-[ng-sidebar-layout] {
+.sidebar-layout,
+.sidebar-wrapper {
   display: flex;
   width: 100%;
   min-height: 100vh;
@@ -9,23 +8,23 @@
   color: var(--sidebar-foreground);
 }
 
-[data-slot="sidebar-container"] {
+.sidebar-container {
   display: flex;
   min-width: 0;
 }
 
-[data-slot="sidebar-gap"] {
+.sidebar-gap {
   display: none;
 }
 
-[data-slot="sidebar-inner"] {
+.sidebar-inner {
   display: flex;
   min-height: 0;
   flex: 1 1 auto;
   flex-direction: column;
 }
 
-[data-slot="sidebar"],
+.sidebar,
 [ng-sidebar] {
   display: flex;
   width: var(--sidebar-width, 16rem);
@@ -42,13 +41,13 @@
     border-color 200ms linear;
 }
 
-:is([data-slot="sidebar"], [ng-sidebar])[data-side="right"] {
+:is(.sidebar, [ng-sidebar])[data-side="right"] {
   border-right: 0;
   border-left: 1px solid var(--sidebar-border);
 }
 
 :is(
-    [data-slot="sidebar"],
+    .sidebar,
     [ng-sidebar]
   )[data-state="collapsed"][data-collapsible="offcanvas"] {
   width: 0;
@@ -57,15 +56,12 @@
   border-color: transparent;
 }
 
-:is(
-    [data-slot="sidebar"],
-    [ng-sidebar]
-  )[data-state="collapsed"][data-collapsible="icon"] {
+:is(.sidebar, [ng-sidebar])[data-state="collapsed"][data-collapsible="icon"] {
   width: var(--sidebar-width-icon, 3rem);
   min-width: var(--sidebar-width-icon, 3rem);
 }
 
-:is([data-slot="sidebar"], [ng-sidebar])[data-variant="floating"] {
+:is(.sidebar, [ng-sidebar])[data-variant="floating"] {
   margin: calc(var(--spacing) * 2);
   min-height: calc(100vh - var(--spacing) * 4);
   min-height: calc(100svh - var(--spacing) * 4);
@@ -74,24 +70,21 @@
   box-shadow: var(--shadow-sm);
 }
 
-[data-slot="sidebar-inset"],
-[ng-sidebar-inset] {
+.sidebar-inset {
   min-width: 0;
   flex: 1 1 auto;
   background: var(--background);
   color: var(--foreground);
 }
 
-[data-slot="sidebar-header"],
-[ng-sidebar-header],
-[data-slot="sidebar-footer"],
-[ng-sidebar-footer] {
+.sidebar-header,
+.sidebar-footer {
   display: grid;
   gap: calc(var(--spacing) * 2);
   padding: calc(var(--spacing) * 2);
 }
 
-[data-slot="sidebar-input"] {
+.sidebar-input {
   width: 100%;
   height: calc(var(--spacing) * 8);
   border: 1px solid var(--sidebar-border);
@@ -103,19 +96,18 @@
   outline: none;
 }
 
-[data-slot="sidebar-input"]:focus-visible {
+.sidebar-input:focus-visible {
   border-color: var(--ring);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 20%, transparent);
 }
 
-[data-slot="sidebar-separator"] {
+.sidebar-separator {
   height: 1px;
   margin-inline: calc(var(--spacing) * 2);
   background: var(--sidebar-border);
 }
 
-[data-slot="sidebar-content"],
-[ng-sidebar-content] {
+.sidebar-content {
   display: grid;
   align-content: start;
   gap: 0;
@@ -124,20 +116,18 @@
   scrollbar-width: none;
 }
 
-:is([data-slot="sidebar-content"], [ng-sidebar-content])::-webkit-scrollbar {
+.sidebar-content::-webkit-scrollbar {
   display: none;
 }
 
-[data-slot="sidebar-group"],
-[ng-sidebar-group] {
+.sidebar-group {
   position: relative;
   display: grid;
   gap: 0;
   padding: calc(var(--spacing) * 2);
 }
 
-[data-slot="sidebar-group-label"],
-[ng-sidebar-group-label] {
+.sidebar-group-label {
   display: flex;
   height: calc(var(--spacing) * 8);
   align-items: center;
@@ -150,15 +140,12 @@
   font-weight: var(--font-weight-medium);
 }
 
-[data-slot="sidebar-group-content"],
-[ng-sidebar-group-content] {
+.sidebar-group-content {
   min-width: 0;
 }
 
-[data-slot="sidebar-group-action"],
-[ng-sidebar-group-action],
-[data-slot="sidebar-menu-action"],
-[ng-sidebar-menu-action] {
+.sidebar-group-action,
+.sidebar-menu-action {
   display: inline-flex;
   width: calc(var(--spacing) * 5);
   height: calc(var(--spacing) * 5);
@@ -168,15 +155,13 @@
   color: var(--sidebar-foreground);
 }
 
-[data-slot="sidebar-group-action"],
-[ng-sidebar-group-action] {
+.sidebar-group-action {
   position: absolute;
   inset-block-start: calc(var(--spacing) * 3.5);
   inset-inline-end: calc(var(--spacing) * 3);
 }
 
-[data-slot="sidebar-menu"],
-[ng-sidebar-menu] {
+.sidebar-menu {
   display: grid;
   gap: 0;
   margin: 0;
@@ -184,22 +169,18 @@
   list-style: none;
 }
 
-[data-slot="sidebar-menu-item"],
-[ng-sidebar-menu-item] {
+.sidebar-menu-item {
   position: relative;
   min-width: 0;
 }
 
-:is([data-slot="sidebar-menu-item"], [ng-sidebar-menu-item])
-  > :is([data-slot="dropdown-menu"], [ng-dropdown]):has(
-    > :is([data-slot="sidebar-menu-action"], [ng-sidebar-menu-action])
-  ) {
+.sidebar-menu-item
+  > :is(.dropdown-menu, [ng-dropdown]):has(> .sidebar-menu-action) {
   position: static;
   display: contents;
 }
 
-[data-slot="sidebar-menu-button"],
-[ng-sidebar-menu-button] {
+.sidebar-menu-button {
   display: flex;
   width: 100%;
   height: calc(var(--spacing) * 8);
@@ -219,8 +200,7 @@
     padding 200ms linear;
 }
 
-:is([data-slot="sidebar-menu-button"], [ng-sidebar-menu-button])
-  > span:not([aria-hidden="true"], [ng-avatar]) {
+.sidebar-menu-button > span:not([aria-hidden="true"], [ng-avatar]) {
   max-width: var(--sidebar-width, 16rem);
   overflow: hidden;
   opacity: 1;
@@ -230,58 +210,51 @@
     opacity 150ms linear;
 }
 
-:is([data-slot="sidebar-menu-button"], [ng-sidebar-menu-button])[size="sm"] {
+.sidebar-menu-button[size="sm"] {
   height: calc(var(--spacing) * 7);
   font-size: var(--text-xs);
 }
 
-:is([data-slot="sidebar-menu-button"], [ng-sidebar-menu-button])[size="lg"] {
+.sidebar-menu-button[size="lg"] {
   height: calc(var(--spacing) * 12);
 }
 
-:is([data-slot="sidebar-menu-button"], [ng-sidebar-menu-button]) > svg,
-:is([data-slot="sidebar-group-label"], [ng-sidebar-group-label]) > svg,
-:is([data-slot="sidebar-group-action"], [ng-sidebar-group-action]) > svg,
-:is([data-slot="sidebar-menu-action"], [ng-sidebar-menu-action]) > svg,
-:is([data-slot="sidebar-menu-sub-button"], [ng-sidebar-menu-sub-button]) > svg {
+.sidebar-menu-button > svg,
+.sidebar-group-label > svg,
+.sidebar-group-action > svg,
+.sidebar-menu-action > svg,
+.sidebar-menu-sub-button > svg {
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
   flex-shrink: 0;
 }
 
-[data-slot="sidebar-menu-button"]:hover,
-[ng-sidebar-menu-button]:hover,
-[data-slot="sidebar-menu-button"][data-active="true"],
-[ng-sidebar-menu-button][data-active="true"] {
+.sidebar-menu-button:hover,
+.sidebar-menu-button[data-active="true"] {
   background: var(--sidebar-accent);
   color: var(--sidebar-accent-foreground);
 }
 
-[data-slot="sidebar-menu-action"],
-[ng-sidebar-menu-action],
-[data-slot="sidebar-menu-badge"],
-[ng-sidebar-menu-badge] {
+.sidebar-menu-action,
+.sidebar-menu-badge {
   position: absolute;
   inset-block-start: 50%;
   inset-inline-end: calc(var(--spacing) * 1);
   transform: translateY(-50%);
 }
 
-:is([data-slot="sidebar-menu-item"], [ng-sidebar-menu-item])
-  > :is([data-slot="dropdown-menu"], [ng-dropdown])
-  > :is([data-slot="sidebar-menu-action"], [ng-sidebar-menu-action]) {
+.sidebar-menu-item > :is(.dropdown-menu, [ng-dropdown]) > .sidebar-menu-action {
   min-height: calc(var(--spacing) * 5);
   border: 0;
   background: transparent;
   padding: 0;
 }
 
-:is([data-slot="sidebar-menu-action"], [ng-sidebar-menu-action])::after {
+.sidebar-menu-action::after {
   display: none;
 }
 
-[data-slot="sidebar-menu-badge"],
-[ng-sidebar-menu-badge] {
+.sidebar-menu-badge {
   display: flex;
   min-width: calc(var(--spacing) * 5);
   height: calc(var(--spacing) * 5);
@@ -293,8 +266,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-[data-slot="sidebar-menu-sub"],
-[ng-sidebar-menu-sub] {
+.sidebar-menu-sub {
   display: grid;
   gap: calc(var(--spacing) * 1);
   margin-inline: calc(var(--spacing) * 3.5);
@@ -303,56 +275,34 @@
   list-style: none;
 }
 
-:is(
-    [data-slot="sidebar"],
-    [ng-sidebar]
-  )[data-state="collapsed"][data-collapsible="icon"]
-  :is([data-slot="sidebar-group-label"], [ng-sidebar-group-label]),
-:is(
-    [data-slot="sidebar"],
-    [ng-sidebar]
-  )[data-state="collapsed"][data-collapsible="icon"]
-  :is([data-slot="sidebar-input"], [data-slot="sidebar-separator"]),
-:is(
-    [data-slot="sidebar"],
-    [ng-sidebar]
-  )[data-state="collapsed"][data-collapsible="icon"]
-  :is([data-slot="sidebar-menu-sub"], [ng-sidebar-menu-sub]),
-:is(
-    [data-slot="sidebar"],
-    [ng-sidebar]
-  )[data-state="collapsed"][data-collapsible="icon"]
-  :is([data-slot="sidebar-menu-badge"], [ng-sidebar-menu-badge]),
-:is(
-    [data-slot="sidebar"],
-    [ng-sidebar]
-  )[data-state="collapsed"][data-collapsible="icon"]
-  :is([data-slot="sidebar-menu-action"], [ng-sidebar-menu-action]) {
+:is(.sidebar, [ng-sidebar])[data-state="collapsed"][data-collapsible="icon"]
+  .sidebar-group-label,
+:is(.sidebar, [ng-sidebar])[data-state="collapsed"][data-collapsible="icon"]
+  :is(.sidebar-input, .sidebar-separator),
+:is(.sidebar, [ng-sidebar])[data-state="collapsed"][data-collapsible="icon"]
+  .sidebar-menu-sub,
+:is(.sidebar, [ng-sidebar])[data-state="collapsed"][data-collapsible="icon"]
+  .sidebar-menu-badge,
+:is(.sidebar, [ng-sidebar])[data-state="collapsed"][data-collapsible="icon"]
+  .sidebar-menu-action {
   display: none;
 }
 
-:is(
-    [data-slot="sidebar"],
-    [ng-sidebar]
-  )[data-state="collapsed"][data-collapsible="icon"]
-  :is([data-slot="sidebar-menu-button"], [ng-sidebar-menu-button]) {
+:is(.sidebar, [ng-sidebar])[data-state="collapsed"][data-collapsible="icon"]
+  .sidebar-menu-button {
   justify-content: center;
   gap: 0;
   padding-inline: 0;
 }
 
-:is(
-    [data-slot="sidebar"],
-    [ng-sidebar]
-  )[data-state="collapsed"][data-collapsible="icon"]
-  :is([data-slot="sidebar-menu-button"], [ng-sidebar-menu-button])
+:is(.sidebar, [ng-sidebar])[data-state="collapsed"][data-collapsible="icon"]
+  .sidebar-menu-button
   > span:not([aria-hidden="true"], [ng-avatar]) {
   max-width: 0;
   opacity: 0;
 }
 
-[data-slot="sidebar-menu-sub-button"],
-[ng-sidebar-menu-sub-button] {
+.sidebar-menu-sub-button {
   display: flex;
   min-height: calc(var(--spacing) * 7);
   align-items: center;
@@ -362,15 +312,13 @@
   font-size: var(--text-sm);
 }
 
-[data-slot="sidebar-menu-sub-button"]:hover,
-[ng-sidebar-menu-sub-button]:hover,
-[data-slot="sidebar-menu-sub-button"][data-active="true"],
-[ng-sidebar-menu-sub-button][data-active="true"] {
+.sidebar-menu-sub-button:hover,
+.sidebar-menu-sub-button[data-active="true"] {
   background: var(--sidebar-accent);
   color: var(--sidebar-accent-foreground);
 }
 
-[data-slot="sidebar-menu-skeleton"] {
+.sidebar-menu-skeleton {
   display: flex;
   min-height: calc(var(--spacing) * 8);
   align-items: center;
@@ -378,8 +326,8 @@
   padding: calc(var(--spacing) * 2);
 }
 
-[data-slot="sidebar-menu-skeleton"]::before,
-[data-slot="sidebar-menu-skeleton"]::after {
+.sidebar-menu-skeleton::before,
+.sidebar-menu-skeleton::after {
   content: "";
   display: block;
   border-radius: calc(var(--radius) - 2px);
@@ -387,12 +335,12 @@
   animation: angularcss-sidebar-skeleton 1.5s ease-in-out infinite;
 }
 
-[data-slot="sidebar-menu-skeleton"]::before {
+.sidebar-menu-skeleton::before {
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
 }
 
-[data-slot="sidebar-menu-skeleton"]::after {
+.sidebar-menu-skeleton::after {
   width: var(--skeleton-width, 65%);
   height: calc(var(--spacing) * 3);
 }
@@ -403,34 +351,30 @@
   }
 }
 
-[data-slot="sidebar-trigger"],
-[ng-sidebar-trigger],
-[data-slot="sidebar-rail"],
-[ng-sidebar-rail] {
+.sidebar-trigger,
+.sidebar-rail {
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
-[data-slot="sidebar-rail"],
-[ng-sidebar-rail] {
+.sidebar-rail {
   width: calc(var(--spacing) * 1);
   background: var(--sidebar-border);
 }
 
-[data-slot="sidebar"][data-direction="rtl"] [data-slot="sidebar-rail"],
-[ng-sidebar][data-direction="rtl"] [ng-sidebar-rail],
-[ng-sidebar][data-direction="rtl"] [data-slot="sidebar-rail"] {
+.sidebar[data-direction="rtl"] .sidebar-rail,
+[ng-sidebar][data-direction="rtl"]
+  [ng-sidebar][data-direction="rtl"]
+  .sidebar-rail {
   order: -1;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-slot="sidebar"],
+  .sidebar,
   [ng-sidebar],
-  [data-slot="sidebar-menu-button"],
-  [ng-sidebar-menu-button],
-  :is([data-slot="sidebar-menu-button"], [ng-sidebar-menu-button])
-    > span:not([aria-hidden="true"], [ng-avatar]) {
+  .sidebar-menu-button,
+  .sidebar-menu-button > span:not([aria-hidden="true"], [ng-avatar]) {
     transition-duration: 0ms;
   }
 }

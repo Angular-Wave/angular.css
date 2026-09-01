@@ -17,20 +17,19 @@
   >
     <main class="label-workflows visual-example">
       <form class="label-control-contract" aria-label="Label state contract">
-        <label ng-label for="email">Email</label>
-        <input data-input id="email" placeholder="Email" />
-        <label ng-label for="name">Name</label>
-        <input data-input id="name" placeholder="Name" />
+        <label for="email" class="label">Email</label>
+        <input id="email" placeholder="Email" class="input" />
+        <label for="name" class="label">Name</label>
+        <input id="name" placeholder="Name" class="input" />
       </form>
 
       <section class="label-checkbox-demo" aria-label="Label checkbox">
         <input
-          ng-checkbox
+
           id="label-terms"
           type="checkbox"
-          ng-model="labelTerms"
-        />
-        <label ng-label for="label-terms">Accept terms and conditions</label>
+          ng-model="labelTerms" class="checkbox" />
+        <label for="label-terms" class="label">Accept terms and conditions</label>
       </section>
 
       <section
@@ -40,18 +39,17 @@
         lang="ar"
       >
         <input
-          ng-checkbox
+
           id="label-terms-rtl"
           type="checkbox"
-          ng-model="labelTermsRtl"
-        />
-        <label ng-label for="label-terms-rtl">قبول الشروط والأحكام</label>
+          ng-model="labelTermsRtl" class="checkbox" />
+        <label for="label-terms-rtl" class="label">قبول الشروط والأحكام</label>
       </section>
 
-      <p class="label-output" role="status">
+      <output class="label-output">
         Terms: {{ labelTerms ? 'accepted' : 'not accepted' }} · الشروط: {{
         labelTermsRtl ? 'مقبولة' : 'غير مقبولة' }}
-      </p>
+      </output>
     </main>
   </body>
 </html>

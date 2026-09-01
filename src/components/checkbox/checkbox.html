@@ -11,21 +11,19 @@
   </head>
   <body ng-app="ui" ng-cloak>
     <div class="stack">
-      <div data-slot="field" orientation="horizontal">
-        <input ng-checkbox id="terms" type="checkbox" />
-        <label ng-label data-slot="field-label" for="terms">Accept terms</label>
+      <div orientation="horizontal" class="field">
+        <input id="terms" type="checkbox" class="checkbox" />
+        <label for="terms" class="field-label label">Accept terms</label>
       </div>
 
-      <div data-slot="field" orientation="horizontal" data-invalid>
+      <div orientation="horizontal" data-invalid class="field">
         <input
-          ng-checkbox
           id="terms-invalid"
           type="checkbox"
           aria-invalid="true"
+          class="checkbox"
         />
-        <label ng-label data-slot="field-label" for="terms-invalid"
-          >Required</label
-        >
+        <label for="terms-invalid" class="field-label label">Required</label>
       </div>
     </div>
   </body>

@@ -12,39 +12,39 @@
   <body ng-app="ui" ng-cloak>
     <fieldset class="p-10">
       <legend class="mb-3">Density</legend>
-      <div ng-radio-group role="radiogroup">
-        <div data-slot="field" orientation="horizontal">
+      <fieldset class="radio-group">
+        <div orientation="horizontal" class="field">
           <input
-            ng-radio-group-item
             id="density-default"
             name="density"
             type="radio"
             value="default"
+            class="radio-group-item"
           />
-          <label ng-label for="density-default">Default</label>
+          <label for="density-default" class="label">Default</label>
         </div>
-        <div data-slot="field" orientation="horizontal">
+        <div orientation="horizontal" class="field">
           <input
-            ng-radio-group-item
             id="density-comfortable"
             name="density"
             type="radio"
             value="comfortable"
             checked
+            class="radio-group-item"
           />
-          <label ng-label for="density-comfortable">Comfortable</label>
+          <label for="density-comfortable" class="label">Comfortable</label>
         </div>
-        <div data-slot="field" orientation="horizontal">
+        <div orientation="horizontal" class="field">
           <input
-            ng-radio-group-item
             id="density-compact"
             name="density"
             type="radio"
             value="compact"
+            class="radio-group-item"
           />
-          <label ng-label for="density-compact">Compact</label>
+          <label for="density-compact" class="label">Compact</label>
         </div>
-      </div>
+      </fieldset>
     </fieldset>
   </body>
 </html>

@@ -27,25 +27,25 @@
           </output>
         </div>
         <div ng-slider min="0" max="1" aria-label="Temperature range">
-          <div ng-slider-track><div ng-slider-range></div></div>
+          <div class="slider-track"><div class="slider-range"></div></div>
           <input
-            ng-slider-thumb
+
             type="range"
             min="0"
             max="1"
             step="0.1"
             ng-model="slider.controlledStart"
             aria-label="Minimum temperature"
-          />
+           class="slider-thumb"/>
           <input
-            ng-slider-thumb
+
             type="range"
             min="0"
             max="1"
             step="0.1"
             ng-model="slider.controlledEnd"
             aria-label="Maximum temperature"
-          />
+           class="slider-thumb"/>
         </div>
       </section>
 
@@ -58,25 +58,25 @@
           <output>{{ slider.rangeStart }}–{{ slider.rangeEnd }}</output>
         </div>
         <div ng-slider min="0" max="100" aria-label="Price range">
-          <div ng-slider-track><div ng-slider-range></div></div>
+          <div class="slider-track"><div class="slider-range"></div></div>
           <input
-            ng-slider-thumb
+
             type="range"
             min="0"
             max="100"
             step="5"
             ng-model="slider.rangeStart"
             aria-label="Minimum price"
-          />
+           class="slider-thumb"/>
           <input
-            ng-slider-thumb
+
             type="range"
             min="0"
             max="100"
             step="5"
             ng-model="slider.rangeEnd"
             aria-label="Maximum price"
-          />
+           class="slider-thumb"/>
         </div>
       </section>
 
@@ -92,34 +92,34 @@
           </output>
         </div>
         <div ng-slider min="0" max="100" aria-label="Multiple slider values">
-          <div ng-slider-track><div ng-slider-range></div></div>
+          <div class="slider-track"><div class="slider-range"></div></div>
           <input
-            ng-slider-thumb
+
             type="range"
             min="0"
             max="100"
             step="10"
             ng-model="slider.multipleOne"
             aria-label="First value"
-          />
+           class="slider-thumb"/>
           <input
-            ng-slider-thumb
+
             type="range"
             min="0"
             max="100"
             step="10"
             ng-model="slider.multipleTwo"
             aria-label="Second value"
-          />
+           class="slider-thumb"/>
           <input
-            ng-slider-thumb
+
             type="range"
             min="0"
             max="100"
             step="10"
             ng-model="slider.multipleThree"
             aria-label="Third value"
-          />
+           class="slider-thumb"/>
         </div>
       </section>
 

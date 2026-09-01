@@ -5,10 +5,11 @@ description: >
   Loading status indicator
 ---
 
-Use `data-slot="spinner"` or `ng-spinner` on an SVG with `role="status"`.
+Use `class="spinner"` on an SVG with an accessible label. Place it in an
+`output` when status semantics are needed.
 
 ```html
-<svg data-slot="spinner" role="status" aria-label="Loading" viewBox="0 0 24 24">
+<svg aria-label="Loading" viewBox="0 0 24 24" class="spinner">
   <circle cx="12" cy="12" r="10" />
 </svg>
 ```

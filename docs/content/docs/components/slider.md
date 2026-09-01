@@ -7,12 +7,12 @@ description: >
 
 Use `ng-slider` with native range inputs. The directive exposes `aria-*` value
 attributes and a computed `data-value`. For range and multiple-value surfaces,
-put native range inputs marked with `ng-slider-thumb` inside a container marked
-with `ng-slider`; each thumb keeps its own AngularTS `ng-model` and native form
+put native range inputs with `.slider-thumb` inside a container marked with
+`ng-slider`; the parent inspects each thumb and every input keeps its own AngularTS `ng-model` and native form
 behavior.
 
 ```html
-<label ng-label for="volume">Volume</label>
+<label for="volume" class="label">Volume</label>
 <input ng-slider id="volume" type="range" min="0" max="100" />
 ```
 
@@ -43,17 +43,10 @@ This component's root directive is `[ng-slider]`. Importing the package register
 ### Directive selectors
 
 - `ng-slider`
-- `ng-slider-thumb`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="slider"]`
-- `[data-slot="slider-range"]`
-- `[data-slot="slider-thumb"]`
-- `[data-slot="slider-track"]`
-
-Slots are optional unless the usage example or behavior description identifies a required relationship.
-Use the named slots as stable Tailwind and CSS selectors.
+Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough.
 
 ## API
 
@@ -79,7 +72,7 @@ Use the named slots as stable Tailwind and CSS selectors.
 | `max` | Input | Maximum native or component value. |
 | `min` | Input | Minimum native or component value. |
 | `orientation` | Input | Layout direction: `horizontal` or `vertical`. |
-| `role` | Input/output | Explicit semantic role when native HTML does not provide one. |
+| `role` | Output | Explicit semantic role when native HTML does not provide one. |
 
 `Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
 
@@ -113,7 +106,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-slider]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-slider]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

@@ -5,17 +5,17 @@ description: >
   Fixed-ratio media wrapper
 ---
 
-Set `ratio` on `ng-aspect-ratio`, or set `--ratio` directly when only the
-styling slot is needed. Media positioning and cropping remain application-owned.
+Set `ratio` or `--ratio` on `figure.aspect-ratio`. Media positioning and
+cropping remain application-owned.
 
 ```html
-<div ng-aspect-ratio ratio="16 / 9">
+<figure ratio="16 / 9" class="aspect-ratio">
   <img
     src="photo.jpg"
     alt="Photo"
     class="absolute inset-0 size-full object-cover"
   />
-</div>
+</figure>
 ```
 
 ## Example
@@ -39,14 +39,11 @@ This is a styling-only HTML element or pattern. AngularCSS registers no runtime 
 
 ### Root styling selector
 
-- `data-slot="aspect-ratio"`
+- `.aspect-ratio`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="aspect-ratio"]`
-
-Slots are optional unless the usage example or behavior description identifies a required relationship.
-Use the named slots as stable Tailwind and CSS selectors.
+Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough.
 
 ## API
 
@@ -84,7 +81,7 @@ content come from the application.
 
 ## Customization
 
-Target semantic elements, styling slots, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

@@ -11,8 +11,8 @@ milliseconds. Set `side` on the content to `left`, `top`, `bottom`, or `right`.
 
 ```html
 <span ng-hover-card open-delay="100" close-delay="100">
-  <a ng-hover-card-trigger href="#">@angularcss</a>
-  <span ng-hover-card-content side="bottom">Preview</span>
+  <a href="#" class="hover-card-trigger">@angularcss</a>
+  <aside side="bottom" class="hover-card-content">Preview</aside>
 </span>
 ```
 
@@ -45,19 +45,10 @@ This component's root directive is `[ng-hover-card]`. Importing the package regi
 ### Directive selectors
 
 - `ng-hover-card`
-- `ng-hover-card-content`
-- `ng-hover-card-trigger`
 
-### Styling slots
-
-- `[data-slot="hover-card"]`
-- `[data-slot="hover-card-content"]`
-- `[data-slot="hover-card-description"]`
-- `[data-slot="hover-card-title"]`
-- `[data-slot="hover-card-trigger"]`
+### Semantic structure
 
 A keyboard-focusable trigger and one preview content element are required. Title and description slots are optional semantic styling hooks inside the preview.
-Use the named slots as stable Tailwind and CSS selectors.
 
 ## API
 
@@ -75,7 +66,6 @@ Use the named slots as stable Tailwind and CSS selectors.
 | `data-state` | Output | Stable component state or styling hook. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
 | `open-delay` | Input | Pointer open delay in milliseconds. |
-| `role` | Input/output | Explicit semantic role when native HTML does not provide one. |
 | `side` | Input | Physical placement: `left`, `top`, `bottom`, or `right`. |
 
 `Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
@@ -108,7 +98,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-hover-card]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-hover-card]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

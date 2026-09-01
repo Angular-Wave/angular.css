@@ -5,16 +5,16 @@ description: >
   Confirmation dialog structure
 ---
 
-Use alert dialog slots for destructive or confirmation flows that need a clear
+Use alert dialog parts for destructive or confirmation flows that need a clear
 action and cancel target.
 
 ```html
-<section id="delete-dialog" ng-alert-dialog>
-  <button ng-button data-slot="alert-dialog-trigger">Delete project</button>
-  <div data-slot="alert-dialog-overlay"></div>
-  <div data-slot="alert-dialog-content" data-size="default">
-    <h2 data-slot="alert-dialog-title">Delete project?</h2>
-  </div>
+<section id="delete-dialog" ng-alert-dialog class="alert-dialog">
+  <button class="alert-dialog-trigger button">Delete project</button>
+  <div class="alert-dialog-overlay"></div>
+  <dialog data-size="default" class="alert-dialog-content">
+    <h2 class="alert-dialog-title">Delete project?</h2>
+  </dialog>
 </section>
 ```
 
@@ -40,30 +40,10 @@ This component's root directive is `[ng-alert-dialog]`. Importing the package re
 ### Directive selectors
 
 - `ng-alert-dialog`
-- `ng-alert-dialog-action`
-- `ng-alert-dialog-cancel`
-- `ng-alert-dialog-content`
-- `ng-alert-dialog-description`
-- `ng-alert-dialog-overlay`
-- `ng-alert-dialog-title`
-- `ng-alert-dialog-trigger`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="alert-dialog"]`
-- `[data-slot="alert-dialog-action"]`
-- `[data-slot="alert-dialog-cancel"]`
-- `[data-slot="alert-dialog-content"]`
-- `[data-slot="alert-dialog-description"]`
-- `[data-slot="alert-dialog-footer"]`
-- `[data-slot="alert-dialog-header"]`
-- `[data-slot="alert-dialog-media"]`
-- `[data-slot="alert-dialog-overlay"]`
-- `[data-slot="alert-dialog-title"]`
-- `[data-slot="alert-dialog-trigger"]`
-
-Slots are optional unless the usage example or behavior description identifies a required relationship.
-Use the named slots as stable Tailwind and CSS selectors.
+Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough.
 
 ## API
 
@@ -101,7 +81,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-alert-dialog]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-alert-dialog]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

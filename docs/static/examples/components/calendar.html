@@ -27,15 +27,15 @@
         ng-on-angularcss:calendar-select="selectedDate = $event.detail.value"
         class="calendar-demo visual-example"
       >
-        <header data-slot="calendar-header">
+        <header class="calendar-header">
           <button
             type="button"
-            ng-button
-            data-slot="calendar-previous"
+
+
             size="icon"
             variant="ghost"
             aria-label="Previous month"
-          >
+           class="calendar-previous button">
             <svg
               class="icon-sm"
               viewBox="0 0 24 24"
@@ -47,15 +47,15 @@
               <path d="m15 18-6-6 6-6" />
             </svg>
           </button>
-          <h3 data-slot="calendar-title"></h3>
+          <h3 class="calendar-title"></h3>
           <button
             type="button"
-            ng-button
-            data-slot="calendar-next"
+
+
             size="icon"
             variant="ghost"
             aria-label="Next month"
-          >
+           class="calendar-next button">
             <svg
               class="icon-sm"
               viewBox="0 0 24 24"
@@ -68,7 +68,7 @@
             </svg>
           </button>
         </header>
-        <div data-slot="calendar-grid"></div>
+        <div class="calendar-grid"></div>
       </section>
       <p class="output" aria-live="polite">Selected: {{ selectedDate }}</p>
     </div>

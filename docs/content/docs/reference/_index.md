@@ -74,5 +74,5 @@ integration supplies a runtime instance manually.
 
 Use the [component catalog]({{< relref "/docs/components" >}}) for the public
 HTML contract of every directive. Those pages are generated from canonical
-TypeScript and document selectors, slots, attributes, state, CSS variables,
+TypeScript and document selectors, parts, attributes, state, CSS variables,
 events, behavior, accessibility, and customization.

@@ -17,19 +17,17 @@
     <main class="combobox-state-workflows visual-example">
       <div class="combobox-state-controls">
         <button
-          ng-button
+
           type="button"
           data-variant="outline"
-          ng-click="state.open=!state.open"
-        >
+          ng-click="state.open=!state.open" class="button">
           Toggle popup
         </button>
         <button
-          ng-button
+
           type="button"
           data-variant="outline"
-          ng-click="state.showAstro=!state.showAstro"
-        >
+          ng-click="state.showAstro=!state.showAstro" class="button">
           Toggle Astro option
         </button>
       </div>
@@ -42,43 +40,43 @@
         ng-on-angularcss:combobox-open-change="state.open=$event.detail.open"
         ng-on-angularcss:combobox-select="state.selected=$event.detail.value; state.query=$event.detail.value; state.open=false"
       >
-        <div ng-combobox-control>
+        <div class="combobox-control">
           <input
-            ng-combobox-input
+
             aria-label="State framework"
             ng-model="state.query"
             placeholder="Select a framework"
-          />
+           class="combobox-input"/>
           <button
-            ng-combobox-trigger
+
             type="button"
             aria-label="Show state frameworks"
-          ></button>
+           class="combobox-trigger"></button>
         </div>
-        <div ng-combobox-content aria-label="State framework options">
-          <div ng-combobox-empty>No items found.</div>
-          <div ng-combobox-list>
-            <div ng-combobox-collection>
-              <div
-                ng-combobox-item
+        <ul aria-label="State framework options" class="combobox-content">
+          <div class="combobox-empty">No items found.</div>
+          <div class="combobox-list">
+            <ul class="combobox-collection">
+              <li
+
                 ng-repeat="option in stateOptions | filter:state.query"
                 data-value="{{ option.label }}"
                 ng-attr-aria-disabled="{{ option.disabled }}"
                 ng-attr-aria-selected="{{ state.selected === option.label }}"
-              >
+               class="combobox-item">
                 {{ option.label }}
-              </div>
-              <div
-                ng-combobox-item
+              </li>
+              <li
+
                 ng-if="state.showAstro"
                 data-value="Astro"
                 ng-attr-aria-selected="{{ state.selected === 'Astro' }}"
-              >
+               class="combobox-item">
                 Astro
-              </div>
-            </div>
+              </li>
+            </ul>
           </div>
-        </div>
+        </ul>
       </div>
 
       <output class="combobox-state-output" aria-live="polite">

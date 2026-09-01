@@ -5,15 +5,15 @@ description: >
   Toast notification stack
 ---
 
-Use toaster and toast slots for notification stacks. Toast behavior and timers
+Use toaster and toast parts for notification stacks. Toast behavior and timers
 stay in application TypeScript.
 
 ```html
-<div data-slot="toaster">
-  <section data-slot="toast">
-    <div data-slot="toast-title">Saved</div>
-  </section>
-</div>
+<ol class="toaster">
+  <li class="toast">
+    <div class="toast-title">Saved</div>
+  </li>
+</ol>
 ```
 
 ## Example

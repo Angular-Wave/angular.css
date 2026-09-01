@@ -5,12 +5,12 @@ description: >
   Visual and semantic content separator
 ---
 
-Use `ng-separator`. The directive supplies separator semantics and horizontal
-orientation by default. Set `orientation="vertical"` for a vertical divider.
+Use `hr.separator` for a horizontal separator. Use `span.separator` with
+`orientation="vertical"` only when a vertical visual divider is needed.
 
 ```html
-<div ng-separator></div>
-<div ng-separator orientation="vertical"></div>
+<hr class="separator" />
+<span orientation="vertical" class="separator"></span>
 ```
 
 ## Example

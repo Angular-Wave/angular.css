@@ -1,18 +1,16 @@
-[data-slot="alert-dialog"],
+.alert-dialog,
 [ng-alert-dialog] {
   position: relative;
 }
 
-[data-slot="alert-dialog-overlay"],
-[ng-alert-dialog-overlay] {
+.alert-dialog-overlay {
   position: absolute;
   inset: 0;
   z-index: 40;
   background: color-mix(in srgb, black 55%, transparent);
 }
 
-[data-slot="alert-dialog-content"],
-[ng-alert-dialog-content] {
+.alert-dialog-content {
   position: absolute;
   inset-block-start: 50%;
   inset-inline-start: 50%;
@@ -29,37 +27,31 @@
   transform: translate(-50%, -50%);
 }
 
-[data-slot="alert-dialog-header"],
-[ng-alert-dialog-header] {
+.alert-dialog-header {
   display: grid;
   gap: calc(var(--spacing) * 2);
 }
 
-[data-slot="alert-dialog-footer"],
-[ng-alert-dialog-footer] {
+.alert-dialog-footer {
   display: flex;
   flex-direction: row-reverse;
   gap: calc(var(--spacing) * 2);
 }
 
-[data-slot="alert-dialog-title"],
-[ng-alert-dialog-title] {
+.alert-dialog-title {
   color: var(--foreground);
   font-size: var(--text-lg);
   font-weight: var(--font-weight-semibold);
   line-height: 1;
 }
 
-[data-slot="alert-dialog-description"],
-[ng-alert-dialog-description] {
+.alert-dialog-description {
   color: var(--muted-foreground);
   font-size: var(--text-sm);
   line-height: 1.5;
 }
 
-[data-slot="alert-dialog-action"],
-[ng-alert-dialog-action],
-[data-slot="alert-dialog-cancel"],
-[ng-alert-dialog-cancel] {
+.alert-dialog-action,
+.alert-dialog-cancel {
   min-width: 5rem;
 }

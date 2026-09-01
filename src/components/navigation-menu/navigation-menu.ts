@@ -18,16 +18,11 @@ type NavigationMenuEntry = {
   disconnect: () => void;
 };
 
-const itemSelector =
-  '[data-slot="navigation-menu-item"], [ng-navigation-menu-item]';
-const triggerSelector =
-  '[data-slot="navigation-menu-trigger"], [ng-navigation-menu-trigger]';
-const contentSelector =
-  '[data-slot="navigation-menu-content"], [ng-navigation-menu-content]';
-const linkSelector =
-  '[data-slot="navigation-menu-link"], [ng-navigation-menu-link]';
-const listSelector =
-  '[data-slot="navigation-menu-list"], [ng-navigation-menu-list]';
+const itemSelector = ".navigation-menu-item";
+const triggerSelector = ".navigation-menu-trigger";
+const contentSelector = ".navigation-menu-content";
+const linkSelector = ".navigation-menu-link";
+const listSelector = ".navigation-menu-list";
 
 let navigationMenuId = 0;
 
@@ -499,7 +494,7 @@ export function navigationMenuDirective(): ng.Directive {
       const structureObserver = new MutationObserver(syncStructure);
       structureObserver.observe(element, {
         attributes: true,
-        attributeFilter: ["data-slot", "dir"],
+        attributeFilter: ["dir"],
         childList: true,
         subtree: true,
       });

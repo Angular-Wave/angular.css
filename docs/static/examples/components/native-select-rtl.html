@@ -17,14 +17,13 @@
   >
     <main class="native-select-rtl-workflow">
       <div class="native-select-field" dir="rtl">
-        <label ng-label for="rtl-native-status">الحالة</label>
-        <div data-slot="native-select-wrapper">
+        <label for="rtl-native-status" class="label">الحالة</label>
+        <div class="native-select-wrapper">
           <select
-            ng-native-select
+
             id="rtl-native-status"
             dir="rtl"
-            ng-model="rtlNativeStatus"
-          >
+            ng-model="rtlNativeStatus" class="native-select">
             <option value="">اختر الحالة</option>
             <option value="todo">مهام</option>
             <option value="in-progress">قيد التنفيذ</option>
@@ -32,13 +31,13 @@
             <option value="cancelled">ملغي</option>
           </select>
           <svg
-            data-slot="native-select-icon"
+
             aria-hidden="true"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             stroke-width="2"
-          >
+           class="native-select-icon">
             <path d="m6 9 6 6 6-6"></path>
           </svg>
         </div>

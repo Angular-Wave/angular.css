@@ -11,14 +11,14 @@
   </head>
   <body ng-app="ui" ng-cloak>
     <section ng-command>
-      <div data-slot="command-input-wrapper">
-        <input data-slot="command-input" placeholder="Search command..." />
+      <div class="command-input-wrapper">
+        <input placeholder="Search command..." class="command-input" />
       </div>
-      <div data-slot="command-list">
-        <div data-slot="command-item">Deploy project</div>
-        <div data-slot="command-item">Invite member</div>
-        <div data-slot="command-item">Open settings</div>
-      </div>
+      <ul class="command-list">
+        <li class="command-item">Deploy project</li>
+        <li class="command-item">Invite member</li>
+        <li class="command-item">Open settings</li>
+      </ul>
     </section>
   </body>
 </html>

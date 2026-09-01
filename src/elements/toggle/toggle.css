@@ -1,5 +1,4 @@
-[data-slot="toggle"],
-[ng-toggle] {
+.toggle {
   display: inline-flex;
   height: calc(var(--spacing) * 9);
   align-items: center;
@@ -16,43 +15,36 @@
   cursor: pointer;
 }
 
-[data-slot="toggle"]:hover,
-[ng-toggle]:hover {
+.toggle:hover {
   background: var(--muted);
 }
 
-[data-slot="toggle"][data-disabled="true"],
-[ng-toggle][data-disabled="true"] {
+.toggle[data-disabled="true"] {
   pointer-events: none;
   opacity: 0.5;
 }
 
-[data-slot="toggle"][variant="outline"],
-[ng-toggle][variant="outline"] {
+.toggle[variant="outline"] {
   border-color: var(--input);
 }
 
-[data-slot="toggle"][aria-pressed="true"],
-[ng-toggle][aria-pressed="true"],
-[data-slot="toggle"][data-state="on"],
-[ng-toggle][data-state="on"] {
+.toggle[aria-pressed="true"],
+.toggle[data-state="on"] {
   background: var(--accent);
   color: var(--accent-foreground);
 }
 
-[data-slot="toggle"][size="sm"],
-[ng-toggle][size="sm"] {
+.toggle[size="sm"] {
   height: calc(var(--spacing) * 8);
   padding-inline: calc(var(--spacing) * 2);
 }
 
-[data-slot="toggle"][size="lg"],
-[ng-toggle][size="lg"] {
+.toggle[size="lg"] {
   height: calc(var(--spacing) * 10);
   padding-inline: calc(var(--spacing) * 4);
 }
 
-:is([data-slot="toggle"], [ng-toggle]) > svg {
+:is(.toggle) > svg {
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
 }

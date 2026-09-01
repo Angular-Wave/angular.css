@@ -3,9 +3,7 @@ import { expect, test } from "@playwright/test";
 const exampleUrl = "/docs/static/examples/components/input-otp.html";
 
 const clearInputs = async (page: import("@playwright/test").Page) => {
-  const inputs = page.locator(
-    `:is([data-slot=input-otp-slot], [ng-input-otp-slot]) input`,
-  );
+  const inputs = page.locator(`.input-otp-slot input`);
   for (let index = 0; index < (await inputs.count()); index += 1) {
     await inputs.nth(index).fill("");
   }
@@ -17,9 +15,7 @@ test("input otp matches the six-slot reference and advances focus", async ({
 }) => {
   await page.goto(exampleUrl);
   const root = page.locator("[ng-input-otp]");
-  const inputs = page.locator(
-    `:is([data-slot=input-otp-slot], [ng-input-otp-slot]) input`,
-  );
+  const inputs = page.locator(`.input-otp-slot input`);
 
   await expect(page.locator("body")).toHaveAttribute(
     "data-example",
@@ -64,19 +60,15 @@ test("input otp binds a slot inserted into the functional page", async ({
   page,
 }) => {
   await page.goto(exampleUrl);
-  const group = page.locator(
-    `:is([data-slot=input-otp-group], [ng-input-otp-group])`,
-  );
+  const group = page.locator(`.input-otp-group`);
   await group.evaluate((element) => {
     element.insertAdjacentHTML(
       "beforeend",
-      '<span data-slot="input-otp-slot"><input /></span>',
+      '<span class="input-otp-slot"><input /></span>',
     );
   });
 
-  const inputs = page.locator(
-    `:is([data-slot=input-otp-slot], [ng-input-otp-slot]) input`,
-  );
+  const inputs = page.locator(`.input-otp-slot input`);
   await expect(inputs).toHaveCount(7);
   await expect(inputs.nth(6)).toHaveAttribute("autocomplete", "one-time-code");
   await expect(inputs.nth(6)).toHaveAttribute("aria-label", "Digit 7");
@@ -88,9 +80,7 @@ test("input otp mirrors native required, disabled, invalid, and active state", a
   await page.goto(exampleUrl);
   const root = page.locator("[ng-input-otp]");
   const inputs = await clearInputs(page);
-  const firstSlot = page
-    .locator(`:is([data-slot=input-otp-slot], [ng-input-otp-slot])`)
-    .first();
+  const firstSlot = page.locator(`.input-otp-slot`).first();
 
   await inputs.nth(0).evaluate((input) => input.setAttribute("required", ""));
   await expect(root).toHaveAttribute("data-invalid", "true");

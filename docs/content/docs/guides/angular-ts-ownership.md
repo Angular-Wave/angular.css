@@ -55,6 +55,6 @@ output, or input/output.
 
 ## Directive names
 
-AngularCSS avoids collisions with AngularTS. For example, use
-`ng-switch-control` for a switch component because `ng-switch` is an AngularTS
-structural directive.
+AngularCSS avoids collisions with AngularTS. Styling-only elements use native
+HTML and classes, so the switch presentation is `input.switch`; AngularTS keeps
+ownership of structural switch rendering.

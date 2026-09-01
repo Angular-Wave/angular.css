@@ -1,4 +1,4 @@
-[data-slot="menubar"],
+.menubar,
 [ng-menubar] {
   display: flex;
   width: fit-content;
@@ -12,13 +12,11 @@
   padding: 3px;
 }
 
-[data-slot="menubar-menu"],
-[ng-menubar-menu] {
+.menubar-menu {
   position: relative;
 }
 
-[data-slot="menubar-trigger"],
-[ng-menubar-trigger] {
+.menubar-trigger {
   display: inline-flex;
   min-height: calc(var(--spacing) * 6);
   align-items: center;
@@ -34,26 +32,17 @@
   user-select: none;
 }
 
-:is([data-slot="menubar-trigger"], [ng-menubar-trigger]):is(
-  :hover,
-  :focus-visible,
-  [data-state="open"]
-) {
+.menubar-trigger:is(:hover, :focus-visible, [data-state="open"]) {
   background: var(--accent);
   color: var(--accent-foreground);
 }
 
-:is([data-slot="menubar-trigger"], [ng-menubar-trigger]):is(
-  :disabled,
-  [aria-disabled="true"],
-  [data-disabled="true"]
-) {
+.menubar-trigger:is(:disabled, [aria-disabled="true"], [data-disabled="true"]) {
   pointer-events: none;
   opacity: 0.5;
 }
 
-[data-slot="menubar-content"],
-[ng-menubar-content] {
+.menubar-content {
   position: absolute;
   inset-block-start: calc(100% + var(--spacing) * 2);
   inset-inline-start: calc(var(--spacing) * -1);
@@ -72,20 +61,15 @@
     var(--shadow-md);
 }
 
-[data-slot="menubar-group"],
-[ng-menubar-group],
-[data-slot="menubar-radio-group"],
-[ng-menubar-radio-group] {
+.menubar-group,
+.menubar-radio-group {
   display: grid;
   gap: 0;
 }
 
-[data-slot="menubar-item"],
-[ng-menubar-item],
-[data-slot="menubar-checkbox-item"],
-[ng-menubar-checkbox-item],
-[data-slot="menubar-radio-item"],
-[ng-menubar-radio-item] {
+.menubar-item,
+.menubar-checkbox-item,
+.menubar-radio-item {
   position: relative;
   display: flex;
   min-height: calc(var(--spacing) * 7);
@@ -103,14 +87,7 @@
   user-select: none;
 }
 
-:is(
-  [data-slot="menubar-item"],
-  [ng-menubar-item],
-  [data-slot="menubar-checkbox-item"],
-  [ng-menubar-checkbox-item],
-  [data-slot="menubar-radio-item"],
-  [ng-menubar-radio-item]
-):is(
+:is(.menubar-item, .menubar-checkbox-item, .menubar-radio-item):is(
   :hover,
   :focus-visible,
   [data-highlighted="true"],
@@ -120,47 +97,28 @@
   color: var(--accent-foreground);
 }
 
-:is(
-  [data-slot="menubar-item"],
-  [ng-menubar-item],
-  [data-slot="menubar-checkbox-item"],
-  [ng-menubar-checkbox-item],
-  [data-slot="menubar-radio-item"],
-  [ng-menubar-radio-item]
-):is(:disabled, [aria-disabled="true"], [data-disabled="true"]) {
+:is(.menubar-item, .menubar-checkbox-item, .menubar-radio-item):is(
+  :disabled,
+  [aria-disabled="true"],
+  [data-disabled="true"]
+) {
   pointer-events: none;
   opacity: 0.5;
 }
 
-:is(
-  [data-slot="menubar-checkbox-item"],
-  [ng-menubar-checkbox-item],
-  [data-slot="menubar-radio-item"],
-  [ng-menubar-radio-item]
-) {
+:is(.menubar-checkbox-item, .menubar-radio-item) {
   padding-inline-start: calc(var(--spacing) * 7);
 }
 
-:is(
-    [data-slot="menubar-checkbox-item"],
-    [ng-menubar-checkbox-item],
-    [data-slot="menubar-radio-item"],
-    [ng-menubar-radio-item]
-  )
-  > input {
+:is(.menubar-checkbox-item, .menubar-radio-item) > input {
   position: absolute;
   width: 1px;
   height: 1px;
   opacity: 0;
 }
 
-:is([data-slot="menubar-checkbox-item"], [ng-menubar-checkbox-item]):has(
-    > input:checked
-  )::before,
-:is(
-    [data-slot="menubar-checkbox-item"],
-    [ng-menubar-checkbox-item]
-  )[aria-checked="true"]::before {
+.menubar-checkbox-item:has(> input:checked)::before,
+:is(.menubar-checkbox-item)[aria-checked="true"]::before {
   position: absolute;
   inset-inline-start: calc(var(--spacing) * 1.5);
   content: "\2713";
@@ -168,13 +126,8 @@
   font-weight: var(--font-weight-medium);
 }
 
-:is([data-slot="menubar-radio-item"], [ng-menubar-radio-item]):has(
-    > input:checked
-  )::before,
-:is(
-    [data-slot="menubar-radio-item"],
-    [ng-menubar-radio-item]
-  )[aria-checked="true"]::before {
+.menubar-radio-item:has(> input:checked)::before,
+:is(.menubar-radio-item)[aria-checked="true"]::before {
   position: absolute;
   inset-inline-start: calc(var(--spacing) * 1.5);
   content: "\2022";
@@ -182,50 +135,40 @@
   font-weight: var(--font-weight-medium);
 }
 
-:is([data-slot="menubar-item"], [ng-menubar-item])[inset] {
+.menubar-item[inset] {
   padding-inline-start: calc(var(--spacing) * 7);
 }
 
-:is(
-    [data-slot="menubar-item"],
-    [ng-menubar-item],
-    [data-slot="menubar-sub-trigger"]
-  )
-  > svg {
+:is(.menubar-item, .menubar-sub-trigger) > svg {
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
   flex-shrink: 0;
   pointer-events: none;
 }
 
-[data-slot="menubar-separator"],
-[ng-menubar-separator] {
+.menubar-separator {
   height: 1px;
   background: var(--border);
   margin-block: calc(var(--spacing) * 1);
 }
 
-[data-slot="menubar-label"],
-[ng-menubar-label] {
+.menubar-label {
   padding: calc(var(--spacing) * 1) calc(var(--spacing) * 1.5);
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
 }
 
-[data-slot="menubar-shortcut"],
-[ng-menubar-shortcut] {
+.menubar-shortcut {
   margin-inline-start: auto;
   color: var(--muted-foreground);
   font-size: var(--text-xs);
 }
 
-[data-slot="menubar-sub"],
-[ng-menubar-sub] {
+.menubar-sub {
   position: relative;
 }
 
-[data-slot="menubar-sub-trigger"],
-[ng-menubar-sub-trigger] {
+.menubar-sub-trigger {
   display: flex;
   width: 100%;
   min-height: calc(var(--spacing) * 7);
@@ -243,29 +186,23 @@
   user-select: none;
 }
 
-:is([data-slot="menubar-sub-trigger"], [ng-menubar-sub-trigger])::after {
+.menubar-sub-trigger::after {
   content: "\203a";
   margin-inline-start: auto;
   font-size: var(--text-base);
   line-height: 1;
 }
 
-[data-direction="rtl"]
-  :is([data-slot="menubar-sub-trigger"], [ng-menubar-sub-trigger])::after {
+[data-direction="rtl"] .menubar-sub-trigger::after {
   transform: rotate(180deg);
 }
 
-:is([data-slot="menubar-sub-trigger"], [ng-menubar-sub-trigger]):is(
-  :hover,
-  :focus-visible,
-  [data-state="open"]
-) {
+.menubar-sub-trigger:is(:hover, :focus-visible, [data-state="open"]) {
   background: var(--accent);
   color: var(--accent-foreground);
 }
 
-[data-slot="menubar-sub-content"],
-[ng-menubar-sub-content] {
+.menubar-sub-content {
   position: absolute;
   inset-block-start: calc(var(--spacing) * -1);
   inset-inline-start: calc(100% + var(--spacing) * 1);

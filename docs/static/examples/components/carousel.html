@@ -17,63 +17,63 @@
   >
     <main class="carousel-canonical-stage visual-example">
       <section ng-carousel class="carousel-demo" aria-label="Numbered slides">
-        <div data-slot="carousel-content">
-          <div data-slot="carousel-track">
-            <article data-slot="carousel-item">
+        <div class="carousel-content">
+          <ul class="carousel-track">
+            <li class="carousel-item">
               <div class="carousel-item-padding">
-                <section ng-card>
-                  <div data-slot="card-content" class="carousel-square">
+                <article class="card">
+                  <section class="carousel-square card-content">
                     <span>1</span>
-                  </div>
-                </section>
+                  </section>
+                </article>
               </div>
-            </article>
-            <article data-slot="carousel-item">
+            </li>
+            <li class="carousel-item">
               <div class="carousel-item-padding">
-                <section ng-card>
-                  <div data-slot="card-content" class="carousel-square">
+                <article class="card">
+                  <section class="carousel-square card-content">
                     <span>2</span>
-                  </div>
-                </section>
+                  </section>
+                </article>
               </div>
-            </article>
-            <article data-slot="carousel-item">
+            </li>
+            <li class="carousel-item">
               <div class="carousel-item-padding">
-                <section ng-card>
-                  <div data-slot="card-content" class="carousel-square">
+                <article class="card">
+                  <section class="carousel-square card-content">
                     <span>3</span>
-                  </div>
-                </section>
+                  </section>
+                </article>
               </div>
-            </article>
-            <article data-slot="carousel-item">
+            </li>
+            <li class="carousel-item">
               <div class="carousel-item-padding">
-                <section ng-card>
-                  <div data-slot="card-content" class="carousel-square">
+                <article class="card">
+                  <section class="carousel-square card-content">
                     <span>4</span>
-                  </div>
-                </section>
+                  </section>
+                </article>
               </div>
-            </article>
-            <article data-slot="carousel-item">
+            </li>
+            <li class="carousel-item">
               <div class="carousel-item-padding">
-                <section ng-card>
-                  <div data-slot="card-content" class="carousel-square">
+                <article class="card">
+                  <section class="carousel-square card-content">
                     <span>5</span>
-                  </div>
-                </section>
+                  </section>
+                </article>
               </div>
-            </article>
-          </div>
+            </li>
+          </ul>
         </div>
         <button
-          data-slot="button"
-          ng-carousel-previous
+
+
           size="icon-sm"
           variant="outline"
           type="button"
           aria-label="Previous slide"
-        >
+         class="button carousel-previous">
           <svg
             class="icon-sm lucide lucide-chevron-left"
             viewBox="0 0 24 24"
@@ -86,13 +86,13 @@
           </svg>
         </button>
         <button
-          data-slot="button"
-          ng-carousel-next
+
+
           size="icon-sm"
           variant="outline"
           type="button"
           aria-label="Next slide"
-        >
+         class="button carousel-next">
           <svg
             class="icon-sm lucide lucide-chevron-right"
             viewBox="0 0 24 24"

@@ -11,22 +11,22 @@ For simple authored HTML plots, `data-value` and `data-color` synchronize to
 `--value` and `--chart-color`.
 
 ```html
-<section ng-chart aria-label="Monthly visitors">
-  <div data-slot="chart-plot">
-    <div data-slot="chart-grid"></div>
-    <div data-slot="chart-bar-groups">
-      <div data-slot="chart-bar-group">
+<figure aria-label="Monthly visitors" class="chart">
+  <div class="chart-plot">
+    <div class="chart-grid"></div>
+    <div class="chart-bar-groups">
+      <div class="chart-bar-group">
         <span
-          data-slot="chart-bar"
+
           data-label="January desktop"
           data-value="72%"
           data-color="var(--chart-1)"
-        ></span>
+         class="chart-bar"></span>
       </div>
     </div>
   </div>
-  <div data-slot="chart-axis"><span data-slot="chart-axis-item">Jan</span></div>
-</section>
+  <div class="chart-axis"><span class="chart-axis-item">Jan</span></div>
+</figure>
 ```
 
 AngularCSS does not implement a chart engine. Plotting, scales, data,
@@ -60,34 +60,11 @@ This is a styling-only HTML element or pattern. AngularCSS registers no runtime 
 
 ### Root styling selector
 
-- `data-slot="chart"`
+- `.chart`
 
-### Styling slots
-
-- `[data-slot="chart"]`
-- `[data-slot="chart-axis"]`
-- `[data-slot="chart-bar"]`
-- `[data-slot="chart-bar-group"]`
-- `[data-slot="chart-bar-groups"]`
-- `[data-slot="chart-bars"]`
-- `[data-slot="chart-description"]`
-- `[data-slot="chart-grid"]`
-- `[data-slot="chart-header"]`
-- `[data-slot="chart-legend"]`
-- `[data-slot="chart-legend-item"]`
-- `[data-slot="chart-plot"]`
-- `[data-slot="chart-swatch"]`
-- `[data-slot="chart-title"]`
-- `[data-slot="chart-tooltip"]`
-- `[data-slot="chart-tooltip-indicator"]`
-- `[data-slot="chart-tooltip-item"]`
-- `[data-slot="chart-tooltip-items"]`
-- `[data-slot="chart-tooltip-label"]`
-- `[data-slot="chart-tooltip-name"]`
-- `[data-slot="chart-tooltip-value"]`
+### Semantic structure
 
 The chart root requires an accessible name. Plot, bar, axis, grid, legend, and tooltip slots are optional composition primitives; place them inside the chart root so synchronized CSS properties and semantics apply.
-Use the named slots as stable Tailwind and CSS selectors.
 
 ## API
 
@@ -111,7 +88,7 @@ Native DOM events continue to work normally. AngularTS event directives such as
 
 ## Behavior
 
-The directive synchronizes authored values and colors into CSS custom properties and supplies chart, axis, legend, bar, and tooltip semantics. Authored HTML, SVG, canvas, or an application-selected chart library owns plotting, scales, data, formatting, hover selection, and active-series state; AngularTS remains the source of truth for reactive application state.
+Semantic figure, heading, list, and data markup owns chart meaning. CSS variables provide visual values and colors; authored HTML, SVG, canvas, or an application-selected chart library owns plotting, scales, data, formatting, and interaction. AngularCSS registers no chart directive.
 
 AngularCSS does not replace AngularTS interpolation, bindings, structural
 directives, form controllers, validation, or application state.
@@ -126,7 +103,7 @@ content come from the application.
 
 ## Customization
 
-Target semantic elements, styling slots, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

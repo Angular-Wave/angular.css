@@ -7,14 +7,10 @@ const statesUrl =
   "/docs/static/examples/components/resizable-state-workflows.html";
 
 const groupPanels = (group: Locator): Locator =>
-  group.locator(
-    ":scope > :is([data-slot='resizable-panel'], [ng-resizable-panel])",
-  );
+  group.locator(":scope > .resizable-panel");
 
 const groupHandles = (group: Locator): Locator =>
-  group.locator(
-    ":scope > :is([data-slot='resizable-handle'], [ng-resizable-handle])",
-  );
+  group.locator(":scope > .resizable-handle");
 
 const expectBuiltArtifactRuntime = async (page: Page): Promise<void> => {
   await expect(
@@ -68,8 +64,8 @@ test("canonical nested layout supplies exact panel, handle, and ARIA anatomy", a
     controlledIds?.[1] ?? "",
   );
 
-  const outerGrip = outerHandle.locator("[ng-resizable-handle-grip]");
-  const innerGrip = innerHandle.locator("[ng-resizable-handle-grip]");
+  const outerGrip = outerHandle.locator(".resizable-handle-grip");
+  const innerGrip = innerHandle.locator(".resizable-handle-grip");
   expect((await outerGrip.boundingBox())?.width).toBe(4);
   expect((await outerGrip.boundingBox())?.height).toBe(24);
   expect((await innerGrip.boundingBox())?.width).toBe(24);
@@ -128,9 +124,7 @@ test("handle and vertical references preserve sizing, bounds, and grip variants"
   const visibleHandle = groupHandles(handleLayout);
   await expect(groupPanels(handleLayout).nth(0)).toHaveCSS("--panel-size", "1");
   await expect(groupPanels(handleLayout).nth(1)).toHaveCSS("--panel-size", "3");
-  await expect(visibleHandle.locator("[ng-resizable-handle-grip]")).toHaveCount(
-    1,
-  );
+  await expect(visibleHandle.locator(".resizable-handle-grip")).toHaveCount(1);
   await visibleHandle.press("ArrowRight");
   await expect(groupPanels(handleLayout).nth(0)).toHaveCSS(
     "--panel-size",
@@ -148,9 +142,9 @@ test("handle and vertical references preserve sizing, bounds, and grip variants"
     "aria-orientation",
     "horizontal",
   );
-  await expect(
-    horizontalHandle.locator("[ng-resizable-handle-grip]"),
-  ).toHaveCount(0);
+  await expect(horizontalHandle.locator(".resizable-handle-grip")).toHaveCount(
+    0,
+  );
   await horizontalHandle.press("ArrowDown");
   await expect(groupPanels(vertical).first()).toHaveCSS("--panel-size", "1.5");
   await horizontalHandle.press("Home");
@@ -166,7 +160,7 @@ test("RTL reference reverses horizontal resizing and preserves nested orientatio
   const rtl = page.locator("#rtl-layout");
   const outerHandle = groupHandles(rtl);
   const nested = rtl.locator(
-    ":scope > [ng-resizable-panel] [ng-resizable-panel-group]",
+    ":scope > .resizable-panel [ng-resizable-panel-group]",
   );
   const nestedHandle = groupHandles(nested);
 

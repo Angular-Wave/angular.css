@@ -27,35 +27,35 @@
           id="vertical-scroll-area"
           aria-label="Release tags"
         >
-          <div ng-scroll-area-viewport>
+          <div class="scroll-area-viewport">
             <div class="scroll-tag-list">
               <span>v1.2.0-beta.50</span>
-              <div data-slot="separator"></div>
+              <div class="separator"></div>
               <span>v1.2.0-beta.49</span>
-              <div data-slot="separator"></div>
+              <div class="separator"></div>
               <span>v1.2.0-beta.48</span>
-              <div data-slot="separator"></div>
+              <div class="separator"></div>
               <span>v1.2.0-beta.47</span>
-              <div data-slot="separator"></div>
+              <div class="separator"></div>
               <span>v1.2.0-beta.46</span>
-              <div data-slot="separator"></div>
+              <div class="separator"></div>
               <span>v1.2.0-beta.45</span>
-              <div data-slot="separator"></div>
+              <div class="separator"></div>
               <span>v1.2.0-beta.44</span>
-              <div data-slot="separator"></div>
+              <div class="separator"></div>
               <span>v1.2.0-beta.43</span>
-              <div data-slot="separator"></div>
+              <div class="separator"></div>
               <span>v1.2.0-beta.42</span>
-              <div data-slot="separator"></div>
+              <div class="separator"></div>
               <span>v1.2.0-beta.41</span>
-              <div data-slot="separator"></div>
+              <div class="separator"></div>
               <span>v1.2.0-beta.40</span>
-              <div data-slot="separator"></div>
+              <div class="separator"></div>
               <span>v1.2.0-beta.39</span>
             </div>
           </div>
-          <div data-slot="scroll-area-scrollbar" data-orientation="vertical">
-            <div data-slot="scroll-area-thumb"></div>
+          <div data-orientation="vertical" class="scroll-area-scrollbar">
+            <div class="scroll-area-thumb"></div>
           </div>
         </div>
       </section>
@@ -71,7 +71,7 @@
           id="horizontal-scroll-area"
           aria-label="Featured artists"
         >
-          <div ng-scroll-area-viewport>
+          <div class="scroll-area-viewport">
             <div class="scroll-artwork-row">
               <figure>
                 <img
@@ -105,8 +105,8 @@
               </figure>
             </div>
           </div>
-          <div data-slot="scroll-area-scrollbar" data-orientation="horizontal">
-            <div data-slot="scroll-area-thumb"></div>
+          <div data-orientation="horizontal" class="scroll-area-scrollbar">
+            <div class="scroll-area-thumb"></div>
           </div>
         </div>
       </section>
@@ -118,12 +118,11 @@
         <header>
           <h2 id="scroll-dynamic-heading">Dynamic content</h2>
           <button
-            ng-button
+
             type="button"
             variant="outline"
             size="sm"
-            ng-click="showOverflow = !showOverflow"
-          >
+            ng-click="showOverflow = !showOverflow" class="button">
             {{ showOverflow ? 'Remove content' : 'Add content' }}
           </button>
         </header>
@@ -133,7 +132,7 @@
           id="dynamic-scroll-area"
           aria-label="Dynamic release notes"
         >
-          <div ng-scroll-area-viewport>
+          <div class="scroll-area-viewport">
             <div class="scroll-dynamic-content">
               <p>Current release</p>
               <div ng-if="showOverflow" class="scroll-dynamic-overflow">
@@ -144,8 +143,8 @@
               </div>
             </div>
           </div>
-          <div data-slot="scroll-area-scrollbar" data-orientation="vertical">
-            <div data-slot="scroll-area-thumb"></div>
+          <div data-orientation="vertical" class="scroll-area-scrollbar">
+            <div class="scroll-area-thumb"></div>
           </div>
         </div>
       </section>
@@ -159,12 +158,11 @@
         <header>
           <h2 id="scroll-rtl-heading">العلامات</h2>
           <button
-            ng-button
+
             type="button"
             variant="outline"
             size="sm"
-            ng-click="scrollDirection = scrollDirection === 'rtl' ? 'ltr' : 'rtl'"
-          >
+            ng-click="scrollDirection = scrollDirection === 'rtl' ? 'ltr' : 'rtl'" class="button">
             Change direction
           </button>
         </header>
@@ -175,27 +173,27 @@
           dir="{{ scrollDirection }}"
           aria-label="علامات الإصدار"
         >
-          <div ng-scroll-area-viewport>
+          <div class="scroll-area-viewport">
             <div class="scroll-tag-list">
               <span>v1.2.0-beta.50</span>
-              <div data-slot="separator"></div>
+              <div class="separator"></div>
               <span>v1.2.0-beta.49</span>
-              <div data-slot="separator"></div>
+              <div class="separator"></div>
               <span>v1.2.0-beta.48</span>
-              <div data-slot="separator"></div>
+              <div class="separator"></div>
               <span>v1.2.0-beta.47</span>
-              <div data-slot="separator"></div>
+              <div class="separator"></div>
               <span>v1.2.0-beta.46</span>
-              <div data-slot="separator"></div>
+              <div class="separator"></div>
               <span>v1.2.0-beta.45</span>
-              <div data-slot="separator"></div>
+              <div class="separator"></div>
               <span>v1.2.0-beta.44</span>
-              <div data-slot="separator"></div>
+              <div class="separator"></div>
               <span>v1.2.0-beta.43</span>
             </div>
           </div>
-          <div data-slot="scroll-area-scrollbar" data-orientation="vertical">
-            <div data-slot="scroll-area-thumb"></div>
+          <div data-orientation="vertical" class="scroll-area-scrollbar">
+            <div class="scroll-area-thumb"></div>
           </div>
         </div>
       </section>

@@ -1,5 +1,4 @@
-[data-slot="skeleton"],
-[ng-skeleton] {
+.skeleton {
   border-radius: calc(var(--radius) - 2px);
   background: var(--muted);
   animation: angularcss-skeleton-pulse 1.6s ease-in-out infinite;

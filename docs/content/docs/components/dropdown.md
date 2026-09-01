@@ -11,11 +11,11 @@ Use `ng-dropdown` on a wrapper with a trigger `button` and a menu panel
 ```html
 <div ng-dropdown>
   <button type="button">Options</button>
-  <div role="menu">
+  <menu>
     <a href="#new">New Task</a>
     <a href="#edit">Edit Task</a>
     <a href="#delete">Delete Task</a>
-  </div>
+  </menu>
 </div>
 ```
 
@@ -43,29 +43,10 @@ This component's root directive is `[ng-dropdown]`. Importing the package regist
 ### Directive selectors
 
 - `ng-dropdown`
-- `ng-dropdown-content`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="dropdown-menu"]`
-- `[data-slot="dropdown-menu-checkbox-item"]`
-- `[data-slot="dropdown-menu-checkbox-item-indicator"]`
-- `[data-slot="dropdown-menu-content"]`
-- `[data-slot="dropdown-menu-group"]`
-- `[data-slot="dropdown-menu-item"]`
-- `[data-slot="dropdown-menu-label"]`
-- `[data-slot="dropdown-menu-radio-group"]`
-- `[data-slot="dropdown-menu-radio-item"]`
-- `[data-slot="dropdown-menu-radio-item-indicator"]`
-- `[data-slot="dropdown-menu-separator"]`
-- `[data-slot="dropdown-menu-shortcut"]`
-- `[data-slot="dropdown-menu-sub"]`
-- `[data-slot="dropdown-menu-sub-content"]`
-- `[data-slot="dropdown-menu-sub-trigger"]`
-- `[data-slot="dropdown-menu-trigger"]`
-
-Slots are optional unless the usage example or behavior description identifies a required relationship.
-Use the named slots as stable Tailwind and CSS selectors.
+Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough.
 
 ## API
 
@@ -73,6 +54,7 @@ Use the named slots as stable Tailwind and CSS selectors.
 
 | Attribute | Access | Purpose |
 | --- | --- | --- |
+| `aria-checked` | Input/output | ARIA relationship or state. |
 | `aria-controls` | Output | ARIA relationship or state. |
 | `aria-disabled` | Input | Semantic disabled state. |
 | `aria-expanded` | Output | Open or expanded state exposed to assistive technology. |
@@ -118,7 +100,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-dropdown]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-dropdown]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

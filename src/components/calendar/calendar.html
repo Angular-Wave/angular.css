@@ -11,70 +11,70 @@
   </head>
   <body ng-app="ui" ng-cloak>
     <section ng-calendar aria-label="May 2026">
-      <header data-slot="calendar-header">
+      <header class="calendar-header">
         <button
-          data-slot="button"
           size="icon"
           variant="outline"
           aria-label="Previous month"
+          class="button"
         >
           &lt;
         </button>
-        <h3 data-slot="calendar-title">May 2026</h3>
+        <h3 class="calendar-title">May 2026</h3>
         <button
-          data-slot="button"
           size="icon"
           variant="outline"
           aria-label="Next month"
+          class="button"
         >
           &gt;
         </button>
       </header>
-      <div data-slot="calendar-grid">
-        <span data-slot="calendar-weekday">Su</span>
-        <span data-slot="calendar-weekday">Mo</span>
-        <span data-slot="calendar-weekday">Tu</span>
-        <span data-slot="calendar-weekday">We</span>
-        <span data-slot="calendar-weekday">Th</span>
-        <span data-slot="calendar-weekday">Fr</span>
-        <span data-slot="calendar-weekday">Sa</span>
+      <div class="calendar-grid">
+        <span class="calendar-weekday">Su</span>
+        <span class="calendar-weekday">Mo</span>
+        <span class="calendar-weekday">Tu</span>
+        <span class="calendar-weekday">We</span>
+        <span class="calendar-weekday">Th</span>
+        <span class="calendar-weekday">Fr</span>
+        <span class="calendar-weekday">Sa</span>
         <button
-          data-slot="calendar-day"
           data-outside="true"
           data-value="2026-04-26"
+          class="calendar-day"
         >
           26
         </button>
         <button
-          data-slot="calendar-day"
           data-outside="true"
           data-value="2026-04-27"
+          class="calendar-day"
         >
           27
         </button>
         <button
-          data-slot="calendar-day"
           data-outside="true"
           data-value="2026-04-28"
+          class="calendar-day"
         >
           28
         </button>
         <button
-          data-slot="calendar-day"
           data-outside="true"
           data-value="2026-04-29"
+          class="calendar-day"
         >
           29
         </button>
         <button
-          data-slot="calendar-day"
           data-outside="true"
           data-value="2026-04-30"
+          class="calendar-day"
         >
           30
         </button>
-        <button data-slot="calendar-day" data-value="2026-05-01">1</button>
-        <button data-slot="calendar-day" data-value="2026-05-02">2</button>
+        <button data-value="2026-05-01" class="calendar-day">1</button>
+        <button data-value="2026-05-02" class="calendar-day">2</button>
       </div>
     </section>
   </body>

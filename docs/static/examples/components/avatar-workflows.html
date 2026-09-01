@@ -24,13 +24,12 @@
         <div class="avatar-workflow-row" aria-label="Avatar badge icon">
           <span ng-avatar>
             <img
-              data-slot="avatar-image"
-              class="avatar-grayscale"
+
+              class="avatar-grayscale avatar-image"
               src="../../images/avatars/02.png"
-              alt="@pranathip"
-            />
-            <span data-slot="avatar-fallback">PP</span>
-            <span data-slot="avatar-badge">
+              alt="@pranathip" />
+            <span class="avatar-fallback">PP</span>
+            <span class="avatar-badge">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -53,35 +52,35 @@
       >
         <h2 id="avatar-count-heading">Group count icon</h2>
         <div
-          data-slot="avatar-group"
-          class="avatar-grayscale"
+
+          class="avatar-grayscale avatar-group"
           aria-label="Avatar group count icon"
         >
           <span ng-avatar>
             <img
-              data-slot="avatar-image"
+
               src="../../images/avatars/01.png"
               alt="@shadcn"
-            />
-            <span data-slot="avatar-fallback">CN</span>
+             class="avatar-image" />
+            <span class="avatar-fallback">CN</span>
           </span>
           <span ng-avatar>
             <img
-              data-slot="avatar-image"
+
               src="../../images/avatars/03.png"
               alt="@maxleiter"
-            />
-            <span data-slot="avatar-fallback">LR</span>
+             class="avatar-image" />
+            <span class="avatar-fallback">LR</span>
           </span>
           <span ng-avatar>
             <img
-              data-slot="avatar-image"
+
               src="../../images/avatars/04.png"
               alt="@evilrabbit"
-            />
-            <span data-slot="avatar-fallback">ER</span>
+             class="avatar-image" />
+            <span class="avatar-fallback">ER</span>
           </span>
-          <span data-slot="avatar-group-count">
+          <span class="avatar-group-count">
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -108,27 +107,27 @@
         >
           <span ng-avatar size="sm">
             <img
-              data-slot="avatar-image"
+
               src="../../images/avatars/01.png"
               alt="@shadcn small"
-            />
-            <span data-slot="avatar-fallback">CN</span>
+             class="avatar-image" />
+            <span class="avatar-fallback">CN</span>
           </span>
           <span ng-avatar>
             <img
-              data-slot="avatar-image"
+
               src="../../images/avatars/01.png"
               alt="@shadcn default"
-            />
-            <span data-slot="avatar-fallback">CN</span>
+             class="avatar-image" />
+            <span class="avatar-fallback">CN</span>
           </span>
           <span ng-avatar size="lg">
             <img
-              data-slot="avatar-image"
+
               src="../../images/avatars/01.png"
               alt="@shadcn large"
-            />
-            <span data-slot="avatar-fallback">CN</span>
+             class="avatar-image" />
+            <span class="avatar-fallback">CN</span>
           </span>
         </div>
       </section>
@@ -138,61 +137,61 @@
         aria-labelledby="avatar-menu-heading"
       >
         <h2 id="avatar-menu-heading">Dropdown</h2>
-        <div ng-dropdown data-slot="dropdown-menu" class="avatar-dropdown-demo">
+        <div ng-dropdown class="avatar-dropdown-demo dropdown-menu">
           <button
             type="button"
-            ng-button
-            data-slot="dropdown-menu-trigger"
+
+
             variant="ghost"
             size="icon"
-            class="avatar-dropdown-trigger"
+            class="avatar-dropdown-trigger dropdown-menu-trigger button"
             aria-label="Open user menu"
           >
             <span ng-avatar>
               <img
-                data-slot="avatar-image"
+
                 src="../../images/avatars/01.png"
                 alt="shadcn"
-              />
-              <span data-slot="avatar-fallback">CN</span>
+               class="avatar-image" />
+              <span class="avatar-fallback">CN</span>
             </span>
           </button>
-          <div data-slot="dropdown-menu-content" class="avatar-dropdown-menu">
-            <div data-slot="dropdown-menu-group">
+          <menu class="avatar-dropdown-menu dropdown-menu-content">
+            <div class="dropdown-menu-group">
               <button
-                data-slot="dropdown-menu-item"
+
                 ng-click="avatarAction = 'Profile'"
-              >
+               class="dropdown-menu-item">
                 Profile
               </button>
               <button
-                data-slot="dropdown-menu-item"
+
                 ng-click="avatarAction = 'Billing'"
-              >
+               class="dropdown-menu-item">
                 Billing
               </button>
               <button
-                data-slot="dropdown-menu-item"
+
                 ng-click="avatarAction = 'Settings'"
-              >
+               class="dropdown-menu-item">
                 Settings
               </button>
             </div>
-            <div data-slot="dropdown-menu-separator"></div>
-            <div data-slot="dropdown-menu-group">
+            <div class="dropdown-menu-separator"></div>
+            <div class="dropdown-menu-group">
               <button
-                data-slot="dropdown-menu-item"
+
                 data-variant="destructive"
                 ng-click="avatarAction = 'Log out'"
-              >
+               class="dropdown-menu-item">
                 Log out
               </button>
             </div>
-          </div>
+          </menu>
         </div>
-        <p class="avatar-workflow-output" role="status">
+        <output class="avatar-workflow-output">
           Selected: {{ avatarAction }}
-        </p>
+        </output>
       </section>
 
       <section
@@ -208,48 +207,47 @@
         >
           <span ng-avatar>
             <img
-              data-slot="avatar-image"
-              class="avatar-grayscale"
+
+              class="avatar-grayscale avatar-image"
               src="../../images/avatars/01.png"
-              alt="@shadcn"
-            />
-            <span data-slot="avatar-fallback">CN</span>
+              alt="@shadcn" />
+            <span class="avatar-fallback">CN</span>
           </span>
           <span ng-avatar class="avatar-rtl-badge">
             <img
-              data-slot="avatar-image"
+
               src="../../images/avatars/04.png"
               alt="@evilrabbit"
-            />
-            <span data-slot="avatar-fallback">ER</span>
-            <span data-slot="avatar-badge" data-variant="success"></span>
+             class="avatar-image" />
+            <span class="avatar-fallback">ER</span>
+            <span data-variant="success" class="avatar-badge"></span>
           </span>
-          <span data-slot="avatar-group" class="avatar-grayscale">
+          <span class="avatar-grayscale avatar-group">
             <span ng-avatar>
               <img
-                data-slot="avatar-image"
+
                 src="../../images/avatars/01.png"
                 alt="@shadcn"
-              />
-              <span data-slot="avatar-fallback">CN</span>
+               class="avatar-image" />
+              <span class="avatar-fallback">CN</span>
             </span>
             <span ng-avatar>
               <img
-                data-slot="avatar-image"
+
                 src="../../images/avatars/03.png"
                 alt="@maxleiter"
-              />
-              <span data-slot="avatar-fallback">LR</span>
+               class="avatar-image" />
+              <span class="avatar-fallback">LR</span>
             </span>
             <span ng-avatar>
               <img
-                data-slot="avatar-image"
+
                 src="../../images/avatars/04.png"
                 alt="@evilrabbit"
-              />
-              <span data-slot="avatar-fallback">ER</span>
+               class="avatar-image" />
+              <span class="avatar-fallback">ER</span>
             </span>
-            <span data-slot="avatar-group-count">+٣</span>
+            <span class="avatar-group-count">+٣</span>
           </span>
         </div>
       </section>

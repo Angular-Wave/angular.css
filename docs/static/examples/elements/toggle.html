@@ -18,14 +18,13 @@
     <main class="toggle-demo visual-example">
       <div class="row" aria-label="Bookmark toggle">
         <button
-          ng-toggle
+
           variant="outline"
           size="sm"
           aria-label="Toggle bookmark"
           aria-pressed="{{ bookmark }}"
           ng-click="bookmark = !bookmark"
-          type="button"
-        >
+          type="button" class="toggle">
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -41,12 +40,11 @@
 
       <div class="row" aria-label="Text toggles">
         <button
-          ng-toggle
+
           aria-label="Toggle italic text"
           aria-pressed="{{ italic }}"
           ng-click="italic = !italic"
-          type="button"
-        >
+          type="button" class="toggle">
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -62,13 +60,12 @@
 
       <div class="row" aria-label="Outline toggles">
         <button
-          ng-toggle
+
           variant="outline"
           aria-label="Toggle italic"
           aria-pressed="{{ italic }}"
           ng-click="italic = !italic"
-          type="button"
-        >
+          type="button" class="toggle">
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -81,13 +78,12 @@
           Italic
         </button>
         <button
-          ng-toggle
+
           variant="outline"
           aria-label="Toggle bold"
           aria-pressed="{{ bold }}"
           ng-click="bold = !bold"
-          type="button"
-        >
+          type="button" class="toggle">
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -102,11 +98,11 @@
       </div>
 
       <div class="row" aria-label="Toggle sizes">
-        <button ng-toggle variant="outline" size="sm" type="button">
+        <button variant="outline" size="sm" type="button" class="toggle">
           Small
         </button>
-        <button ng-toggle variant="outline" type="button">Default</button>
-        <button ng-toggle variant="outline" size="lg" type="button">
+        <button variant="outline" type="button" class="toggle">Default</button>
+        <button variant="outline" size="lg" type="button" class="toggle">
           Large
         </button>
       </div>

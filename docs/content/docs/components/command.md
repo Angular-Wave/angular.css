@@ -5,38 +5,39 @@ description: >
   Command palette layout
 ---
 
-Build a searchable command menu from semantic `ng-command-*` attributes.
+Build a searchable command menu with one `ng-command` root and semantic child
+elements identified by command part classes.
 AngularTS owns query filtering and command execution. Command follows the
 rendered result DOM and supplies listbox relationships, active-descendant
 navigation, disabled skipping, and scroll-to-active behavior.
 
 ```html
 <section ng-command data-variant="surface" aria-label="Command menu">
-  <div ng-command-input-wrapper>
-    <div ng-command-input-group>
-      <span ng-command-input-icon aria-hidden="true"><!-- search icon --></span>
+  <div class="command-input-wrapper">
+    <div class="command-input-group">
+      <span aria-hidden="true" class="command-input-icon"><!-- search icon --></span>
       <input
-        ng-command-input
+
         aria-label="Search commands"
         ng-model="query"
         placeholder="Type a command or search..."
-      />
+       class="command-input"/>
     </div>
   </div>
-  <div ng-command-list>
-    <p ng-command-empty>No results found.</p>
-    <section ng-command-group>
-      <h2 ng-command-group-heading>Suggestions</h2>
-      <div
-        ng-command-item
+  <ul class="command-list">
+    <p class="command-empty">No results found.</p>
+    <section class="command-group">
+      <h2 class="command-group-heading">Suggestions</h2>
+      <li
+
         ng-repeat="command in commands | filter:query"
         ng-click="selected=command.label"
-      >
+       class="command-item">
         <span ng-bind="command.label"></span>
-        <span ng-command-shortcut ng-bind="command.shortcut"></span>
-      </div>
+        <span ng-bind="command.shortcut" class="command-shortcut"></span>
+      </li>
     </section>
-  </div>
+  </ul>
 </section>
 ```
 
@@ -45,7 +46,7 @@ Arrow keys wrap through enabled rendered options; Home and End move to the
 boundaries; Enter activates the current option through its ordinary click
 handler. Pointer movement updates the same active state.
 
-For a modal palette, place `ng-command` directly inside `ng-dialog-content`. Use
+For a modal palette, place `ng-command` directly inside `.dialog-content`. Use
 the existing Dialog trigger and `data-dialog-close` behavior hooks instead of
 reproducing modal focus, Escape, outside-dismissal, or focus-restoration logic
 in Command. Application shortcuts such as Ctrl J remain AngularTS `ng-keydown`
@@ -90,34 +91,10 @@ This component's root directive is `[ng-command]`. Importing the package registe
 ### Directive selectors
 
 - `ng-command`
-- `ng-command-empty`
-- `ng-command-group`
-- `ng-command-group-heading`
-- `ng-command-input`
-- `ng-command-item`
-- `ng-command-list`
-- `ng-command-separator`
-- `ng-command-shortcut`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="command"]`
-- `[data-slot="command-empty"]`
-- `[data-slot="command-group"]`
-- `[data-slot="command-group-heading"]`
-- `[data-slot="command-input"]`
-- `[data-slot="command-input-group"]`
-- `[data-slot="command-input-icon"]`
-- `[data-slot="command-input-wrapper"]`
-- `[data-slot="command-item"]`
-- `[data-slot="command-item-icon"]`
-- `[data-slot="command-list"]`
-- `[data-slot="command-separator"]`
-- `[data-slot="command-shortcut"]`
-- `[data-slot="dialog-content"]`
-
-A command root requires one input and one list. Empty state, labeled groups, separators, item icons, and shortcuts are optional composition primitives. Prefer semantic `ng-command-*` attributes when AngularCSS supplies behavior and styling; use `data-slot` only as a styling hook when behavior is supplied elsewhere, and never duplicate both on one element. Compose modal palettes from the existing Dialog primitives and use `data-dialog-close` when an option should close that dialog without acquiring Dialog close-button styling.
-Use the named slots as stable Tailwind and CSS selectors.
+A command root requires one input and one list. The root directive inspects semantic descendants through command part classes; no child directives are required. Empty state, labeled groups, separators, item icons, and shortcuts are optional. Compose modal palettes from Dialog.
 
 ## API
 
@@ -175,7 +152,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-command]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-command]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

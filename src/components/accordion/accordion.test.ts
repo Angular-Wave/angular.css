@@ -35,17 +35,10 @@ test("canonical accordion preserves initial state and single-item behavior", asy
   await page.goto(canonicalUrl);
   await expectBuiltArtifactRuntime(page);
   const root = page.locator("[ng-accordion]");
-  const items = page.locator(
-    `:is([data-slot=accordion-item], [ng-accordion-item])`,
-  );
-  const triggers = page.locator(
-    `:is([data-slot=accordion-trigger], [ng-accordion-trigger])`,
-  );
-  const panels = page.locator(
-    `:is([data-slot=accordion-content], [ng-accordion-content])`,
-  );
+  const items = page.locator(`.accordion-item`);
+  const triggers = page.locator(`.accordion-trigger`);
+  const panels = page.locator(`.accordion-content`);
 
-  await expect(root).not.toHaveAttribute("data-slot");
   await expect(triggers).toHaveCount(3);
   await expect(triggers.nth(0)).toHaveAttribute("aria-expanded", "true");
   await expect(panels.nth(0)).toHaveAttribute("data-open", "true");
@@ -65,15 +58,9 @@ test("canonical accordion supplies semantic relationships and keyboard focus", a
   page,
 }) => {
   await page.goto(canonicalUrl);
-  const items = page.locator(
-    `:is([data-slot=accordion-item], [ng-accordion-item])`,
-  );
-  const triggers = page.locator(
-    `:is([data-slot=accordion-trigger], [ng-accordion-trigger])`,
-  );
-  const panels = page.locator(
-    `:is([data-slot=accordion-content], [ng-accordion-content])`,
-  );
+  const items = page.locator(`.accordion-item`);
+  const triggers = page.locator(`.accordion-trigger`);
+  const panels = page.locator(`.accordion-content`);
 
   await expect(triggers.nth(0)).toHaveAttribute(
     "aria-controls",
@@ -110,18 +97,12 @@ test("accordion workflow page covers multiple and disabled behavior", async ({
   const multiple = page.locator(
     '[ng-accordion][aria-label="Settings questions"]',
   );
-  const multipleTriggers = multiple.locator(
-    ":is([data-slot=accordion-trigger], [ng-accordion-trigger])",
-  );
-  const multiplePanels = multiple.locator(
-    `:is([data-slot=accordion-content], [ng-accordion-content])`,
-  );
+  const multipleTriggers = multiple.locator(".accordion-trigger");
+  const multiplePanels = multiple.locator(`.accordion-content`);
   const disabledRoot = page.locator(
     '[ng-accordion][aria-label="Feature availability questions"]',
   );
-  const disabledTriggers = disabledRoot.locator(
-    ":is([data-slot=accordion-trigger], [ng-accordion-trigger])",
-  );
+  const disabledTriggers = disabledRoot.locator(".accordion-trigger");
 
   await expect(multiple).toHaveAttribute("multiple", "");
   await multipleTriggers.nth(1).click();

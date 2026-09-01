@@ -16,22 +16,21 @@
   >
     <main class="workflow-stack">
       <div class="workflow-row" aria-label="Button variants">
-        <button ng-button>Button</button>
-        <button ng-button variant="secondary">Secondary</button>
-        <button ng-button variant="destructive">Destructive</button>
-        <button ng-button variant="outline">Outline</button>
-        <button ng-button variant="ghost">Ghost</button>
-        <button ng-button variant="link">Link</button>
+        <button class="button">Button</button>
+        <button variant="secondary" class="button">Secondary</button>
+        <button variant="destructive" class="button">Destructive</button>
+        <button variant="outline" class="button">Outline</button>
+        <button variant="ghost" class="button">Ghost</button>
+        <button variant="link" class="button">Link</button>
       </div>
 
       <div class="workflow-row workflow-sizes" aria-label="Button sizes">
-        <button ng-button size="xs" variant="outline">Extra Small</button>
+        <button size="xs" variant="outline" class="button">Extra Small</button>
         <button
-          ng-button
+
           size="icon-xs"
           variant="outline"
-          aria-label="Submit extra small"
-        >
+          aria-label="Submit extra small" class="button">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path
               d="M7 17 17 7M7 7h10v10"
@@ -42,13 +41,12 @@
             />
           </svg>
         </button>
-        <button ng-button size="sm" variant="outline">Small</button>
+        <button size="sm" variant="outline" class="button">Small</button>
         <button
-          ng-button
+
           size="icon-sm"
           variant="outline"
-          aria-label="Submit small"
-        >
+          aria-label="Submit small" class="button">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path
               d="M7 17 17 7M7 7h10v10"
@@ -59,13 +57,12 @@
             />
           </svg>
         </button>
-        <button ng-button variant="outline">Default</button>
+        <button variant="outline" class="button">Default</button>
         <button
-          ng-button
+
           size="icon"
           variant="outline"
-          aria-label="Submit default"
-        >
+          aria-label="Submit default" class="button">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path
               d="M7 17 17 7M7 7h10v10"
@@ -76,13 +73,12 @@
             />
           </svg>
         </button>
-        <button ng-button size="lg" variant="outline">Large</button>
+        <button size="lg" variant="outline" class="button">Large</button>
         <button
-          ng-button
+
           size="icon-lg"
           variant="outline"
-          aria-label="Submit large"
-        >
+          aria-label="Submit large" class="button">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path
               d="M7 17 17 7M7 7h10v10"
@@ -96,13 +92,13 @@
       </div>
 
       <div class="workflow-row" aria-label="Rounded and icon buttons">
-        <a ng-button href="#login" variant="secondary" size="sm">Login</a>
-        <button ng-button type="submit" class="button-rounded">
+        <a href="#login" variant="secondary" size="sm" class="button">Login</a>
+        <button type="submit" class="button-rounded button">
           Get Started
         </button>
         <button
-          ng-button
-          class="button-rounded"
+
+          class="button-rounded button"
           variant="outline"
           size="icon"
           aria-label="Continue"
@@ -117,7 +113,7 @@
             />
           </svg>
         </button>
-        <button ng-button variant="outline">
+        <button variant="outline" class="button">
           <svg
             data-icon="inline-start"
             viewBox="0 0 24 24"
@@ -133,7 +129,7 @@
           </svg>
           New Branch
         </button>
-        <button ng-button variant="outline">
+        <button variant="outline" class="button">
           Fork
           <svg
             data-icon="inline-end"
@@ -152,14 +148,13 @@
       </div>
 
       <div class="workflow-row" aria-label="Loading buttons">
-        <button ng-button variant="outline" disabled>
+        <button variant="outline" disabled class="button">
           <svg
-            ng-spinner
+
             data-icon="inline-start"
             aria-hidden="true"
             viewBox="0 0 24 24"
-            fill="none"
-          >
+            fill="none" class="spinner">
             <path
               d="M21 12a9 9 0 1 1-6.22-8.56"
               stroke="currentColor"
@@ -169,15 +164,14 @@
           </svg>
           Generating
         </button>
-        <button ng-button variant="secondary" aria-disabled="true">
+        <button variant="secondary" aria-disabled="true" class="button">
           Downloading
           <svg
-            ng-spinner
+
             data-icon="inline-end"
             aria-hidden="true"
             viewBox="0 0 24 24"
-            fill="none"
-          >
+            fill="none" class="spinner">
             <path
               d="M21 12a9 9 0 1 1-6.22-8.56"
               stroke="currentColor"
@@ -189,9 +183,9 @@
       </div>
 
       <div class="workflow-row" dir="rtl" aria-label="RTL buttons">
-        <button ng-button variant="outline">زر</button>
-        <button ng-button variant="destructive">حذف</button>
-        <button ng-button variant="outline">
+        <button variant="outline" class="button">زر</button>
+        <button variant="destructive" class="button">حذف</button>
+        <button variant="outline" class="button">
           إرسال
           <svg
             data-icon="inline-end"

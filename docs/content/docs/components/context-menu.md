@@ -11,17 +11,17 @@ AngularTS owns actions and checkbox or radio values.
 
 ```html
 <div ng-context-menu>
-  <div ng-context-menu-trigger>Right click here</div>
-  <div ng-context-menu-content aria-label="Browser actions">
-    <button ng-context-menu-item ng-click="reload()">Reload</button>
+  <div class="context-menu-trigger">Right click here</div>
+  <menu aria-label="Browser actions" class="context-menu-content">
+    <button ng-click="reload()" class="context-menu-item">Reload</button>
     <button
-      ng-context-menu-checkbox-item
+
       aria-checked="{{ showBookmarks }}"
       ng-click="showBookmarks=!showBookmarks"
-    >
+     class="context-menu-checkbox-item">
       Show Bookmarks Bar
     </button>
-  </div>
+  </menu>
 </div>
 ```
 
@@ -66,37 +66,10 @@ This component's root directive is `[ng-context-menu]`. Importing the package re
 ### Directive selectors
 
 - `ng-context-menu`
-- `ng-context-menu-checkbox-item`
-- `ng-context-menu-content`
-- `ng-context-menu-group`
-- `ng-context-menu-item`
-- `ng-context-menu-label`
-- `ng-context-menu-radio-group`
-- `ng-context-menu-radio-item`
-- `ng-context-menu-separator`
-- `ng-context-menu-sub-content`
-- `ng-context-menu-sub-trigger`
-- `ng-context-menu-trigger`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="context-menu"]`
-- `[data-slot="context-menu-checkbox-item"]`
-- `[data-slot="context-menu-content"]`
-- `[data-slot="context-menu-group"]`
-- `[data-slot="context-menu-item"]`
-- `[data-slot="context-menu-label"]`
-- `[data-slot="context-menu-radio-group"]`
-- `[data-slot="context-menu-radio-item"]`
-- `[data-slot="context-menu-separator"]`
-- `[data-slot="context-menu-shortcut"]`
-- `[data-slot="context-menu-sub"]`
-- `[data-slot="context-menu-sub-content"]`
-- `[data-slot="context-menu-sub-trigger"]`
-- `[data-slot="context-menu-trigger"]`
-
-A context menu root requires one focusable trigger and one content element. Groups, labels, separators, shortcuts, checkbox items, radio groups, destructive or inset items, and nested submenus are optional. Prefer semantic `ng-context-menu-*` attributes when AngularCSS supplies behavior and styling; use `data-slot` only when behavior is supplied elsewhere, and never duplicate both on one element. Checked and radio values must come from AngularTS bindings rather than component-owned state.
-Use the named slots as stable Tailwind and CSS selectors.
+A context menu root requires one focusable trigger and one menu element. The root directive inspects semantic descendants through context-menu part classes; no child directives are required. Groups, separators, shortcuts, checked items, and submenus are optional.
 
 ## API
 
@@ -121,7 +94,7 @@ Use the named slots as stable Tailwind and CSS selectors.
 | `data-state` | Input/output | Stable component state or styling hook. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
 | `disabled` | Input | Disables native or component interaction. |
-| `role` | Input/output | Explicit semantic role when native HTML does not provide one. |
+| `role` | Output | Explicit semantic role when native HTML does not provide one. |
 | `side` | Input | Physical placement: `left`, `top`, `bottom`, or `right`. |
 | `side-offset` | Input | Authored option or semantic HTML attribute observed by the directive. |
 | `tabindex` | Input/output | Keyboard focus order for composite descendants. |
@@ -158,7 +131,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-context-menu]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-context-menu]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

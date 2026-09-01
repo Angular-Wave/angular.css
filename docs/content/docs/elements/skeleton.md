@@ -5,14 +5,13 @@ description: >
   Loading placeholder primitive
 ---
 
-Use `data-slot="skeleton"` or `ng-skeleton` on a block element and control its
-size with normal CSS.
+Use `class="skeleton"` on a block element and control its size with normal CSS.
 
 ```html
 <div
-  data-slot="skeleton"
+
   style="height: 2.5rem; width: 2.5rem; border-radius: 9999px;"
-></div>
+ class="skeleton"></div>
 ```
 
 ## Example

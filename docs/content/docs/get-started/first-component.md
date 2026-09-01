@@ -21,7 +21,7 @@ panel.
       </h2>
       <div>
         <label for="display-name">Display name</label>
-        <input id="display-name" data-input ng-model="profile.name" />
+        <input id="display-name" ng-model="profile.name" class="input" />
         <output>Preview: {{ profile.name || "Unnamed" }}</output>
       </div>
     </article>

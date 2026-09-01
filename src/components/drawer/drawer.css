@@ -1,29 +1,30 @@
-[data-slot="drawer-content"],
-[ng-drawer-content] {
+.drawer-content {
   height: auto;
+  margin: 0;
 }
 
-:is([data-slot="drawer-content"], [ng-drawer-content])[data-side="bottom"] {
+.drawer-content[data-side="bottom"] {
   inset-inline: 0;
-  inset-block-end: 0;
+  inset-block: auto 0;
   max-height: 80dvh;
   border-block-start: 1px solid var(--border);
   border-start-start-radius: calc(var(--radius) + 2px);
   border-start-end-radius: calc(var(--radius) + 2px);
 }
 
-:is([data-slot="drawer-content"], [ng-drawer-content])[data-side="top"] {
+.drawer-content[data-side="top"] {
   inset-inline: 0;
-  inset-block-start: 0;
+  inset-block: 0 auto;
   max-height: 80dvh;
   border-block-end: 1px solid var(--border);
   border-end-start-radius: calc(var(--radius) + 2px);
   border-end-end-radius: calc(var(--radius) + 2px);
 }
 
-:is([data-slot="drawer-content"], [ng-drawer-content])[data-side="left"] {
+.drawer-content[data-side="left"] {
   inset-block: 0;
-  inset-inline-start: 0;
+  right: auto;
+  left: 0;
   width: 75%;
   max-width: 24rem;
   border-inline-end: 1px solid var(--border);
@@ -31,9 +32,10 @@
   border-end-end-radius: calc(var(--radius) + 2px);
 }
 
-:is([data-slot="drawer-content"], [ng-drawer-content])[data-side="right"] {
+.drawer-content[data-side="right"] {
   inset-block: 0;
-  inset-inline-end: 0;
+  right: 0;
+  left: auto;
   width: 75%;
   max-width: 24rem;
   border-inline-start: 1px solid var(--border);
@@ -41,12 +43,11 @@
   border-end-start-radius: calc(var(--radius) + 2px);
 }
 
-:is([data-slot="drawer-content"], [ng-drawer-content])[data-size="half"] {
+.drawer-content[data-size="half"] {
   max-height: 50dvh;
 }
 
-[data-slot="drawer-handle"],
-[ng-drawer-handle] {
+.drawer-handle {
   display: none;
   width: 6.25rem;
   height: calc(var(--spacing) * 1);
@@ -57,28 +58,22 @@
   background: var(--muted);
 }
 
-:is([data-slot="drawer-content"], [ng-drawer-content])[data-side="bottom"]
-  > :is([data-slot="drawer-handle"], [ng-drawer-handle]) {
+.drawer-content[data-side="bottom"] > .drawer-handle {
   display: block;
 }
 
-[data-slot="drawer-header"],
-[ng-drawer-header] {
+.drawer-header {
   text-align: start;
 }
 
-:is([data-slot="drawer-content"], [ng-drawer-content])[data-side="bottom"]
-  > :is([data-slot="drawer-header"], [ng-drawer-header]),
-:is([data-slot="drawer-content"], [ng-drawer-content])[data-side="top"]
-  > :is([data-slot="drawer-header"], [ng-drawer-header]) {
+.drawer-content[data-side="bottom"] > .drawer-header,
+.drawer-content[data-side="top"] > .drawer-header {
   text-align: center;
 }
 
 @media (width >= 768px) {
-  :is([data-slot="drawer-content"], [ng-drawer-content])[data-side="bottom"]
-    > :is([data-slot="drawer-header"], [ng-drawer-header]),
-  :is([data-slot="drawer-content"], [ng-drawer-content])[data-side="top"]
-    > :is([data-slot="drawer-header"], [ng-drawer-header]) {
+  .drawer-content[data-side="bottom"] > .drawer-header,
+  .drawer-content[data-side="top"] > .drawer-header {
     text-align: start;
   }
 }

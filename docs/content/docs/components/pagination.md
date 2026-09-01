@@ -9,13 +9,13 @@ Use `nav` with `aria-label="pagination"` and mark the current page with
 `aria-current="page"`.
 
 ```html
-<nav data-slot="pagination" aria-label="pagination">
-  <ul data-slot="pagination-content">
-    <li data-slot="pagination-item">
-      <a data-slot="pagination-link" href="#">1</a>
+<nav aria-label="pagination" class="pagination">
+  <ul class="pagination-content">
+    <li class="pagination-item">
+      <a href="#" class="pagination-link">1</a>
     </li>
-    <li data-slot="pagination-item">
-      <a data-slot="pagination-link" aria-current="page" href="#">2</a>
+    <li class="pagination-item">
+      <a aria-current="page" href="#" class="pagination-link">2</a>
     </li>
   </ul>
 </nav>
@@ -42,20 +42,11 @@ This is a styling-only HTML element or pattern. AngularCSS registers no runtime 
 
 ### Root styling selector
 
-- `data-slot="pagination"`
+- `.pagination`
 
-### Styling slots
-
-- `[data-slot="pagination"]`
-- `[data-slot="pagination-content"]`
-- `[data-slot="pagination-ellipsis"]`
-- `[data-slot="pagination-item"]`
-- `[data-slot="pagination-link"]`
-- `[data-slot="pagination-next"]`
-- `[data-slot="pagination-previous"]`
+### Semantic structure
 
 Use a native `nav` containing a `ul` or `ol` with direct `li` children. Page, previous, and next controls remain native links. Ellipsis is optional. Compose rows-per-page controls beside Pagination with existing native form components; Pagination does not own that model.
-Use the named slots as stable Tailwind and CSS selectors.
 
 ## API
 
@@ -83,7 +74,7 @@ Native DOM events continue to work normally. AngularTS event directives such as
 
 ## Behavior
 
-The directive preserves native navigation, list, list-item, and link semantics while synchronizing authored `aria-current`, `data-active`, `aria-disabled`, and dynamically inserted controls into stable state hooks. Native links own navigation; URLs, routing, page counts, rows-per-page values, and current-page application state remain AngularTS or application concerns.
+Native navigation, lists, list items, and links own pagination semantics and navigation. URLs, routing, page counts, rows-per-page values, and current-page application state remain AngularTS or application concerns. AngularCSS registers no pagination directive.
 
 AngularCSS does not replace AngularTS interpolation, bindings, structural
 directives, form controllers, validation, or application state.
@@ -98,7 +89,7 @@ content come from the application.
 
 ## Customization
 
-Target semantic elements, styling slots, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

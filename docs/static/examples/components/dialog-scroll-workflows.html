@@ -18,16 +18,16 @@
       <section class="dialog-workflow" aria-labelledby="scroll-heading">
         <h2 id="scroll-heading">Scrollable content</h2>
         <div id="scroll-dialog" ng-dialog>
-          <button ng-dialog-trigger ng-button variant="outline">
+          <button variant="outline" class="dialog-trigger button">
             Read profile
           </button>
-          <div ng-dialog-overlay></div>
-          <article ng-dialog-content data-size="wide">
-            <header ng-dialog-header>
-              <h3 ng-dialog-title>About Pedro Duarte</h3>
-              <p ng-dialog-description>A short professional biography.</p>
+          <div class="dialog-overlay"></div>
+          <dialog data-size="wide" class="dialog-content">
+            <header class="dialog-header">
+              <h3 class="dialog-title">About Pedro Duarte</h3>
+              <p class="dialog-description">A short professional biography.</p>
             </header>
-            <div ng-dialog-body class="dialog-prose">
+            <div class="dialog-prose dialog-body">
               <p>
                 Pedro is a designer and developer focused on accessible design
                 systems and thoughtful product interfaces.
@@ -53,7 +53,7 @@
                 remains independently scrollable inside the viewport.
               </p>
             </div>
-            <button ng-dialog-close ng-button variant="ghost" size="icon-sm">
+            <button variant="ghost" size="icon-sm" class="dialog-close button">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -66,25 +66,25 @@
               </svg>
               <span class="example-sr-only">Close</span>
             </button>
-          </article>
+          </dialog>
         </div>
       </section>
 
       <section class="dialog-workflow" aria-labelledby="sticky-heading">
         <h2 id="sticky-heading">Sticky footer</h2>
         <div id="sticky-dialog" ng-dialog>
-          <button ng-dialog-trigger ng-button variant="outline">
+          <button variant="outline" class="dialog-trigger button">
             Review notes
           </button>
-          <div ng-dialog-overlay></div>
-          <article ng-dialog-content data-size="wide">
-            <header ng-dialog-header>
-              <h3 ng-dialog-title>Release notes</h3>
-              <p ng-dialog-description>
+          <div class="dialog-overlay"></div>
+          <dialog data-size="wide" class="dialog-content">
+            <header class="dialog-header">
+              <h3 class="dialog-title">Release notes</h3>
+              <p class="dialog-description">
                 Review the changes included in this release.
               </p>
             </header>
-            <div ng-dialog-body class="dialog-prose">
+            <div class="dialog-prose dialog-body">
               <p>
                 Focus is now contained inside modal dialogs while they are open.
               </p>
@@ -109,13 +109,13 @@
                 both left-to-right and right-to-left layouts.
               </p>
             </div>
-            <footer ng-dialog-footer>
-              <button ng-button variant="outline" data-dialog-close>
+            <footer class="dialog-footer">
+              <button variant="outline" data-dialog-close class="button">
                 Cancel
               </button>
-              <button ng-button data-dialog-close>Confirm</button>
+              <button data-dialog-close class="button">Confirm</button>
             </footer>
-          </article>
+          </dialog>
         </div>
       </section>
     </main>

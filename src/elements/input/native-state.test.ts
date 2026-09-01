@@ -61,7 +61,7 @@ test("native choice artifacts preserve checked state and keyboard interaction", 
   await expect(page.getByRole("status")).toContainText("Terms accepted");
 
   await openElementArtifact(page, "switch");
-  const switchControl = page.getByRole("switch", { name: "Airplane Mode" });
+  const switchControl = page.getByRole("checkbox", { name: "Airplane Mode" });
   await switchControl.check();
   await expect(switchControl).toBeChecked();
   await expect(page.locator(".output")).toContainText("true");
@@ -99,10 +99,9 @@ test("button-group, toggle, and progress artifacts keep commands and state conne
   page,
 }) => {
   await openElementArtifact(page, "button-group");
-  await expect(page.locator("[ng-button-group]").first()).toHaveAttribute(
-    "role",
-    "group",
-  );
+  expect(
+    await page.locator(".button-group").first().getAttribute("role"),
+  ).toBeNull();
   await page.getByRole("button", { name: "Copy" }).click();
   await expect(page.getByRole("status")).toHaveText("Action: Copy");
 
@@ -117,8 +116,6 @@ test("button-group, toggle, and progress artifacts keep commands and state conne
   const labeled = page.getByRole("progressbar", {
     name: "Upload progress",
   });
-  await expect(labeled).toHaveAttribute("aria-valuenow", "56");
-  await expect(labeled.locator('[data-slot="progress-value"]')).toHaveText(
-    "56%",
-  );
+  await expect(labeled).toHaveAttribute("value", "56");
+  await expect(page.locator(".progress-value")).toHaveText("56%");
 });

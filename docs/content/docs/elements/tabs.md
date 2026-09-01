@@ -5,17 +5,17 @@ description: >
   Tabbed content sections
 ---
 
-Use ARIA tab roles and slot attributes. Set active triggers with
+Use ARIA tab roles and part classes. Set active triggers with
 `aria-selected="true"` or `data-active="true"`.
 
 ```html
-<div data-slot="tabs">
-  <div data-slot="tabs-list" role="tablist">
-    <button data-slot="tabs-trigger" role="tab" aria-selected="true">
+<div class="tabs">
+  <menu class="tabs-list">
+    <button aria-selected="true" class="tabs-trigger">
       Overview
     </button>
-  </div>
-  <div data-slot="tabs-content" role="tabpanel">Content</div>
+  </menu>
+  <div class="tabs-content">Content</div>
 </div>
 ```
 

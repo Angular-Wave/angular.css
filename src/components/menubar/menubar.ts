@@ -20,11 +20,11 @@ type MenubarEntry = {
   disconnect: () => void;
 };
 
-const menuSelector = '[data-slot="menubar-menu"], [ng-menubar-menu]';
-const triggerSelector = '[data-slot="menubar-trigger"], [ng-menubar-trigger]';
-const contentSelector = '[data-slot="menubar-content"], [ng-menubar-content]';
+const menuSelector = ".menubar-menu";
+const triggerSelector = ".menubar-trigger";
+const contentSelector = ".menubar-content";
 const itemSelector =
-  '[data-slot="menubar-item"], [ng-menubar-item], [role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"], a, button';
+  '.menubar-item, [role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"], a, button';
 
 const setAttribute = (
   element: HTMLElement,
@@ -82,7 +82,15 @@ export function menubarDirective(): ng.Directive {
       const syncContentItems = () => {
         queryAll<HTMLElement>(element, contentSelector).forEach((content) => {
           getAllContentItems(content).forEach((item) => {
-            setAttribute(item, "role", item.getAttribute("role") ?? "menuitem");
+            const role = item.matches(".menubar-checkbox-item")
+              ? "menuitemcheckbox"
+              : item.matches(".menubar-radio-item")
+                ? "menuitemradio"
+                : "menuitem";
+            setAttribute(item, "role", role);
+            if (role !== "menuitem" && !item.hasAttribute("aria-checked")) {
+              setAttribute(item, "aria-checked", "false");
+            }
           });
         });
       };
@@ -193,21 +201,22 @@ export function menubarDirective(): ng.Directive {
         const contentId = content.id || `${triggerId}-content`;
         trigger.id = triggerId;
         content.id = contentId;
-        setAttribute(
-          trigger,
-          "role",
-          trigger.getAttribute("role") ?? "menuitem",
-        );
+        setAttribute(trigger, "role", "menuitem");
         setAttribute(trigger, "aria-haspopup", "menu");
         setAttribute(trigger, "aria-controls", contentId);
-        setAttribute(content, "role", content.getAttribute("role") ?? "menu");
+        setAttribute(content, "role", "menu");
         setAttribute(content, "aria-labelledby", triggerId);
         setAttribute(content, "aria-hidden", "true");
         if (!content.hasAttribute("tabindex")) {
           setAttribute(content, "tabindex", "-1");
         }
         getContentItems(content).forEach((item) => {
-          setAttribute(item, "role", item.getAttribute("role") ?? "menuitem");
+          const role = item.matches(".menubar-checkbox-item")
+            ? "menuitemcheckbox"
+            : item.matches(".menubar-radio-item")
+              ? "menuitemradio"
+              : "menuitem";
+          setAttribute(item, "role", role);
         });
 
         const entry: MenubarEntry = {
@@ -342,9 +351,7 @@ export function menubarDirective(): ng.Directive {
           ? triggers.find((trigger) => trigger === activeElement)
           : null;
         const activeContent = activeElement
-          ? activeElement.closest<HTMLElement>(
-              '[data-slot="menubar-content"], [ng-menubar-content]',
-            )
+          ? activeElement.closest<HTMLElement>(".menubar-content")
           : null;
 
         if (!activeTrigger && !activeContent) return;
@@ -352,9 +359,8 @@ export function menubarDirective(): ng.Directive {
         if (event.key === "Escape") {
           event.preventDefault();
           if (activeContent) {
-            const currentMenu = activeContent.closest<HTMLElement>(
-              '[data-slot="menubar-menu"], [ng-menubar-menu]',
-            );
+            const currentMenu =
+              activeContent.closest<HTMLElement>(".menubar-menu");
             const currentIndex = currentMenu
               ? entries.findIndex((entry) => entry.menu === currentMenu)
               : -1;
@@ -399,9 +405,8 @@ export function menubarDirective(): ng.Directive {
 
           if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
             event.preventDefault();
-            const currentMenu = activeContent.closest<HTMLElement>(
-              '[data-slot="menubar-menu"], [ng-menubar-menu]',
-            );
+            const currentMenu =
+              activeContent.closest<HTMLElement>(".menubar-menu");
             const currentIndex = currentMenu
               ? entries.findIndex((entry) => entry.menu === currentMenu)
               : -1;
@@ -432,7 +437,7 @@ export function menubarDirective(): ng.Directive {
         }
       };
 
-      setAttribute(element, "role", element.getAttribute("role") ?? "menubar");
+      setAttribute(element, "role", "menubar");
 
       const handleDocumentClick = (event: MouseEvent) => {
         if (event.target instanceof Node && !element.contains(event.target)) {
@@ -446,9 +451,7 @@ export function menubarDirective(): ng.Directive {
             : null;
         if (
           !target?.closest(contentSelector) ||
-          target.matches(
-            '[data-slot="menubar-sub-trigger"], [ng-menubar-sub-trigger]',
-          ) ||
+          target.matches(".menubar-sub-trigger") ||
           isDisabled(target)
         ) {
           return;
@@ -461,7 +464,7 @@ export function menubarDirective(): ng.Directive {
       const structureObserver = new MutationObserver(syncStructure);
       structureObserver.observe(element, {
         attributes: true,
-        attributeFilter: ["data-slot", "dir"],
+        attributeFilter: ["dir"],
         childList: true,
         subtree: true,
       });

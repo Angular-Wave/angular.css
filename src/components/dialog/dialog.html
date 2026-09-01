@@ -13,13 +13,13 @@
     <div>
       <button aria-controls="profile-dialog">Open dialog</button>
       <section id="profile-dialog" ng-dialog>
-        <div data-slot="dialog-overlay"></div>
-        <section data-slot="dialog-content" role="dialog">
-          <header data-slot="dialog-header">
-            <h2 data-slot="dialog-title">Profile</h2>
-            <p data-slot="dialog-description">Preview your profile.</p>
+        <div class="dialog-overlay"></div>
+        <dialog class="dialog-content">
+          <header class="dialog-header">
+            <h2 class="dialog-title">Profile</h2>
+            <p class="dialog-description">Preview your profile.</p>
           </header>
-        </section>
+        </dialog>
       </section>
     </div>
   </body>

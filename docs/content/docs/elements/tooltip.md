@@ -9,9 +9,9 @@ Use a tooltip wrapper, trigger, and content. Content can be held visible with
 `data-open="true"` for controlled examples.
 
 ```html
-<span data-slot="tooltip">
-  <button data-slot="tooltip-trigger">Hover</button>
-  <span data-slot="tooltip-content" role="tooltip">Add to library</span>
+<span class="tooltip">
+  <button class="tooltip-trigger">Hover</button>
+  <span class="tooltip-content">Add to library</span>
 </span>
 ```
 

@@ -5,16 +5,14 @@ description: >
   Task completion indicator
 ---
 
-Use native `progress` or a slot-based progress wrapper when you need a label and
-value display.
+Use native `progress`. Compose its label and value with native `label` and
+`output` elements when needed.
 
 ```html
-<div ng-progress value="56" max="100">
-  <span ng-progress-label>Upload progress</span>
-  <span ng-progress-value></span>
-  <span ng-progress-track>
-    <span ng-progress-indicator></span>
-  </span>
+<div class="progress-group">
+  <label id="upload-progress-label" class="progress-label">Upload progress</label>
+  <output class="progress-value">56%</output>
+  <progress class="progress" value="56" max="100" aria-labelledby="upload-progress-label"></progress>
 </div>
 ```
 
@@ -39,18 +37,11 @@ This is a styling-only HTML element or pattern. AngularCSS registers no runtime 
 
 ### Root styling selector
 
-- `data-slot="progress"`
+- `.progress`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="progress"]`
-- `[data-slot="progress-indicator"]`
-- `[data-slot="progress-label"]`
-- `[data-slot="progress-track"]`
-- `[data-slot="progress-value"]`
-
-The root may contain optional label and value slots followed by one track containing one indicator. Use `data-value-format="custom"` on the value slot when application-authored localized text must be preserved. Use either `ng-progress-*` selectors or `data-slot` hooks on each element; do not duplicate both.
-Use the named slots as stable Tailwind and CSS selectors.
+Use a native `progress.progress` element. For a visible label and value, compose it with native `label` and `output` elements inside `.progress-group`.
 
 ## API
 
@@ -58,7 +49,6 @@ Use the named slots as stable Tailwind and CSS selectors.
 
 | Attribute | Access | Purpose |
 | --- | --- | --- |
-| `data-value-format` | Input | Set to `custom` to preserve application-authored value text. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
 | `max` | Input | Maximum native or component value. |
 | `value` | Input | Native value or authored component value. |
@@ -78,14 +68,14 @@ Native DOM events continue to work normally. AngularTS event directives such as
 
 ## Behavior
 
-The directive synchronizes authored `value` and `max` attributes into progressbar ARIA state, `data-value`, the `--value` CSS property, and standard label/value slots. AngularTS models, native form controls, timers, and application workflows remain the source of truth for when and how progress changes.
+The native `progress` element owns progressbar semantics and determinate or indeterminate state. Native `label` and `output` elements provide optional context. AngularTS may bind `value`; AngularCSS registers no progress directive.
 
 AngularCSS does not replace AngularTS interpolation, bindings, structural
 directives, form controllers, validation, or application state.
 
 ## Accessibility
 
-Give every progressbar an accessible name. A progress label slot is connected automatically unless the root already has `aria-label` or an authored `aria-labelledby`. Determinate values expose `aria-valuenow`; omit `value` for indeterminate progress.
+Give every native progress element an accessible name with `label`, `aria-label`, or `aria-labelledby`. Set `value` and `max` for determinate progress; omit `value` for indeterminate progress.
 
 Authored accessible names and relationships are preserved. Test the final
 composition with keyboard navigation and assistive technology because labels and
@@ -93,7 +83,7 @@ content come from the application.
 
 ## Customization
 
-Target semantic elements, styling slots, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

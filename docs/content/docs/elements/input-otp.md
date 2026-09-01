@@ -2,17 +2,17 @@
 title: input-otp
 notoc: true
 description: >
-  One-time password input slots
+  One-time password input parts
 ---
 
-Group OTP slots with `data-slot="input-otp-group"` and mark the active slot with
+Group OTP parts with `class="input-otp-group"` and mark the active part with
 `data-active="true"`.
 
 ```html
-<div data-slot="input-otp">
-  <div data-slot="input-otp-group">
-    <div data-slot="input-otp-slot">1</div>
-    <div data-slot="input-otp-slot" data-active="true">2</div>
+<div class="input-otp">
+  <div class="input-otp-group">
+    <div class="input-otp-part">1</div>
+    <div data-active="true" class="input-otp-part">2</div>
   </div>
 </div>
 ```

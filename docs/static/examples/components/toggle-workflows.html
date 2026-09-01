@@ -22,25 +22,23 @@
       >
         <h2 id="toggle-disabled-heading">Disabled</h2>
         <div class="row">
-          <button ng-toggle type="button" ng-disabled="disabledState">
+          <button type="button" ng-disabled="disabledState" class="toggle">
             Disabled
           </button>
           <button
-            ng-toggle
+
             type="button"
             variant="outline"
-            ng-disabled="disabledState"
-          >
+            ng-disabled="disabledState" class="toggle">
             Disabled
           </button>
         </div>
         <button
-          ng-button
+
           type="button"
           variant="outline"
           size="sm"
-          ng-click="disabledState = !disabledState"
-        >
+          ng-click="disabledState = !disabledState" class="button">
           {{ disabledState ? 'Enable toggles' : 'Disable toggles' }}
         </button>
       </section>
@@ -53,14 +51,13 @@
       >
         <h2 id="toggle-rtl-heading">إشارة مرجعية</h2>
         <button
-          ng-toggle
+
           type="button"
           size="sm"
           variant="outline"
           aria-label="تبديل الإشارة المرجعية"
           aria-pressed="{{ rtlBookmark }}"
-          ng-click="rtlBookmark = !rtlBookmark"
-        >
+          ng-click="rtlBookmark = !rtlBookmark" class="toggle">
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -72,9 +69,9 @@
           </svg>
           إشارة مرجعية
         </button>
-        <p class="output" role="status">
+        <output class="output">
           الحالة: {{ rtlBookmark ? 'مفعلة' : 'غير مفعلة' }}
-        </p>
+        </output>
       </section>
     </main>
   </body>

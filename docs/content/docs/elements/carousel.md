@@ -9,11 +9,11 @@ Use a content viewport, track, items, navigation controls, and dots. Carousel
 movement can be driven by native scrolling or application code.
 
 ```html
-<section data-slot="carousel">
-  <div data-slot="carousel-content">
-    <div data-slot="carousel-track">
-      <article data-slot="carousel-item">Slide</article>
-    </div>
+<section class="carousel">
+  <div class="carousel-content">
+    <ul class="carousel-track">
+      <li class="carousel-item">Slide</li>
+    </ul>
   </div>
 </section>
 ```

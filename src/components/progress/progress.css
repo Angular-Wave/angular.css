@@ -1,5 +1,4 @@
-[data-slot="progress"],
-[ng-progress] {
+.progress-group {
   display: flex;
   width: 100%;
   flex-wrap: wrap;
@@ -9,20 +8,17 @@
   font-size: var(--text-sm);
 }
 
-[data-slot="progress-label"],
-[ng-progress-label] {
+.progress-label {
   font-weight: var(--font-weight-medium);
 }
 
-[data-slot="progress-value"],
-[ng-progress-value] {
+.progress-value {
   margin-inline-start: auto;
   color: var(--muted-foreground);
   font-variant-numeric: tabular-nums;
 }
 
-[data-slot="progress-track"],
-[ng-progress-track] {
+.progress-track {
   position: relative;
   display: flex;
   width: 100%;
@@ -33,8 +29,7 @@
   background: var(--muted);
 }
 
-[data-slot="progress-indicator"],
-[ng-progress-indicator] {
+.progress-indicator {
   display: block;
   height: 100%;
   width: var(--value, 0%);
@@ -43,8 +38,7 @@
   transition: width 150ms ease;
 }
 
-progress[data-slot="progress"],
-progress[ng-progress] {
+progress.progress {
   width: 100%;
   height: calc(var(--spacing) * 1);
   overflow: hidden;
@@ -53,17 +47,14 @@ progress[ng-progress] {
   background: var(--muted);
 }
 
-progress[data-slot="progress"]::-webkit-progress-bar,
-progress[ng-progress]::-webkit-progress-bar {
+progress.progress::-webkit-progress-bar {
   background: var(--muted);
 }
 
-progress[data-slot="progress"]::-webkit-progress-value,
-progress[ng-progress]::-webkit-progress-value {
+progress.progress::-webkit-progress-value {
   background: var(--primary);
 }
 
-progress[data-slot="progress"]::-moz-progress-bar,
-progress[ng-progress]::-moz-progress-bar {
+progress.progress::-moz-progress-bar {
   background: var(--primary);
 }

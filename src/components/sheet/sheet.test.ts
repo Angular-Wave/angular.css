@@ -27,17 +27,16 @@ test("canonical artifact supplies modal semantics, focus containment, and profil
   await page.goto(canonicalUrl);
   await expectBuiltArtifactRuntime(page);
   const root = page.locator("#profile-sheet");
-  const trigger = root.locator("[ng-sheet-trigger]");
-  const content = root.locator("[ng-sheet-content]");
+  const trigger = root.locator(".sheet-trigger");
+  const content = root.locator(".sheet-content");
   const name = page.locator("#sheet-demo-name");
 
-  await expect(root).not.toHaveAttribute("data-slot");
   await expect(root).toHaveAttribute("data-side", "right");
   await expect(content).toBeHidden();
   await trigger.click();
   await expect(content).toBeVisible();
   await expect(content).toHaveAttribute("data-side", "right");
-  await expect(content).toHaveAttribute("role", "dialog");
+  expect(await content.getAttribute("role")).toBeNull();
   await expect(content).toHaveAttribute("aria-modal", "true");
   await expect(content).toHaveAttribute(
     "aria-labelledby",
@@ -78,8 +77,8 @@ test("canonical artifact supports Escape and controlled data-open state", async 
 }) => {
   await page.goto(canonicalUrl);
   const root = page.locator("#profile-sheet");
-  const trigger = root.locator("[ng-sheet-trigger]");
-  const content = root.locator("[ng-sheet-content]");
+  const trigger = root.locator(".sheet-trigger");
+  const content = root.locator(".sheet-content");
 
   await trigger.click();
   await page.keyboard.press("Escape");
@@ -98,16 +97,14 @@ test("no-close artifact omits controls and closes only through modal behavior", 
   await page.goto(noCloseUrl);
   await expectBuiltArtifactRuntime(page);
   const root = page.locator("#plain-sheet");
-  const trigger = root.locator("[ng-sheet-trigger]");
-  const content = root.locator("[ng-sheet-content]");
+  const trigger = root.locator(".sheet-trigger");
+  const content = root.locator(".sheet-content");
 
-  await expect(
-    root.locator("[ng-sheet-close], [data-sheet-close]"),
-  ).toHaveCount(0);
+  await expect(root.locator("[data-sheet-close]")).toHaveCount(0);
   await trigger.click();
   await expect(content).toBeVisible();
   await expect(content).toBeFocused();
-  await root.locator("[ng-sheet-overlay]").dispatchEvent("click");
+  await root.locator(".sheet-overlay").dispatchEvent("click");
   await expect(content).toBeHidden();
   await expect(trigger).toBeFocused();
 });
@@ -125,11 +122,11 @@ test("all authored sides reflect state, anchor physically, and provide real over
   for (let index = 0; index < sides.length; index += 1) {
     const side = sides[index];
     const root = roots.nth(index);
-    const content = root.locator("[ng-sheet-content]");
-    const body = root.locator("[ng-sheet-body]");
-    const footer = root.locator("[ng-sheet-footer]");
+    const content = root.locator(".sheet-content");
+    const body = root.locator(".sheet-body");
+    const footer = root.locator(".sheet-footer");
     await expect(root).toHaveAttribute("data-side", side);
-    await root.locator("[ng-sheet-trigger]").click();
+    await root.locator(".sheet-trigger").click();
     const box = await content.boundingBox();
     expect(box).not.toBeNull();
     if (side === "top") expect(box!.y).toBeCloseTo(0, 0);
@@ -164,11 +161,11 @@ test("RTL artifact keeps logical content direction on a physical left sheet", as
   await page.goto(rtlUrl);
   await expectBuiltArtifactRuntime(page);
   const root = page.locator("#rtl-profile-sheet");
-  const content = root.locator("[ng-sheet-content]");
+  const content = root.locator(".sheet-content");
 
   await expect(root).toHaveAttribute("data-direction", "rtl");
   await expect(root).toHaveAttribute("data-side", "left");
-  await root.locator("[ng-sheet-trigger]").click();
+  await root.locator(".sheet-trigger").click();
   await expect(content).toHaveAttribute("data-direction", "rtl");
   await expect(content).toHaveAttribute("data-side", "left");
   const box = await content.boundingBox();

@@ -23,19 +23,19 @@
         <p id="external-help" class="component-state-help">
           Enter an invoice total.
         </p>
-        <div ng-input-group id="described-group">
+        <div ng-input-group id="described-group" class="input-group">
           <input
-            data-input
-            data-slot="input-group-control"
+
+
             aria-label="Invoice total"
             aria-describedby="external-help"
-          />
-          <span data-slot="input-group-addon" id="currency-code">USD</span>
+           class="input-group-control input"/>
+          <span id="currency-code" class="input-group-addon">USD</span>
           <span
-            data-slot="input-group-addon"
+
             data-align="inline-end"
             aria-hidden="true"
-          >
+           class="input-group-addon">
             .00
           </span>
         </div>
@@ -46,19 +46,19 @@
         aria-labelledby="button-group-title"
       >
         <h2 id="button-group-title">Action button</h2>
-        <div ng-input-group id="button-group">
+        <div ng-input-group id="button-group" class="input-group">
           <input
-            data-input
-            data-slot="input-group-control"
+
+
             aria-label="Documentation search"
             ng-model="query"
-          />
+           class="input-group-control input"/>
           <button
-            ng-button
-            data-slot="input-group-button"
+
+
             type="button"
             ng-click="query=''"
-          >
+           class="input-group-button button">
             Clear
           </button>
         </div>
@@ -69,29 +69,28 @@
         aria-labelledby="dynamic-group-title"
       >
         <h2 id="dynamic-group-title">Conditional addon</h2>
-        <div ng-input-group id="dynamic-group">
+        <div ng-input-group id="dynamic-group" class="input-group">
           <input
-            data-input
-            data-slot="input-group-control"
+
+
             aria-label="Budget"
             aria-describedby="budget-help"
-          />
+           class="input-group-control input"/>
           <span
             ng-if="showCurrency"
-            data-slot="input-group-addon"
+
             id="dynamic-addon"
-          >
+           class="input-group-addon">
             USD
           </span>
         </div>
         <p id="budget-help" class="component-state-help">Monthly budget</p>
         <button
-          ng-button
+
           variant="outline"
           type="button"
           ng-click="showCurrency=true"
-          ng-disabled="showCurrency"
-        >
+          ng-disabled="showCurrency" class="button">
           Add currency
         </button>
       </section>
@@ -101,28 +100,27 @@
         aria-labelledby="hidden-group-title"
       >
         <h2 id="hidden-group-title">Hidden addon</h2>
-        <div ng-input-group id="hidden-group">
+        <div ng-input-group id="hidden-group" class="input-group">
           <input
-            data-input
-            data-slot="input-group-control"
+
+
             aria-label="Price"
             aria-describedby="price-help"
-          />
+           class="input-group-control input"/>
           <span
-            data-slot="input-group-addon"
+
             id="addon-price"
             ng-attr-aria-hidden="{{ priceHidden }}"
-          >
+           class="input-group-addon">
             USD
           </span>
         </div>
         <p id="price-help" class="component-state-help">Price before tax</p>
         <button
-          ng-button
+
           variant="outline"
           type="button"
-          ng-click="priceHidden=!priceHidden"
-        >
+          ng-click="priceHidden=!priceHidden" class="button">
           Toggle currency description
         </button>
       </section>

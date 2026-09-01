@@ -12,12 +12,12 @@ result to `data-type` for styling.
 
 ```html
 <div ng-toaster>
-  <section data-slot="toast" type="success">
-    <div data-slot="toast-content">
-      <h3 data-slot="toast-title">Saved</h3>
-      <p data-slot="toast-description">Update published.</p>
-    </div>
-  </section>
+  <li type="success" class="toast">
+    <section class="toast-content">
+      <h3 class="toast-title">Saved</h3>
+      <p class="toast-description">Update published.</p>
+    </section>
+  </li>
 </div>
 ```
 
@@ -51,25 +51,10 @@ This component's root directive is `[ng-toaster]`. Importing the package registe
 ### Directive selectors
 
 - `ng-toaster`
-- `ng-toast`
-- `ng-toast-action`
-- `ng-toast-close`
-- `ng-toast-description`
-- `ng-toast-title`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="toast"]`
-- `[data-slot="toast-action"]`
-- `[data-slot="toast-close"]`
-- `[data-slot="toast-content"]`
-- `[data-slot="toast-description"]`
-- `[data-slot="toast-icon"]`
-- `[data-slot="toast-title"]`
-- `[data-slot="toaster"]`
-
-Slots are optional unless the usage example or behavior description identifies a required relationship.
-Use the named slots as stable Tailwind and CSS selectors.
+Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough.
 
 ## API
 
@@ -90,7 +75,7 @@ Use the named slots as stable Tailwind and CSS selectors.
 | `data-variant` | Input | Stable component state or styling hook. |
 | `data-visible` | Output | Stable component state or styling hook. |
 | `position` | Input | Placement token used by the component surface. |
-| `role` | Input/output | Explicit semantic role when native HTML does not provide one. |
+| `role` | Output | Explicit semantic role when native HTML does not provide one. |
 | `type` | Input | Component or native behavior variant. |
 
 `Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
@@ -123,7 +108,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-toaster]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-toaster]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

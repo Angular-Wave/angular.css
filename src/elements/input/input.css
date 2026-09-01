@@ -1,5 +1,4 @@
-input[data-slot="input"],
-input[data-input] {
+input.input {
   @apply flex h-9 w-full min-w-0 rounded-md border border-input bg-transparent
     px-3 py-1 text-sm shadow-xs transition-colors outline-none
     placeholder:text-muted-foreground

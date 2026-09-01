@@ -19,13 +19,12 @@
       <section class="native-select-workflow-section">
         <header class="workflow-heading"><h2>Grouped options</h2></header>
         <div class="native-select-field">
-          <label ng-label for="native-department">Department</label>
-          <div data-slot="native-select-wrapper">
+          <label for="native-department" class="label">Department</label>
+          <div class="native-select-wrapper">
             <select
-              ng-native-select
+
               id="native-department"
-              ng-model="nativeSelectWorkflow.department"
-            >
+              ng-model="nativeSelectWorkflow.department" class="native-select">
               <option value="">Select department</option>
               <optgroup label="Engineering">
                 <option value="frontend">Frontend</option>
@@ -60,9 +59,9 @@
         <header class="workflow-heading"><h2>States</h2></header>
         <div class="native-select-state-list">
           <div class="native-select-field">
-            <label ng-label for="native-disabled">Disabled</label>
-            <div data-slot="native-select-wrapper">
-              <select ng-native-select id="native-disabled" disabled>
+            <label for="native-disabled" class="label">Disabled</label>
+            <div class="native-select-wrapper">
+              <select id="native-disabled" disabled class="native-select">
                 <option value="">Disabled</option>
                 <option value="apple">Apple</option>
                 <option value="banana">Banana</option>
@@ -71,14 +70,13 @@
             </div>
           </div>
           <div class="native-select-field">
-            <label ng-label for="native-invalid">Invalid</label>
-            <div data-slot="native-select-wrapper">
+            <label for="native-invalid" class="label">Invalid</label>
+            <div class="native-select-wrapper">
               <select
-                ng-native-select
+
                 id="native-invalid"
                 aria-invalid="true"
-                ng-model="nativeSelectWorkflow.fruit"
-              >
+                ng-model="nativeSelectWorkflow.fruit" class="native-select">
                 <option value="">Error state</option>
                 <option value="apple">Apple</option>
                 <option value="banana">Banana</option>
@@ -87,14 +85,13 @@
             </div>
           </div>
           <div class="native-select-field">
-            <label ng-label for="native-compact">Small</label>
-            <div data-slot="native-select-wrapper" data-size="sm">
+            <label for="native-compact" class="label">Small</label>
+            <div data-size="sm" class="native-select-wrapper">
               <select
-                ng-native-select
+
                 id="native-compact"
                 data-size="sm"
-                ng-model="nativeSelectWorkflow.compact"
-              >
+                ng-model="nativeSelectWorkflow.compact" class="native-select">
                 <option value="todo">Todo</option>
                 <option value="done">Done</option>
               </select>
@@ -110,21 +107,19 @@
           <h2>Dynamic AngularTS options</h2>
         </header>
         <button
-          ng-button
+
           type="button"
           variant="outline"
-          ng-click="nativeSelectWorkflow.showArchived=true"
-        >
+          ng-click="nativeSelectWorkflow.showArchived=true" class="button">
           Add archived option
         </button>
         <div class="native-select-field">
-          <label ng-label for="native-dynamic">Project status</label>
-          <div data-slot="native-select-wrapper">
+          <label for="native-dynamic" class="label">Project status</label>
+          <div class="native-select-wrapper">
             <select
-              ng-native-select
+
               id="native-dynamic"
-              ng-model="nativeSelectWorkflow.dynamic"
-            >
+              ng-model="nativeSelectWorkflow.dynamic" class="native-select">
               <option value="">Select status</option>
               <option value="active">Active</option>
               <option

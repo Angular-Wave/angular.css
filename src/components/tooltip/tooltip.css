@@ -1,17 +1,15 @@
-[data-slot="tooltip"],
+.tooltip,
 [ng-tooltip] {
   position: relative;
   display: inline-flex;
   width: fit-content;
 }
 
-[data-slot="tooltip-trigger"],
-[ng-tooltip-trigger] {
+.tooltip-trigger {
   display: inline-flex;
 }
 
-[data-slot="tooltip-content"],
-[ng-tooltip-content] {
+.tooltip-content {
   position: absolute;
   z-index: 50;
   display: inline-flex;
@@ -35,19 +33,17 @@
     transform 150ms ease;
 }
 
-[data-slot="tooltip-content"][data-direction="rtl"],
-[ng-tooltip-content][data-direction="rtl"] {
+.tooltip-content[data-direction="rtl"] {
   direction: rtl;
 }
 
-[data-slot="tooltip-content"][data-open="true"],
-[ng-tooltip-content][data-open="true"] {
+.tooltip-content[data-open="true"] {
   opacity: 1;
   transform: translate(var(--tooltip-x, 0), var(--tooltip-y, 0)) translate(0, 0)
     scale(1);
 }
 
-:is([data-slot="tooltip-content"], [ng-tooltip-content])[data-side="top"] {
+.tooltip-content[data-side="top"] {
   bottom: 100%;
   left: 50%;
 
@@ -57,7 +53,7 @@
   transform-origin: bottom;
 }
 
-:is([data-slot="tooltip-content"], [ng-tooltip-content])[data-side="bottom"] {
+.tooltip-content[data-side="bottom"] {
   top: 100%;
   left: 50%;
 
@@ -67,7 +63,7 @@
   transform-origin: top;
 }
 
-:is([data-slot="tooltip-content"], [ng-tooltip-content])[data-side="left"] {
+.tooltip-content[data-side="left"] {
   top: 50%;
   right: 100%;
 
@@ -78,7 +74,7 @@
   transform-origin: right;
 }
 
-:is([data-slot="tooltip-content"], [ng-tooltip-content])[data-side="right"] {
+.tooltip-content[data-side="right"] {
   top: 50%;
   left: 100%;
 
@@ -89,7 +85,7 @@
   transform-origin: left;
 }
 
-:is([data-slot="tooltip-content"], [ng-tooltip-content])::after {
+.tooltip-content::after {
   position: absolute;
   width: calc(var(--spacing) * 2.5);
   height: calc(var(--spacing) * 2.5);
@@ -99,37 +95,25 @@
   transform: rotate(45deg);
 }
 
-:is(
-    [data-slot="tooltip-content"],
-    [ng-tooltip-content]
-  )[data-side="top"]::after {
+:is(.tooltip-content)[data-side="top"]::after {
   bottom: calc(var(--spacing) * -1);
   left: 50%;
   transform: translateX(-50%) rotate(45deg);
 }
 
-:is(
-    [data-slot="tooltip-content"],
-    [ng-tooltip-content]
-  )[data-side="bottom"]::after {
+:is(.tooltip-content)[data-side="bottom"]::after {
   top: calc(var(--spacing) * -1);
   left: 50%;
   transform: translateX(-50%) rotate(45deg);
 }
 
-:is(
-    [data-slot="tooltip-content"],
-    [ng-tooltip-content]
-  )[data-side="left"]::after {
+:is(.tooltip-content)[data-side="left"]::after {
   top: 50%;
   right: calc(var(--spacing) * -1);
   transform: translateY(-50%) rotate(45deg);
 }
 
-:is(
-    [data-slot="tooltip-content"],
-    [ng-tooltip-content]
-  )[data-side="right"]::after {
+:is(.tooltip-content)[data-side="right"]::after {
   top: 50%;
   left: calc(var(--spacing) * -1);
   transform: translateY(-50%) rotate(45deg);

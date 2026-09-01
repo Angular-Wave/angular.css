@@ -13,23 +13,14 @@
     <div class="stack-sm" ng-init="status='Todo'">
       <div class="output">Current: <span ng-bind="status"></span></div>
       <div ng-select data-open="false">
-        <button data-slot="select-trigger" type="button">Todo</button>
-        <div data-slot="select-content">
-          <div
-            data-slot="select-item"
-            data-value="Todo"
-            role="option"
-            aria-selected="true"
-          >
+        <button type="button" class="select-trigger">Todo</button>
+        <ul class="select-content">
+          <li data-value="Todo" aria-selected="true" class="select-item">
             Todo
-          </div>
-          <div data-slot="select-item" data-value="In progress" role="option">
-            In progress
-          </div>
-          <div data-slot="select-item" data-value="Done" role="option">
-            Done
-          </div>
-        </div>
+          </li>
+          <li data-value="In progress" class="select-item">In progress</li>
+          <li data-value="Done" class="select-item">Done</li>
+        </ul>
       </div>
     </div>
   </body>

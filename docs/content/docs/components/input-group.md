@@ -5,14 +5,14 @@ description: >
   Grouped input controls and addon content with shared focus/description wiring.
 ---
 
-Use `ng-input-group` with one native control and optional styling slots for
+Use `ng-input-group` with one native control and optional styling parts for
 addons, text, and buttons. AngularTS continues to own the model and actions.
 
 ```html
-<div ng-input-group>
-  <input data-slot="input-group-control" placeholder="Search" />
-  <div data-slot="input-group-addon" data-align="inline-start">🔍</div>
-  <div data-slot="input-group-addon" data-align="inline-end">⌘K</div>
+<div ng-input-group class="input-group">
+  <input placeholder="Search"  class="input-group-control"/>
+  <div data-align="inline-start" class="input-group-addon">🔍</div>
+  <div data-align="inline-end" class="input-group-addon">⌘K</div>
 </div>
 ```
 
@@ -72,19 +72,10 @@ This component's root directive is `[ng-input-group]`. Importing the package reg
 ### Directive selectors
 
 - `ng-input-group`
-- `ng-input-group-addon`
-- `ng-input-group-button`
 
-### Styling slots
-
-- `[data-slot="input-group"]`
-- `[data-slot="input-group-addon"]`
-- `[data-slot="input-group-button"]`
-- `[data-slot="input-group-control"]`
-- `[data-slot="input-group-text"]`
+### Semantic structure
 
 Use one native input, textarea, select, combobox, or spinbutton control per root. Addons may be placed at inline-start, inline-end, block-start, or block-end with `data-align`. Clicking non-button addon content focuses the control; buttons, menus, tooltips, and popovers retain their existing component behavior. AngularTS owns values, validation, counters, submission, and all application actions.
-Use the named slots as stable Tailwind and CSS selectors.
 
 ## API
 
@@ -129,7 +120,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-input-group]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-input-group]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

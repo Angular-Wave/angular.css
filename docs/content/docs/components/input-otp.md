@@ -5,17 +5,16 @@ description: >
   Multi-digit OTP inputs with automatic focus movement and paste handling.
 ---
 
-Use `ng-input-otp` to apply OTP slot behavior to a set of fixed-width inputs.
+Use `ng-input-otp` on a fieldset containing grouped `.input-otp-slot` inputs.
 
 ```html
-<div ng-input-otp>
-  <div data-slot="input-otp-slot">
+<fieldset ng-input-otp class="input-otp">
+  <div class="input-otp-group">
+    <span class="input-otp-slot">
     <input />
+    </span>
   </div>
-  <div data-slot="input-otp-slot">
-    <input />
-  </div>
-</div>
+</fieldset>
 ```
 
 ## Example
@@ -36,17 +35,10 @@ This component's root directive is `[ng-input-otp]`. Importing the package regis
 ### Directive selectors
 
 - `ng-input-otp`
-- `ng-input-otp-slot`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="input-otp"]`
-- `[data-slot="input-otp-group"]`
-- `[data-slot="input-otp-separator"]`
-- `[data-slot="input-otp-slot"]`
-
-Slots are optional unless the usage example or behavior description identifies a required relationship.
-Use the named slots as stable Tailwind and CSS selectors.
+Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough.
 
 ## API
 
@@ -95,7 +87,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-input-otp]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-input-otp]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

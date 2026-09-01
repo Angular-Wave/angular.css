@@ -8,11 +8,11 @@ description: >
 Items compose media, content, title, description, and actions.
 
 ```html
-<div data-slot="item" variant="outline">
-  <div data-slot="item-content">
-    <div data-slot="item-title">Item title</div>
-    <p data-slot="item-description">Supporting description.</p>
-  </div>
+<div variant="outline" class="item">
+  <section class="item-content">
+    <h3 class="item-title">Item title</h3>
+    <p class="item-description">Supporting description.</p>
+  </section>
 </div>
 ```
 

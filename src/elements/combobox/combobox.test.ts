@@ -29,7 +29,7 @@ test("element artifact runs the packaged combobox without source construction", 
   const basic = page.locator("#basic-combobox");
   const automatic = page.locator("#auto-combobox");
   await expect(roots).toHaveCount(2);
-  await expect(basic.locator("[ng-combobox-content]")).toBeHidden();
+  await expect(basic.locator(".combobox-content")).toBeHidden();
 
   const basicInput = basic.getByRole("combobox");
   await basicInput.fill("sv");

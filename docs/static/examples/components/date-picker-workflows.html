@@ -19,25 +19,25 @@
     <main class="date-picker-grid" aria-label="Date picker workflows">
       <section class="date-picker-workflow">
         <h2>Basic</h2>
-        <div ng-field class="date-picker-field-compact">
-          <label ng-field-label for="date-picker-basic">Date</label>
+        <fieldset ng-field class="date-picker-field-compact">
+          <label for="date-picker-basic" class="field-label">Date</label>
           <span ng-popover id="date-picker-basic-popover">
             <button
               id="date-picker-basic"
               type="button"
-              ng-button
-              ng-popover-trigger
+
+
               variant="outline"
-              class="date-picker-trigger"
+              class="date-picker-trigger popover-trigger button"
             >
               {{ picker.basicDate ? picker.format(picker.basicDate) : 'Pick a
               date' }}
             </button>
-            <section
-              ng-popover-content
+            <aside
+
               side="bottom"
               align="start"
-              class="calendar-popover-content"
+              class="calendar-popover-content popover-content"
               aria-label="Choose a basic date"
             >
               <section
@@ -47,15 +47,15 @@
                 ng-attr-data-value="{{ picker.basicDate }}"
                 ng-on-angularcss:calendar-select="picker.selectBasic($event.detail.value)"
               >
-                <header ng-calendar-header>
+                <header class="calendar-header">
                   <button
                     type="button"
-                    ng-button
-                    ng-calendar-previous
+
+
                     size="icon"
                     variant="ghost"
                     aria-label="Previous basic month"
-                  >
+                   class="calendar-previous button">
                     <svg
                       viewBox="0 0 24 24"
                       fill="none"
@@ -66,15 +66,15 @@
                       <path d="m15 18-6-6 6-6"></path>
                     </svg>
                   </button>
-                  <h3 ng-calendar-title></h3>
+                  <h3 class="calendar-title"></h3>
                   <button
                     type="button"
-                    ng-button
-                    ng-calendar-next
+
+
                     size="icon"
                     variant="ghost"
                     aria-label="Next basic month"
-                  >
+                   class="calendar-next button">
                     <svg
                       viewBox="0 0 24 24"
                       fill="none"
@@ -86,11 +86,11 @@
                     </svg>
                   </button>
                 </header>
-                <div ng-calendar-grid></div>
+                <div class="calendar-grid"></div>
               </section>
-            </section>
+            </aside>
           </span>
-        </div>
+        </fieldset>
       </section>
 
       <section class="date-picker-workflow">
@@ -98,16 +98,15 @@
         <span ng-popover id="date-picker-demo-popover">
           <button
             type="button"
-            ng-button
-            ng-popover-trigger
+
+
             variant="outline"
-            class="date-picker-trigger date-picker-trigger-between"
+            class="date-picker-trigger date-picker-trigger-between popover-trigger button"
             ng-attr-data-empty="{{ !picker.demoDate }}"
           >
             <span
               >{{ picker.demoDate ? picker.format(picker.demoDate) : 'Pick a
-              date' }}</span
-            >
+              date' }}</span>
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -118,11 +117,11 @@
               <path d="m6 9 6 6 6-6"></path>
             </svg>
           </button>
-          <section
-            ng-popover-content
+          <aside
+
             side="bottom"
             align="start"
-            class="calendar-popover-content"
+            class="calendar-popover-content popover-content"
             aria-label="Choose a demo date"
           >
             <section
@@ -132,15 +131,15 @@
               ng-attr-data-value="{{ picker.demoDate }}"
               ng-on-angularcss:calendar-select="picker.selectDemo($event.detail.value)"
             >
-              <header ng-calendar-header>
+              <header class="calendar-header">
                 <button
                   type="button"
-                  ng-button
-                  ng-calendar-previous
+
+
                   size="icon"
                   variant="ghost"
                   aria-label="Previous demo month"
-                >
+                 class="calendar-previous button">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -151,15 +150,15 @@
                     <path d="m15 18-6-6 6-6"></path>
                   </svg>
                 </button>
-                <h3 ng-calendar-title></h3>
+                <h3 class="calendar-title"></h3>
                 <button
                   type="button"
-                  ng-button
-                  ng-calendar-next
+
+
                   size="icon"
                   variant="ghost"
                   aria-label="Next demo month"
-                >
+                 class="calendar-next button">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -171,33 +170,33 @@
                   </svg>
                 </button>
               </header>
-              <div ng-calendar-grid></div>
+              <div class="calendar-grid"></div>
             </section>
-          </section>
+          </aside>
         </span>
       </section>
 
       <section class="date-picker-workflow">
         <h2>Date of birth</h2>
-        <div ng-field class="date-picker-field-compact">
-          <label ng-field-label for="date-picker-dob">Date of birth</label>
+        <fieldset ng-field class="date-picker-field-compact">
+          <label for="date-picker-dob" class="field-label">Date of birth</label>
           <span ng-popover id="date-picker-dob-popover">
             <button
               id="date-picker-dob"
               type="button"
-              ng-button
-              ng-popover-trigger
+
+
               variant="outline"
-              class="date-picker-trigger"
+              class="date-picker-trigger popover-trigger button"
             >
               {{ picker.dobDate ? picker.format(picker.dobDate) : 'Select date'
               }}
             </button>
-            <section
-              ng-popover-content
+            <aside
+
               side="bottom"
               align="start"
-              class="calendar-popover-content"
+              class="calendar-popover-content popover-content"
               aria-label="Choose a birth date"
             >
               <section
@@ -210,15 +209,15 @@
                 data-end-year="2026"
                 ng-on-angularcss:calendar-select="picker.selectDob($event.detail.value)"
               >
-                <header ng-calendar-header>
+                <header class="calendar-header">
                   <button
                     type="button"
-                    ng-button
-                    ng-calendar-previous
+
+
                     size="icon"
                     variant="ghost"
                     aria-label="Previous birth month"
-                  >
+                   class="calendar-previous button">
                     <svg
                       viewBox="0 0 24 24"
                       fill="none"
@@ -229,15 +228,15 @@
                       <path d="m15 18-6-6 6-6"></path>
                     </svg>
                   </button>
-                  <h3 ng-calendar-title></h3>
+                  <h3 class="calendar-title"></h3>
                   <button
                     type="button"
-                    ng-button
-                    ng-calendar-next
+
+
                     size="icon"
                     variant="ghost"
                     aria-label="Next birth month"
-                  >
+                   class="calendar-next button">
                     <svg
                       viewBox="0 0 24 24"
                       fill="none"
@@ -249,40 +248,38 @@
                     </svg>
                   </button>
                 </header>
-                <div ng-calendar-grid></div>
+                <div class="calendar-grid"></div>
               </section>
-            </section>
+            </aside>
           </span>
-        </div>
+        </fieldset>
       </section>
 
       <section class="date-picker-workflow">
         <h2>Input</h2>
-        <div ng-field class="date-picker-input-field">
-          <label ng-field-label for="date-picker-input"
-            >Subscription Date</label
-          >
-          <div ng-input-group role="group">
+        <fieldset ng-field class="date-picker-input-field">
+          <label for="date-picker-input"
+             class="field-label">Subscription Date</label>
+          <div ng-input-group class="input-group">
             <input
               id="date-picker-input"
-              data-input
-              ng-input-group-control
+
+
               ng-model="picker.inputValue"
               data-change="picker.updateInput()"
               ng-keydown="picker.openPopover('date-picker-input-popover', $event)"
-              placeholder="June 01, 2025"
-            />
-            <div ng-input-group-addon data-align="inline-end">
+              placeholder="June 01, 2025"  class="input-group-control input"/>
+            <div data-align="inline-end" class="input-group-addon">
               <span ng-popover id="date-picker-input-popover">
                 <button
                   type="button"
-                  ng-button
-                  ng-input-group-button
-                  ng-popover-trigger
+
+
+
                   variant="ghost"
                   size="icon-xs"
                   aria-label="Select subscription date"
-                >
+                 class="input-group-button popover-trigger button">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -294,11 +291,11 @@
                     <path d="M16 3v4M8 3v4M3 10h18"></path>
                   </svg>
                 </button>
-                <section
-                  ng-popover-content
+                <aside
+
                   side="bottom"
                   align="end"
-                  class="calendar-popover-content"
+                  class="calendar-popover-content popover-content"
                   aria-label="Choose a subscription date"
                 >
                   <section
@@ -308,15 +305,15 @@
                     ng-attr-data-value="{{ picker.inputDate }}"
                     ng-on-angularcss:calendar-select="picker.selectInput($event.detail.value)"
                   >
-                    <header ng-calendar-header>
+                    <header class="calendar-header">
                       <button
                         type="button"
-                        ng-button
-                        ng-calendar-previous
+
+
                         size="icon"
                         variant="ghost"
                         aria-label="Previous subscription month"
-                      >
+                       class="calendar-previous button">
                         <svg
                           viewBox="0 0 24 24"
                           fill="none"
@@ -327,15 +324,15 @@
                           <path d="m15 18-6-6 6-6"></path>
                         </svg>
                       </button>
-                      <h3 ng-calendar-title></h3>
+                      <h3 class="calendar-title"></h3>
                       <button
                         type="button"
-                        ng-button
-                        ng-calendar-next
+
+
                         size="icon"
                         variant="ghost"
                         aria-label="Next subscription month"
-                      >
+                       class="calendar-next button">
                         <svg
                           viewBox="0 0 24 24"
                           fill="none"
@@ -347,40 +344,39 @@
                         </svg>
                       </button>
                     </header>
-                    <div ng-calendar-grid></div>
+                    <div class="calendar-grid"></div>
                   </section>
-                </section>
+                </aside>
               </span>
             </div>
           </div>
-        </div>
+        </fieldset>
       </section>
 
       <section class="date-picker-workflow date-picker-workflow-wide">
         <h2>Natural language</h2>
-        <div ng-field class="date-picker-natural-field">
-          <label ng-field-label for="date-picker-natural">Schedule Date</label>
-          <div ng-input-group role="group">
+        <fieldset ng-field class="date-picker-natural-field">
+          <label for="date-picker-natural" class="field-label">Schedule Date</label>
+          <div ng-input-group class="input-group">
             <input
               id="date-picker-natural"
-              data-input
-              ng-input-group-control
+
+
               ng-model="picker.naturalValue"
               data-change="picker.updateNatural()"
               ng-keydown="picker.openPopover('date-picker-natural-popover', $event)"
-              placeholder="Tomorrow or next week"
-            />
-            <div ng-input-group-addon data-align="inline-end">
+              placeholder="Tomorrow or next week"  class="input-group-control input"/>
+            <div data-align="inline-end" class="input-group-addon">
               <span ng-popover id="date-picker-natural-popover">
                 <button
                   type="button"
-                  ng-button
-                  ng-input-group-button
-                  ng-popover-trigger
+
+
+
                   variant="ghost"
                   size="icon-xs"
                   aria-label="Select schedule date"
-                >
+                 class="input-group-button popover-trigger button">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -392,11 +388,11 @@
                     <path d="M16 3v4M8 3v4M3 10h18"></path>
                   </svg>
                 </button>
-                <section
-                  ng-popover-content
+                <aside
+
                   side="bottom"
                   align="end"
-                  class="calendar-popover-content"
+                  class="calendar-popover-content popover-content"
                   aria-label="Choose a schedule date"
                 >
                   <section
@@ -409,15 +405,15 @@
                     data-end-year="2028"
                     ng-on-angularcss:calendar-select="picker.selectNatural($event.detail.value)"
                   >
-                    <header ng-calendar-header>
+                    <header class="calendar-header">
                       <button
                         type="button"
-                        ng-button
-                        ng-calendar-previous
+
+
                         size="icon"
                         variant="ghost"
                         aria-label="Previous schedule month"
-                      >
+                       class="calendar-previous button">
                         <svg
                           viewBox="0 0 24 24"
                           fill="none"
@@ -428,15 +424,15 @@
                           <path d="m15 18-6-6 6-6"></path>
                         </svg>
                       </button>
-                      <h3 ng-calendar-title></h3>
+                      <h3 class="calendar-title"></h3>
                       <button
                         type="button"
-                        ng-button
-                        ng-calendar-next
+
+
                         size="icon"
                         variant="ghost"
                         aria-label="Next schedule month"
-                      >
+                       class="calendar-next button">
                         <svg
                           viewBox="0 0 24 24"
                           fill="none"
@@ -448,9 +444,9 @@
                         </svg>
                       </button>
                     </header>
-                    <div ng-calendar-grid></div>
+                    <div class="calendar-grid"></div>
                   </section>
-                </section>
+                </aside>
               </span>
             </div>
           </div>
@@ -458,23 +454,22 @@
             Your post will be published on
             <strong>{{ picker.format(picker.naturalDate) }}</strong>.
           </p>
-        </div>
+        </fieldset>
       </section>
 
       <section class="date-picker-workflow date-picker-workflow-wide">
         <h2>Range</h2>
-        <div ng-field class="date-picker-range-field">
-          <label ng-field-label for="date-picker-range"
-            >Date Picker Range</label
-          >
+        <fieldset ng-field class="date-picker-range-field">
+          <label for="date-picker-range"
+             class="field-label">Date Picker Range</label>
           <span ng-popover id="date-picker-range-popover">
             <button
               id="date-picker-range"
               type="button"
-              ng-button
-              ng-popover-trigger
+
+
               variant="outline"
-              class="date-picker-trigger"
+              class="date-picker-trigger popover-trigger button"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -488,14 +483,13 @@
               </svg>
               <span
                 >{{ picker.formatShort(picker.rangeStart) }} - {{
-                picker.formatShort(picker.rangeEnd) }}</span
-              >
+                picker.formatShort(picker.rangeEnd) }}</span>
             </button>
-            <section
-              ng-popover-content
+            <aside
+
               side="bottom"
               align="start"
-              class="calendar-popover-content"
+              class="calendar-popover-content popover-content"
               aria-label="Choose a date range"
             >
               <section
@@ -508,15 +502,15 @@
                 ng-attr-data-range-end-value="{{ picker.rangeEnd }}"
                 ng-on-angularcss:calendar-select="picker.selectRange($event.detail.range)"
               >
-                <header ng-calendar-header>
+                <header class="calendar-header">
                   <button
                     type="button"
-                    ng-button
-                    ng-calendar-previous
+
+
                     size="icon"
                     variant="ghost"
                     aria-label="Previous range month"
-                  >
+                   class="calendar-previous button">
                     <svg
                       viewBox="0 0 24 24"
                       fill="none"
@@ -527,15 +521,15 @@
                       <path d="m15 18-6-6 6-6"></path>
                     </svg>
                   </button>
-                  <h3 ng-calendar-title></h3>
+                  <h3 class="calendar-title"></h3>
                   <button
                     type="button"
-                    ng-button
-                    ng-calendar-next
+
+
                     size="icon"
                     variant="ghost"
                     aria-label="Next range month"
-                  >
+                   class="calendar-next button">
                     <svg
                       viewBox="0 0 24 24"
                       fill="none"
@@ -547,11 +541,11 @@
                     </svg>
                   </button>
                 </header>
-                <div ng-calendar-grid></div>
+                <div class="calendar-grid"></div>
               </section>
-            </section>
+            </aside>
           </span>
-        </div>
+        </fieldset>
       </section>
 
       <section class="date-picker-workflow" dir="rtl" lang="ar">
@@ -559,16 +553,15 @@
         <span ng-popover id="date-picker-rtl-popover">
           <button
             type="button"
-            ng-button
-            ng-popover-trigger
+
+
             variant="outline"
-            class="date-picker-trigger date-picker-trigger-between"
+            class="date-picker-trigger date-picker-trigger-between popover-trigger button"
             ng-attr-data-empty="{{ !picker.rtlDate }}"
           >
             <span
               >{{ picker.rtlDate ? picker.formatRtl(picker.rtlDate) : 'اختر
-              تاريخًا' }}</span
-            >
+              تاريخًا' }}</span>
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -579,11 +572,11 @@
               <path d="m6 9 6 6 6-6"></path>
             </svg>
           </button>
-          <section
-            ng-popover-content
+          <aside
+
             side="bottom"
             align="start"
-            class="calendar-popover-content"
+            class="calendar-popover-content popover-content"
             aria-label="اختر تاريخًا"
           >
             <section
@@ -593,15 +586,15 @@
               ng-attr-data-value="{{ picker.rtlDate }}"
               ng-on-angularcss:calendar-select="picker.selectRtl($event.detail.value)"
             >
-              <header ng-calendar-header>
+              <header class="calendar-header">
                 <button
                   type="button"
-                  ng-button
-                  ng-calendar-previous
+
+
                   size="icon"
                   variant="ghost"
                   aria-label="الشهر السابق"
-                >
+                 class="calendar-previous button">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -612,15 +605,15 @@
                     <path d="m15 18-6-6 6-6"></path>
                   </svg>
                 </button>
-                <h3 ng-calendar-title></h3>
+                <h3 class="calendar-title"></h3>
                 <button
                   type="button"
-                  ng-button
-                  ng-calendar-next
+
+
                   size="icon"
                   variant="ghost"
                   aria-label="الشهر التالي"
-                >
+                 class="calendar-next button">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -632,9 +625,9 @@
                   </svg>
                 </button>
               </header>
-              <div ng-calendar-grid></div>
+              <div class="calendar-grid"></div>
             </section>
-          </section>
+          </aside>
         </span>
       </section>
 
@@ -643,21 +636,20 @@
       >
         <h2>Date and time</h2>
         <div class="date-picker-time-fields">
-          <div ng-field>
-            <label ng-field-label for="date-picker-time-date">Date</label>
+          <fieldset ng-field>
+            <label for="date-picker-time-date" class="field-label">Date</label>
             <span ng-popover id="date-picker-time-popover">
               <button
                 id="date-picker-time-date"
                 type="button"
-                ng-button
-                ng-popover-trigger
+
+
                 variant="outline"
-                class="date-picker-trigger date-picker-trigger-between"
+                class="date-picker-trigger date-picker-trigger-between popover-trigger button"
               >
                 <span
                   >{{ picker.timeDate ? picker.formatShort(picker.timeDate) :
-                  'Select date' }}</span
-                >
+                  'Select date' }}</span>
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -668,11 +660,11 @@
                   <path d="m6 9 6 6 6-6"></path>
                 </svg>
               </button>
-              <section
-                ng-popover-content
+              <aside
+
                 side="bottom"
                 align="start"
-                class="calendar-popover-content"
+                class="calendar-popover-content popover-content"
                 aria-label="Choose an appointment date"
               >
                 <section
@@ -685,15 +677,15 @@
                   data-end-year="2028"
                   ng-on-angularcss:calendar-select="picker.selectTimeDate($event.detail.value)"
                 >
-                  <header ng-calendar-header>
+                  <header class="calendar-header">
                     <button
                       type="button"
-                      ng-button
-                      ng-calendar-previous
+
+
                       size="icon"
                       variant="ghost"
                       aria-label="Previous appointment month"
-                    >
+                     class="calendar-previous button">
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -704,15 +696,15 @@
                         <path d="m15 18-6-6 6-6"></path>
                       </svg>
                     </button>
-                    <h3 ng-calendar-title></h3>
+                    <h3 class="calendar-title"></h3>
                     <button
                       type="button"
-                      ng-button
-                      ng-calendar-next
+
+
                       size="icon"
                       variant="ghost"
                       aria-label="Next appointment month"
-                    >
+                     class="calendar-next button">
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -724,21 +716,20 @@
                       </svg>
                     </button>
                   </header>
-                  <div ng-calendar-grid></div>
+                  <div class="calendar-grid"></div>
                 </section>
-              </section>
+              </aside>
             </span>
-          </div>
-          <div ng-field>
-            <label ng-field-label for="date-picker-time-value">Time</label>
+          </fieldset>
+          <fieldset ng-field>
+            <label for="date-picker-time-value" class="field-label">Time</label>
             <input
               id="date-picker-time-value"
-              data-input
+
               type="time"
               step="1"
-              ng-model="picker.time"
-            />
-          </div>
+              ng-model="picker.time" class="input" />
+          </fieldset>
         </div>
       </section>
     </main>

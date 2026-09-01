@@ -1,4 +1,4 @@
-[data-slot="avatar"],
+.avatar,
 [ng-avatar] {
   position: relative;
   display: inline-flex;
@@ -14,7 +14,7 @@
   user-select: none;
 }
 
-:is([data-slot="avatar"], [ng-avatar])::after {
+:is(.avatar, [ng-avatar])::after {
   position: absolute;
   inset: 0;
   border: 1px solid var(--border);
@@ -23,20 +23,19 @@
   pointer-events: none;
 }
 
-[data-slot="avatar"][data-size="sm"],
+.avatar[data-size="sm"],
 [ng-avatar][data-size="sm"] {
   width: calc(var(--spacing) * 6);
   height: calc(var(--spacing) * 6);
 }
 
-[data-slot="avatar"][data-size="lg"],
+.avatar[data-size="lg"],
 [ng-avatar][data-size="lg"] {
   width: calc(var(--spacing) * 10);
   height: calc(var(--spacing) * 10);
 }
 
-[data-slot="avatar-image"],
-[ng-avatar-image] {
+.avatar-image {
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -44,8 +43,7 @@
   object-fit: cover;
 }
 
-[data-slot="avatar-fallback"],
-[ng-avatar-fallback] {
+.avatar-fallback {
   display: flex;
   width: 100%;
   height: 100%;
@@ -56,13 +54,11 @@
   font-size: var(--text-sm);
 }
 
-:is([data-slot="avatar"], [ng-avatar])[data-size="sm"]
-  :is([data-slot="avatar-fallback"], [ng-avatar-fallback]) {
+:is(.avatar, [ng-avatar])[data-size="sm"] .avatar-fallback {
   font-size: var(--text-xs);
 }
 
-[data-slot="avatar-badge"],
-[ng-avatar-badge] {
+.avatar-badge {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -75,40 +71,35 @@
   color: var(--primary-foreground);
 }
 
-:is([data-slot="avatar-badge"], [ng-avatar-badge])[data-variant="success"] {
+.avatar-badge[data-variant="success"] {
   background: var(--success);
 }
 
-:is([data-slot="avatar"], [ng-avatar])[data-size="sm"]
-  :is([data-slot="avatar-badge"], [ng-avatar-badge]) {
+:is(.avatar, [ng-avatar])[data-size="sm"] .avatar-badge {
   width: calc(var(--spacing) * 2);
   height: calc(var(--spacing) * 2);
 }
 
-:is([data-slot="avatar"], [ng-avatar])[data-size="lg"]
-  :is([data-slot="avatar-badge"], [ng-avatar-badge]) {
+:is(.avatar, [ng-avatar])[data-size="lg"] .avatar-badge {
   width: calc(var(--spacing) * 3);
   height: calc(var(--spacing) * 3);
 }
 
-[data-slot="avatar-group"],
-[ng-avatar-group] {
+.avatar-group {
   display: flex;
   align-items: center;
 }
 
-:is([data-slot="avatar-group"], [ng-avatar-group])
-  > :is([data-slot="avatar"], [ng-avatar]) {
+.avatar-group > :is(.avatar, [ng-avatar]) {
   box-shadow: 0 0 0 2px var(--background);
   margin-inline-start: calc(var(--spacing) * -2);
 }
 
-:is([data-slot="avatar-group"], [ng-avatar-group]) > :first-child {
+.avatar-group > :first-child {
   margin-inline-start: 0;
 }
 
-[data-slot="avatar-group-count"],
-[ng-avatar-group-count] {
+.avatar-group-count {
   display: inline-flex;
   width: calc(var(--spacing) * 8);
   height: calc(var(--spacing) * 8);
@@ -123,19 +114,15 @@
   margin-inline-start: calc(var(--spacing) * -2);
 }
 
-:is([data-slot="avatar-group"], [ng-avatar-group]):has(
-    > :is([data-slot="avatar"], [ng-avatar])[data-size="sm"]
-  )
-  > :is([data-slot="avatar-group-count"], [ng-avatar-group-count]) {
+.avatar-group:has(> :is(.avatar, [ng-avatar])[data-size="sm"])
+  > .avatar-group-count {
   width: calc(var(--spacing) * 6);
   height: calc(var(--spacing) * 6);
   font-size: var(--text-xs);
 }
 
-:is([data-slot="avatar-group"], [ng-avatar-group]):has(
-    > :is([data-slot="avatar"], [ng-avatar])[data-size="lg"]
-  )
-  > :is([data-slot="avatar-group-count"], [ng-avatar-group-count]) {
+.avatar-group:has(> :is(.avatar, [ng-avatar])[data-size="lg"])
+  > .avatar-group-count {
   width: calc(var(--spacing) * 10);
   height: calc(var(--spacing) * 10);
 }

@@ -8,11 +8,11 @@ description: >
 Items compose media, content, title, description, and actions.
 
 ```html
-<div data-slot="item" variant="outline">
-  <div data-slot="item-content">
-    <div data-slot="item-title">Item title</div>
-    <p data-slot="item-description">Supporting description.</p>
-  </div>
+<div variant="outline" class="item">
+  <section class="item-content">
+    <h3 class="item-title">Item title</h3>
+    <p class="item-description">Supporting description.</p>
+  </section>
 </div>
 ```
 
@@ -37,24 +37,11 @@ This is a styling-only HTML element or pattern. AngularCSS registers no runtime 
 
 ### Root styling selector
 
-- `data-slot="item"`
+- `.item`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="item"]`
-- `[data-slot="item-actions"]`
-- `[data-slot="item-content"]`
-- `[data-slot="item-description"]`
-- `[data-slot="item-footer"]`
-- `[data-slot="item-group"]`
-- `[data-slot="item-header"]`
-- `[data-slot="item-media"]`
-- `[data-slot="item-separator"]`
-- `[data-slot="item-title"]`
-- `[data-slot="spinner"]`
-
-Slots are optional unless the usage example or behavior description identifies a required relationship.
-Use the named slots as stable Tailwind and CSS selectors.
+Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough.
 
 ## API
 
@@ -92,7 +79,7 @@ content come from the application.
 
 ## Customization
 
-Target semantic elements, styling slots, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

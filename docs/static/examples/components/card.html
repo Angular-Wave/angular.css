@@ -10,43 +10,42 @@
     <script src="../../js/angular-css.umd.js"></script>
   </head>
   <body ng-app="ui" ng-cloak data-example="card-demo">
-    <section ng-card class="example-card visual-example">
-      <header data-slot="card-header">
-        <h3 data-slot="card-title">Login to your account</h3>
-        <p data-slot="card-description">
+    <article class="example-card visual-example card">
+      <header class="card-header">
+        <h2 class="card-title">Login to your account</h2>
+        <p class="card-description">
           Enter your email below to login to your account
         </p>
-        <div data-slot="card-action">
-          <button ng-button variant="link" type="button">Sign Up</button>
-        </div>
+        <menu class="card-action">
+          <button variant="link" type="button" class="button">Sign Up</button>
+        </menu>
       </header>
-      <div data-slot="card-content">
+      <section class="card-content">
         <form class="card-form" id="login-form">
           <div class="card-field">
-            <label ng-label for="card-email">Email</label>
+            <label for="card-email" class="label">Email</label>
             <input
-              data-input
+
               id="card-email"
               type="email"
               placeholder="m@example.com"
-              required
-            />
+              required class="input" />
           </div>
           <div class="card-field">
             <div class="card-label-row">
-              <label ng-label for="card-password">Password</label>
+              <label for="card-password" class="label">Password</label>
               <a href="#forgot-password">Forgot your password?</a>
             </div>
-            <input data-input id="card-password" type="password" required />
+            <input id="card-password" type="password" required class="input" />
           </div>
         </form>
-      </div>
-      <footer data-slot="card-footer" class="card-footer-stacked">
-        <button ng-button type="submit" form="login-form">Login</button>
-        <button ng-button variant="outline" type="button">
+      </section>
+      <footer class="card-footer-stacked card-footer">
+        <button type="submit" form="login-form" class="button">Login</button>
+        <button variant="outline" type="button" class="button">
           Login with Google
         </button>
       </footer>
-    </section>
+    </article>
   </body>
 </html>

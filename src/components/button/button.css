@@ -1,9 +1,6 @@
-button[ng-button],
-button[data-slot="button"],
-input[type="button"][ng-button],
-input[type="button"][data-slot="button"],
-a[ng-button],
-a[data-slot="button"] {
+button.button,
+input[type="button"].button,
+a.button {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
@@ -27,284 +24,166 @@ a[data-slot="button"] {
     transform 80ms ease;
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  ):focus-visible {
+:is(button, input[type="button"], a).button:has(> [data-icon="inline-start"]) {
+  padding-inline-start: calc(var(--spacing) * 2);
+}
+
+:is(button, input[type="button"], a).button:has(> [data-icon="inline-end"]) {
+  padding-inline-end: calc(var(--spacing) * 2);
+}
+
+:is(button, input[type="button"], a).button:focus-visible {
   border-color: var(--ring);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  ):active:not([aria-haspopup]) {
-  transform: translateY(1px);
-}
-
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  ):disabled,
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[aria-disabled="true"] {
+:is(button, input[type="button"], a).button:disabled,
+:is(button, input[type="button"], a).button[aria-disabled="true"] {
   pointer-events: none;
   opacity: 0.5;
 }
 
-:is(button, input[type="button"], a):is([ng-button], [data-slot="button"]):not(
-    [size]
-  ),
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[size="default"] {
+:is(button, input[type="button"], a).button:not([size]),
+:is(button, input[type="button"], a).button[size="default"] {
   height: calc(var(--spacing) * 9);
   padding-inline: calc(var(--spacing) * 2.5);
 }
 
-:is(button, input[type="button"], a):is([ng-button], [data-slot="button"]):not(
-    [variant]
-  ),
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[variant="default"] {
+:is(button, input[type="button"], a).button:not([variant]),
+:is(button, input[type="button"], a).button[variant="default"] {
   background: var(--primary);
   color: var(--primary-foreground);
 }
 
-:is(button, input[type="button"], a):is([ng-button], [data-slot="button"]):not(
-    [variant]
-  ):hover,
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[variant="default"]:hover {
+:is(button, input[type="button"], a).button:not([variant]):hover,
+:is(button, input[type="button"], a).button[variant="default"]:hover {
   background: color-mix(in srgb, var(--primary) 80%, transparent);
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[variant="outline"] {
+:is(button, input[type="button"], a).button[variant="outline"] {
   border-color: var(--border);
   background: var(--background);
   color: var(--foreground);
   box-shadow: 0 1px 2px color-mix(in srgb, var(--foreground) 6%, transparent);
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[variant="outline"]:hover {
+:is(button, input[type="button"], a).button[variant="outline"]:hover {
   background: var(--muted);
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[variant="secondary"] {
+:is(button, input[type="button"], a).button[variant="secondary"] {
   background: var(--secondary);
   color: var(--secondary-foreground);
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[variant="secondary"]:hover {
+:is(button, input[type="button"], a).button[variant="secondary"]:hover {
   background: color-mix(in srgb, var(--secondary) 80%, var(--foreground));
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[variant="ghost"] {
+:is(button, input[type="button"], a).button[variant="ghost"] {
   background: transparent;
   color: var(--foreground);
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[variant="ghost"]:hover {
+:is(button, input[type="button"], a).button[variant="ghost"]:hover {
   background: var(--muted);
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[variant="destructive"],
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[variant="error"] {
+:is(button, input[type="button"], a).button[variant="destructive"],
+:is(button, input[type="button"], a).button[variant="error"] {
   background: color-mix(in srgb, var(--error) 10%, transparent);
   color: var(--error);
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[variant="destructive"]:hover,
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[variant="error"]:hover {
+:is(button, input[type="button"], a).button[variant="destructive"]:hover,
+:is(button, input[type="button"], a).button[variant="error"]:hover {
   background: color-mix(in srgb, var(--error) 20%, transparent);
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[variant="warning"],
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[variant="info"],
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[variant="success"] {
+:is(button, input[type="button"], a).button[variant="warning"],
+:is(button, input[type="button"], a).button[variant="info"],
+:is(button, input[type="button"], a).button[variant="success"] {
   color: white;
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[variant="warning"] {
+:is(button, input[type="button"], a).button[variant="warning"] {
   background: var(--warning);
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[variant="info"] {
+:is(button, input[type="button"], a).button[variant="info"] {
   background: var(--info);
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[variant="success"] {
+:is(button, input[type="button"], a).button[variant="success"] {
   background: var(--success);
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[variant="link"] {
+:is(button, input[type="button"], a).button[variant="link"] {
   background: transparent;
   color: var(--primary);
   text-underline-offset: 4px;
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[variant="link"]:hover {
+:is(button, input[type="button"], a).button[variant="link"]:hover {
   text-decoration-line: underline;
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[size="xs"] {
+:is(button, input[type="button"], a).button[size="xs"] {
   height: calc(var(--spacing) * 6);
   gap: calc(var(--spacing) * 1);
   padding-inline: calc(var(--spacing) * 2);
   font-size: var(--text-xs);
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[size="sm"] {
+:is(button, input[type="button"], a).button[size="sm"] {
   height: calc(var(--spacing) * 8);
   gap: calc(var(--spacing) * 1);
   padding-inline: calc(var(--spacing) * 2.5);
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[size="lg"] {
+:is(button, input[type="button"], a).button[size="lg"] {
   height: calc(var(--spacing) * 10);
   padding-inline: calc(var(--spacing) * 2.5);
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[size="icon-xs"] {
+:is(button, input[type="button"], a).button[size="icon-xs"] {
   width: calc(var(--spacing) * 6);
   height: calc(var(--spacing) * 6);
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[size="icon-sm"] {
+:is(button, input[type="button"], a).button[size="icon-sm"] {
   width: calc(var(--spacing) * 8);
   height: calc(var(--spacing) * 8);
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[size="icon"] {
+:is(button, input[type="button"], a).button[size="icon"] {
   width: calc(var(--spacing) * 9);
   height: calc(var(--spacing) * 9);
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[size="icon-lg"] {
+:is(button, input[type="button"], a).button[size="icon-lg"] {
   width: calc(var(--spacing) * 10);
   height: calc(var(--spacing) * 10);
 }
 
-:is(button, input[type="button"], a):is([ng-button], [data-slot="button"]):has(
-    > [data-icon="inline-start"]
-  ) {
-  padding-inline-start: calc(var(--spacing) * 2);
-}
-
-:is(button, input[type="button"], a):is([ng-button], [data-slot="button"]):has(
-    > [data-icon="inline-end"]
-  ) {
-  padding-inline-end: calc(var(--spacing) * 2);
-}
-
-:is(button, input[type="button"], a):is([ng-button], [data-slot="button"])
-  > svg {
+:is(button, input[type="button"], a).button > svg {
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
   flex-shrink: 0;
   pointer-events: none;
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[size="xs"]
-  > svg,
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[size="icon-xs"]
-  > svg {
+:is(button, input[type="button"], a).button[size="xs"] > svg,
+:is(button, input[type="button"], a).button[size="icon-xs"] > svg {
   width: calc(var(--spacing) * 3);
   height: calc(var(--spacing) * 3);
 }
 
-:is(button, input[type="button"], a):is(
-    [ng-button],
-    [data-slot="button"]
-  )[aria-invalid="true"] {
+:is(button, input[type="button"], a).button[aria-invalid="true"] {
   border-color: var(--error);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--error) 20%, transparent);
+}
+
+:is(button, input[type="button"], a).button:active:not([aria-haspopup]) {
+  transform: translateY(1px);
 }

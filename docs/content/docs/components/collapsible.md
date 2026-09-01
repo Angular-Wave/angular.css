@@ -13,8 +13,8 @@ application model.
 
 ```html
 <details ng-collapsible>
-  <summary data-slot="collapsible-trigger">Order details</summary>
-  <div data-slot="collapsible-content">Shipping address and item details.</div>
+  <summary class="collapsible-trigger">Order details</summary>
+  <div class="collapsible-content">Shipping address and item details.</div>
 </details>
 ```
 
@@ -44,17 +44,10 @@ This component's root directive is `[ng-collapsible]`. Importing the package reg
 ### Directive selectors
 
 - `ng-collapsible`
-- `ng-collapsible-content`
-- `ng-collapsible-trigger`
 
-### Styling slots
-
-- `[data-slot="collapsible"]`
-- `[data-slot="collapsible-content"]`
-- `[data-slot="collapsible-trigger"]`
+### Semantic structure
 
 A trigger and content panel are required. Prefer direct `summary` and panel children of native `details`; use a native button trigger only when the composition cannot be represented by `details`.
-Use the named slots as stable Tailwind and CSS selectors.
 
 ## API
 
@@ -99,7 +92,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-collapsible]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-collapsible]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

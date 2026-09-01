@@ -5,13 +5,13 @@ description: >
   Chart layout and legend primitives
 ---
 
-Use chart slots to frame application-rendered SVG, canvas, or HTML charts. Bars
+Use chart parts to frame application-rendered SVG, canvas, or HTML charts. Bars
 can use `--value` and `--chart-color` for simple CSS-rendered examples.
 
 ```html
-<section data-slot="chart">
-  <div data-slot="chart-plot">
-    <span data-slot="chart-bar" style="--value: 72%;"></span>
+<section class="chart">
+  <div class="chart-plot">
+    <span style="--value: 72%;" class="chart-bar"></span>
   </div>
 </section>
 ```

@@ -1,28 +1,25 @@
-[data-slot="input-otp"],
+.input-otp,
 [ng-input-otp] {
   display: flex;
   align-items: center;
 }
 
-[data-slot="input-otp"][data-disabled="true"],
+.input-otp[data-disabled="true"],
 [ng-input-otp][data-disabled="true"] {
   opacity: 0.5;
 }
 
-:is([data-slot="input-otp"], [ng-input-otp])[data-invalid="true"]
-  :is([data-slot="input-otp-group"], [ng-input-otp-group]) {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--error) 20%, transparent);
-}
-
-[data-slot="input-otp-group"],
-[ng-input-otp-group] {
+.input-otp-group {
   display: flex;
   align-items: center;
   border-radius: var(--radius);
 }
 
-[data-slot="input-otp-slot"],
-[ng-input-otp-slot] {
+.input-otp[data-invalid="true"] .input-otp-group {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--error) 20%, transparent);
+}
+
+.input-otp-slot {
   position: relative;
   display: inline-flex;
   width: calc(var(--spacing) * 8);
@@ -41,41 +38,34 @@
     box-shadow 150ms ease;
 }
 
-[data-slot="input-otp-slot"]:first-child,
-[ng-input-otp-slot]:first-child {
+.input-otp-slot:first-child {
   border-start-start-radius: var(--radius);
   border-end-start-radius: var(--radius);
 }
 
-[data-slot="input-otp-slot"]:last-child,
-[ng-input-otp-slot]:last-child {
+.input-otp-slot:last-child {
   border-inline-end-width: 1px;
   border-start-end-radius: var(--radius);
   border-end-end-radius: var(--radius);
 }
 
-[data-slot="input-otp-slot"][data-active="true"],
-[ng-input-otp-slot][data-active="true"],
-[data-slot="input-otp-slot"]:focus-within,
-[ng-input-otp-slot]:focus-within {
+.input-otp-slot[data-active="true"],
+.input-otp-slot:focus-within {
   z-index: 1;
   border-color: var(--ring);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
-[data-slot="input-otp-slot"][aria-invalid="true"],
-[ng-input-otp-slot][aria-invalid="true"] {
+.input-otp-slot[aria-invalid="true"] {
   border-color: var(--error);
 }
 
-[data-slot="input-otp"][data-invalid="true"] [data-slot="input-otp-slot"],
-[ng-input-otp][data-invalid="true"] [ng-input-otp-slot],
-[ng-input-otp][data-invalid="true"] [data-slot="input-otp-slot"] {
+.input-otp[data-invalid="true"] .input-otp-slot,
+[ng-input-otp][data-invalid="true"] .input-otp-slot {
   border-color: var(--error);
 }
 
-[data-slot="input-otp-slot"] > :is(input, span),
-[ng-input-otp-slot] > :is(input, span) {
+.input-otp-slot > :is(input, span) {
   width: 100%;
   height: 100%;
   border: 0;
@@ -86,14 +76,13 @@
   outline: none;
 }
 
-[data-slot="input-otp-separator"],
-[ng-input-otp-separator] {
+.input-otp-separator {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-:is([data-slot="input-otp-separator"], [ng-input-otp-separator]) > svg {
+.input-otp-separator > svg {
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
 }

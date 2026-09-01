@@ -8,7 +8,7 @@ test("published scroll area exposes focusable viewport and live scroll state", a
 }) => {
   await page.goto(workflowsUrl);
   const root = page.locator("#vertical-scroll-area");
-  const viewport = root.locator("[ng-scroll-area-viewport]");
+  const viewport = root.locator(".scroll-area-viewport");
 
   await expect(viewport).toHaveAttribute("tabindex", "0");
   await expect(viewport).toHaveAttribute("role", "region");
@@ -30,9 +30,9 @@ test("published horizontal scrollbar tracks and changes viewport position", asyn
   await page.goto(workflowsUrl);
   const root = page.locator("#horizontal-scroll-area");
   const scrollbar = root.locator(
-    '[data-slot="scroll-area-scrollbar"][data-orientation="horizontal"]',
+    '.scroll-area-scrollbar[data-orientation="horizontal"]',
   );
-  const thumb = scrollbar.locator('[data-slot="scroll-area-thumb"]');
+  const thumb = scrollbar.locator(".scroll-area-thumb");
 
   await expect(root).toHaveAttribute("data-scrollable-x", "true");
   await expect(scrollbar).toHaveAttribute("data-visible", "true");
@@ -62,9 +62,10 @@ test("published workflow updates overflow when AngularTS inserts content", async
   await expect(root).toHaveAttribute("data-scrollable-y", "false");
   await page.getByRole("button", { name: "Add content" }).click();
   await expect(root).toHaveAttribute("data-scrollable-y", "true");
-  await expect(
-    root.locator('[data-slot="scroll-area-scrollbar"]'),
-  ).toHaveAttribute("data-visible", "true");
+  await expect(root.locator(".scroll-area-scrollbar")).toHaveAttribute(
+    "data-visible",
+    "true",
+  );
 });
 
 test("published workflow mirrors AngularTS direction and scroll boundaries", async ({
@@ -72,7 +73,7 @@ test("published workflow mirrors AngularTS direction and scroll boundaries", asy
 }) => {
   await page.goto(workflowsUrl);
   const rtl = page.locator("#rtl-scroll-area");
-  const rtlViewport = rtl.locator("[ng-scroll-area-viewport]");
+  const rtlViewport = rtl.locator(".scroll-area-viewport");
   await expect(rtl).toHaveAttribute("data-direction", "rtl");
   await expect(rtlViewport).toHaveAttribute("data-direction", "rtl");
 
@@ -81,7 +82,7 @@ test("published workflow mirrors AngularTS direction and scroll boundaries", asy
   await expect(rtlViewport).toHaveAttribute("data-direction", "ltr");
 
   const vertical = page.locator("#vertical-scroll-area");
-  const viewport = vertical.locator("[ng-scroll-area-viewport]");
+  const viewport = vertical.locator(".scroll-area-viewport");
   await viewport.focus();
   await viewport.press("End");
   await expect(vertical).toHaveAttribute("data-scroll-at-bottom", "true");

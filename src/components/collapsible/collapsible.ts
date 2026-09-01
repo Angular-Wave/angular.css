@@ -9,14 +9,10 @@ export function collapsibleDirective(): ng.Directive {
     link(scope: ng.Scope, element: HTMLElement) {
       const trigger = query(
         element,
-        '[data-slot="collapsible-trigger"], [ng-collapsible-trigger], button',
+        ".collapsible-trigger, button",
         HTMLElement,
       );
-      const content = query(
-        element,
-        '[data-slot="collapsible-content"], [ng-collapsible-content]',
-        HTMLElement,
-      );
+      const content = query(element, ".collapsible-content", HTMLElement);
 
       if (!trigger || !content) return;
 

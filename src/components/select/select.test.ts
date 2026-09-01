@@ -29,17 +29,16 @@ test("canonical artifact supplies Nova anatomy and updates AngularTS state", asy
   await expectBuiltArtifactRuntime(page);
 
   const root = page.locator("[ng-select]");
-  const trigger = page.locator("[ng-select-trigger]");
-  const content = page.locator("[ng-select-content]");
-  const items = page.locator("[ng-select-item]");
-  await expect(root).not.toHaveAttribute("data-slot");
+  const trigger = page.locator(".select-trigger");
+  const content = page.locator(".select-content");
+  const items = page.locator(".select-item");
   await expect(trigger).toHaveAttribute("role", "combobox");
   await expect(trigger).toHaveAttribute("aria-haspopup", "listbox");
   await expect(trigger).toHaveAttribute("aria-expanded", "false");
   await expect(content).toHaveAttribute("role", "listbox");
   await expect(content).toBeHidden();
   await expect(items).toHaveCount(6);
-  await expect(page.locator("[ng-select-group]")).toHaveAttribute(
+  await expect(page.locator(".select-group")).toHaveAttribute(
     "aria-labelledby",
     /select-label-/,
   );
@@ -54,7 +53,7 @@ test("canonical artifact supplies Nova anatomy and updates AngularTS state", asy
   await page.getByRole("option", { name: "Banana", exact: true }).click();
 
   await expect(root).toHaveAttribute("data-value", "banana");
-  await expect(page.locator("[ng-select-value]")).toHaveText("Banana");
+  await expect(page.locator(".select-value")).toHaveText("Banana");
   await expect(page.locator(".output")).toContainText("Selected: banana");
   await expect(content).toBeHidden();
   await expect(trigger).toBeFocused();
@@ -66,9 +65,9 @@ test("keyboard navigation skips disabled options and drives the AngularTS model"
   await page.goto(statesUrl);
   await expectBuiltArtifactRuntime(page);
   const root = page.locator("#state-select");
-  const trigger = root.locator("[ng-select-trigger]");
-  const content = root.locator("[ng-select-content]");
-  const items = root.locator("[ng-select-item]");
+  const trigger = root.locator(".select-trigger");
+  const content = root.locator(".select-content");
+  const items = root.locator(".select-item");
 
   await page.getByRole("button", { name: "Toggle popup" }).click();
   await expect(content).toBeVisible();
@@ -106,28 +105,27 @@ test("grouped, disabled, and invalid references retain their semantics", async (
 
   const disabled = page.locator("#disabled-select");
   await expect(disabled).toHaveAttribute("data-disabled", "true");
-  await expect(disabled.locator("[ng-select-trigger]")).toBeDisabled();
-  await disabled.locator("[ng-select-trigger]").press("Enter");
-  await expect(disabled.locator("[ng-select-content]")).toBeHidden();
+  await expect(disabled.locator(".select-trigger")).toBeDisabled();
+  await disabled.locator(".select-trigger").press("Enter");
+  await expect(disabled.locator(".select-content")).toBeHidden();
 
   const grouped = page.locator("#grouped-select");
-  await grouped.locator("[ng-select-trigger]").click();
-  await expect(grouped.locator("[ng-select-group]")).toHaveCount(2);
-  await expect(grouped.locator("[ng-select-separator]")).toHaveAttribute(
+  await grouped.locator(".select-trigger").click();
+  await expect(grouped.locator(".select-group")).toHaveCount(2);
+  await expect(grouped.locator(".select-separator")).toHaveAttribute(
     "role",
     "separator",
   );
   await page.getByRole("option", { name: "Spinach", exact: true }).click();
   await expect(grouped).toHaveAttribute("data-value", "spinach");
-  await expect(grouped.locator("[ng-select-value]")).toHaveText("Spinach");
+  await expect(grouped.locator(".select-value")).toHaveText("Spinach");
 
-  const invalidTrigger = page.locator("#invalid-select [ng-select-trigger]");
+  const invalidTrigger = page.locator("#invalid-select .select-trigger");
   await expect(invalidTrigger).toHaveAttribute("aria-invalid", "true");
   await expect(invalidTrigger).toHaveCSS("border-color", "rgb(229, 72, 77)");
-  await expect(page.getByText("Please select a fruit.")).toHaveAttribute(
-    "role",
-    "alert",
-  );
+  expect(
+    await page.getByText("Please select a fruit.").getAttribute("role"),
+  ).toBeNull();
 });
 
 test("align-item input changes popup placement without component-owned state", async ({
@@ -135,9 +133,9 @@ test("align-item input changes popup placement without component-owned state", a
 }) => {
   await page.goto(workflowsUrl);
   const root = page.locator("#align-select");
-  const trigger = root.locator("[ng-select-trigger]");
-  const content = root.locator("[ng-select-content]");
-  const alignment = page.getByRole("switch", { name: "Align Item" });
+  const trigger = root.locator(".select-trigger");
+  const content = root.locator(".select-content");
+  const alignment = page.getByRole("checkbox", { name: "Align Item" });
 
   await expect(alignment).toBeChecked();
   await expect(content).toHaveAttribute("data-align-trigger", "true");
@@ -158,13 +156,13 @@ test("RTL reference mirrors direction and preserves logical selection", async ({
 }) => {
   await page.goto(workflowsUrl);
   const root = page.locator("#rtl-select");
-  const content = root.locator("[ng-select-content]");
+  const content = root.locator(".select-content");
   await expect(root).toHaveAttribute("data-direction", "rtl");
   await expect(content).toHaveAttribute("data-direction", "rtl");
-  await root.locator("[ng-select-trigger]").click();
+  await root.locator(".select-trigger").click();
   await page.getByRole("option", { name: "موز", exact: true }).click();
   await expect(root).toHaveAttribute("data-value", "banana");
-  await expect(root.locator("[ng-select-value]")).toHaveText("موز");
+  await expect(root.locator(".select-value")).toHaveText("موز");
 });
 
 test("scrollable reference exposes scroll controls and keeps active options visible", async ({
@@ -172,8 +170,8 @@ test("scrollable reference exposes scroll controls and keeps active options visi
 }) => {
   await page.goto(workflowsUrl);
   const root = page.locator("#timezone-select");
-  const trigger = root.locator("[ng-select-trigger]");
-  const content = root.locator("[ng-select-content]");
+  const trigger = root.locator(".select-trigger");
+  const content = root.locator(".select-content");
   await trigger.click();
   await expect(content).toBeVisible();
   await expect(content).toHaveAttribute("data-scroll-start", "true");
@@ -189,7 +187,7 @@ test("scrollable reference exposes scroll controls and keeps active options visi
 
   await trigger.focus();
   await trigger.press("End");
-  const last = root.locator("[ng-select-item]").last();
+  const last = root.locator(".select-item").last();
   await expect(last).toHaveAttribute("data-highlighted", "true");
   await expect(last).toBeInViewport();
   await trigger.press("Enter");
@@ -201,17 +199,17 @@ test("controlled open state is reflected from an AngularTS binding", async ({
 }) => {
   await page.goto(statesUrl);
   const root = page.locator("#state-select");
-  const content = root.locator("[ng-select-content]");
+  const content = root.locator(".select-content");
   await page.getByRole("button", { name: "Toggle popup" }).click();
   await expect(root).toHaveAttribute("open", "true");
   await expect(root).toHaveAttribute("data-open", "true");
   await expect(content).toBeVisible();
-  await root.locator("[ng-select-trigger]").press("Escape");
+  await root.locator(".select-trigger").press("Escape");
   await expect(root).toHaveAttribute("open", "false");
   await expect(root).toHaveAttribute("data-open", "false");
   await expect(content).toBeHidden();
 
-  await root.locator("[ng-select-trigger]").click();
+  await root.locator(".select-trigger").click();
   await expect(root).toHaveAttribute("open", "true");
   await page.getByRole("button", { name: "Toggle archived option" }).click();
   await expect(root).toHaveAttribute("open", "false");

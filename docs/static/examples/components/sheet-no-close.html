@@ -12,17 +12,17 @@
   <body ng-app="ui" ng-cloak data-example="sheet-no-close-button">
     <main class="sheet-demo visual-example">
       <section id="plain-sheet" ng-sheet>
-        <button ng-sheet-trigger ng-button variant="outline">Open Sheet</button>
-        <div ng-sheet-overlay></div>
-        <aside ng-sheet-content>
-          <header ng-sheet-header>
-            <h2 ng-sheet-title>No Close Button</h2>
-            <p ng-sheet-description>
+        <button variant="outline" class="sheet-trigger button">Open Sheet</button>
+        <div class="sheet-overlay"></div>
+        <dialog class="sheet-content">
+          <header class="sheet-header">
+            <h2 class="sheet-title">No Close Button</h2>
+            <p class="sheet-description">
               This sheet doesn't have a close button in the top-right corner.
               Click outside to close.
             </p>
           </header>
-        </aside>
+        </dialog>
       </section>
     </main>
   </body>

@@ -10,8 +10,8 @@ can be held visible with `data-open="true"` for controlled examples.
 
 ```html
 <span ng-tooltip>
-  <button ng-tooltip-trigger>Hover</button>
-  <span ng-tooltip-content side="top">Add to library</span>
+  <button class="tooltip-trigger">Hover</button>
+  <span side="top" class="tooltip-content">Add to library</span>
 </span>
 ```
 
@@ -33,17 +33,10 @@ This component's root directive is `[ng-tooltip]`. Importing the package registe
 ### Directive selectors
 
 - `ng-tooltip`
-- `ng-tooltip-content`
-- `ng-tooltip-trigger`
 
-### Styling slots
-
-- `[data-slot="tooltip"]`
-- `[data-slot="tooltip-content"]`
-- `[data-slot="tooltip-trigger"]`
+### Semantic structure
 
 One trigger and one plain-text content element are required. Prefer a native button or link trigger. Tooltip content is descriptive and non-interactive; use Popover when the floating content needs controls or focus.
-Use the named slots as stable Tailwind and CSS selectors.
 
 ## API
 
@@ -58,7 +51,7 @@ Use the named slots as stable Tailwind and CSS selectors.
 | `data-side` | Input/output | Stable component state or styling hook. |
 | `data-state` | Output | Stable component state or styling hook. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
-| `role` | Input/output | Explicit semantic role when native HTML does not provide one. |
+| `role` | Output | Explicit semantic role when native HTML does not provide one. |
 | `side` | Input | Physical placement: `left`, `top`, `bottom`, or `right`. |
 
 `Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
@@ -91,7 +84,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-tooltip]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-tooltip]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

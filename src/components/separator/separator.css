@@ -1,20 +1,16 @@
-[data-slot="separator"],
-[ng-separator] {
+.separator {
   flex-shrink: 0;
   border: 0;
   background: var(--border);
 }
 
-[data-slot="separator"]:not([orientation="vertical"]),
-[ng-separator]:not([orientation="vertical"]),
-[data-slot="separator"][orientation="horizontal"],
-[ng-separator][orientation="horizontal"] {
+.separator:not([orientation="vertical"]),
+.separator[orientation="horizontal"] {
   width: 100%;
   height: 1px;
 }
 
-[data-slot="separator"][orientation="vertical"],
-[ng-separator][orientation="vertical"] {
+.separator[orientation="vertical"] {
   align-self: stretch;
   width: 1px;
   min-height: 1rem;

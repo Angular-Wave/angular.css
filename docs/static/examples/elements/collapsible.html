@@ -20,9 +20,9 @@
       <div class="collapsible-order-header">
         <h4>Order #4189</h4>
         <button
-          ng-collapsible-trigger
+
           ng-click="orderOpen=!orderOpen"
-          class="collapsible-icon-button"
+          class="collapsible-icon-button collapsible-trigger"
         >
           <svg viewBox="0 0 24 24" fill="none">
             <path d="m7 15 5 5 5-5M7 9l5-5 5 5" />
@@ -33,7 +33,7 @@
       <div class="collapsible-order-status">
         <span>Status</span><strong>Shipped</strong>
       </div>
-      <div data-slot="collapsible-content" class="collapsible-order-content">
+      <div class="collapsible-order-content collapsible-content">
         <div class="collapsible-order-panel">
           <p><strong>Shipping address</strong></p>
           <p>100 Market St, San Francisco</p>
@@ -44,8 +44,8 @@
         </div>
       </div>
     </section>
-    <p class="visually-hidden" role="status" aria-live="polite">
+    <output class="visually-hidden" aria-live="polite">
       Order details {{ orderOpen ? 'expanded' : 'collapsed' }}.
-    </p>
+    </output>
   </body>
 </html>

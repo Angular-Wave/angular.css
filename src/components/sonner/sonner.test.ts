@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 const canonicalUrl = "/docs/static/examples/components/sonner.html";
 const workflowsUrl = "/docs/static/examples/components/sonner-workflows.html";
-const toastSelector = ":is([data-slot=toast], [ng-toast])";
+const toastSelector = ":is(.toast)";
 
 test("canonical Sonner demo creates accessible toast feedback from built HTML", async ({
   page,
@@ -25,10 +25,8 @@ test("canonical Sonner demo creates accessible toast feedback from built HTML", 
   await expect(toast).toHaveAttribute("data-type", "default");
   await expect(toast).toHaveAttribute("data-visible", "true");
 
-  const title = toast.locator(":is([data-slot=toast-title], [ng-toast-title])");
-  const description = toast.locator(
-    ":is([data-slot=toast-description], [ng-toast-description])",
-  );
+  const title = toast.locator(".toast-title");
+  const description = toast.locator(".toast-description");
   await expect(toast).toHaveAttribute(
     "aria-labelledby",
     (await title.getAttribute("id")) ?? "",
@@ -119,7 +117,7 @@ test("type workflow reflects default, rich, and promise transition states", asyn
   await typeButtons.getByRole("button", { name: "Promise" }).click();
   await expect(toast).toHaveAttribute("data-type", "loading");
   await expect(toast).toContainText("Loading...");
-  await expect(toast.locator("[ng-toast-icon] svg")).toHaveCount(1);
+  await expect(toast.locator(".toast-icon svg")).toHaveCount(1);
 
   await expect(toast).toHaveAttribute("data-type", "success", {
     timeout: 2_000,

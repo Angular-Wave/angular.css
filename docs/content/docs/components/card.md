@@ -2,22 +2,22 @@
 title: card
 category: 'layout'
 description: >
-  Sectioned content container using semantic slots.
+  Sectioned content container using semantic parts.
 ---
 
-Use `ng-card` on a wrapper and optional child slots for header, content, footer,
-and action.
+Use `article.card` with optional semantic header, content, footer, and action
+regions.
 
 ```html
-<section ng-card>
-  <header data-slot="card-header">
-    <h3 data-slot="card-title">Title</h3>
-    <p data-slot="card-description">Optional description</p>
-    <div data-slot="card-action">Action</div>
+<article class="card">
+  <header class="card-header">
+    <h2 class="card-title">Title</h2>
+    <p class="card-description">Optional description</p>
+    <menu class="card-action">Action</menu>
   </header>
-  <div data-slot="card-content">Content</div>
-  <footer data-slot="card-footer">Footer</footer>
-</section>
+  <section class="card-content">Content</section>
+  <footer class="card-footer">Footer</footer>
+</article>
 ```
 
 ## Example
@@ -51,20 +51,11 @@ This is a styling-only HTML element or pattern. AngularCSS registers no runtime 
 
 ### Root styling selector
 
-- `data-slot="card"`
+- `.card`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="card"]`
-- `[data-slot="card-action"]`
-- `[data-slot="card-content"]`
-- `[data-slot="card-description"]`
-- `[data-slot="card-footer"]`
-- `[data-slot="card-header"]`
-- `[data-slot="card-title"]`
-
-Slots are optional unless the usage example or behavior description identifies a required relationship.
-Use the named slots as stable Tailwind and CSS selectors.
+Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough.
 
 ## API
 
@@ -102,7 +93,7 @@ content come from the application.
 
 ## Customization
 
-Target semantic elements, styling slots, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

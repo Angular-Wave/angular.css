@@ -11,70 +11,66 @@
   </head>
   <body ng-app="ui" ng-cloak>
     <section ng-carousel aria-label="Featured reports" style="max-width: 28rem">
-      <div data-slot="carousel-content">
-        <div data-slot="carousel-track">
-          <article data-slot="carousel-item">
-            <section data-slot="card">
-              <header data-slot="card-header">
-                <h3 data-slot="card-title">Revenue</h3>
-                <p data-slot="card-description">
-                  Quarterly performance summary.
-                </p>
+      <div class="carousel-content">
+        <ul class="carousel-track">
+          <li class="carousel-item">
+            <section class="card">
+              <header class="card-header">
+                <h2 class="card-title">Revenue</h2>
+                <p class="card-description">Quarterly performance summary.</p>
               </header>
-              <div data-slot="card-content">
+              <section class="card-content">
                 <div
                   class="media-surface"
                   style="height: 9rem; border-radius: var(--radius)"
                 >
                   +18%
                 </div>
-              </div>
+              </section>
             </section>
-          </article>
-          <article data-slot="carousel-item">
-            <section data-slot="card">
-              <header data-slot="card-header">
-                <h3 data-slot="card-title">Retention</h3>
-                <p data-slot="card-description">Monthly cohort movement.</p>
+          </li>
+          <li class="carousel-item">
+            <section class="card">
+              <header class="card-header">
+                <h2 class="card-title">Retention</h2>
+                <p class="card-description">Monthly cohort movement.</p>
               </header>
-              <div data-slot="card-content">
+              <section class="card-content">
                 <div
                   class="media-surface"
                   style="height: 9rem; border-radius: var(--radius)"
                 >
                   94%
                 </div>
-              </div>
+              </section>
             </section>
-          </article>
-        </div>
+          </li>
+        </ul>
       </div>
       <button
-        data-slot="button"
-        ng-carousel-previous
         size="icon"
         variant="outline"
         aria-label="Previous"
+        class="button carousel-previous"
       >
         &lt;
       </button>
       <button
-        data-slot="button"
-        ng-carousel-next
         size="icon"
         variant="outline"
         aria-label="Next"
+        class="button carousel-next"
       >
         &gt;
       </button>
-      <div data-slot="carousel-dots" aria-hidden="true">
+      <nav aria-hidden="true" class="carousel-dots">
         <button
-          data-slot="carousel-dot"
           data-active="true"
           aria-label="Show revenue"
+          class="carousel-dot"
         ></button>
-        <button data-slot="carousel-dot" aria-label="Show retention"></button>
-      </div>
+        <button aria-label="Show retention" class="carousel-dot"></button>
+      </nav>
     </section>
   </body>
 </html>

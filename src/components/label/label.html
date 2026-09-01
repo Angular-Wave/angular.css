@@ -11,11 +11,16 @@
   </head>
   <body ng-app="ui" ng-cloak>
     <div class="stack">
-      <label ng-label for="email">Email</label>
-      <input data-input id="email" placeholder="Email" />
+      <label for="email" class="label">Email</label>
+      <input id="email" placeholder="Email" class="input" />
 
-      <label ng-label for="disabled-email">Disabled email</label>
-      <input data-input id="disabled-email" placeholder="Disabled" disabled />
+      <label for="disabled-email" class="label">Disabled email</label>
+      <input
+        id="disabled-email"
+        placeholder="Disabled"
+        disabled
+        class="input"
+      />
     </div>
   </body>
 </html>

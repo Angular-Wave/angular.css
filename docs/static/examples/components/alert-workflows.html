@@ -16,13 +16,13 @@
     data-example="alert-action alert-basic alert-colors alert-destructive alert-rtl"
   >
     <main class="alert-workflow-grid">
-      <div ng-alert role="alert">
+      <section class="alert">
         <svg
-          data-slot="alert-icon"
+
           aria-hidden="true"
           viewBox="0 0 24 24"
           fill="none"
-        >
+         class="alert-icon">
           <circle
             cx="12"
             cy="12"
@@ -38,38 +38,37 @@
             stroke-linejoin="round"
           />
         </svg>
-        <div data-slot="alert-title">Account updated successfully</div>
-        <div data-slot="alert-description">
+        <h2 class="alert-title">Account updated successfully</h2>
+        <p class="alert-description">
           Your profile information has been saved. Changes will be reflected
           immediately.
-        </div>
-      </div>
+        </p>
+      </section>
 
-      <div ng-alert class="alert-action-demo" role="status" aria-live="polite">
-        <div data-slot="alert-title">Dark mode is now available</div>
-        <div data-slot="alert-description">
+      <section class="alert-action-demo alert" aria-live="polite">
+        <h2 class="alert-title">Dark mode is now available</h2>
+        <p class="alert-description">
           Enable it under your profile settings to get started.
-        </div>
-        <div data-slot="alert-action">
+        </p>
+        <div class="alert-action">
           <button
-            ng-button
+
             size="xs"
             type="button"
             ng-click="darkModeEnabled=true"
-            ng-disabled="darkModeEnabled"
-          >
+            ng-disabled="darkModeEnabled" class="button">
             {{ darkModeEnabled ? 'Enabled' : 'Enable' }}
           </button>
         </div>
-      </div>
+      </section>
 
-      <div ng-alert variant="warning" class="alert-warning-demo" role="alert">
+      <section variant="warning" class="alert-warning-demo alert">
         <svg
-          data-slot="alert-icon"
+
           aria-hidden="true"
           viewBox="0 0 24 24"
           fill="none"
-        >
+         class="alert-icon">
           <path
             d="M10.3 2.9 1.8 17a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 2.9a2 2 0 0 0-3.4 0Z"
             stroke="currentColor"
@@ -83,21 +82,21 @@
             stroke-linecap="round"
           />
         </svg>
-        <div data-slot="alert-title">
+        <h2 class="alert-title">
           Your subscription will expire in 3 days.
-        </div>
-        <div data-slot="alert-description">
+        </h2>
+        <p class="alert-description">
           Renew now to avoid service interruption or upgrade to a paid plan.
-        </div>
-      </div>
+        </p>
+      </section>
 
-      <div ng-alert variant="destructive" role="alert">
+      <section variant="destructive" class="alert">
         <svg
-          data-slot="alert-icon"
+
           aria-hidden="true"
           viewBox="0 0 24 24"
           fill="none"
-        >
+         class="alert-icon">
           <circle
             cx="12"
             cy="12"
@@ -112,12 +111,12 @@
             stroke-linecap="round"
           />
         </svg>
-        <div data-slot="alert-title">Payment failed</div>
-        <div data-slot="alert-description">
+        <h2 class="alert-title">Payment failed</h2>
+        <p class="alert-description">
           Your payment could not be processed. Check your payment method and try
           again.
-        </div>
-      </div>
+        </p>
+      </section>
 
       <section
         class="alert-rtl-demo"
@@ -125,13 +124,13 @@
         lang="ar"
         aria-label="التنبيهات"
       >
-        <div ng-alert role="alert">
+        <section class="alert">
           <svg
-            data-slot="alert-icon"
+
             aria-hidden="true"
             viewBox="0 0 24 24"
             fill="none"
-          >
+           class="alert-icon">
             <circle
               cx="12"
               cy="12"
@@ -147,18 +146,18 @@
               stroke-linejoin="round"
             />
           </svg>
-          <div data-slot="alert-title">تم الدفع بنجاح</div>
-          <div data-slot="alert-description">
+          <h2 class="alert-title">تم الدفع بنجاح</h2>
+          <p class="alert-description">
             تمت معالجة دفعتك وإرسال إيصال إلى عنوان بريدك الإلكتروني.
-          </div>
-        </div>
-        <div ng-alert role="alert">
+          </p>
+        </section>
+        <section class="alert">
           <svg
-            data-slot="alert-icon"
+
             aria-hidden="true"
             viewBox="0 0 24 24"
             fill="none"
-          >
+           class="alert-icon">
             <circle
               cx="12"
               cy="12"
@@ -173,16 +172,16 @@
               stroke-linecap="round"
             />
           </svg>
-          <div data-slot="alert-title">ميزة جديدة متاحة</div>
-          <div data-slot="alert-description">
+          <h2 class="alert-title">ميزة جديدة متاحة</h2>
+          <p class="alert-description">
             لقد أضفنا دعم الوضع الداكن ويمكنك تفعيله في إعدادات حسابك.
-          </div>
-        </div>
+          </p>
+        </section>
       </section>
 
-      <p class="output alert-workflow-output" role="status">
+      <output class="output alert-workflow-output">
         Dark mode: {{ darkModeEnabled ? 'enabled' : 'disabled' }}
-      </p>
+      </output>
     </main>
   </body>
 </html>

@@ -19,87 +19,77 @@
       class="chart-composition-grid"
       aria-label="Chart reference compositions"
     >
-      <article ng-card class="chart-interactive-card chart-composition-wide">
-        <header data-slot="card-header" class="chart-interactive-header">
+      <article class="chart-interactive-card chart-composition-wide card">
+        <header class="chart-interactive-header card-header">
           <div class="chart-interactive-copy">
-            <h2 data-slot="card-title">Bar Chart - Interactive</h2>
-            <p data-slot="card-description">
+            <h2 class="card-title">Bar Chart - Interactive</h2>
+            <p class="card-description">
               Showing total visitors for the last 3 months
             </p>
           </div>
           <div class="chart-series-controls" aria-label="Visitor series">
             <button
               type="button"
-              ng-button
+
               variant="ghost"
               data-active="{{ activeChart == 'desktop' }}"
-              ng-click="activeChart='desktop'"
-            >
+              ng-click="activeChart='desktop'" class="button">
               <span>Desktop</span><strong>7,324</strong>
             </button>
             <button
               type="button"
-              ng-button
+
               variant="ghost"
               data-active="{{ activeChart == 'mobile' }}"
-              ng-click="activeChart='mobile'"
-            >
+              ng-click="activeChart='mobile'" class="button">
               <span>Mobile</span><strong>7,250</strong>
             </button>
           </div>
         </header>
-        <div data-slot="card-content" class="chart-interactive-content">
-          <section
-            ng-chart
-            class="chart-interactive-demo"
+        <section class="chart-interactive-content card-content">
+          <figure
+
+            class="chart-interactive-demo chart"
             aria-label="Interactive daily visitors"
           >
-            <div data-slot="chart-plot">
-              <div data-slot="chart-grid"></div>
-              <div data-slot="chart-bars" class="chart-daily-bars">
+            <div class="chart-plot">
+              <div class="chart-grid"></div>
+              <div class="chart-daily-bars chart-bars">
                 <span
-                  data-slot="chart-bar"
+
                   ng-repeat="point in interactiveData"
                   data-label="{{ point.date }} {{ activeChart }}"
                   data-value="{{ activeChart == 'desktop' ? point.dp : point.mp }}"
                   data-color="{{ activeChart == 'desktop' ? 'var(--chart-2)' : 'var(--chart-1)' }}"
                   ng-mouseenter="demoTip.visible=true;demoTip.date=point.date;demoTip.value=activeChart == 'desktop' ? point.d : point.m"
                   ng-mouseleave="demoTip.visible=false"
-                ></span>
+                 class="chart-bar"></span>
               </div>
               <div
-                data-slot="chart-tooltip"
-                class="chart-floating-tooltip"
+
+                class="chart-floating-tooltip chart-tooltip"
                 ng-if="demoTip.visible"
               >
-                <strong data-slot="chart-tooltip-label"
-                  >{{ demoTip.date }}, 2024</strong
-                >
-                <div data-slot="chart-tooltip-items">
-                  <div data-slot="chart-tooltip-item">
+                <strong
+                   class="chart-tooltip-label">{{ demoTip.date }}, 2024</strong>
+                <div class="chart-tooltip-items">
+                  <div class="chart-tooltip-item">
                     <span
-                      data-slot="chart-tooltip-indicator"
+
                       data-color="{{ activeChart == 'desktop' ? 'var(--chart-2)' : 'var(--chart-1)' }}"
-                    ></span
-                    ><span data-slot="chart-tooltip-name"
-                      >{{ activeChart == 'desktop' ? 'Desktop' : 'Mobile'
-                      }}</span
-                    ><span data-slot="chart-tooltip-value"
-                      >{{ demoTip.value }}</span
-                    >
+                     class="chart-tooltip-indicator"></span><span
+                       class="chart-tooltip-name">{{ activeChart == 'desktop' ? 'Desktop' : 'Mobile'
+                      }}</span><span
+                       class="chart-tooltip-value">{{ demoTip.value }}</span>
                   </div>
                 </div>
               </div>
             </div>
-            <div data-slot="chart-axis" class="chart-date-axis">
-              <span data-slot="chart-axis-item">Apr 1</span
-              ><span data-slot="chart-axis-item">Apr 8</span
-              ><span data-slot="chart-axis-item">Apr 15</span
-              ><span data-slot="chart-axis-item">Apr 22</span
-              ><span data-slot="chart-axis-item">Apr 30</span>
+            <div class="chart-date-axis chart-axis">
+              <span class="chart-axis-item">Apr 1</span><span class="chart-axis-item">Apr 8</span><span class="chart-axis-item">Apr 15</span><span class="chart-axis-item">Apr 22</span><span class="chart-axis-item">Apr 30</span>
             </div>
-          </section>
-        </div>
+          </figure>
+        </section>
       </article>
 
       <section
@@ -109,82 +99,70 @@
         lang="ar"
       >
         <h2 id="chart-rtl-heading">مخطط من اليمين إلى اليسار</h2>
-        <section
-          ng-chart
-          class="chart-reference-demo"
+        <figure
+
+          class="chart-reference-demo chart"
           aria-label="زوار سطح المكتب والجوال"
         >
-          <div data-slot="chart-plot">
-            <div data-slot="chart-grid"></div>
-            <div data-slot="chart-bar-groups">
+          <div class="chart-plot">
+            <div class="chart-grid"></div>
+            <div class="chart-bar-groups">
               <div
-                data-slot="chart-bar-group"
+
                 ng-repeat="point in rtlData"
                 ng-mouseenter="rtlTip.visible=true;rtlTip.month=point.month;rtlTip.desktop=point.desktop;rtlTip.mobile=point.mobile"
                 ng-mouseleave="rtlTip.visible=false"
-              >
+               class="chart-bar-group">
                 <span
-                  data-slot="chart-bar"
+
                   data-label="{{ point.month }} سطح المكتب"
                   data-value="{{ point.d }}"
                   data-color="var(--chart-2)"
-                ></span>
+                 class="chart-bar"></span>
                 <span
-                  data-slot="chart-bar"
+
                   data-label="{{ point.month }} الجوال"
                   data-value="{{ point.m }}"
                   data-color="var(--chart-1)"
-                ></span>
+                 class="chart-bar"></span>
               </div>
             </div>
             <div
-              data-slot="chart-tooltip"
-              class="chart-floating-tooltip"
+
+              class="chart-floating-tooltip chart-tooltip"
               ng-if="rtlTip.visible"
             >
-              <strong data-slot="chart-tooltip-label"
-                >{{ rtlTip.month }}</strong
-              >
-              <div data-slot="chart-tooltip-items">
-                <div data-slot="chart-tooltip-item">
+              <strong
+                 class="chart-tooltip-label">{{ rtlTip.month }}</strong>
+              <div class="chart-tooltip-items">
+                <div class="chart-tooltip-item">
                   <span
-                    data-slot="chart-tooltip-indicator"
+
                     data-color="var(--chart-2)"
-                  ></span
-                  ><span data-slot="chart-tooltip-name">سطح المكتب</span
-                  ><span data-slot="chart-tooltip-value"
-                    >{{ rtlTip.desktop }}</span
-                  >
+                   class="chart-tooltip-indicator"></span><span class="chart-tooltip-name">سطح المكتب</span><span
+                     class="chart-tooltip-value">{{ rtlTip.desktop }}</span>
                 </div>
-                <div data-slot="chart-tooltip-item">
+                <div class="chart-tooltip-item">
                   <span
-                    data-slot="chart-tooltip-indicator"
+
                     data-color="var(--chart-1)"
-                  ></span
-                  ><span data-slot="chart-tooltip-name">الجوال</span
-                  ><span data-slot="chart-tooltip-value"
-                    >{{ rtlTip.mobile }}</span
-                  >
+                   class="chart-tooltip-indicator"></span><span class="chart-tooltip-name">الجوال</span><span
+                     class="chart-tooltip-value">{{ rtlTip.mobile }}</span>
                 </div>
               </div>
             </div>
           </div>
-          <div data-slot="chart-axis">
-            <span data-slot="chart-axis-item" ng-repeat="point in rtlData"
-              >{{ point.short }}</span
-            >
+          <div class="chart-axis">
+            <span ng-repeat="point in rtlData"
+               class="chart-axis-item">{{ point.short }}</span>
           </div>
-          <div data-slot="chart-legend">
-            <span data-slot="chart-legend-item"
-              ><span data-slot="chart-swatch" data-color="var(--chart-2)"></span
-              >سطح المكتب</span
-            >
-            <span data-slot="chart-legend-item"
-              ><span data-slot="chart-swatch" data-color="var(--chart-1)"></span
-              >الجوال</span
-            >
-          </div>
-        </section>
+          <ul class="chart-legend">
+            <li
+               class="chart-legend-item"><span data-color="var(--chart-2)" class="chart-swatch"></span>سطح المكتب</li>
+            <li
+               class="chart-legend-item"><span data-color="var(--chart-1)" class="chart-swatch"></span>الجوال</li>
+          </ul>
+        </figure>
       </section>
 
       <section
@@ -192,82 +170,70 @@
         aria-labelledby="chart-tooltip-gallery-heading"
       >
         <h2 id="chart-tooltip-gallery-heading">Tooltip anatomy</h2>
-        <div
-          ng-chart
-          class="chart-tooltip-gallery"
-          role="img"
+        <figure
+
+          class="chart-tooltip-gallery chart"
+
           aria-label="Chart tooltip anatomy examples"
         >
-          <div data-slot="chart-tooltip">
-            <strong data-slot="chart-tooltip-label">Page Views</strong>
-            <div data-slot="chart-tooltip-items">
-              <div data-slot="chart-tooltip-item">
+          <div class="chart-tooltip">
+            <strong class="chart-tooltip-label">Page Views</strong>
+            <div class="chart-tooltip-items">
+              <div class="chart-tooltip-item">
                 <span
-                  data-slot="chart-tooltip-indicator"
+
                   data-color="var(--chart-1)"
-                ></span
-                ><span data-slot="chart-tooltip-name">Desktop</span
-                ><span data-slot="chart-tooltip-value">186</span>
+                 class="chart-tooltip-indicator"></span><span class="chart-tooltip-name">Desktop</span><span class="chart-tooltip-value">186</span>
               </div>
-              <div data-slot="chart-tooltip-item">
+              <div class="chart-tooltip-item">
                 <span
-                  data-slot="chart-tooltip-indicator"
+
                   data-color="var(--chart-2)"
-                ></span
-                ><span data-slot="chart-tooltip-name">Mobile</span
-                ><span data-slot="chart-tooltip-value">80</span>
+                 class="chart-tooltip-indicator"></span><span class="chart-tooltip-name">Mobile</span><span class="chart-tooltip-value">80</span>
               </div>
             </div>
           </div>
-          <div data-slot="chart-tooltip">
-            <div data-slot="chart-tooltip-items">
-              <div data-slot="chart-tooltip-item">
+          <div class="chart-tooltip">
+            <div class="chart-tooltip-items">
+              <div class="chart-tooltip-item">
                 <span
-                  data-slot="chart-tooltip-indicator"
+
                   data-indicator="dashed"
                   data-color="var(--chart-3)"
-                ></span
-                ><span data-slot="chart-tooltip-name">Chrome</span
-                ><span data-slot="chart-tooltip-value">1,286</span>
+                 class="chart-tooltip-indicator"></span><span class="chart-tooltip-name">Chrome</span><span class="chart-tooltip-value">1,286</span>
               </div>
-              <div data-slot="chart-tooltip-item">
+              <div class="chart-tooltip-item">
                 <span
-                  data-slot="chart-tooltip-indicator"
+
                   data-indicator="dashed"
                   data-color="var(--chart-4)"
-                ></span
-                ><span data-slot="chart-tooltip-name">Firefox</span
-                ><span data-slot="chart-tooltip-value">1,000</span>
+                 class="chart-tooltip-indicator"></span><span class="chart-tooltip-name">Firefox</span><span class="chart-tooltip-value">1,000</span>
               </div>
             </div>
           </div>
-          <div data-slot="chart-tooltip">
-            <div data-slot="chart-tooltip-items">
-              <div data-slot="chart-tooltip-item">
+          <div class="chart-tooltip">
+            <div class="chart-tooltip-items">
+              <div class="chart-tooltip-item">
                 <span
-                  data-slot="chart-tooltip-indicator"
+
                   data-indicator="line"
                   data-color="var(--chart-3)"
-                ></span
-                ><span data-slot="chart-tooltip-name"
-                  ><strong>Page Views</strong><br />Desktop</span
-                ><span data-slot="chart-tooltip-value">12,486</span>
+                 class="chart-tooltip-indicator"></span><span
+                   class="chart-tooltip-name"><strong>Page Views</strong><br />Desktop</span><span class="chart-tooltip-value">12,486</span>
               </div>
             </div>
           </div>
-          <div data-slot="chart-tooltip">
-            <div data-slot="chart-tooltip-items">
-              <div data-slot="chart-tooltip-item">
+          <div class="chart-tooltip">
+            <div class="chart-tooltip-items">
+              <div class="chart-tooltip-item">
                 <span
-                  data-slot="chart-tooltip-indicator"
+
                   data-color="var(--chart-1)"
-                ></span
-                ><span data-slot="chart-tooltip-name">Chrome</span
-                ><span data-slot="chart-tooltip-value">1,286</span>
+                 class="chart-tooltip-indicator"></span><span class="chart-tooltip-name">Chrome</span><span class="chart-tooltip-value">1,286</span>
               </div>
             </div>
           </div>
-        </div>
+        </figure>
       </section>
     </main>
   </body>

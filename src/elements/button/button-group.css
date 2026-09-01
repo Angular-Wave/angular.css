@@ -1,9 +1,7 @@
-[ng-button-group],
-[data-slot="button-group"] {
+.button-group {
   display: inline-flex;
 
-  > button[ng-button],
-  > button[data-slot="button"] {
+  > button.button {
     border: 1px solid;
     border-color: var(--input);
     background-color: var(--background);
@@ -28,8 +26,7 @@
   &[orientation="column"] {
     flex-direction: column;
 
-    > button[ng-button],
-    > button[data-slot="button"] {
+    > button.button {
       &:first-child {
         @apply rounded-t-md;
 

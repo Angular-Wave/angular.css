@@ -10,11 +10,11 @@ as the component page.
 
 ```html
 <section ng-drawer>
-  <button ng-drawer-trigger>Open Drawer</button>
-  <div ng-drawer-overlay></div>
-  <section ng-drawer-content>
-    <div ng-drawer-handle></div>
-  </section>
+  <button class="drawer-trigger">Open Drawer</button>
+  <div class="drawer-overlay"></div>
+  <dialog class="drawer-content">
+    <div class="drawer-handle"></div>
+  </dialog>
 </section>
 ```
 

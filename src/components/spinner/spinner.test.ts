@@ -3,5 +3,5 @@ import { testStyleOnlyElement } from "../../testing/style-only-element";
 testStyleOnlyElement({
   directive: "ngSpinner",
   name: "spinner",
-  selector: "[ng-spinner]",
+  selector: ".spinner",
 });

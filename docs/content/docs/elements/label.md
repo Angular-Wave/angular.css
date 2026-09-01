@@ -5,13 +5,11 @@ description: >
   Native form label
 ---
 
-Use native `label` elements with `for` whenever possible. AngularCSS styles
-opt-in `ng-label` labels and supports `data-slot="label"` for explicit slot
-markup.
+Use native `label` elements with `for` and `class="label"`.
 
 ```html
-<label ng-label for="email">Email</label>
-<input data-input id="email" type="email" placeholder="Email" />
+<label for="email" class="label">Email</label>
+<input id="email" type="email" placeholder="Email" class="input" />
 ```
 
 ## Example

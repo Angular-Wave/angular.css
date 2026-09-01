@@ -5,24 +5,25 @@ description: >
   Edge anchored overlay panels
 ---
 
-Use semantic `ng-sheet-*` attributes for the panel anatomy. Author `side` on the
+Use one `ng-sheet` root with semantic child elements identified by sheet part
+classes. Author `side` on the
 root or content as `right`, `left`, `top`, or `bottom`; the directive reflects
 the resolved physical viewport edge to `data-side`.
 
 ```html
 <section ng-sheet side="right">
-  <button ng-sheet-trigger>Open</button>
-  <div ng-sheet-overlay></div>
-  <aside ng-sheet-content>
-    <header ng-sheet-header>
-      <h2 ng-sheet-title>Edit profile</h2>
-      <p ng-sheet-description>Update your account details.</p>
+  <button class="sheet-trigger">Open</button>
+  <div class="sheet-overlay"></div>
+  <dialog class="sheet-content">
+    <header class="sheet-header">
+      <h2 class="sheet-title">Edit profile</h2>
+      <p class="sheet-description">Update your account details.</p>
     </header>
-    <div ng-sheet-body>Content</div>
-    <footer ng-sheet-footer>
+    <div class="sheet-body">Content</div>
+    <footer class="sheet-footer">
       <button data-sheet-close>Close</button>
     </footer>
-  </aside>
+  </dialog>
 </section>
 ```
 
@@ -65,25 +66,10 @@ This component's root directive is `[ng-sheet]`. Importing the package registers
 ### Directive selectors
 
 - `ng-sheet`
-- `ng-sheet-close`
-- `ng-sheet-content`
-- `ng-sheet-description`
-- `ng-sheet-overlay`
-- `ng-sheet-title`
-- `ng-sheet-trigger`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="sheet"]`
-- `[data-slot="sheet-close"]`
-- `[data-slot="sheet-content"]`
-- `[data-slot="sheet-description"]`
-- `[data-slot="sheet-overlay"]`
-- `[data-slot="sheet-title"]`
-- `[data-slot="sheet-trigger"]`
-
-A sheet root requires one native button trigger, one overlay, and one content element. Use `side` on the root or content for physical `right`, `left`, `top`, or `bottom` placement; right is the default. Title and description are strongly recommended; header, body, and footer are optional layout selectors. Prefer semantic `ng-sheet-*` attributes and do not duplicate them with `data-slot`. Use `data-sheet-close` only for an action that closes without acquiring close-button styling.
-Use the named slots as stable Tailwind and CSS selectors.
+A sheet root requires one native button trigger, one overlay, and one native dialog content element. The root directive inspects descendants through sheet part classes; no child directives are required. Use `side` for placement. Title, description, header, body, and footer are optional.
 
 ## API
 
@@ -140,7 +126,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-sheet]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-sheet]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

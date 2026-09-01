@@ -11,35 +11,35 @@
   </head>
   <body ng-app="ui" ng-cloak data-example="accordion-demo">
     <div ng-accordion class="accordion-demo visual-example">
-      <div data-slot="accordion-item" data-state="open">
+      <div data-state="open" class="accordion-item">
         <h3>
-          <button type="button" data-slot="accordion-trigger">
+          <button type="button" class="accordion-trigger">
             What are your shipping options?
           </button>
         </h3>
-        <div data-slot="accordion-content">
+        <div class="accordion-content">
           We offer standard (5-7 days), express (2-3 days), and overnight
           shipping. Free shipping on international orders.
         </div>
       </div>
-      <div data-slot="accordion-item">
+      <div class="accordion-item">
         <h3>
-          <button type="button" data-slot="accordion-trigger">
+          <button type="button" class="accordion-trigger">
             What is your return policy?
           </button>
         </h3>
-        <div data-slot="accordion-content">
+        <div class="accordion-content">
           Returns are accepted within 30 days. Items must be unused and in their
           original packaging.
         </div>
       </div>
-      <div data-slot="accordion-item">
+      <div class="accordion-item">
         <h3>
-          <button type="button" data-slot="accordion-trigger">
+          <button type="button" class="accordion-trigger">
             How can I contact customer support?
           </button>
         </h3>
-        <div data-slot="accordion-content">
+        <div class="accordion-content">
           Reach us by email, live chat, or phone during business hours.
         </div>
       </div>

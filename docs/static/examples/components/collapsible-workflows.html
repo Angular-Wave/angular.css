@@ -20,24 +20,24 @@
         aria-labelledby="collapsible-basic-heading"
       >
         <h2 id="collapsible-basic-heading">Basic</h2>
-        <div data-slot="card" class="collapsible-basic-card">
-          <div data-slot="card-content">
+        <div class="collapsible-basic-card card">
+          <section class="card-content">
             <details ng-collapsible class="collapsible-product">
-              <summary data-slot="collapsible-trigger">
+              <summary class="collapsible-trigger">
                 <span>Product details</span>
                 <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="m6 9 6 6 6-6" />
                 </svg>
               </summary>
-              <div data-slot="collapsible-content">
+              <div class="collapsible-content">
                 <p>
                   This panel can be expanded or collapsed to reveal additional
                   content.
                 </p>
-                <button ng-button size="xs">Learn More</button>
+                <button size="xs" class="button">Learn More</button>
               </div>
             </details>
-          </div>
+          </section>
         </div>
       </section>
 
@@ -46,51 +46,47 @@
         aria-labelledby="collapsible-settings-heading"
       >
         <h2 id="collapsible-settings-heading">Settings</h2>
-        <div data-slot="card" data-size="sm" class="collapsible-settings-card">
-          <div data-slot="card-header">
-            <div data-slot="card-title">Radius</div>
-            <p data-slot="card-description">
+        <div data-size="sm" class="collapsible-settings-card card">
+          <header class="card-header">
+            <h2 class="card-title">Radius</h2>
+            <p class="card-description">
               Set the corner radius of the element.
             </p>
-          </div>
-          <div data-slot="card-content">
+          </header>
+          <section class="card-content">
             <section ng-collapsible class="collapsible-settings">
               <div class="collapsible-settings-fields">
                 <label class="visually-hidden" for="radius-x">Radius X</label>
-                <input id="radius-x" data-input type="number" value="0" />
+                <input id="radius-x" type="number" value="0" class="input" />
                 <label class="visually-hidden" for="radius-y">Radius Y</label>
-                <input id="radius-y" data-input type="number" value="0" />
+                <input id="radius-y" type="number" value="0" class="input" />
                 <div
-                  data-slot="collapsible-content"
-                  class="collapsible-settings-more"
+
+                  class="collapsible-settings-more collapsible-content"
                 >
                   <label class="visually-hidden" for="radius-bottom-x"
-                    >Bottom radius X</label
-                  >
+                    >Bottom radius X</label>
                   <input
                     id="radius-bottom-x"
-                    data-input
+
                     type="number"
-                    value="0"
-                  />
+                    value="0" class="input" />
                   <label class="visually-hidden" for="radius-bottom-y"
-                    >Bottom radius Y</label
-                  >
+                    >Bottom radius Y</label>
                   <input
                     id="radius-bottom-y"
-                    data-input
+
                     type="number"
-                    value="0"
-                  />
+                    value="0" class="input" />
                 </div>
               </div>
               <button
-                ng-collapsible-trigger
-                ng-button
+
+
                 variant="outline"
                 size="icon"
                 aria-label="Toggle additional radius settings"
-              >
+               class="collapsible-trigger button">
                 <svg
                   class="collapsible-maximize"
                   viewBox="0 0 24 24"
@@ -113,7 +109,7 @@
                 </svg>
               </button>
             </section>
-          </div>
+          </section>
         </div>
       </section>
 
@@ -127,7 +123,7 @@
         <section ng-collapsible class="collapsible-order-demo">
           <div class="collapsible-order-header">
             <h4>الطلب #4189</h4>
-            <button ng-collapsible-trigger class="collapsible-icon-button">
+            <button class="collapsible-icon-button collapsible-trigger">
               <svg viewBox="0 0 24 24" fill="none">
                 <path d="m7 15 5 5 5-5M7 9l5-5 5 5" />
               </svg>
@@ -138,8 +134,8 @@
             <span>الحالة</span><strong>تم الشحن</strong>
           </div>
           <div
-            data-slot="collapsible-content"
-            class="collapsible-order-content"
+
+            class="collapsible-order-content collapsible-content"
           >
             <div class="collapsible-order-panel">
               <p><strong>عنوان الشحن</strong></p>

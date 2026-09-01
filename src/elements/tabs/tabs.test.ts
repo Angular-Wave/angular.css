@@ -6,7 +6,7 @@ test("tabs element example exercises the built functional artifact", async ({
   await page.goto("/docs/static/examples/elements/tabs.html");
   const tabs = page.locator("[ng-tabs]");
   const triggers = tabs.getByRole("tab");
-  const panels = tabs.locator('[data-slot="tabs-content"]');
+  const panels = tabs.locator(".tabs-content");
 
   await expect(triggers).toHaveCount(4);
   await expect(panels.nth(0)).toBeVisible();

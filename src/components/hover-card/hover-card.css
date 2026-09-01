@@ -1,17 +1,15 @@
-[data-slot="hover-card"],
+.hover-card,
 [ng-hover-card] {
   position: relative;
   display: inline-flex;
   width: fit-content;
 }
 
-[data-slot="hover-card-trigger"],
-[ng-hover-card-trigger] {
+.hover-card-trigger {
   display: inline-flex;
 }
 
-[data-slot="hover-card-content"],
-[ng-hover-card-content] {
+.hover-card-content {
   position: absolute;
   z-index: 50;
   display: grid;
@@ -35,10 +33,7 @@
     transform 150ms ease;
 }
 
-:is(
-  [data-slot="hover-card-content"],
-  [ng-hover-card-content]
-)[data-side="bottom"] {
+:is(.hover-card-content)[data-side="bottom"] {
   inset-block-start: calc(100% + var(--spacing));
   left: 50%;
 
@@ -47,10 +42,7 @@
   --hover-card-motion-y: -2px;
 }
 
-:is(
-  [data-slot="hover-card-content"],
-  [ng-hover-card-content]
-)[data-side="top"] {
+:is(.hover-card-content)[data-side="top"] {
   inset-block-end: calc(100% + var(--spacing));
   left: 50%;
 
@@ -59,10 +51,7 @@
   --hover-card-motion-y: 2px;
 }
 
-:is(
-  [data-slot="hover-card-content"],
-  [ng-hover-card-content]
-)[data-side="left"] {
+:is(.hover-card-content)[data-side="left"] {
   inset-block-start: 50%;
   right: calc(100% + var(--spacing));
 
@@ -72,10 +61,7 @@
   --hover-card-motion-y: 0;
 }
 
-:is(
-  [data-slot="hover-card-content"],
-  [ng-hover-card-content]
-)[data-side="right"] {
+:is(.hover-card-content)[data-side="right"] {
   inset-block-start: 50%;
   left: calc(100% + var(--spacing));
 
@@ -85,27 +71,22 @@
   --hover-card-motion-y: 0;
 }
 
-:is([data-slot="hover-card"], [ng-hover-card]):hover
-  > :is([data-slot="hover-card-content"], [ng-hover-card-content]),
-:is([data-slot="hover-card"], [ng-hover-card]):focus-within
-  > :is([data-slot="hover-card-content"], [ng-hover-card-content]),
-[data-slot="hover-card-content"][data-open="true"],
-[ng-hover-card-content][data-open="true"] {
+:is(.hover-card, [ng-hover-card]):hover > .hover-card-content,
+:is(.hover-card, [ng-hover-card]):focus-within > .hover-card-content,
+.hover-card-content[data-open="true"] {
   opacity: 1;
   pointer-events: auto;
   transform: translate(var(--hover-card-x, 0), var(--hover-card-y, 0))
     translate(0, 0) scale(1);
 }
 
-[data-slot="hover-card-title"],
-[ng-hover-card-title] {
+.hover-card-title {
   color: var(--foreground);
   font-size: var(--text-sm);
   font-weight: var(--font-weight-semibold);
 }
 
-[data-slot="hover-card-description"],
-[ng-hover-card-description] {
+.hover-card-description {
   color: var(--muted-foreground);
   font-size: var(--text-sm);
   line-height: 1.45;

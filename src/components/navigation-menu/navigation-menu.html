@@ -12,17 +12,17 @@
   <body ng-app="ui" ng-cloak class="navigation-menu-example-body">
     <main class="navigation-menu-demo">
       <nav ng-navigation-menu aria-label="Primary navigation">
-        <ul ng-navigation-menu-list>
-          <li ng-navigation-menu-item>
-            <button type="button" ng-navigation-menu-trigger>
+        <ul class="navigation-menu-list">
+          <li class="navigation-menu-item">
+            <button type="button" class="navigation-menu-trigger">
               Getting started
             </button>
-            <div ng-navigation-menu-content>
+            <section class="navigation-menu-content">
               <ul
                 class="navigation-menu-content-list navigation-menu-intro-list"
               >
                 <li>
-                  <a ng-navigation-menu-link href="#introduction">
+                  <a href="#introduction" class="navigation-menu-link">
                     <span class="navigation-menu-link-copy">
                       <strong>Introduction</strong>
                       <span>Re-usable components built with Tailwind CSS.</span>
@@ -30,7 +30,7 @@
                   </a>
                 </li>
                 <li>
-                  <a ng-navigation-menu-link href="#installation">
+                  <a href="#installation" class="navigation-menu-link">
                     <span class="navigation-menu-link-copy">
                       <strong>Installation</strong>
                       <span
@@ -41,7 +41,7 @@
                   </a>
                 </li>
                 <li>
-                  <a ng-navigation-menu-link href="#typography">
+                  <a href="#typography" class="navigation-menu-link">
                     <span class="navigation-menu-link-copy">
                       <strong>Typography</strong>
                       <span>Styles for headings, paragraphs, lists...etc</span>
@@ -49,18 +49,20 @@
                   </a>
                 </li>
               </ul>
-            </div>
-            <span ng-navigation-menu-indicator aria-hidden="true"></span>
+            </section>
+            <span aria-hidden="true" class="navigation-menu-indicator"></span>
           </li>
 
-          <li ng-navigation-menu-item class="navigation-menu-components-item">
-            <button type="button" ng-navigation-menu-trigger>Components</button>
-            <div ng-navigation-menu-content>
+          <li class="navigation-menu-components-item navigation-menu-item">
+            <button type="button" class="navigation-menu-trigger">
+              Components
+            </button>
+            <section class="navigation-menu-content">
               <ul
                 class="navigation-menu-content-list navigation-menu-components-list"
               >
                 <li>
-                  <a ng-navigation-menu-link href="#alert-dialog">
+                  <a href="#alert-dialog" class="navigation-menu-link">
                     <span class="navigation-menu-link-copy">
                       <strong>Alert Dialog</strong>
                       <span
@@ -71,7 +73,7 @@
                   </a>
                 </li>
                 <li>
-                  <a ng-navigation-menu-link href="#hover-card">
+                  <a href="#hover-card" class="navigation-menu-link">
                     <span class="navigation-menu-link-copy">
                       <strong>Hover Card</strong>
                       <span>Preview content available behind a link.</span>
@@ -79,7 +81,7 @@
                   </a>
                 </li>
                 <li>
-                  <a ng-navigation-menu-link href="#progress">
+                  <a href="#progress" class="navigation-menu-link">
                     <span class="navigation-menu-link-copy">
                       <strong>Progress</strong>
                       <span>Displays the completion progress of a task.</span>
@@ -87,7 +89,7 @@
                   </a>
                 </li>
                 <li>
-                  <a ng-navigation-menu-link href="#scroll-area">
+                  <a href="#scroll-area" class="navigation-menu-link">
                     <span class="navigation-menu-link-copy">
                       <strong>Scroll-area</strong>
                       <span>Visually or semantically separates content.</span>
@@ -95,7 +97,7 @@
                   </a>
                 </li>
                 <li>
-                  <a ng-navigation-menu-link href="#tabs">
+                  <a href="#tabs" class="navigation-menu-link">
                     <span class="navigation-menu-link-copy">
                       <strong>Tabs</strong>
                       <span>Layered sections displayed one at a time.</span>
@@ -103,7 +105,7 @@
                   </a>
                 </li>
                 <li>
-                  <a ng-navigation-menu-link href="#tooltip">
+                  <a href="#tooltip" class="navigation-menu-link">
                     <span class="navigation-menu-link-copy">
                       <strong>Tooltip</strong>
                       <span
@@ -113,18 +115,20 @@
                   </a>
                 </li>
               </ul>
-            </div>
-            <span ng-navigation-menu-indicator aria-hidden="true"></span>
+            </section>
+            <span aria-hidden="true" class="navigation-menu-indicator"></span>
           </li>
 
-          <li ng-navigation-menu-item>
-            <button type="button" ng-navigation-menu-trigger>With Icon</button>
-            <div ng-navigation-menu-content>
+          <li class="navigation-menu-item">
+            <button type="button" class="navigation-menu-trigger">
+              With Icon
+            </button>
+            <section class="navigation-menu-content">
               <ul
                 class="navigation-menu-content-list navigation-menu-icon-list"
               >
                 <li>
-                  <a ng-navigation-menu-link href="#backlog">
+                  <a href="#backlog" class="navigation-menu-link">
                     <svg
                       aria-hidden="true"
                       viewBox="0 0 24 24"
@@ -139,7 +143,7 @@
                   </a>
                 </li>
                 <li>
-                  <a ng-navigation-menu-link href="#todo">
+                  <a href="#todo" class="navigation-menu-link">
                     <svg
                       aria-hidden="true"
                       viewBox="0 0 24 24"
@@ -158,7 +162,7 @@
                   </a>
                 </li>
                 <li>
-                  <a ng-navigation-menu-link href="#done">
+                  <a href="#done" class="navigation-menu-link">
                     <svg
                       aria-hidden="true"
                       viewBox="0 0 24 24"
@@ -173,12 +177,12 @@
                   </a>
                 </li>
               </ul>
-            </div>
-            <span ng-navigation-menu-indicator aria-hidden="true"></span>
+            </section>
+            <span aria-hidden="true" class="navigation-menu-indicator"></span>
           </li>
 
-          <li ng-navigation-menu-item>
-            <a ng-navigation-menu-link href="#docs">Docs</a>
+          <li class="navigation-menu-item">
+            <a href="#docs" class="navigation-menu-link">Docs</a>
           </li>
         </ul>
       </nav>

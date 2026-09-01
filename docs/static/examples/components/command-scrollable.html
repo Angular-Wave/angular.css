@@ -17,11 +17,10 @@
   >
     <main class="command-scrollable-demo visual-example">
       <button
-        ng-button
+
         type="button"
         data-variant="outline"
-        aria-controls="scrollable-command-dialog"
-      >
+        aria-controls="scrollable-command-dialog" class="button">
         Open Menu
       </button>
       <section
@@ -30,16 +29,16 @@
         ng-dialog
         data-open="false"
       >
-        <div ng-dialog-overlay></div>
-        <section ng-dialog-content>
+        <div class="dialog-overlay"></div>
+        <dialog class="dialog-content">
           <header class="visually-hidden">
-            <h2 ng-dialog-title>Scrollable Command Palette</h2>
-            <p ng-dialog-description>Search all application commands.</p>
+            <h2 class="dialog-title">Scrollable Command Palette</h2>
+            <p class="dialog-description">Search all application commands.</p>
           </header>
           <section ng-command aria-label="Scrollable command menu">
-            <div ng-command-input-wrapper>
-              <div ng-command-input-group>
-                <span ng-command-input-icon aria-hidden="true">
+            <div class="command-input-wrapper">
+              <div class="command-input-group">
+                <span aria-hidden="true" class="command-input-icon">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -51,25 +50,25 @@
                   </svg>
                 </span>
                 <input
-                  ng-command-input
+
                   aria-label="Search all commands"
                   ng-model="scroll.query"
                   placeholder="Type a command or search..."
-                />
+                 class="command-input"/>
               </div>
             </div>
-            <div ng-command-list>
-              <p ng-command-empty>No results found.</p>
-              <section ng-command-group ng-repeat="group in commandGroups">
-                <h3 ng-command-group-heading ng-bind="group.label"></h3>
-                <div
-                  ng-command-item
+            <ul class="command-list">
+              <p class="command-empty">No results found.</p>
+              <section ng-repeat="group in commandGroups" class="command-group">
+                <h3 ng-bind="group.label" class="command-group-heading"></h3>
+                <li
+
                   data-dialog-close
                   ng-repeat="item in group.items | filter:scroll.query"
                   ng-click="scroll.selected=item.label"
-                >
+                 class="command-item">
                   <svg
-                    ng-command-item-icon
+
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -77,22 +76,22 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     aria-hidden="true"
-                  >
+                   class="command-item-icon">
                     <path d="M6 2h9l3 3v17H6z"></path>
                     <path d="M14 2v4h4"></path>
                   </svg>
                   <span ng-bind="item.label"></span>
                   <span
-                    ng-command-shortcut
+
                     ng-if="item.shortcut"
                     ng-bind="item.shortcut"
-                  ></span>
-                </div>
-                <div ng-command-separator></div>
+                   class="command-shortcut"></span>
+                </li>
+                <div class="command-separator"></div>
               </section>
-            </div>
+            </ul>
           </section>
-        </section>
+        </dialog>
       </section>
       <output class="command-workflow-output" aria-live="polite">
         Selected: <span ng-bind="scroll.selected || 'None'"></span>

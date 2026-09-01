@@ -19,10 +19,10 @@
       <section class="context-menu-workflow" aria-labelledby="icons-title">
         <h2 id="icons-title">Icons and destructive action</h2>
         <div ng-context-menu>
-          <div ng-context-menu-trigger>Right click here</div>
-          <div ng-context-menu-content aria-label="Editing actions">
-            <div ng-context-menu-group>
-              <button ng-context-menu-item ng-click="action='Copy'">
+          <div class="context-menu-trigger">Right click here</div>
+          <menu aria-label="Editing actions" class="context-menu-content">
+            <div class="context-menu-group">
+              <button ng-click="action='Copy'" class="context-menu-item">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -37,7 +37,7 @@
                 </svg>
                 Copy
               </button>
-              <button ng-context-menu-item ng-click="action='Cut'">
+              <button ng-click="action='Cut'" class="context-menu-item">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -52,7 +52,7 @@
                 </svg>
                 Cut
               </button>
-              <button ng-context-menu-item ng-click="action='Paste'">
+              <button ng-click="action='Paste'" class="context-menu-item">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -66,12 +66,12 @@
                 Paste
               </button>
             </div>
-            <div ng-context-menu-separator></div>
+            <div class="context-menu-separator"></div>
             <button
-              ng-context-menu-item
+
               data-variant="destructive"
               ng-click="action='Delete'"
-            >
+             class="context-menu-item">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -85,7 +85,7 @@
               </svg>
               Delete
             </button>
-          </div>
+          </menu>
         </div>
         <output>Action: <span ng-bind="action"></span></output>
       </section>
@@ -93,54 +93,54 @@
       <section class="context-menu-workflow" aria-labelledby="groups-title">
         <h2 id="groups-title">Groups and shortcuts</h2>
         <div ng-context-menu>
-          <div ng-context-menu-trigger>Right click here</div>
-          <div ng-context-menu-content aria-label="File actions">
-            <div ng-context-menu-group>
-              <div ng-context-menu-label>File</div>
-              <button ng-context-menu-item>
-                New File <span ng-context-menu-shortcut>Ctrl+N</span>
+          <div class="context-menu-trigger">Right click here</div>
+          <menu aria-label="File actions" class="context-menu-content">
+            <div class="context-menu-group">
+              <div class="context-menu-label">File</div>
+              <button class="context-menu-item">
+                New File <span class="context-menu-shortcut">Ctrl+N</span>
               </button>
-              <button ng-context-menu-item>
-                Open File <span ng-context-menu-shortcut>Ctrl+O</span>
+              <button class="context-menu-item">
+                Open File <span class="context-menu-shortcut">Ctrl+O</span>
               </button>
-              <button ng-context-menu-item>
-                Save <span ng-context-menu-shortcut>Ctrl+S</span>
-              </button>
-            </div>
-            <div ng-context-menu-separator></div>
-            <div ng-context-menu-group>
-              <div ng-context-menu-label>Edit</div>
-              <button ng-context-menu-item>
-                Undo <span ng-context-menu-shortcut>Ctrl+Z</span>
-              </button>
-              <button ng-context-menu-item disabled>
-                Redo <span ng-context-menu-shortcut>Shift+Ctrl+Z</span>
+              <button class="context-menu-item">
+                Save <span class="context-menu-shortcut">Ctrl+S</span>
               </button>
             </div>
-          </div>
+            <div class="context-menu-separator"></div>
+            <div class="context-menu-group">
+              <div class="context-menu-label">Edit</div>
+              <button class="context-menu-item">
+                Undo <span class="context-menu-shortcut">Ctrl+Z</span>
+              </button>
+              <button disabled class="context-menu-item">
+                Redo <span class="context-menu-shortcut">Shift+Ctrl+Z</span>
+              </button>
+            </div>
+          </menu>
         </div>
       </section>
 
       <section class="context-menu-workflow" aria-labelledby="checkbox-title">
         <h2 id="checkbox-title">Checkboxes</h2>
         <div ng-context-menu>
-          <div ng-context-menu-trigger>Right click here</div>
-          <div ng-context-menu-content aria-label="View options">
+          <div class="context-menu-trigger">Right click here</div>
+          <menu aria-label="View options" class="context-menu-content">
             <button
-              ng-context-menu-checkbox-item
+
               aria-checked="{{ view.bookmarks }}"
               ng-click="view.bookmarks=!view.bookmarks"
-            >
+             class="context-menu-checkbox-item">
               Show Bookmarks Bar
             </button>
             <button
-              ng-context-menu-checkbox-item
+
               aria-checked="{{ view.urls }}"
               ng-click="view.urls=!view.urls"
-            >
+             class="context-menu-checkbox-item">
               Show Full URLs
             </button>
-          </div>
+          </menu>
         </div>
         <output>
           Bookmarks: <span ng-bind="view.bookmarks ? 'On' : 'Off'"></span>
@@ -150,55 +150,55 @@
       <section class="context-menu-workflow" aria-labelledby="radio-title">
         <h2 id="radio-title">Radio groups</h2>
         <div ng-context-menu>
-          <div ng-context-menu-trigger>Right click here</div>
-          <div ng-context-menu-content aria-label="Profile and theme">
-            <div ng-context-menu-group>
-              <div ng-context-menu-label>People</div>
-              <div ng-context-menu-radio-group aria-label="People">
+          <div class="context-menu-trigger">Right click here</div>
+          <menu aria-label="Profile and theme" class="context-menu-content">
+            <div class="context-menu-group">
+              <div class="context-menu-label">People</div>
+              <div aria-label="People" class="context-menu-radio-group">
                 <button
-                  ng-context-menu-radio-item
+
                   aria-checked="{{ person === 'pedro' }}"
                   ng-click="person='pedro'"
-                >
+                 class="context-menu-radio-item">
                   Pedro Duarte
                 </button>
                 <button
-                  ng-context-menu-radio-item
+
                   aria-checked="{{ person === 'colm' }}"
                   ng-click="person='colm'"
-                >
+                 class="context-menu-radio-item">
                   Colm Tuite
                 </button>
               </div>
             </div>
-            <div ng-context-menu-separator></div>
-            <div ng-context-menu-group>
-              <div ng-context-menu-label>Theme</div>
-              <div ng-context-menu-radio-group aria-label="Theme">
+            <div class="context-menu-separator"></div>
+            <div class="context-menu-group">
+              <div class="context-menu-label">Theme</div>
+              <div aria-label="Theme" class="context-menu-radio-group">
                 <button
-                  ng-context-menu-radio-item
+
                   aria-checked="{{ theme === 'light' }}"
                   ng-click="theme='light'"
-                >
+                 class="context-menu-radio-item">
                   Light
                 </button>
                 <button
-                  ng-context-menu-radio-item
+
                   aria-checked="{{ theme === 'dark' }}"
                   ng-click="theme='dark'"
-                >
+                 class="context-menu-radio-item">
                   Dark
                 </button>
                 <button
-                  ng-context-menu-radio-item
+
                   aria-checked="{{ theme === 'system' }}"
                   ng-click="theme='system'"
-                >
+                 class="context-menu-radio-item">
                   System
                 </button>
               </div>
             </div>
-          </div>
+          </menu>
         </div>
         <output>
           Person: <span ng-bind="person"></span>; Theme:

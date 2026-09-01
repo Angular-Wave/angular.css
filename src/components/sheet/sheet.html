@@ -11,10 +11,10 @@
   </head>
   <body ng-app="ui" ng-cloak style="padding: 0">
     <button
-      data-slot="button"
       variant="outline"
       aria-controls="notifications-sheet"
       style="position: absolute; left: 24px; top: 24px; z-index: 60"
+      class="button"
     >
       Open sheet
     </button>
@@ -24,42 +24,38 @@
       data-open="true"
       style="height: 370px"
     >
-      <div data-slot="sheet-overlay"></div>
-      <aside
-        data-slot="sheet-content"
+      <div class="sheet-overlay"></div>
+      <dialog
         data-side="right"
         aria-label="Notifications"
+        class="sheet-content"
       >
-        <header data-slot="sheet-header">
-          <h2 data-slot="sheet-title">Notifications</h2>
-          <p data-slot="sheet-description">
-            Recent updates from your workspace.
-          </p>
+        <header class="sheet-header">
+          <h2 class="sheet-title">Notifications</h2>
+          <p class="sheet-description">Recent updates from your workspace.</p>
         </header>
         <div class="stack-sm">
-          <div data-slot="item">
-            <div data-slot="item-content">
-              <div data-slot="item-title">Build completed</div>
-              <div data-slot="item-description">
+          <div class="item">
+            <section class="item-content">
+              <h3 class="item-title">Build completed</h3>
+              <p class="item-description">
                 Production build finished 2 minutes ago.
-              </div>
-            </div>
+              </p>
+            </section>
           </div>
-          <div data-slot="item">
-            <div data-slot="item-content">
-              <div data-slot="item-title">Invite accepted</div>
-              <div data-slot="item-description">
-                Jane joined the design team.
-              </div>
-            </div>
+          <div class="item">
+            <section class="item-content">
+              <h3 class="item-title">Invite accepted</h3>
+              <p class="item-description">Jane joined the design team.</p>
+            </section>
           </div>
         </div>
-        <footer data-slot="sheet-footer">
-          <button data-slot="button" variant="outline" data-sheet-close>
+        <footer class="sheet-footer">
+          <button variant="outline" data-sheet-close class="button">
             Close
           </button>
         </footer>
-      </aside>
+      </dialog>
     </section>
   </body>
 </html>

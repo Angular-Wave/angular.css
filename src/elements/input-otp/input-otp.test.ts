@@ -5,9 +5,7 @@ test("input otp element example mirrors the functional six-slot component page",
 }) => {
   await page.goto("/docs/static/examples/elements/input-otp.html");
   const root = page.locator("[ng-input-otp]");
-  const inputs = page.locator(
-    `:is([data-slot=input-otp-slot], [ng-input-otp-slot]) input`,
-  );
+  const inputs = page.locator(`.input-otp-slot input`);
 
   await expect(inputs).toHaveCount(6);
   await expect(root).toHaveAttribute("data-value", "123456");

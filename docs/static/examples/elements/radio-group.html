@@ -17,41 +17,38 @@
   >
     <fieldset class="radio-group-demo visual-example">
       <legend class="visually-hidden">Density</legend>
-      <div ng-radio-group role="radiogroup" aria-label="Density">
-        <div data-slot="field" orientation="horizontal">
+      <fieldset aria-label="Density" class="radio-group">
+        <div orientation="horizontal" class="field">
           <input
-            ng-radio-group-item
+
             id="density-default"
             name="density"
             type="radio"
             value="default"
-            ng-model="density"
-          />
-          <label ng-label for="density-default">Default</label>
+            ng-model="density"  class="radio-group-item"/>
+          <label for="density-default" class="label">Default</label>
         </div>
-        <div data-slot="field" orientation="horizontal">
+        <div orientation="horizontal" class="field">
           <input
-            ng-radio-group-item
+
             id="density-comfortable"
             name="density"
             type="radio"
             value="comfortable"
-            ng-model="density"
-          />
-          <label ng-label for="density-comfortable">Comfortable</label>
+            ng-model="density"  class="radio-group-item"/>
+          <label for="density-comfortable" class="label">Comfortable</label>
         </div>
-        <div data-slot="field" orientation="horizontal">
+        <div orientation="horizontal" class="field">
           <input
-            ng-radio-group-item
+
             id="density-compact"
             name="density"
             type="radio"
             value="compact"
-            ng-model="density"
-          />
-          <label ng-label for="density-compact">Compact</label>
+            ng-model="density"  class="radio-group-item"/>
+          <label for="density-compact" class="label">Compact</label>
         </div>
-      </div>
+      </fieldset>
       <div class="output visually-hidden" aria-live="polite">
         Selected: <span ng-bind="density"></span>
       </div>

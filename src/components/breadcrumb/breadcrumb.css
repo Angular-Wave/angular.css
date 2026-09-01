@@ -1,12 +1,10 @@
-[data-slot="breadcrumb"],
-[ng-breadcrumb] {
+.breadcrumb {
   display: block;
   color: var(--muted-foreground);
   font-size: var(--text-sm);
 }
 
-[data-slot="breadcrumb-list"],
-[ng-breadcrumb-list] {
+.breadcrumb-list {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -17,55 +15,46 @@
   overflow-wrap: anywhere;
 }
 
-[data-slot="breadcrumb-item"],
-[ng-breadcrumb-item] {
+.breadcrumb-item {
   display: inline-flex;
   align-items: center;
   gap: calc(var(--spacing) * 1.5);
 }
 
-[data-slot="breadcrumb-link"],
-[ng-breadcrumb-link] {
+.breadcrumb-link {
   color: var(--muted-foreground);
   text-decoration: none;
   transition: color 150ms ease;
 }
 
-[data-slot="breadcrumb-link"]:hover,
-[ng-breadcrumb-link]:hover {
+.breadcrumb-link:hover {
   color: var(--foreground);
 }
 
-[data-slot="breadcrumb-page"],
-[ng-breadcrumb-page] {
+.breadcrumb-page {
   color: var(--foreground);
   font-weight: var(--font-weight-normal);
 }
 
-[data-slot="breadcrumb-separator"],
-[ng-breadcrumb-separator],
-[data-slot="breadcrumb-ellipsis"],
-[ng-breadcrumb-ellipsis] {
+.breadcrumb-separator,
+.breadcrumb-ellipsis {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: var(--muted-foreground);
 }
 
-:is([data-slot="breadcrumb-separator"], [ng-breadcrumb-separator]) > svg {
+.breadcrumb-separator > svg {
   width: calc(var(--spacing) * 3.5);
   height: calc(var(--spacing) * 3.5);
 }
 
-:is([data-slot="breadcrumb-separator"], [ng-breadcrumb-separator]):empty {
+.breadcrumb-separator:empty {
   width: calc(var(--spacing) * 3.5);
   height: calc(var(--spacing) * 3.5);
 }
 
-:is(
-    [data-slot="breadcrumb-separator"],
-    [ng-breadcrumb-separator]
-  ):empty::before {
+:is(.breadcrumb-separator):empty::before {
   content: "";
   width: calc(var(--spacing) * 1.5);
   height: calc(var(--spacing) * 1.5);
@@ -74,33 +63,27 @@
   transform: rotate(45deg);
 }
 
-[data-slot="breadcrumb-ellipsis"],
-[ng-breadcrumb-ellipsis] {
+.breadcrumb-ellipsis {
   width: calc(var(--spacing) * 5);
   height: calc(var(--spacing) * 5);
 }
 
-:is([data-slot="breadcrumb-ellipsis"], [ng-breadcrumb-ellipsis]) > svg {
+.breadcrumb-ellipsis > svg {
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
 }
 
-:is([data-slot="breadcrumb-ellipsis"], [ng-breadcrumb-ellipsis]):empty::before {
+.breadcrumb-ellipsis:empty::before {
   content: "...";
   line-height: 1;
 }
 
-[dir="rtl"]
-  :is(
-    [data-slot="breadcrumb-separator"],
-    [ng-breadcrumb-separator]
-  ):empty::before {
+[dir="rtl"] :is(.breadcrumb-separator):empty::before {
   transform: rotate(-135deg);
 }
 
 @media (width >= 40rem) {
-  [data-slot="breadcrumb-list"],
-  [ng-breadcrumb-list] {
+  .breadcrumb-list {
     gap: calc(var(--spacing) * 2.5);
   }
 }

@@ -1,13 +1,13 @@
-[data-slot="native-select-wrapper"] {
+.native-select-wrapper {
   position: relative;
   width: fit-content;
 }
 
-[data-slot="native-select-wrapper"]:has(select:disabled) {
+.native-select-wrapper:has(select:disabled) {
   opacity: 0.5;
 }
 
-[data-slot="native-select-wrapper"]::after {
+.native-select-wrapper::after {
   position: absolute;
   inset-block-start: 50%;
   inset-inline-end: calc(var(--spacing) * 3);
@@ -21,13 +21,11 @@
   transform: translateY(-65%) rotate(45deg);
 }
 
-[data-slot="native-select-wrapper"]:has(
-    > [data-slot="native-select-icon"]
-  )::after {
+.native-select-wrapper:has(> .native-select-icon)::after {
   display: none;
 }
 
-[data-slot="native-select-icon"] {
+.native-select-icon {
   position: absolute;
   inset-block-start: 50%;
   inset-inline-end: calc(var(--spacing) * 2.5);
@@ -39,7 +37,7 @@
   user-select: none;
 }
 
-:is(select[ng-native-select], select[data-slot="native-select"]) {
+:is(select.native-select, select.native-select) {
   display: block;
   width: 100%;
   min-width: 0;
@@ -62,12 +60,12 @@
   user-select: none;
 }
 
-:is(select[ng-native-select], select[data-slot="native-select"]):focus-visible {
+:is(select.native-select, select.native-select):focus-visible {
   border-color: var(--ring);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
-:is(select[ng-native-select], select[data-slot="native-select"]):is(
+:is(select.native-select, select.native-select):is(
   :invalid,
   [aria-invalid="true"],
   [data-invalid="true"]
@@ -76,25 +74,25 @@
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--error) 20%, transparent);
 }
 
-:is(select[ng-native-select], select[data-slot="native-select"]):disabled {
+:is(select.native-select, select.native-select):disabled {
   pointer-events: none;
   cursor: not-allowed;
 }
 
-:is(select[ng-native-select], select[data-slot="native-select"]):is(
+:is(select.native-select, select.native-select):is(
   [size="sm"],
   [data-size="sm"]
 ),
-[data-slot="native-select-wrapper"][data-size="sm"] select {
+.native-select-wrapper[data-size="sm"] select {
   height: calc(var(--spacing) * 7);
   border-radius: min(var(--radius-md), 10px);
   padding-block: calc(var(--spacing) * 0.5);
 }
 
-:is(select[ng-native-select], select[data-slot="native-select"]) option,
-:is(select[ng-native-select], select[data-slot="native-select"]) optgroup,
-[data-slot="native-select-option"],
-[data-slot="native-select-optgroup"] {
+:is(select.native-select, select.native-select) option,
+:is(select.native-select, select.native-select) optgroup,
+.native-select-option,
+.native-select-optgroup {
   background: Canvas;
   color: CanvasText;
 }

@@ -29,16 +29,15 @@ test("canonical artifact supplies modal semantics and direct trigger ownership",
   await page.goto(canonicalUrl);
   await expectBuiltArtifactRuntime(page);
   const root = page.locator("#profile-dialog");
-  const trigger = root.locator("[ng-dialog-trigger]");
-  const content = root.locator("[ng-dialog-content]");
-  const overlay = root.locator("[ng-dialog-overlay]");
+  const trigger = root.locator(".dialog-trigger");
+  const content = root.locator(".dialog-content");
+  const overlay = root.locator(".dialog-overlay");
 
-  await expect(root).not.toHaveAttribute("data-slot");
   await expect(content).toBeHidden();
   await expect(trigger).toHaveAttribute("type", "button");
   await expect(trigger).toHaveAttribute("aria-haspopup", "dialog");
   await expect(trigger).toHaveAttribute("aria-expanded", "false");
-  await expect(content).toHaveAttribute("role", "dialog");
+  expect(await content.getAttribute("role")).toBeNull();
   await expect(content).toHaveAttribute("aria-modal", "true");
   await expect(content).toHaveAttribute("aria-hidden", "true");
 
@@ -48,11 +47,11 @@ test("canonical artifact supplies modal semantics and direct trigger ownership",
   await expect(overlay).toHaveAttribute("data-state", "open");
   await expect(content).toHaveAttribute(
     "aria-labelledby",
-    (await root.locator("[ng-dialog-title]").getAttribute("id")) ?? "",
+    (await root.locator(".dialog-title").getAttribute("id")) ?? "",
   );
   await expect(content).toHaveAttribute(
     "aria-describedby",
-    (await root.locator("[ng-dialog-description]").getAttribute("id")) ?? "",
+    (await root.locator(".dialog-description").getAttribute("id")) ?? "",
   );
   await expect(page.locator("#dialog-name")).toBeFocused();
 });
@@ -62,9 +61,9 @@ test("focus wraps, escaped focus is contained, and dismissal restores the trigge
 }) => {
   await page.goto(canonicalUrl);
   const root = page.locator("#profile-dialog");
-  const trigger = root.locator("[ng-dialog-trigger]");
-  const content = root.locator("[ng-dialog-content]");
-  const cornerClose = root.locator("[ng-dialog-close]");
+  const trigger = root.locator(".dialog-trigger");
+  const content = root.locator(".dialog-content");
+  const cornerClose = root.locator(".dialog-close");
 
   await trigger.click();
   await cornerClose.focus();
@@ -78,7 +77,7 @@ test("focus wraps, escaped focus is contained, and dismissal restores the trigge
 
   await root.locator(".dialog-overlay-probe").dispatchEvent("click");
   await expect(content).toBeVisible();
-  await root.locator("[ng-dialog-overlay]").dispatchEvent("click");
+  await root.locator(".dialog-overlay").dispatchEvent("click");
   await expect(content).toBeHidden();
   await expect(trigger).toBeFocused();
 
@@ -92,7 +91,7 @@ test("open dialogs isolate the background and lock document scrolling", async ({
   page,
 }) => {
   await page.goto(canonicalUrl);
-  const trigger = page.locator("[ng-dialog-trigger]");
+  const trigger = page.locator(".dialog-trigger");
   const background = page.locator(".dialog-output");
 
   await trigger.click();
@@ -121,8 +120,8 @@ test("AngularTS form state remains authoritative and controlled state composes",
 }) => {
   await page.goto(canonicalUrl);
   const root = page.locator("#profile-dialog");
-  const content = root.locator("[ng-dialog-content]");
-  const trigger = root.locator("[ng-dialog-trigger]");
+  const content = root.locator(".dialog-content");
+  const trigger = root.locator(".dialog-trigger");
 
   await trigger.click();
   await page.locator("#dialog-name").fill("Jane Doe");
@@ -146,17 +145,17 @@ test("close-button workflows distinguish corner and footer close actions", async
   const share = page.locator("#share-dialog");
   const plain = page.locator("#plain-dialog");
 
-  await share.locator("[ng-dialog-trigger]").click();
-  await expect(share.locator("[ng-dialog-close]")).toHaveCount(1);
+  await share.locator(".dialog-trigger").click();
+  await expect(share.locator(".dialog-close")).toHaveCount(1);
   await expect(share.locator("[data-dialog-close]")).toHaveCount(1);
   await share.locator("[data-dialog-close]").click();
-  await expect(share.locator("[ng-dialog-content]")).toBeHidden();
+  await expect(share.locator(".dialog-content")).toBeHidden();
 
-  await plain.locator("[ng-dialog-trigger]").click();
-  await expect(plain.locator("[ng-dialog-close]")).toHaveCount(0);
+  await plain.locator(".dialog-trigger").click();
+  await expect(plain.locator(".dialog-close")).toHaveCount(0);
   await expect(plain.getByRole("button", { name: "Continue" })).toBeVisible();
   await plain.getByRole("button", { name: "Continue" }).click();
-  await expect(plain.locator("[ng-dialog-content]")).toBeHidden();
+  await expect(plain.locator(".dialog-content")).toBeHidden();
 });
 
 test("scroll workflows provide real overflow and keep the footer stationary", async ({
@@ -167,8 +166,8 @@ test("scroll workflows provide real overflow and keep the footer stationary", as
   await expectBuiltArtifactRuntime(page);
 
   const scrollDialog = page.locator("#scroll-dialog");
-  await scrollDialog.locator("[ng-dialog-trigger]").click();
-  const body = scrollDialog.locator("[ng-dialog-body]");
+  await scrollDialog.locator(".dialog-trigger").click();
+  const body = scrollDialog.locator(".dialog-body");
   expect(
     await body.evaluate(
       (element) => element.scrollHeight > element.clientHeight,
@@ -177,9 +176,9 @@ test("scroll workflows provide real overflow and keep the footer stationary", as
   await page.keyboard.press("Escape");
 
   const stickyDialog = page.locator("#sticky-dialog");
-  await stickyDialog.locator("[ng-dialog-trigger]").click();
-  const stickyBody = stickyDialog.locator("[ng-dialog-body]");
-  const footer = stickyDialog.locator("[ng-dialog-footer]");
+  await stickyDialog.locator(".dialog-trigger").click();
+  const stickyBody = stickyDialog.locator(".dialog-body");
+  const footer = stickyDialog.locator(".dialog-footer");
   const before = await footer.boundingBox();
   await stickyBody.evaluate((element) => {
     element.scrollTop = element.scrollHeight;
@@ -198,9 +197,9 @@ test("RTL artifact mirrors semantics and logical corner positioning", async ({
   await expectBuiltArtifactRuntime(page);
   const root = page.locator("[ng-dialog]");
   await expect(root).toHaveAttribute("data-direction", "rtl");
-  await root.locator("[ng-dialog-trigger]").click();
-  const content = root.locator("[ng-dialog-content]");
-  const close = root.locator("[ng-dialog-close]");
+  await root.locator(".dialog-trigger").click();
+  const content = root.locator(".dialog-content");
+  const close = root.locator(".dialog-close");
   await expect(content).toHaveAttribute("data-direction", "rtl");
   const contentBox = await content.boundingBox();
   const closeBox = await close.boundingBox();

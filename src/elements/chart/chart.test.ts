@@ -5,10 +5,11 @@ test("element entrypoint example is a complete functional chart page", async ({
 }) => {
   await page.goto("/docs/static/examples/elements/chart.html");
 
-  const chart = page.locator("[ng-chart]");
-  const bars = chart.locator(`:is([data-slot=chart-bar], [ng-chart-bar])`);
+  const chart = page.locator(".chart");
+  const bars = chart.locator(`.chart-bar`);
 
-  await expect(chart).toHaveAttribute("role", "img");
+  expect(await chart.getAttribute("role")).toBeNull();
+  await expect(chart).toHaveRole("figure");
   await expect(bars).toHaveCount(12);
   await expect(bars.first()).toHaveAttribute("data-value", "61%");
 });

@@ -307,7 +307,10 @@ export function bindOverlay(
     const content = getContent();
     if (content) {
       if (!content.id) content.id = `${element.id}-content`;
-      setAttributeIfChanged(content, "role", parts.contentRole ?? "dialog");
+      const contentRole = parts.contentRole ?? "dialog";
+      if (content.tagName !== "DIALOG" || contentRole !== "dialog") {
+        setAttributeIfChanged(content, "role", contentRole);
+      }
       setAttributeIfChanged(content, "aria-modal", "true");
       if (!content.hasAttribute("tabindex")) content.tabIndex = -1;
 

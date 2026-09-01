@@ -22,19 +22,19 @@ test("element artifact uses bundled entrypoints and remains functional", async (
   ).toEqual([]);
 
   const root = page.locator("[ng-select]");
-  const trigger = page.locator("[ng-select-trigger]");
-  const content = page.locator("[ng-select-content]");
+  const trigger = page.locator(".select-trigger");
+  const content = page.locator(".select-content");
   await expect(content).toBeHidden();
   await trigger.focus();
   await trigger.press("ArrowDown");
   await trigger.press("End");
   await expect(content).toBeVisible();
-  await expect(page.locator("[ng-select-item]").last()).toHaveAttribute(
+  await expect(page.locator(".select-item").last()).toHaveAttribute(
     "data-highlighted",
     "true",
   );
   await trigger.press("Enter");
   await expect(root).toHaveAttribute("data-value", "pineapple");
-  await expect(page.locator("[ng-select-value]")).toHaveText("Pineapple");
+  await expect(page.locator(".select-value")).toHaveText("Pineapple");
   await expect(page.locator(".output")).toContainText("Selected: pineapple");
 });

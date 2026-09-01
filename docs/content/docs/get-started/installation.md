@@ -35,7 +35,7 @@ Then attach your application module to an HTML root:
 
 ```html
 <main ng-app="app">
-  <button ng-button>Save</button>
+  <button class="button">Save</button>
 </main>
 ```
 
@@ -53,7 +53,7 @@ into their own static asset directory. Serve all three from the same origin:
 <script src="/vendor/angularcss/angular-css.umd.js"></script>
 
 <div ng-app="ui">
-  <button ng-button>Save</button>
+  <button class="button">Save</button>
 </div>
 ```
 
@@ -70,7 +70,7 @@ and place application overrides after the component stylesheet:
 @import '@angular-wave/angular.css/dist/angular.css';
 
 @layer components {
-  [ng-button][variant='outline'] {
+  .button[variant='outline'] {
     @apply border-slate-300 bg-transparent;
   }
 }
@@ -84,12 +84,12 @@ compiled.
 Render a button and inspect it in browser developer tools:
 
 ```html
-<button ng-button variant="secondary">Installed</button>
+<button variant="secondary" class="button">Installed</button>
 ```
 
-The element should retain `ng-button` and receive mirrored `data-variant` and
-`data-size` attributes. If it remains unstyled, verify the CSS import. If state
-attributes are missing, verify script order and the `ui` module dependency.
+The element should retain its class and native attributes. If it remains
+unstyled, verify the CSS import. Behavioral components additionally require the
+AngularTS script order and the `ui` module dependency.
 
 ## TypeScript
 

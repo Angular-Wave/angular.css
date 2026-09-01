@@ -1,25 +1,19 @@
-[data-slot="item-group"],
-[ng-item-group] {
+.item-group {
   display: flex;
   width: 100%;
   flex-direction: column;
   gap: calc(var(--spacing) * 4);
 }
 
-:is([data-slot="item-group"], [ng-item-group]):has(
-  > :is([data-slot="item"], [ng-item]):is([size="sm"], [data-size="sm"])
-) {
+.item-group:has(> :is(.item):is([size="sm"], [data-size="sm"])) {
   gap: calc(var(--spacing) * 2.5);
 }
 
-:is([data-slot="item-group"], [ng-item-group]):has(
-  > :is([data-slot="item"], [ng-item]):is([size="xs"], [data-size="xs"])
-) {
+.item-group:has(> :is(.item):is([size="xs"], [data-size="xs"])) {
   gap: calc(var(--spacing) * 2);
 }
 
-[data-slot="item"],
-[ng-item] {
+.item {
   display: flex;
   width: 100%;
   flex-wrap: wrap;
@@ -37,40 +31,35 @@
     box-shadow 100ms ease;
 }
 
-[data-slot="item"][variant="outline"],
-[data-slot="item"][data-variant="outline"],
-[ng-item][variant="outline"],
-[ng-item][data-variant="outline"] {
+.item[variant="outline"],
+.item[data-variant="outline"] {
   border-color: var(--border);
   background: var(--background);
 }
 
-[data-slot="item"][variant="muted"],
-[data-slot="item"][data-variant="muted"],
-[ng-item][variant="muted"],
-[ng-item][data-variant="muted"] {
+.item[variant="muted"],
+.item[data-variant="muted"] {
   background: color-mix(in srgb, var(--muted) 50%, transparent);
 }
 
-:is([data-slot="item"], [ng-item]):is([size="sm"], [data-size="sm"]) {
+:is(.item):is([size="sm"], [data-size="sm"]) {
   gap: calc(var(--spacing) * 2.5);
   padding-block: calc(var(--spacing) * 2.5);
   padding-inline: calc(var(--spacing) * 3);
 }
 
-:is([data-slot="item"], [ng-item]):is([size="xs"], [data-size="xs"]) {
+:is(.item):is([size="xs"], [data-size="xs"]) {
   gap: calc(var(--spacing) * 2);
   padding-block: calc(var(--spacing) * 2);
   padding-inline: calc(var(--spacing) * 2.5);
 }
 
-:is([data-slot="item"], [ng-item]):focus-visible {
+:is(.item):focus-visible {
   border-color: var(--ring);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 35%, transparent);
 }
 
-[data-slot="item-media"],
-[ng-item-media] {
+.item-media {
   display: flex;
   flex-shrink: 0;
   align-items: center;
@@ -79,47 +68,38 @@
   color: var(--muted-foreground);
 }
 
-[data-slot="item-media"][variant="icon"],
-[ng-item-media][variant="icon"] {
+.item-media[variant="icon"] {
   background: transparent;
 }
 
-[data-slot="item-media"][variant="image"],
-[ng-item-media][variant="image"] {
+.item-media[variant="image"] {
   width: calc(var(--spacing) * 10);
   height: calc(var(--spacing) * 10);
   overflow: hidden;
   border-radius: calc(var(--radius) - 2px);
 }
 
-:is([data-slot="item"], [ng-item]):is([size="sm"], [data-size="sm"])
-  :is([data-slot="item-media"], [ng-item-media])[variant="image"] {
+:is(.item):is([size="sm"], [data-size="sm"]) .item-media[variant="image"] {
   width: calc(var(--spacing) * 8);
   height: calc(var(--spacing) * 8);
 }
 
-:is([data-slot="item"], [ng-item]):is([size="xs"], [data-size="xs"])
-  :is([data-slot="item-media"], [ng-item-media])[variant="image"] {
+:is(.item):is([size="xs"], [data-size="xs"]) .item-media[variant="image"] {
   width: calc(var(--spacing) * 6);
   height: calc(var(--spacing) * 6);
 }
 
-:is([data-slot="item"], [ng-item]):has(
-    :is([data-slot="item-description"], [ng-item-description])
-  )
-  > :is([data-slot="item-media"], [ng-item-media]) {
+:is(.item):has(.item-description) > .item-media {
   align-self: flex-start;
   transform: translateY(calc(var(--spacing) * 0.5));
 }
 
-:is([data-slot="item-media"], [ng-item-media])
-  svg:not([data-slot="spinner"], [ng-spinner]) {
+.item-media svg:not(.spinner) {
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
 }
 
-[data-slot="item-content"],
-[ng-item-content] {
+.item-content {
   display: flex;
   min-width: 0;
   flex: 1 1 0;
@@ -127,13 +107,11 @@
   gap: calc(var(--spacing) * 1);
 }
 
-:is([data-slot="item-content"], [ng-item-content])
-  + :is([data-slot="item-content"], [ng-item-content]) {
+.item-content + .item-content {
   flex: none;
 }
 
-[data-slot="item-title"],
-[ng-item-title] {
+.item-title {
   display: flex;
   width: fit-content;
   align-items: center;
@@ -147,8 +125,7 @@
   white-space: nowrap;
 }
 
-[data-slot="item-description"],
-[ng-item-description] {
+.item-description {
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
@@ -159,23 +136,19 @@
   text-align: start;
 }
 
-:is([data-slot="item"], [ng-item]):is([size="xs"], [data-size="xs"])
-  :is([data-slot="item-description"], [ng-item-description]) {
+:is(.item):is([size="xs"], [data-size="xs"]) .item-description {
   font-size: var(--text-xs);
 }
 
-[data-slot="item-actions"],
-[ng-item-actions] {
+.item-actions {
   display: flex;
   flex-shrink: 0;
   align-items: center;
   gap: calc(var(--spacing) * 2);
 }
 
-[data-slot="item-header"],
-[ng-item-header],
-[data-slot="item-footer"],
-[ng-item-footer] {
+.item-header,
+.item-footer {
   display: flex;
   flex-basis: 100%;
   align-items: center;
@@ -183,8 +156,7 @@
   gap: calc(var(--spacing) * 2);
 }
 
-[data-slot="item-separator"],
-[ng-item-separator] {
+.item-separator {
   width: 100%;
   height: 1px;
   margin-block: calc(var(--spacing) * 2);

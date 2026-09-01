@@ -1,6 +1,6 @@
 import express from "express";
 const app = express();
-const port = 3000;
+const port = Number(process.env.MOCK_SERVER_PORT ?? 4101);
 
 app.use("/post", express.json());
 app.use("/nocontent", express.json());

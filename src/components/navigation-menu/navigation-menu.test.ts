@@ -22,7 +22,7 @@ const expectBuiltArtifactRuntime = async (page: Page): Promise<void> => {
 };
 
 const directContent = (trigger: Locator): Locator =>
-  trigger.locator("..").locator(":scope > [ng-navigation-menu-content]");
+  trigger.locator("..").locator(":scope > .navigation-menu-content");
 
 test("canonical navigation preserves native landmark, list, button, and link semantics", async ({
   page,
@@ -31,12 +31,10 @@ test("canonical navigation preserves native landmark, list, button, and link sem
   await expectBuiltArtifactRuntime(page);
 
   const nav = page.getByRole("navigation", { name: "Primary navigation" });
-  const triggers = nav.locator("[ng-navigation-menu-trigger]");
-  const contents = nav.locator("[ng-navigation-menu-content]");
+  const triggers = nav.locator(".navigation-menu-trigger");
+  const contents = nav.locator(".navigation-menu-content");
   await expect(nav).toHaveAttribute("data-state", "closed");
-  await expect(nav.locator(":scope > [ng-navigation-menu-list]")).toHaveCount(
-    1,
-  );
+  await expect(nav.locator(":scope > .navigation-menu-list")).toHaveCount(1);
   await expect(triggers).toHaveCount(3);
   await expect(nav.getByRole("link", { name: "Docs" })).toHaveAttribute(
     "href",
@@ -61,9 +59,7 @@ test("pointer and click disclosure share state and Escape restores trigger focus
   await page.goto(canonicalUrl);
   const trigger = page.getByRole("button", { name: "Getting started" });
   const content = directContent(trigger);
-  const indicator = trigger
-    .locator("..")
-    .locator("[ng-navigation-menu-indicator]");
+  const indicator = trigger.locator("..").locator(".navigation-menu-indicator");
 
   await trigger.hover();
   await expect(content).toBeVisible();

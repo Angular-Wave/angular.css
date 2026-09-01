@@ -10,9 +10,9 @@ export function bindSemanticSubmenus(
   prefix: "context-menu" | "dropdown-menu" | "menubar",
   getDirection: () => Direction,
 ): () => void {
-  const subSelector = `[data-slot="${prefix}-sub"], [ng-${prefix}-sub]`;
-  const triggerSelector = `[data-slot="${prefix}-sub-trigger"], [ng-${prefix}-sub-trigger]`;
-  const contentSelector = `[data-slot="${prefix}-sub-content"], [ng-${prefix}-sub-content]`;
+  const subSelector = `.${prefix}-sub, [ng-${prefix}-sub]`;
+  const triggerSelector = `.${prefix}-sub-trigger, [ng-${prefix}-sub-trigger]`;
+  const contentSelector = `.${prefix}-sub-content, [ng-${prefix}-sub-content]`;
   const cleanups = new Map<HTMLElement, () => void>();
   let submenuId = 0;
 
@@ -28,14 +28,23 @@ export function bindSemanticSubmenus(
     content.id = contentId;
     trigger.setAttribute("aria-controls", contentId);
     trigger.setAttribute("aria-haspopup", "menu");
-    content.setAttribute("role", content.getAttribute("role") ?? "menu");
+    content.setAttribute("role", "menu");
     const getItems = () =>
       queryAll<HTMLElement>(content, itemSelector).filter(
         (item) => !isDisabled(item),
       );
     const syncItems = () => {
       getItems().forEach((item) => {
-        if (!item.hasAttribute("role")) item.setAttribute("role", "menuitem");
+        if (item.hasAttribute("role")) return;
+        const role = item.matches(`.${prefix}-checkbox-item`)
+          ? "menuitemcheckbox"
+          : item.matches(`.${prefix}-radio-item`)
+            ? "menuitemradio"
+            : "menuitem";
+        item.setAttribute("role", role);
+        if (role !== "menuitem" && !item.hasAttribute("aria-checked")) {
+          item.setAttribute("aria-checked", "false");
+        }
       });
     };
 

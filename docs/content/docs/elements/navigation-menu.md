@@ -6,14 +6,14 @@ description: >
 ---
 
 Navigation menu is exposed as semantic `nav` markup with list, item, trigger,
-link, and content slots.
+link, and content parts.
 
 ```html
-<nav data-slot="navigation-menu">
-  <ul data-slot="navigation-menu-list">
-    <li data-slot="navigation-menu-item">
-      <button data-slot="navigation-menu-trigger">Components</button>
-      <div data-slot="navigation-menu-content">Links</div>
+<nav class="navigation-menu">
+  <ul class="navigation-menu-list">
+    <li class="navigation-menu-item">
+      <button class="navigation-menu-trigger">Components</button>
+      <section class="navigation-menu-content">Links</section>
     </li>
   </ul>
 </nav>

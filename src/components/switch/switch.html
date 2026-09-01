@@ -11,22 +11,25 @@
   </head>
   <body ng-app="ui" ng-cloak ng-init="mode=false">
     <div class="stack-sm">
-      <div class="row" data-slot="field" orientation="horizontal">
+      <div class="row field" orientation="horizontal">
         <input
-          ng-switch-control
           id="airplane-mode"
           type="checkbox"
-          role="switch"
           ng-model="mode"
+          class="switch"
         />
-        <label ng-label for="airplane-mode">Airplane mode</label>
+        <label for="airplane-mode" class="label">Airplane mode</label>
       </div>
       <div class="output">Mode enabled: <span ng-bind="mode"></span></div>
 
-      <button ng-switch-control aria-checked="false">Remote mode</button>
-      <button ng-switch-control size="sm" aria-checked="true">
-        Small switch
-      </button>
+      <input aria-label="Remote mode" type="checkbox" class="switch" />
+      <input
+        aria-label="Small switch"
+        size="sm"
+        type="checkbox"
+        checked
+        class="switch"
+      />
     </div>
   </body>
 </html>

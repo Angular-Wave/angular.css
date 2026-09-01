@@ -23,11 +23,10 @@
       >
         <h2 id="sonner-description-title">With description</h2>
         <button
-          ng-button
+
           type="button"
           variant="outline"
-          ng-click="sonner.showDescription()"
-        >
+          ng-click="sonner.showDescription()" class="button">
           Show Toast
         </button>
         <div class="sonner-inline-preview">
@@ -36,25 +35,25 @@
             class="sonner-inline-toaster"
             aria-label="Description notifications"
           >
-            <section ng-toast ng-if="sonner.descriptionVisible">
-              <div ng-toast-content>
-                <h3 ng-toast-title>Event has been created</h3>
-                <p ng-toast-description>Monday, January 3rd at 6:00pm</p>
-              </div>
+            <li ng-if="sonner.descriptionVisible" class="toast">
+              <section class="toast-content">
+                <h3 class="toast-title">Event has been created</h3>
+                <p class="toast-description">Monday, January 3rd at 6:00pm</p>
+              </section>
               <button
-                ng-button
-                ng-toast-close
+
+
                 variant="ghost"
                 size="icon-sm"
                 aria-label="Dismiss description toast"
                 ng-click="sonner.dismissDescription()"
-              >
-                <span ng-sonner-icon="close"></span>
+               class="toast-close button">
+                <span class="sonner-icon"></span>
               </button>
-            </section>
+            </li>
           </div>
         </div>
-        <p class="output" role="status">{{ sonner.descriptionStatus }}</p>
+        <output class="output">{{ sonner.descriptionStatus }}</output>
       </section>
 
       <section
@@ -64,51 +63,45 @@
         <h2 id="sonner-position-title">Position</h2>
         <div class="sonner-button-grid" aria-label="Toast positions">
           <button
-            ng-button
+
             type="button"
             variant="outline"
-            ng-click="sonner.showPosition('top-left')"
-          >
+            ng-click="sonner.showPosition('top-left')" class="button">
             Top Left
           </button>
           <button
-            ng-button
+
             type="button"
             variant="outline"
-            ng-click="sonner.showPosition('top-center')"
-          >
+            ng-click="sonner.showPosition('top-center')" class="button">
             Top Center
           </button>
           <button
-            ng-button
+
             type="button"
             variant="outline"
-            ng-click="sonner.showPosition('top-right')"
-          >
+            ng-click="sonner.showPosition('top-right')" class="button">
             Top Right
           </button>
           <button
-            ng-button
+
             type="button"
             variant="outline"
-            ng-click="sonner.showPosition('bottom-left')"
-          >
+            ng-click="sonner.showPosition('bottom-left')" class="button">
             Bottom Left
           </button>
           <button
-            ng-button
+
             type="button"
             variant="outline"
-            ng-click="sonner.showPosition('bottom-center')"
-          >
+            ng-click="sonner.showPosition('bottom-center')" class="button">
             Bottom Center
           </button>
           <button
-            ng-button
+
             type="button"
             variant="outline"
-            ng-click="sonner.showPosition('bottom-right')"
-          >
+            ng-click="sonner.showPosition('bottom-right')" class="button">
             Bottom Right
           </button>
         </div>
@@ -119,24 +112,24 @@
             position="{{ sonner.position }}"
             aria-label="Position notifications"
           >
-            <section ng-toast ng-if="sonner.positionVisible">
-              <div ng-toast-content>
-                <h3 ng-toast-title>Event has been created</h3>
-              </div>
+            <li ng-if="sonner.positionVisible" class="toast">
+              <section class="toast-content">
+                <h3 class="toast-title">Event has been created</h3>
+              </section>
               <button
-                ng-button
-                ng-toast-close
+
+
                 variant="ghost"
                 size="icon-sm"
                 aria-label="Dismiss position toast"
                 ng-click="sonner.dismissPosition()"
-              >
-                <span ng-sonner-icon="close"></span>
+               class="toast-close button">
+                <span class="sonner-icon"></span>
               </button>
-            </section>
+            </li>
           </div>
         </div>
-        <p class="output" role="status">Position: {{ sonner.position }}</p>
+        <output class="output">Position: {{ sonner.position }}</output>
       </section>
 
       <section
@@ -146,51 +139,45 @@
         <h2 id="sonner-types-title">Types</h2>
         <div class="sonner-button-grid" aria-label="Toast types">
           <button
-            ng-button
+
             type="button"
             variant="outline"
-            ng-click="sonner.showType('default')"
-          >
+            ng-click="sonner.showType('default')" class="button">
             Default
           </button>
           <button
-            ng-button
+
             type="button"
             variant="outline"
-            ng-click="sonner.showType('success')"
-          >
+            ng-click="sonner.showType('success')" class="button">
             Success
           </button>
           <button
-            ng-button
+
             type="button"
             variant="outline"
-            ng-click="sonner.showType('info')"
-          >
+            ng-click="sonner.showType('info')" class="button">
             Info
           </button>
           <button
-            ng-button
+
             type="button"
             variant="outline"
-            ng-click="sonner.showType('warning')"
-          >
+            ng-click="sonner.showType('warning')" class="button">
             Warning
           </button>
           <button
-            ng-button
+
             type="button"
             variant="outline"
-            ng-click="sonner.showType('error')"
-          >
+            ng-click="sonner.showType('error')" class="button">
             Error
           </button>
           <button
-            ng-button
+
             type="button"
             variant="outline"
-            ng-click="sonner.showPromise()"
-          >
+            ng-click="sonner.showPromise()" class="button">
             Promise
           </button>
         </div>
@@ -200,53 +187,53 @@
             class="sonner-inline-toaster"
             aria-label="Type notifications"
           >
-            <section
-              ng-toast
+            <li
+
               type="{{ sonner.type }}"
               ng-if="sonner.typeVisible"
-            >
+             class="toast">
               <span
-                ng-toast-icon
-                ng-sonner-icon="success"
+
+
                 ng-if="sonner.type === 'success'"
-              ></span>
+               class="toast-icon sonner-icon"></span>
               <span
-                ng-toast-icon
-                ng-sonner-icon="info"
+
+
                 ng-if="sonner.type === 'info'"
-              ></span>
+               class="toast-icon sonner-icon"></span>
               <span
-                ng-toast-icon
-                ng-sonner-icon="warning"
+
+
                 ng-if="sonner.type === 'warning'"
-              ></span>
+               class="toast-icon sonner-icon"></span>
               <span
-                ng-toast-icon
-                ng-sonner-icon="error"
+
+
                 ng-if="sonner.type === 'error'"
-              ></span>
+               class="toast-icon sonner-icon"></span>
               <span
-                ng-toast-icon
-                ng-sonner-icon="loading"
+
+
                 ng-if="sonner.type === 'loading'"
-              ></span>
-              <div ng-toast-content>
-                <h3 ng-toast-title>{{ sonner.typeMessage }}</h3>
-              </div>
+               class="toast-icon sonner-icon"></span>
+              <section class="toast-content">
+                <h3 class="toast-title">{{ sonner.typeMessage }}</h3>
+              </section>
               <button
-                ng-button
-                ng-toast-close
+
+
                 variant="ghost"
                 size="icon-sm"
                 aria-label="Dismiss type toast"
                 ng-click="sonner.dismissType()"
-              >
-                <span ng-sonner-icon="close"></span>
+               class="toast-close button">
+                <span class="sonner-icon"></span>
               </button>
-            </section>
+            </li>
           </div>
         </div>
-        <p class="output" role="status">Type: {{ sonner.type }}</p>
+        <output class="output">Type: {{ sonner.type }}</output>
       </section>
     </main>
   </body>

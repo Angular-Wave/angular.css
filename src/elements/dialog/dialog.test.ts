@@ -19,12 +19,12 @@ test("element dialog page uses the packaged canonical implementation", async ({
   expect(sourceRequests).toEqual([]);
 
   const root = page.locator("[ng-dialog]");
-  const trigger = root.locator("[ng-dialog-trigger]");
-  const content = root.locator("[ng-dialog-content]");
+  const trigger = root.locator(".dialog-trigger");
+  const content = root.locator(".dialog-content");
   await expect(content).toBeHidden();
   await trigger.click();
   await expect(content).toBeVisible();
-  await expect(content).toHaveAttribute("role", "dialog");
+  expect(await content.getAttribute("role")).toBeNull();
   await page.keyboard.press("Escape");
   await expect(content).toBeHidden();
   await expect(trigger).toBeFocused();

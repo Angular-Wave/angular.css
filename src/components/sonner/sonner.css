@@ -1,4 +1,4 @@
-[data-slot="toaster"],
+.toaster,
 [ng-toaster] {
   position: fixed;
   inset-block-end: calc(var(--spacing) * 4);
@@ -10,50 +10,49 @@
   pointer-events: none;
 }
 
-[data-slot="toaster"][data-position="bottom-left"],
+.toaster[data-position="bottom-left"],
 [ng-toaster][data-position="bottom-left"] {
   inset-block-end: calc(var(--spacing) * 4);
   inset-inline: calc(var(--spacing) * 4) auto;
   transform: none;
 }
 
-[data-slot="toaster"][data-position="bottom-center"],
+.toaster[data-position="bottom-center"],
 [ng-toaster][data-position="bottom-center"] {
   inset-block-end: calc(var(--spacing) * 4);
   inset-inline: 50% auto;
   transform: translateX(-50%);
 }
 
-[data-slot="toaster"][data-position="bottom-right"],
+.toaster[data-position="bottom-right"],
 [ng-toaster][data-position="bottom-right"] {
   inset-block-end: calc(var(--spacing) * 4);
   inset-inline: auto calc(var(--spacing) * 4);
   transform: none;
 }
 
-[data-slot="toaster"][data-position="top-left"],
+.toaster[data-position="top-left"],
 [ng-toaster][data-position="top-left"] {
   inset-block: calc(var(--spacing) * 4) auto;
   inset-inline: calc(var(--spacing) * 4) auto;
   transform: none;
 }
 
-[data-slot="toaster"][data-position="top-center"],
+.toaster[data-position="top-center"],
 [ng-toaster][data-position="top-center"] {
   inset-block: calc(var(--spacing) * 4) auto;
   inset-inline: 50% auto;
   transform: translateX(-50%);
 }
 
-[data-slot="toaster"][data-position="top-right"],
+.toaster[data-position="top-right"],
 [ng-toaster][data-position="top-right"] {
   inset-block: calc(var(--spacing) * 4) auto;
   inset-inline: auto calc(var(--spacing) * 4);
   transform: none;
 }
 
-[data-slot="toast"],
-[ng-toast] {
+.toast {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   min-height: calc(var(--spacing) * 16);
@@ -69,18 +68,15 @@
   animation: angularcss-toast-in 180ms ease-out;
 }
 
-:is([data-slot="toast"], [ng-toast])[hidden] {
+:is(.toast)[hidden] {
   display: none;
 }
 
-:is([data-slot="toast"], [ng-toast]):has(
-  > :is([data-slot="toast-icon"], [ng-toast-icon])
-) {
+:is(.toast):has(> .toast-icon) {
   grid-template-columns: auto minmax(0, 1fr) auto;
 }
 
-[data-slot="toast-icon"],
-[ng-toast-icon] {
+.toast-icon {
   display: grid;
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
@@ -88,57 +84,46 @@
   margin-block-start: 1px;
 }
 
-:is([data-slot="toast"], [ng-toast])[data-type="success"]
-  :is([data-slot="toast-icon"], [ng-toast-icon]) {
+:is(.toast)[data-type="success"] .toast-icon {
   color: var(--success);
 }
 
-:is([data-slot="toast"], [ng-toast])[data-type="info"]
-  :is([data-slot="toast-icon"], [ng-toast-icon]) {
+:is(.toast)[data-type="info"] .toast-icon {
   color: var(--info);
 }
 
-:is([data-slot="toast"], [ng-toast])[data-type="warning"]
-  :is([data-slot="toast-icon"], [ng-toast-icon]) {
+:is(.toast)[data-type="warning"] .toast-icon {
   color: var(--warning);
 }
 
-:is([data-slot="toast"], [ng-toast])[data-type="error"]
-  :is([data-slot="toast-icon"], [ng-toast-icon]) {
+:is(.toast)[data-type="error"] .toast-icon {
   color: var(--error);
 }
 
-:is([data-slot="toast"], [ng-toast])[data-type="loading"]
-  :is([data-slot="toast-icon"], [ng-toast-icon])
-  > svg {
+:is(.toast)[data-type="loading"] .toast-icon > svg {
   animation: angularcss-toast-spin 800ms linear infinite;
 }
 
-[data-slot="toast-content"],
-[ng-toast-content] {
+.toast-content {
   display: grid;
   gap: calc(var(--spacing) * 1);
 }
 
-[data-slot="toast-title"],
-[ng-toast-title] {
+.toast-title {
   color: var(--foreground);
   font-size: var(--text-sm);
   font-weight: var(--font-weight-semibold);
   line-height: 1.2;
 }
 
-[data-slot="toast-description"],
-[ng-toast-description] {
+.toast-description {
   color: var(--muted-foreground);
   font-size: var(--text-sm);
   line-height: 1.35;
 }
 
-[data-slot="toast-action"],
-[ng-toast-action],
-[data-slot="toast-close"],
-[ng-toast-close] {
+.toast-action,
+.toast-close {
   align-self: start;
 }
 
@@ -161,11 +146,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-slot="toast"],
-  [ng-toast],
-  :is([data-slot="toast"], [ng-toast])[data-type="loading"]
-    :is([data-slot="toast-icon"], [ng-toast-icon])
-    > svg {
+  .toast,
+  :is(.toast)[data-type="loading"] .toast-icon > svg {
     animation: none;
   }
 }

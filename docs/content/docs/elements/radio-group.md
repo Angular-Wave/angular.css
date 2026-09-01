@@ -5,23 +5,21 @@ description: >
   Native radio option group
 ---
 
-Use native radio inputs inside a `fieldset` or an element with
-`role="radiogroup"`.
+Use native radio inputs with a shared name inside a `fieldset` with a `legend`.
 
 ```html
-<div ng-radio-group role="radiogroup">
-  <div data-slot="field" orientation="horizontal">
+<fieldset class="radio-group">
+  <div orientation="horizontal" class="field">
     <input
-      ng-radio-group-item
+
       id="default"
       name="density"
       type="radio"
       value="default"
-      ng-model="density"
-    />
-    <label ng-label for="default">Default</label>
+      ng-model="density"  class="radio-group-item"/>
+    <label for="default" class="label">Default</label>
   </div>
-</div>
+</fieldset>
 <span>Density: <span ng-bind="density"></span></span>
 ```
 

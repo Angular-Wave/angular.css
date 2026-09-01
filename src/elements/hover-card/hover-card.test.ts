@@ -5,8 +5,8 @@ test("hover card element example exercises the built functional artifact", async
 }) => {
   await page.goto("/docs/static/examples/elements/hover-card.html");
 
-  const trigger = page.locator("[ng-hover-card-trigger]");
-  const content = page.locator("[ng-hover-card-content]");
+  const trigger = page.locator(".hover-card-trigger");
+  const content = page.locator(".hover-card-content");
   await expect(content).toBeHidden();
   await trigger.focus();
   await expect(content).toBeVisible();

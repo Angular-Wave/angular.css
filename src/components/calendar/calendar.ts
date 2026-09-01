@@ -65,10 +65,7 @@ export function calendarDirective(): ng.Directive {
           element.setAttribute("data-direction", direction);
         }
       };
-      let days = queryAll<HTMLElement>(
-        element,
-        '[data-slot="calendar-day"], [ng-calendar-day]',
-      );
+      let days = queryAll<HTMLElement>(element, ".calendar-day");
       const columns = Number(element.getAttribute("data-columns") ?? 7);
       const cleanupDays = new WeakMap<HTMLElement, () => void>();
       const cleanupControls = new WeakMap<HTMLElement, () => void>();
@@ -76,7 +73,7 @@ export function calendarDirective(): ng.Directive {
       const generatedCurrent = new WeakSet<HTMLElement>();
       let renderedMonth = "";
 
-      element.setAttribute("role", element.getAttribute("role") ?? "grid");
+      element.setAttribute("role", "grid");
       syncDirection();
 
       const getLocale = () =>
@@ -103,9 +100,7 @@ export function calendarDirective(): ng.Directive {
       const renderGeneratedMonth = () => {
         if (!element.hasAttribute("data-calendar-generated")) return;
 
-        const grid = element.querySelector<HTMLElement>(
-          '[data-slot="calendar-grid"], [ng-calendar-grid]',
-        );
+        const grid = element.querySelector<HTMLElement>(".calendar-grid");
         if (!grid) return;
 
         const selectedDate = parseDateValue(element.getAttribute("data-value"));
@@ -142,17 +137,15 @@ export function calendarDirective(): ng.Directive {
         renderedMonth = renderKey;
         setAttributeIfChanged(element, "data-month", monthValue);
 
-        const title = element.querySelector<HTMLElement>(
-          '[data-slot="calendar-title"], [ng-calendar-title]',
-        );
+        const title = element.querySelector<HTMLElement>(".calendar-title");
         if (title) {
           const captionLayout =
             element.getAttribute("data-caption-layout") ?? "label";
           if (captionLayout === "dropdown") {
             const monthSelect = document.createElement("select");
             const yearSelect = document.createElement("select");
-            monthSelect.setAttribute("data-slot", "calendar-month-select");
-            yearSelect.setAttribute("data-slot", "calendar-year-select");
+            monthSelect.className = "calendar-month-select";
+            yearSelect.className = "calendar-year-select";
             monthSelect.setAttribute("aria-label", "Month");
             yearSelect.setAttribute("aria-label", "Year");
 
@@ -252,7 +245,7 @@ export function calendarDirective(): ng.Directive {
           element.getAttribute("data-show-outside-days") !== "false";
         const buildMonthGrid = (visibleMonth: Date) => {
           const monthGrid = document.createElement("div");
-          monthGrid.setAttribute("data-slot", "calendar-month-grid");
+          monthGrid.className = "calendar-month-grid";
           monthGrid.setAttribute(
             "data-show-week-numbers",
             String(showWeekNumbers),
@@ -261,7 +254,7 @@ export function calendarDirective(): ng.Directive {
 
           if (showWeekNumbers) {
             const header = document.createElement("span");
-            header.setAttribute("data-slot", "calendar-week-number-header");
+            header.className = "calendar-week-number-header";
             header.setAttribute("aria-label", "Week number");
             header.textContent = "Wk";
             monthGrid.append(header);
@@ -270,7 +263,7 @@ export function calendarDirective(): ng.Directive {
             const date = addDays(firstVisibleDate, index);
             const weekday = document.createElement("span");
             const weekdayLabel = weekdayFormatter.format(date);
-            weekday.setAttribute("data-slot", "calendar-weekday");
+            weekday.className = "calendar-weekday";
             weekday.setAttribute("aria-label", weekdayLabel);
             weekday.textContent = useNarrowWeekdays
               ? narrowWeekdayFormatter.format(date)
@@ -283,7 +276,7 @@ export function calendarDirective(): ng.Directive {
             const value = formatDateValue(date);
             if (showWeekNumbers && index % 7 === 0) {
               const weekNumber = document.createElement("span");
-              weekNumber.setAttribute("data-slot", "calendar-week-number");
+              weekNumber.className = "calendar-week-number";
               weekNumber.textContent = numberFormatter.format(
                 getWeek(date, { weekStartsOn }),
               );
@@ -293,7 +286,7 @@ export function calendarDirective(): ng.Directive {
             const outside = !isSameMonth(date, visibleMonth);
             const day = document.createElement("button");
             day.type = "button";
-            day.setAttribute("data-slot", "calendar-day");
+            day.className = "calendar-day";
             day.setAttribute("data-value", value);
             day.setAttribute("data-label", dateFormatter.format(date));
             day.setAttribute("data-outside", String(outside));
@@ -344,9 +337,9 @@ export function calendarDirective(): ng.Directive {
             continue;
           }
           const monthSection = document.createElement("section");
-          monthSection.setAttribute("data-slot", "calendar-month");
+          monthSection.className = "calendar-month";
           const monthTitle = document.createElement("h3");
-          monthTitle.setAttribute("data-slot", "calendar-month-title");
+          monthTitle.className = "calendar-month-title";
           monthTitle.textContent = createFormatter({
             month: "long",
             year: "numeric",
@@ -529,11 +522,7 @@ export function calendarDirective(): ng.Directive {
       };
 
       const bindDay = (day: HTMLElement) => {
-        setAttributeIfChanged(
-          day,
-          "role",
-          day.getAttribute("role") ?? "gridcell",
-        );
+        setAttributeIfChanged(day, "role", "gridcell");
         setAttributeIfChanged(
           day,
           "tabindex",
@@ -740,43 +729,26 @@ export function calendarDirective(): ng.Directive {
 
       function syncCalendar() {
         renderGeneratedMonth();
-        const title = element.querySelector<HTMLElement>(
-          '[data-slot="calendar-title"], [ng-calendar-title]',
-        );
+        const title = element.querySelector<HTMLElement>(".calendar-title");
         if (title && !element.hasAttribute("aria-label")) {
           if (!title.id)
             title.id = `calendar-title-${String(calendarIdCounter++)}`;
           setAttributeIfChanged(element, "aria-labelledby", title.id);
         }
-        queryAll<HTMLElement>(
-          element,
-          '[data-slot="calendar-row"], [ng-calendar-row]',
-        ).forEach((row) => {
-          row.setAttribute("role", row.getAttribute("role") ?? "row");
+        queryAll<HTMLElement>(element, ".calendar-row").forEach((row) => {
+          row.setAttribute("role", "row");
         });
-        queryAll<HTMLElement>(
-          element,
-          '[data-slot="calendar-weekday"], [ng-calendar-weekday]',
-        ).forEach((weekday) => {
-          weekday.setAttribute(
-            "role",
-            weekday.getAttribute("role") ?? "columnheader",
-          );
-        });
-        queryAll<HTMLElement>(
-          element,
-          '[data-slot="calendar-week-number"], [ng-calendar-week-number]',
-        ).forEach((weekNumber) => {
-          setAttributeIfChanged(
-            weekNumber,
-            "role",
-            weekNumber.getAttribute("role") ?? "rowheader",
-          );
-        });
-        days = queryAll<HTMLElement>(
-          element,
-          '[data-slot="calendar-day"], [ng-calendar-day]',
+        queryAll<HTMLElement>(element, ".calendar-weekday").forEach(
+          (weekday) => {
+            weekday.setAttribute("role", "columnheader");
+          },
         );
+        queryAll<HTMLElement>(element, ".calendar-week-number").forEach(
+          (weekNumber) => {
+            setAttributeIfChanged(weekNumber, "role", "rowheader");
+          },
+        );
+        days = queryAll<HTMLElement>(element, ".calendar-day");
         days.forEach(bindDay);
         const selectionMode =
           element.getAttribute("data-selection-mode") ?? "single";
@@ -795,16 +767,12 @@ export function calendarDirective(): ng.Directive {
             element.getAttribute("data-range-end-value") ?? "",
           );
         }
-        queryAll<HTMLElement>(
-          element,
-          '[data-slot="calendar-previous"], [ng-calendar-previous]',
-        ).forEach((control) => {
-          bindMonthControl(control, -1);
-        });
-        queryAll<HTMLElement>(
-          element,
-          '[data-slot="calendar-next"], [ng-calendar-next]',
-        ).forEach((control) => {
+        queryAll<HTMLElement>(element, ".calendar-previous").forEach(
+          (control) => {
+            bindMonthControl(control, -1);
+          },
+        );
+        queryAll<HTMLElement>(element, ".calendar-next").forEach((control) => {
           bindMonthControl(control, 1);
         });
         queryAll<HTMLElement>(element, "[data-calendar-preset]").forEach(
@@ -897,7 +865,7 @@ export function calendarDirective(): ng.Directive {
         });
         queryAll<HTMLElement>(
           element,
-          '[data-slot="calendar-previous"], [ng-calendar-previous], [data-slot="calendar-next"], [ng-calendar-next]',
+          ".calendar-previous, .calendar-next",
         ).forEach((control) => cleanupControls.get(control)?.());
         queryAll<HTMLElement>(element, "[data-calendar-preset]").forEach(
           (control) => cleanupControls.get(control)?.(),

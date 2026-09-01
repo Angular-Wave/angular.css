@@ -11,16 +11,16 @@
   </head>
   <body ng-app="ui" ng-cloak>
     <main class="stack">
-      <div data-slot="field">
-        <label ng-label data-slot="field-label" for="search">Search</label>
-        <div ng-input-group role="group">
+      <div class="field">
+        <label for="search" class="field-label label">Search</label>
+        <div ng-input-group class="input-group">
           <input
-            data-input
-            data-slot="input-group-control"
+
+
             id="search"
             placeholder="Search documentation..."
-          />
-          <div data-slot="input-group-addon" data-align="inline-start">⌕</div>
+           class="input-group-control input" />
+          <div data-align="inline-start" class="input-group-addon">⌕</div>
         </div>
       </div>
     </main>

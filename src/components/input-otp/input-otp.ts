@@ -100,10 +100,7 @@ export function inputOtpDirective(): ng.Directive {
         };
 
         const handleFocus = () => {
-          queryAll<HTMLElement>(
-            element,
-            '[data-slot="input-otp-slot"], [ng-input-otp-slot]',
-          ).forEach((slot) => {
+          queryAll<HTMLElement>(element, ".input-otp-slot").forEach((slot) => {
             setAttributeIfChanged(
               slot,
               "data-active",
@@ -113,9 +110,7 @@ export function inputOtpDirective(): ng.Directive {
         };
 
         const handleBlur = () => {
-          const slot = input.closest<HTMLElement>(
-            '[data-slot="input-otp-slot"], [ng-input-otp-slot]',
-          );
+          const slot = input.closest<HTMLElement>(".input-otp-slot");
           if (slot) setAttributeIfChanged(slot, "data-active", "false");
         };
 

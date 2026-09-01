@@ -57,8 +57,8 @@ test("canonical popover uses built bundles and exposes disclosure semantics", as
   await expectBuiltArtifactRuntime(page);
 
   const root = page.locator("[ng-popover]");
-  const trigger = page.locator("[ng-popover-trigger]");
-  const content = page.locator("[ng-popover-content]");
+  const trigger = page.locator(".popover-trigger");
+  const content = page.locator(".popover-content");
 
   await expect(content).toBeHidden();
   await expect(trigger).toHaveAttribute("aria-haspopup", "dialog");
@@ -91,8 +91,8 @@ test("native trigger keyboard activation and external open state remain function
   await page.goto(canonicalUrl);
 
   const root = page.locator("[ng-popover]");
-  const trigger = page.locator("[ng-popover-trigger]");
-  const content = page.locator("[ng-popover-content]");
+  const trigger = page.locator(".popover-trigger");
+  const content = page.locator(".popover-content");
 
   await trigger.focus();
   await trigger.press("Enter");
@@ -120,7 +120,7 @@ test("workflow alignments render start, center, and end geometry", async ({
     const trigger = page.getByRole("button", {
       name: new RegExp(`^${align}$`, "i"),
     });
-    const content = trigger.locator("..").locator("[ng-popover-content]");
+    const content = trigger.locator("..").locator(".popover-content");
     await trigger.click();
     await expect(content).toBeVisible();
     await expect(content).toHaveAttribute("data-align", align);
@@ -150,7 +150,7 @@ test("form focus can move within content and focus outside dismisses", async ({
   await page.goto(workflowsUrl);
 
   const trigger = page.getByRole("button", { name: "Edit dimensions" });
-  const content = trigger.locator("..").locator("[ng-popover-content]");
+  const content = trigger.locator("..").locator(".popover-content");
   const width = content.getByRole("textbox", { name: "Width" });
   const height = content.getByRole("textbox", { name: "Height" });
 
@@ -169,17 +169,15 @@ test("disabled and sibling workflow states dismiss without stealing focus", asyn
   await page.goto(workflowsUrl);
 
   const disabled = page.getByRole("button", { name: "Disabled" });
-  const disabledContent = disabled
-    .locator("..")
-    .locator("[ng-popover-content]");
+  const disabledContent = disabled.locator("..").locator(".popover-content");
   await disabled.click({ force: true });
   await expect(disabledContent).toBeHidden();
   await expect(disabled).toHaveAttribute("aria-expanded", "false");
 
   const first = page.getByRole("button", { name: "First", exact: true });
   const second = page.getByRole("button", { name: "Second", exact: true });
-  const firstContent = first.locator("..").locator("[ng-popover-content]");
-  const secondContent = second.locator("..").locator("[ng-popover-content]");
+  const firstContent = first.locator("..").locator(".popover-content");
+  const secondContent = second.locator("..").locator(".popover-content");
   await first.click();
   await expect(firstContent).toBeVisible();
   await second.click();
@@ -201,7 +199,7 @@ test("RTL preserves direction while every side remains physical", async ({
   ] as const) {
     const trigger = page.getByRole("button", { name });
     const root = trigger.locator("..");
-    const content = root.locator("[ng-popover-content]");
+    const content = root.locator(".popover-content");
     await expect(root).toHaveAttribute("data-direction", "rtl");
     await trigger.click();
     await expect(content).toHaveAttribute("data-direction", "rtl");

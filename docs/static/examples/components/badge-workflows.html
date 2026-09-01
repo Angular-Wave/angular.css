@@ -16,23 +16,23 @@
   >
     <main class="workflow-stack">
       <div class="workflow-row" aria-label="Badge variants">
-        <span ng-badge>Default</span>
-        <span ng-badge variant="secondary">Secondary</span>
-        <span ng-badge variant="destructive">Destructive</span>
-        <span ng-badge variant="outline">Outline</span>
-        <span ng-badge variant="ghost">Ghost</span>
+        <span class="badge">Default</span>
+        <span variant="secondary" class="badge">Secondary</span>
+        <span variant="destructive" class="badge">Destructive</span>
+        <span variant="outline" class="badge">Outline</span>
+        <span variant="ghost" class="badge">Ghost</span>
       </div>
 
       <div class="workflow-row" aria-label="Badge custom colors">
-        <span ng-badge class="badge-color-blue">Blue</span>
-        <span ng-badge class="badge-color-green">Green</span>
-        <span ng-badge class="badge-color-sky">Sky</span>
-        <span ng-badge class="badge-color-purple">Purple</span>
-        <span ng-badge class="badge-color-red">Red</span>
+        <span class="badge-color-blue badge">Blue</span>
+        <span class="badge-color-green badge">Green</span>
+        <span class="badge-color-sky badge">Sky</span>
+        <span class="badge-color-purple badge">Purple</span>
+        <span class="badge-color-red badge">Red</span>
       </div>
 
       <div class="workflow-row" aria-label="Badges with icons">
-        <span ng-badge variant="secondary">
+        <span variant="secondary" class="badge">
           <svg
             data-icon="inline-start"
             viewBox="0 0 24 24"
@@ -49,7 +49,7 @@
           </svg>
           Verified
         </span>
-        <span ng-badge variant="outline">
+        <span variant="outline" class="badge">
           Bookmark
           <svg
             data-icon="inline-end"
@@ -65,7 +65,7 @@
             />
           </svg>
         </span>
-        <a ng-badge href="#link">
+        <a href="#link" class="badge">
           Open Link
           <svg
             data-icon="inline-end"
@@ -85,14 +85,13 @@
       </div>
 
       <div class="workflow-row" aria-label="Badges with loading status">
-        <span ng-badge variant="destructive">
+        <span variant="destructive" class="badge">
           <svg
-            ng-spinner
+
             data-icon="inline-start"
             aria-hidden="true"
             viewBox="0 0 24 24"
-            fill="none"
-          >
+            fill="none" class="spinner">
             <path
               d="M21 12a9 9 0 1 1-6.22-8.56"
               stroke="currentColor"
@@ -102,15 +101,14 @@
           </svg>
           Deleting
         </span>
-        <span ng-badge variant="secondary">
+        <span variant="secondary" class="badge">
           Generating
           <svg
-            ng-spinner
+
             data-icon="inline-end"
             aria-hidden="true"
             viewBox="0 0 24 24"
-            fill="none"
-          >
+            fill="none" class="spinner">
             <path
               d="M21 12a9 9 0 1 1-6.22-8.56"
               stroke="currentColor"
@@ -122,10 +120,10 @@
       </div>
 
       <div class="workflow-row" dir="rtl" aria-label="RTL badges">
-        <span ng-badge>شارة</span>
-        <span ng-badge variant="secondary">ثانوي</span>
-        <span ng-badge variant="destructive">مدمر</span>
-        <span ng-badge variant="outline">مخطط</span>
+        <span class="badge">شارة</span>
+        <span variant="secondary" class="badge">ثانوي</span>
+        <span variant="destructive" class="badge">مدمر</span>
+        <span variant="outline" class="badge">مخطط</span>
       </div>
     </main>
   </body>

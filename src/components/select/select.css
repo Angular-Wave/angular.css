@@ -1,4 +1,4 @@
-[data-slot="select"],
+.select,
 [ng-select] {
   position: relative;
   display: inline-block;
@@ -6,8 +6,7 @@
   color: var(--foreground);
 }
 
-[data-slot="select-trigger"],
-[ng-select-trigger] {
+.select-trigger {
   display: flex;
   width: 100%;
   height: calc(var(--spacing) * 8);
@@ -30,8 +29,7 @@
   user-select: none;
 }
 
-[data-slot="select-trigger"]::after,
-[ng-select-trigger]::after {
+.select-trigger::after {
   width: calc(var(--spacing) * 2);
   height: calc(var(--spacing) * 2);
   flex: 0 0 auto;
@@ -42,37 +40,28 @@
   transform: translateY(-25%) rotate(45deg);
 }
 
-[data-slot="select-trigger"][data-size="sm"],
-[ng-select-trigger][data-size="sm"] {
+.select-trigger[data-size="sm"] {
   height: calc(var(--spacing) * 7);
   border-radius: calc(var(--radius) - 2px);
 }
 
-[data-slot="select-trigger"]:focus-visible,
-[ng-select-trigger]:focus-visible {
+.select-trigger:is([aria-invalid="true"], [aria-invalid=""]) {
+  border-color: var(--error);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--error) 20%, transparent);
+}
+
+.select-trigger:is(:disabled, [aria-disabled="true"]) {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.select-trigger:focus-visible {
   border-color: var(--ring);
   outline: none;
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
-[data-slot="select-trigger"][aria-invalid="true"],
-[data-slot="select-trigger"][aria-invalid=""],
-[ng-select-trigger][aria-invalid="true"],
-[ng-select-trigger][aria-invalid=""] {
-  border-color: var(--error);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--error) 20%, transparent);
-}
-
-[data-slot="select-trigger"]:disabled,
-[data-slot="select-trigger"][aria-disabled="true"],
-[ng-select-trigger]:disabled,
-[ng-select-trigger][aria-disabled="true"] {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-[data-slot="select-value"],
-[ng-select-value] {
+.select-value {
   display: flex;
   min-width: 0;
   flex: 1;
@@ -84,13 +73,11 @@
   white-space: nowrap;
 }
 
-[data-slot="select-trigger"][data-placeholder="true"],
-[ng-select-trigger][data-placeholder="true"] {
+.select-trigger[data-placeholder="true"] {
   color: var(--muted-foreground);
 }
 
-[data-slot="select-content"],
-[ng-select-content] {
+.select-content {
   position: absolute;
   z-index: 50;
   inset-block-start: var(--select-content-top, calc(100% + 4px));
@@ -112,20 +99,17 @@
   overscroll-behavior: contain;
 }
 
-[data-slot="select-content"][data-direction="rtl"],
-[ng-select-content][data-direction="rtl"] {
+.select-content[data-direction="rtl"] {
   direction: rtl;
 }
 
-[data-slot="select-group"],
-[ng-select-group] {
+.select-group {
   display: grid;
   scroll-margin-block: calc(var(--spacing) * 1);
   padding: calc(var(--spacing) * 1);
 }
 
-[data-slot="select-label"],
-[ng-select-label] {
+.select-label {
   color: var(--muted-foreground);
   padding-block: calc(var(--spacing) * 1);
   padding-inline: calc(var(--spacing) * 1.5);
@@ -134,8 +118,7 @@
   line-height: 1rem;
 }
 
-[data-slot="select-item"],
-[ng-select-item] {
+.select-item {
   position: relative;
   display: flex;
   width: 100%;
@@ -153,24 +136,18 @@
   user-select: none;
 }
 
-[data-slot="select-item"]:not([aria-disabled="true"]):hover,
-[ng-select-item]:not([aria-disabled="true"]):hover,
-[data-slot="select-item"][data-highlighted="true"],
-[ng-select-item][data-highlighted="true"] {
-  background: var(--accent);
-  color: var(--accent-foreground);
-}
-
-[data-slot="select-item"][aria-disabled="true"],
-[data-slot="select-item"][data-disabled="true"],
-[ng-select-item][aria-disabled="true"],
-[ng-select-item][data-disabled="true"] {
+.select-item:is([aria-disabled="true"], [data-disabled="true"]) {
   opacity: 0.5;
   pointer-events: none;
 }
 
-[data-slot="select-item"][aria-selected="true"]::after,
-[ng-select-item][aria-selected="true"]::after {
+.select-item:not([aria-disabled="true"]):hover,
+.select-item[data-highlighted="true"] {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.select-item[aria-selected="true"]::after {
   position: absolute;
   inset-inline-end: calc(var(--spacing) * 2.5);
   width: calc(var(--spacing) * 2.5);
@@ -181,18 +158,15 @@
   transform: translateY(-15%) rotate(-45deg);
 }
 
-[data-slot="select-separator"],
-[ng-select-separator] {
+.select-separator {
   height: 1px;
   margin: calc(var(--spacing) * 1) calc(var(--spacing) * -1);
   background: var(--border);
   pointer-events: none;
 }
 
-[data-slot="select-scroll-up-button"],
-[ng-select-scroll-up-button],
-[data-slot="select-scroll-down-button"],
-[ng-select-scroll-down-button] {
+.select-scroll-up-button,
+.select-scroll-down-button {
   position: sticky;
   z-index: 1;
   display: flex;
@@ -208,20 +182,16 @@
   cursor: default;
 }
 
-[data-slot="select-scroll-up-button"],
-[ng-select-scroll-up-button] {
+.select-scroll-up-button {
   inset-block-start: 0;
 }
 
-[data-slot="select-scroll-down-button"],
-[ng-select-scroll-down-button] {
+.select-scroll-down-button {
   inset-block-end: 0;
 }
 
-[data-slot="select-scroll-up-button"]::after,
-[ng-select-scroll-up-button]::after,
-[data-slot="select-scroll-down-button"]::after,
-[ng-select-scroll-down-button]::after {
+.select-scroll-up-button::after,
+.select-scroll-down-button::after {
   width: calc(var(--spacing) * 2);
   height: calc(var(--spacing) * 2);
   border-top: 1.5px solid currentcolor;
@@ -230,7 +200,6 @@
   transform: translateY(25%) rotate(45deg);
 }
 
-[data-slot="select-scroll-down-button"]::after,
-[ng-select-scroll-down-button]::after {
+.select-scroll-down-button::after {
   transform: translateY(-25%) rotate(225deg);
 }

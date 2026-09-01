@@ -17,49 +17,46 @@
   >
     <main class="sheet-demo visual-example">
       <section id="rtl-profile-sheet" ng-sheet side="left">
-        <button ng-sheet-trigger ng-button variant="outline">فتح</button>
-        <div ng-sheet-overlay></div>
-        <aside ng-sheet-content>
-          <header ng-sheet-header>
-            <h2 ng-sheet-title>تعديل الملف الشخصي</h2>
-            <p ng-sheet-description>
+        <button variant="outline" class="sheet-trigger button">فتح</button>
+        <div class="sheet-overlay"></div>
+        <dialog class="sheet-content">
+          <header class="sheet-header">
+            <h2 class="sheet-title">تعديل الملف الشخصي</h2>
+            <p class="sheet-description">
               قم بإجراء تغييرات على ملفك الشخصي هنا. انقر حفظ عند الانتهاء.
             </p>
           </header>
           <form class="sheet-profile-form">
-            <div ng-sheet-body class="sheet-profile-fields">
+            <div class="sheet-profile-fields sheet-body">
               <div class="sheet-profile-field">
-                <label ng-label for="sheet-rtl-name">الاسم</label>
+                <label for="sheet-rtl-name" class="label">الاسم</label>
                 <input
                   id="sheet-rtl-name"
-                  data-input
+
                   ng-model="profile.name"
-                  autofocus
-                />
+                  autofocus class="input" />
               </div>
               <div class="sheet-profile-field">
-                <label ng-label for="sheet-rtl-username">اسم المستخدم</label>
+                <label for="sheet-rtl-username" class="label">اسم المستخدم</label>
                 <input
                   id="sheet-rtl-username"
-                  data-input
-                  ng-model="profile.username"
-                />
+
+                  ng-model="profile.username" class="input" />
               </div>
             </div>
-            <footer ng-sheet-footer>
+            <footer class="sheet-footer">
               <button
-                ng-button
+
                 data-sheet-close
-                ng-click="savedName=profile.name"
-              >
+                ng-click="savedName=profile.name" class="button">
                 حفظ التغييرات
               </button>
-              <button data-sheet-close ng-button variant="outline">
+              <button data-sheet-close variant="outline" class="button">
                 إغلاق
               </button>
             </footer>
           </form>
-          <button ng-sheet-close ng-button variant="ghost" size="icon-sm">
+          <button variant="ghost" size="icon-sm" class="sheet-close button">
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -72,7 +69,7 @@
             </svg>
             <span class="example-sr-only">إغلاق اللوحة</span>
           </button>
-        </aside>
+        </dialog>
       </section>
       <output class="sheet-output" aria-live="polite">
         الملف المحفوظ: <span ng-bind="savedName"></span>

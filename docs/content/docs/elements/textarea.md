@@ -5,18 +5,16 @@ description: >
   Native multiline text control
 ---
 
-Use native `textarea` elements for multiline input. AngularCSS styles opt-in
-`ng-textarea` controls and also supports `data-slot="textarea"`.
+Use native `textarea` elements with `class="textarea"` for multiline input.
 
 ```html
 <textarea
-  ng-textarea
+
   id="message"
   placeholder="Add a message"
-  ng-model="message"
-></textarea>
+  ng-model="message" class="textarea"></textarea>
 <span>Message: <span ng-bind="message"></span></span>
-<textarea ng-textarea id="invalid-message" aria-invalid="true"></textarea>
+<textarea id="invalid-message" aria-invalid="true" class="textarea"></textarea>
 ```
 
 ## Example

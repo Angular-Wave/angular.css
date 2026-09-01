@@ -11,13 +11,13 @@
   </head>
   <body ng-app="ui" ng-cloak data-example="empty-demo">
     <section
-      ng-empty
-      class="empty-demo visual-example"
-      role="status"
+
+      class="empty-demo visual-example empty"
+
       aria-live="polite"
     >
-      <div data-slot="empty-header">
-        <div data-slot="empty-media" variant="icon">
+      <header class="empty-header">
+        <div variant="icon" class="empty-media">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -32,18 +32,18 @@
             />
           </svg>
         </div>
-        <h3 data-slot="empty-title">No Projects Yet</h3>
-        <p data-slot="empty-description">
+        <h2 class="empty-title">No Projects Yet</h2>
+        <p class="empty-description">
           You haven't created any projects yet. Get started by creating your
           first project.
         </p>
-      </div>
-      <div data-slot="empty-content">
+      </header>
+      <section class="empty-content">
         <div class="row">
-          <button ng-button>Create Project</button>
-          <button ng-button variant="outline">Import Project</button>
+          <button class="button">Create Project</button>
+          <button variant="outline" class="button">Import Project</button>
         </div>
-      </div>
+      </section>
       <a class="empty-learn-more" href="#learn-more">
         Learn More
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">

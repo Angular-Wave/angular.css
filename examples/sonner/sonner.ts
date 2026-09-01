@@ -1,14 +1,4 @@
 import type {} from "@angular-wave/angular.ts";
-import {
-  CircleCheck,
-  CircleX,
-  createElement,
-  Info,
-  LoaderCircle,
-  type IconNode,
-  TriangleAlert,
-  X,
-} from "lucide";
 
 type ToastPosition =
   | "bottom-center"
@@ -25,15 +15,6 @@ type ToastType =
   | "loading"
   | "success"
   | "warning";
-
-const toastIcons: Record<string, IconNode> = {
-  close: X,
-  error: CircleX,
-  info: Info,
-  loading: LoaderCircle,
-  success: CircleCheck,
-  warning: TriangleAlert,
-};
 
 class SonnerDemoController {
   descriptionVisible = false;
@@ -100,20 +81,4 @@ class SonnerDemoController {
 
 window.angular
   .module("sonnerDemo", ["ui"])
-  .directive("ngSonnerIcon", () => ({
-    link(_scope: ng.Scope, element: HTMLElement) {
-      const type = element.getAttribute("ng-sonner-icon");
-      const icon = type ? toastIcons[type] : undefined;
-      if (!icon) return;
-
-      element.replaceChildren(
-        createElement(icon, {
-          "aria-hidden": "true",
-          focusable: "false",
-          height: 16,
-          width: 16,
-        }),
-      );
-    },
-  }))
   .controller("SonnerDemoController", SonnerDemoController);

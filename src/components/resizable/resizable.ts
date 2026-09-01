@@ -7,10 +7,9 @@ const DEFAULT_MAX_SIZE = 4;
 const DEFAULT_STEP = 0.25;
 let resizableIdCounter = 0;
 
-const GROUP_SELECTOR =
-  '[data-slot="resizable-panel-group"], [ng-resizable-panel-group]';
-const PANEL_SELECTOR = '[data-slot="resizable-panel"], [ng-resizable-panel]';
-const HANDLE_SELECTOR = '[data-slot="resizable-handle"], [ng-resizable-handle]';
+const GROUP_SELECTOR = ".resizable-panel-group, [ng-resizable-panel-group]";
+const PANEL_SELECTOR = ".resizable-panel";
+const HANDLE_SELECTOR = ".resizable-handle";
 
 type ResizableOrientation = "horizontal" | "vertical";
 
@@ -110,7 +109,7 @@ export function resizablePanelGroupDirective(): ng.Directive {
       const bindHandle = (handle: HTMLElement) => {
         if (cleanupHandles.has(handle)) return;
         handle.setAttribute("tabindex", handle.getAttribute("tabindex") ?? "0");
-        handle.setAttribute("role", handle.getAttribute("role") ?? "separator");
+        handle.setAttribute("role", "separator");
         let stopPointerResize: (() => void) | null = null;
 
         const handlePointerDown = (event: PointerEvent) => {

@@ -20,16 +20,8 @@ export function tooltipDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
       const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
-      const trigger = query(
-        element,
-        '[data-slot="tooltip-trigger"], [ng-tooltip-trigger]',
-        HTMLElement,
-      );
-      const content = query(
-        element,
-        '[data-slot="tooltip-content"], [ng-tooltip-content]',
-        HTMLElement,
-      );
+      const trigger = query(element, ".tooltip-trigger", HTMLElement);
+      const content = query(element, ".tooltip-content", HTMLElement);
 
       if (!trigger || !content) return;
 
@@ -52,7 +44,7 @@ export function tooltipDirective(): ng.Directive {
         content.id || `tooltip-content-${String(tooltipIdCounter++)}`;
       content.id = contentId;
       trigger.setAttribute("aria-describedby", contentId);
-      content.setAttribute("role", content.getAttribute("role") ?? "tooltip");
+      content.setAttribute("role", "tooltip");
 
       let controlledOpen =
         element.getAttribute("data-open") === "true" ||

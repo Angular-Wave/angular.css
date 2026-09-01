@@ -5,14 +5,14 @@ description: >
   Calendar date grid structure
 ---
 
-Use calendar slots for the header, weekday row, and day cells. Mark selected,
+Use calendar parts for the header, weekday row, and day cells. Mark selected,
 today, and outside-month days with attributes.
 
 ```html
-<section data-slot="calendar">
-  <header data-slot="calendar-header">May 2026</header>
-  <div data-slot="calendar-grid">
-    <button data-slot="calendar-day" aria-selected="true">14</button>
+<section class="calendar">
+  <header class="calendar-header">May 2026</header>
+  <div class="calendar-grid">
+    <button aria-selected="true" class="calendar-day">14</button>
   </div>
 </section>
 ```

@@ -11,41 +11,41 @@
   </head>
   <body ng-app="ui" ng-cloak>
     <div class="stack">
-      <section data-slot="card" ng-direction id="direction-default">
-        <header data-slot="card-header">
-          <h3 data-slot="card-title">LTR</h3>
-          <p data-slot="card-description" data-logical-align="start">
+      <section id="direction-default" class="card direction">
+        <header class="card-header">
+          <h2 class="card-title">LTR</h2>
+          <p data-logical-align="start" class="card-description">
             The chevron points forward.
           </p>
         </header>
-        <div data-slot="card-content" class="row">
-          <span data-slot="rtl-flip" aria-hidden="true">-&gt;</span>
+        <section class="row card-content">
+          <span aria-hidden="true" class="rtl-flip">-&gt;</span>
           <span>Settings</span>
-        </div>
+        </section>
       </section>
 
       <section
-        data-slot="card"
-        ng-direction
+
+
         id="direction-rtl"
         dir="rtl"
         lang="ar"
-      >
-        <header data-slot="card-header">
-          <h3 data-slot="card-title">RTL</h3>
-          <p data-slot="card-description" data-logical-align="start">
+       class="card direction">
+        <header class="card-header">
+          <h2 class="card-title">RTL</h2>
+          <p data-logical-align="start" class="card-description">
             تتبع المحاذاة المنطقية واتجاه الأيقونة اتجاه المستند.
           </p>
         </header>
-        <div
-          data-slot="card-content"
-          class="row"
-          ng-direction
+        <section
+
+          class="row card-content direction"
+
           id="direction-nested"
         >
-          <span data-slot="rtl-flip" aria-hidden="true">-&gt;</span>
+          <span aria-hidden="true" class="rtl-flip">-&gt;</span>
           <span>الإعدادات</span>
-        </div>
+        </section>
       </section>
     </div>
   </body>

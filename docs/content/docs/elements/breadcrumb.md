@@ -5,18 +5,18 @@ description: >
   Page location navigation
 ---
 
-Use `nav` with `aria-label="breadcrumb"` and slot attributes for list, item,
+Use `nav` with `aria-label="breadcrumb"` and part classes for list, item,
 link, separator, and current page elements.
 
 ```html
-<nav data-slot="breadcrumb" aria-label="breadcrumb">
-  <ol data-slot="breadcrumb-list">
-    <li data-slot="breadcrumb-item">
-      <a data-slot="breadcrumb-link" href="#">Home</a>
+<nav aria-label="breadcrumb" class="breadcrumb">
+  <ol class="breadcrumb-list">
+    <li class="breadcrumb-item">
+      <a href="#" class="breadcrumb-link">Home</a>
     </li>
-    <li data-slot="breadcrumb-separator" aria-hidden="true">/</li>
-    <li data-slot="breadcrumb-item">
-      <span data-slot="breadcrumb-page" aria-current="page">Docs</span>
+    <li aria-hidden="true" class="breadcrumb-separator">/</li>
+    <li class="breadcrumb-item">
+      <span aria-current="page" class="breadcrumb-page">Docs</span>
     </li>
   </ol>
 </nav>

@@ -10,14 +10,14 @@ button followed by a panel.
 
 ```html
 <div ng-accordion>
-  <div data-slot="accordion-item">
+  <div class="accordion-item">
     <h3>
-      <button data-slot="accordion-trigger">
+      <button class="accordion-trigger">
         Section 1
-        <svg data-slot="accordion-trigger-icon" aria-hidden="true"></svg>
+        <svg aria-hidden="true" class="accordion-trigger-icon"></svg>
       </button>
     </h3>
-    <div data-slot="accordion-content">Content for section 1</div>
+    <div class="accordion-content">Content for section 1</div>
   </div>
 </div>
 ```
@@ -51,20 +51,10 @@ This component's root directive is `[ng-accordion]`. Importing the package regis
 ### Directive selectors
 
 - `ng-accordion`
-- `ng-accordion-item`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="accordion"]`
-- `[data-slot="accordion-content"]`
-- `[data-slot="accordion-header"]`
-- `[data-slot="accordion-item"]`
-- `[data-slot="accordion-panel"]`
-- `[data-slot="accordion-trigger"]`
-- `[data-slot="accordion-trigger-icon"]`
-
-Slots are optional unless the usage example or behavior description identifies a required relationship.
-Use the named slots as stable Tailwind and CSS selectors.
+Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough.
 
 ## API
 
@@ -83,7 +73,7 @@ Use the named slots as stable Tailwind and CSS selectors.
 | `data-type` | Input | Stable component state or styling hook. |
 | `disabled` | Input | Disables native or component interaction. |
 | `multiple` | Input | Allows more than one item to remain selected or open. |
-| `role` | Output | Explicit semantic role when native HTML does not provide one. |
+| `role` | Input/output | Explicit semantic role when native HTML does not provide one. |
 | `type` | Input | Component or native behavior variant. |
 
 `Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
@@ -116,7 +106,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-accordion]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-accordion]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

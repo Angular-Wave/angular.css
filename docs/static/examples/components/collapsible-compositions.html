@@ -17,232 +17,205 @@
   >
     <main aria-label="Collapsible file tree composition">
       <div
-        data-slot="card"
+
         data-size="sm"
-        class="collapsible-file-card visual-example"
+        class="collapsible-file-card visual-example card"
       >
-        <div data-slot="card-header">
-          <div ng-tabs>
-            <div data-slot="tabs-list" role="tablist" aria-label="File views">
-              <button data-slot="tabs-trigger" role="tab" aria-selected="true">
+        <header class="card-header">
+          <section ng-tabs>
+            <menu aria-label="File views" class="tabs-list">
+              <button aria-selected="true" class="tabs-trigger">
                 Explorer
               </button>
-              <button data-slot="tabs-trigger" role="tab">Outline</button>
-            </div>
+              <button class="tabs-trigger">Outline</button>
+            </menu>
             <section
-              data-slot="tabs-content"
-              role="tabpanel"
-              class="visually-hidden"
+
+
+              class="visually-hidden tabs-content"
             >
               Explorer file tree
             </section>
             <section
-              data-slot="tabs-content"
-              role="tabpanel"
-              class="visually-hidden"
+
+
+              class="visually-hidden tabs-content"
             >
               No outline available
             </section>
-          </div>
-        </div>
-        <div data-slot="card-content">
+          </section>
+        </header>
+        <section class="card-content">
           <div class="collapsible-file-tree">
             <details ng-collapsible>
-              <summary data-slot="collapsible-trigger">
+              <summary class="collapsible-trigger">
                 <svg
                   class="tree-chevron"
                   viewBox="0 0 24 24"
                   fill="none"
                   aria-hidden="true"
                 >
-                  <path d="m9 18 6-6-6-6" /></svg
-                ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="m9 18 6-6-6-6" /></svg><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path
                     d="M4 19V5a2 2 0 0 1 2-2h5l2 3h5a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"
-                  /></svg
-                ><span>components</span>
+                  /></svg><span>components</span>
               </summary>
-              <div data-slot="collapsible-content">
+              <div class="collapsible-content">
                 <details ng-collapsible>
-                  <summary data-slot="collapsible-trigger">
+                  <summary class="collapsible-trigger">
                     <svg
                       class="tree-chevron"
                       viewBox="0 0 24 24"
                       fill="none"
                       aria-hidden="true"
                     >
-                      <path d="m9 18 6-6-6-6" /></svg
-                    ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="m9 18 6-6-6-6" /></svg><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                       <path
                         d="M4 19V5a2 2 0 0 1 2-2h5l2 3h5a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"
-                      /></svg
-                    ><span>ui</span>
+                      /></svg><span>ui</span>
                   </summary>
-                  <div data-slot="collapsible-content">
-                    <button ng-button variant="link" size="sm">
+                  <div class="collapsible-content">
+                    <button variant="link" size="sm" class="button">
                       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <path
                           d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"
                         />
-                        <path d="M14 2v6h6" /></svg
-                      >button.tsx
+                        <path d="M14 2v6h6" /></svg>button.tsx
                     </button>
-                    <button ng-button variant="link" size="sm">
+                    <button variant="link" size="sm" class="button">
                       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <path
                           d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"
                         />
-                        <path d="M14 2v6h6" /></svg
-                      >card.tsx
+                        <path d="M14 2v6h6" /></svg>card.tsx
                     </button>
-                    <button ng-button variant="link" size="sm">
+                    <button variant="link" size="sm" class="button">
                       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <path
                           d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"
                         />
-                        <path d="M14 2v6h6" /></svg
-                      >dialog.tsx
+                        <path d="M14 2v6h6" /></svg>dialog.tsx
                     </button>
-                    <button ng-button variant="link" size="sm">
+                    <button variant="link" size="sm" class="button">
                       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <path
                           d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"
                         />
-                        <path d="M14 2v6h6" /></svg
-                      >input.tsx
+                        <path d="M14 2v6h6" /></svg>input.tsx
                     </button>
-                    <button ng-button variant="link" size="sm">
+                    <button variant="link" size="sm" class="button">
                       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <path
                           d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"
                         />
-                        <path d="M14 2v6h6" /></svg
-                      >select.tsx
+                        <path d="M14 2v6h6" /></svg>select.tsx
                     </button>
-                    <button ng-button variant="link" size="sm">
+                    <button variant="link" size="sm" class="button">
                       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <path
                           d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"
                         />
-                        <path d="M14 2v6h6" /></svg
-                      >table.tsx
+                        <path d="M14 2v6h6" /></svg>table.tsx
                     </button>
                   </div>
                 </details>
-                <button ng-button variant="link" size="sm">
+                <button variant="link" size="sm" class="button">
                   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                     <path
                       d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"
                     />
-                    <path d="M14 2v6h6" /></svg
-                  >login-form.tsx
+                    <path d="M14 2v6h6" /></svg>login-form.tsx
                 </button>
-                <button ng-button variant="link" size="sm">
+                <button variant="link" size="sm" class="button">
                   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                     <path
                       d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"
                     />
-                    <path d="M14 2v6h6" /></svg
-                  >register-form.tsx
+                    <path d="M14 2v6h6" /></svg>register-form.tsx
                 </button>
               </div>
             </details>
             <details ng-collapsible>
-              <summary data-slot="collapsible-trigger">
+              <summary class="collapsible-trigger">
                 <svg
                   class="tree-chevron"
                   viewBox="0 0 24 24"
                   fill="none"
                   aria-hidden="true"
                 >
-                  <path d="m9 18 6-6-6-6" /></svg
-                ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="m9 18 6-6-6-6" /></svg><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path
                     d="M4 19V5a2 2 0 0 1 2-2h5l2 3h5a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"
-                  /></svg
-                ><span>lib</span>
+                  /></svg><span>lib</span>
               </summary>
-              <div data-slot="collapsible-content">
-                <button ng-button variant="link" size="sm">utils.ts</button
-                ><button ng-button variant="link" size="sm">cn.ts</button
-                ><button ng-button variant="link" size="sm">api.ts</button>
+              <div class="collapsible-content">
+                <button variant="link" size="sm" class="button">utils.ts</button><button variant="link" size="sm" class="button">cn.ts</button><button variant="link" size="sm" class="button">api.ts</button>
               </div>
             </details>
             <details ng-collapsible>
-              <summary data-slot="collapsible-trigger">
+              <summary class="collapsible-trigger">
                 <svg
                   class="tree-chevron"
                   viewBox="0 0 24 24"
                   fill="none"
                   aria-hidden="true"
                 >
-                  <path d="m9 18 6-6-6-6" /></svg
-                ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="m9 18 6-6-6-6" /></svg><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path
                     d="M4 19V5a2 2 0 0 1 2-2h5l2 3h5a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"
-                  /></svg
-                ><span>hooks</span>
+                  /></svg><span>hooks</span>
               </summary>
-              <div data-slot="collapsible-content">
-                <button ng-button variant="link" size="sm">
-                  use-media-query.ts</button
-                ><button ng-button variant="link" size="sm">
-                  use-debounce.ts</button
-                ><button ng-button variant="link" size="sm">
+              <div class="collapsible-content">
+                <button variant="link" size="sm" class="button">
+                  use-media-query.ts</button><button variant="link" size="sm" class="button">
+                  use-debounce.ts</button><button variant="link" size="sm" class="button">
                   use-local-storage.ts
                 </button>
               </div>
             </details>
             <details ng-collapsible>
-              <summary data-slot="collapsible-trigger">
+              <summary class="collapsible-trigger">
                 <svg
                   class="tree-chevron"
                   viewBox="0 0 24 24"
                   fill="none"
                   aria-hidden="true"
                 >
-                  <path d="m9 18 6-6-6-6" /></svg
-                ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="m9 18 6-6-6-6" /></svg><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path
                     d="M4 19V5a2 2 0 0 1 2-2h5l2 3h5a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"
-                  /></svg
-                ><span>types</span>
+                  /></svg><span>types</span>
               </summary>
-              <div data-slot="collapsible-content">
-                <button ng-button variant="link" size="sm">index.d.ts</button
-                ><button ng-button variant="link" size="sm">api.d.ts</button>
+              <div class="collapsible-content">
+                <button variant="link" size="sm" class="button">index.d.ts</button><button variant="link" size="sm" class="button">api.d.ts</button>
               </div>
             </details>
             <details ng-collapsible>
-              <summary data-slot="collapsible-trigger">
+              <summary class="collapsible-trigger">
                 <svg
                   class="tree-chevron"
                   viewBox="0 0 24 24"
                   fill="none"
                   aria-hidden="true"
                 >
-                  <path d="m9 18 6-6-6-6" /></svg
-                ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="m9 18 6-6-6-6" /></svg><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path
                     d="M4 19V5a2 2 0 0 1 2-2h5l2 3h5a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"
-                  /></svg
-                ><span>public</span>
+                  /></svg><span>public</span>
               </summary>
-              <div data-slot="collapsible-content">
-                <button ng-button variant="link" size="sm">favicon.ico</button
-                ><button ng-button variant="link" size="sm">logo.svg</button
-                ><button ng-button variant="link" size="sm">images</button>
+              <div class="collapsible-content">
+                <button variant="link" size="sm" class="button">favicon.ico</button><button variant="link" size="sm" class="button">logo.svg</button><button variant="link" size="sm" class="button">images</button>
               </div>
             </details>
-            <button ng-button variant="link" size="sm">app.tsx</button>
-            <button ng-button variant="link" size="sm">layout.tsx</button>
-            <button ng-button variant="link" size="sm">globals.css</button>
-            <button ng-button variant="link" size="sm">package.json</button>
-            <button ng-button variant="link" size="sm">tsconfig.json</button>
-            <button ng-button variant="link" size="sm">README.md</button>
-            <button ng-button variant="link" size="sm">.gitignore</button>
+            <button variant="link" size="sm" class="button">app.tsx</button>
+            <button variant="link" size="sm" class="button">layout.tsx</button>
+            <button variant="link" size="sm" class="button">globals.css</button>
+            <button variant="link" size="sm" class="button">package.json</button>
+            <button variant="link" size="sm" class="button">tsconfig.json</button>
+            <button variant="link" size="sm" class="button">README.md</button>
+            <button variant="link" size="sm" class="button">.gitignore</button>
           </div>
-        </div>
+        </section>
       </div>
     </main>
   </body>

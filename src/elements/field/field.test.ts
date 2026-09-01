@@ -9,7 +9,7 @@ test("element field reacts to AngularTS error insertion and removal", async ({
     has: page.locator("#demo-profile-email"),
   });
   const input = page.locator("#demo-profile-email");
-  const error = field.locator('[data-slot="field-error"]');
+  const error = field.locator(".field-error");
 
   await expect(error).toBeVisible();
   await expect(field).toHaveAttribute("data-invalid", "true");

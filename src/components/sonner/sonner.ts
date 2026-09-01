@@ -1,13 +1,22 @@
 import type {} from "@angular-wave/angular.ts";
+import {
+  CircleCheck,
+  CircleX,
+  createElement,
+  Info,
+  LoaderCircle,
+  type IconNode,
+  TriangleAlert,
+  X,
+} from "lucide";
 
 import { onDestroy, queryAll } from "../../internal/dom";
 
-const toastSelector = '[data-slot="toast"], [ng-toast]';
-const closeSelector = '[data-slot="toast-close"], [ng-toast-close]';
-const actionSelector = '[data-slot="toast-action"], [ng-toast-action]';
-const titleSelector = '[data-slot="toast-title"], [ng-toast-title]';
-const descriptionSelector =
-  '[data-slot="toast-description"], [ng-toast-description]';
+const toastSelector = ".toast";
+const closeSelector = ".toast-close";
+const actionSelector = ".toast-action";
+const titleSelector = ".toast-title";
+const descriptionSelector = ".toast-description";
 const toasterPositions = new Set([
   "bottom-center",
   "bottom-left",
@@ -24,6 +33,13 @@ const toastTypes = new Set([
   "success",
   "warning",
 ]);
+const toastIcons: Partial<Record<string, IconNode>> = {
+  error: CircleX,
+  info: Info,
+  loading: LoaderCircle,
+  success: CircleCheck,
+  warning: TriangleAlert,
+};
 type ToastTypeSource = "data-type" | "default" | "type" | "variant";
 
 let toastIdCounter = 0;
@@ -64,6 +80,24 @@ export function toasterDirective(): ng.Directive {
         HTMLElement,
         { source: ToastTypeSource; value: string }
       >();
+      const generatedIcons = new WeakMap<HTMLElement, string>();
+
+      const syncGeneratedIcon = (container: HTMLElement, iconName: string) => {
+        const icon = toastIcons[iconName] ?? (iconName === "close" ? X : null);
+        if (!icon || generatedIcons.get(container) === iconName) return;
+        if (container.childElementCount > 0 && !generatedIcons.has(container)) {
+          return;
+        }
+        container.replaceChildren(
+          createElement(icon, {
+            "aria-hidden": "true",
+            focusable: "false",
+            height: 16,
+            width: 16,
+          }),
+        );
+        generatedIcons.set(container, iconName);
+      };
 
       const syncPosition = () => {
         const position = getToasterPosition(element);
@@ -73,11 +107,7 @@ export function toasterDirective(): ng.Directive {
       };
 
       const bindToast = (toast: HTMLElement) => {
-        setAttributeIfChanged(
-          toast,
-          "role",
-          toast.getAttribute("role") ?? "status",
-        );
+        setAttributeIfChanged(toast, "role", "status");
         setAttributeIfChanged(
           toast,
           "aria-live",
@@ -153,6 +183,10 @@ export function toasterDirective(): ng.Directive {
 
         setAttributeIfChanged(toast, "data-type", nextType);
         mirroredTypes.set(toast, { source: typeSource, value: nextType });
+        const icon = toast.querySelector<HTMLElement>(":scope > .toast-icon");
+        if (icon && nextType !== "default") {
+          syncGeneratedIcon(icon, nextType);
+        }
 
         const open = !toast.hidden;
         setAttributeIfChanged(toast, "aria-hidden", String(!open));
@@ -177,11 +211,11 @@ export function toasterDirective(): ng.Directive {
           "aria-label",
           button.getAttribute("aria-label") ?? "Close toast",
         );
+        const icon = button.querySelector<HTMLElement>(".sonner-icon");
+        if (icon) syncGeneratedIcon(icon, "close");
 
         const handleClick = () => {
-          const toast = button.closest<HTMLElement>(
-            '[data-slot="toast"], [ng-toast]',
-          );
+          const toast = button.closest<HTMLElement>(".toast");
           if (toast) {
             toast.hidden = true;
             toast.setAttribute("aria-hidden", "true");

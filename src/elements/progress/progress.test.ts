@@ -12,10 +12,10 @@ test("progress element entrypoint exercises the built functional artifact", asyn
   ).toHaveCount(1);
 
   const timed = page.locator(".progress-demo-timed");
-  await expect(timed).toHaveAttribute("aria-valuenow", "66");
-  await expect(page.locator(".progress-demo-labeled")).toHaveAccessibleName(
-    "Upload progress",
-  );
+  await expect(timed).toHaveAttribute("value", "66");
+  await expect(
+    page.locator(".progress-demo-labeled progress"),
+  ).toHaveAccessibleName("Upload progress");
 
   const sourceRequests = await page.evaluate(() =>
     performance

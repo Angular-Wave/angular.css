@@ -5,20 +5,20 @@ description: >
   Composable input adornments and grouped controls
 ---
 
-Use `data-slot="input-group"` with `role="group"` to compose native inputs,
+Use `class="input-group"` with `role="group"` to compose native inputs,
 textarea controls, text affixes, icons, keyboard hints, and action buttons.
-Controls stay native and use `data-slot="input-group-control"`.
+Controls stay native and use `class="input-group-control"`.
 
 ```html
-<div data-slot="input-group" role="group">
-  <input data-input data-slot="input-group-control" placeholder="Search..." />
-  <div data-slot="input-group-addon" data-align="inline-start">
-    <span data-slot="input-group-text">Search</span>
+<fieldset class="input-group">
+  <input placeholder="Search..."  class="input-group-control input" />
+  <div data-align="inline-start" class="input-group-addon">
+    <span class="input-group-text">Search</span>
   </div>
-  <div data-slot="input-group-addon" data-align="inline-end">
-    <button ng-button data-slot="input-group-button" variant="ghost">Go</button>
+  <div data-align="inline-end" class="input-group-addon">
+    <button variant="ghost" class="input-group-button button">Go</button>
   </div>
-</div>
+</fieldset>
 ```
 
 ## Example

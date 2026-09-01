@@ -10,9 +10,7 @@ const dropdownDatePickerUrl =
   "/docs/static/examples/components/date-picker-with-dropdowns.html";
 
 const day = (page: Page, value: string) =>
-  page.locator(
-    `:is([data-slot="calendar-day"], [ng-calendar-day])[data-value="${value}"]`,
-  );
+  page.locator(`.calendar-day[data-value="${value}"]`);
 
 const expectBuiltArtifactRuntime = async (
   page: Page,
@@ -47,15 +45,9 @@ test("canonical artifact generates a complete navigable calendar", async ({
   await expectBuiltArtifactRuntime(page);
 
   const calendar = page.locator("[ng-calendar]");
-  const days = calendar.locator(
-    ':is([data-slot="calendar-day"], [ng-calendar-day])',
-  );
+  const days = calendar.locator(".calendar-day");
   await expect(days).toHaveCount(42);
-  await expect(
-    calendar.locator(
-      ':is([data-slot="calendar-weekday"], [ng-calendar-weekday])',
-    ),
-  ).toHaveCount(7);
+  await expect(calendar.locator(".calendar-weekday")).toHaveCount(7);
   await expect(page.getByRole("combobox", { name: "Month" })).toHaveValue("4");
   await expect(page.getByRole("combobox", { name: "Year" })).toHaveValue(
     "2026",
@@ -100,11 +92,9 @@ test("workflow artifact covers booked, caption, multiple, range, and week-number
   const calendars = page.locator("[ng-calendar]");
   await expect(calendars).toHaveCount(6);
   for (let index = 0; index < 6; index += 1) {
-    await expect(
-      calendars
-        .nth(index)
-        .locator(':is([data-slot="calendar-day"], [ng-calendar-day])'),
-    ).toHaveCount(index === 4 ? 84 : 42);
+    await expect(calendars.nth(index).locator(".calendar-day")).toHaveCount(
+      index === 4 ? 84 : 42,
+    );
   }
 
   const booked = calendars.nth(1);
@@ -131,7 +121,7 @@ test("workflow artifact covers booked, caption, multiple, range, and week-number
 
   const range = calendars.nth(4);
   const monthBoxes = await range
-    .locator(':is([data-slot="calendar-month"], [ng-calendar-month])')
+    .locator(".calendar-month")
     .evaluateAll((months) =>
       months.map((month) => {
         const box = month.getBoundingClientRect();
@@ -150,13 +140,9 @@ test("workflow artifact covers booked, caption, multiple, range, and week-number
     "2026-09-20 to 2026-09-23",
   );
 
-  await expect(
-    calendars
-      .nth(5)
-      .locator(
-        ':is([data-slot="calendar-week-number"], [ng-calendar-week-number])',
-      ),
-  ).toHaveCount(6);
+  await expect(calendars.nth(5).locator(".calendar-week-number")).toHaveCount(
+    6,
+  );
 });
 
 test("composition artifact preserves custom content, presets, time, RTL, and authored calendar adapters", async ({
@@ -189,11 +175,7 @@ test("composition artifact preserves custom content, presets, time, RTL, and aut
   );
   await expect(calendars.nth(3)).toHaveAttribute("data-direction", "rtl");
   await expect(calendars.nth(4)).toHaveAttribute("aria-label", "خرداد ۱۴۰۴");
-  await expect(
-    calendars
-      .nth(4)
-      .locator(':is([data-slot="calendar-day"], [ng-calendar-day])'),
-  ).toHaveCount(42);
+  await expect(calendars.nth(4).locator(".calendar-day")).toHaveCount(42);
 });
 
 test("Date Picker basic, demo, and date-of-birth compositions use real popovers and calendars", async ({
@@ -213,9 +195,9 @@ test("Date Picker basic, demo, and date-of-birth compositions use real popovers 
   await expect(basic).toHaveAttribute("data-open", "true");
 
   const demo = page.locator("#date-picker-demo-popover");
-  await demo.locator("[ng-popover-trigger]").click();
+  await demo.locator(".popover-trigger").click();
   await demo.locator('[data-value="2026-09-13"]').click();
-  await expect(demo.locator("[ng-popover-trigger]")).toContainText(
+  await expect(demo.locator(".popover-trigger")).toContainText(
     "September 13, 2026",
   );
   await expect(demo).toHaveAttribute("data-open", "true");
@@ -299,11 +281,7 @@ test("Date Picker range, RTL, and time compositions remain functional and contai
   const range = page.locator("#date-picker-range-popover");
   await page.locator("#date-picker-range").click();
   const rangeCalendar = range.locator("[ng-calendar]");
-  await expect(
-    rangeCalendar.locator(
-      ':is([data-slot="calendar-month"], [ng-calendar-month])',
-    ),
-  ).toHaveCount(2);
+  await expect(rangeCalendar.locator(".calendar-month")).toHaveCount(2);
   await rangeCalendar.locator('[data-value="2026-09-20"]').click();
   await rangeCalendar.locator('[data-value="2026-09-23"]').click();
   await expect(page.locator("#date-picker-range")).toContainText(
@@ -313,16 +291,12 @@ test("Date Picker range, RTL, and time compositions remain functional and contai
 
   await page.keyboard.press("Escape");
   const rtl = page.locator("#date-picker-rtl-popover");
-  await rtl.locator("[ng-popover-trigger]").click();
+  await rtl.locator(".popover-trigger").click();
   await expect(rtl.locator("[ng-calendar]")).toHaveAttribute(
     "data-direction",
     "rtl",
   );
-  await expect(
-    rtl
-      .locator(':is([data-slot="calendar-weekday"], [ng-calendar-weekday])')
-      .first(),
-  ).toContainText("ح");
+  await expect(rtl.locator(".calendar-weekday").first()).toContainText("ح");
 
   await page.keyboard.press("Escape");
   const time = page.locator("#date-picker-time-popover");
@@ -349,9 +323,7 @@ test("Date Picker layouts remain non-overlapping at the mobile breakpoint", asyn
   await page.goto(datePickersUrl);
   const range = page.locator("#date-picker-range-popover");
   await page.locator("#date-picker-range").click();
-  const months = range.locator(
-    ':is([data-slot="calendar-month"], [ng-calendar-month])',
-  );
+  const months = range.locator(".calendar-month");
   await expect(months).toHaveCount(2);
   const boxes = await months.evaluateAll((elements) =>
     elements.map((element) => {

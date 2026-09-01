@@ -1,5 +1,4 @@
-[data-slot="dialog-content"],
-[ng-dialog-content] {
+.dialog-content {
   inset-block-start: 50%;
   inset-inline-start: 50%;
   display: grid;
@@ -15,23 +14,21 @@
   transform: translate(-50%, -50%);
 }
 
-:is([data-slot="dialog-content"], [ng-dialog-content])[data-direction="rtl"] {
+.dialog-content[data-direction="rtl"] {
   transform: translate(50%, -50%);
 }
 
-:is([data-slot="dialog-content"], [ng-dialog-content])[data-size="wide"] {
+.dialog-content[data-size="wide"] {
   width: min(calc(100% - calc(var(--spacing) * 8)), 32rem);
 }
 
-[data-slot="dialog-header"],
-[ng-dialog-header] {
+.dialog-header {
   display: grid;
   gap: calc(var(--spacing) * 2);
   text-align: start;
 }
 
-[data-slot="dialog-footer"],
-[ng-dialog-footer] {
+.dialog-footer {
   display: flex;
   margin-inline: calc(var(--spacing) * -4);
   margin-block-end: calc(var(--spacing) * -4);
@@ -44,27 +41,24 @@
   background: color-mix(in srgb, var(--muted) 50%, transparent);
 }
 
-[data-slot="dialog-close"],
-[ng-dialog-close] {
+.dialog-close {
   position: absolute;
   inset-block-start: calc(var(--spacing) * 2);
   inset-inline-end: calc(var(--spacing) * 2);
 }
 
-:is([data-slot="dialog-close"], [ng-dialog-close]) > svg {
+.dialog-close > svg {
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
 }
 
-[data-slot="dialog-body"],
-[ng-dialog-body] {
+.dialog-body {
   max-height: 50dvh;
   margin-inline: calc(var(--spacing) * -4);
 }
 
 @media (width >= 640px) {
-  [data-slot="dialog-footer"],
-  [ng-dialog-footer] {
+  .dialog-footer {
     flex-direction: row;
     justify-content: flex-end;
   }

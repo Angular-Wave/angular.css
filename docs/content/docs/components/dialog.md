@@ -11,15 +11,15 @@ AngularTS owns form values and application actions inside the dialog.
 
 ```html
 <section ng-dialog>
-  <button ng-dialog-trigger>Edit profile</button>
-  <div ng-dialog-overlay></div>
-  <section ng-dialog-content>
-    <header ng-dialog-header>
-      <h2 ng-dialog-title>Edit profile</h2>
-      <p ng-dialog-description>Update your public profile.</p>
+  <button class="dialog-trigger">Edit profile</button>
+  <div class="dialog-overlay"></div>
+  <dialog class="dialog-content">
+    <header class="dialog-header">
+      <h2 class="dialog-title">Edit profile</h2>
+      <p class="dialog-description">Update your public profile.</p>
     </header>
     <button data-dialog-close>Save changes</button>
-  </section>
+  </dialog>
 </section>
 ```
 
@@ -38,7 +38,7 @@ omitted without changing modal behavior.
 
 ## Scrolling
 
-Use `ng-dialog-body` for independently scrollable content. Keep the footer
+Use `.dialog-body` for independently scrollable content. Keep the footer
 outside that body when its actions must remain visible.
 
 {{< example src="examples/components/dialog-scroll-workflows.html" title="Scrollable dialogs" height="480" >}}
@@ -61,28 +61,10 @@ This component's root directive is `[ng-dialog]`. Importing the package register
 ### Directive selectors
 
 - `ng-dialog`
-- `ng-dialog-close`
-- `ng-dialog-content`
-- `ng-dialog-description`
-- `ng-dialog-overlay`
-- `ng-dialog-title`
-- `ng-dialog-trigger`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="dialog"]`
-- `[data-slot="dialog-body"]`
-- `[data-slot="dialog-close"]`
-- `[data-slot="dialog-content"]`
-- `[data-slot="dialog-description"]`
-- `[data-slot="dialog-footer"]`
-- `[data-slot="dialog-header"]`
-- `[data-slot="dialog-overlay"]`
-- `[data-slot="dialog-title"]`
-- `[data-slot="dialog-trigger"]`
-
-A dialog root requires one native button trigger, one overlay, and one content element. Title and description are strongly recommended; header, body, and footer are optional layout selectors. Use semantic `ng-dialog-*` attributes when AngularCSS supplies behavior and styling, and do not duplicate them with `data-slot`. Use `data-dialog-close` for footer actions that close without acquiring corner-close styling.
-Use the named slots as stable Tailwind and CSS selectors.
+A dialog root requires one native button trigger, one overlay, and one native dialog content element. The root directive inspects descendants through dialog part classes; no child directives are required. Title and description are strongly recommended; header, body, and footer are optional.
 
 ## API
 
@@ -137,7 +119,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-dialog]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-dialog]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

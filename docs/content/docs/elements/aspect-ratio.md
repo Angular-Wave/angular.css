@@ -5,10 +5,10 @@ description: >
   Fixed-ratio media wrapper
 ---
 
-Set `--ratio` on `data-slot="aspect-ratio"` or `ng-aspect-ratio`.
+Set `--ratio` on `figure.aspect-ratio`.
 
 ```html
-<div data-slot="aspect-ratio" style="--ratio: 16 / 9;">
+<div style="--ratio: 16 / 9;" class="aspect-ratio">
   <div>Media</div>
 </div>
 ```

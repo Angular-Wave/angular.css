@@ -6,11 +6,11 @@ type SidebarScope = ng.Scope;
 let sidebarIdCounter = 0;
 
 const selectors = {
-  group: '[data-slot="sidebar-group"], [ng-sidebar-group]',
-  groupAction: '[data-slot="sidebar-group-action"], [ng-sidebar-group-action]',
-  groupLabel: '[data-slot="sidebar-group-label"], [ng-sidebar-group-label]',
-  menuAction: '[data-slot="sidebar-menu-action"], [ng-sidebar-menu-action]',
-  menuButton: '[data-slot="sidebar-menu-button"], [ng-sidebar-menu-button]',
+  group: ".sidebar-group",
+  groupAction: ".sidebar-group-action",
+  groupLabel: ".sidebar-group-label",
+  menuAction: ".sidebar-menu-action",
+  menuButton: ".sidebar-menu-button",
 };
 
 const sidebarOptions = {
@@ -40,7 +40,7 @@ export function sidebarDirective(): ng.Directive {
     link(scope: SidebarScope, element: HTMLElement) {
       const triggerSelector = element.id
         ? `[aria-controls="${element.id}"], [data-sidebar-target="${element.id}"]`
-        : "[ng-sidebar-trigger], [data-slot='sidebar-trigger']";
+        : ".sidebar-trigger";
       const cleanupTriggers = new Map<HTMLElement, () => void>();
       const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
       const mobileQuery = window.matchMedia("(max-width: 767px)");
@@ -204,10 +204,9 @@ export function sidebarDirective(): ng.Directive {
         setCollapsed(getCollapsed());
       };
 
-      element.setAttribute(
-        "role",
-        element.getAttribute("role") ?? "complementary",
-      );
+      if (element.tagName !== "ASIDE" && !element.hasAttribute("role")) {
+        element.setAttribute("role", "complementary");
+      }
 
       syncFromState();
       syncStructure();

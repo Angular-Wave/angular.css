@@ -5,7 +5,7 @@ test("toggle-group element example exercises the built functional artifact", asy
 }) => {
   await page.goto("/docs/static/examples/elements/toggle-group.html");
   const group = page.locator("[ng-toggle-group]");
-  const items = group.locator('[data-slot="toggle-group-item"]');
+  const items = group.locator(".toggle-group-item");
 
   await expect(items).toHaveCount(3);
   await expect(items.nth(1)).toHaveAttribute("data-state", "on");

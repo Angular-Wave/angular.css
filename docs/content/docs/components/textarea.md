@@ -6,11 +6,11 @@ description: >
   empty/required/disabled/error.
 ---
 
-Use `ng-textarea` on textarea controls to sync common state attributes.
+Use `class="textarea"` on native textarea controls.
 
 ```html
-<textarea ng-textarea placeholder="Add a message"></textarea>
-<textarea ng-textarea placeholder="Invalid" aria-invalid="true"></textarea>
+<textarea placeholder="Add a message" class="textarea"></textarea>
+<textarea placeholder="Invalid" aria-invalid="true" class="textarea"></textarea>
 ```
 
 ## Example
@@ -30,14 +30,11 @@ This is a styling-only HTML element or pattern. AngularCSS registers no runtime 
 
 ### Root styling selector
 
-- `data-slot="textarea"`
+- `.textarea`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="textarea"]`
-
-Slots are optional unless the usage example or behavior description identifies a required relationship.
-Use the named slots as stable Tailwind and CSS selectors.
+Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough.
 
 ## API
 
@@ -75,7 +72,7 @@ content come from the application.
 
 ## Customization
 
-Target semantic elements, styling slots, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

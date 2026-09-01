@@ -9,8 +9,8 @@ Use native `button` elements with `aria-pressed`. The CSS also accepts
 `data-state="on"`.
 
 ```html
-<button data-slot="toggle" aria-pressed="true">Bold</button>
-<button data-slot="toggle" variant="outline">Italic</button>
+<button aria-pressed="true" class="toggle">Bold</button>
+<button variant="outline" class="toggle">Italic</button>
 ```
 
 ## Example

@@ -12,9 +12,7 @@ test("pagination element example exercises the built functional artifact", async
   ).toHaveCount(1);
 
   const pagination = page.getByRole("navigation", { name: "pagination" });
-  await expect(pagination.locator("[data-slot='pagination-link']")).toHaveCount(
-    3,
-  );
+  await expect(pagination.locator(".pagination-link")).toHaveCount(3);
   await expect(pagination.locator("[aria-current='page']")).toHaveText("2");
   await expect(
     pagination.getByRole("link", { name: "Go to previous page" }),

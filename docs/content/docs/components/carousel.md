@@ -16,10 +16,10 @@ navigation.
   align="start"
   style="--carousel-item-size: 50%; --carousel-gap: 0.5rem"
 >
-  <div data-slot="carousel-content">
-    <div data-slot="carousel-track">
-      <article data-slot="carousel-item">Slide</article>
-    </div>
+  <div class="carousel-content">
+    <ul class="carousel-track">
+      <li class="carousel-item">Slide</li>
+    </ul>
   </div>
 </section>
 ```
@@ -68,26 +68,10 @@ This component's root directive is `[ng-carousel]`. Importing the package regist
 ### Directive selectors
 
 - `ng-carousel`
-- `ng-carousel-content`
-- `ng-carousel-dot`
-- `ng-carousel-item`
-- `ng-carousel-next`
-- `ng-carousel-previous`
-- `ng-carousel-track`
 
-### Styling slots
-
-- `[data-slot="carousel"]`
-- `[data-slot="carousel-content"]`
-- `[data-slot="carousel-dot"]`
-- `[data-slot="carousel-dots"]`
-- `[data-slot="carousel-item"]`
-- `[data-slot="carousel-next"]`
-- `[data-slot="carousel-previous"]`
-- `[data-slot="carousel-track"]`
+### Semantic structure
 
 The content viewport and its direct track child are required. Items must be direct track children. Navigation controls and dots are optional.
-Use the named slots as stable Tailwind and CSS selectors.
 
 ## API
 
@@ -154,7 +138,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-carousel]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-carousel]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

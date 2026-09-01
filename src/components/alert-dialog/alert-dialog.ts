@@ -6,21 +6,16 @@ export function alertDialogDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
       bindOverlay(scope, element, {
-        rootSelector: '[data-slot="alert-dialog"], [ng-alert-dialog]',
+        rootSelector: ".alert-dialog, [ng-alert-dialog]",
         closeSelector:
-          '[data-slot="alert-dialog-cancel"], [ng-alert-dialog-cancel], [data-slot="alert-dialog-action"], [ng-alert-dialog-action], [data-alert-dialog-close]',
-        contentSelector:
-          '[data-slot="alert-dialog-content"], [ng-alert-dialog-content]',
+          ".alert-dialog-cancel, .alert-dialog-action, [data-alert-dialog-close]",
+        contentSelector: ".alert-dialog-content",
         contentRole: "alertdialog",
-        descriptionSelector:
-          '[data-slot="alert-dialog-description"], [ng-alert-dialog-description]',
+        descriptionSelector: ".alert-dialog-description",
         closeOnOverlayClick: false,
-        overlaySelector:
-          '[data-slot="alert-dialog-overlay"], [ng-alert-dialog-overlay]',
-        titleSelector:
-          '[data-slot="alert-dialog-title"], [ng-alert-dialog-title]',
-        triggerSelector:
-          '[data-slot="alert-dialog-trigger"], [ng-alert-dialog-trigger]',
+        overlaySelector: ".alert-dialog-overlay",
+        titleSelector: ".alert-dialog-title",
+        triggerSelector: ".alert-dialog-trigger",
         closeOnOutsideClick: false,
       });
     },

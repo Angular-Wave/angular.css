@@ -8,7 +8,10 @@ test("field links visible descriptions and errors to its control", async ({
   await page.goto(statesUrl);
 
   const control = page.locator("#message-control");
-  await expect(page.locator("#message-field")).toHaveAttribute("role", "group");
+  await expect(page.locator("#message-field")).not.toHaveAttribute(
+    "role",
+    "group",
+  );
   const describedBy = (await control.getAttribute("aria-describedby"))?.split(
     /\s+/,
   );
@@ -72,7 +75,12 @@ test("field workflows compose controls, responsive layout, and RTL", async ({
   const fields = page.locator("[ng-field]");
   expect(await fields.count()).toBeGreaterThan(20);
   for (const field of await fields.all()) {
-    await expect(field).toHaveAttribute("role", "group");
+    const tagName = await field.evaluate((element) => element.tagName);
+    if (tagName === "FIELDSET") {
+      await expect(field).not.toHaveAttribute("role", "group");
+    } else {
+      await expect(field).toHaveAttribute("role", "group");
+    }
   }
 
   await page.getByLabel("External disks").check();
@@ -83,15 +91,13 @@ test("field workflows compose controls, responsive layout, and RTL", async ({
   await expect(page.getByLabel("Yearly ($99.99/year)")).toBeChecked();
   await page.getByLabel("Minimum budget").fill("300");
   await expect(
-    page.locator(
-      "[data-example='field-slider'] [data-slot='field-description']",
-    ),
+    page.locator("[data-example='field-slider'] .field-description"),
   ).toContainText("$300 - $800");
 
   const select = page.locator("[data-example='field-select']");
-  await select.locator("[ng-select-trigger]").click();
+  await select.locator(".select-trigger").click();
   await select.getByRole("option", { name: "Engineering" }).click();
-  await expect(select.locator("[ng-select-value]")).toHaveText("Engineering");
+  await expect(select.locator(".select-value")).toHaveText("Engineering");
 
   const responsive = page.locator("[data-example='field-responsive']");
   await responsive.getByLabel("Name").fill("Jane Doe");

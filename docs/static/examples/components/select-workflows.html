@@ -17,23 +17,22 @@
   >
     <main class="select-workflows visual-example">
       <section class="select-workflow select-align-workflow">
-        <div ng-field-group>
-          <div ng-field orientation="horizontal">
-            <div ng-field-content>
-              <label ng-field-label for="align-item">Align Item</label>
-              <p ng-field-description>
+        <div class="field-group">
+          <fieldset ng-field orientation="horizontal">
+            <div class="field-content">
+              <label for="align-item" class="field-label">Align Item</label>
+              <p class="field-description">
                 Toggle to align the item with the trigger.
               </p>
             </div>
             <input
-              ng-switch-control
+
               id="align-item"
               type="checkbox"
-              role="switch"
-              ng-model="alignItem"
-            />
-          </div>
-          <div ng-field>
+
+              ng-model="alignItem" class="switch" />
+          </fieldset>
+          <fieldset ng-field>
             <div
               id="align-select"
               ng-select
@@ -41,56 +40,56 @@
               ng-on-angularcss:select="alignedFruit=$event.detail.value"
             >
               <button
-                ng-select-trigger
+
                 type="button"
                 aria-label="Aligned fruit"
-              >
+               class="select-trigger">
                 <span
-                  ng-select-value
+
                   ng-bind="alignedFruit === 'apple' ? 'Apple' : alignedFruit === 'banana' ? 'Banana' : alignedFruit === 'blueberry' ? 'Blueberry' : alignedFruit === 'grapes' ? 'Grapes' : alignedFruit === 'pineapple' ? 'Pineapple' : 'Select a fruit'"
-                ></span>
+                 class="select-value"></span>
               </button>
-              <div ng-select-content align-item-with-trigger="{{ alignItem }}">
-                <div ng-select-group>
-                  <div ng-select-item data-value="">Select a fruit</div>
-                  <div ng-select-item data-value="apple">Apple</div>
-                  <div ng-select-item data-value="banana" aria-selected="true">
+              <ul align-item-with-trigger="{{ alignItem }}" class="select-content">
+                <div class="select-group">
+                  <li data-value="" class="select-item">Select a fruit</li>
+                  <li data-value="apple" class="select-item">Apple</li>
+                  <li data-value="banana" aria-selected="true" class="select-item">
                     Banana
-                  </div>
-                  <div ng-select-item data-value="blueberry">Blueberry</div>
-                  <div ng-select-item data-value="grapes">Grapes</div>
-                  <div ng-select-item data-value="pineapple">Pineapple</div>
+                  </li>
+                  <li data-value="blueberry" class="select-item">Blueberry</li>
+                  <li data-value="grapes" class="select-item">Grapes</li>
+                  <li data-value="pineapple" class="select-item">Pineapple</li>
                 </div>
-              </div>
+              </ul>
             </div>
-          </div>
+          </fieldset>
         </div>
       </section>
 
       <section class="select-workflow">
         <div id="disabled-select" ng-select data-open="false">
           <button
-            ng-select-trigger
+
             type="button"
             aria-label="Disabled fruit"
             disabled
-          >
-            <span ng-select-value>Select a fruit</span>
+           class="select-trigger">
+            <span class="select-value">Select a fruit</span>
           </button>
-          <div ng-select-content>
-            <div ng-select-group>
-              <div ng-select-item data-value="" aria-selected="true">
+          <ul class="select-content">
+            <div class="select-group">
+              <li data-value="" aria-selected="true" class="select-item">
                 Select a fruit
-              </div>
-              <div ng-select-item data-value="apple">Apple</div>
-              <div ng-select-item data-value="banana">Banana</div>
-              <div ng-select-item data-value="blueberry">Blueberry</div>
-              <div ng-select-item data-value="grapes" aria-disabled="true">
+              </li>
+              <li data-value="apple" class="select-item">Apple</li>
+              <li data-value="banana" class="select-item">Banana</li>
+              <li data-value="blueberry" class="select-item">Blueberry</li>
+              <li data-value="grapes" aria-disabled="true" class="select-item">
                 Grapes
-              </div>
-              <div ng-select-item data-value="pineapple">Pineapple</div>
+              </li>
+              <li data-value="pineapple" class="select-item">Pineapple</li>
             </div>
-          </div>
+          </ul>
         </div>
       </section>
 
@@ -101,36 +100,36 @@
           data-open="false"
           ng-on-angularcss:select="groupedValue=$event.detail.value"
         >
-          <button ng-select-trigger type="button" aria-label="Produce">
+          <button type="button" aria-label="Produce" class="select-trigger">
             <span
-              ng-select-value
+
               ng-bind="groupedValue === 'apple' ? 'Apple' : groupedValue === 'banana' ? 'Banana' : groupedValue === 'blueberry' ? 'Blueberry' : groupedValue === 'carrot' ? 'Carrot' : groupedValue === 'broccoli' ? 'Broccoli' : groupedValue === 'spinach' ? 'Spinach' : 'Select a fruit'"
-            ></span>
+             class="select-value"></span>
           </button>
-          <div ng-select-content data-align-trigger="false">
-            <div ng-select-group>
-              <div ng-select-label>Fruits</div>
-              <div ng-select-item data-value="" aria-selected="true">
+          <ul data-align-trigger="false" class="select-content">
+            <div class="select-group">
+              <div class="select-label">Fruits</div>
+              <li data-value="" aria-selected="true" class="select-item">
                 Select a fruit
-              </div>
-              <div ng-select-item data-value="apple">Apple</div>
-              <div ng-select-item data-value="banana">Banana</div>
-              <div ng-select-item data-value="blueberry">Blueberry</div>
+              </li>
+              <li data-value="apple" class="select-item">Apple</li>
+              <li data-value="banana" class="select-item">Banana</li>
+              <li data-value="blueberry" class="select-item">Blueberry</li>
             </div>
-            <div ng-select-separator></div>
-            <div ng-select-group>
-              <div ng-select-label>Vegetables</div>
-              <div ng-select-item data-value="carrot">Carrot</div>
-              <div ng-select-item data-value="broccoli">Broccoli</div>
-              <div ng-select-item data-value="spinach">Spinach</div>
+            <div class="select-separator"></div>
+            <div class="select-group">
+              <div class="select-label">Vegetables</div>
+              <li data-value="carrot" class="select-item">Carrot</li>
+              <li data-value="broccoli" class="select-item">Broccoli</li>
+              <li data-value="spinach" class="select-item">Spinach</li>
             </div>
-          </div>
+          </ul>
         </div>
       </section>
 
       <section class="select-workflow">
-        <div ng-field data-invalid="true" class="select-invalid-field">
-          <label ng-field-label for="invalid-select-trigger">Fruit</label>
+        <fieldset ng-field data-invalid="true" class="select-invalid-field">
+          <label for="invalid-select-trigger" class="field-label">Fruit</label>
           <div
             id="invalid-select"
             ng-select
@@ -139,28 +138,28 @@
           >
             <button
               id="invalid-select-trigger"
-              ng-select-trigger
+
               type="button"
               aria-invalid="true"
-            >
+             class="select-trigger">
               <span
-                ng-select-value
+
                 ng-bind="invalidValue === 'apple' ? 'Apple' : invalidValue === 'banana' ? 'Banana' : invalidValue === 'blueberry' ? 'Blueberry' : 'Select a fruit'"
-              ></span>
+               class="select-value"></span>
             </button>
-            <div ng-select-content>
-              <div ng-select-group>
-                <div ng-select-item data-value="" aria-selected="true">
+            <ul class="select-content">
+              <div class="select-group">
+                <li data-value="" aria-selected="true" class="select-item">
                   Select a fruit
-                </div>
-                <div ng-select-item data-value="apple">Apple</div>
-                <div ng-select-item data-value="banana">Banana</div>
-                <div ng-select-item data-value="blueberry">Blueberry</div>
+                </li>
+                <li data-value="apple" class="select-item">Apple</li>
+                <li data-value="banana" class="select-item">Banana</li>
+                <li data-value="blueberry" class="select-item">Blueberry</li>
               </div>
-            </div>
+            </ul>
           </div>
-          <p ng-field-error role="alert">Please select a fruit.</p>
-        </div>
+          <p class="field-error">Please select a fruit.</p>
+        </fieldset>
       </section>
 
       <section class="select-workflow" lang="ar" dir="rtl">
@@ -170,32 +169,32 @@
           data-open="false"
           ng-on-angularcss:select="rtlValue=$event.detail.value"
         >
-          <button ng-select-trigger type="button" aria-label="الفاكهة">
+          <button type="button" aria-label="الفاكهة" class="select-trigger">
             <span
-              ng-select-value
+
               ng-bind="rtlValue === 'apple' ? 'تفاح' : rtlValue === 'banana' ? 'موز' : rtlValue === 'blueberry' ? 'توت أزرق' : rtlValue === 'grapes' ? 'عنب' : rtlValue === 'pineapple' ? 'أناناس' : rtlValue === 'carrot' ? 'جزر' : rtlValue === 'broccoli' ? 'بروكلي' : rtlValue === 'spinach' ? 'سبانخ' : 'اختر فاكهة'"
-            ></span>
+             class="select-value"></span>
           </button>
-          <div ng-select-content data-lang="ar">
-            <div ng-select-group>
-              <div ng-select-label>الفواكه</div>
-              <div ng-select-item data-value="" aria-selected="true">
+          <ul data-lang="ar" class="select-content">
+            <div class="select-group">
+              <div class="select-label">الفواكه</div>
+              <li data-value="" aria-selected="true" class="select-item">
                 اختر فاكهة
-              </div>
-              <div ng-select-item data-value="apple">تفاح</div>
-              <div ng-select-item data-value="banana">موز</div>
-              <div ng-select-item data-value="blueberry">توت أزرق</div>
-              <div ng-select-item data-value="grapes">عنب</div>
-              <div ng-select-item data-value="pineapple">أناناس</div>
+              </li>
+              <li data-value="apple" class="select-item">تفاح</li>
+              <li data-value="banana" class="select-item">موز</li>
+              <li data-value="blueberry" class="select-item">توت أزرق</li>
+              <li data-value="grapes" class="select-item">عنب</li>
+              <li data-value="pineapple" class="select-item">أناناس</li>
             </div>
-            <div ng-select-separator></div>
-            <div ng-select-group>
-              <div ng-select-label>الخضروات</div>
-              <div ng-select-item data-value="carrot">جزر</div>
-              <div ng-select-item data-value="broccoli">بروكلي</div>
-              <div ng-select-item data-value="spinach">سبانخ</div>
+            <div class="select-separator"></div>
+            <div class="select-group">
+              <div class="select-label">الخضروات</div>
+              <li data-value="carrot" class="select-item">جزر</li>
+              <li data-value="broccoli" class="select-item">بروكلي</li>
+              <li data-value="spinach" class="select-item">سبانخ</li>
             </div>
-          </div>
+          </ul>
         </div>
       </section>
 
@@ -206,75 +205,75 @@
           data-open="false"
           ng-on-angularcss:select="timezone=$event.detail.value"
         >
-          <button ng-select-trigger type="button" aria-label="Timezone">
+          <button type="button" aria-label="Timezone" class="select-trigger">
             <span
-              ng-select-value
+
               ng-bind="timezone || 'Select a timezone'"
-            ></span>
+             class="select-value"></span>
           </button>
-          <div ng-select-content data-align-trigger="false">
-            <button ng-select-scroll-up-button type="button"></button>
-            <div ng-select-group>
-              <div ng-select-label>North America</div>
-              <div ng-select-item data-value="" aria-selected="true">
+          <ul data-align-trigger="false" class="select-content">
+            <button type="button" class="select-scroll-up-button"></button>
+            <div class="select-group">
+              <div class="select-label">North America</div>
+              <li data-value="" aria-selected="true" class="select-item">
                 Select a timezone
-              </div>
-              <div ng-select-item data-value="est">Eastern Standard Time</div>
-              <div ng-select-item data-value="cst">Central Standard Time</div>
-              <div ng-select-item data-value="mst">Mountain Standard Time</div>
-              <div ng-select-item data-value="pst">Pacific Standard Time</div>
-              <div ng-select-item data-value="akst">Alaska Standard Time</div>
-              <div ng-select-item data-value="hst">Hawaii Standard Time</div>
+              </li>
+              <li data-value="est" class="select-item">Eastern Standard Time</li>
+              <li data-value="cst" class="select-item">Central Standard Time</li>
+              <li data-value="mst" class="select-item">Mountain Standard Time</li>
+              <li data-value="pst" class="select-item">Pacific Standard Time</li>
+              <li data-value="akst" class="select-item">Alaska Standard Time</li>
+              <li data-value="hst" class="select-item">Hawaii Standard Time</li>
             </div>
-            <div ng-select-group>
-              <div ng-select-label>Europe &amp; Africa</div>
-              <div ng-select-item data-value="gmt">Greenwich Mean Time</div>
-              <div ng-select-item data-value="cet">Central European Time</div>
-              <div ng-select-item data-value="eet">Eastern European Time</div>
-              <div ng-select-item data-value="west">
+            <div class="select-group">
+              <div class="select-label">Europe &amp; Africa</div>
+              <li data-value="gmt" class="select-item">Greenwich Mean Time</li>
+              <li data-value="cet" class="select-item">Central European Time</li>
+              <li data-value="eet" class="select-item">Eastern European Time</li>
+              <li data-value="west" class="select-item">
                 Western European Summer Time
-              </div>
-              <div ng-select-item data-value="cat">Central Africa Time</div>
-              <div ng-select-item data-value="eat">East Africa Time</div>
+              </li>
+              <li data-value="cat" class="select-item">Central Africa Time</li>
+              <li data-value="eat" class="select-item">East Africa Time</li>
             </div>
-            <div ng-select-group>
-              <div ng-select-label>Asia</div>
-              <div ng-select-item data-value="msk">Moscow Time</div>
-              <div ng-select-item data-value="ist">India Standard Time</div>
-              <div ng-select-item data-value="cst_china">
+            <div class="select-group">
+              <div class="select-label">Asia</div>
+              <li data-value="msk" class="select-item">Moscow Time</li>
+              <li data-value="ist" class="select-item">India Standard Time</li>
+              <li data-value="cst_china" class="select-item">
                 China Standard Time
-              </div>
-              <div ng-select-item data-value="jst">Japan Standard Time</div>
-              <div ng-select-item data-value="kst">Korea Standard Time</div>
-              <div ng-select-item data-value="ist_indonesia">
+              </li>
+              <li data-value="jst" class="select-item">Japan Standard Time</li>
+              <li data-value="kst" class="select-item">Korea Standard Time</li>
+              <li data-value="ist_indonesia" class="select-item">
                 Indonesia Central Standard Time
-              </div>
+              </li>
             </div>
-            <div ng-select-group>
-              <div ng-select-label>Australia &amp; Pacific</div>
-              <div ng-select-item data-value="awst">
+            <div class="select-group">
+              <div class="select-label">Australia &amp; Pacific</div>
+              <li data-value="awst" class="select-item">
                 Australian Western Standard Time
-              </div>
-              <div ng-select-item data-value="acst">
+              </li>
+              <li data-value="acst" class="select-item">
                 Australian Central Standard Time
-              </div>
-              <div ng-select-item data-value="aest">
+              </li>
+              <li data-value="aest" class="select-item">
                 Australian Eastern Standard Time
-              </div>
-              <div ng-select-item data-value="nzst">
+              </li>
+              <li data-value="nzst" class="select-item">
                 New Zealand Standard Time
-              </div>
-              <div ng-select-item data-value="fjt">Fiji Time</div>
+              </li>
+              <li data-value="fjt" class="select-item">Fiji Time</li>
             </div>
-            <div ng-select-group>
-              <div ng-select-label>South America</div>
-              <div ng-select-item data-value="art">Argentina Time</div>
-              <div ng-select-item data-value="bot">Bolivia Time</div>
-              <div ng-select-item data-value="brt">Brasilia Time</div>
-              <div ng-select-item data-value="clt">Chile Standard Time</div>
+            <div class="select-group">
+              <div class="select-label">South America</div>
+              <li data-value="art" class="select-item">Argentina Time</li>
+              <li data-value="bot" class="select-item">Bolivia Time</li>
+              <li data-value="brt" class="select-item">Brasilia Time</li>
+              <li data-value="clt" class="select-item">Chile Standard Time</li>
             </div>
-            <button ng-select-scroll-down-button type="button"></button>
-          </div>
+            <button type="button" class="select-scroll-down-button"></button>
+          </ul>
         </div>
       </section>
 

@@ -9,7 +9,7 @@ Use `dir`, logical alignment attributes, and optional flip markers for
 direction-aware layouts.
 
 ```html
-<section data-slot="direction" dir="rtl">
+<section dir="rtl" class="direction">
   <p data-logical-align="start">Start aligned text</p>
 </section>
 ```

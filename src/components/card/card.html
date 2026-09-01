@@ -10,35 +10,33 @@
     <script src="../../js/angular-css.umd.js"></script>
   </head>
   <body ng-app="ui" ng-cloak>
-    <section ng-card class="example-card">
-      <header data-slot="card-header">
+    <article class="example-card card">
+      <header class="card-header">
         <div>
-          <h3 data-slot="card-title">Login to your account</h3>
-          <p data-slot="card-description">
-            Enter your email below to continue.
-          </p>
+          <h2 class="card-title">Login to your account</h2>
+          <p class="card-description">Enter your email below to continue.</p>
         </div>
-        <div data-slot="card-action">
-          <button ng-button variant="link">Sign up</button>
-        </div>
+        <menu class="card-action">
+          <button variant="link" class="button">Sign up</button>
+        </menu>
       </header>
-      <div data-slot="card-content">
+      <section class="card-content">
         <div class="stack-sm">
-          <label ng-label for="card-email">Email</label>
+          <label for="card-email" class="label">Email</label>
           <input
-            data-input
             id="card-email"
             type="email"
             placeholder="m@example.com"
+            class="input"
           />
-          <label ng-label for="card-password">Password</label>
-          <input data-input id="card-password" type="password" />
+          <label for="card-password" class="label">Password</label>
+          <input id="card-password" type="password" class="input" />
         </div>
-      </div>
-      <footer data-slot="card-footer" class="stack-sm">
-        <button ng-button>Login</button>
-        <button ng-button variant="outline">Login with provider</button>
+      </section>
+      <footer class="stack-sm card-footer">
+        <button class="button">Login</button>
+        <button variant="outline" class="button">Login with provider</button>
       </footer>
-    </section>
+    </article>
   </body>
 </html>

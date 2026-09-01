@@ -14,12 +14,12 @@ them when a workflow needs behavior from more than one primitive.
 Combine field, label, input, description, and AngularTS validation:
 
 ```html
-<div ng-field>
-  <label ng-label for="email">Email</label>
-  <input id="email" name="email" data-input ng-model="profile.email" required />
-  <p ng-field-description>Used for account notices.</p>
-  <p ng-field-error ng-if="profileForm.email.invalid">Enter a valid email.</p>
-</div>
+<fieldset ng-field>
+  <label for="email" class="label">Email</label>
+  <input id="email" name="email" ng-model="profile.email" required class="input" />
+  <p class="field-description">Used for account notices.</p>
+  <p ng-if="profileForm.email.invalid" class="field-error">Enter a valid email.</p>
+</fieldset>
 ```
 
 The native input and AngularTS form controller own the value and validity. The

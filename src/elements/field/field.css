@@ -1,21 +1,12 @@
-fieldset[data-slot="field-set"],
-fieldset[ng-field-set] {
+fieldset.field-set {
   @apply flex flex-col gap-4;
 
-  &:has(
-    > :is(
-      [data-slot="checkbox-group"],
-      [ng-checkbox-group],
-      [data-slot="radio-group"],
-      [ng-radio-group]
-    )
-  ) {
+  &:has(> :is(.checkbox-group, .radio-group, .radio-group)) {
     @apply gap-3;
   }
 }
 
-legend[data-slot="field-legend"],
-legend[ng-field-legend] {
+legend.field-legend {
   @apply mb-1.5 font-medium;
 
   &[data-variant="label"] {
@@ -27,12 +18,11 @@ legend[ng-field-legend] {
   }
 }
 
-[data-slot="field-group"],
-[ng-field-group] {
+.field-group {
   @apply flex w-full flex-col gap-5;
 }
 
-[data-slot="field"],
+.field,
 [ng-field] {
   @apply flex w-full flex-col gap-2;
 
@@ -40,16 +30,15 @@ legend[ng-field-legend] {
   &[data-orientation="horizontal"] {
     @apply flex-row items-center;
 
-    &:has(> :is([data-slot="field-content"], [ng-field-content])) {
+    &:has(> .field-content) {
       @apply items-start;
     }
 
-    > :is([data-slot="field-label"], [ng-field-label]) {
+    > .field-label {
       @apply flex-auto;
     }
 
-    &:has(> :is([data-slot="field-content"], [ng-field-content]))
-      > :is([role="checkbox"], [role="radio"]) {
+    &:has(> .field-content) > :is(input[type="checkbox"], input[type="radio"]) {
       margin-top: 1px;
     }
   }
@@ -61,63 +50,44 @@ legend[ng-field-legend] {
 
   &[data-invalid="true"],
   &[aria-invalid="true"] {
-    [data-slot="field-label"],
-    [ng-field-label] {
+    .field-label {
       @apply text-error;
     }
   }
 
-  &[data-disabled="true"]
-    :is(
-      [data-slot="field-label"],
-      [ng-field-label],
-      [data-slot="field-title"],
-      [ng-field-title]
-    ) {
+  &[data-disabled="true"] :is(.field-label, .field-title) {
     @apply opacity-50;
   }
 }
 
-[data-slot="field-content"],
-[ng-field-content] {
+.field-content {
   @apply flex flex-1 flex-col gap-0.5 leading-snug;
 }
 
-[data-slot="field-label"],
-[ng-field-label] {
+.field-label {
   @apply flex w-fit items-center gap-2 text-sm leading-snug font-medium;
 
-  &:has(> :is([data-slot="field"], [ng-field])) {
+  &:has(> :is(.field, [ng-field])) {
     @apply w-full flex-col items-start rounded-lg border border-border;
 
-    > :is([data-slot="field"], [ng-field]) {
+    > :is(.field, [ng-field]) {
       @apply p-2.5;
     }
   }
 
   &:has(
-    > :is([data-slot="field"], [ng-field])
-      :is(
-        [data-slot="checkbox"],
-        [ng-checkbox],
-        [data-slot="radio-group-item"],
-        [ng-radio-group-item],
-        [data-slot="switch"],
-        [ng-switch-control]
-      ):checked
+    > :is(.field, [ng-field]) :is(.checkbox, .radio-group-item, .switch):checked
   ) {
     border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
     background: color-mix(in srgb, var(--primary) 5%, transparent);
   }
 }
 
-[data-slot="field-title"],
-[ng-field-title] {
+.field-title {
   @apply flex w-fit items-center gap-2 text-sm font-medium;
 }
 
-[data-slot="field-description"],
-[ng-field-description] {
+.field-description {
   @apply text-sm leading-normal font-normal text-muted-foreground;
 
   a {
@@ -125,17 +95,11 @@ legend[ng-field-legend] {
   }
 }
 
-[data-slot="field-error"],
-[ng-field-error] {
-  @apply text-sm font-normal text-error;
-
-  &[role="alert"] {
-    @apply mt-1;
-  }
+.field-error {
+  @apply mt-1 text-sm font-normal text-error;
 }
 
-[data-slot="field-separator"],
-[ng-field-separator] {
+.field-separator {
   @apply relative flex items-center justify-center text-xs text-muted-foreground;
 
   &::before {
@@ -145,7 +109,7 @@ legend[ng-field-legend] {
   }
 
   &[data-content="true"] > *,
-  > [data-slot="field-separator-content"] {
+  > .field-separator-content {
     @apply relative bg-background px-2;
   }
 }

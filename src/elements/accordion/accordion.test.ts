@@ -11,14 +11,9 @@ test("accordion element example exercises the built functional artifact", async 
     page.locator('script[src="../../js/angular-css.umd.js"]'),
   ).toHaveCount(1);
   const root = page.locator("[ng-accordion]");
-  const triggers = page.locator(
-    `:is([data-slot=accordion-trigger], [ng-accordion-trigger])`,
-  );
-  const panels = page.locator(
-    `:is([data-slot=accordion-content], [ng-accordion-content])`,
-  );
+  const triggers = page.locator(`.accordion-trigger`);
+  const panels = page.locator(`.accordion-content`);
 
-  await expect(root).not.toHaveAttribute("data-slot");
   await expect(triggers).toHaveCount(3);
   await triggers.nth(1).click();
   await expect(triggers.nth(0)).toHaveAttribute("aria-expanded", "false");

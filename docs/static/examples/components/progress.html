@@ -21,42 +21,27 @@
         <h2 id="progress-timed-title" class="example-sr-only">
           Loading progress
         </h2>
-        <div
-          ng-progress
+        <progress
           value="{{ demoValue }}"
           max="100"
-          role="progressbar"
-          aria-valuemin="0"
-          aria-valuemax="100"
-          aria-valuenow="{{ demoValue }}"
-          style="--value: {{ demoValue }}%"
           aria-labelledby="progress-timed-title"
-          class="progress-demo-timed"
-        >
-          <span data-slot="progress-track">
-            <span data-slot="progress-indicator"></span>
-          </span>
-        </div>
+          class="progress-demo-timed progress"
+        ></progress>
       </section>
 
       <section>
-        <div
-          ng-progress
-          value="56"
-          max="100"
-          role="progressbar"
-          aria-valuemin="0"
-          aria-valuemax="100"
-          aria-valuenow="56"
-          aria-label="Upload progress"
-          style="--value: 56%"
-          class="progress-demo-labeled"
-        >
-          <span data-slot="progress-label">Upload progress</span>
-          <span data-slot="progress-value">56%</span>
-          <span data-slot="progress-track">
-            <span data-slot="progress-indicator"></span>
-          </span>
+        <div class="progress-demo-labeled progress-group">
+          <label id="upload-progress-label" class="progress-label">
+            Upload progress
+          </label>
+          <output class="progress-value" for="upload-progress">56%</output>
+          <progress
+            id="upload-progress"
+            class="progress"
+            value="56"
+            max="100"
+            aria-labelledby="upload-progress-label"
+          ></progress>
         </div>
       </section>
     </main>

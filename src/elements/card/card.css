@@ -1,5 +1,4 @@
-[data-slot="card"],
-[ng-card] {
+.card {
   display: flex;
   flex-direction: column;
   gap: calc(var(--spacing) * 6);
@@ -10,19 +9,16 @@
   color: var(--card-foreground);
 }
 
-[data-slot="card"]:not([data-size="sm"]),
-[ng-card]:not([data-size="sm"]) {
+.card:not([data-size="sm"]) {
   padding-block: calc(var(--spacing) * 6);
 }
 
-[data-slot="card"][data-size="sm"],
-[ng-card][data-size="sm"] {
+.card[data-size="sm"] {
   gap: calc(var(--spacing) * 4);
   padding-block: calc(var(--spacing) * 4);
 }
 
-[data-slot="card-header"],
-[ng-card-header] {
+.card-header {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: calc(var(--spacing) * 1.5);
@@ -30,42 +26,34 @@
   padding-inline: calc(var(--spacing) * 6);
 }
 
-:is([data-slot="card-header"], [ng-card-header]):has(
-  [data-slot="card-action"],
-  [ng-card-action]
-) {
+.card-header:has(.card-action) {
   grid-template-columns: minmax(0, 1fr) auto;
 }
 
-[data-slot="card-title"],
-[ng-card-title] {
+.card-title {
   color: var(--card-foreground);
   font-size: 1rem;
   line-height: 1.25;
   font-weight: var(--font-weight-medium);
 }
 
-[data-slot="card-description"],
-[ng-card-description] {
+.card-description {
   color: var(--muted-foreground);
   font-size: var(--text-sm);
   line-height: var(--leading-normal);
 }
 
-[data-slot="card-action"],
-[ng-card-action] {
+.card-action {
   grid-column-start: 2;
   grid-row: 1 / span 2;
   place-self: start end;
 }
 
-[data-slot="card-content"],
-[ng-card-content] {
+.card-content {
   padding-inline: calc(var(--spacing) * 6);
 }
 
-[data-slot="card-footer"],
-[ng-card-footer] {
+.card-footer {
   display: flex;
   align-items: center;
   gap: calc(var(--spacing) * 2);

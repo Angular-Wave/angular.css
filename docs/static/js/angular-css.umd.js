@@ -1,4 +1,4 @@
-/* Version: 0.0.1 - September 1, 2026 04:05:55 */
+/* Version: 0.0.1 - September 1, 2026 18:49:18 */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
     typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -49,22 +49,21 @@
     };
     const resolveItems = (element) => {
         const explicit = Array.from(element.children).filter((child) => child instanceof HTMLElement &&
-            (child.matches("[data-slot='accordion-item']") ||
-                child.matches("[ng-accordion-item]")));
+            (child.matches(".accordion-item") || child.matches(".accordion-item")));
         if (explicit.length) {
             return explicit;
         }
         return Array.from(element.children).filter((child) => child instanceof HTMLElement);
     };
     const resolveHeader = (item) => {
-        return (item.querySelector("[data-slot='accordion-header']") ??
+        return (item.querySelector(".accordion-header") ??
             (item.firstElementChild instanceof HTMLElement
                 ? item.firstElementChild
                 : null));
     };
     const resolvePanel = (item, header) => {
-        return (item.querySelector("[data-slot='accordion-content']") ??
-            item.querySelector("[data-slot='accordion-panel']") ??
+        return (item.querySelector(".accordion-content") ??
+            item.querySelector(".accordion-panel") ??
             (header.nextElementSibling instanceof HTMLElement
                 ? header.nextElementSibling
                 : item.lastElementChild instanceof HTMLElement
@@ -72,8 +71,8 @@
                     : null));
     };
     const resolveTrigger = (header) => {
-        const slotTrigger = header.querySelector("[data-slot='accordion-trigger']") ??
-            header.querySelector("button[data-slot='accordion-trigger']");
+        const slotTrigger = header.querySelector(".accordion-trigger") ??
+            header.querySelector("button.accordion-trigger");
         const trigger = slotTrigger ?? header.querySelector("button");
         if (trigger instanceof HTMLButtonElement)
             return trigger;
@@ -140,7 +139,7 @@
                     if (!button.querySelector("svg")) {
                         button.insertAdjacentHTML("beforeend", `
               <svg xmlns="http://www.w3.org/2000/svg"
-                   data-slot="accordion-trigger-icon"
+
                    aria-hidden="true"
                    width="24" height="24"
                    fill="none"
@@ -148,7 +147,7 @@
                    stroke-width="2"
                    stroke-linecap="round"
                    stroke-linejoin="round"
-                   stroke="currentColor">
+                   stroke="currentColor" class="accordion-trigger-icon">
                 <path d="m19.5 8.25-7.5 7.5-7.5-7.5" />
               </svg>
             `);
@@ -161,9 +160,10 @@
                     button.id = id;
                     panel.id = panelId;
                     button.setAttribute("aria-controls", panelId);
-                    panel.setAttribute("role", "region");
+                    if (panel.tagName !== "SECTION" && !panel.hasAttribute("role")) {
+                        panel.setAttribute("role", "region");
+                    }
                     panel.setAttribute("aria-labelledby", id);
-                    item.setAttribute("data-slot", item.getAttribute("data-slot") ?? "accordion-item");
                     const initiallyOpen = isPanelOpen(item);
                     const isClosed = isElementClosed(item.getAttribute("data-state"));
                     const open = isClosed
@@ -256,9 +256,9 @@
 
     const itemSelector$6 = 'a[href], button, [role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]';
     function bindSemanticSubmenus(root, prefix, getDirection) {
-        const subSelector = `[data-slot="${prefix}-sub"], [ng-${prefix}-sub]`;
-        const triggerSelector = `[data-slot="${prefix}-sub-trigger"], [ng-${prefix}-sub-trigger]`;
-        const contentSelector = `[data-slot="${prefix}-sub-content"], [ng-${prefix}-sub-content]`;
+        const subSelector = `.${prefix}-sub, [ng-${prefix}-sub]`;
+        const triggerSelector = `.${prefix}-sub-trigger, [ng-${prefix}-sub-trigger]`;
+        const contentSelector = `.${prefix}-sub-content, [ng-${prefix}-sub-content]`;
         const cleanups = new Map();
         let submenuId = 0;
         const bindSubmenu = (submenu) => {
@@ -272,12 +272,21 @@
             content.id = contentId;
             trigger.setAttribute("aria-controls", contentId);
             trigger.setAttribute("aria-haspopup", "menu");
-            content.setAttribute("role", content.getAttribute("role") ?? "menu");
+            content.setAttribute("role", "menu");
             const getItems = () => queryAll(content, itemSelector$6).filter((item) => !isDisabled(item));
             const syncItems = () => {
                 getItems().forEach((item) => {
-                    if (!item.hasAttribute("role"))
-                        item.setAttribute("role", "menuitem");
+                    if (item.hasAttribute("role"))
+                        return;
+                    const role = item.matches(`.${prefix}-checkbox-item`)
+                        ? "menuitemcheckbox"
+                        : item.matches(`.${prefix}-radio-item`)
+                            ? "menuitemradio"
+                            : "menuitem";
+                    item.setAttribute("role", role);
+                    if (role !== "menuitem" && !item.hasAttribute("aria-checked")) {
+                        item.setAttribute("aria-checked", "false");
+                    }
                 });
             };
             let open = submenu.getAttribute("data-open") === "true" ||
@@ -406,7 +415,7 @@
         return {
             link(scope, element) {
                 const button = element.querySelector("button");
-                const panel = element.querySelector('[role="menu"], [data-slot="dropdown-menu-content"], [ng-dropdown-content]');
+                const panel = element.querySelector('menu, [role="menu"], .dropdown-menu-content');
                 if (!button || !panel)
                     return;
                 const setAttribute = (target, name, value) => {
@@ -437,7 +446,7 @@
                 button.setAttribute("aria-haspopup", "true");
                 button.setAttribute("aria-expanded", "false");
                 button.setAttribute("aria-controls", panelId);
-                panel.setAttribute("role", panel.getAttribute("role") ?? "menu");
+                panel.setAttribute("role", "menu");
                 panel.setAttribute("tabindex", panel.getAttribute("tabindex") ?? "-1");
                 panel.setAttribute("aria-labelledby", button.id);
                 const isIconTrigger = button.getAttribute("size")?.startsWith("icon") ??
@@ -460,7 +469,15 @@
                 const refreshMenuItemRoles = () => {
                     queryMenuItems(panel).forEach((item) => {
                         if (!item.hasAttribute("role")) {
-                            item.setAttribute("role", "menuitem");
+                            const role = item.matches(".dropdown-menu-checkbox-item")
+                                ? "menuitemcheckbox"
+                                : item.matches(".dropdown-menu-radio-item")
+                                    ? "menuitemradio"
+                                    : "menuitem";
+                            item.setAttribute("role", role);
+                            if (role !== "menuitem" && !item.hasAttribute("aria-checked")) {
+                                item.setAttribute("aria-checked", "false");
+                            }
                         }
                     });
                 };
@@ -904,7 +921,10 @@
             if (content) {
                 if (!content.id)
                     content.id = `${element.id}-content`;
-                setAttributeIfChanged$g(content, "role", parts.contentRole ?? "dialog");
+                const contentRole = parts.contentRole ?? "dialog";
+                if (content.tagName !== "DIALOG" || contentRole !== "dialog") {
+                    setAttributeIfChanged$g(content, "role", contentRole);
+                }
                 setAttributeIfChanged$g(content, "aria-modal", "true");
                 if (!content.hasAttribute("tabindex"))
                     content.tabIndex = -1;
@@ -1065,15 +1085,15 @@
         return {
             link(scope, element) {
                 bindOverlay(scope, element, {
-                    rootSelector: '[data-slot="alert-dialog"], [ng-alert-dialog]',
-                    closeSelector: '[data-slot="alert-dialog-cancel"], [ng-alert-dialog-cancel], [data-slot="alert-dialog-action"], [ng-alert-dialog-action], [data-alert-dialog-close]',
-                    contentSelector: '[data-slot="alert-dialog-content"], [ng-alert-dialog-content]',
+                    rootSelector: ".alert-dialog, [ng-alert-dialog]",
+                    closeSelector: ".alert-dialog-cancel, .alert-dialog-action, [data-alert-dialog-close]",
+                    contentSelector: ".alert-dialog-content",
                     contentRole: "alertdialog",
-                    descriptionSelector: '[data-slot="alert-dialog-description"], [ng-alert-dialog-description]',
+                    descriptionSelector: ".alert-dialog-description",
                     closeOnOverlayClick: false,
-                    overlaySelector: '[data-slot="alert-dialog-overlay"], [ng-alert-dialog-overlay]',
-                    titleSelector: '[data-slot="alert-dialog-title"], [ng-alert-dialog-title]',
-                    triggerSelector: '[data-slot="alert-dialog-trigger"], [ng-alert-dialog-trigger]',
+                    overlaySelector: ".alert-dialog-overlay",
+                    titleSelector: ".alert-dialog-title",
+                    triggerSelector: ".alert-dialog-trigger",
                     closeOnOutsideClick: false,
                 });
             },
@@ -1087,8 +1107,8 @@
                     element.getAttribute("data-size") ??
                     "default";
                 element.setAttribute("data-size", size);
-                const image = query(element, '[data-slot="avatar-image"], [ng-avatar-image]', HTMLImageElement);
-                const fallback = query(element, '[data-slot="avatar-fallback"], [ng-avatar-fallback]', HTMLElement);
+                const image = query(element, ".avatar-image", HTMLImageElement);
+                const fallback = query(element, ".avatar-fallback", HTMLElement);
                 const setState = (state) => {
                     element.setAttribute("data-state", state);
                     if (image)
@@ -1846,14 +1866,14 @@
                         element.setAttribute("data-direction", direction);
                     }
                 };
-                let days = queryAll(element, '[data-slot="calendar-day"], [ng-calendar-day]');
+                let days = queryAll(element, ".calendar-day");
                 const columns = Number(element.getAttribute("data-columns") ?? 7);
                 const cleanupDays = new WeakMap();
                 const cleanupControls = new WeakMap();
                 const generatedLabels = new WeakMap();
                 const generatedCurrent = new WeakSet();
                 let renderedMonth = "";
-                element.setAttribute("role", element.getAttribute("role") ?? "grid");
+                element.setAttribute("role", "grid");
                 syncDirection();
                 const getLocale = () => (element.closest("[lang]")?.getAttribute("lang") ??
                     document.documentElement.lang) ||
@@ -1877,7 +1897,7 @@
                 const renderGeneratedMonth = () => {
                     if (!element.hasAttribute("data-calendar-generated"))
                         return;
-                    const grid = element.querySelector('[data-slot="calendar-grid"], [ng-calendar-grid]');
+                    const grid = element.querySelector(".calendar-grid");
                     if (!grid)
                         return;
                     const selectedDate = parseDateValue(element.getAttribute("data-value"));
@@ -1902,14 +1922,14 @@
                         return;
                     renderedMonth = renderKey;
                     setAttributeIfChanged$f(element, "data-month", monthValue);
-                    const title = element.querySelector('[data-slot="calendar-title"], [ng-calendar-title]');
+                    const title = element.querySelector(".calendar-title");
                     if (title) {
                         const captionLayout = element.getAttribute("data-caption-layout") ?? "label";
                         if (captionLayout === "dropdown") {
                             const monthSelect = document.createElement("select");
                             const yearSelect = document.createElement("select");
-                            monthSelect.setAttribute("data-slot", "calendar-month-select");
-                            yearSelect.setAttribute("data-slot", "calendar-year-select");
+                            monthSelect.className = "calendar-month-select";
+                            yearSelect.className = "calendar-year-select";
                             monthSelect.setAttribute("aria-label", "Month");
                             yearSelect.setAttribute("aria-label", "Year");
                             const monthFormatter = createFormatter({ month: "short" });
@@ -1982,12 +2002,12 @@
                     const showOutsideDays = element.getAttribute("data-show-outside-days") !== "false";
                     const buildMonthGrid = (visibleMonth) => {
                         const monthGrid = document.createElement("div");
-                        monthGrid.setAttribute("data-slot", "calendar-month-grid");
+                        monthGrid.className = "calendar-month-grid";
                         monthGrid.setAttribute("data-show-week-numbers", String(showWeekNumbers));
                         const firstVisibleDate = startOfWeek(visibleMonth, { weekStartsOn });
                         if (showWeekNumbers) {
                             const header = document.createElement("span");
-                            header.setAttribute("data-slot", "calendar-week-number-header");
+                            header.className = "calendar-week-number-header";
                             header.setAttribute("aria-label", "Week number");
                             header.textContent = "Wk";
                             monthGrid.append(header);
@@ -1996,7 +2016,7 @@
                             const date = addDays(firstVisibleDate, index);
                             const weekday = document.createElement("span");
                             const weekdayLabel = weekdayFormatter.format(date);
-                            weekday.setAttribute("data-slot", "calendar-weekday");
+                            weekday.className = "calendar-weekday";
                             weekday.setAttribute("aria-label", weekdayLabel);
                             weekday.textContent = useNarrowWeekdays
                                 ? narrowWeekdayFormatter.format(date)
@@ -2008,14 +2028,14 @@
                             const value = formatDateValue(date);
                             if (showWeekNumbers && index % 7 === 0) {
                                 const weekNumber = document.createElement("span");
-                                weekNumber.setAttribute("data-slot", "calendar-week-number");
+                                weekNumber.className = "calendar-week-number";
                                 weekNumber.textContent = numberFormatter.format(getWeek(date, { weekStartsOn }));
                                 monthGrid.append(weekNumber);
                             }
                             const outside = !isSameMonth(date, visibleMonth);
                             const day = document.createElement("button");
                             day.type = "button";
-                            day.setAttribute("data-slot", "calendar-day");
+                            day.className = "calendar-day";
                             day.setAttribute("data-value", value);
                             day.setAttribute("data-label", dateFormatter.format(date));
                             day.setAttribute("data-outside", String(outside));
@@ -2063,9 +2083,9 @@
                             continue;
                         }
                         const monthSection = document.createElement("section");
-                        monthSection.setAttribute("data-slot", "calendar-month");
+                        monthSection.className = "calendar-month";
                         const monthTitle = document.createElement("h3");
-                        monthTitle.setAttribute("data-slot", "calendar-month-title");
+                        monthTitle.className = "calendar-month-title";
                         monthTitle.textContent = createFormatter({
                             month: "long",
                             year: "numeric",
@@ -2187,7 +2207,7 @@
                     }
                 };
                 const bindDay = (day) => {
-                    setAttributeIfChanged$f(day, "role", day.getAttribute("role") ?? "gridcell");
+                    setAttributeIfChanged$f(day, "role", "gridcell");
                     setAttributeIfChanged$f(day, "tabindex", day.getAttribute("tabindex") ?? "-1");
                     const disabled = isDisabled(day);
                     setAttributeIfChanged$f(day, "data-disabled", String(disabled));
@@ -2352,22 +2372,22 @@
                 };
                 function syncCalendar() {
                     renderGeneratedMonth();
-                    const title = element.querySelector('[data-slot="calendar-title"], [ng-calendar-title]');
+                    const title = element.querySelector(".calendar-title");
                     if (title && !element.hasAttribute("aria-label")) {
                         if (!title.id)
                             title.id = `calendar-title-${String(calendarIdCounter++)}`;
                         setAttributeIfChanged$f(element, "aria-labelledby", title.id);
                     }
-                    queryAll(element, '[data-slot="calendar-row"], [ng-calendar-row]').forEach((row) => {
-                        row.setAttribute("role", row.getAttribute("role") ?? "row");
+                    queryAll(element, ".calendar-row").forEach((row) => {
+                        row.setAttribute("role", "row");
                     });
-                    queryAll(element, '[data-slot="calendar-weekday"], [ng-calendar-weekday]').forEach((weekday) => {
-                        weekday.setAttribute("role", weekday.getAttribute("role") ?? "columnheader");
+                    queryAll(element, ".calendar-weekday").forEach((weekday) => {
+                        weekday.setAttribute("role", "columnheader");
                     });
-                    queryAll(element, '[data-slot="calendar-week-number"], [ng-calendar-week-number]').forEach((weekNumber) => {
-                        setAttributeIfChanged$f(weekNumber, "role", weekNumber.getAttribute("role") ?? "rowheader");
+                    queryAll(element, ".calendar-week-number").forEach((weekNumber) => {
+                        setAttributeIfChanged$f(weekNumber, "role", "rowheader");
                     });
-                    days = queryAll(element, '[data-slot="calendar-day"], [ng-calendar-day]');
+                    days = queryAll(element, ".calendar-day");
                     days.forEach(bindDay);
                     const selectionMode = element.getAttribute("data-selection-mode") ?? "single";
                     const hasRootSelection = selectionMode === "multiple"
@@ -2379,10 +2399,10 @@
                     if (hasRootSelection) {
                         syncSelectionState(selectionMode, [...parseDateList(element.getAttribute("data-values"))], element.getAttribute("data-range-start-value") ?? "", element.getAttribute("data-range-end-value") ?? "");
                     }
-                    queryAll(element, '[data-slot="calendar-previous"], [ng-calendar-previous]').forEach((control) => {
+                    queryAll(element, ".calendar-previous").forEach((control) => {
                         bindMonthControl(control, -1);
                     });
-                    queryAll(element, '[data-slot="calendar-next"], [ng-calendar-next]').forEach((control) => {
+                    queryAll(element, ".calendar-next").forEach((control) => {
                         bindMonthControl(control, 1);
                     });
                     queryAll(element, "[data-calendar-preset]").forEach(bindPresetControl);
@@ -2457,7 +2477,7 @@
                     days.forEach((day) => {
                         cleanupDays.get(day)?.();
                     });
-                    queryAll(element, '[data-slot="calendar-previous"], [ng-calendar-previous], [data-slot="calendar-next"], [ng-calendar-next]').forEach((control) => cleanupControls.get(control)?.());
+                    queryAll(element, ".calendar-previous, .calendar-next").forEach((control) => cleanupControls.get(control)?.());
                     queryAll(element, "[data-calendar-preset]").forEach((control) => cleanupControls.get(control)?.());
                 });
             },
@@ -4326,11 +4346,11 @@
     }
     Autoplay.globalOptions = undefined;
 
-    const ROOT_SELECTOR = '[data-slot="carousel"], [ng-carousel]';
-    const ITEM_SELECTOR = '[data-slot="carousel-item"], [ng-carousel-item]';
-    const DOT_SELECTOR = '[data-slot="carousel-dot"], [ng-carousel-dot]';
-    const PREVIOUS_SELECTOR = '[data-slot="carousel-previous"], [ng-carousel-previous]';
-    const NEXT_SELECTOR = '[data-slot="carousel-next"], [ng-carousel-next]';
+    const ROOT_SELECTOR = ".carousel, [ng-carousel]";
+    const ITEM_SELECTOR = ".carousel-item";
+    const DOT_SELECTOR = ".carousel-dot";
+    const PREVIOUS_SELECTOR = ".carousel-previous";
+    const NEXT_SELECTOR = ".carousel-next";
     const setAttributeIfChanged$e = (element, name, value) => {
         if (element.getAttribute(name) !== value) {
             element.setAttribute(name, value);
@@ -4347,8 +4367,8 @@
     function carouselDirective() {
         return {
             link(scope, element) {
-                const viewport = query(element, '[data-slot="carousel-content"], [ng-carousel-content]', HTMLElement);
-                const track = query(element, '[data-slot="carousel-track"], [ng-carousel-track]', HTMLElement);
+                const viewport = query(element, ".carousel-content", HTMLElement);
+                const track = query(element, ".carousel-track", HTMLElement);
                 if (!viewport || track?.parentElement !== viewport)
                     return;
                 const belongsToThisCarousel = (candidate) => candidate.closest(ROOT_SELECTOR) === element;
@@ -4404,14 +4424,16 @@
                 const syncStaticSemantics = () => {
                     const items = getItems();
                     const dots = getDots();
-                    setAttributeIfChanged$e(element, "role", element.getAttribute("role") ?? "region");
+                    if (element.tagName !== "SECTION" && !element.hasAttribute("role")) {
+                        setAttributeIfChanged$e(element, "role", "region");
+                    }
                     setAttributeIfChanged$e(element, "aria-roledescription", "carousel");
                     setAttributeIfChanged$e(element, "tabindex", element.getAttribute("tabindex") ?? "0");
                     setAttributeIfChanged$e(element, "data-orientation", getOrientation());
                     setAttributeIfChanged$e(element, "data-direction", getDirection());
                     setAttributeIfChanged$e(element, "data-item-count", String(items.length));
                     items.forEach((item, index) => {
-                        setAttributeIfChanged$e(item, "role", item.getAttribute("role") ?? "group");
+                        setAttributeIfChanged$e(item, "role", "group");
                         setAttributeIfChanged$e(item, "aria-roledescription", "slide");
                         setAttributeIfChanged$e(item, "aria-label", item.getAttribute("aria-label") ??
                             `${String(index + 1)} of ${String(items.length)}`);
@@ -4578,8 +4600,8 @@
     function collapsibleDirective() {
         return {
             link(scope, element) {
-                const trigger = query(element, '[data-slot="collapsible-trigger"], [ng-collapsible-trigger], button', HTMLElement);
-                const content = query(element, '[data-slot="collapsible-content"], [ng-collapsible-content]', HTMLElement);
+                const trigger = query(element, ".collapsible-trigger, button", HTMLElement);
+                const content = query(element, ".collapsible-content", HTMLElement);
                 if (!trigger || !content)
                     return;
                 const contentId = content.id || `collapsible-content-${String(collapsibleIdCounter++)}`;
@@ -4641,18 +4663,18 @@
     }
 
     let comboboxIdCounter = 0;
-    const anchorSelector = '[data-slot="combobox-control"], [ng-combobox-control], [data-slot="combobox-chips"], [ng-combobox-chips]';
-    const chipSelector = '[data-slot="combobox-chip"], [ng-combobox-chip]';
-    const clearSelector = '[data-slot="combobox-clear"], [ng-combobox-clear]';
-    const contentSelector$5 = '[data-slot="combobox-content"], [ng-combobox-content]';
-    const emptySelector$1 = '[data-slot="combobox-empty"], [ng-combobox-empty]';
-    const groupLabelSelector = '[data-slot="combobox-label"], [ng-combobox-label], [data-slot="combobox-group-label"], [ng-combobox-group-label]';
-    const groupSelector$3 = '[data-slot="combobox-group"], [ng-combobox-group]';
-    const inputSelector$1 = 'input[ng-combobox-input], input[data-slot="combobox-input"], input[ng-combobox-chip-input], input[data-slot="combobox-chip-input"], input[role="combobox"], input[data-input], input[data-slot="input"], input[ng-input-group-input]';
-    const itemSelector$5 = '[data-slot="combobox-item"], [ng-combobox-item]';
-    const rootSelector$3 = '[data-slot="combobox"], [ng-combobox]';
-    const separatorSelector$3 = '[data-slot="combobox-separator"], [ng-combobox-separator]';
-    const triggerSelector$5 = '[data-slot="combobox-trigger"], [ng-combobox-trigger]';
+    const anchorSelector = ".combobox-control, .combobox-chips";
+    const chipSelector = ".combobox-chip";
+    const clearSelector = ".combobox-clear";
+    const contentSelector$5 = ".combobox-content";
+    const emptySelector$1 = ".combobox-empty";
+    const groupLabelSelector = ".combobox-label, .combobox-group-label";
+    const groupSelector$3 = ".combobox-group";
+    const inputSelector$1 = 'input.combobox-input, input.combobox-chip-input, input[role="combobox"], input.input, input.input, input.input-group-input';
+    const itemSelector$5 = ".combobox-item";
+    const rootSelector$3 = ".combobox, [ng-combobox]";
+    const separatorSelector$3 = ".combobox-separator";
+    const triggerSelector$5 = ".combobox-trigger";
     const setAttributeIfChanged$d = (element, name, value) => {
         if (element.getAttribute(name) !== value)
             element.setAttribute(name, value);
@@ -4718,7 +4740,7 @@
                     setAttributeIfChanged$d(element, "data-invalid", String(invalid));
                     setAttributeIfChanged$d(element, "data-multiple", String(multiple));
                     setAttributeIfChanged$d(content, "aria-multiselectable", String(multiple));
-                    setAttributeIfChanged$d(content, "data-chips", String(Boolean(owned('[data-slot="combobox-chips"], [ng-combobox-chips]', HTMLElement))));
+                    setAttributeIfChanged$d(content, "data-chips", String(Boolean(owned(".combobox-chips", HTMLElement))));
                     if (ownsAriaInvalid) {
                         setAttributeIfChanged$d(input, "aria-invalid", String(invalid));
                     }
@@ -4827,6 +4849,10 @@
                     if (!item.id)
                         item.id = `combobox-item-${String(comboboxIdCounter++)}`;
                     setAttributeIfChanged$d(item, "role", "option");
+                    const semanticLabel = item.querySelector(".item-title, .combobox-item-label");
+                    if (semanticLabel?.textContent.trim()) {
+                        setAttributeIfChanged$d(item, "aria-label", semanticLabel.textContent.trim());
+                    }
                     setAttributeIfChanged$d(item, "tabindex", "-1");
                     setAttributeIfChanged$d(item, "data-disabled", String(isDisabled(item)));
                     if (!item.hasAttribute("aria-selected")) {
@@ -5040,6 +5066,7 @@
                         "required",
                     ],
                     childList: true,
+                    characterData: true,
                     subtree: true,
                 });
                 const directionObserver = directionOwner === element
@@ -5087,15 +5114,15 @@
     }
 
     let commandIdCounter = 0;
-    const emptySelector = '[data-slot="command-empty"], [ng-command-empty]';
-    const groupHeadingSelector = '[data-slot="command-group-heading"], [ng-command-group-heading]';
-    const groupSelector$2 = '[data-slot="command-group"], [ng-command-group]';
-    const inputSelector = '[data-slot="command-input"], [ng-command-input]';
-    const itemSelector$4 = '[data-slot="command-item"], [ng-command-item]';
-    const listSelector$2 = '[data-slot="command-list"], [ng-command-list]';
-    const rootSelector$2 = '[data-slot="command"], [ng-command]';
-    const separatorSelector$2 = '[data-slot="command-separator"], [ng-command-separator]';
-    const shortcutSelector = '[data-slot="command-shortcut"], [ng-command-shortcut]';
+    const emptySelector = ".command-empty";
+    const groupHeadingSelector = ".command-group-heading";
+    const groupSelector$2 = ".command-group";
+    const inputSelector = ".command-input";
+    const itemSelector$4 = ".command-item";
+    const listSelector$2 = ".command-list";
+    const rootSelector$2 = ".command, [ng-command]";
+    const separatorSelector$2 = ".command-separator";
+    const shortcutSelector = ".command-shortcut";
     const setAttributeIfChanged$c = (element, name, value) => {
         if (element.getAttribute(name) !== value)
             element.setAttribute(name, value);
@@ -5301,30 +5328,30 @@
     }
 
     let contextMenuIdCounter = 0;
-    const rootSelector$1 = '[data-slot="context-menu"], [ng-context-menu]';
-    const triggerSelector$4 = '[data-slot="context-menu-trigger"], [ng-context-menu-trigger]';
-    const contentSelector$4 = '[data-slot="context-menu-content"], [ng-context-menu-content]';
-    const subContentSelector = '[data-slot="context-menu-sub-content"], [ng-context-menu-sub-content]';
+    const rootSelector$1 = ".context-menu, [ng-context-menu]";
+    const triggerSelector$4 = ".context-menu-trigger";
+    const contentSelector$4 = ".context-menu-content";
+    const subContentSelector = ".context-menu-sub-content";
     const menuSurfaceSelector = `${contentSelector$4}, ${subContentSelector}`;
     const itemSelector$3 = [
-        '[data-slot="context-menu-item"]',
-        "[ng-context-menu-item]",
-        '[data-slot="context-menu-checkbox-item"]',
-        "[ng-context-menu-checkbox-item]",
-        '[data-slot="context-menu-radio-item"]',
-        "[ng-context-menu-radio-item]",
-        '[data-slot="context-menu-sub-trigger"]',
-        "[ng-context-menu-sub-trigger]",
+        ".context-menu-item",
+        ".context-menu-item",
+        ".context-menu-checkbox-item",
+        ".context-menu-checkbox-item",
+        ".context-menu-radio-item",
+        ".context-menu-radio-item",
+        ".context-menu-sub-trigger",
+        ".context-menu-sub-trigger",
         '[role="menuitem"]',
         '[role="menuitemcheckbox"]',
         '[role="menuitemradio"]',
     ].join(", ");
-    const checkboxSelector = '[data-slot="context-menu-checkbox-item"], [ng-context-menu-checkbox-item]';
-    const radioSelector = '[data-slot="context-menu-radio-item"], [ng-context-menu-radio-item]';
-    const subTriggerSelector = '[data-slot="context-menu-sub-trigger"], [ng-context-menu-sub-trigger]';
-    const groupSelector$1 = '[data-slot="context-menu-group"], [ng-context-menu-group], [data-slot="context-menu-radio-group"], [ng-context-menu-radio-group]';
-    const labelSelector$1 = '[data-slot="context-menu-label"], [ng-context-menu-label]';
-    const separatorSelector$1 = '[data-slot="context-menu-separator"], [ng-context-menu-separator]';
+    const checkboxSelector = ".context-menu-checkbox-item";
+    const radioSelector = ".context-menu-radio-item";
+    const subTriggerSelector = ".context-menu-sub-trigger";
+    const groupSelector$1 = ".context-menu-group, .context-menu-radio-group";
+    const labelSelector$1 = ".context-menu-label";
+    const separatorSelector$1 = ".context-menu-separator";
     const sides$3 = new Set([
         "bottom",
         "inline-end",
@@ -5382,7 +5409,7 @@
                 trigger.setAttribute("aria-controls", contentId);
                 if (!trigger.hasAttribute("tabindex"))
                     trigger.tabIndex = 0;
-                setAttributeIfChanged$b(content, "role", content.getAttribute("role") ?? "menu");
+                setAttributeIfChanged$b(content, "role", "menu");
                 setAttributeIfChanged$b(content, "tabindex", content.getAttribute("tabindex") ?? "-1");
                 const menuItems = (surface) => queryAll(surface, itemSelector$3).filter((item) => {
                     if (!isOwned(item))
@@ -5717,13 +5744,13 @@
         return {
             link(scope, element) {
                 bindOverlay(scope, element, {
-                    rootSelector: '[data-slot="dialog"], [ng-dialog]',
-                    closeSelector: '[data-slot="dialog-close"], [ng-dialog-close], [data-dialog-close]',
-                    contentSelector: '[data-slot="dialog-content"], [ng-dialog-content]',
-                    descriptionSelector: '[data-slot="dialog-description"], [ng-dialog-description]',
-                    overlaySelector: '[data-slot="dialog-overlay"], [ng-dialog-overlay]',
-                    titleSelector: '[data-slot="dialog-title"], [ng-dialog-title]',
-                    triggerSelector: '[data-slot="dialog-trigger"], [ng-dialog-trigger]',
+                    rootSelector: ".dialog, [ng-dialog]",
+                    closeSelector: ".dialog-close, [data-dialog-close]",
+                    contentSelector: ".dialog-content",
+                    descriptionSelector: ".dialog-description",
+                    overlaySelector: ".dialog-overlay",
+                    titleSelector: ".dialog-title",
+                    triggerSelector: ".dialog-trigger",
                     closeOnOutsideClick: true,
                 });
             },
@@ -5739,7 +5766,7 @@
     function drawerDirective() {
         return {
             link(scope, element) {
-                const getContent = () => queryAll(element, '[data-slot="drawer-content"], [ng-drawer-content]').find((candidate) => candidate.closest('[data-slot="drawer"], [ng-drawer]') === element) ?? null;
+                const getContent = () => queryAll(element, ".drawer-content").find((candidate) => candidate.closest(".drawer, [ng-drawer]") === element) ?? null;
                 const syncSide = () => {
                     const content = getContent();
                     const authoredSide = element.getAttribute("side") ??
@@ -5754,13 +5781,13 @@
                         setAttributeIfChanged$a(content, "data-side", side);
                 };
                 bindOverlay(scope, element, {
-                    rootSelector: '[data-slot="drawer"], [ng-drawer]',
-                    closeSelector: '[data-slot="drawer-close"], [ng-drawer-close], [data-drawer-close]',
-                    contentSelector: '[data-slot="drawer-content"], [ng-drawer-content]',
-                    descriptionSelector: '[data-slot="drawer-description"], [ng-drawer-description]',
-                    overlaySelector: '[data-slot="drawer-overlay"], [ng-drawer-overlay]',
-                    titleSelector: '[data-slot="drawer-title"], [ng-drawer-title]',
-                    triggerSelector: '[data-slot="drawer-trigger"], [ng-drawer-trigger]',
+                    rootSelector: ".drawer, [ng-drawer]",
+                    closeSelector: ".drawer-close, [data-drawer-close]",
+                    contentSelector: ".drawer-content",
+                    descriptionSelector: ".drawer-description",
+                    overlaySelector: ".drawer-overlay",
+                    titleSelector: ".drawer-title",
+                    triggerSelector: ".drawer-trigger",
                     closeOnOutsideClick: true,
                 });
                 const sideObserver = new MutationObserver(syncSide);
@@ -5780,13 +5807,13 @@
 
     let fieldIdCounter = 0;
     const findControl = (element) => {
-        return query(element, "input, textarea, select, button, [role='combobox'], [role='switch']", HTMLElement);
+        return query(element, "input, textarea, select, button, .combobox-input", HTMLElement);
     };
     const findDescription = (element) => {
-        return query(element, '[data-slot="field-description"], [ng-field-description]', HTMLElement);
+        return query(element, ".field-description", HTMLElement);
     };
     const findError = (element) => {
-        return query(element, '[data-slot="field-error"], [ng-field-error]', HTMLElement);
+        return query(element, ".field-error", HTMLElement);
     };
     const isElementVisible = (node) => {
         return node instanceof HTMLElement && !node.hidden;
@@ -5794,7 +5821,7 @@
     function fieldDirective() {
         return {
             link(_scope, element) {
-                if (!element.hasAttribute("role")) {
+                if (element.tagName !== "FIELDSET" && !element.hasAttribute("role")) {
                     element.setAttribute("role", "group");
                 }
                 const resolveControl = () => findControl(element);
@@ -5876,8 +5903,8 @@
     function hoverCardDirective() {
         return {
             link(scope, element) {
-                const trigger = query(element, '[data-slot="hover-card-trigger"], [ng-hover-card-trigger]', HTMLElement);
-                const content = query(element, '[data-slot="hover-card-content"], [ng-hover-card-content]', HTMLElement);
+                const trigger = query(element, ".hover-card-trigger", HTMLElement);
+                const content = query(element, ".hover-card-content", HTMLElement);
                 if (!trigger || !content)
                     return;
                 const directionOwner = element.closest("[dir]") ?? element;
@@ -5900,7 +5927,6 @@
                 content.id = contentId;
                 trigger.setAttribute("aria-controls", contentId);
                 trigger.setAttribute("aria-expanded", "false");
-                content.setAttribute("role", content.getAttribute("role") ?? "dialog");
                 let openState = element.getAttribute("data-open") === "true" ||
                     content.getAttribute("data-open") === "true";
                 const setOpen = (open) => {
@@ -6042,15 +6068,15 @@
     }
 
     let inputGroupIdCounter = 0;
-    const addonSelector = '[data-slot="input-group-addon"], [ng-input-group-addon]';
-    const buttonSelector = '[data-slot="input-group-button"], [ng-input-group-button]';
-    const controlSelector = 'input, textarea, select, [role="combobox"], [role="spinbutton"]';
+    const addonSelector = ".input-group-addon";
+    const buttonSelector = ".input-group-button";
+    const controlSelector = "input, textarea, select, .combobox-input";
     function inputGroupDirective() {
         return {
             link(scope, element) {
                 let describedControl = null;
                 let managedDescriptionIds = new Set();
-                if (!element.hasAttribute("role")) {
+                if (element.tagName !== "FIELDSET" && !element.hasAttribute("role")) {
                     element.setAttribute("role", "group");
                 }
                 const removeManagedDescriptions = (control) => {
@@ -6188,12 +6214,12 @@
                         focusInput(Math.min(startIndex + pasted.length, inputs.length - 1));
                     };
                     const handleFocus = () => {
-                        queryAll(element, '[data-slot="input-otp-slot"], [ng-input-otp-slot]').forEach((slot) => {
+                        queryAll(element, ".input-otp-slot").forEach((slot) => {
                             setAttributeIfChanged$9(slot, "data-active", String(slot.contains(input)));
                         });
                     };
                     const handleBlur = () => {
-                        const slot = input.closest('[data-slot="input-otp-slot"], [ng-input-otp-slot]');
+                        const slot = input.closest(".input-otp-slot");
                         if (slot)
                             setAttributeIfChanged$9(slot, "data-active", "false");
                     };
@@ -6244,10 +6270,10 @@
     }
 
     let menubarIdCounter = 0;
-    const menuSelector = '[data-slot="menubar-menu"], [ng-menubar-menu]';
-    const triggerSelector$3 = '[data-slot="menubar-trigger"], [ng-menubar-trigger]';
-    const contentSelector$3 = '[data-slot="menubar-content"], [ng-menubar-content]';
-    const itemSelector$2 = '[data-slot="menubar-item"], [ng-menubar-item], [role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"], a, button';
+    const menuSelector = ".menubar-menu";
+    const triggerSelector$3 = ".menubar-trigger";
+    const contentSelector$3 = ".menubar-content";
+    const itemSelector$2 = '.menubar-item, [role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"], a, button';
     const setAttribute$2 = (element, name, value) => {
         if (element.getAttribute(name) !== value) {
             element.setAttribute(name, value);
@@ -6285,7 +6311,15 @@
                 const syncContentItems = () => {
                     queryAll(element, contentSelector$3).forEach((content) => {
                         getAllContentItems(content).forEach((item) => {
-                            setAttribute$2(item, "role", item.getAttribute("role") ?? "menuitem");
+                            const role = item.matches(".menubar-checkbox-item")
+                                ? "menuitemcheckbox"
+                                : item.matches(".menubar-radio-item")
+                                    ? "menuitemradio"
+                                    : "menuitem";
+                            setAttribute$2(item, "role", role);
+                            if (role !== "menuitem" && !item.hasAttribute("aria-checked")) {
+                                setAttribute$2(item, "aria-checked", "false");
+                            }
                         });
                     });
                 };
@@ -6383,17 +6417,22 @@
                     const contentId = content.id || `${triggerId}-content`;
                     trigger.id = triggerId;
                     content.id = contentId;
-                    setAttribute$2(trigger, "role", trigger.getAttribute("role") ?? "menuitem");
+                    setAttribute$2(trigger, "role", "menuitem");
                     setAttribute$2(trigger, "aria-haspopup", "menu");
                     setAttribute$2(trigger, "aria-controls", contentId);
-                    setAttribute$2(content, "role", content.getAttribute("role") ?? "menu");
+                    setAttribute$2(content, "role", "menu");
                     setAttribute$2(content, "aria-labelledby", triggerId);
                     setAttribute$2(content, "aria-hidden", "true");
                     if (!content.hasAttribute("tabindex")) {
                         setAttribute$2(content, "tabindex", "-1");
                     }
                     getContentItems(content).forEach((item) => {
-                        setAttribute$2(item, "role", item.getAttribute("role") ?? "menuitem");
+                        const role = item.matches(".menubar-checkbox-item")
+                            ? "menuitemcheckbox"
+                            : item.matches(".menubar-radio-item")
+                                ? "menuitemradio"
+                                : "menuitem";
+                        setAttribute$2(item, "role", role);
                     });
                     const entry = {
                         menu,
@@ -6507,14 +6546,14 @@
                         ? triggers.find((trigger) => trigger === activeElement)
                         : null;
                     const activeContent = activeElement
-                        ? activeElement.closest('[data-slot="menubar-content"], [ng-menubar-content]')
+                        ? activeElement.closest(".menubar-content")
                         : null;
                     if (!activeTrigger && !activeContent)
                         return;
                     if (event.key === "Escape") {
                         event.preventDefault();
                         if (activeContent) {
-                            const currentMenu = activeContent.closest('[data-slot="menubar-menu"], [ng-menubar-menu]');
+                            const currentMenu = activeContent.closest(".menubar-menu");
                             const currentIndex = currentMenu
                                 ? entries.findIndex((entry) => entry.menu === currentMenu)
                                 : -1;
@@ -6551,7 +6590,7 @@
                         }
                         if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
                             event.preventDefault();
-                            const currentMenu = activeContent.closest('[data-slot="menubar-menu"], [ng-menubar-menu]');
+                            const currentMenu = activeContent.closest(".menubar-menu");
                             const currentIndex = currentMenu
                                 ? entries.findIndex((entry) => entry.menu === currentMenu)
                                 : -1;
@@ -6572,7 +6611,7 @@
                         }
                     }
                 };
-                setAttribute$2(element, "role", element.getAttribute("role") ?? "menubar");
+                setAttribute$2(element, "role", "menubar");
                 const handleDocumentClick = (event) => {
                     if (event.target instanceof Node && !element.contains(event.target)) {
                         closeAll();
@@ -6583,7 +6622,7 @@
                         ? event.target.closest(itemSelector$2)
                         : null;
                     if (!target?.closest(contentSelector$3) ||
-                        target.matches('[data-slot="menubar-sub-trigger"], [ng-menubar-sub-trigger]') ||
+                        target.matches(".menubar-sub-trigger") ||
                         isDisabled(target)) {
                         return;
                     }
@@ -6595,7 +6634,7 @@
                 const structureObserver = new MutationObserver(syncStructure);
                 structureObserver.observe(element, {
                     attributes: true,
-                    attributeFilter: ["data-slot", "dir"],
+                    attributeFilter: ["dir"],
                     childList: true,
                     subtree: true,
                 });
@@ -6632,16 +6671,16 @@
     }
 
     let selectIdCounter = 0;
-    const contentSelector$2 = '[data-slot="select-content"], [ng-select-content]';
-    const groupSelector = '[data-slot="select-group"], [ng-select-group]';
-    const itemSelector$1 = '[data-slot="select-item"], [ng-select-item]';
-    const labelSelector = '[data-slot="select-label"], [ng-select-label]';
-    const rootSelector = '[data-slot="select"], [ng-select]';
-    const scrollDownSelector = '[data-slot="select-scroll-down-button"], [ng-select-scroll-down-button]';
-    const scrollUpSelector = '[data-slot="select-scroll-up-button"], [ng-select-scroll-up-button]';
-    const separatorSelector = '[data-slot="select-separator"], [ng-select-separator]';
-    const triggerSelector$2 = '[data-slot="select-trigger"], [ng-select-trigger]';
-    const valueSelector = '[data-slot="select-value"], [ng-select-value]';
+    const contentSelector$2 = ".select-content";
+    const groupSelector = ".select-group";
+    const itemSelector$1 = ".select-item";
+    const labelSelector = ".select-label";
+    const rootSelector = ".select, [ng-select]";
+    const scrollDownSelector = ".select-scroll-down-button";
+    const scrollUpSelector = ".select-scroll-up-button";
+    const separatorSelector = ".select-separator";
+    const triggerSelector$2 = ".select-trigger";
+    const valueSelector = ".select-value";
     const setAttributeIfChanged$8 = (element, name, value) => {
         if (element.getAttribute(name) !== value) {
             element.setAttribute(name, value);
@@ -6669,11 +6708,11 @@
                 const triggerId = trigger.id || `select-trigger-${String(selectIdCounter++)}`;
                 content.id = contentId;
                 trigger.id = triggerId;
-                setAttributeIfChanged$8(trigger, "role", trigger.getAttribute("role") ?? "combobox");
+                setAttributeIfChanged$8(trigger, "role", "combobox");
                 setAttributeIfChanged$8(trigger, "aria-haspopup", "listbox");
                 setAttributeIfChanged$8(trigger, "aria-controls", contentId);
                 setAttributeIfChanged$8(trigger, "aria-autocomplete", "none");
-                setAttributeIfChanged$8(content, "role", content.getAttribute("role") ?? "listbox");
+                setAttributeIfChanged$8(content, "role", "listbox");
                 setAttributeIfChanged$8(content, "aria-labelledby", triggerId);
                 setAttributeIfChanged$8(content, "tabindex", "-1");
                 let items = [];
@@ -6825,7 +6864,7 @@
                 const bindItem = (item) => {
                     if (!item.id)
                         item.id = `select-item-${String(selectIdCounter++)}`;
-                    setAttributeIfChanged$8(item, "role", item.getAttribute("role") ?? "option");
+                    setAttributeIfChanged$8(item, "role", "option");
                     setAttributeIfChanged$8(item, "tabindex", "-1");
                     if (isDisabled(item)) {
                         setAttributeIfChanged$8(item, "aria-disabled", "true");
@@ -7059,11 +7098,11 @@
         };
     }
 
-    const itemSelector = '[data-slot="navigation-menu-item"], [ng-navigation-menu-item]';
-    const triggerSelector$1 = '[data-slot="navigation-menu-trigger"], [ng-navigation-menu-trigger]';
-    const contentSelector$1 = '[data-slot="navigation-menu-content"], [ng-navigation-menu-content]';
-    const linkSelector = '[data-slot="navigation-menu-link"], [ng-navigation-menu-link]';
-    const listSelector$1 = '[data-slot="navigation-menu-list"], [ng-navigation-menu-list]';
+    const itemSelector = ".navigation-menu-item";
+    const triggerSelector$1 = ".navigation-menu-trigger";
+    const contentSelector$1 = ".navigation-menu-content";
+    const linkSelector = ".navigation-menu-link";
+    const listSelector$1 = ".navigation-menu-list";
     let navigationMenuId = 0;
     const setAttribute$1 = (element, name, value) => {
         if (element.getAttribute(name) !== value) {
@@ -7443,7 +7482,7 @@
                 const structureObserver = new MutationObserver(syncStructure);
                 structureObserver.observe(element, {
                     attributes: true,
-                    attributeFilter: ["data-slot", "dir"],
+                    attributeFilter: ["dir"],
                     childList: true,
                     subtree: true,
                 });
@@ -7490,8 +7529,8 @@
         return {
             link(scope, element) {
                 const directionOwner = element.closest("[dir]") ?? element;
-                const trigger = query(element, '[data-slot="popover-trigger"], [ng-popover-trigger]', HTMLElement);
-                const content = query(element, '[data-slot="popover-content"], [ng-popover-content]', HTMLElement);
+                const trigger = query(element, ".popover-trigger", HTMLElement);
+                const content = query(element, ".popover-content", HTMLElement);
                 if (!trigger || !content)
                     return;
                 const getDirection = () => element.closest("[dir]")?.getAttribute("dir") === "rtl"
@@ -7516,7 +7555,7 @@
                 content.id = contentId;
                 trigger.setAttribute("aria-haspopup", "dialog");
                 trigger.setAttribute("aria-controls", contentId);
-                content.setAttribute("role", content.getAttribute("role") ?? "dialog");
+                content.setAttribute("role", "dialog");
                 content.setAttribute("aria-modal", content.getAttribute("aria-modal") ?? "false");
                 content.setAttribute("tabindex", content.getAttribute("tabindex") ?? "-1");
                 let open = element.getAttribute("data-open") === "true" ||
@@ -7628,9 +7667,9 @@
     const DEFAULT_MAX_SIZE = 4;
     const DEFAULT_STEP = 0.25;
     let resizableIdCounter = 0;
-    const GROUP_SELECTOR = '[data-slot="resizable-panel-group"], [ng-resizable-panel-group]';
-    const PANEL_SELECTOR = '[data-slot="resizable-panel"], [ng-resizable-panel]';
-    const HANDLE_SELECTOR = '[data-slot="resizable-handle"], [ng-resizable-handle]';
+    const GROUP_SELECTOR = ".resizable-panel-group, [ng-resizable-panel-group]";
+    const PANEL_SELECTOR = ".resizable-panel";
+    const HANDLE_SELECTOR = ".resizable-handle";
     const numberAttribute = (element, attribute, fallback) => {
         const rawValue = element.getAttribute(attribute);
         if (rawValue === null || rawValue === "")
@@ -7692,7 +7731,7 @@
                     if (cleanupHandles.has(handle))
                         return;
                     handle.setAttribute("tabindex", handle.getAttribute("tabindex") ?? "0");
-                    handle.setAttribute("role", handle.getAttribute("role") ?? "separator");
+                    handle.setAttribute("role", "separator");
                     let stopPointerResize = null;
                     const handlePointerDown = (event) => {
                         if (event.button !== 0 ||
@@ -7864,11 +7903,11 @@
     function scrollAreaDirective() {
         return {
             link(scope, element) {
-                const viewport = query(element, '[data-slot="scroll-area-viewport"], [ng-scroll-area-viewport]', HTMLElement);
+                const viewport = query(element, ".scroll-area-viewport", HTMLElement);
                 if (!viewport)
                     return;
                 viewport.setAttribute("tabindex", viewport.getAttribute("tabindex") ?? "0");
-                viewport.setAttribute("role", viewport.getAttribute("role") ?? "region");
+                viewport.setAttribute("role", "region");
                 viewport.setAttribute("aria-label", viewport.getAttribute("aria-label") ??
                     element.getAttribute("aria-label") ??
                     "Scrollable content");
@@ -7953,7 +7992,7 @@
                         ? scrollbar.clientWidth
                         : scrollbar.clientHeight;
                     const maxScroll = Math.max(0, scrollSize - viewportSize);
-                    const thumb = query(scrollbar, '[data-slot="scroll-area-thumb"], [ng-scroll-area-thumb]', HTMLElement);
+                    const thumb = query(scrollbar, ".scroll-area-thumb", HTMLElement);
                     if (!thumb || trackSize <= 0 || scrollSize <= 0)
                         return;
                     const thumbSize = Math.max(18, trackSize * Math.min(1, viewportSize / scrollSize));
@@ -7977,7 +8016,7 @@
                     element.setAttribute("data-scroll-left", String(viewport.scrollLeft));
                     element.setAttribute("data-scroll-at-top", String(viewport.scrollTop <= 0));
                     element.setAttribute("data-scroll-at-bottom", String(viewport.scrollTop + viewport.clientHeight >= viewport.scrollHeight));
-                    queryAll(element, '[data-slot="scroll-area-scrollbar"], [ng-scroll-area-scrollbar]').forEach((scrollbar) => {
+                    queryAll(element, ".scroll-area-scrollbar").forEach((scrollbar) => {
                         const orientation = scrollbar.getAttribute("data-orientation") === "horizontal"
                             ? "horizontal"
                             : "vertical";
@@ -7988,7 +8027,7 @@
                             : (element.getAttribute("data-scrollable-y") ?? "false"));
                         syncScrollbar(scrollbar, orientation);
                     });
-                    queryAll(element, '[data-slot="scroll-area-thumb"], [ng-scroll-area-thumb]').forEach((thumb) => {
+                    queryAll(element, ".scroll-area-thumb").forEach((thumb) => {
                         thumb.setAttribute("aria-hidden", "true");
                     });
                 };
@@ -8049,7 +8088,7 @@
     function sheetDirective() {
         return {
             link(scope, element) {
-                const getContent = () => queryAll(element, '[data-slot="sheet-content"], [ng-sheet-content]').find((candidate) => candidate.closest('[data-slot="sheet"], [ng-sheet]') === element) ?? null;
+                const getContent = () => queryAll(element, ".sheet-content").find((candidate) => candidate.closest(".sheet, [ng-sheet]") === element) ?? null;
                 const syncSide = () => {
                     const content = getContent();
                     const authoredSide = element.getAttribute("side") ?? content?.getAttribute("side");
@@ -8059,13 +8098,13 @@
                         setAttributeIfChanged$5(content, "data-side", side);
                 };
                 bindOverlay(scope, element, {
-                    rootSelector: '[data-slot="sheet"], [ng-sheet]',
-                    closeSelector: '[data-slot="sheet-close"], [ng-sheet-close], [data-sheet-close]',
-                    contentSelector: '[data-slot="sheet-content"], [ng-sheet-content]',
-                    descriptionSelector: '[data-slot="sheet-description"], [ng-sheet-description]',
-                    overlaySelector: '[data-slot="sheet-overlay"], [ng-sheet-overlay]',
-                    titleSelector: '[data-slot="sheet-title"], [ng-sheet-title]',
-                    triggerSelector: '[data-slot="sheet-trigger"], [ng-sheet-trigger]',
+                    rootSelector: ".sheet, [ng-sheet]",
+                    closeSelector: ".sheet-close, [data-sheet-close]",
+                    contentSelector: ".sheet-content",
+                    descriptionSelector: ".sheet-description",
+                    overlaySelector: ".sheet-overlay",
+                    titleSelector: ".sheet-title",
+                    triggerSelector: ".sheet-trigger",
                     closeOnOutsideClick: true,
                 });
                 const sideObserver = new MutationObserver(syncSide);
@@ -8085,11 +8124,11 @@
 
     let sidebarIdCounter = 0;
     const selectors = {
-        group: '[data-slot="sidebar-group"], [ng-sidebar-group]',
-        groupAction: '[data-slot="sidebar-group-action"], [ng-sidebar-group-action]',
-        groupLabel: '[data-slot="sidebar-group-label"], [ng-sidebar-group-label]',
-        menuAction: '[data-slot="sidebar-menu-action"], [ng-sidebar-menu-action]',
-        menuButton: '[data-slot="sidebar-menu-button"], [ng-sidebar-menu-button]',
+        group: ".sidebar-group",
+        groupAction: ".sidebar-group-action",
+        groupLabel: ".sidebar-group-label",
+        menuAction: ".sidebar-menu-action",
+        menuButton: ".sidebar-menu-button",
     };
     const sidebarOptions = {
         collapsible: new Set(["icon", "none", "offcanvas"]),
@@ -8110,7 +8149,7 @@
             link(scope, element) {
                 const triggerSelector = element.id
                     ? `[aria-controls="${element.id}"], [data-sidebar-target="${element.id}"]`
-                    : "[ng-sidebar-trigger], [data-slot='sidebar-trigger']";
+                    : ".sidebar-trigger";
                 const cleanupTriggers = new Map();
                 const directionOwner = element.closest("[dir]") ?? element;
                 const mobileQuery = window.matchMedia("(max-width: 767px)");
@@ -8228,7 +8267,9 @@
                     });
                     setCollapsed(getCollapsed());
                 };
-                element.setAttribute("role", element.getAttribute("role") ?? "complementary");
+                if (element.tagName !== "ASIDE" && !element.hasAttribute("role")) {
+                    element.setAttribute("role", "complementary");
+                }
                 syncFromState();
                 syncStructure();
                 syncTriggers();
@@ -8291,7 +8332,7 @@
             element.removeAttribute("aria-required");
     }
 
-    const thumbSelector = 'input[type="range"][ng-slider-thumb], input[type="range"][data-slot="slider-thumb"]';
+    const thumbSelector = 'input[type="range"].slider-thumb';
     const orientations = new Set(["horizontal", "vertical"]);
     const setAttributeIfChanged$3 = (element, name, value) => {
         if (element.getAttribute(name) !== value) {
@@ -8323,7 +8364,7 @@
     const syncInput = (element, orientation = orientationFor(element)) => {
         const state = sliderValue(element);
         syncNativeControlState(element);
-        setAttributeIfChanged$3(element, "role", element.getAttribute("role") ?? "slider");
+        setAttributeIfChanged$3(element, "role", "slider");
         setAttributeIfChanged$3(element, "aria-orientation", orientation);
         setAttributeIfChanged$3(element, "data-orientation", orientation);
         setAttributeIfChanged$3(element, "aria-valuemin", String(state.min));
@@ -8448,11 +8489,132 @@
         };
     }
 
-    const toastSelector = '[data-slot="toast"], [ng-toast]';
-    const closeSelector = '[data-slot="toast-close"], [ng-toast-close]';
-    const actionSelector = '[data-slot="toast-action"], [ng-toast-action]';
-    const titleSelector = '[data-slot="toast-title"], [ng-toast-title]';
-    const descriptionSelector = '[data-slot="toast-description"], [ng-toast-description]';
+    /**
+     * @license lucide v1.33.0 - ISC
+     *
+     * This source code is licensed under the ISC license.
+     * See the LICENSE file in the root directory of this source tree.
+     */
+
+    const defaultAttributes = {
+      xmlns: "http://www.w3.org/2000/svg",
+      width: 24,
+      height: 24,
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      "stroke-width": 2,
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    };
+
+    /**
+     * @license lucide v1.33.0 - ISC
+     *
+     * This source code is licensed under the ISC license.
+     * See the LICENSE file in the root directory of this source tree.
+     */
+
+
+    const createSVGElement = ([tag, attrs, children]) => {
+      const element = document.createElementNS("http://www.w3.org/2000/svg", tag);
+      Object.keys(attrs).forEach((name) => {
+        element.setAttribute(name, String(attrs[name]));
+      });
+      if (children?.length) {
+        children.forEach((child) => {
+          const childElement = createSVGElement(child);
+          element.appendChild(childElement);
+        });
+      }
+      return element;
+    };
+    const createElement = (iconNode, customAttrs = {}) => {
+      const tag = "svg";
+      const attrs = {
+        ...defaultAttributes,
+        ...customAttrs
+      };
+      return createSVGElement([tag, attrs, iconNode]);
+    };
+
+    /**
+     * @license lucide v1.33.0 - ISC
+     *
+     * This source code is licensed under the ISC license.
+     * See the LICENSE file in the root directory of this source tree.
+     */
+
+    const CircleCheck = [
+      ["circle", { cx: "12", cy: "12", r: "10" }],
+      ["path", { d: "m9 12 2 2 4-4" }]
+    ];
+
+    /**
+     * @license lucide v1.33.0 - ISC
+     *
+     * This source code is licensed under the ISC license.
+     * See the LICENSE file in the root directory of this source tree.
+     */
+
+    const CircleX = [
+      ["circle", { cx: "12", cy: "12", r: "10" }],
+      ["path", { d: "m15 9-6 6" }],
+      ["path", { d: "m9 9 6 6" }]
+    ];
+
+    /**
+     * @license lucide v1.33.0 - ISC
+     *
+     * This source code is licensed under the ISC license.
+     * See the LICENSE file in the root directory of this source tree.
+     */
+
+    const Info = [
+      ["circle", { cx: "12", cy: "12", r: "10" }],
+      ["path", { d: "M12 16v-4" }],
+      ["path", { d: "M12 8h.01" }]
+    ];
+
+    /**
+     * @license lucide v1.33.0 - ISC
+     *
+     * This source code is licensed under the ISC license.
+     * See the LICENSE file in the root directory of this source tree.
+     */
+
+    const LoaderCircle = [["path", { d: "M21 12a9 9 0 1 1-6.219-8.56" }]];
+
+    /**
+     * @license lucide v1.33.0 - ISC
+     *
+     * This source code is licensed under the ISC license.
+     * See the LICENSE file in the root directory of this source tree.
+     */
+
+    const TriangleAlert = [
+      ["path", { d: "m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" }],
+      ["path", { d: "M12 9v4" }],
+      ["path", { d: "M12 17h.01" }]
+    ];
+
+    /**
+     * @license lucide v1.33.0 - ISC
+     *
+     * This source code is licensed under the ISC license.
+     * See the LICENSE file in the root directory of this source tree.
+     */
+
+    const X = [
+      ["path", { d: "M18 6 6 18" }],
+      ["path", { d: "m6 6 12 12" }]
+    ];
+
+    const toastSelector = ".toast";
+    const closeSelector = ".toast-close";
+    const actionSelector = ".toast-action";
+    const titleSelector = ".toast-title";
+    const descriptionSelector = ".toast-description";
     const toasterPositions = new Set([
         "bottom-center",
         "bottom-left",
@@ -8469,6 +8631,13 @@
         "success",
         "warning",
     ]);
+    const toastIcons = {
+        error: CircleX,
+        info: Info,
+        loading: LoaderCircle,
+        success: CircleCheck,
+        warning: TriangleAlert,
+    };
     let toastIdCounter = 0;
     const setAttributeIfChanged$2 = (element, name, value) => {
         if (element.getAttribute(name) !== value) {
@@ -8492,6 +8661,22 @@
                 const cleanupButtons = new Map();
                 const generatedRelationships = new WeakMap();
                 const mirroredTypes = new WeakMap();
+                const generatedIcons = new WeakMap();
+                const syncGeneratedIcon = (container, iconName) => {
+                    const icon = toastIcons[iconName] ?? (iconName === "close" ? X : null);
+                    if (!icon || generatedIcons.get(container) === iconName)
+                        return;
+                    if (container.childElementCount > 0 && !generatedIcons.has(container)) {
+                        return;
+                    }
+                    container.replaceChildren(createElement(icon, {
+                        "aria-hidden": "true",
+                        focusable: "false",
+                        height: 16,
+                        width: 16,
+                    }));
+                    generatedIcons.set(container, iconName);
+                };
                 const syncPosition = () => {
                     const position = getToasterPosition(element);
                     if (element.getAttribute("data-position") !== position) {
@@ -8499,7 +8684,7 @@
                     }
                 };
                 const bindToast = (toast) => {
-                    setAttributeIfChanged$2(toast, "role", toast.getAttribute("role") ?? "status");
+                    setAttributeIfChanged$2(toast, "role", "status");
                     setAttributeIfChanged$2(toast, "aria-live", toast.getAttribute("aria-live") ?? "polite");
                     setAttributeIfChanged$2(toast, "aria-atomic", toast.getAttribute("aria-atomic") ?? "true");
                     const relationships = generatedRelationships.get(toast) ?? {};
@@ -8559,6 +8744,10 @@
                     }
                     setAttributeIfChanged$2(toast, "data-type", nextType);
                     mirroredTypes.set(toast, { source: typeSource, value: nextType });
+                    const icon = toast.querySelector(":scope > .toast-icon");
+                    if (icon && nextType !== "default") {
+                        syncGeneratedIcon(icon, nextType);
+                    }
                     const open = !toast.hidden;
                     setAttributeIfChanged$2(toast, "aria-hidden", String(!open));
                     setAttributeIfChanged$2(toast, "data-state", open ? "open" : "closed");
@@ -8575,8 +8764,11 @@
                         return;
                     bindActionButton(button);
                     setAttributeIfChanged$2(button, "aria-label", button.getAttribute("aria-label") ?? "Close toast");
+                    const icon = button.querySelector(".sonner-icon");
+                    if (icon)
+                        syncGeneratedIcon(icon, "close");
                     const handleClick = () => {
-                        const toast = button.closest('[data-slot="toast"], [ng-toast]');
+                        const toast = button.closest(".toast");
                         if (toast) {
                             toast.hidden = true;
                             toast.setAttribute("aria-hidden", "true");
@@ -8631,9 +8823,9 @@
     }
 
     let tabsIdCounter = 0;
-    const triggerSelector = '[data-slot="tabs-trigger"], [ng-tabs-trigger]';
-    const contentSelector = '[data-slot="tabs-content"], [ng-tabs-content]';
-    const listSelector = '[data-slot="tabs-list"], [ng-tabs-list], [role="tablist"]';
+    const triggerSelector = ".tabs-trigger";
+    const contentSelector = ".tabs-content";
+    const listSelector = '.tabs-list, [role="tablist"]';
     const setAttribute = (element, name, value) => {
         if (element.getAttribute(name) !== value) {
             element.setAttribute(name, value);
@@ -8691,7 +8883,7 @@
                         const selected = contentIndex === nextActiveIndex;
                         content.hidden = !selected;
                         setAttribute(content, "data-active", String(selected));
-                        setAttribute(content, "role", content.getAttribute("role") ?? "tabpanel");
+                        setAttribute(content, "role", "tabpanel");
                         setAttribute(content, "aria-hidden", String(!selected));
                         setAttribute(content, "tabindex", selected ? "0" : "-1");
                     });
@@ -8755,19 +8947,19 @@
                     setAttribute(element, "data-direction", getDirection());
                     setAttribute(element, "data-orientation", orientation);
                     if (list) {
-                        setAttribute(list, "role", list.getAttribute("role") ?? "tablist");
+                        setAttribute(list, "role", "tablist");
                         setAttribute(list, "aria-orientation", orientation);
                     }
                     triggers.forEach((trigger, index) => {
                         const content = contents.at(index);
                         const triggerId = trigger.id || `tabs-trigger-${String(tabsIdCounter++)}`;
                         trigger.id = triggerId;
-                        setAttribute(trigger, "role", trigger.getAttribute("role") ?? "tab");
+                        setAttribute(trigger, "role", "tab");
                         if (content) {
                             const contentId = content.id || `${triggerId}-content`;
                             content.id = contentId;
                             setAttribute(trigger, "aria-controls", contentId);
-                            setAttribute(content, "role", content.getAttribute("role") ?? "tabpanel");
+                            setAttribute(content, "role", "tabpanel");
                             setAttribute(content, "aria-labelledby", triggerId);
                         }
                         bindTrigger(trigger);
@@ -8793,7 +8985,6 @@
                         "aria-selected",
                         "data-active",
                         "data-disabled",
-                        "data-slot",
                         "disabled",
                         "orientation",
                         "dir",
@@ -8825,12 +9016,14 @@
         return {
             link(scope, element) {
                 const directionOwner = element.closest("[dir]") ?? element;
-                const itemSelector = '[data-slot="toggle-group-item"], [ng-toggle-group-item], button[aria-pressed]';
+                const itemSelector = ".toggle-group-item, button[aria-pressed]";
                 let items = [];
                 const allowsMultiple = element.hasAttribute("multiple") ||
                     element.getAttribute("type") === "multiple";
                 const cleanupItems = new Map();
-                element.setAttribute("role", element.getAttribute("role") ?? "group");
+                if (element.tagName !== "FIELDSET" && !element.hasAttribute("role")) {
+                    element.setAttribute("role", "group");
+                }
                 const isGroupDisabled = () => element.hasAttribute("disabled") ||
                     element.getAttribute("aria-disabled") === "true";
                 const isItemDisabled = (item) => isGroupDisabled() ||
@@ -8970,8 +9163,8 @@
         return {
             link(scope, element) {
                 const directionOwner = element.closest("[dir]") ?? element;
-                const trigger = query(element, '[data-slot="tooltip-trigger"], [ng-tooltip-trigger]', HTMLElement);
-                const content = query(element, '[data-slot="tooltip-content"], [ng-tooltip-content]', HTMLElement);
+                const trigger = query(element, ".tooltip-trigger", HTMLElement);
+                const content = query(element, ".tooltip-content", HTMLElement);
                 if (!trigger || !content)
                     return;
                 const getDirection = () => element.closest("[dir]")?.getAttribute("dir") === "rtl"
@@ -8990,7 +9183,7 @@
                 const contentId = content.id || `tooltip-content-${String(tooltipIdCounter++)}`;
                 content.id = contentId;
                 trigger.setAttribute("aria-describedby", contentId);
-                content.setAttribute("role", content.getAttribute("role") ?? "tooltip");
+                content.setAttribute("role", "tooltip");
                 let controlledOpen = element.getAttribute("data-open") === "true" ||
                     content.getAttribute("data-open") === "true";
                 let keepOpen = false;

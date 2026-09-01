@@ -6,11 +6,11 @@ description: >
 ---
 
 Use native `select` for simple option lists. Wrap the select in
-`data-slot="native-select-wrapper"` when you want the AngularCSS chevron.
+`class="native-select-wrapper"` when you want the AngularCSS chevron.
 
 ```html
-<div data-slot="native-select-wrapper">
-  <select data-slot="native-select" aria-label="Status" ng-model="status">
+<div class="native-select-wrapper">
+  <select aria-label="Status" ng-model="status" class="native-select">
     <option value="">Select status</option>
     <option value="todo">Todo</option>
     <option value="done">Done</option>

@@ -2,8 +2,8 @@ import { expect, test } from "@playwright/test";
 
 const canonicalUrl = "/docs/static/examples/components/tabs.html";
 const workflowsUrl = "/docs/static/examples/components/tabs-workflows.html";
-const triggerSelector = ':is([data-slot="tabs-trigger"], [ng-tabs-trigger])';
-const panelSelector = ':is([data-slot="tabs-content"], [ng-tabs-content])';
+const triggerSelector = ".tabs-trigger";
+const panelSelector = ".tabs-content";
 
 test("published tabs activate panels by click and roving keyboard navigation", async ({
   page,

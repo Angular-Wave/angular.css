@@ -9,7 +9,7 @@ test("navigation menu element example exercises the built functional artifact", 
   const trigger = nav.getByRole("button", { name: "Getting started" });
   const content = trigger
     .locator("..")
-    .locator(":scope > [ng-navigation-menu-content]");
+    .locator(":scope > .navigation-menu-content");
   await expect(content).toBeHidden();
   await trigger.click();
   await expect(content).toBeVisible();

@@ -5,13 +5,13 @@ description: >
   Keyboard shortcut hint
 ---
 
-Use native `kbd` elements with `data-slot="kbd"`. Group shortcuts with
-`data-slot="kbd-group"`.
+Use native `kbd` elements with `class="kbd"`. Group shortcuts with
+`class="kbd-group"`.
 
 ```html
-<span data-slot="kbd-group">
-  <kbd data-slot="kbd">Ctrl</kbd>
-  <kbd data-slot="kbd">K</kbd>
+<span class="kbd-group">
+  <kbd class="kbd">Ctrl</kbd>
+  <kbd class="kbd">K</kbd>
 </span>
 ```
 

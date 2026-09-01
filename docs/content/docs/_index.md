@@ -19,14 +19,14 @@ know basic HTML but do not assume prior AngularCSS experience.
 3. [Build your first component]({{< relref
    "/docs/get-started/first-component" >}}) creates an interactive accordion.
 4. [Styling with Tailwind]({{< relref
-   "/docs/get-started/styling-tailwind" >}}) covers tokens, slots, and state
+   "/docs/get-started/styling-tailwind" >}}) covers tokens, parts, and state
    selectors.
 
 ## Find a component
 
 The [component catalog]({{< relref "/docs/components" >}}) contains a working
 iframe demo and complete contract for every canonical component. Each page
-documents selectors, slots, authored attributes, generated state, ARIA
+documents selectors, parts, authored attributes, generated state, ARIA
 relationships, CSS variables, events, behavior ownership, and customization.
 
 The [element entrypoints]({{< relref "/docs/elements" >}}) are compatibility

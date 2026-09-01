@@ -18,157 +18,157 @@
   >
     <main class="menubar-demo visual-example">
       <nav ng-menubar aria-label="Browser application menu">
-        <section ng-menubar-menu>
-          <button type="button" ng-menubar-trigger>File</button>
-          <div ng-menubar-content>
-            <div ng-menubar-group>
-              <button type="button" ng-menubar-item>
-                New Tab <span ng-menubar-shortcut>⌘T</span>
+        <section class="menubar-menu">
+          <button type="button" class="menubar-trigger">File</button>
+          <menu class="menubar-content">
+            <div class="menubar-group">
+              <button type="button" class="menubar-item">
+                New Tab <span class="menubar-shortcut">⌘T</span>
               </button>
-              <button type="button" ng-menubar-item>
-                New Window <span ng-menubar-shortcut>⌘N</span>
+              <button type="button" class="menubar-item">
+                New Window <span class="menubar-shortcut">⌘N</span>
               </button>
-              <button type="button" ng-menubar-item disabled>
+              <button type="button" disabled class="menubar-item">
                 New Incognito Window
               </button>
             </div>
-            <div ng-menubar-separator role="separator"></div>
-            <div ng-menubar-group>
-              <div ng-menubar-sub>
-                <button type="button" ng-menubar-sub-trigger>Share</button>
-                <div ng-menubar-sub-content>
-                  <div ng-menubar-group>
-                    <button type="button" ng-menubar-item>Email link</button>
-                    <button type="button" ng-menubar-item>Messages</button>
-                    <button type="button" ng-menubar-item>Notes</button>
+            <hr  class="menubar-separator"/>
+            <div class="menubar-group">
+              <div class="menubar-sub">
+                <button type="button" class="menubar-sub-trigger">Share</button>
+                <div class="menubar-sub-content">
+                  <div class="menubar-group">
+                    <button type="button" class="menubar-item">Email link</button>
+                    <button type="button" class="menubar-item">Messages</button>
+                    <button type="button" class="menubar-item">Notes</button>
                   </div>
                 </div>
               </div>
             </div>
-            <div ng-menubar-separator role="separator"></div>
-            <div ng-menubar-group>
-              <button type="button" ng-menubar-item>
-                Print... <span ng-menubar-shortcut>⌘P</span>
+            <hr  class="menubar-separator"/>
+            <div class="menubar-group">
+              <button type="button" class="menubar-item">
+                Print... <span class="menubar-shortcut">⌘P</span>
               </button>
             </div>
-          </div>
+          </menu>
         </section>
 
-        <section ng-menubar-menu>
-          <button type="button" ng-menubar-trigger>Edit</button>
-          <div ng-menubar-content>
-            <div ng-menubar-group>
-              <button type="button" ng-menubar-item>
-                Undo <span ng-menubar-shortcut>⌘Z</span>
+        <section class="menubar-menu">
+          <button type="button" class="menubar-trigger">Edit</button>
+          <menu class="menubar-content">
+            <div class="menubar-group">
+              <button type="button" class="menubar-item">
+                Undo <span class="menubar-shortcut">⌘Z</span>
               </button>
-              <button type="button" ng-menubar-item>
-                Redo <span ng-menubar-shortcut>⇧⌘Z</span>
+              <button type="button" class="menubar-item">
+                Redo <span class="menubar-shortcut">⇧⌘Z</span>
               </button>
             </div>
-            <div ng-menubar-separator role="separator"></div>
-            <div ng-menubar-group>
-              <div ng-menubar-sub>
-                <button type="button" ng-menubar-sub-trigger>Find</button>
-                <div ng-menubar-sub-content>
-                  <button type="button" ng-menubar-item>Search the web</button>
-                  <div ng-menubar-separator role="separator"></div>
-                  <button type="button" ng-menubar-item>Find...</button>
-                  <button type="button" ng-menubar-item>Find Next</button>
-                  <button type="button" ng-menubar-item>Find Previous</button>
+            <hr  class="menubar-separator"/>
+            <div class="menubar-group">
+              <div class="menubar-sub">
+                <button type="button" class="menubar-sub-trigger">Find</button>
+                <div class="menubar-sub-content">
+                  <button type="button" class="menubar-item">Search the web</button>
+                  <hr  class="menubar-separator"/>
+                  <button type="button" class="menubar-item">Find...</button>
+                  <button type="button" class="menubar-item">Find Next</button>
+                  <button type="button" class="menubar-item">Find Previous</button>
                 </div>
               </div>
             </div>
-            <div ng-menubar-separator role="separator"></div>
-            <div ng-menubar-group>
-              <button type="button" ng-menubar-item>Cut</button>
-              <button type="button" ng-menubar-item>Copy</button>
-              <button type="button" ng-menubar-item>Paste</button>
+            <hr  class="menubar-separator"/>
+            <div class="menubar-group">
+              <button type="button" class="menubar-item">Cut</button>
+              <button type="button" class="menubar-item">Copy</button>
+              <button type="button" class="menubar-item">Paste</button>
             </div>
-          </div>
+          </menu>
         </section>
 
-        <section ng-menubar-menu>
-          <button type="button" ng-menubar-trigger>View</button>
-          <div ng-menubar-content class="menubar-view-content">
-            <div ng-menubar-group>
+        <section class="menubar-menu">
+          <button type="button" class="menubar-trigger">View</button>
+          <menu class="menubar-view-content menubar-content">
+            <div class="menubar-group">
               <button
                 type="button"
-                ng-menubar-checkbox-item
-                role="menuitemcheckbox"
+
+
                 aria-checked="{{ menubarDemo.bookmarks }}"
                 ng-click="menubarDemo.bookmarks=!menubarDemo.bookmarks"
-              >
+               class="menubar-checkbox-item">
                 Bookmarks Bar
               </button>
               <button
                 type="button"
-                ng-menubar-checkbox-item
-                role="menuitemcheckbox"
+
+
                 aria-checked="{{ menubarDemo.fullUrls }}"
                 ng-click="menubarDemo.fullUrls=!menubarDemo.fullUrls"
-              >
+               class="menubar-checkbox-item">
                 Full URLs
               </button>
             </div>
-            <div ng-menubar-separator role="separator"></div>
-            <div ng-menubar-group>
-              <button type="button" ng-menubar-item inset>
-                Reload <span ng-menubar-shortcut>⌘R</span>
+            <hr  class="menubar-separator"/>
+            <div class="menubar-group">
+              <button type="button" inset class="menubar-item">
+                Reload <span class="menubar-shortcut">⌘R</span>
               </button>
-              <button type="button" ng-menubar-item inset disabled>
-                Force Reload <span ng-menubar-shortcut>⇧⌘R</span>
+              <button type="button" inset disabled class="menubar-item">
+                Force Reload <span class="menubar-shortcut">⇧⌘R</span>
               </button>
             </div>
-            <div ng-menubar-separator role="separator"></div>
-            <button type="button" ng-menubar-item inset>
+            <hr  class="menubar-separator"/>
+            <button type="button" inset class="menubar-item">
               Toggle Fullscreen
             </button>
-            <div ng-menubar-separator role="separator"></div>
-            <button type="button" ng-menubar-item inset>Hide Sidebar</button>
-          </div>
+            <hr  class="menubar-separator"/>
+            <button type="button" inset class="menubar-item">Hide Sidebar</button>
+          </menu>
         </section>
 
-        <section ng-menubar-menu>
-          <button type="button" ng-menubar-trigger>Profiles</button>
-          <div ng-menubar-content>
-            <div
-              ng-menubar-radio-group
-              role="group"
+        <section class="menubar-menu">
+          <button type="button" class="menubar-trigger">Profiles</button>
+          <menu class="menubar-content">
+            <fieldset
+
+
               aria-label="Active profile"
-            >
+             class="menubar-radio-group">
               <button
                 type="button"
-                ng-menubar-radio-item
-                role="menuitemradio"
+
+
                 aria-checked="{{ menubarDemo.profile === 'andy' }}"
                 ng-click="menubarDemo.profile='andy'"
-              >
+               class="menubar-radio-item">
                 Andy
               </button>
               <button
                 type="button"
-                ng-menubar-radio-item
-                role="menuitemradio"
+
+
                 aria-checked="{{ menubarDemo.profile === 'benoit' }}"
                 ng-click="menubarDemo.profile='benoit'"
-              >
+               class="menubar-radio-item">
                 Benoit
               </button>
               <button
                 type="button"
-                ng-menubar-radio-item
-                role="menuitemradio"
+
+
                 aria-checked="{{ menubarDemo.profile === 'luis' }}"
                 ng-click="menubarDemo.profile='luis'"
-              >
+               class="menubar-radio-item">
                 Luis
               </button>
-            </div>
-            <div ng-menubar-separator role="separator"></div>
-            <button type="button" ng-menubar-item inset>Edit...</button>
-            <div ng-menubar-separator role="separator"></div>
-            <button type="button" ng-menubar-item inset>Add Profile...</button>
-          </div>
+            </fieldset>
+            <hr  class="menubar-separator"/>
+            <button type="button" inset class="menubar-item">Edit...</button>
+            <hr  class="menubar-separator"/>
+            <button type="button" inset class="menubar-item">Add Profile...</button>
+          </menu>
         </section>
       </nav>
     </main>

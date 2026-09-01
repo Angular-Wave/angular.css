@@ -20,19 +20,19 @@
         <div class="popover-stage popover-basic-stage">
           <span ng-popover aria-label="Basic popover">
             <button
-              ng-button
+
               type="button"
               variant="outline"
-              ng-popover-trigger
-            >
+
+             class="popover-trigger button">
               Open Popover
             </button>
-            <section ng-popover-content align="start" aria-label="Dimensions">
-              <header ng-popover-header>
-                <h3 ng-popover-title>Dimensions</h3>
-                <p ng-popover-description>Set the dimensions for the layer.</p>
+            <aside align="start" aria-label="Dimensions" class="popover-content">
+              <header class="popover-header">
+                <h3 class="popover-title">Dimensions</h3>
+                <p class="popover-description">Set the dimensions for the layer.</p>
               </header>
-            </section>
+            </aside>
           </span>
         </div>
       </section>
@@ -42,34 +42,34 @@
         <div class="popover-stage popover-form-stage">
           <span ng-popover aria-label="Form popover">
             <button
-              ng-button
+
               type="button"
               variant="outline"
-              ng-popover-trigger
-            >
+
+             class="popover-trigger button">
               Edit dimensions
             </button>
-            <section
-              ng-popover-content
-              class="popover-form-content"
+            <aside
+
+              class="popover-form-content popover-content"
               align="start"
               aria-label="Edit dimensions"
             >
-              <header ng-popover-header>
-                <h3 ng-popover-title>Dimensions</h3>
-                <p ng-popover-description>Set the dimensions for the layer.</p>
+              <header class="popover-header">
+                <h3 class="popover-title">Dimensions</h3>
+                <p class="popover-description">Set the dimensions for the layer.</p>
               </header>
               <div class="popover-form-fields">
-                <label ng-field orientation="horizontal">
-                  <span ng-field-label>Width</span>
-                  <input data-input value="100%" aria-label="Width" />
-                </label>
-                <label ng-field orientation="horizontal">
-                  <span ng-field-label>Height</span>
-                  <input data-input value="25px" aria-label="Height" />
-                </label>
+                <fieldset ng-field orientation="horizontal">
+                  <span class="field-label">Width</span>
+                  <input value="100%" aria-label="Width" class="input" />
+                </fieldset>
+                <fieldset ng-field orientation="horizontal">
+                  <span class="field-label">Height</span>
+                  <input value="25px" aria-label="Height" class="input" />
+                </fieldset>
               </div>
-            </section>
+            </aside>
           </span>
         </div>
       </section>
@@ -79,57 +79,57 @@
         <div class="popover-alignment-row">
           <span ng-popover aria-label="Start aligned popover">
             <button
-              ng-button
+
               type="button"
               size="sm"
               variant="outline"
-              ng-popover-trigger
-            >
+
+             class="popover-trigger button">
               Start
             </button>
-            <section
-              ng-popover-content
-              class="popover-compact-content"
+            <aside
+
+              class="popover-compact-content popover-content"
               align="start"
             >
               Aligned to start
-            </section>
+            </aside>
           </span>
           <span ng-popover aria-label="Center aligned popover">
             <button
-              ng-button
+
               type="button"
               size="sm"
               variant="outline"
-              ng-popover-trigger
-            >
+
+             class="popover-trigger button">
               Center
             </button>
-            <section
-              ng-popover-content
-              class="popover-compact-content"
+            <aside
+
+              class="popover-compact-content popover-content"
               align="center"
             >
               Aligned to center
-            </section>
+            </aside>
           </span>
           <span ng-popover aria-label="End aligned popover">
             <button
-              ng-button
+
               type="button"
               size="sm"
               variant="outline"
-              ng-popover-trigger
-            >
+
+             class="popover-trigger button">
               End
             </button>
-            <section
-              ng-popover-content
-              class="popover-compact-content"
+            <aside
+
+              class="popover-compact-content popover-content"
               align="end"
             >
               Aligned to end
-            </section>
+            </aside>
           </span>
         </div>
       </section>
@@ -139,49 +139,49 @@
         <div class="popover-state-row">
           <span ng-popover aria-label="Disabled popover">
             <button
-              ng-button
+
               type="button"
               variant="outline"
-              ng-popover-trigger
+
               disabled
-            >
+             class="popover-trigger button">
               Disabled
             </button>
-            <section ng-popover-content>Unavailable</section>
+            <aside class="popover-content">Unavailable</aside>
           </span>
           <span ng-popover aria-label="First sibling popover">
             <button
-              ng-button
+
               type="button"
               variant="outline"
-              ng-popover-trigger
-            >
+
+             class="popover-trigger button">
               First
             </button>
-            <section
-              ng-popover-content
-              class="popover-compact-content"
+            <aside
+
+              class="popover-compact-content popover-content"
               aria-label="First panel"
             >
               First panel
-            </section>
+            </aside>
           </span>
           <span ng-popover aria-label="Second sibling popover">
             <button
-              ng-button
+
               type="button"
               variant="outline"
-              ng-popover-trigger
-            >
+
+             class="popover-trigger button">
               Second
             </button>
-            <section
-              ng-popover-content
-              class="popover-compact-content"
+            <aside
+
+              class="popover-compact-content popover-content"
               aria-label="Second panel"
             >
               Second panel
-            </section>
+            </aside>
           </span>
         </div>
       </section>

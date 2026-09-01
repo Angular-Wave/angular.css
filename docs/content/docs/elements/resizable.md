@@ -5,14 +5,14 @@ description: >
   Resizable panel group structure
 ---
 
-Use panel group, panel, and handle slots. Application behavior can bind panel
+Use panel group, panel, and handle parts. Application behavior can bind panel
 sizes through `--panel-size`.
 
 ```html
-<div data-slot="resizable-panel-group">
-  <section data-slot="resizable-panel" style="--panel-size: 2;">One</section>
-  <div data-slot="resizable-handle"></div>
-  <section data-slot="resizable-panel">Two</section>
+<div class="resizable-panel-group">
+  <section style="--panel-size: 2;" class="resizable-panel">One</section>
+  <div class="resizable-handle"></div>
+  <section class="resizable-panel">Two</section>
 </div>
 ```
 

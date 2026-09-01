@@ -19,101 +19,101 @@
       <header class="workflow-heading"><h2>قائمة التطبيق</h2></header>
       <div class="menubar-rtl-stage">
         <nav ng-menubar aria-label="قائمة التطبيق">
-          <section ng-menubar-menu>
-            <button type="button" ng-menubar-trigger>ملف</button>
-            <div ng-menubar-content>
-              <button type="button" ng-menubar-item>
-                علامة تبويب جديدة <span ng-menubar-shortcut>⌘T</span>
+          <section class="menubar-menu">
+            <button type="button" class="menubar-trigger">ملف</button>
+            <menu class="menubar-content">
+              <button type="button" class="menubar-item">
+                علامة تبويب جديدة <span class="menubar-shortcut">⌘T</span>
               </button>
-              <button type="button" ng-menubar-item>
-                نافذة جديدة <span ng-menubar-shortcut>⌘N</span>
+              <button type="button" class="menubar-item">
+                نافذة جديدة <span class="menubar-shortcut">⌘N</span>
               </button>
-              <button type="button" ng-menubar-item disabled>
+              <button type="button" disabled class="menubar-item">
                 نافذة التصفح المتخفي الجديدة
               </button>
-              <div ng-menubar-separator role="separator"></div>
-              <div ng-menubar-sub>
-                <button type="button" ng-menubar-sub-trigger>مشاركة</button>
-                <div ng-menubar-sub-content>
-                  <button type="button" ng-menubar-item>
+              <hr  class="menubar-separator"/>
+              <div class="menubar-sub">
+                <button type="button" class="menubar-sub-trigger">مشاركة</button>
+                <div class="menubar-sub-content">
+                  <button type="button" class="menubar-item">
                     رابط البريد الإلكتروني
                   </button>
-                  <button type="button" ng-menubar-item>الرسائل</button>
-                  <button type="button" ng-menubar-item>الملاحظات</button>
+                  <button type="button" class="menubar-item">الرسائل</button>
+                  <button type="button" class="menubar-item">الملاحظات</button>
                 </div>
               </div>
-              <div ng-menubar-separator role="separator"></div>
-              <button type="button" ng-menubar-item>
-                طباعة... <span ng-menubar-shortcut>⌘P</span>
+              <hr  class="menubar-separator"/>
+              <button type="button" class="menubar-item">
+                طباعة... <span class="menubar-shortcut">⌘P</span>
               </button>
-            </div>
+            </menu>
           </section>
 
-          <section ng-menubar-menu>
-            <button type="button" ng-menubar-trigger>تعديل</button>
-            <div ng-menubar-content>
-              <button type="button" ng-menubar-item>تراجع</button>
-              <button type="button" ng-menubar-item>إعادة</button>
-              <div ng-menubar-separator role="separator"></div>
-              <button type="button" ng-menubar-item>قص</button>
-              <button type="button" ng-menubar-item>نسخ</button>
-              <button type="button" ng-menubar-item>لصق</button>
-            </div>
+          <section class="menubar-menu">
+            <button type="button" class="menubar-trigger">تعديل</button>
+            <menu class="menubar-content">
+              <button type="button" class="menubar-item">تراجع</button>
+              <button type="button" class="menubar-item">إعادة</button>
+              <hr  class="menubar-separator"/>
+              <button type="button" class="menubar-item">قص</button>
+              <button type="button" class="menubar-item">نسخ</button>
+              <button type="button" class="menubar-item">لصق</button>
+            </menu>
           </section>
 
-          <section ng-menubar-menu>
-            <button type="button" ng-menubar-trigger>عرض</button>
-            <div ng-menubar-content class="menubar-wide-content">
+          <section class="menubar-menu">
+            <button type="button" class="menubar-trigger">عرض</button>
+            <menu class="menubar-wide-content menubar-content">
               <button
                 type="button"
-                ng-menubar-checkbox-item
-                role="menuitemcheckbox"
+
+
                 aria-checked="{{ rtlMenubar.fullUrls }}"
                 ng-click="rtlMenubar.fullUrls=!rtlMenubar.fullUrls"
-              >
+               class="menubar-checkbox-item">
                 عناوين URL الكاملة
               </button>
-              <div ng-menubar-separator role="separator"></div>
-              <button type="button" ng-menubar-item inset>إعادة تحميل</button>
-              <button type="button" ng-menubar-item inset disabled>
+              <hr  class="menubar-separator"/>
+              <button type="button" inset class="menubar-item">إعادة تحميل</button>
+              <button type="button" inset disabled class="menubar-item">
                 إعادة تحميل قسري
               </button>
-            </div>
+            </menu>
           </section>
 
-          <section ng-menubar-menu>
-            <button type="button" ng-menubar-trigger>الملفات الشخصية</button>
-            <div ng-menubar-content>
-              <div ng-menubar-radio-group role="group" aria-label="الملف النشط">
+          <section class="menubar-menu">
+            <button type="button" class="menubar-trigger">الملفات الشخصية</button>
+            <menu class="menubar-content">
+              <fieldset aria-label="الملف النشط" class="menubar-radio-group">
                 <button
                   type="button"
-                  ng-menubar-radio-item
-                  role="menuitemradio"
+
+
                   aria-checked="{{ rtlMenubar.profile === 'andy' }}"
                   ng-click="rtlMenubar.profile='andy'"
-                >
+                 class="menubar-radio-item">
                   Andy
                 </button>
                 <button
                   type="button"
-                  ng-menubar-radio-item
-                  role="menuitemradio"
+
+
                   aria-checked="{{ rtlMenubar.profile === 'benoit' }}"
                   ng-click="rtlMenubar.profile='benoit'"
-                >
+                 class="menubar-radio-item">
                   Benoit
                 </button>
                 <button
                   type="button"
-                  ng-menubar-radio-item
-                  role="menuitemradio"
+
+
                   aria-checked="{{ rtlMenubar.profile === 'luis' }}"
                   ng-click="rtlMenubar.profile='luis'"
-                >
+                 class="menubar-radio-item">
                   Luis
                 </button>
-              </div>
-            </div>
+              </fieldset>
+            </menu>
           </section>
         </nav>
       </div>

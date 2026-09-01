@@ -18,30 +18,29 @@
       <section class="dialog-workflow" aria-labelledby="share-heading">
         <h2 id="share-heading">Custom close action</h2>
         <div id="share-dialog" ng-dialog>
-          <button ng-dialog-trigger ng-button variant="outline">Share</button>
-          <div ng-dialog-overlay></div>
-          <section ng-dialog-content>
-            <header ng-dialog-header>
-              <h3 ng-dialog-title>Share link</h3>
-              <p ng-dialog-description>
+          <button variant="outline" class="dialog-trigger button">Share</button>
+          <div class="dialog-overlay"></div>
+          <dialog class="dialog-content">
+            <header class="dialog-header">
+              <h3 class="dialog-title">Share link</h3>
+              <p class="dialog-description">
                 Anyone who has this link will be able to view this project.
               </p>
             </header>
             <div class="dialog-copy-row">
               <input
-                data-input
+
                 aria-label="Share URL"
                 value="https://example.com/link/to/document"
-                readonly
-              />
-              <button ng-button variant="secondary">Copy Link</button>
+                readonly class="input" />
+              <button variant="secondary" class="button">Copy Link</button>
             </div>
-            <footer ng-dialog-footer>
-              <button ng-button variant="outline" data-dialog-close>
+            <footer class="dialog-footer">
+              <button variant="outline" data-dialog-close class="button">
                 Close
               </button>
             </footer>
-            <button ng-dialog-close ng-button variant="ghost" size="icon-sm">
+            <button variant="ghost" size="icon-sm" class="dialog-close button">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -54,29 +53,29 @@
               </svg>
               <span class="example-sr-only">Close</span>
             </button>
-          </section>
+          </dialog>
         </div>
       </section>
 
       <section class="dialog-workflow" aria-labelledby="plain-heading">
         <h2 id="plain-heading">Without corner close</h2>
         <div id="plain-dialog" ng-dialog>
-          <button ng-dialog-trigger ng-button variant="outline">
+          <button variant="outline" class="dialog-trigger button">
             Open dialog
           </button>
-          <div ng-dialog-overlay></div>
-          <section ng-dialog-content>
-            <header ng-dialog-header>
-              <h3 ng-dialog-title>Terms of service</h3>
-              <p ng-dialog-description>
+          <div class="dialog-overlay"></div>
+          <dialog class="dialog-content">
+            <header class="dialog-header">
+              <h3 class="dialog-title">Terms of service</h3>
+              <p class="dialog-description">
                 Review the current terms before continuing.
               </p>
             </header>
             <p>Your workspace data remains available to members with access.</p>
-            <footer ng-dialog-footer>
-              <button ng-button data-dialog-close>Continue</button>
+            <footer class="dialog-footer">
+              <button data-dialog-close class="button">Continue</button>
             </footer>
-          </section>
+          </dialog>
         </div>
       </section>
     </main>

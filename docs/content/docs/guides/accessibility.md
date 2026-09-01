@@ -23,7 +23,7 @@ as tabs, menus, and custom listboxes.
 
 Visible text should name buttons, fields, landmarks, and overlays. Use
 `aria-label` only when visible text cannot provide the name. Dialog-like
-components should include title and description slots so the directive can
+components should include title and description parts so the directive can
 connect `aria-labelledby` and `aria-describedby`.
 
 ## Preserve keyboard behavior

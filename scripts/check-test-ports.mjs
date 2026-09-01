@@ -1,17 +1,21 @@
 import { readFileSync } from "node:fs";
 
 const blockedPorts = new Set(["3000", "4000"]);
-const files = ["package.json", "playwright.config.ts"];
+const files = ["package.json", "playwright.config.ts", "utils/express.js"];
 const failures = [];
 
 for (const file of files) {
   const source = readFileSync(file, "utf8");
 
   for (const port of blockedPorts) {
-    const portPattern = new RegExp(`(?:localhost|127\\.0\\.0\\.1|--port)[:= ]+${port}\\b`);
+    const portPattern = new RegExp(
+      `(?:localhost|127\\.0\\.0\\.1|--port)[:= ]+${port}\\b`,
+    );
 
     if (portPattern.test(source)) {
-      failures.push(`${file}: test/dev tooling must not use blocked port ${port}`);
+      failures.push(
+        `${file}: test/dev tooling must not use blocked port ${port}`,
+      );
     }
   }
 }

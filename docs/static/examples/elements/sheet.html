@@ -17,50 +17,47 @@
   >
     <main class="sheet-demo visual-example">
       <section id="profile-sheet" ng-sheet>
-        <button ng-sheet-trigger ng-button variant="outline">Open</button>
-        <div ng-sheet-overlay></div>
-        <aside ng-sheet-content>
-          <header ng-sheet-header>
-            <h2 ng-sheet-title>Edit profile</h2>
-            <p ng-sheet-description>
+        <button variant="outline" class="sheet-trigger button">Open</button>
+        <div class="sheet-overlay"></div>
+        <dialog class="sheet-content">
+          <header class="sheet-header">
+            <h2 class="sheet-title">Edit profile</h2>
+            <p class="sheet-description">
               Make changes to your profile here. Click save when you're done.
             </p>
           </header>
           <form class="sheet-profile-form" ng-submit="savedName=profile.name">
-            <div ng-sheet-body class="sheet-profile-fields">
+            <div class="sheet-profile-fields sheet-body">
               <div class="sheet-profile-field">
-                <label ng-label for="sheet-demo-name">Name</label>
+                <label for="sheet-demo-name" class="label">Name</label>
                 <input
                   id="sheet-demo-name"
-                  data-input
+
                   ng-model="profile.name"
-                  autofocus
-                />
+                  autofocus class="input" />
               </div>
               <div class="sheet-profile-field">
-                <label ng-label for="sheet-demo-username">Username</label>
+                <label for="sheet-demo-username" class="label">Username</label>
                 <input
                   id="sheet-demo-username"
-                  data-input
-                  ng-model="profile.username"
-                />
+
+                  ng-model="profile.username" class="input" />
               </div>
             </div>
-            <footer ng-sheet-footer>
+            <footer class="sheet-footer">
               <button
-                ng-button
+
                 type="submit"
                 data-sheet-close
-                ng-click="savedName=profile.name"
-              >
+                ng-click="savedName=profile.name" class="button">
                 Save changes
               </button>
-              <button data-sheet-close ng-button variant="outline">
+              <button data-sheet-close variant="outline" class="button">
                 Close
               </button>
             </footer>
           </form>
-          <button ng-sheet-close ng-button variant="ghost" size="icon-sm">
+          <button variant="ghost" size="icon-sm" class="sheet-close button">
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -73,7 +70,7 @@
             </svg>
             <span class="example-sr-only">Close sheet</span>
           </button>
-        </aside>
+        </dialog>
       </section>
       <output class="sheet-output" aria-live="polite">
         Saved profile: <span ng-bind="savedName"></span>

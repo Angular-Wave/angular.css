@@ -5,7 +5,8 @@ description: >
   Search input with selectable options
 ---
 
-Compose a searchable listbox from semantic `ng-combobox-*` attributes. AngularTS
+Compose a searchable listbox with one `ng-combobox` root and semantic child
+elements identified by combobox part classes. AngularTS
 `ng-model`, filters, and event expressions remain the source of truth for query
 and selected-value state. AngularCSS supplies popup disclosure,
 active-descendant navigation, disabled handling, collision placement, and visual
@@ -16,34 +17,34 @@ state.
   ng-combobox
   ng-on-angularcss:combobox-select="selected=$event.detail.value; query=selected"
 >
-  <div ng-combobox-control>
+  <div class="combobox-control">
     <input
-      ng-combobox-input
+
       aria-label="Framework"
       ng-model="query"
       placeholder="Select a framework"
-    />
+     class="combobox-input"/>
     <button
-      ng-combobox-trigger
+
       type="button"
       aria-label="Show frameworks"
-    ></button>
+     class="combobox-trigger"></button>
   </div>
-  <div ng-combobox-content aria-label="Framework options">
-    <div ng-combobox-empty>No items found.</div>
-    <div ng-combobox-list>
-      <div ng-combobox-collection>
-        <div
-          ng-combobox-item
+  <ul aria-label="Framework options" class="combobox-content">
+    <div class="combobox-empty">No items found.</div>
+    <div class="combobox-list">
+      <ul class="combobox-collection">
+        <li
+
           ng-repeat="framework in frameworks | filter:query"
           data-value="{{ framework }}"
           ng-attr-aria-selected="{{ selected === framework }}"
-        >
+         class="combobox-item">
           {{ framework }}
-        </div>
-      </div>
+        </li>
+      </ul>
     </div>
-  </div>
+  </ul>
 </div>
 ```
 
@@ -64,10 +65,9 @@ empty chip input. AngularCSS never replaces the application's collection.
 ## Reference Workflows
 
 Clear, disabled, grouped, input-addon, invalid, and separate popup-trigger
-compositions are functional in this artifact. Use `ng-combobox-value` for a
-trigger's selected-value label. When a composition needs a compact authored
-button inside an input shell, reuse the existing `ng-input-group-button`
-primitive rather than recreating Input Group behavior in Combobox.
+compositions are functional in this artifact. Use `.combobox-value` for a
+trigger's selected-value label. When a composition needs a compact button
+inside an input shell, reuse `.input-group-button`.
 
 {{< example src="examples/components/combobox-workflows.html" title="Combobox workflows" height="980" >}}
 
@@ -99,47 +99,10 @@ This component's root directive is `[ng-combobox]`. Importing the package regist
 ### Directive selectors
 
 - `ng-combobox`
-- `ng-combobox-chip`
-- `ng-combobox-chip-input`
-- `ng-combobox-chips`
-- `ng-combobox-clear`
-- `ng-combobox-content`
-- `ng-combobox-control`
-- `ng-combobox-empty`
-- `ng-combobox-group`
-- `ng-combobox-group-label`
-- `ng-combobox-input`
-- `ng-combobox-item`
-- `ng-combobox-label`
-- `ng-combobox-separator`
-- `ng-combobox-trigger`
-- `ng-input-group-input`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="combobox"]`
-- `[data-slot="combobox-chip"]`
-- `[data-slot="combobox-chip-input"]`
-- `[data-slot="combobox-chip-remove"]`
-- `[data-slot="combobox-chips"]`
-- `[data-slot="combobox-clear"]`
-- `[data-slot="combobox-collection"]`
-- `[data-slot="combobox-content"]`
-- `[data-slot="combobox-control"]`
-- `[data-slot="combobox-empty"]`
-- `[data-slot="combobox-group"]`
-- `[data-slot="combobox-group-label"]`
-- `[data-slot="combobox-input"]`
-- `[data-slot="combobox-item"]`
-- `[data-slot="combobox-label"]`
-- `[data-slot="combobox-list"]`
-- `[data-slot="combobox-separator"]`
-- `[data-slot="combobox-trigger"]`
-- `[data-slot="combobox-value"]`
-- `[data-slot="input"]`
-
-A combobox root requires one input and one listbox content element. Control, trigger, clear, empty, list, collection, labeled group, separator, chips, chip, and chip-remove selectors are optional composition primitives. Prefer semantic `ng-combobox-*` attributes when AngularCSS supplies behavior and styling; use `data-slot` only as a styling hook when behavior is supplied elsewhere, and never duplicate both on one element.
-Use the named slots as stable Tailwind and CSS selectors.
+A combobox root requires one input and one listbox content element. The root directive inspects semantic descendants through combobox part classes; no child directives are required. Control, trigger, clear, empty, groups, separators, and chips are optional.
 
 ## API
 
@@ -218,7 +181,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-combobox]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-combobox]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

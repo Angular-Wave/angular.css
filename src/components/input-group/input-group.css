@@ -1,4 +1,4 @@
-[data-slot="input-group"],
+.input-group,
 [ng-input-group] {
   position: relative;
   display: flex;
@@ -16,17 +16,7 @@
     box-shadow 150ms ease;
 }
 
-:is([data-slot="input-group"], [ng-input-group]):has(
-  > :is(
-      [data-slot="input-group-control"],
-      [ng-input-group-control]
-    ):focus-visible
-) {
-  border-color: var(--ring);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
-}
-
-:is([data-slot="input-group"], [ng-input-group]):has(
+.input-group:has(
   > :is(textarea, [data-align="block-start"], [data-align="block-end"])
 ) {
   height: auto;
@@ -34,19 +24,23 @@
   align-items: stretch;
 }
 
-:is([data-slot="input-group"], [ng-input-group]):has(:disabled),
-:is([data-slot="input-group"], [ng-input-group])[data-disabled="true"] {
+.input-group:has(:disabled),
+.input-group[data-disabled="true"] {
   background: color-mix(in srgb, var(--input) 50%, transparent);
   opacity: 0.5;
 }
 
-:is([data-slot="input-group"], [ng-input-group]):has([aria-invalid="true"]) {
+.input-group:has([aria-invalid="true"]) {
   border-color: var(--error);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--error) 20%, transparent);
 }
 
-:is([data-slot="input-group"], [ng-input-group])
-  > :is([data-slot="input-group-control"], [ng-input-group-control]) {
+.input-group:has(> .input-group-control:focus-visible) {
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+}
+
+.input-group > .input-group-control {
   min-width: 0;
   flex: 1 1 auto;
   border: 0;
@@ -56,59 +50,38 @@
   outline: none;
 }
 
-:is([data-slot="input-group"], [ng-input-group])
-  > :is([data-slot="input-group-control"], [ng-input-group-control]):not(
-    textarea
-  ) {
+.input-group > .input-group-control:not(textarea) {
   height: 100%;
   align-self: stretch;
 }
 
-:is([data-slot="input-group"], [ng-input-group])
-  > :is([data-slot="input-group-control"], [ng-input-group-control]):is(
-    textarea
-  ) {
+.input-group > .input-group-control:is(textarea) {
   min-height: calc(var(--spacing) * 16);
   resize: none;
 }
 
-:is([data-slot="input-group"], [ng-input-group])
-  > :is(
-    [data-slot="input-group-control"],
-    [ng-input-group-control]
-  ):focus-visible {
+.input-group > :is(.input-group-control):focus-visible {
   border-color: transparent;
   box-shadow: none;
 }
 
-:is([data-slot="input-group"], [ng-input-group]):has(
-    > [data-align="inline-start"]
-  )
-  > :is([data-slot="input-group-control"], [ng-input-group-control]) {
+.input-group:has(> [data-align="inline-start"]) > .input-group-control {
   padding-inline-start: calc(var(--spacing) * 1.5);
 }
 
-:is([data-slot="input-group"], [ng-input-group]):has(
-    > [data-align="inline-end"]
-  )
-  > :is([data-slot="input-group-control"], [ng-input-group-control]) {
+.input-group:has(> [data-align="inline-end"]) > .input-group-control {
   padding-inline-end: calc(var(--spacing) * 1.5);
 }
 
-:is([data-slot="input-group"], [ng-input-group]):has(
-    > [data-align="block-start"]
-  )
-  > input:is([data-slot="input-group-control"], [ng-input-group-control]) {
+.input-group:has(> [data-align="block-start"]) > input.input-group-control {
   padding-block-end: calc(var(--spacing) * 3);
 }
 
-:is([data-slot="input-group"], [ng-input-group]):has(> [data-align="block-end"])
-  > input:is([data-slot="input-group-control"], [ng-input-group-control]) {
+.input-group:has(> [data-align="block-end"]) > input.input-group-control {
   padding-block-start: calc(var(--spacing) * 3);
 }
 
-[data-slot="input-group-addon"],
-[ng-input-group-addon] {
+.input-group-addon {
   display: flex;
   min-height: 0;
   flex: 0 0 auto;
@@ -125,81 +98,63 @@
   cursor: text;
 }
 
-[data-slot="input-group-addon"]:not([data-align]),
-[ng-input-group-addon]:not([data-align]),
-[data-slot="input-group-addon"][data-align="inline-start"],
-[ng-input-group-addon][data-align="inline-start"] {
+.input-group-addon:not([data-align]),
+.input-group-addon[data-align="inline-start"] {
   order: -1;
   padding-inline: calc(var(--spacing) * 2) 0;
 }
 
-[data-slot="input-group-addon"][data-align="inline-end"],
-[ng-input-group-addon][data-align="inline-end"] {
+.input-group-addon[data-align="inline-end"] {
   order: 1;
   padding-inline: 0 calc(var(--spacing) * 2);
 }
 
-[data-slot="input-group-addon"][data-align="block-start"],
-[ng-input-group-addon][data-align="block-start"],
-[data-slot="input-group-addon"][data-align="block-end"],
-[ng-input-group-addon][data-align="block-end"] {
+.input-group-addon[data-align="block-start"],
+.input-group-addon[data-align="block-end"] {
   width: 100%;
   justify-content: flex-start;
   padding-inline: calc(var(--spacing) * 2.5);
 }
 
-[data-slot="input-group-addon"][data-align="block-start"],
-[ng-input-group-addon][data-align="block-start"] {
+.input-group-addon[data-align="block-start"] {
   order: -1;
   padding-block-start: calc(var(--spacing) * 2);
 }
 
-[data-slot="input-group-addon"][data-align="block-end"],
-[ng-input-group-addon][data-align="block-end"] {
+.input-group-addon[data-align="block-end"] {
   order: 1;
   padding-block-end: calc(var(--spacing) * 2);
 }
 
-:is(
-  [data-slot="input-group-addon"],
-  [ng-input-group-addon]
-)[data-border="true"] {
+:is(.input-group-addon)[data-border="true"] {
   border-color: var(--border);
 }
 
-:is(
-    [data-slot="input-group-addon"],
-    [ng-input-group-addon]
-  )[data-align="block-start"][data-border="true"] {
+:is(.input-group-addon)[data-align="block-start"][data-border="true"] {
   border-block-end: 1px solid var(--border);
   padding-block-end: calc(var(--spacing) * 2);
 }
 
-:is(
-    [data-slot="input-group-addon"],
-    [ng-input-group-addon]
-  )[data-align="block-end"][data-border="true"] {
+:is(.input-group-addon)[data-align="block-end"][data-border="true"] {
   border-block-start: 1px solid var(--border);
   padding-block-start: calc(var(--spacing) * 2);
 }
 
-[data-slot="input-group-text"],
-[ng-input-group-text] {
+.input-group-text {
   display: inline-flex;
   align-items: center;
   gap: calc(var(--spacing) * 1.5);
 }
 
-:is([data-slot="input-group-text"], [ng-input-group-text]) > svg,
-:is([data-slot="input-group-addon"], [ng-input-group-addon]) > svg {
+.input-group-text > svg,
+.input-group-addon > svg {
   pointer-events: none;
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
   flex-shrink: 0;
 }
 
-[data-slot="input-group-button"],
-[ng-input-group-button] {
+.input-group-button {
   min-height: calc(var(--spacing) * 6);
   height: calc(var(--spacing) * 6);
   gap: calc(var(--spacing) * 1);
@@ -210,22 +165,19 @@
   cursor: pointer;
 }
 
-[data-slot="input-group-button"][data-size="sm"],
-[ng-input-group-button][data-size="sm"] {
+.input-group-button[data-size="sm"] {
   min-height: calc(var(--spacing) * 8);
   height: calc(var(--spacing) * 8);
   padding-inline: calc(var(--spacing) * 3);
   font-size: var(--text-sm);
 }
 
-[data-slot="input-group-button"][data-size="icon-xs"],
-[ng-input-group-button][data-size="icon-xs"] {
+.input-group-button[data-size="icon-xs"] {
   width: calc(var(--spacing) * 6);
   padding-inline: 0;
 }
 
-[data-slot="input-group-button"][data-size="icon-sm"],
-[ng-input-group-button][data-size="icon-sm"] {
+.input-group-button[data-size="icon-sm"] {
   width: calc(var(--spacing) * 8);
   min-height: calc(var(--spacing) * 8);
   height: calc(var(--spacing) * 8);

@@ -9,13 +9,13 @@ Use `nav` with `aria-label="pagination"` and mark the current page with
 `aria-current="page"`.
 
 ```html
-<nav data-slot="pagination" aria-label="pagination">
-  <ul data-slot="pagination-content">
-    <li data-slot="pagination-item">
-      <a data-slot="pagination-link" href="#">1</a>
+<nav aria-label="pagination" class="pagination">
+  <ul class="pagination-content">
+    <li class="pagination-item">
+      <a href="#" class="pagination-link">1</a>
     </li>
-    <li data-slot="pagination-item">
-      <a data-slot="pagination-link" aria-current="page" href="#">2</a>
+    <li class="pagination-item">
+      <a aria-current="page" href="#" class="pagination-link">2</a>
     </li>
   </ul>
 </nav>

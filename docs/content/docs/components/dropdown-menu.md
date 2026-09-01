@@ -10,11 +10,11 @@ Use `ng-dropdown` on a wrapper with a trigger `button` and a panel with
 ```html
 <div ng-dropdown>
   <button type="button">Options</button>
-  <div role="menu">
+  <menu>
     <a href="#new">New Task</a>
     <a href="#edit">Edit Task</a>
     <a href="#delete">Delete Task</a>
-  </div>
+  </menu>
 </div>
 ```
 

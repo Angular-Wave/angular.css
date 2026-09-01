@@ -4,18 +4,15 @@ import { isDisabled, onDestroy, queryAll } from "../../internal/dom";
 
 let commandIdCounter = 0;
 
-const emptySelector = '[data-slot="command-empty"], [ng-command-empty]';
-const groupHeadingSelector =
-  '[data-slot="command-group-heading"], [ng-command-group-heading]';
-const groupSelector = '[data-slot="command-group"], [ng-command-group]';
-const inputSelector = '[data-slot="command-input"], [ng-command-input]';
-const itemSelector = '[data-slot="command-item"], [ng-command-item]';
-const listSelector = '[data-slot="command-list"], [ng-command-list]';
-const rootSelector = '[data-slot="command"], [ng-command]';
-const separatorSelector =
-  '[data-slot="command-separator"], [ng-command-separator]';
-const shortcutSelector =
-  '[data-slot="command-shortcut"], [ng-command-shortcut]';
+const emptySelector = ".command-empty";
+const groupHeadingSelector = ".command-group-heading";
+const groupSelector = ".command-group";
+const inputSelector = ".command-input";
+const itemSelector = ".command-item";
+const listSelector = ".command-list";
+const rootSelector = ".command, [ng-command]";
+const separatorSelector = ".command-separator";
+const shortcutSelector = ".command-shortcut";
 
 const setAttributeIfChanged = (
   element: HTMLElement,

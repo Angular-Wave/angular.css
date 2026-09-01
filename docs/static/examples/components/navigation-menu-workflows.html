@@ -21,59 +21,58 @@
         </header>
         <div class="navigation-menu-workflow-actions">
           <button
-            ng-button
+
             type="button"
             variant="outline"
-            ng-click="navigationWorkflow.controlled=!navigationWorkflow.controlled"
-          >
+            ng-click="navigationWorkflow.controlled=!navigationWorkflow.controlled" class="button">
             Toggle controlled panel
           </button>
         </div>
         <nav ng-navigation-menu aria-label="Controlled navigation">
-          <ul ng-navigation-menu-list>
-            <li ng-navigation-menu-item>
-              <button type="button" ng-navigation-menu-trigger>
+          <ul class="navigation-menu-list">
+            <li class="navigation-menu-item">
+              <button type="button" class="navigation-menu-trigger">
                 Resources
               </button>
-              <div
+              <section
                 ng-if="!navigationWorkflow.controlled"
-                ng-navigation-menu-content
-              >
+
+               class="navigation-menu-content">
                 <ul
                   class="navigation-menu-content-list navigation-menu-intro-list"
                 >
-                  <li><a ng-navigation-menu-link href="#guides">Guides</a></li>
+                  <li><a href="#guides" class="navigation-menu-link">Guides</a></li>
                   <li>
-                    <a ng-navigation-menu-link href="#api">API reference</a>
+                    <a href="#api" class="navigation-menu-link">API reference</a>
                   </li>
                 </ul>
-              </div>
-              <div
+              </section>
+              <section
                 ng-if="navigationWorkflow.controlled"
-                ng-navigation-menu-content
+
                 data-open="true"
-              >
+               class="navigation-menu-content">
                 <ul
                   class="navigation-menu-content-list navigation-menu-intro-list"
                 >
-                  <li><a ng-navigation-menu-link href="#guides">Guides</a></li>
+                  <li><a href="#guides" class="navigation-menu-link">Guides</a></li>
                   <li>
-                    <a ng-navigation-menu-link href="#api">API reference</a>
+                    <a href="#api" class="navigation-menu-link">API reference</a>
                   </li>
                 </ul>
-              </div>
-              <span ng-navigation-menu-indicator aria-hidden="true"></span>
+              </section>
+              <span aria-hidden="true" class="navigation-menu-indicator"></span>
             </li>
-            <li ng-navigation-menu-item>
-              <button type="button" ng-navigation-menu-trigger disabled>
+            <li class="navigation-menu-item">
+              <button type="button" disabled class="navigation-menu-trigger">
                 Disabled
               </button>
-              <div ng-navigation-menu-content>
-                <a ng-navigation-menu-link href="#unavailable">Unavailable</a>
-              </div>
+              <section class="navigation-menu-content">
+                <a href="#unavailable" class="navigation-menu-link">Unavailable</a>
+              </section>
             </li>
-            <li ng-navigation-menu-item>
-              <a ng-navigation-menu-link href="#pricing">Pricing</a>
+            <li class="navigation-menu-item">
+              <a href="#pricing" class="navigation-menu-link">Pricing</a>
             </li>
           </ul>
         </nav>
@@ -85,72 +84,70 @@
         </header>
         <div class="navigation-menu-workflow-actions">
           <button
-            ng-button
+
             type="button"
             variant="outline"
-            ng-click="navigationWorkflow.showMenu=true"
-          >
+            ng-click="navigationWorkflow.showMenu=true" class="button">
             Add company menu
           </button>
           <button
-            ng-button
+
             type="button"
             variant="outline"
-            ng-click="navigationWorkflow.showLink=true"
-          >
+            ng-click="navigationWorkflow.showLink=true" class="button">
             Add careers link
           </button>
         </div>
         <nav ng-navigation-menu aria-label="Dynamic navigation">
-          <ul ng-navigation-menu-list>
-            <li ng-navigation-menu-item>
-              <button type="button" ng-navigation-menu-trigger>Product</button>
-              <div ng-navigation-menu-content>
+          <ul class="navigation-menu-list">
+            <li class="navigation-menu-item">
+              <button type="button" class="navigation-menu-trigger">Product</button>
+              <section class="navigation-menu-content">
                 <ul
                   class="navigation-menu-content-list navigation-menu-intro-list"
                 >
                   <li>
-                    <a ng-navigation-menu-link href="#overview">Overview</a>
+                    <a href="#overview" class="navigation-menu-link">Overview</a>
                   </li>
                   <li ng-if="navigationWorkflow.showLink">
                     <a
-                      ng-navigation-menu-link
+
                       id="dynamic-careers-link"
                       href="#careers"
-                    >
+                     class="navigation-menu-link">
                       Careers
                     </a>
                   </li>
                 </ul>
-              </div>
-              <span ng-navigation-menu-indicator aria-hidden="true"></span>
+              </section>
+              <span aria-hidden="true" class="navigation-menu-indicator"></span>
             </li>
             <li
               ng-if="navigationWorkflow.showMenu"
-              ng-navigation-menu-item
+
               id="dynamic-company-menu"
-            >
-              <button type="button" ng-navigation-menu-trigger>Company</button>
-              <div ng-navigation-menu-content>
+             class="navigation-menu-item">
+              <button type="button" class="navigation-menu-trigger">Company</button>
+              <section class="navigation-menu-content">
                 <ul
                   class="navigation-menu-content-list navigation-menu-intro-list"
                 >
-                  <li><a ng-navigation-menu-link href="#about">About</a></li>
+                  <li><a href="#about" class="navigation-menu-link">About</a></li>
                   <li>
-                    <a ng-navigation-menu-link href="#contact">Contact</a>
+                    <a href="#contact" class="navigation-menu-link">Contact</a>
                   </li>
                 </ul>
-              </div>
-              <span ng-navigation-menu-indicator aria-hidden="true"></span>
+              </section>
+              <span aria-hidden="true" class="navigation-menu-indicator"></span>
             </li>
-            <li ng-navigation-menu-item>
-              <a ng-navigation-menu-link href="#support">Support</a>
+            <li class="navigation-menu-item">
+              <a href="#support" class="navigation-menu-link">Support</a>
             </li>
           </ul>
         </nav>
       </section>
 
-      <button ng-button type="button" variant="outline">
+      <button type="button" variant="outline" class="button">
         Outside focus target
       </button>
     </main>

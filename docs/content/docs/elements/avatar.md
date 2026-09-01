@@ -5,12 +5,12 @@ description: >
   User image, fallback, badge, and group primitive
 ---
 
-Use `data-slot="avatar"` with optional image, fallback, badge, and group slots.
+Use `class="avatar"` with optional image, fallback, badge, and group parts.
 
 ```html
-<span data-slot="avatar">
-  <span data-slot="avatar-fallback">JD</span>
-  <span data-slot="avatar-badge"></span>
+<span class="avatar">
+  <span class="avatar-fallback">JD</span>
+  <span class="avatar-badge"></span>
 </span>
 ```
 

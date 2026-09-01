@@ -1,5 +1,5 @@
 input[type="range"][ng-slider],
-input[type="range"][data-slot="slider"] {
+input[type="range"].slider {
   width: 100%;
   height: calc(var(--spacing) * 5);
   appearance: none;
@@ -106,7 +106,7 @@ input[type="range"][data-slot="slider"] {
   }
 }
 
-:is([ng-slider], [data-slot="slider"]):not(input) {
+:is([ng-slider], .slider):not(input) {
   position: relative;
   display: flex;
   width: 100%;
@@ -116,11 +116,11 @@ input[type="range"][data-slot="slider"] {
   user-select: none;
 }
 
-:is([ng-slider], [data-slot="slider"]):not(input)[data-disabled="true"] {
+:is([ng-slider], .slider):not(input)[data-disabled="true"] {
   opacity: 0.5;
 }
 
-:is([data-slot="slider-track"], [ng-slider-track]) {
+.slider-track {
   position: absolute;
   inset-inline: 0;
   top: 50%;
@@ -132,7 +132,7 @@ input[type="range"][data-slot="slider"] {
   pointer-events: none;
 }
 
-:is([data-slot="slider-range"], [ng-slider-range]) {
+.slider-range {
   position: absolute;
   inset-block: 0;
   left: var(--range-start, 0%);
@@ -141,11 +141,7 @@ input[type="range"][data-slot="slider"] {
   pointer-events: none;
 }
 
-:is([ng-slider], [data-slot="slider"]):not(input)
-  > :is(
-    input[type="range"][ng-slider-thumb],
-    input[type="range"][data-slot="slider-thumb"]
-  ) {
+:is([ng-slider], .slider):not(input) > :is(input[type="range"].slider-thumb) {
   position: absolute;
   inset: 0;
   z-index: 1;
@@ -157,38 +153,26 @@ input[type="range"][data-slot="slider"] {
   pointer-events: none;
 }
 
-:is([ng-slider], [data-slot="slider"]):not(input)
-  > :is(
-    input[type="range"][ng-slider-thumb],
-    input[type="range"][data-slot="slider-thumb"]
-  ):is(:focus, [data-active="true"]) {
+:is([ng-slider], .slider):not(input)
+  > :is(input[type="range"].slider-thumb):is(:focus, [data-active="true"]) {
   z-index: 2;
   outline: none;
 }
 
-:is([ng-slider], [data-slot="slider"]):not(input)
-  > :is(
-    input[type="range"][ng-slider-thumb],
-    input[type="range"][data-slot="slider-thumb"]
-  )::-webkit-slider-runnable-track {
+:is([ng-slider], .slider):not(input)
+  > :is(input[type="range"].slider-thumb)::-webkit-slider-runnable-track {
   height: calc(var(--spacing) * 1);
   background: transparent;
 }
 
-:is([ng-slider], [data-slot="slider"]):not(input)
-  > :is(
-    input[type="range"][ng-slider-thumb],
-    input[type="range"][data-slot="slider-thumb"]
-  )::-moz-range-track {
+:is([ng-slider], .slider):not(input)
+  > :is(input[type="range"].slider-thumb)::-moz-range-track {
   height: calc(var(--spacing) * 1);
   background: transparent;
 }
 
-:is([ng-slider], [data-slot="slider"]):not(input)
-  > :is(
-    input[type="range"][ng-slider-thumb],
-    input[type="range"][data-slot="slider-thumb"]
-  )::-webkit-slider-thumb {
+:is([ng-slider], .slider):not(input)
+  > :is(input[type="range"].slider-thumb)::-webkit-slider-thumb {
   width: calc(var(--spacing) * 3);
   height: calc(var(--spacing) * 3);
   margin-block-start: calc(var(--spacing) * -1);
@@ -200,11 +184,8 @@ input[type="range"][data-slot="slider"] {
   transition: box-shadow 120ms ease;
 }
 
-:is([ng-slider], [data-slot="slider"]):not(input)
-  > :is(
-    input[type="range"][ng-slider-thumb],
-    input[type="range"][data-slot="slider-thumb"]
-  )::-moz-range-thumb {
+:is([ng-slider], .slider):not(input)
+  > :is(input[type="range"].slider-thumb)::-moz-range-thumb {
   width: calc(var(--spacing) * 3);
   height: calc(var(--spacing) * 3);
   border: 1px solid var(--ring);
@@ -214,39 +195,30 @@ input[type="range"][data-slot="slider"] {
   transition: box-shadow 120ms ease;
 }
 
-:is([ng-slider], [data-slot="slider"]):not(input)
-  > :is(
-    input[type="range"][ng-slider-thumb],
-    input[type="range"][data-slot="slider-thumb"]
-  ):focus-visible::-webkit-slider-thumb {
+:is([ng-slider], .slider):not(input)
+  > :is(input[type="range"].slider-thumb):focus-visible::-webkit-slider-thumb {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
-:is([ng-slider], [data-slot="slider"]):not(input)
-  > :is(
-    input[type="range"][ng-slider-thumb],
-    input[type="range"][data-slot="slider-thumb"]
-  ):focus-visible::-moz-range-thumb {
+:is([ng-slider], .slider):not(input)
+  > :is(input[type="range"].slider-thumb):focus-visible::-moz-range-thumb {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
-:is([ng-slider], [data-slot="slider"]):not(input)
-  > :is(
-    input[type="range"][ng-slider-thumb],
-    input[type="range"][data-slot="slider-thumb"]
-  ):disabled {
+:is([ng-slider], .slider):not(input)
+  > :is(input[type="range"].slider-thumb):disabled {
   pointer-events: none;
 }
 
 /* stylelint-disable-next-line no-descending-specificity -- Native and composite slider roots cannot match the same element. */
-:is([ng-slider], [data-slot="slider"]):not(input)[data-orientation="vertical"] {
+:is([ng-slider], .slider):not(input)[data-orientation="vertical"] {
   width: calc(var(--spacing) * 5);
   height: calc(var(--spacing) * 40);
   flex-direction: column;
 }
 
-:is([ng-slider], [data-slot="slider"]):not(input)[data-orientation="vertical"]
-  :is([data-slot="slider-track"], [ng-slider-track]) {
+:is([ng-slider], .slider):not(input)[data-orientation="vertical"]
+  .slider-track {
   inset-block: 0;
   inset-inline-start: 50%;
   top: auto;
@@ -255,8 +227,8 @@ input[type="range"][data-slot="slider"] {
   transform: translateX(-50%);
 }
 
-:is([ng-slider], [data-slot="slider"]):not(input)[data-orientation="vertical"]
-  :is([data-slot="slider-range"], [ng-slider-range]) {
+:is([ng-slider], .slider):not(input)[data-orientation="vertical"]
+  .slider-range {
   inset-inline: 0;
   top: auto;
   bottom: var(--range-start, 0%);
@@ -264,11 +236,8 @@ input[type="range"][data-slot="slider"] {
   height: calc(var(--range-end, 0%) - var(--range-start, 0%));
 }
 
-:is([ng-slider], [data-slot="slider"]):not(input)[data-orientation="vertical"]
-  > :is(
-    input[type="range"][ng-slider-thumb],
-    input[type="range"][data-slot="slider-thumb"]
-  ) {
+:is([ng-slider], .slider):not(input)[data-orientation="vertical"]
+  > :is(input[type="range"].slider-thumb) {
   width: calc(var(--spacing) * 5);
   height: calc(var(--spacing) * 40);
   direction: rtl;

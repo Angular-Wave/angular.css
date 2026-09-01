@@ -6,14 +6,14 @@ description: >
 ---
 
 Navigation menu is exposed as semantic `nav` markup with list, item, trigger,
-link, and content slots.
+link, and content parts.
 
 ```html
-<nav data-slot="navigation-menu">
-  <ul data-slot="navigation-menu-list">
-    <li data-slot="navigation-menu-item">
-      <button data-slot="navigation-menu-trigger">Components</button>
-      <div data-slot="navigation-menu-content">Links</div>
+<nav class="navigation-menu">
+  <ul class="navigation-menu-list">
+    <li class="navigation-menu-item">
+      <button class="navigation-menu-trigger">Components</button>
+      <section class="navigation-menu-content">Links</section>
     </li>
   </ul>
 </nav>
@@ -37,24 +37,10 @@ This component's root directive is `[ng-navigation-menu]`. Importing the package
 ### Directive selectors
 
 - `ng-navigation-menu`
-- `ng-navigation-menu-content`
-- `ng-navigation-menu-item`
-- `ng-navigation-menu-link`
-- `ng-navigation-menu-list`
-- `ng-navigation-menu-trigger`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="navigation-menu"]`
-- `[data-slot="navigation-menu-content"]`
-- `[data-slot="navigation-menu-indicator"]`
-- `[data-slot="navigation-menu-item"]`
-- `[data-slot="navigation-menu-link"]`
-- `[data-slot="navigation-menu-list"]`
-- `[data-slot="navigation-menu-trigger"]`
-
-Use a native `nav` containing one direct list. Each list item may contain either a native link or a native button trigger followed by its flyout content. The indicator is optional. Use either `ng-navigation-menu-*` selectors for behavior and styling or `data-slot` hooks when behavior is supplied elsewhere; do not duplicate both on one element.
-Use the named slots as stable Tailwind and CSS selectors.
+Use a native `nav` containing one direct list. Each list item may contain either a native link or a native button trigger followed by flyout content. The root directive inspects descendants through navigation-menu part classes; no child directives are required.
 
 ## API
 
@@ -100,7 +86,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-navigation-menu]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-navigation-menu]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

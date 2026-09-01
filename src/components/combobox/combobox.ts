@@ -9,22 +9,19 @@ import {
 
 let comboboxIdCounter = 0;
 
-const anchorSelector =
-  '[data-slot="combobox-control"], [ng-combobox-control], [data-slot="combobox-chips"], [ng-combobox-chips]';
-const chipSelector = '[data-slot="combobox-chip"], [ng-combobox-chip]';
-const clearSelector = '[data-slot="combobox-clear"], [ng-combobox-clear]';
-const contentSelector = '[data-slot="combobox-content"], [ng-combobox-content]';
-const emptySelector = '[data-slot="combobox-empty"], [ng-combobox-empty]';
-const groupLabelSelector =
-  '[data-slot="combobox-label"], [ng-combobox-label], [data-slot="combobox-group-label"], [ng-combobox-group-label]';
-const groupSelector = '[data-slot="combobox-group"], [ng-combobox-group]';
+const anchorSelector = ".combobox-control, .combobox-chips";
+const chipSelector = ".combobox-chip";
+const clearSelector = ".combobox-clear";
+const contentSelector = ".combobox-content";
+const emptySelector = ".combobox-empty";
+const groupLabelSelector = ".combobox-label, .combobox-group-label";
+const groupSelector = ".combobox-group";
 const inputSelector =
-  'input[ng-combobox-input], input[data-slot="combobox-input"], input[ng-combobox-chip-input], input[data-slot="combobox-chip-input"], input[role="combobox"], input[data-input], input[data-slot="input"], input[ng-input-group-input]';
-const itemSelector = '[data-slot="combobox-item"], [ng-combobox-item]';
-const rootSelector = '[data-slot="combobox"], [ng-combobox]';
-const separatorSelector =
-  '[data-slot="combobox-separator"], [ng-combobox-separator]';
-const triggerSelector = '[data-slot="combobox-trigger"], [ng-combobox-trigger]';
+  'input.combobox-input, input.combobox-chip-input, input[role="combobox"], input.input, input.input, input.input-group-input';
+const itemSelector = ".combobox-item";
+const rootSelector = ".combobox, [ng-combobox]";
+const separatorSelector = ".combobox-separator";
+const triggerSelector = ".combobox-trigger";
 
 const setAttributeIfChanged = (
   element: HTMLElement,
@@ -129,14 +126,7 @@ export function comboboxDirective(): ng.Directive {
         setAttributeIfChanged(
           content,
           "data-chips",
-          String(
-            Boolean(
-              owned(
-                '[data-slot="combobox-chips"], [ng-combobox-chips]',
-                HTMLElement,
-              ),
-            ),
-          ),
+          String(Boolean(owned(".combobox-chips", HTMLElement))),
         );
         if (ownsAriaInvalid) {
           setAttributeIfChanged(input, "aria-invalid", String(invalid));
@@ -269,6 +259,16 @@ export function comboboxDirective(): ng.Directive {
       const bindItem = (item: HTMLElement) => {
         if (!item.id) item.id = `combobox-item-${String(comboboxIdCounter++)}`;
         setAttributeIfChanged(item, "role", "option");
+        const semanticLabel = item.querySelector<HTMLElement>(
+          ".item-title, .combobox-item-label",
+        );
+        if (semanticLabel?.textContent.trim()) {
+          setAttributeIfChanged(
+            item,
+            "aria-label",
+            semanticLabel.textContent.trim(),
+          );
+        }
         setAttributeIfChanged(item, "tabindex", "-1");
         setAttributeIfChanged(item, "data-disabled", String(isDisabled(item)));
         if (!item.hasAttribute("aria-selected")) {
@@ -510,6 +510,7 @@ export function comboboxDirective(): ng.Directive {
           "required",
         ],
         childList: true,
+        characterData: true,
         subtree: true,
       });
       const directionObserver =

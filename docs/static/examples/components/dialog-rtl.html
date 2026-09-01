@@ -17,32 +17,32 @@
   >
     <main class="dialog-demo visual-example">
       <section id="rtl-profile-dialog" ng-dialog>
-        <button ng-dialog-trigger ng-button variant="outline">
+        <button variant="outline" class="dialog-trigger button">
           تعديل الملف الشخصي
         </button>
-        <div ng-dialog-overlay></div>
-        <section ng-dialog-content>
-          <header ng-dialog-header>
-            <h2 ng-dialog-title>تعديل الملف الشخصي</h2>
-            <p ng-dialog-description>
+        <div class="dialog-overlay"></div>
+        <dialog class="dialog-content">
+          <header class="dialog-header">
+            <h2 class="dialog-title">تعديل الملف الشخصي</h2>
+            <p class="dialog-description">
               غيّر بيانات ملفك الشخصي ثم احفظ التعديلات.
             </p>
           </header>
           <div class="dialog-profile-form">
             <div class="dialog-form-row">
-              <label ng-label for="rtl-name">الاسم</label>
-              <input id="rtl-name" data-input ng-model="profile.name" />
+              <label for="rtl-name" class="label">الاسم</label>
+              <input id="rtl-name" ng-model="profile.name" class="input" />
             </div>
             <div class="dialog-form-row">
-              <label ng-label for="rtl-username">اسم المستخدم</label>
-              <input id="rtl-username" data-input ng-model="profile.username" />
+              <label for="rtl-username" class="label">اسم المستخدم</label>
+              <input id="rtl-username" ng-model="profile.username" class="input" />
             </div>
           </div>
-          <footer ng-dialog-footer>
-            <button ng-button variant="outline" data-dialog-close>إلغاء</button>
-            <button ng-button data-dialog-close>حفظ التغييرات</button>
+          <footer class="dialog-footer">
+            <button variant="outline" data-dialog-close class="button">إلغاء</button>
+            <button data-dialog-close class="button">حفظ التغييرات</button>
           </footer>
-          <button ng-dialog-close ng-button variant="ghost" size="icon-sm">
+          <button variant="ghost" size="icon-sm" class="dialog-close button">
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -55,7 +55,7 @@
             </svg>
             <span class="example-sr-only">إغلاق</span>
           </button>
-        </section>
+        </dialog>
       </section>
     </main>
   </body>

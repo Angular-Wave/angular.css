@@ -20,16 +20,8 @@ const delayFor = (
 export function hoverCardDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
-      const trigger = query(
-        element,
-        '[data-slot="hover-card-trigger"], [ng-hover-card-trigger]',
-        HTMLElement,
-      );
-      const content = query(
-        element,
-        '[data-slot="hover-card-content"], [ng-hover-card-content]',
-        HTMLElement,
-      );
+      const trigger = query(element, ".hover-card-trigger", HTMLElement);
+      const content = query(element, ".hover-card-content", HTMLElement);
 
       if (!trigger || !content) return;
 
@@ -57,8 +49,6 @@ export function hoverCardDirective(): ng.Directive {
       content.id = contentId;
       trigger.setAttribute("aria-controls", contentId);
       trigger.setAttribute("aria-expanded", "false");
-      content.setAttribute("role", content.getAttribute("role") ?? "dialog");
-
       let openState =
         element.getAttribute("data-open") === "true" ||
         content.getAttribute("data-open") === "true";

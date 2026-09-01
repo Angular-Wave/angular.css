@@ -10,8 +10,8 @@ AngularTS controller should render the panel open.
 
 ```html
 <span ng-popover>
-  <button ng-popover-trigger>Open</button>
-  <section ng-popover-content side="bottom">Content</section>
+  <button class="popover-trigger">Open</button>
+  <aside side="bottom" class="popover-content">Content</aside>
 </span>
 ```
 
@@ -33,20 +33,10 @@ This component's root directive is `[ng-popover]`. Importing the package registe
 ### Directive selectors
 
 - `ng-popover`
-- `ng-popover-content`
-- `ng-popover-trigger`
 
-### Styling slots
-
-- `[data-slot="popover"]`
-- `[data-slot="popover-content"]`
-- `[data-slot="popover-description"]`
-- `[data-slot="popover-header"]`
-- `[data-slot="popover-title"]`
-- `[data-slot="popover-trigger"]`
+### Semantic structure
 
 A native button trigger and one content element are required. Header, title, and description selectors are optional semantic styling hooks. Use native form controls inside the content; AngularTS owns their values and validation.
-Use the named slots as stable Tailwind and CSS selectors.
 
 ## API
 
@@ -66,7 +56,7 @@ Use the named slots as stable Tailwind and CSS selectors.
 | `data-side` | Input/output | Stable component state or styling hook. |
 | `data-state` | Output | Stable component state or styling hook. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
-| `role` | Input/output | Explicit semantic role when native HTML does not provide one. |
+| `role` | Output | Explicit semantic role when native HTML does not provide one. |
 | `side` | Input | Physical placement: `left`, `top`, `bottom`, or `right`. |
 | `tabindex` | Input/output | Keyboard focus order for composite descendants. |
 
@@ -100,7 +90,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-popover]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-popover]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

@@ -22,8 +22,8 @@ test("empty, item, keyboard, and separator artifacts expose semantic structure",
   page,
 }) => {
   await openElementArtifact(page, "empty");
-  const empty = page.locator("[ng-empty]");
-  await expect(empty).toHaveAttribute("role", "status");
+  const empty = page.locator(".empty");
+  expect(await empty.getAttribute("role")).toBeNull();
   await expect(empty).toHaveAttribute("aria-live", "polite");
   await expect(
     empty.getByRole("heading", { name: "No Projects Yet" }),
@@ -40,20 +40,22 @@ test("empty, item, keyboard, and separator artifacts expose semantic structure",
   );
 
   await openElementArtifact(page, "kbd");
-  await expect(page.locator("[ng-kbd]").first()).toHaveText("Ctrl");
-  await expect(page.locator("[ng-kbd]").nth(2)).toHaveAccessibleName("Slash");
+  await expect(page.locator(".kbd").first()).toHaveText("Ctrl");
+  await expect(page.locator(".kbd").nth(2)).toHaveAccessibleName("Slash");
 
   await openElementArtifact(page, "separator");
-  await expect(page.locator("[ng-separator]").first()).toHaveAttribute(
+  await expect(page.locator(".separator").first()).toHaveAttribute(
     "aria-orientation",
     "horizontal",
   );
-  await expect(
-    page.locator('[ng-separator][orientation="vertical"]'),
-  ).toHaveCount(4);
-  await expect(
-    page.locator('[ng-separator][orientation="vertical"]').first(),
-  ).toHaveAttribute("role", "separator");
+  await expect(page.locator('.separator[orientation="vertical"]')).toHaveCount(
+    4,
+  );
+  const verticalSeparator = page
+    .locator('.separator[orientation="vertical"]')
+    .first();
+  expect(await verticalSeparator.getAttribute("role")).toBeNull();
+  await expect(verticalSeparator).toHaveRole("separator");
 });
 
 test("field and label artifacts connect controls, descriptions, errors, and AngularTS values", async ({
@@ -87,9 +89,7 @@ test("input-group artifact associates its visible addon with the control", async
   await expect(group).toHaveAttribute("data-has-addon", "true");
   await expect(group).toHaveAttribute("data-addon-count", "1");
   await expect(group).toHaveAttribute("data-has-button", "false");
-  const addonId = await group
-    .locator('[data-slot="input-group-addon"]')
-    .getAttribute("id");
+  const addonId = await group.locator(".input-group-addon").getAttribute("id");
   await expect(input).toHaveAttribute("aria-describedby", addonId ?? "");
 });
 
@@ -124,7 +124,7 @@ test("scroll-area artifact exposes both overflow axes and synchronized scroll st
 }) => {
   await openElementArtifact(page, "scroll-area");
   const root = page.locator("[ng-scroll-area]");
-  const viewport = page.locator("[ng-scroll-area-viewport]");
+  const viewport = page.locator(".scroll-area-viewport");
   await expect(viewport).toHaveAttribute("tabindex", "0");
   await expect(viewport).toHaveAttribute("role", "region");
   await expect(viewport).toHaveAttribute("aria-label", "Scrollable content");

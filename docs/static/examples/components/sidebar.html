@@ -17,7 +17,7 @@
     data-example="sidebar-demo sidebar-controlled"
     class="sidebar-example-body"
   >
-    <div ng-sidebar-layout class="sidebar-demo-shell visual-example">
+    <div class="sidebar-demo-shell visual-example sidebar-layout">
       <aside
         id="app-sidebar"
         ng-sidebar
@@ -26,8 +26,8 @@
         class="sidebar-demo-panel"
         aria-label="Workspace navigation"
       >
-        <header ng-sidebar-header>
-          <a href="#workspace" ng-sidebar-menu-button size="lg">
+        <header class="sidebar-header">
+          <a href="#workspace" size="lg" class="sidebar-menu-button">
             <span class="sidebar-brand-mark" aria-hidden="true">A</span>
             <span class="sidebar-brand-copy">
               <strong>Acme Inc</strong>
@@ -35,24 +35,24 @@
             </span>
           </a>
           <input
-            data-slot="sidebar-input"
+
             ng-model="sidebarQuery"
             aria-label="Filter navigation"
             placeholder="Filter projects..."
-          />
+           class="sidebar-input" />
         </header>
-        <div data-slot="sidebar-separator" role="separator"></div>
-        <div ng-sidebar-content>
-          <section ng-sidebar-group>
-            <div ng-sidebar-group-label>Platform</div>
-            <div ng-sidebar-group-content>
-              <ul ng-sidebar-menu>
-                <li ng-sidebar-menu-item>
+        <hr class="sidebar-separator" />
+        <nav class="sidebar-content">
+          <section class="sidebar-group">
+            <h3 class="sidebar-group-label">Platform</h3>
+            <div class="sidebar-group-content">
+              <ul class="sidebar-menu">
+                <li class="sidebar-menu-item">
                   <a
                     href="#playground"
-                    ng-sidebar-menu-button
+
                     data-active="true"
-                  >
+                   class="sidebar-menu-button">
                     <svg
                       viewBox="0 0 24 24"
                       fill="none"
@@ -65,22 +65,21 @@
                     </svg>
                     <span>Playground</span>
                   </a>
-                  <ul ng-sidebar-menu-sub>
-                    <li ng-sidebar-menu-sub-item>
-                      <a ng-sidebar-menu-sub-button href="#history">History</a>
+                  <ul class="sidebar-menu-sub">
+                    <li class="sidebar-menu-sub-item">
+                      <a href="#history" class="sidebar-menu-sub-button">History</a>
                     </li>
-                    <li ng-sidebar-menu-sub-item>
-                      <a ng-sidebar-menu-sub-button href="#starred">Starred</a>
+                    <li class="sidebar-menu-sub-item">
+                      <a href="#starred" class="sidebar-menu-sub-button">Starred</a>
                     </li>
-                    <li ng-sidebar-menu-sub-item>
-                      <a ng-sidebar-menu-sub-button href="#settings"
-                        >Settings</a
-                      >
+                    <li class="sidebar-menu-sub-item">
+                      <a href="#settings"
+                         class="sidebar-menu-sub-button">Settings</a>
                     </li>
                   </ul>
                 </li>
-                <li ng-sidebar-menu-item>
-                  <a href="#models" ng-sidebar-menu-button>
+                <li class="sidebar-menu-item">
+                  <a href="#models" class="sidebar-menu-button">
                     <svg
                       viewBox="0 0 24 24"
                       fill="none"
@@ -94,8 +93,8 @@
                     <span>Models</span>
                   </a>
                 </li>
-                <li ng-sidebar-menu-item>
-                  <a href="#documentation" ng-sidebar-menu-button>
+                <li class="sidebar-menu-item">
+                  <a href="#documentation" class="sidebar-menu-button">
                     <svg
                       viewBox="0 0 24 24"
                       fill="none"
@@ -113,38 +112,38 @@
               </ul>
             </div>
           </section>
-          <section ng-sidebar-group>
-            <div ng-sidebar-group-label>Projects</div>
-            <div ng-sidebar-group-content>
-              <ul ng-sidebar-menu>
-                <li ng-sidebar-menu-item>
-                  <a href="#design" ng-sidebar-menu-button>
+          <section class="sidebar-group">
+            <h3 class="sidebar-group-label">Projects</h3>
+            <div class="sidebar-group-content">
+              <ul class="sidebar-menu">
+                <li class="sidebar-menu-item">
+                  <a href="#design" class="sidebar-menu-button">
                     <span class="sidebar-menu-dot" aria-hidden="true"></span>
                     <span>Design Engineering</span>
                   </a>
-                  <span ng-sidebar-menu-badge>24</span>
+                  <span class="sidebar-menu-badge">24</span>
                 </li>
-                <li ng-sidebar-menu-item>
-                  <a href="#sales" ng-sidebar-menu-button>
+                <li class="sidebar-menu-item">
+                  <a href="#sales" class="sidebar-menu-button">
                     <span class="sidebar-menu-dot" aria-hidden="true"></span>
                     <span>Sales &amp; Marketing</span>
                   </a>
-                  <span ng-sidebar-menu-badge>12</span>
+                  <span class="sidebar-menu-badge">12</span>
                 </li>
-                <li ng-sidebar-menu-item>
-                  <a href="#travel" ng-sidebar-menu-button>
+                <li class="sidebar-menu-item">
+                  <a href="#travel" class="sidebar-menu-button">
                     <span class="sidebar-menu-dot" aria-hidden="true"></span>
                     <span>Travel</span>
                   </a>
-                  <span ng-sidebar-menu-badge>3</span>
+                  <span class="sidebar-menu-badge">3</span>
                 </li>
               </ul>
             </div>
           </section>
-        </div>
-        <footer ng-sidebar-footer>
-          <button ng-sidebar-menu-button size="lg">
-            <span ng-avatar><span ng-avatar-fallback>JD</span></span>
+        </nav>
+        <footer class="sidebar-footer">
+          <button size="lg" class="sidebar-menu-button">
+            <span ng-avatar><span class="avatar-fallback">JD</span></span>
             <span class="sidebar-brand-copy">
               <strong>Jane Doe</strong>
               <small>jane@example.com</small>
@@ -152,17 +151,16 @@
           </button>
         </footer>
       </aside>
-      <main ng-sidebar-inset class="sidebar-demo-inset">
+      <main class="sidebar-demo-inset sidebar-inset">
         <header class="sidebar-demo-toolbar">
           <button
-            ng-button
+
             variant="ghost"
             size="sm"
             data-sidebar-controlled
             aria-controls="app-sidebar"
             aria-keyshortcuts="Control+B Meta+B"
-            ng-click="sidebarOpen=!sidebarOpen"
-          >
+            ng-click="sidebarOpen=!sidebarOpen" class="button">
             <svg
               viewBox="0 0 24 24"
               fill="none"

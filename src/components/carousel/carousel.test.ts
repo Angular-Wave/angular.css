@@ -11,13 +11,11 @@ test("canonical carousel exposes semantics and navigates with controls and keys"
   await page.goto(canonicalUrl);
 
   const carousel = page.locator("[ng-carousel]");
-  const items = carousel.locator(
-    `:is([data-slot=carousel-item], [ng-carousel-item])`,
-  );
-  const previous = carousel.locator("[ng-carousel-previous]");
-  const next = carousel.locator("[ng-carousel-next]");
+  const items = carousel.locator(`.carousel-item`);
+  const previous = carousel.locator(".carousel-previous");
+  const next = carousel.locator(".carousel-next");
 
-  await expect(carousel).toHaveAttribute("role", "region");
+  expect(await carousel.getAttribute("role")).toBeNull();
   await expect(carousel).toHaveAttribute("aria-roledescription", "carousel");
   await expect(carousel).toHaveAttribute("data-count", "5");
   await expect(carousel).toHaveAttribute("data-item-count", "5");
@@ -50,9 +48,7 @@ test("carousel drag gesture selects the next snap", async ({ page }) => {
   await page.goto(canonicalUrl);
 
   const carousel = page.locator("[ng-carousel]");
-  const viewport = carousel.locator(
-    `:is([data-slot=carousel-content], [ng-carousel-content])`,
-  );
+  const viewport = carousel.locator(`.carousel-content`);
   const box = await viewport.boundingBox();
   if (!box) throw new Error("Carousel viewport is not rendered");
 
@@ -76,7 +72,7 @@ test("API example binds Embla selection detail through AngularTS", async ({
   const status = workflow.locator(".carousel-status");
 
   await expect(status).toHaveText("Slide 1 of 5");
-  await carousel.locator("[ng-carousel-next]").click();
+  await carousel.locator(".carousel-next").click();
   await expect(carousel).toHaveAttribute("data-index", "1");
   await expect(status).toHaveText("Slide 2 of 5");
 });
@@ -87,13 +83,9 @@ test("multi-item carousel uses visible slide basis and snap boundaries", async (
   await page.goto(workflowsUrl);
 
   const carousel = page.locator(".carousel-multiple-demo");
-  const items = carousel.locator(
-    `:is([data-slot=carousel-item], [ng-carousel-item])`,
-  );
-  const cards = carousel.locator(`:is([data-slot=card], [ng-card])`);
-  const viewport = carousel.locator(
-    `:is([data-slot=carousel-content], [ng-carousel-content])`,
-  );
+  const items = carousel.locator(`.carousel-item`);
+  const cards = carousel.locator(".card");
+  const viewport = carousel.locator(`.carousel-content`);
   const viewportBox = await viewport.boundingBox();
   const itemBox = await items.first().boundingBox();
   const cardBox = await cards.first().boundingBox();
@@ -105,7 +97,7 @@ test("multi-item carousel uses visible slide basis and snap boundaries", async (
   expect(cardBox.width / viewportBox.width).toBeGreaterThan(0.28);
   expect(cardBox.width / viewportBox.width).toBeLessThan(0.32);
   await expect(carousel).toHaveAttribute("data-count", "3");
-  await carousel.locator("[ng-carousel-next]").click();
+  await carousel.locator(".carousel-next").click();
   await expect(carousel).toHaveAttribute("data-index", "1");
 });
 
@@ -115,13 +107,9 @@ test("vertical carousel uses vertical geometry and arrow keys", async ({
   await page.goto(workflowsUrl);
 
   const carousel = page.locator(".carousel-vertical-demo");
-  const first = carousel
-    .locator(`:is([data-slot=carousel-item], [ng-carousel-item])`)
-    .first();
-  const second = carousel
-    .locator(`:is([data-slot=carousel-item], [ng-carousel-item])`)
-    .nth(1);
-  const cards = carousel.locator(`:is([data-slot=card], [ng-card])`);
+  const first = carousel.locator(`.carousel-item`).first();
+  const second = carousel.locator(`.carousel-item`).nth(1);
+  const cards = carousel.locator(".card");
   const firstBox = await first.boundingBox();
   const secondBox = await second.boundingBox();
   const firstCardBox = await cards.first().boundingBox();
@@ -160,8 +148,8 @@ test("RTL carousel preserves logical direction and functional controls", async (
   await page.goto(compositionsUrl);
 
   const carousel = page.locator(`[ng-carousel][dir="rtl"]`);
-  const previous = carousel.locator("[ng-carousel-previous]");
-  const next = carousel.locator("[ng-carousel-next]");
+  const previous = carousel.locator(".carousel-previous");
+  const next = carousel.locator(".carousel-next");
   const previousBox = await previous.boundingBox();
   const nextBox = await next.boundingBox();
   if (!previousBox || !nextBox) throw new Error("RTL controls are hidden");
@@ -170,11 +158,10 @@ test("RTL carousel preserves logical direction and functional controls", async (
   expect(previousBox.x).toBeGreaterThan(nextBox.x);
   await next.click();
   await expect(carousel).toHaveAttribute("data-index", "1");
-  await expect(
-    carousel
-      .locator(`:is([data-slot=carousel-item], [ng-carousel-item])`)
-      .nth(1),
-  ).toHaveAttribute("data-active", "true");
+  await expect(carousel.locator(`.carousel-item`).nth(1)).toHaveAttribute(
+    "data-active",
+    "true",
+  );
 });
 
 test("custom spacing and sizing remain authored CSS concerns", async ({
@@ -184,10 +171,8 @@ test("custom spacing and sizing remain authored CSS concerns", async ({
 
   const sized = page.locator(".carousel-size-demo");
   const spaced = page.locator(".carousel-spacing-demo");
-  const sizedItems = sized.locator(
-    `:is([data-slot=carousel-item], [ng-carousel-item])`,
-  );
-  const spacedCards = spaced.locator(`:is([data-slot=card], [ng-card])`);
+  const sizedItems = sized.locator(`.carousel-item`);
+  const spacedCards = spaced.locator(".card");
   const sizedFirst = await sizedItems.first().boundingBox();
   const spacedFirst = await spacedCards.first().boundingBox();
   const spacedSecond = await spacedCards.nth(1).boundingBox();
@@ -222,10 +207,10 @@ test("carousel examples match the reference responsive widths and bases", async 
   await expectWidth(".carousel-multiple-demo", 320);
   await expectWidth(".carousel-vertical-demo", 320);
   await expect(
-    page.locator(".carousel-multiple-demo [ng-carousel-previous]"),
+    page.locator(".carousel-multiple-demo .carousel-previous"),
   ).toBeHidden();
   const compactMultiple = await page
-    .locator(".carousel-multiple-demo [data-slot='carousel-item']")
+    .locator(".carousel-multiple-demo .carousel-item")
     .first()
     .boundingBox();
   expect(compactMultiple?.width).toBeGreaterThan(320);
@@ -235,7 +220,7 @@ test("carousel examples match the reference responsive widths and bases", async 
   await expectWidth(".carousel-multiple-demo", 384);
   await expectWidth(".carousel-vertical-demo", 320);
   await expect(
-    page.locator(".carousel-multiple-demo [ng-carousel-previous]"),
+    page.locator(".carousel-multiple-demo .carousel-previous"),
   ).toBeVisible();
 
   await page.setViewportSize({ height: 1200, width: 420 });
@@ -254,20 +239,17 @@ test("carousel reinitializes when slides are inserted", async ({ page }) => {
   await page.goto(canonicalUrl);
 
   const carousel = page.locator("[ng-carousel]");
-  await carousel
-    .locator(`:is([data-slot=carousel-track], [ng-carousel-track])`)
-    .evaluate((track) => {
-      const slide = document.createElement("article");
-      slide.setAttribute("data-slot", "carousel-item");
-      slide.innerHTML = "<div>6</div>";
-      track.append(slide);
-    });
+  await carousel.locator(`.carousel-track`).evaluate((track) => {
+    const slide = document.createElement("article");
+    slide.className = "carousel-item";
+    slide.innerHTML = "<div>6</div>";
+    track.append(slide);
+  });
 
   await expect(carousel).toHaveAttribute("data-item-count", "6");
   await expect(carousel).toHaveAttribute("data-count", "6");
-  await expect(
-    carousel
-      .locator(`:is([data-slot=carousel-item], [ng-carousel-item])`)
-      .nth(5),
-  ).toHaveAttribute("aria-label", "6 of 6");
+  await expect(carousel.locator(`.carousel-item`).nth(5)).toHaveAttribute(
+    "aria-label",
+    "6 of 6",
+  );
 });

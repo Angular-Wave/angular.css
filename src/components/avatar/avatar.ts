@@ -11,16 +11,8 @@ export function avatarDirective(): ng.Directive {
         "default";
       element.setAttribute("data-size", size);
 
-      const image = query(
-        element,
-        '[data-slot="avatar-image"], [ng-avatar-image]',
-        HTMLImageElement,
-      );
-      const fallback = query(
-        element,
-        '[data-slot="avatar-fallback"], [ng-avatar-fallback]',
-        HTMLElement,
-      );
+      const image = query(element, ".avatar-image", HTMLImageElement);
+      const fallback = query(element, ".avatar-fallback", HTMLElement);
 
       const setState = (state: "loaded" | "fallback") => {
         element.setAttribute("data-state", state);

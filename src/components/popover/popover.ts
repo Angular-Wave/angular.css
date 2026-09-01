@@ -24,16 +24,8 @@ export function popoverDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
       const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
-      const trigger = query(
-        element,
-        '[data-slot="popover-trigger"], [ng-popover-trigger]',
-        HTMLElement,
-      );
-      const content = query(
-        element,
-        '[data-slot="popover-content"], [ng-popover-content]',
-        HTMLElement,
-      );
+      const trigger = query(element, ".popover-trigger", HTMLElement);
+      const content = query(element, ".popover-content", HTMLElement);
 
       if (!trigger || !content) return;
 
@@ -65,7 +57,7 @@ export function popoverDirective(): ng.Directive {
       content.id = contentId;
       trigger.setAttribute("aria-haspopup", "dialog");
       trigger.setAttribute("aria-controls", contentId);
-      content.setAttribute("role", content.getAttribute("role") ?? "dialog");
+      content.setAttribute("role", "dialog");
       content.setAttribute(
         "aria-modal",
         content.getAttribute("aria-modal") ?? "false",

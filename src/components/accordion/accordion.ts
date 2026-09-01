@@ -27,8 +27,7 @@ const resolveItems = (element: HTMLElement): AccordionItem[] => {
   const explicit = Array.from(element.children).filter(
     (child): child is AccordionItem =>
       child instanceof HTMLElement &&
-      (child.matches("[data-slot='accordion-item']") ||
-        child.matches("[ng-accordion-item]")),
+      (child.matches(".accordion-item") || child.matches(".accordion-item")),
   );
   if (explicit.length) {
     return explicit;
@@ -41,7 +40,7 @@ const resolveItems = (element: HTMLElement): AccordionItem[] => {
 
 const resolveHeader = (item: AccordionItem): HTMLElement | null => {
   return (
-    item.querySelector<HTMLElement>("[data-slot='accordion-header']") ??
+    item.querySelector<HTMLElement>(".accordion-header") ??
     (item.firstElementChild instanceof HTMLElement
       ? item.firstElementChild
       : null)
@@ -53,8 +52,8 @@ const resolvePanel = (
   header: Element,
 ): HTMLElement | null => {
   return (
-    item.querySelector<HTMLElement>("[data-slot='accordion-content']") ??
-    item.querySelector<HTMLElement>("[data-slot='accordion-panel']") ??
+    item.querySelector<HTMLElement>(".accordion-content") ??
+    item.querySelector<HTMLElement>(".accordion-panel") ??
     (header.nextElementSibling instanceof HTMLElement
       ? header.nextElementSibling
       : item.lastElementChild instanceof HTMLElement
@@ -65,8 +64,8 @@ const resolvePanel = (
 
 const resolveTrigger = (header: HTMLElement): HTMLButtonElement | null => {
   const slotTrigger =
-    header.querySelector<HTMLElement>("[data-slot='accordion-trigger']") ??
-    header.querySelector<HTMLElement>("button[data-slot='accordion-trigger']");
+    header.querySelector<HTMLElement>(".accordion-trigger") ??
+    header.querySelector<HTMLElement>("button.accordion-trigger");
   const trigger = slotTrigger ?? header.querySelector("button");
   if (trigger instanceof HTMLButtonElement) return trigger;
   return header instanceof HTMLButtonElement ? header : null;
@@ -146,7 +145,7 @@ export function accordionDirective(): ng.Directive {
             "beforeend",
             `
               <svg xmlns="http://www.w3.org/2000/svg"
-                   data-slot="accordion-trigger-icon"
+
                    aria-hidden="true"
                    width="24" height="24"
                    fill="none"
@@ -154,7 +153,7 @@ export function accordionDirective(): ng.Directive {
                    stroke-width="2"
                    stroke-linecap="round"
                    stroke-linejoin="round"
-                   stroke="currentColor">
+                   stroke="currentColor" class="accordion-trigger-icon">
                 <path d="m19.5 8.25-7.5 7.5-7.5-7.5" />
               </svg>
             `,
@@ -171,12 +170,10 @@ export function accordionDirective(): ng.Directive {
         button.id = id;
         panel.id = panelId;
         button.setAttribute("aria-controls", panelId);
-        panel.setAttribute("role", "region");
+        if (panel.tagName !== "SECTION" && !panel.hasAttribute("role")) {
+          panel.setAttribute("role", "region");
+        }
         panel.setAttribute("aria-labelledby", id);
-        item.setAttribute(
-          "data-slot",
-          item.getAttribute("data-slot") ?? "accordion-item",
-        );
 
         const initiallyOpen = isPanelOpen(item);
         const isClosed = isElementClosed(item.getAttribute("data-state"));

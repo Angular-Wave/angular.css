@@ -8,13 +8,13 @@ description: >
 Compose comboboxes from a control, input, content, and option items.
 
 ```html
-<div data-slot="combobox">
-  <div data-slot="combobox-control">
-    <input data-slot="input" role="combobox" />
+<div class="combobox">
+  <div class="combobox-control">
+    <input  class="input" />
   </div>
-  <div data-slot="combobox-content" role="listbox">
-    <div data-slot="combobox-item" role="option">AngularCSS</div>
-  </div>
+  <ul class="combobox-content">
+    <li class="combobox-item">AngularCSS</li>
+  </ul>
 </div>
 ```
 

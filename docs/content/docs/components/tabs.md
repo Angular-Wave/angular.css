@@ -5,17 +5,17 @@ description: >
   Tabbed content sections
 ---
 
-Use ARIA tab roles and slot attributes. Set active triggers with
+Use ARIA tab roles and part classes. Set active triggers with
 `aria-selected="true"` or `data-active="true"`.
 
 ```html
-<div data-slot="tabs">
-  <div data-slot="tabs-list" role="tablist">
-    <button data-slot="tabs-trigger" role="tab" aria-selected="true">
+<div class="tabs">
+  <menu class="tabs-list">
+    <button aria-selected="true" class="tabs-trigger">
       Overview
     </button>
-  </div>
-  <div data-slot="tabs-content" role="tabpanel">Content</div>
+  </menu>
+  <div class="tabs-content">Content</div>
 </div>
 ```
 
@@ -41,19 +41,10 @@ This component's root directive is `[ng-tabs]`. Importing the package registers 
 ### Directive selectors
 
 - `ng-tabs`
-- `ng-tabs-content`
-- `ng-tabs-list`
-- `ng-tabs-trigger`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="tabs"]`
-- `[data-slot="tabs-content"]`
-- `[data-slot="tabs-list"]`
-- `[data-slot="tabs-trigger"]`
-
-Slots are optional unless the usage example or behavior description identifies a required relationship.
-Use the named slots as stable Tailwind and CSS selectors.
+Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough.
 
 ## API
 
@@ -68,7 +59,6 @@ Use the named slots as stable Tailwind and CSS selectors.
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
 | `disabled` | Input | Disables native or component interaction. |
 | `orientation` | Input | Layout direction: `horizontal` or `vertical`. |
-| `role` | Input | Explicit semantic role when native HTML does not provide one. |
 
 `Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
 
@@ -100,7 +90,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-tabs]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-tabs]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

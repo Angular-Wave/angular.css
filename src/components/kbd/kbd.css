@@ -1,5 +1,4 @@
-[data-slot="kbd"],
-[ng-kbd] {
+.kbd {
   display: inline-flex;
   min-width: 1.5rem;
   align-items: center;
@@ -17,8 +16,7 @@
   user-select: none;
 }
 
-[data-slot="kbd-group"],
-[ng-kbd-group] {
+.kbd-group {
   display: inline-flex;
   align-items: center;
   gap: calc(var(--spacing) * 1);

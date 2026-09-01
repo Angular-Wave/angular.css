@@ -17,19 +17,19 @@
   >
     <main class="alert-dialog-workflows">
       <div class="alert-dialog-trigger-grid" aria-label="Alert dialog examples">
-        <section id="share-project-dialog" ng-alert-dialog>
+        <section id="share-project-dialog" ng-alert-dialog class="alert-dialog">
           <button
-            ng-button
+
             type="button"
             variant="outline"
-            data-slot="alert-dialog-trigger"
-          >
+
+           class="alert-dialog-trigger button">
             Share Project
           </button>
-          <div data-slot="alert-dialog-overlay"></div>
-          <section data-slot="alert-dialog-content" data-size="default">
-            <header data-slot="alert-dialog-header">
-              <div data-slot="alert-dialog-media" aria-hidden="true">
+          <div class="alert-dialog-overlay"></div>
+          <dialog data-size="default" class="alert-dialog-content">
+            <header class="alert-dialog-header">
+              <div aria-hidden="true" class="alert-dialog-media">
                 <svg viewBox="0 0 24 24" fill="none">
                   <circle
                     cx="12"
@@ -46,76 +46,76 @@
                   />
                 </svg>
               </div>
-              <h2 data-slot="alert-dialog-title">Share this project?</h2>
-              <p data-slot="alert-dialog-description">
+              <h2 class="alert-dialog-title">Share this project?</h2>
+              <p class="alert-dialog-description">
                 Anyone with the link will be able to view and edit this project.
               </p>
             </header>
-            <footer data-slot="alert-dialog-footer">
+            <footer class="alert-dialog-footer">
               <button
-                ng-button
+
                 type="button"
                 variant="outline"
-                data-slot="alert-dialog-cancel"
-              >
+
+               class="alert-dialog-cancel button">
                 Cancel
               </button>
-              <button ng-button type="button" data-slot="alert-dialog-action">
+              <button type="button" class="alert-dialog-action button">
                 Share
               </button>
             </footer>
-          </section>
+          </dialog>
         </section>
 
-        <section id="accessory-dialog" ng-alert-dialog>
+        <section id="accessory-dialog" ng-alert-dialog class="alert-dialog">
           <button
-            ng-button
+
             type="button"
             variant="outline"
-            data-slot="alert-dialog-trigger"
-          >
+
+           class="alert-dialog-trigger button">
             Show Small Dialog
           </button>
-          <div data-slot="alert-dialog-overlay"></div>
-          <section data-slot="alert-dialog-content" data-size="sm">
-            <header data-slot="alert-dialog-header">
-              <h2 data-slot="alert-dialog-title">
+          <div class="alert-dialog-overlay"></div>
+          <dialog data-size="sm" class="alert-dialog-content">
+            <header class="alert-dialog-header">
+              <h2 class="alert-dialog-title">
                 Allow accessory to connect?
               </h2>
-              <p data-slot="alert-dialog-description">
+              <p class="alert-dialog-description">
                 Do you want to allow the USB accessory to connect to this
                 device?
               </p>
             </header>
-            <footer data-slot="alert-dialog-footer">
+            <footer class="alert-dialog-footer">
               <button
-                ng-button
+
                 type="button"
                 variant="outline"
-                data-slot="alert-dialog-cancel"
-              >
+
+               class="alert-dialog-cancel button">
                 Don't allow
               </button>
-              <button ng-button type="button" data-slot="alert-dialog-action">
+              <button type="button" class="alert-dialog-action button">
                 Allow
               </button>
             </footer>
-          </section>
+          </dialog>
         </section>
 
-        <section id="accessory-media-dialog" ng-alert-dialog>
+        <section id="accessory-media-dialog" ng-alert-dialog class="alert-dialog">
           <button
-            ng-button
+
             type="button"
             variant="outline"
-            data-slot="alert-dialog-trigger"
-          >
+
+           class="alert-dialog-trigger button">
             Show Small Dialog With Media
           </button>
-          <div data-slot="alert-dialog-overlay"></div>
-          <section data-slot="alert-dialog-content" data-size="sm">
-            <header data-slot="alert-dialog-header">
-              <div data-slot="alert-dialog-media" aria-hidden="true">
+          <div class="alert-dialog-overlay"></div>
+          <dialog data-size="sm" class="alert-dialog-content">
+            <header class="alert-dialog-header">
+              <div aria-hidden="true" class="alert-dialog-media">
                 <svg viewBox="0 0 24 24" fill="none">
                   <path
                     d="m7 7 10 10-5 5V2l5 5L7 17"
@@ -126,45 +126,45 @@
                   />
                 </svg>
               </div>
-              <h2 data-slot="alert-dialog-title">
+              <h2 class="alert-dialog-title">
                 Allow accessory to connect?
               </h2>
-              <p data-slot="alert-dialog-description">
+              <p class="alert-dialog-description">
                 Do you want to allow the USB accessory to connect to this
                 device?
               </p>
             </header>
-            <footer data-slot="alert-dialog-footer">
+            <footer class="alert-dialog-footer">
               <button
-                ng-button
+
                 type="button"
                 variant="outline"
-                data-slot="alert-dialog-cancel"
-              >
+
+               class="alert-dialog-cancel button">
                 Don't allow
               </button>
-              <button ng-button type="button" data-slot="alert-dialog-action">
+              <button type="button" class="alert-dialog-action button">
                 Allow
               </button>
             </footer>
-          </section>
+          </dialog>
         </section>
 
-        <section id="delete-chat-dialog" ng-alert-dialog>
+        <section id="delete-chat-dialog" ng-alert-dialog class="alert-dialog">
           <button
-            ng-button
+
             type="button"
             variant="destructive"
-            data-slot="alert-dialog-trigger"
-          >
+
+           class="alert-dialog-trigger button">
             Delete Chat
           </button>
-          <div data-slot="alert-dialog-overlay"></div>
-          <section data-slot="alert-dialog-content" data-size="sm">
-            <header data-slot="alert-dialog-header">
+          <div class="alert-dialog-overlay"></div>
+          <dialog data-size="sm" class="alert-dialog-content">
+            <header class="alert-dialog-header">
               <div
-                data-slot="alert-dialog-media"
-                class="alert-dialog-media-destructive"
+
+                class="alert-dialog-media-destructive alert-dialog-media"
                 aria-hidden="true"
               >
                 <svg viewBox="0 0 24 24" fill="none">
@@ -177,82 +177,82 @@
                   />
                 </svg>
               </div>
-              <h2 data-slot="alert-dialog-title">Delete chat?</h2>
-              <p data-slot="alert-dialog-description">
+              <h2 class="alert-dialog-title">Delete chat?</h2>
+              <p class="alert-dialog-description">
                 This will permanently delete this chat conversation. View
                 <a href="#settings">Settings</a> to delete saved memories.
               </p>
             </header>
-            <footer data-slot="alert-dialog-footer">
+            <footer class="alert-dialog-footer">
               <button
-                ng-button
+
                 type="button"
                 variant="outline"
-                data-slot="alert-dialog-cancel"
-              >
+
+               class="alert-dialog-cancel button">
                 Cancel
               </button>
               <button
-                ng-button
+
                 type="button"
                 variant="destructive"
-                data-slot="alert-dialog-action"
+
                 ng-click="chatDeleted=true"
-              >
+               class="alert-dialog-action button">
                 Delete
               </button>
             </footer>
-          </section>
+          </dialog>
         </section>
 
         <div class="alert-dialog-rtl-triggers" dir="rtl" lang="ar">
-          <section id="rtl-confirmation-dialog" ng-alert-dialog>
+          <section id="rtl-confirmation-dialog" ng-alert-dialog class="alert-dialog">
             <button
-              ng-button
+
               type="button"
               variant="outline"
-              data-slot="alert-dialog-trigger"
-            >
+
+             class="alert-dialog-trigger button">
               إظهار الحوار
             </button>
-            <div data-slot="alert-dialog-overlay"></div>
-            <section data-slot="alert-dialog-content" data-size="default">
-              <header data-slot="alert-dialog-header">
-                <h2 data-slot="alert-dialog-title">هل أنت متأكد تمامًا؟</h2>
-                <p data-slot="alert-dialog-description">
+            <div class="alert-dialog-overlay"></div>
+            <dialog data-size="default" class="alert-dialog-content">
+              <header class="alert-dialog-header">
+                <h2 class="alert-dialog-title">هل أنت متأكد تمامًا؟</h2>
+                <p class="alert-dialog-description">
                   لا يمكن التراجع عن هذا الإجراء. سيؤدي هذا إلى حذف حسابك
                   نهائيًا من خوادمنا.
                 </p>
               </header>
-              <footer data-slot="alert-dialog-footer">
+              <footer class="alert-dialog-footer">
                 <button
-                  ng-button
+
                   type="button"
                   variant="outline"
-                  data-slot="alert-dialog-cancel"
-                >
+
+                 class="alert-dialog-cancel button">
                   إلغاء
                 </button>
-                <button ng-button type="button" data-slot="alert-dialog-action">
+                <button type="button" class="alert-dialog-action button">
                   متابعة
                 </button>
               </footer>
-            </section>
+            </dialog>
           </section>
 
-          <section id="rtl-accessory-dialog" ng-alert-dialog>
+          <section id="rtl-accessory-dialog" ng-alert-dialog class="alert-dialog">
             <button
-              ng-button
+
               type="button"
               variant="outline"
-              data-slot="alert-dialog-trigger"
-            >
+
+             class="alert-dialog-trigger button">
               إظهار الحوار (صغير)
             </button>
-            <div data-slot="alert-dialog-overlay"></div>
-            <section data-slot="alert-dialog-content" data-size="sm">
-              <header data-slot="alert-dialog-header">
-                <div data-slot="alert-dialog-media" aria-hidden="true">
+            <div class="alert-dialog-overlay"></div>
+            <dialog data-size="sm" class="alert-dialog-content">
+              <header class="alert-dialog-header">
+                <div aria-hidden="true" class="alert-dialog-media">
                   <svg viewBox="0 0 24 24" fill="none">
                     <path
                       d="m7 7 10 10-5 5V2l5 5L7 17"
@@ -263,31 +263,31 @@
                     />
                   </svg>
                 </div>
-                <h2 data-slot="alert-dialog-title">السماح للملحق بالاتصال؟</h2>
-                <p data-slot="alert-dialog-description">
+                <h2 class="alert-dialog-title">السماح للملحق بالاتصال؟</h2>
+                <p class="alert-dialog-description">
                   هل تريد السماح لملحق USB بالاتصال بهذا الجهاز؟
                 </p>
               </header>
-              <footer data-slot="alert-dialog-footer">
+              <footer class="alert-dialog-footer">
                 <button
-                  ng-button
+
                   type="button"
                   variant="outline"
-                  data-slot="alert-dialog-cancel"
-                >
+
+                 class="alert-dialog-cancel button">
                   عدم السماح
                 </button>
-                <button ng-button type="button" data-slot="alert-dialog-action">
+                <button type="button" class="alert-dialog-action button">
                   السماح
                 </button>
               </footer>
-            </section>
+            </dialog>
           </section>
         </div>
       </div>
-      <p class="output" role="status">
+      <output class="output">
         Chat: {{ chatDeleted ? 'deleted' : 'available' }}
-      </p>
+      </output>
     </main>
   </body>
 </html>

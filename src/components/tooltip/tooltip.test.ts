@@ -56,8 +56,8 @@ test("canonical tooltip uses built bundles and hover disclosure semantics", asyn
   await expectBuiltArtifactRuntime(page);
 
   const root = page.locator("[ng-tooltip]");
-  const trigger = page.locator("[ng-tooltip-trigger]");
-  const content = page.locator("[ng-tooltip-content]");
+  const trigger = page.locator(".tooltip-trigger");
+  const content = page.locator(".tooltip-content");
 
   await expect(content).toBeHidden();
   await expect(content).toHaveAttribute("role", "tooltip");
@@ -91,8 +91,8 @@ test("focus opens canonical tooltip and Escape closes it without moving focus", 
 }) => {
   await page.goto(canonicalUrl);
 
-  const trigger = page.locator("[ng-tooltip-trigger]");
-  const content = page.locator("[ng-tooltip-content]");
+  const trigger = page.locator(".tooltip-trigger");
+  const content = page.locator(".tooltip-content");
   await trigger.focus();
   await expect(content).toBeVisible();
   await trigger.press("Escape");
@@ -106,8 +106,8 @@ test("externally controlled root and content open state remains authoritative", 
   await page.goto(canonicalUrl);
 
   const root = page.locator("[ng-tooltip]");
-  const trigger = page.locator("[ng-tooltip-trigger]");
-  const content = page.locator("[ng-tooltip-content]");
+  const trigger = page.locator(".tooltip-trigger");
+  const content = page.locator(".tooltip-content");
 
   await root.evaluate((element) => element.setAttribute("data-open", "true"));
   await expect(content).toBeVisible();
@@ -129,10 +129,10 @@ test("keyboard and disabled-button wrapper references remain functional", async 
   await expectBuiltArtifactRuntime(page);
 
   const save = page.getByRole("button", { name: "Save changes" });
-  const saveContent = save.locator("..").locator("[ng-tooltip-content]");
+  const saveContent = save.locator("..").locator(".tooltip-content");
   await save.focus();
   await expect(saveContent).toBeVisible();
-  await expect(saveContent.locator("[ng-kbd]")).toHaveText("S");
+  await expect(saveContent.locator(".kbd")).toHaveText("S");
   await save.press("Escape");
   await expect(saveContent).toBeHidden();
 
@@ -140,7 +140,7 @@ test("keyboard and disabled-button wrapper references remain functional", async 
   const disabledWrapper = disabledButton.locator("..");
   const disabledContent = disabledWrapper
     .locator("..")
-    .locator("[ng-tooltip-content]");
+    .locator(".tooltip-content");
   await disabledWrapper.hover();
   await expect(disabledButton).toBeDisabled();
   await expect(disabledContent).toBeVisible();
@@ -151,7 +151,7 @@ test("keyboard and disabled-button wrapper references remain functional", async 
   const unavailable = page.getByRole("button", { name: "Unavailable" });
   const unavailableContent = unavailable
     .locator("..")
-    .locator("[ng-tooltip-content]");
+    .locator(".tooltip-content");
   await unavailable.hover({ force: true });
   await expect(unavailableContent).toBeHidden();
 });
@@ -163,7 +163,7 @@ test("workflow sides use physical rendered placement", async ({ page }) => {
     const trigger = page.getByRole("button", {
       name: new RegExp(`^${side}$`, "i"),
     });
-    const content = trigger.locator("..").locator("[ng-tooltip-content]");
+    const content = trigger.locator("..").locator(".tooltip-content");
     await trigger.hover();
     await expect(content).toBeVisible();
     await expect(content).toHaveAttribute("data-side", side);
@@ -184,7 +184,7 @@ test("RTL mirrors text direction while left and right remain physical", async ({
   ] as const) {
     const trigger = page.getByRole("button", { name });
     const root = trigger.locator("..");
-    const content = root.locator("[ng-tooltip-content]");
+    const content = root.locator(".tooltip-content");
     await expect(root).toHaveAttribute("data-direction", "rtl");
     await trigger.hover();
     await expect(content).toHaveAttribute("data-direction", "rtl");

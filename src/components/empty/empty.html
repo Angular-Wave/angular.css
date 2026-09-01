@@ -10,9 +10,9 @@
     <script src="../../js/angular-css.umd.js"></script>
   </head>
   <body ng-app="ui" ng-cloak>
-    <section ng-empty class="empty-demo">
-      <div data-slot="empty-header">
-        <div data-slot="empty-media" variant="icon">
+    <section class="empty-demo empty">
+      <header class="empty-header">
+        <div variant="icon" class="empty-media">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -27,17 +27,17 @@
             />
           </svg>
         </div>
-        <h3 data-slot="empty-title">No projects yet</h3>
-        <p data-slot="empty-description">
+        <h2 class="empty-title">No projects yet</h2>
+        <p class="empty-description">
           Create a project or import an existing workspace to get started.
         </p>
-      </div>
-      <div data-slot="empty-content">
+      </header>
+      <section class="empty-content">
         <div class="row">
-          <button ng-button>Create project</button>
-          <button ng-button variant="outline">Import</button>
+          <button class="button">Create project</button>
+          <button variant="outline" class="button">Import</button>
         </div>
-      </div>
+      </section>
     </section>
   </body>
 </html>

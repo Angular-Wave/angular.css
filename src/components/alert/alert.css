@@ -1,4 +1,4 @@
-:is([ng-alert], [data-slot="alert"]) {
+.alert {
   position: relative;
   display: grid;
   width: 100%;
@@ -13,12 +13,12 @@
   text-align: start;
 }
 
-:is([ng-alert], [data-slot="alert"]):has(> [data-slot="alert-icon"]) {
+.alert:has(> .alert-icon) {
   grid-template-columns: auto minmax(0, 1fr);
   column-gap: calc(var(--spacing) * 2.5);
 }
 
-:is([ng-alert], [data-slot="alert"]) > [data-slot="alert-icon"] {
+.alert > .alert-icon {
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
   grid-row: span 2;
@@ -26,40 +26,36 @@
   transform: translateY(2px);
 }
 
-:is([ng-alert], [data-slot="alert"]):has(> [data-slot="alert-icon"])
-  > :is([data-slot="alert-title"], [data-slot="alert-description"]) {
+.alert:has(> .alert-icon) > :is(.alert-title, .alert-description) {
   grid-column-start: 2;
 }
 
-:is([ng-alert], [data-slot="alert"]):has(> [data-slot="alert-action"]) {
+.alert:has(> .alert-action) {
   padding-inline-end: calc(var(--spacing) * 18);
 }
 
-:is([ng-alert], [data-slot="alert"]):is(
-  [variant="destructive"],
-  [data-variant="destructive"]
-) {
+.alert:is([variant="destructive"], [data-variant="destructive"]) {
   color: var(--error);
 }
 
-[data-slot="alert-title"] {
+.alert-title {
   min-width: 0;
   font-weight: var(--font-weight-medium);
 }
 
-[data-slot="alert-title"] a,
-[data-slot="alert-description"] a {
+.alert-title a,
+.alert-description a {
   color: inherit;
   text-decoration-line: underline;
   text-underline-offset: 3px;
 }
 
-[data-slot="alert-title"] a:hover,
-[data-slot="alert-description"] a:hover {
+.alert-title a:hover,
+.alert-description a:hover {
   color: var(--foreground);
 }
 
-[data-slot="alert-description"] {
+.alert-description {
   min-width: 0;
   color: var(--muted-foreground);
   font-size: var(--text-sm);
@@ -67,19 +63,16 @@
   text-wrap: balance;
 }
 
-:is([ng-alert], [data-slot="alert"]):is(
-    [variant="destructive"],
-    [data-variant="destructive"]
-  )
-  > [data-slot="alert-description"] {
+.alert:is([variant="destructive"], [data-variant="destructive"])
+  > .alert-description {
   color: color-mix(in srgb, var(--error) 90%, transparent);
 }
 
-[data-slot="alert-description"] p:not(:last-child) {
+.alert-description p:not(:last-child) {
   margin-block-end: calc(var(--spacing) * 4);
 }
 
-[data-slot="alert-action"] {
+.alert-action {
   position: absolute;
   inset-block-start: calc(var(--spacing) * 2.5);
   inset-inline-end: calc(var(--spacing) * 3);

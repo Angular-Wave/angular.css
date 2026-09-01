@@ -20,68 +20,66 @@
       class="input-group-rtl-workflow"
       aria-label="مجموعات إدخال من اليمين إلى اليسار"
     >
-      <div ng-input-group>
+      <div ng-input-group class="input-group">
         <input
-          data-input
-          data-slot="input-group-control"
+
+
           ng-model="rtlQuery"
           placeholder="بحث..."
           aria-label="بحث"
-        />
-        <div data-slot="input-group-addon" data-align="inline-start">
+         class="input-group-control input" />
+        <div data-align="inline-start" class="input-group-addon">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="11" cy="11" r="8"></circle>
             <path d="m21 21-4.3-4.3"></path>
           </svg>
         </div>
-        <div data-slot="input-group-addon" data-align="inline-end">
+        <div data-align="inline-end" class="input-group-addon">
           ١٢ نتيجة
         </div>
       </div>
-      <div ng-input-group>
+      <div ng-input-group class="input-group">
         <input
-          data-input
-          data-slot="input-group-control"
+
+
           placeholder="جاري البحث..."
           aria-label="جاري البحث"
-        />
-        <div data-slot="input-group-addon" data-align="inline-end">
-          <span ng-spinner data-size="sm" aria-label="تحميل"></span>
+         class="input-group-control input" />
+        <div data-align="inline-end" class="input-group-addon">
+          <span data-size="sm" aria-label="تحميل" class="spinner"></span>
         </div>
       </div>
-      <div ng-input-group>
+      <div ng-input-group class="input-group">
         <input
-          data-input
-          data-slot="input-group-control"
+
+
           placeholder="جاري حفظ التغييرات..."
           aria-label="جاري الحفظ"
-        />
-        <div data-slot="input-group-addon" data-align="inline-end">
-          <span data-slot="input-group-text">جاري الحفظ...</span
-          ><span ng-spinner data-size="sm" aria-label="تحميل"></span>
+         class="input-group-control input" />
+        <div data-align="inline-end" class="input-group-addon">
+          <span class="input-group-text">جاري الحفظ...</span><span data-size="sm" aria-label="تحميل" class="spinner"></span>
         </div>
       </div>
-      <div data-slot="field">
-        <label ng-label data-slot="field-label" for="input-group-rtl-comment"
-          >منطقة النص</label
-        >
-        <div ng-input-group>
+      <div class="field">
+        <label for="input-group-rtl-comment"
+           class="field-label label">منطقة النص</label>
+        <div ng-input-group class="input-group">
           <textarea
-            ng-textarea
-            data-slot="input-group-control"
+
+
             id="input-group-rtl-comment"
             ng-model="rtlComment"
             data-change="rtlCount=rtlComment.length"
             maxlength="280"
             placeholder="اكتب تعليقًا..."
-          ></textarea>
-          <div data-slot="input-group-addon" data-align="block-end">
-            <span data-slot="input-group-text">{{ rtlCount }}/٢٨٠</span>
+           class="input-group-control textarea"></textarea>
+          <div data-align="block-end" class="input-group-addon">
+            <span class="input-group-text">{{ rtlCount }}/٢٨٠</span>
             <button
-              ng-button
-              data-slot="input-group-button"
+
+
               data-size="sm"
-              class="input-group-push-end"
+              class="input-group-push-end input-group-button button"
               type="button"
               ng-click="rtlStatus='تم النشر'"
             >
@@ -89,11 +87,11 @@
             </button>
           </div>
         </div>
-        <p data-slot="field-description">تذييل موضع أسفل منطقة النص.</p>
+        <p class="field-description">تذييل موضع أسفل منطقة النص.</p>
       </div>
-      <p class="input-group-output" role="status">
+      <output class="input-group-output">
         {{ rtlStatus }} · {{ rtlQuery || 'لا يوجد بحث' }}
-      </p>
+      </output>
     </main>
   </body>
 </html>

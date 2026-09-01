@@ -5,18 +5,18 @@ description: >
   Page location navigation
 ---
 
-Use `nav` with `aria-label="breadcrumb"` and slot attributes for list, item,
+Use `nav` with `aria-label="breadcrumb"` and part classes for list, item,
 link, separator, and current page elements.
 
 ```html
-<nav data-slot="breadcrumb" aria-label="breadcrumb">
-  <ol data-slot="breadcrumb-list">
-    <li data-slot="breadcrumb-item">
-      <a data-slot="breadcrumb-link" href="#">Home</a>
+<nav aria-label="breadcrumb" class="breadcrumb">
+  <ol class="breadcrumb-list">
+    <li class="breadcrumb-item">
+      <a href="#" class="breadcrumb-link">Home</a>
     </li>
-    <li data-slot="breadcrumb-separator" aria-hidden="true">/</li>
-    <li data-slot="breadcrumb-item">
-      <span data-slot="breadcrumb-page" aria-current="page">Docs</span>
+    <li aria-hidden="true" class="breadcrumb-separator">/</li>
+    <li class="breadcrumb-item">
+      <span aria-current="page" class="breadcrumb-page">Docs</span>
     </li>
   </ol>
 </nav>
@@ -28,7 +28,7 @@ link, separator, and current page elements.
 
 ## Variants And Composition
 
-Empty separator and ellipsis slots receive their standard icons. Author custom
+Empty separator and ellipsis parts receive their standard icons. Author custom
 separator content directly, and compose dropdowns with the existing semantic
 Dropdown component.
 
@@ -47,20 +47,11 @@ This is a styling-only HTML element or pattern. AngularCSS registers no runtime 
 
 ### Root styling selector
 
-- `data-slot="breadcrumb"`
+- `.breadcrumb`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="breadcrumb"]`
-- `[data-slot="breadcrumb-ellipsis"]`
-- `[data-slot="breadcrumb-item"]`
-- `[data-slot="breadcrumb-link"]`
-- `[data-slot="breadcrumb-list"]`
-- `[data-slot="breadcrumb-page"]`
-- `[data-slot="breadcrumb-separator"]`
-
-Slots are optional unless the usage example or behavior description identifies a required relationship.
-Use the named slots as stable Tailwind and CSS selectors.
+Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough.
 
 ## API
 
@@ -98,7 +89,7 @@ content come from the application.
 
 ## Customization
 
-Target semantic elements, styling slots, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

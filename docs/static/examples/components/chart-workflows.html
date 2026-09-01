@@ -18,217 +18,196 @@
     <main class="chart-workflow-grid" aria-label="Chart composition workflows">
       <section class="chart-workflow" aria-labelledby="chart-grid-heading">
         <h2 id="chart-grid-heading">Grid</h2>
-        <section
-          ng-chart
-          class="chart-reference-demo"
+        <figure
+
+          class="chart-reference-demo chart"
           aria-label="Visitor chart with horizontal grid"
         >
-          <div data-slot="chart-plot">
-            <div data-slot="chart-grid"></div>
-            <div data-slot="chart-bar-groups">
-              <div data-slot="chart-bar-group" ng-repeat="point in chartData">
+          <div class="chart-plot">
+            <div class="chart-grid"></div>
+            <div class="chart-bar-groups">
+              <div ng-repeat="point in chartData" class="chart-bar-group">
                 <span
-                  data-slot="chart-bar"
+
                   data-label="{{ point.month }} desktop"
                   data-value="{{ point.d }}"
                   data-color="#2563eb"
-                ></span>
+                 class="chart-bar"></span>
                 <span
-                  data-slot="chart-bar"
+
                   data-label="{{ point.month }} mobile"
                   data-value="{{ point.m }}"
                   data-color="#60a5fa"
-                ></span>
+                 class="chart-bar"></span>
               </div>
             </div>
           </div>
-        </section>
+        </figure>
       </section>
 
       <section class="chart-workflow" aria-labelledby="chart-axis-heading">
         <h2 id="chart-axis-heading">Axis</h2>
-        <section
-          ng-chart
-          class="chart-reference-demo"
+        <figure
+
+          class="chart-reference-demo chart"
           aria-label="Visitor chart with horizontal axis"
         >
-          <div data-slot="chart-plot">
-            <div data-slot="chart-grid"></div>
-            <div data-slot="chart-bar-groups">
-              <div data-slot="chart-bar-group" ng-repeat="point in chartData">
+          <div class="chart-plot">
+            <div class="chart-grid"></div>
+            <div class="chart-bar-groups">
+              <div ng-repeat="point in chartData" class="chart-bar-group">
                 <span
-                  data-slot="chart-bar"
+
                   data-label="{{ point.month }} desktop"
                   data-value="{{ point.d }}"
                   data-color="#2563eb"
-                ></span>
+                 class="chart-bar"></span>
                 <span
-                  data-slot="chart-bar"
+
                   data-label="{{ point.month }} mobile"
                   data-value="{{ point.m }}"
                   data-color="#60a5fa"
-                ></span>
+                 class="chart-bar"></span>
               </div>
             </div>
           </div>
-          <div data-slot="chart-axis">
-            <span data-slot="chart-axis-item" ng-repeat="point in chartData"
-              >{{ point.short }}</span
-            >
+          <div class="chart-axis">
+            <span ng-repeat="point in chartData"
+               class="chart-axis-item">{{ point.short }}</span>
           </div>
-        </section>
+        </figure>
       </section>
 
       <section class="chart-workflow" aria-labelledby="chart-tooltip-heading">
         <h2 id="chart-tooltip-heading">Tooltip</h2>
-        <section
-          ng-chart
-          class="chart-reference-demo"
+        <figure
+
+          class="chart-reference-demo chart"
           aria-label="Visitor chart with tooltip"
         >
-          <div data-slot="chart-plot">
-            <div data-slot="chart-grid"></div>
-            <div data-slot="chart-bar-groups">
+          <div class="chart-plot">
+            <div class="chart-grid"></div>
+            <div class="chart-bar-groups">
               <div
-                data-slot="chart-bar-group"
+
                 ng-repeat="point in chartData"
                 ng-mouseenter="tooltip.visible=true;tooltip.month=point.month;tooltip.desktop=point.desktop;tooltip.mobile=point.mobile"
                 ng-mouseleave="tooltip.visible=false"
-              >
+               class="chart-bar-group">
                 <span
-                  data-slot="chart-bar"
+
                   data-label="{{ point.month }} desktop"
                   data-value="{{ point.d }}"
                   data-color="#2563eb"
-                ></span>
+                 class="chart-bar"></span>
                 <span
-                  data-slot="chart-bar"
+
                   data-label="{{ point.month }} mobile"
                   data-value="{{ point.m }}"
                   data-color="#60a5fa"
-                ></span>
+                 class="chart-bar"></span>
               </div>
             </div>
-            <div
-              data-slot="chart-tooltip"
-              class="chart-floating-tooltip"
+            <output
+
+              class="chart-floating-tooltip chart-tooltip"
               ng-if="tooltip.visible"
-              role="status"
+
             >
-              <strong data-slot="chart-tooltip-label"
-                >{{ tooltip.month }}</strong
-              >
-              <div data-slot="chart-tooltip-items">
-                <div data-slot="chart-tooltip-item">
+              <strong
+                 class="chart-tooltip-label">{{ tooltip.month }}</strong>
+              <div class="chart-tooltip-items">
+                <div class="chart-tooltip-item">
                   <span
-                    data-slot="chart-tooltip-indicator"
+
                     data-color="#2563eb"
-                  ></span
-                  ><span data-slot="chart-tooltip-name">Desktop</span
-                  ><span data-slot="chart-tooltip-value"
-                    >{{ tooltip.desktop }}</span
-                  >
+                   class="chart-tooltip-indicator"></span><span class="chart-tooltip-name">Desktop</span><span
+                     class="chart-tooltip-value">{{ tooltip.desktop }}</span>
                 </div>
-                <div data-slot="chart-tooltip-item">
+                <div class="chart-tooltip-item">
                   <span
-                    data-slot="chart-tooltip-indicator"
+
                     data-color="#60a5fa"
-                  ></span
-                  ><span data-slot="chart-tooltip-name">Mobile</span
-                  ><span data-slot="chart-tooltip-value"
-                    >{{ tooltip.mobile }}</span
-                  >
+                   class="chart-tooltip-indicator"></span><span class="chart-tooltip-name">Mobile</span><span
+                     class="chart-tooltip-value">{{ tooltip.mobile }}</span>
                 </div>
               </div>
-            </div>
+            </output>
           </div>
-          <div data-slot="chart-axis">
-            <span data-slot="chart-axis-item" ng-repeat="point in chartData"
-              >{{ point.short }}</span
-            >
+          <div class="chart-axis">
+            <span ng-repeat="point in chartData"
+               class="chart-axis-item">{{ point.short }}</span>
           </div>
-        </section>
+        </figure>
       </section>
 
       <section class="chart-workflow" aria-labelledby="chart-legend-heading">
         <h2 id="chart-legend-heading">Legend</h2>
-        <section
-          ng-chart
-          class="chart-reference-demo"
+        <figure
+
+          class="chart-reference-demo chart"
           aria-label="Visitor chart with legend and tooltip"
         >
-          <div data-slot="chart-plot">
-            <div data-slot="chart-grid"></div>
-            <div data-slot="chart-bar-groups">
+          <div class="chart-plot">
+            <div class="chart-grid"></div>
+            <div class="chart-bar-groups">
               <div
-                data-slot="chart-bar-group"
+
                 ng-repeat="point in chartData"
                 ng-mouseenter="legendTip.visible=true;legendTip.month=point.month;legendTip.desktop=point.desktop;legendTip.mobile=point.mobile"
                 ng-mouseleave="legendTip.visible=false"
-              >
+               class="chart-bar-group">
                 <span
-                  data-slot="chart-bar"
+
                   data-label="{{ point.month }} desktop"
                   data-value="{{ point.d }}"
                   data-color="#2563eb"
-                ></span>
+                 class="chart-bar"></span>
                 <span
-                  data-slot="chart-bar"
+
                   data-label="{{ point.month }} mobile"
                   data-value="{{ point.m }}"
                   data-color="#60a5fa"
-                ></span>
+                 class="chart-bar"></span>
               </div>
             </div>
-            <div
-              data-slot="chart-tooltip"
-              class="chart-floating-tooltip"
+            <output
+
+              class="chart-floating-tooltip chart-tooltip"
               ng-if="legendTip.visible"
-              role="status"
+
             >
-              <strong data-slot="chart-tooltip-label"
-                >{{ legendTip.month }}</strong
-              >
-              <div data-slot="chart-tooltip-items">
-                <div data-slot="chart-tooltip-item">
+              <strong
+                 class="chart-tooltip-label">{{ legendTip.month }}</strong>
+              <div class="chart-tooltip-items">
+                <div class="chart-tooltip-item">
                   <span
-                    data-slot="chart-tooltip-indicator"
+
                     data-color="#2563eb"
-                  ></span
-                  ><span data-slot="chart-tooltip-name">Desktop</span
-                  ><span data-slot="chart-tooltip-value"
-                    >{{ legendTip.desktop }}</span
-                  >
+                   class="chart-tooltip-indicator"></span><span class="chart-tooltip-name">Desktop</span><span
+                     class="chart-tooltip-value">{{ legendTip.desktop }}</span>
                 </div>
-                <div data-slot="chart-tooltip-item">
+                <div class="chart-tooltip-item">
                   <span
-                    data-slot="chart-tooltip-indicator"
+
                     data-color="#60a5fa"
-                  ></span
-                  ><span data-slot="chart-tooltip-name">Mobile</span
-                  ><span data-slot="chart-tooltip-value"
-                    >{{ legendTip.mobile }}</span
-                  >
+                   class="chart-tooltip-indicator"></span><span class="chart-tooltip-name">Mobile</span><span
+                     class="chart-tooltip-value">{{ legendTip.mobile }}</span>
                 </div>
               </div>
-            </div>
+            </output>
           </div>
-          <div data-slot="chart-axis">
-            <span data-slot="chart-axis-item" ng-repeat="point in chartData"
-              >{{ point.short }}</span
-            >
+          <div class="chart-axis">
+            <span ng-repeat="point in chartData"
+               class="chart-axis-item">{{ point.short }}</span>
           </div>
-          <div data-slot="chart-legend">
-            <span data-slot="chart-legend-item"
-              ><span data-slot="chart-swatch" data-color="#2563eb"></span
-              >Desktop</span
-            >
-            <span data-slot="chart-legend-item"
-              ><span data-slot="chart-swatch" data-color="#60a5fa"></span
-              >Mobile</span
-            >
-          </div>
-        </section>
+          <ul class="chart-legend">
+            <li
+               class="chart-legend-item"><span data-color="#2563eb" class="chart-swatch"></span>Desktop</li>
+            <li
+               class="chart-legend-item"><span data-color="#60a5fa" class="chart-swatch"></span>Mobile</li>
+          </ul>
+        </figure>
       </section>
     </main>
   </body>

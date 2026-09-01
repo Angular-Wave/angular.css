@@ -5,11 +5,11 @@ description: >
   Contained scrollable region
 ---
 
-Use a root and viewport slot to contain overflow without scrolling the page.
+Use a root and viewport part to contain overflow without scrolling the page.
 
 ```html
-<div data-slot="scroll-area">
-  <div data-slot="scroll-area-viewport">Scrollable content</div>
+<div class="scroll-area">
+  <div class="scroll-area-viewport">Scrollable content</div>
 </div>
 ```
 

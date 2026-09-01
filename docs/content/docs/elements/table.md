@@ -5,18 +5,18 @@ description: >
   Semantic data table
 ---
 
-Use native table elements with slot attributes for styling hooks.
+Use native table elements with part classes for styling hooks.
 
 ```html
-<div data-slot="table-container">
-  <table data-slot="table">
-    <thead data-slot="table-header">
-      <tr data-slot="table-row">
-        <th data-slot="table-head">Invoice</th>
+<figure class="table-container">
+  <table class="table">
+    <thead class="table-header">
+      <tr class="table-row">
+        <th class="table-head">Invoice</th>
       </tr>
     </thead>
   </table>
-</div>
+</figure>
 ```
 
 ## Example

@@ -17,27 +17,26 @@
   >
     <main class="drawer-demo visual-example">
       <section id="goal-drawer" ng-drawer>
-        <button ng-drawer-trigger ng-button variant="outline">
+        <button variant="outline" class="drawer-trigger button">
           Open Drawer
         </button>
-        <div ng-drawer-overlay></div>
-        <section ng-drawer-content>
-          <div ng-drawer-handle></div>
+        <div class="drawer-overlay"></div>
+        <dialog class="drawer-content">
+          <div class="drawer-handle"></div>
           <div class="drawer-goal-panel">
-            <header ng-drawer-header>
-              <h2 ng-drawer-title>Move Goal</h2>
-              <p ng-drawer-description>Set your daily activity goal.</p>
+            <header class="drawer-header">
+              <h2 class="drawer-title">Move Goal</h2>
+              <p class="drawer-description">Set your daily activity goal.</p>
             </header>
             <div class="drawer-goal-body">
               <div class="drawer-goal-control">
                 <button
-                  ng-button
+
                   variant="outline"
                   size="icon-sm"
                   aria-label="Decrease"
                   ng-disabled="goal <= 200"
-                  ng-click="goal=goal-10"
-                >
+                  ng-click="goal=goal-10" class="button">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -53,12 +52,13 @@
                   <span>Calories/day</span>
                 </div>
                 <button
-                  ng-button
+
                   variant="outline"
                   size="icon-sm"
                   aria-label="Increase"
                   ng-disabled="goal >= 400"
                   ng-click="goal=goal+10"
+                  class="button"
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -82,14 +82,14 @@
                 <span data-height="70"></span>
               </div>
             </div>
-            <footer ng-drawer-footer>
-              <button ng-button ng-click="submittedGoal=goal">Submit</button>
-              <button ng-drawer-close ng-button variant="outline">
+            <footer class="drawer-footer">
+              <button ng-click="submittedGoal=goal" class="button">Submit</button>
+              <button variant="outline" class="drawer-close button">
                 Cancel
               </button>
             </footer>
           </div>
-        </section>
+        </dialog>
       </section>
       <output class="drawer-output" aria-live="polite">
         Submitted goal: <span ng-bind="submittedGoal"></span>

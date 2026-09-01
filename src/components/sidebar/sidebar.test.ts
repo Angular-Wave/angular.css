@@ -30,14 +30,14 @@ test("canonical artifact reflects options and AngularTS controlled state", async
   await expectBuiltArtifactRuntime(page);
 
   const sidebar = page.locator("#app-sidebar");
-  const layout = page.locator("[ng-sidebar-layout]");
+  const layout = page.locator(".sidebar-layout");
   const trigger = page.getByRole("button", { name: "Close Sidebar" });
   await expect(sidebar).toHaveAttribute("data-collapsible", "icon");
   await expect(sidebar).toHaveAttribute("data-side", "left");
   await expect(sidebar).toHaveAttribute("data-variant", "sidebar");
   await expect(sidebar).toHaveAttribute("data-state", "expanded");
   await expect(sidebar).toHaveAttribute("data-mobile", "false");
-  await expect(sidebar).toHaveAttribute("role", "complementary");
+  expect(await sidebar.getAttribute("role")).toBeNull();
   await expect(sidebar).toHaveAttribute("aria-hidden", "false");
   await expect(trigger).toHaveAttribute("aria-controls", "app-sidebar");
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
@@ -80,14 +80,16 @@ test("canonical artifact reflects options and AngularTS controlled state", async
   await expect(sidebar.locator(".sidebar-brand-mark")).toBeVisible();
   const sidebarCenter = collapsedBox!.x + collapsedBox!.width / 2;
   const centeredItems = sidebar.locator(
-    ".sidebar-brand-mark, [ng-sidebar-menu-button] > svg, [ng-sidebar-menu-button] > [ng-avatar]",
+    ".sidebar-brand-mark, .sidebar-menu-button > svg, .sidebar-menu-button > [ng-avatar]",
   );
-  for (let index = 0; index < (await centeredItems.count()); index += 1) {
+  const centeredItemCount = await centeredItems.count();
+  expect(centeredItemCount).toBeGreaterThan(0);
+  for (let index = 0; index < centeredItemCount; index += 1) {
     const box = await centeredItems.nth(index).boundingBox();
-    if (!box) continue;
-    expect(Math.abs(box.x + box.width / 2 - sidebarCenter)).toBeLessThanOrEqual(
-      1,
-    );
+    expect(box).not.toBeNull();
+    expect(
+      Math.abs(box!.x + box!.width / 2 - sidebarCenter),
+    ).toBeLessThanOrEqual(1);
   }
 
   await page.keyboard.press("Control+b");
@@ -101,7 +103,7 @@ test("anatomy artifact wires groups, actions, menus, badges, and loading state",
   await page.goto(anatomyUrl);
   await expectBuiltArtifactRuntime(page);
 
-  const groups = page.locator("[ng-sidebar-group]");
+  const groups = page.locator(".sidebar-group");
   await expect(groups).toHaveCount(3);
   for (let index = 0; index < 3; index += 1) {
     await expect(groups.nth(index)).toHaveAttribute(
@@ -109,18 +111,19 @@ test("anatomy artifact wires groups, actions, menus, badges, and loading state",
       /sidebar-group-label-/,
     );
   }
-  await expect(page.locator("[ng-sidebar-group-action]")).toHaveCount(2);
-  await expect(
-    page.locator("[ng-sidebar-group-action]").first(),
-  ).toHaveAttribute("type", "button");
-  await expect(page.locator("[ng-sidebar-menu-action]")).toHaveAttribute(
+  await expect(page.locator(".sidebar-group-action")).toHaveCount(2);
+  await expect(page.locator(".sidebar-group-action").first()).toHaveAttribute(
     "type",
     "button",
   );
-  await expect(page.locator("[ng-sidebar-menu-badge]")).toHaveCount(2);
+  await expect(page.locator(".sidebar-menu-action")).toHaveAttribute(
+    "type",
+    "button",
+  );
+  await expect(page.locator(".sidebar-menu-badge")).toHaveCount(2);
   expect(
     await page
-      .locator('[data-slot="sidebar-menu-skeleton"]')
+      .locator(".sidebar-menu-skeleton")
       .first()
       .evaluate(
         (element) => getComputedStyle(element, "::after").animationName,
@@ -132,9 +135,7 @@ test("anatomy artifact wires groups, actions, menus, badges, and loading state",
     "Added project",
   );
   await page.getByRole("button", { name: "Toggle loading" }).click();
-  await expect(page.locator('[data-slot="sidebar-menu-skeleton"]')).toHaveCount(
-    0,
-  );
+  await expect(page.locator(".sidebar-menu-skeleton")).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Support" })).toBeVisible();
 
   await page

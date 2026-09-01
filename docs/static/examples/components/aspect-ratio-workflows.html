@@ -15,10 +15,10 @@
     data-example="aspect-ratio-portrait aspect-ratio-rtl aspect-ratio-square"
   >
     <main class="aspect-ratio-workflows">
-      <div
-        ng-aspect-ratio
+      <figure
+
         ratio="9 / 16"
-        class="aspect-ratio-portrait"
+        class="aspect-ratio-portrait aspect-ratio"
         aria-label="Portrait aspect ratio"
       >
         <img
@@ -26,12 +26,12 @@
           src="../../images/avatars/01.png"
           alt="Photo"
         />
-      </div>
+      </figure>
 
-      <div
-        ng-aspect-ratio
+      <figure
+
         ratio="1 / 1"
-        class="aspect-ratio-square"
+        class="aspect-ratio-square aspect-ratio"
         aria-label="Square aspect ratio"
       >
         <img
@@ -39,16 +39,16 @@
           src="../../images/avatars/01.png"
           alt="Photo"
         />
-      </div>
+      </figure>
 
       <figure class="aspect-ratio-rtl" dir="rtl" lang="ar">
-        <div ng-aspect-ratio ratio="16 / 9" aria-label="Landscape aspect ratio">
+        <figure ratio="16 / 9" aria-label="Landscape aspect ratio" class="aspect-ratio">
           <img
             class="aspect-ratio-image"
             src="../../images/avatars/01.png"
             alt="صورة"
           />
-        </div>
+        </figure>
         <figcaption>منظر طبيعي جميل</figcaption>
       </figure>
     </main>

@@ -11,14 +11,14 @@ side geometry; AngularTS owns values and actions inside the panel.
 
 ```html
 <section ng-drawer side="bottom">
-  <button ng-drawer-trigger>Open Drawer</button>
-  <div ng-drawer-overlay></div>
-  <section ng-drawer-content>
-    <div ng-drawer-handle></div>
-    <h2 ng-drawer-title>Move Goal</h2>
-    <p ng-drawer-description>Set your daily activity goal.</p>
-    <button ng-drawer-close>Cancel</button>
-  </section>
+  <button class="drawer-trigger">Open Drawer</button>
+  <div class="drawer-overlay"></div>
+  <dialog class="drawer-content">
+    <div class="drawer-handle"></div>
+    <h2 class="drawer-title">Move Goal</h2>
+    <p class="drawer-description">Set your daily activity goal.</p>
+    <button class="drawer-close">Cancel</button>
+  </dialog>
 </section>
 ```
 
@@ -61,27 +61,10 @@ This component's root directive is `[ng-drawer]`. Importing the package register
 ### Directive selectors
 
 - `ng-drawer`
-- `ng-drawer-close`
-- `ng-drawer-content`
-- `ng-drawer-description`
-- `ng-drawer-overlay`
-- `ng-drawer-title`
-- `ng-drawer-trigger`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="drawer"]`
-- `[data-slot="drawer-close"]`
-- `[data-slot="drawer-content"]`
-- `[data-slot="drawer-description"]`
-- `[data-slot="drawer-handle"]`
-- `[data-slot="drawer-header"]`
-- `[data-slot="drawer-overlay"]`
-- `[data-slot="drawer-title"]`
-- `[data-slot="drawer-trigger"]`
-
-A drawer root requires one native button trigger, one overlay, and one content element. Use `side` or `direction` on the root for `bottom`, `top`, `left`, or `right`; bottom is the default. Title and description are strongly recommended; handle, header, body, and footer are optional layout selectors. Prefer semantic `ng-drawer-*` attributes and do not duplicate them with `data-slot`. AngularTS owns all values and application actions inside the drawer.
-Use the named slots as stable Tailwind and CSS selectors.
+A drawer root requires one native button trigger, one overlay, and one native dialog content element. The root directive inspects descendants through drawer part classes; no child directives are required. Use `side` for placement. Title, description, handle, header, body, and footer are optional.
 
 ## API
 
@@ -139,7 +122,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-drawer]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-drawer]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

@@ -28,19 +28,18 @@ test("canonical artifact supplies a modal bottom drawer and focus restoration", 
   await page.goto(canonicalUrl);
   await expectBuiltArtifactRuntime(page);
   const root = page.locator("#goal-drawer");
-  const trigger = root.locator("[ng-drawer-trigger]");
-  const content = root.locator("[ng-drawer-content]");
+  const trigger = root.locator(".drawer-trigger");
+  const content = root.locator(".drawer-content");
 
-  await expect(root).not.toHaveAttribute("data-slot");
   await expect(root).toHaveAttribute("data-side", "bottom");
   await expect(content).toBeHidden();
   await trigger.click();
   await expect(content).toBeVisible();
   await expect(content).toHaveAttribute("data-side", "bottom");
-  await expect(content).toHaveAttribute("role", "dialog");
+  expect(await content.getAttribute("role")).toBeNull();
   await expect(content).toHaveAttribute("aria-modal", "true");
   await expect(root.getByRole("button", { name: "Decrease" })).toBeFocused();
-  await expect(root.locator("[ng-drawer-handle]")).toBeVisible();
+  await expect(root.locator(".drawer-handle")).toBeVisible();
 
   await root.getByRole("button", { name: "Cancel" }).click();
   await expect(content).toBeHidden();
@@ -52,8 +51,8 @@ test("AngularTS owns goal state while Drawer owns only disclosure", async ({
 }) => {
   await page.goto(canonicalUrl);
   const root = page.locator("#goal-drawer");
-  const content = root.locator("[ng-drawer-content]");
-  await root.locator("[ng-drawer-trigger]").click();
+  const content = root.locator(".drawer-content");
+  await root.locator(".drawer-trigger").click();
 
   await root.getByRole("button", { name: "Increase" }).click();
   await expect(root.locator(".drawer-goal-value strong")).toHaveText("360");
@@ -63,7 +62,7 @@ test("AngularTS owns goal state while Drawer owns only disclosure", async ({
     "Submitted goal: 360",
   );
 
-  await root.locator("[ng-drawer-overlay]").dispatchEvent("click");
+  await root.locator(".drawer-overlay").dispatchEvent("click");
   await expect(content).toBeHidden();
   await root.evaluate((element) => element.setAttribute("data-open", "true"));
   await expect(content).toBeVisible();
@@ -84,16 +83,16 @@ test("four authored sides reflect state and anchor to the correct viewport edge"
   for (let index = 0; index < expected.length; index += 1) {
     const side = expected[index];
     const root = roots.nth(index);
-    const content = root.locator("[ng-drawer-content]");
+    const content = root.locator(".drawer-content");
     await expect(root).toHaveAttribute("data-side", side);
-    await root.locator("[ng-drawer-trigger]").click();
+    await root.locator(".drawer-trigger").click();
     const box = await content.boundingBox();
     expect(box).not.toBeNull();
     if (side === "top") expect(box!.y).toBeCloseTo(0, 0);
     if (side === "bottom") expect(box!.y + box!.height).toBeCloseTo(620, 0);
     if (side === "left") expect(box!.x).toBeCloseTo(0, 0);
     if (side === "right") expect(box!.x + box!.width).toBeCloseTo(900, 0);
-    await expect(root.locator("[ng-drawer-handle]")).toHaveCount(
+    await expect(root.locator(".drawer-handle")).toHaveCount(
       side === "bottom" ? 1 : 0,
     );
     await root.getByRole("button", { name: "Cancel" }).click();
@@ -107,9 +106,9 @@ test("right drawer body genuinely scrolls while its footer remains fixed", async
   await page.goto(scrollUrl);
   await expectBuiltArtifactRuntime(page);
   const root = page.locator("#scrollable-drawer");
-  await root.locator("[ng-drawer-trigger]").click();
-  const body = root.locator("[ng-drawer-body]");
-  const footer = root.locator("[ng-drawer-footer]");
+  await root.locator(".drawer-trigger").click();
+  const body = root.locator(".drawer-body");
+  const footer = root.locator(".drawer-footer");
   expect(
     await body.evaluate(
       (element) => element.scrollHeight > element.clientHeight,
@@ -156,8 +155,8 @@ test("RTL artifact preserves logical layout and AngularTS goal interaction", asy
   await expectBuiltArtifactRuntime(page);
   const root = page.locator("#rtl-goal-drawer");
   await expect(root).toHaveAttribute("data-direction", "rtl");
-  await root.locator("[ng-drawer-trigger]").click();
-  const content = root.locator("[ng-drawer-content]");
+  await root.locator(".drawer-trigger").click();
+  const content = root.locator(".drawer-content");
   await expect(content).toHaveAttribute("data-direction", "rtl");
   await root.getByRole("button", { name: "زيادة" }).click();
   await expect(root.locator(".drawer-goal-value strong")).toHaveText("360");

@@ -1,5 +1,4 @@
-[data-slot="empty"],
-[ng-empty] {
+.empty {
   display: flex;
   width: 100%;
   min-width: 0;
@@ -13,8 +12,7 @@
   text-wrap: balance;
 }
 
-[data-slot="empty-header"],
-[ng-empty-header] {
+.empty-header {
   display: flex;
   max-width: 24rem;
   flex-direction: column;
@@ -22,10 +20,8 @@
   gap: calc(var(--spacing) * 2);
 }
 
-[data-slot="empty-media"],
-[ng-empty-media],
-[data-slot="empty-icon"],
-[ng-empty-icon] {
+.empty-media,
+.empty-icon {
   display: flex;
   width: calc(var(--spacing) * 10);
   height: calc(var(--spacing) * 10);
@@ -38,41 +34,30 @@
   margin-block-end: calc(var(--spacing) * 2);
 }
 
-[data-slot="empty-media"][variant="icon"],
-[ng-empty-media][variant="icon"],
-[data-slot="empty-icon"][variant="icon"],
-[ng-empty-icon][variant="icon"] {
+.empty-media[variant="icon"],
+.empty-icon[variant="icon"] {
   border-radius: var(--radius);
 }
 
-:is(
-    [data-slot="empty-media"],
-    [ng-empty-media],
-    [data-slot="empty-icon"],
-    [ng-empty-icon]
-  )
-  > svg:not([data-slot="spinner"], [ng-spinner]) {
+:is(.empty-media, .empty-icon) > svg:not(.spinner) {
   width: calc(var(--spacing) * 6);
   height: calc(var(--spacing) * 6);
 }
 
-[data-slot="empty-title"],
-[ng-empty-title] {
+.empty-title {
   color: var(--foreground);
   font-size: 1.125rem;
   line-height: 1.25;
   font-weight: var(--font-weight-medium);
 }
 
-[data-slot="empty-description"],
-[ng-empty-description] {
+.empty-description {
   color: var(--muted-foreground);
   font-size: var(--text-sm);
   line-height: 1.625;
 }
 
-[data-slot="empty-content"],
-[ng-empty-content] {
+.empty-content {
   display: flex;
   width: 100%;
   max-width: 24rem;

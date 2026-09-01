@@ -6,7 +6,7 @@ test("Sonner element example exercises the canonical built artifact", async ({
   await page.goto("/docs/static/examples/elements/sonner.html");
 
   const toaster = page.locator("[ng-toaster]");
-  const toast = page.locator(":is([data-slot=toast], [ng-toast])");
+  const toast = page.locator(":is(.toast)");
   await expect(toaster).toHaveAttribute("data-sonner-toaster", "");
   await expect(toaster).toHaveAttribute("data-position", "bottom-right");
   await expect(toast).toHaveCount(0);

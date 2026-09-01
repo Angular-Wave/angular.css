@@ -31,7 +31,7 @@ const assertGeometry = async (
     const viewportWidth = await page.evaluate(
       () => document.documentElement.clientWidth,
     );
-    const root = await page.locator("[ng-aspect-ratio]").boundingBox();
+    const root = await page.locator(".aspect-ratio").boundingBox();
     expect(root).not.toBeNull();
     expect(root!.width).toBeCloseTo(Math.min(384, viewportWidth - 48), 0);
     expect(root!.width / root!.height).toBeCloseTo(16 / 9, 2);
@@ -44,8 +44,8 @@ const assertGeometry = async (
       () => document.documentElement.clientWidth,
     );
     const root = await page.locator(".alert-demo").boundingBox();
-    const alerts = page.locator("[ng-alert]");
-    const icons = page.locator(":is([data-slot=alert-icon], [ng-alert-icon])");
+    const alerts = page.locator(".alert");
+    const icons = page.locator(".alert-icon");
     expect(root).not.toBeNull();
     expect(root!.width).toBeCloseTo(Math.min(448, viewportWidth - 48), 0);
     await expect(alerts).toHaveCount(2);
@@ -66,9 +66,7 @@ const assertGeometry = async (
 
   if (component === "accordion") {
     const root = await page.locator("[ng-accordion]").boundingBox();
-    const triggers = page.locator(
-      ":is([data-slot=accordion-trigger], [ng-accordion-trigger])",
-    );
+    const triggers = page.locator(".accordion-trigger");
     const viewportWidth = await page.evaluate(
       () => document.documentElement.clientWidth,
     );
@@ -81,7 +79,7 @@ const assertGeometry = async (
 
   if (component === "skeleton") {
     const boxes = await page
-      .locator(".visual-example [ng-skeleton]")
+      .locator(".visual-example .skeleton")
       .evaluateAll((items) =>
         items.map((item) => {
           const box = item.getBoundingClientRect();
@@ -97,20 +95,16 @@ const assertGeometry = async (
   }
 
   if (component === "empty") {
-    const media = await page
-      .locator(":is([data-slot=empty-media], [ng-empty-media])")
-      .boundingBox();
+    const media = await page.locator(".empty-media").boundingBox();
     expect(media).not.toBeNull();
     expect(media!.width).toBeCloseTo(40, 0);
     expect(media!.height).toBeCloseTo(40, 0);
-    await expect(
-      page.locator(":is([data-slot=empty-title], [ng-empty-title])"),
-    ).toHaveCSS("font-size", "18px");
+    await expect(page.locator(".empty-title")).toHaveCSS("font-size", "18px");
     return;
   }
 
   if (component === "button") {
-    const boxes = await page.locator("[ng-button]").evaluateAll((items) =>
+    const boxes = await page.locator(".button").evaluateAll((items) =>
       items.map((item) => {
         const box = item.getBoundingClientRect();
         return { height: box.height, width: box.width };
@@ -123,7 +117,7 @@ const assertGeometry = async (
   }
 
   if (component === "button-group") {
-    const groups = page.locator("[ng-button-group]");
+    const groups = page.locator(".button-group");
     await expect(groups).toHaveCount(6);
     const sizeButtons = page
       .getByLabel("Button group sizes")
@@ -138,24 +132,19 @@ const assertGeometry = async (
     expect(verticalBox).not.toBeNull();
     expect(verticalBox!.width).toBeCloseTo(36, 0);
     expect(verticalBox!.height).toBeCloseTo(73, 0);
+    await expect(vertical.locator(".button-group-separator")).toHaveCSS(
+      "height",
+      "1px",
+    );
     await expect(
-      vertical.locator(
-        ':is([data-slot="button-group-separator"], [ng-button-group-separator])',
-      ),
-    ).toHaveCSS("height", "1px");
-    await expect(
-      page
-        .locator(
-          ':is([data-slot="button-group-separator"], [ng-button-group-separator])[orientation="vertical"]',
-        )
-        .first(),
+      page.locator('.button-group-separator[orientation="vertical"]').first(),
     ).toHaveCSS("width", "1px");
     return;
   }
 
   if (component === "badge") {
     const boxes = await page
-      .locator("[ng-badge]")
+      .locator(".badge")
       .evaluateAll((items) =>
         items.map((item) => item.getBoundingClientRect().height),
       );
@@ -168,13 +157,9 @@ const assertGeometry = async (
     expect(root).not.toBeNull();
     expect(root!.width).toBeCloseTo(214, 0);
     expect(root!.height).toBeCloseTo(314, 0);
+    await expect(page.locator(`.calendar-day`)).toHaveCount(42);
     await expect(
-      page.locator(`:is([data-slot=calendar-day], [ng-calendar-day])`),
-    ).toHaveCount(42);
-    await expect(
-      page.locator(
-        `:is([data-slot=calendar-day], [ng-calendar-day])[aria-selected="true"]`,
-      ),
+      page.locator(`.calendar-day[aria-selected="true"]`),
     ).toHaveCount(1);
     await expect(page.getByRole("combobox", { name: "Month" })).toHaveValue(
       "4",
@@ -183,13 +168,11 @@ const assertGeometry = async (
   }
 
   if (component === "spinner") {
-    const spinnerSize = await page
-      .locator("[ng-spinner]")
-      .evaluate((element) => {
-        const style = getComputedStyle(element);
-        return { height: style.height, width: style.width };
-      });
-    const item = await page.locator("[ng-item]").boundingBox();
+    const spinnerSize = await page.locator(".spinner").evaluate((element) => {
+      const style = getComputedStyle(element);
+      return { height: style.height, width: style.width };
+    });
+    const item = await page.locator(".item").boundingBox();
     expect(item).not.toBeNull();
     expect(spinnerSize).toEqual({ height: "16px", width: "16px" });
     expect(item!.width).toBeCloseTo(320, 0);
@@ -198,7 +181,7 @@ const assertGeometry = async (
 
   if (component === "avatar") {
     const avatars = await page
-      .locator(":is([data-slot=avatar], [ng-avatar])")
+      .locator(":is(.avatar, [ng-avatar])")
       .evaluateAll((items) =>
         items.map((item) => {
           const box = item.getBoundingClientRect();
@@ -207,9 +190,7 @@ const assertGeometry = async (
       );
     expect(avatars).toHaveLength(5);
     expect(avatars).toEqual(avatars.map(() => ({ height: 32, width: 32 })));
-    await expect(
-      page.locator(":is([data-slot=avatar-badge], [ng-avatar-badge])"),
-    ).toHaveCSS("width", "10px");
+    await expect(page.locator(".avatar-badge")).toHaveCSS("width", "10px");
     return;
   }
 
@@ -222,24 +203,20 @@ const assertGeometry = async (
   }
 
   if (component === "radio-group") {
-    const boxes = await page
-      .locator(":is([data-slot=radio-group-item], [ng-radio-group-item])")
-      .evaluateAll((items) =>
-        items.map((item) => {
-          const box = item.getBoundingClientRect();
-          return { height: box.height, width: box.width };
-        }),
-      );
+    const boxes = await page.locator(".radio-group-item").evaluateAll((items) =>
+      items.map((item) => {
+        const box = item.getBoundingClientRect();
+        return { height: box.height, width: box.width };
+      }),
+    );
     expect(boxes).toHaveLength(3);
     expect(boxes).toEqual(boxes.map(() => ({ height: 16, width: 16 })));
     return;
   }
 
   if (component === "card") {
-    const card = page.locator(":is([data-slot=card], [ng-card])");
-    const buttons = page.locator(
-      ":is([data-slot=card-footer], [ng-card-footer]) > button",
-    );
+    const card = page.locator(".card");
+    const buttons = page.locator(".card-footer > button");
     const [cardBox, firstButtonBox, secondButtonBox] = await Promise.all([
       card.boundingBox(),
       buttons.nth(0).boundingBox(),
@@ -256,11 +233,8 @@ const assertGeometry = async (
   if (component === "carousel") {
     const root = page.locator("[ng-carousel]");
     const rootBox = await root.boundingBox();
-    const cardBox = await root
-      .locator(`:is([data-slot=card-content], [ng-card-content])`)
-      .first()
-      .boundingBox();
-    const controls = root.locator("[ng-carousel-previous], [ng-carousel-next]");
+    const cardBox = await root.locator(`.card-content`).first().boundingBox();
+    const controls = root.locator(".carousel-previous, .carousel-next");
     expect(rootBox).not.toBeNull();
     expect(cardBox).not.toBeNull();
     expect(rootBox!.width).toBeCloseTo(
@@ -281,12 +255,10 @@ const assertGeometry = async (
 
   if (component === "chart") {
     const viewportWidth = await page.evaluate(() => innerWidth);
-    const chart = page.locator("[ng-chart]");
-    const plot = page.locator(`:is([data-slot=chart-plot], [ng-chart-plot])`);
-    const groups = page.locator(
-      `:is([data-slot=chart-bar-group], [ng-chart-bar-group])`,
-    );
-    const bars = page.locator(`:is([data-slot=chart-bar], [ng-chart-bar])`);
+    const chart = page.locator(".chart");
+    const plot = page.locator(`.chart-plot`);
+    const groups = page.locator(`.chart-bar-group`);
+    const bars = page.locator(`.chart-bar`);
     const [chartBox, plotBox] = await Promise.all([
       chart.boundingBox(),
       plot.boundingBox(),
@@ -308,7 +280,7 @@ const assertGeometry = async (
   if (component === "checkbox") {
     const viewportWidth = await page.evaluate(() => innerWidth);
     const root = page.locator(".checkbox-demo");
-    const controls = page.locator("[ng-checkbox]");
+    const controls = page.locator(".checkbox");
     const rootBox = await root.boundingBox();
     expect(rootBox).not.toBeNull();
     expect(rootBox!.width).toBeCloseTo(Math.min(384, viewportWidth - 48), 0);
@@ -338,22 +310,14 @@ const assertGeometry = async (
     expect(rootBox!.width).toBeCloseTo(Math.min(350, viewportWidth - 48), 0);
     expect(triggerBox).toMatchObject({ height: 32, width: 32 });
     await expect(page.getByText("Status", { exact: true })).toBeVisible();
-    await expect(
-      page.locator(
-        `:is([data-slot=collapsible-content], [ng-collapsible-content])`,
-      ),
-    ).toBeHidden();
+    await expect(page.locator(`.collapsible-content`)).toBeHidden();
     await expect(trigger).toHaveCSS("box-shadow", "none");
     return;
   }
 
   if (component === "input-otp") {
-    const slots = page.locator(
-      `:is([data-slot=input-otp-slot], [ng-input-otp-slot])`,
-    );
-    const group = page.locator(
-      `:is([data-slot=input-otp-group], [ng-input-otp-group])`,
-    );
+    const slots = page.locator(`.input-otp-slot`);
+    const group = page.locator(`.input-otp-group`);
     await expect(slots).toHaveCount(6);
     expect(
       await slots.evaluateAll((items) =>
@@ -377,15 +341,9 @@ const assertGeometry = async (
     return;
   }
 
-  const groups = page.locator(
-    ":is([data-slot=resizable-panel-group], [ng-resizable-panel-group])",
-  );
-  const outerPanels = groups
-    .first()
-    .locator(":scope > :is([data-slot=resizable-panel], [ng-resizable-panel])");
-  const innerPanels = groups
-    .nth(1)
-    .locator(":scope > :is([data-slot=resizable-panel], [ng-resizable-panel])");
+  const groups = page.locator("[ng-resizable-panel-group]");
+  const outerPanels = groups.first().locator(":scope > .resizable-panel");
+  const innerPanels = groups.nth(1).locator(":scope > .resizable-panel");
   const [groupBox, leftBox, rightBox, topBox, bottomBox] = await Promise.all([
     groups.first().boundingBox(),
     outerPanels.nth(0).boundingBox(),

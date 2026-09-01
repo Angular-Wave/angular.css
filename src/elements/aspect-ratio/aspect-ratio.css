@@ -1,12 +1,11 @@
-[data-slot="aspect-ratio"],
-[ng-aspect-ratio] {
+.aspect-ratio {
   position: relative;
   width: 100%;
   overflow: hidden;
   aspect-ratio: var(--ratio, 16 / 9);
 }
 
-:is([data-slot="aspect-ratio"], [ng-aspect-ratio]) > * {
+:is(.aspect-ratio) > * {
   width: 100%;
   height: 100%;
   object-fit: cover;

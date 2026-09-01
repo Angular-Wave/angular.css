@@ -17,35 +17,35 @@
   >
     <main class="context-menu-rtl-demo visual-example">
       <div ng-context-menu>
-        <div ng-context-menu-trigger>انقر بزر الفأرة الأيمن هنا</div>
-        <div ng-context-menu-content aria-label="إجراءات المتصفح">
-          <div ng-context-menu-group>
-            <button ng-context-menu-item ng-click="lastAction='رجوع'">
+        <div class="context-menu-trigger">انقر بزر الفأرة الأيمن هنا</div>
+        <menu aria-label="إجراءات المتصفح" class="context-menu-content">
+          <div class="context-menu-group">
+            <button ng-click="lastAction='رجوع'" class="context-menu-item">
               رجوع
-              <span ng-context-menu-shortcut>Alt+Right</span>
+              <span class="context-menu-shortcut">Alt+Right</span>
             </button>
-            <button ng-context-menu-item disabled>
+            <button disabled class="context-menu-item">
               للأمام
-              <span ng-context-menu-shortcut>Alt+Left</span>
+              <span class="context-menu-shortcut">Alt+Left</span>
             </button>
-            <button ng-context-menu-item ng-click="lastAction='إعادة تحميل'">
+            <button ng-click="lastAction='إعادة تحميل'" class="context-menu-item">
               إعادة تحميل
-              <span ng-context-menu-shortcut>Ctrl+R</span>
+              <span class="context-menu-shortcut">Ctrl+R</span>
             </button>
           </div>
-          <div ng-context-menu-separator></div>
-          <div ng-context-menu-sub>
-            <button ng-context-menu-sub-trigger>المزيد من الأدوات</button>
-            <div ng-context-menu-sub-content>
-              <button ng-context-menu-item ng-click="lastAction='حفظ الصفحة'">
+          <div class="context-menu-separator"></div>
+          <div class="context-menu-sub">
+            <button class="context-menu-sub-trigger">المزيد من الأدوات</button>
+            <div class="context-menu-sub-content">
+              <button ng-click="lastAction='حفظ الصفحة'" class="context-menu-item">
                 حفظ الصفحة...
               </button>
-              <button ng-context-menu-item ng-click="lastAction='أدوات المطور'">
+              <button ng-click="lastAction='أدوات المطور'" class="context-menu-item">
                 أدوات المطور
               </button>
             </div>
           </div>
-        </div>
+        </menu>
       </div>
       <output class="context-menu-output" aria-live="polite">
         الإجراء الأخير: <span ng-bind="lastAction"></span>

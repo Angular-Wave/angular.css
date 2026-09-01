@@ -97,7 +97,7 @@ test("input group examples match canonical geometry, state, and addon focus beha
   const commandInput = page.locator("#ig-command-search");
   await commandInput
     .locator("..")
-    .locator("[data-slot=input-group-addon]")
+    .locator(".input-group-addon")
     .first()
     .click();
   await expect(commandInput).toBeFocused();

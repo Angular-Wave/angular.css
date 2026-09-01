@@ -5,16 +5,16 @@ description: >
   Sectioned content container
 ---
 
-Cards are CSS-first containers composed from slot attributes.
+Cards are CSS-first semantic article compositions.
 
 ```html
-<section data-slot="card">
-  <header data-slot="card-header">
-    <h3 data-slot="card-title">Title</h3>
-    <p data-slot="card-description">Description</p>
+<section class="card">
+  <header class="card-header">
+    <h2 class="card-title">Title</h2>
+    <p class="card-description">Description</p>
   </header>
-  <div data-slot="card-content">Content</div>
-  <footer data-slot="card-footer">Footer</footer>
+  <section class="card-content">Content</section>
+  <footer class="card-footer">Footer</footer>
 </section>
 ```
 

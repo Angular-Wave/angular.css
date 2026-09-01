@@ -5,19 +5,18 @@ description: >
   Status message element
 ---
 
-Use `ng-alert` for static status messages. The first text child is treated as
-the title, and the next text child is treated as the description. An optional
-leading SVG icon is supported.
+Use `section.alert` for static status messages. The first heading is the title,
+the following paragraph is the description, and an optional SVG may provide an icon.
 
 ```html
-<div ng-alert>
+<section class="alert">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
     <circle cx="12" cy="12" r="10"></circle>
     <path d="m9 12 2 2 4-4"></path>
   </svg>
   <div>Success! Your changes have been saved.</div>
   <div>This is an alert with icon, title, and description.</div>
-</div>
+</section>
 ```
 
 ## Example

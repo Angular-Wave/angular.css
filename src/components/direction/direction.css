@@ -1,34 +1,28 @@
-[data-slot="direction"],
-[ng-direction] {
+.direction {
   direction: inherit;
   unicode-bidi: isolate;
 }
 
-[data-slot="direction"][dir="ltr"],
-[ng-direction][dir="ltr"] {
+.direction[dir="ltr"] {
   direction: ltr;
 }
 
-[data-slot="direction"][dir="rtl"],
-[ng-direction][dir="rtl"] {
+.direction[dir="rtl"] {
   direction: rtl;
 }
 
-[data-logical-align="start"],
-[ng-logical-align="start"] {
+[data-logical-align="start"] {
   text-align: start;
 }
 
-[data-logical-align="end"],
-[ng-logical-align="end"] {
+[data-logical-align="end"] {
   text-align: end;
 }
 
-[data-slot="rtl-flip"],
-[ng-rtl-flip] {
+.rtl-flip {
   transform: scaleX(var(--rtl-flip-x, 1));
 }
 
-[dir="rtl"] :is([data-slot="rtl-flip"], [ng-rtl-flip]) {
+[dir="rtl"] .rtl-flip {
   --rtl-flip-x: -1;
 }

@@ -5,15 +5,15 @@ description: >
   Context menu surface and items
 ---
 
-Use the trigger and content slots with menu item, checkbox item, radio item,
-separator, and shortcut slots.
+Use the trigger and content parts with menu item, checkbox item, radio item,
+separator, and shortcut parts.
 
 ```html
-<div data-slot="context-menu">
-  <div data-slot="context-menu-trigger">Right click</div>
-  <div data-slot="context-menu-content" role="menu">
-    <button data-slot="context-menu-item" role="menuitem">Reload</button>
-  </div>
+<div class="context-menu">
+  <div class="context-menu-trigger">Right click</div>
+  <menu class="context-menu-content">
+    <button class="context-menu-item">Reload</button>
+  </menu>
 </div>
 ```
 

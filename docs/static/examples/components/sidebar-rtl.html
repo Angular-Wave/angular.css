@@ -16,16 +16,16 @@
     data-example="sidebar-rtl"
     class="sidebar-example-body"
   >
-    <div ng-sidebar-layout class="sidebar-rtl-shell visual-example">
-      <main ng-sidebar-inset class="sidebar-rtl-inset">
+    <div class="sidebar-rtl-shell visual-example sidebar-layout">
+      <main class="sidebar-rtl-inset sidebar-inset">
         <header class="sidebar-demo-toolbar">
           <button
-            ng-button
             variant="ghost"
             size="sm"
             data-sidebar-controlled
             aria-controls="rtl-sidebar"
             ng-click="sidebarOpen=!sidebarOpen"
+            class="button"
           >
             <svg
               viewBox="0 0 24 24"
@@ -63,24 +63,24 @@
         class="sidebar-rtl-panel"
         aria-label="التنقل في مساحة العمل"
       >
-        <header ng-sidebar-header>
-          <a href="#workspace" ng-sidebar-menu-button size="lg">
+        <header class="sidebar-header">
+          <a href="#workspace" size="lg" class="sidebar-menu-button">
             <span class="sidebar-brand-mark" aria-hidden="true">أ</span>
             <span class="sidebar-brand-copy"
               ><strong>شركة أكمي</strong><small>المؤسسة</small></span
             >
           </a>
         </header>
-        <div ng-sidebar-content>
-          <section ng-sidebar-group>
-            <div ng-sidebar-group-label>المنصة</div>
-            <div ng-sidebar-group-content>
-              <ul ng-sidebar-menu>
-                <li ng-sidebar-menu-item>
+        <nav class="sidebar-content">
+          <section class="sidebar-group">
+            <h3 class="sidebar-group-label">المنصة</h3>
+            <div class="sidebar-group-content">
+              <ul class="sidebar-menu">
+                <li class="sidebar-menu-item">
                   <a
-                    ng-sidebar-menu-button
                     data-active="true"
                     href="#playground"
+                    class="sidebar-menu-button"
                   >
                     <svg
                       viewBox="0 0 24 24"
@@ -94,22 +94,26 @@
                     </svg>
                     <span>ملعب</span>
                   </a>
-                  <ul ng-sidebar-menu-sub>
-                    <li ng-sidebar-menu-sub-item>
-                      <a ng-sidebar-menu-sub-button href="#history">السجل</a>
+                  <ul class="sidebar-menu-sub">
+                    <li class="sidebar-menu-sub-item">
+                      <a href="#history" class="sidebar-menu-sub-button"
+                        >السجل</a
+                      >
                     </li>
-                    <li ng-sidebar-menu-sub-item>
-                      <a ng-sidebar-menu-sub-button href="#starred">المميز</a>
+                    <li class="sidebar-menu-sub-item">
+                      <a href="#starred" class="sidebar-menu-sub-button"
+                        >المميز</a
+                      >
                     </li>
-                    <li ng-sidebar-menu-sub-item>
-                      <a ng-sidebar-menu-sub-button href="#settings"
+                    <li class="sidebar-menu-sub-item">
+                      <a href="#settings" class="sidebar-menu-sub-button"
                         >الإعدادات</a
                       >
                     </li>
                   </ul>
                 </li>
-                <li ng-sidebar-menu-item>
-                  <a ng-sidebar-menu-button href="#models"
+                <li class="sidebar-menu-item">
+                  <a href="#models" class="sidebar-menu-button"
                     ><span class="sidebar-menu-dot" aria-hidden="true"></span
                     ><span>النماذج</span></a
                   >
@@ -117,20 +121,19 @@
               </ul>
             </div>
           </section>
-          <section ng-sidebar-group>
-            <div ng-sidebar-group-label>المشاريع</div>
-            <div ng-sidebar-group-content>
-              <ul ng-sidebar-menu>
-                <li ng-sidebar-menu-item>
-                  <a ng-sidebar-menu-button href="#design"
+          <section class="sidebar-group">
+            <h3 class="sidebar-group-label">المشاريع</h3>
+            <div class="sidebar-group-content">
+              <ul class="sidebar-menu">
+                <li class="sidebar-menu-item">
+                  <a href="#design" class="sidebar-menu-button"
                     ><span class="sidebar-menu-dot" aria-hidden="true"></span
                     ><span>هندسة التصميم</span></a
                   >
                   <div ng-dropdown>
                     <button
-                      ng-dropdown-trigger
-                      ng-sidebar-menu-action
                       aria-label="المزيد"
+                      class="dropdown-menu-trigger sidebar-menu-action"
                     >
                       <svg
                         viewBox="0 0 24 24"
@@ -142,30 +145,34 @@
                         <circle cx="19" cy="12" r="1.5"></circle>
                       </svg>
                     </button>
-                    <div ng-dropdown-content side="left" align="start">
+                    <menu
+                      side="left"
+                      align="start"
+                      class="dropdown-menu-content"
+                    >
                       <button
-                        ng-dropdown-item
                         ng-click="sidebarAction='عرض المشروع'"
+                        class="dropdown-menu-item"
                       >
                         عرض المشروع
                       </button>
                       <button
-                        ng-dropdown-item
                         ng-click="sidebarAction='مشاركة المشروع'"
+                        class="dropdown-menu-item"
                       >
                         مشاركة المشروع
                       </button>
-                    </div>
+                    </menu>
                   </div>
                 </li>
-                <li ng-sidebar-menu-item>
-                  <a ng-sidebar-menu-button href="#sales"
+                <li class="sidebar-menu-item">
+                  <a href="#sales" class="sidebar-menu-button"
                     ><span class="sidebar-menu-dot" aria-hidden="true"></span
                     ><span>المبيعات والتسويق</span></a
                   >
                 </li>
-                <li ng-sidebar-menu-item>
-                  <a ng-sidebar-menu-button href="#travel"
+                <li class="sidebar-menu-item">
+                  <a href="#travel" class="sidebar-menu-button"
                     ><span class="sidebar-menu-dot" aria-hidden="true"></span
                     ><span>السفر</span></a
                   >
@@ -173,14 +180,14 @@
               </ul>
             </div>
           </section>
-        </div>
-        <footer ng-sidebar-footer>
+        </nav>
+        <footer class="sidebar-footer">
           <button
-            ng-sidebar-menu-button
             size="lg"
             ng-click="sidebarAction='الحساب'"
+            class="sidebar-menu-button"
           >
-            <span ng-avatar><span ng-avatar-fallback>ش</span></span>
+            <span ng-avatar><span class="avatar-fallback">ش</span></span>
             <span class="sidebar-brand-copy"
               ><strong>شاد سي إن</strong><small>m@example.com</small></span
             >

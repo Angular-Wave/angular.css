@@ -13,24 +13,24 @@
     <div class="stack-sm">
       <div class="row">
         <button
-          ng-toggle
           aria-pressed="{{ bold }}"
           ng-click="bold = !bold"
           type="button"
+          class="toggle"
         >
           Bold
         </button>
         <button
-          ng-toggle
           variant="outline"
           aria-pressed="false"
           ng-click="italic = !italic"
           type="button"
+          class="toggle"
         >
           Italic
         </button>
-        <button ng-toggle size="sm" type="button">Small</button>
-        <button ng-toggle size="lg" type="button">Large</button>
+        <button size="sm" type="button" class="toggle">Small</button>
+        <button size="lg" type="button" class="toggle">Large</button>
       </div>
       <div class="output">
         Bold: <span ng-bind="bold ? 'on' : 'off'"></span>, Italic:

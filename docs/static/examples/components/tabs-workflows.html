@@ -20,86 +20,84 @@
         <header>
           <h2 id="tabs-dynamic-heading">Dynamic sections</h2>
           <button
-            ng-button
+
             type="button"
             variant="outline"
             size="sm"
-            ng-click="advancedVisible = !advancedVisible"
-          >
+            ng-click="advancedVisible = !advancedVisible" class="button">
             {{ advancedVisible ? 'Remove advanced' : 'Add advanced' }}
           </button>
         </header>
-        <div ng-tabs id="dynamic-tabs">
-          <div data-slot="tabs-list" aria-label="Dynamic project sections">
-            <button data-slot="tabs-trigger" aria-selected="true">
+        <section ng-tabs id="dynamic-tabs">
+          <div aria-label="Dynamic project sections" class="tabs-list">
+            <button aria-selected="true" class="tabs-trigger">
               Overview
             </button>
-            <button data-slot="tabs-trigger">Activity</button>
-            <button data-slot="tabs-trigger" ng-if="advancedVisible">
+            <button class="tabs-trigger">Activity</button>
+            <button ng-if="advancedVisible" class="tabs-trigger">
               Advanced
             </button>
           </div>
-          <div data-slot="tabs-content">Project overview</div>
-          <div data-slot="tabs-content">Recent project activity</div>
-          <div data-slot="tabs-content" ng-if="advancedVisible">
+          <div class="tabs-content">Project overview</div>
+          <div class="tabs-content">Recent project activity</div>
+          <div ng-if="advancedVisible" class="tabs-content">
             Advanced project controls
           </div>
-        </div>
+        </section>
       </section>
 
       <section aria-labelledby="tabs-disabled-heading">
         <header>
           <h2 id="tabs-disabled-heading">Disabled state</h2>
           <button
-            ng-button
+
             type="button"
             variant="outline"
             size="sm"
-            ng-click="overviewDisabled = !overviewDisabled"
-          >
+            ng-click="overviewDisabled = !overviewDisabled" class="button">
             {{ overviewDisabled ? 'Enable overview' : 'Disable overview' }}
           </button>
         </header>
-        <div ng-tabs id="disabled-tabs">
-          <div data-slot="tabs-list" aria-label="Account sections">
+        <section ng-tabs id="disabled-tabs">
+          <div aria-label="Account sections" class="tabs-list">
             <button
-              data-slot="tabs-trigger"
+
               aria-selected="true"
               ng-disabled="overviewDisabled"
-            >
+             class="tabs-trigger">
               Overview
             </button>
-            <button data-slot="tabs-trigger">Settings</button>
-            <button data-slot="tabs-trigger" disabled>Unavailable</button>
+            <button class="tabs-trigger">Settings</button>
+            <button disabled class="tabs-trigger">Unavailable</button>
           </div>
-          <div data-slot="tabs-content">Account overview</div>
-          <div data-slot="tabs-content">Account settings</div>
-          <div data-slot="tabs-content">Unavailable settings</div>
-        </div>
+          <div class="tabs-content">Account overview</div>
+          <div class="tabs-content">Account settings</div>
+          <div class="tabs-content">Unavailable settings</div>
+        </section>
       </section>
 
       <section aria-labelledby="tabs-vertical-heading">
         <header><h2 id="tabs-vertical-heading">Vertical</h2></header>
-        <div ng-tabs orientation="vertical" id="vertical-tabs">
-          <div data-slot="tabs-list" aria-label="Preference sections">
-            <button data-slot="tabs-trigger" aria-selected="true">
+        <section ng-tabs orientation="vertical" id="vertical-tabs">
+          <div aria-label="Preference sections" class="tabs-list">
+            <button aria-selected="true" class="tabs-trigger">
               Account
             </button>
-            <button data-slot="tabs-trigger">Password</button>
-            <button data-slot="tabs-trigger">Notifications</button>
+            <button class="tabs-trigger">Password</button>
+            <button class="tabs-trigger">Notifications</button>
           </div>
-          <div data-slot="tabs-content">Account preferences</div>
-          <div data-slot="tabs-content">Password preferences</div>
-          <div data-slot="tabs-content">Notification preferences</div>
-        </div>
+          <div class="tabs-content">Account preferences</div>
+          <div class="tabs-content">Password preferences</div>
+          <div class="tabs-content">Notification preferences</div>
+        </section>
       </section>
 
       <section aria-labelledby="tabs-variants-heading">
         <header><h2 id="tabs-variants-heading">Variants</h2></header>
         <div class="tabs-variant-stack">
-          <div ng-tabs id="icon-tabs">
-            <div data-slot="tabs-list" aria-label="Editor view">
-              <button data-slot="tabs-trigger" aria-selected="true">
+          <section ng-tabs id="icon-tabs">
+            <div aria-label="Editor view" class="tabs-list">
+              <button aria-selected="true" class="tabs-trigger">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -112,7 +110,7 @@
                 </svg>
                 Preview
               </button>
-              <button data-slot="tabs-trigger">
+              <button class="tabs-trigger">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -125,37 +123,37 @@
                 Code
               </button>
             </div>
-          </div>
-          <div ng-tabs id="line-tabs">
+          </section>
+          <section ng-tabs id="line-tabs">
             <div
-              data-slot="tabs-list"
+
               variant="line"
               aria-label="Report sections"
-            >
-              <button data-slot="tabs-trigger" aria-selected="true">
+             class="tabs-list">
+              <button aria-selected="true" class="tabs-trigger">
                 Overview
               </button>
-              <button data-slot="tabs-trigger">Analytics</button>
-              <button data-slot="tabs-trigger">Reports</button>
+              <button class="tabs-trigger">Analytics</button>
+              <button class="tabs-trigger">Reports</button>
             </div>
-          </div>
+          </section>
         </div>
       </section>
 
       <section aria-labelledby="tabs-rtl-heading" dir="rtl" lang="ar">
         <header><h2 id="tabs-rtl-heading">الاتجاه من اليمين</h2></header>
-        <div ng-tabs id="rtl-tabs">
-          <div data-slot="tabs-list" aria-label="أقسام المشروع">
-            <button data-slot="tabs-trigger">نظرة عامة</button>
-            <button data-slot="tabs-trigger" aria-selected="true">
+        <section ng-tabs id="rtl-tabs">
+          <div aria-label="أقسام المشروع" class="tabs-list">
+            <button class="tabs-trigger">نظرة عامة</button>
+            <button aria-selected="true" class="tabs-trigger">
               التحليلات
             </button>
-            <button data-slot="tabs-trigger">التقارير</button>
+            <button class="tabs-trigger">التقارير</button>
           </div>
-          <div data-slot="tabs-content">نظرة عامة على المشروع</div>
-          <div data-slot="tabs-content">تحليلات المشروع</div>
-          <div data-slot="tabs-content">تقارير المشروع</div>
-        </div>
+          <div class="tabs-content">نظرة عامة على المشروع</div>
+          <div class="tabs-content">تحليلات المشروع</div>
+          <div class="tabs-content">تقارير المشروع</div>
+        </section>
       </section>
     </main>
   </body>

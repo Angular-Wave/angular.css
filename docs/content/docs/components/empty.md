@@ -5,15 +5,15 @@ description: >
   Empty state layout
 ---
 
-Empty states compose media, title, description, and action content slots.
+Empty states compose media, title, description, and action content parts.
 
 ```html
-<section ng-empty>
-  <div data-slot="empty-header">
-    <div data-slot="empty-media" variant="icon"></div>
-    <h3 data-slot="empty-title">No projects yet</h3>
-    <p data-slot="empty-description">Create your first project.</p>
-  </div>
+<section class="empty">
+  <header class="empty-header">
+    <div variant="icon" class="empty-media"></div>
+    <h2 class="empty-title">No projects yet</h2>
+    <p class="empty-description">Create your first project.</p>
+  </header>
 </section>
 ```
 
@@ -38,21 +38,11 @@ This is a styling-only HTML element or pattern. AngularCSS registers no runtime 
 
 ### Root styling selector
 
-- `data-slot="empty"`
+- `.empty`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="empty"]`
-- `[data-slot="empty-content"]`
-- `[data-slot="empty-description"]`
-- `[data-slot="empty-header"]`
-- `[data-slot="empty-icon"]`
-- `[data-slot="empty-media"]`
-- `[data-slot="empty-title"]`
-- `[data-slot="spinner"]`
-
-Slots are optional unless the usage example or behavior description identifies a required relationship.
-Use the named slots as stable Tailwind and CSS selectors.
+Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough.
 
 ## API
 
@@ -90,7 +80,7 @@ content come from the application.
 
 ## Customization
 
-Target semantic elements, styling slots, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

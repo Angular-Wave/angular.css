@@ -10,10 +10,11 @@ test("radio-group element example exercises the built functional artifact", asyn
   await expect(
     page.locator('script[src="../../js/angular-css.umd.js"]'),
   ).toHaveCount(1);
-  const group = page.locator("[ng-radio-group]");
+  const group = page.locator(".radio-group");
   const radios = group.locator("input[type=radio]");
 
-  await expect(group).toHaveAttribute("role", "radiogroup");
+  expect(await group.getAttribute("role")).toBeNull();
+  await expect(group).toHaveRole("group");
   await expect(radios.nth(1)).toBeChecked();
 
   await radios.nth(2).check();

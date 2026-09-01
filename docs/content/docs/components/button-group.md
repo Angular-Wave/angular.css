@@ -5,16 +5,16 @@ description: >
   Layout primitive for visually connected buttons and form controls.
 ---
 
-Use `ng-button-group` around related commands or form controls. Set
+Use `fieldset.button-group` around related commands or form controls. Set
 `orientation="vertical"` for stacked groups. Use Toggle Group when the controls
 represent one or more selectable values.
 
 ```html
-<div ng-button-group role="group">
-  <button ng-button>One</button>
-  <span data-slot="button-group-separator" role="separator"></span>
-  <button ng-button>Two</button>
-</div>
+<fieldset class="button-group">
+  <button class="button">One</button>
+  <span class="button-group-separator"></span>
+  <button class="button">Two</button>
+</fieldset>
 ```
 
 ## Example
@@ -42,19 +42,11 @@ This is a styling-only HTML element or pattern. AngularCSS registers no runtime 
 
 ### Root styling selector
 
-- `data-slot="button-group"`
+- `.button-group`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="button-group"]`
-- `[data-slot="button-group-separator"]`
-- `[data-slot="button-group-text"]`
-- `[data-slot="dropdown-menu-trigger"]`
-- `[data-slot="popover-trigger"]`
-- `[data-slot="select-trigger"]`
-
-Slots are optional unless the usage example or behavior description identifies a required relationship.
-Use the named slots as stable Tailwind and CSS selectors.
+Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough.
 
 ## API
 
@@ -92,7 +84,7 @@ content come from the application.
 
 ## Customization
 
-Target semantic elements, styling slots, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

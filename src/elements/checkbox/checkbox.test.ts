@@ -5,7 +5,7 @@ test("element entrypoint example is a functional checkbox page", async ({
 }) => {
   await page.goto("/docs/static/examples/elements/checkbox.html");
 
-  const checkboxes = page.locator("[ng-checkbox]");
+  const checkboxes = page.locator(".checkbox");
   const terms = page.locator("#terms-checkbox");
   await expect(checkboxes).toHaveCount(4);
   await expect(terms).not.toBeChecked();

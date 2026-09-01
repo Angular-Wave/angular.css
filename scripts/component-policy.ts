@@ -247,7 +247,7 @@ export const componentPolicy = {
   switch: {
     kind: "element",
     rationale:
-      "A native checkbox with role switch and AngularTS model owns the complete behavior.",
+      "A native checkbox and AngularTS model own the complete behavior without a component directive.",
   },
   table: {
     kind: "element",

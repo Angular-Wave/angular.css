@@ -5,12 +5,12 @@ description: >
   Horizontal application menu
 ---
 
-Use menubar slots for menu containers, triggers, content, items, and separators.
+Use menubar parts for menu containers, triggers, content, items, and separators.
 
 ```html
-<nav data-slot="menubar" role="menubar">
-  <div data-slot="menubar-menu">
-    <button data-slot="menubar-trigger">File</button>
+<nav class="menubar">
+  <div class="menubar-menu">
+    <button class="menubar-trigger">File</button>
   </div>
 </nav>
 ```

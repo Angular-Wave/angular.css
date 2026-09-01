@@ -1,4 +1,4 @@
-[data-slot="calendar"],
+.calendar,
 [ng-calendar] {
   --calendar-cell-size: calc(var(--spacing) * 7);
 
@@ -11,8 +11,7 @@
   color: var(--foreground);
 }
 
-[data-slot="calendar-header"],
-[ng-calendar-header] {
+.calendar-header {
   display: grid;
   grid-template-columns:
     var(--calendar-cell-size) minmax(0, 1fr)
@@ -22,8 +21,7 @@
   width: 100%;
 }
 
-[data-slot="calendar-title"],
-[ng-calendar-title] {
+.calendar-title {
   display: flex;
   grid-column: 2;
   min-height: var(--calendar-cell-size);
@@ -36,12 +34,12 @@
   white-space: nowrap;
 }
 
-[data-slot="calendar-title"]:has(select) {
+.calendar-title:has(select) {
   gap: calc(var(--spacing) * 1.5);
 }
 
-[data-slot="calendar-month-select"],
-[data-slot="calendar-year-select"] {
+.calendar-month-select,
+.calendar-year-select {
   height: var(--calendar-cell-size);
   border: 1px solid var(--input);
   border-radius: calc(var(--radius) - 2px);
@@ -52,13 +50,7 @@
   font-size: var(--text-sm);
 }
 
-:is([data-slot="calendar-header"], [ng-calendar-header])
-  :is(
-    [data-slot="calendar-previous"],
-    [ng-calendar-previous],
-    [data-slot="calendar-next"],
-    [ng-calendar-next]
-  ) {
+.calendar-header :is(.calendar-previous, .calendar-next) {
   width: var(--calendar-cell-size);
   min-width: var(--calendar-cell-size);
   height: var(--calendar-cell-size);
@@ -66,92 +58,77 @@
   padding: 0;
 }
 
-:is([data-slot="calendar-header"], [ng-calendar-header])
-  :is([data-slot="calendar-next"], [ng-calendar-next]) {
+.calendar-header .calendar-next {
   grid-column: 3;
 }
 
-[data-slot="calendar-nav"],
-[ng-calendar-nav] {
+.calendar-nav {
   display: flex;
   align-items: center;
   gap: calc(var(--spacing) * 1);
 }
 
-[data-slot="calendar-grid"],
-[ng-calendar-grid] {
+.calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, var(--calendar-cell-size)));
   gap: calc(var(--spacing) * 2) 0;
 }
 
-:is(
-  [data-slot="calendar-grid"],
-  [ng-calendar-grid]
-)[data-show-week-numbers="true"] {
+:is(.calendar-grid)[data-show-week-numbers="true"] {
   grid-template-columns: repeat(8, minmax(0, var(--calendar-cell-size)));
 }
 
-:is([data-slot="calendar-grid"], [ng-calendar-grid])[data-months]:not(
-    [data-months="1"]
-  ) {
+.calendar-grid[data-months]:not([data-months="1"]) {
   display: flex;
   width: max-content;
   align-items: flex-start;
   gap: calc(var(--spacing) * 6);
 }
 
-[data-slot="calendar-month"] {
+.calendar-month {
   display: grid;
   width: calc(var(--calendar-cell-size) * 7);
   gap: calc(var(--spacing) * 2);
 }
 
-[data-slot="calendar-month"]:has(
-  [data-slot="calendar-month-grid"][data-show-week-numbers="true"]
-) {
+.calendar-month:has(.calendar-month-grid[data-show-week-numbers="true"]) {
   width: calc(var(--calendar-cell-size) * 8);
 }
 
-[data-slot="calendar-month-title"] {
+.calendar-month-title {
   text-align: center;
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
 }
 
-[data-slot="calendar-month-grid"] {
+.calendar-month-grid {
   display: grid;
   width: max-content;
   grid-template-columns: repeat(7, var(--calendar-cell-size));
   gap: calc(var(--spacing) * 2) 0;
 }
 
-[data-slot="calendar-month-grid"][data-show-week-numbers="true"] {
+.calendar-month-grid[data-show-week-numbers="true"] {
   grid-template-columns: repeat(8, var(--calendar-cell-size));
 }
 
-[data-slot="calendar"][data-direction="rtl"] [data-slot="calendar-grid"],
-[ng-calendar][data-direction="rtl"] [ng-calendar-grid],
-[ng-calendar][data-direction="rtl"] [data-slot="calendar-grid"],
-[data-slot="calendar"][data-direction="rtl"] [data-slot="calendar-month-grid"],
-[ng-calendar][data-direction="rtl"] [data-slot="calendar-month-grid"] {
+.calendar[data-direction="rtl"] .calendar-grid,
+[ng-calendar][data-direction="rtl"]
+  [ng-calendar][data-direction="rtl"]
+  .calendar-grid,
+.calendar[data-direction="rtl"] .calendar-month-grid,
+[ng-calendar][data-direction="rtl"] .calendar-month-grid {
   direction: rtl;
 }
 
-[data-slot="calendar"][data-direction="rtl"]
-  :is([data-slot="calendar-previous"], [data-slot="calendar-next"])
-  svg,
-[ng-calendar][data-direction="rtl"]
-  :is([ng-calendar-previous], [ng-calendar-next])
-  svg {
+.calendar[data-direction="rtl"] :is(.calendar-previous, .calendar-next) svg,
+[ng-calendar][data-direction="rtl"] :is(.calendar-previous) svg {
   transform: rotate(180deg);
 }
 
-[data-slot="calendar-weekday"],
-[ng-calendar-weekday],
-[data-slot="calendar-week-number-header"],
-[data-slot="calendar-week-number"],
-[ng-calendar-week-number] {
+.calendar-weekday,
+.calendar-week-number-header,
+.calendar-week-number {
   display: grid;
   place-items: center;
   height: var(--calendar-cell-size);
@@ -160,13 +137,11 @@
   font-weight: var(--font-weight-normal);
 }
 
-[data-slot="calendar-week-number"],
-[ng-calendar-week-number] {
+.calendar-week-number {
   color: var(--muted-foreground);
 }
 
-[data-slot="calendar-day"],
-[ng-calendar-day] {
+.calendar-day {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
@@ -186,85 +161,74 @@
   user-select: none;
 }
 
-[data-slot="calendar-day"] > span,
-[ng-calendar-day] > span {
+.calendar-day > span > span {
   font-size: var(--text-xs);
   opacity: 0.7;
 }
 
-[data-slot="calendar-day"]:focus-visible,
-[ng-calendar-day]:focus-visible {
+.calendar-day:focus-visible {
   position: relative;
   z-index: 1;
   outline: 2px solid var(--ring);
   outline-offset: 1px;
 }
 
-[data-slot="calendar-day"][data-outside="true"],
-[ng-calendar-day][data-outside="true"] {
+.calendar-day[data-outside="true"] {
   color: var(--muted-foreground);
   opacity: 0.5;
 }
 
-[data-slot="calendar-day"][aria-selected="true"],
-[ng-calendar-day][aria-selected="true"],
-[data-slot="calendar-day"][data-selected="true"],
-[ng-calendar-day][data-selected="true"] {
+.calendar-day[aria-selected="true"],
+.calendar-day[data-selected="true"] {
   background: var(--primary);
   color: var(--primary-foreground);
 }
 
-[data-slot="calendar-day"][aria-disabled="true"],
-[ng-calendar-day][aria-disabled="true"],
-[data-slot="calendar-day"]:disabled,
-[ng-calendar-day]:disabled {
+.calendar-day[aria-disabled="true"],
+.calendar-day:disabled {
   opacity: 0.45;
   cursor: not-allowed;
 }
 
-[data-slot="calendar-day"]:not(:disabled, [aria-disabled="true"]):hover,
-[ng-calendar-day]:not(:disabled, [aria-disabled="true"]):hover {
+.calendar-day:not(:disabled, [aria-disabled="true"]):hover:not(
+    :disabled,
+    [aria-disabled="true"]
+  ):hover {
   background: var(--accent);
   color: var(--accent-foreground);
 }
 
-[data-slot="calendar-day"][data-today="true"]:not([aria-selected="true"]),
-[ng-calendar-day][data-today="true"]:not([aria-selected="true"]) {
+.calendar-day[data-today="true"]:not(
+    [aria-selected="true"]
+  )[data-today="true"]:not([aria-selected="true"]) {
   background: var(--muted);
   color: var(--foreground);
 }
 
-[data-slot="calendar-day"][data-range="middle"],
-[ng-calendar-day][data-range="middle"],
-[data-slot="calendar-day"][data-range-middle="true"],
-[ng-calendar-day][data-range-middle="true"] {
+.calendar-day[data-range="middle"],
+.calendar-day[data-range-middle="true"] {
   border-radius: 0;
   background: var(--accent);
   color: var(--accent-foreground);
 }
 
-[data-slot="calendar-day"][data-range="start"],
-[ng-calendar-day][data-range="start"],
-[data-slot="calendar-day"][data-range-start="true"],
-[ng-calendar-day][data-range-start="true"] {
+.calendar-day[data-range="start"],
+.calendar-day[data-range-start="true"] {
   border-start-end-radius: 0;
   border-end-end-radius: 0;
 }
 
-[data-slot="calendar-day"][data-range="end"],
-[ng-calendar-day][data-range="end"],
-[data-slot="calendar-day"][data-range-end="true"],
-[ng-calendar-day][data-range-end="true"] {
+.calendar-day[data-range="end"],
+.calendar-day[data-range-end="true"] {
   border-start-start-radius: 0;
   border-end-start-radius: 0;
 }
 
-[data-slot="calendar-day"][data-booked="true"],
-[ng-calendar-day][data-booked="true"] {
+.calendar-day[data-booked="true"] {
   text-decoration: line-through;
 }
 
-:is([data-slot="calendar"], [ng-calendar])[data-range-invalid="true"] {
+:is(.calendar, [ng-calendar])[data-range-invalid="true"] {
   outline: 2px solid color-mix(in srgb, var(--error) 45%, transparent);
   outline-offset: calc(var(--spacing) * 1);
 }
@@ -274,9 +238,7 @@
 }
 
 @media (width <= 48rem) {
-  :is([data-slot="calendar-grid"], [ng-calendar-grid])[data-months]:not(
-      [data-months="1"]
-    ) {
+  .calendar-grid[data-months]:not([data-months="1"]) {
     flex-direction: column;
   }
 }

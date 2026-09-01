@@ -11,13 +11,13 @@
   </head>
   <body ng-app="ui" ng-cloak data-example="pagination-demo">
     <main class="pagination-demo visual-example">
-      <nav ng-pagination aria-label="pagination">
-        <ul data-slot="pagination-content">
-          <li data-slot="pagination-item">
+      <nav aria-label="pagination" class="pagination">
+        <ul class="pagination-content">
+          <li class="pagination-item">
             <a
-              data-slot="pagination-previous"
               href="#previous"
               aria-label="Go to previous page"
+              class="pagination-previous"
             >
               <svg
                 data-icon="inline-start"
@@ -32,19 +32,17 @@
               <span class="pagination-previous-text">Previous</span>
             </a>
           </li>
-          <li data-slot="pagination-item">
-            <a data-slot="pagination-link" href="#page-1">1</a>
+          <li class="pagination-item">
+            <a href="#page-1" class="pagination-link">1</a>
           </li>
-          <li data-slot="pagination-item">
-            <a data-slot="pagination-link" href="#page-2" aria-current="page"
-              >2</a
-            >
+          <li class="pagination-item">
+            <a href="#page-2" aria-current="page" class="pagination-link">2</a>
           </li>
-          <li data-slot="pagination-item">
-            <a data-slot="pagination-link" href="#page-3">3</a>
+          <li class="pagination-item">
+            <a href="#page-3" class="pagination-link">3</a>
           </li>
-          <li data-slot="pagination-item">
-            <span data-slot="pagination-ellipsis">
+          <li class="pagination-item">
+            <span class="pagination-ellipsis">
               <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
                 <circle cx="5" cy="12" r="1.5"></circle>
                 <circle cx="12" cy="12" r="1.5"></circle>
@@ -53,11 +51,11 @@
               <span class="pagination-sr-only">More pages</span>
             </span>
           </li>
-          <li data-slot="pagination-item">
+          <li class="pagination-item">
             <a
-              data-slot="pagination-next"
               href="#next"
               aria-label="Go to next page"
+              class="pagination-next"
             >
               <span class="pagination-next-text">Next</span>
               <svg

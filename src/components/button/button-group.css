@@ -1,36 +1,71 @@
-[ng-button-group],
-[data-slot="button-group"] {
+.button-group {
   display: flex;
   width: fit-content;
   align-items: stretch;
 }
 
-:is([ng-button-group], [data-slot="button-group"]):has(
-  > :is([ng-button-group], [data-slot="button-group"])
-) {
+.button-group:has(> .button-group) {
   gap: calc(var(--spacing) * 2);
 }
 
-:is([ng-button-group], [data-slot="button-group"])
-  > :is([data-slot], [ng-button], [data-input], [ng-input-group], [ng-select]) {
+.button-group
+  > :is(
+    button,
+    a,
+    input,
+    select,
+    textarea,
+    fieldset,
+    .button,
+    .input,
+    [ng-input-group],
+    [ng-select]
+  ) {
   position: relative;
   border-start-end-radius: 0;
   border-end-end-radius: 0;
 }
 
-:is([ng-button-group], [data-slot="button-group"])
-  > :is([data-slot], [ng-button], [data-input], [ng-input-group], [ng-select])
-  ~ :is([data-slot], [ng-button], [data-input], [ng-input-group], [ng-select]) {
+.button-group
+  > :is(
+    button,
+    a,
+    input,
+    select,
+    textarea,
+    fieldset,
+    .button,
+    .input,
+    [ng-input-group],
+    [ng-select]
+  )
+  ~ :is(
+    button,
+    a,
+    input,
+    select,
+    textarea,
+    fieldset,
+    .button,
+    .input,
+    [ng-input-group],
+    [ng-select]
+  ) {
   border-inline-start-width: 0;
   border-start-start-radius: 0;
   border-end-start-radius: 0;
 }
 
-:is([ng-button-group], [data-slot="button-group"])
+.button-group
   > :is(
-    [data-slot],
-    [ng-button],
-    [data-input],
+    button,
+    a,
+    input,
+    select,
+    textarea,
+    fieldset,
+    .button,
+    .input,
     [ng-input-group],
     [ng-select]
   ):last-child {
@@ -38,84 +73,121 @@
   border-end-end-radius: calc(var(--radius) - 2px);
 }
 
-:is([ng-button-group], [data-slot="button-group"])
+.button-group
   > :is([ng-dropdown], [ng-popover], [ng-select])
-  > :is(
-    [data-slot="dropdown-menu-trigger"],
-    [data-slot="popover-trigger"],
-    [data-slot="select-trigger"],
-    [ng-popover-trigger]
-  ) {
+  > :is(.dropdown-menu-trigger, .popover-trigger, .select-trigger) {
   border-radius: inherit;
 }
 
-:is([ng-button-group], [data-slot="button-group"])
-  > :is([data-slot], [ng-button], [data-input], [ng-input-group], [ng-select])
-  ~ :is([ng-dropdown], [ng-popover], [ng-select])
+.button-group
   > :is(
-    [data-slot="dropdown-menu-trigger"],
-    [data-slot="popover-trigger"],
-    [data-slot="select-trigger"],
-    [ng-popover-trigger]
-  ) {
+    button,
+    a,
+    input,
+    select,
+    textarea,
+    fieldset,
+    .button,
+    .input,
+    [ng-input-group],
+    [ng-select]
+  )
+  ~ :is([ng-dropdown], [ng-popover], [ng-select])
+  > :is(.dropdown-menu-trigger, .popover-trigger, .select-trigger) {
   border-inline-start-width: 0;
 }
 
-:is([ng-button-group], [data-slot="button-group"])
+.button-group
   > :is(
-    [data-slot],
-    [ng-button],
-    [data-input],
+    button,
+    a,
+    input,
+    select,
+    textarea,
+    fieldset,
+    .button,
+    .input,
     [ng-input-group],
     [ng-select]
   ):focus-visible,
-:is([ng-button-group], [data-slot="button-group"])
+.button-group
   > :is(
-    [data-slot],
-    [ng-button],
-    [data-input],
+    button,
+    a,
+    input,
+    select,
+    textarea,
+    fieldset,
+    .button,
+    .input,
     [ng-input-group],
     [ng-select]
   ):focus-within {
   z-index: 10;
 }
 
-:is([ng-button-group], [data-slot="button-group"]):is(
-  [orientation="vertical"],
-  [data-orientation="vertical"]
-) {
+.button-group:is([orientation="vertical"], [data-orientation="vertical"]) {
   flex-direction: column;
 }
 
-:is([ng-button-group], [data-slot="button-group"]):is(
-    [orientation="vertical"],
-    [data-orientation="vertical"]
-  )
-  > :is([data-slot], [ng-button], [data-input], [ng-input-group], [ng-select]) {
+.button-group:is([orientation="vertical"], [data-orientation="vertical"])
+  > :is(
+    button,
+    a,
+    input,
+    select,
+    textarea,
+    fieldset,
+    .button,
+    .input,
+    [ng-input-group],
+    [ng-select]
+  ) {
   border-radius: 0;
   border-start-start-radius: calc(var(--radius) - 2px);
   border-start-end-radius: calc(var(--radius) - 2px);
 }
 
-:is([ng-button-group], [data-slot="button-group"]):is(
-    [orientation="vertical"],
-    [data-orientation="vertical"]
+.button-group:is([orientation="vertical"], [data-orientation="vertical"])
+  > :is(
+    button,
+    a,
+    input,
+    select,
+    textarea,
+    fieldset,
+    .button,
+    .input,
+    [ng-input-group],
+    [ng-select]
   )
-  > :is([data-slot], [ng-button], [data-input], [ng-input-group], [ng-select])
-  ~ :is([data-slot], [ng-button], [data-input], [ng-input-group], [ng-select]) {
+  ~ :is(
+    button,
+    a,
+    input,
+    select,
+    textarea,
+    fieldset,
+    .button,
+    .input,
+    [ng-input-group],
+    [ng-select]
+  ) {
   border-block-start-width: 0;
   border-start-start-radius: 0;
   border-start-end-radius: 0;
 }
 
-:is([ng-button-group], [data-slot="button-group"]):is(
-    [orientation="vertical"],
-    [data-orientation="vertical"]
-  )
+.button-group:is([orientation="vertical"], [data-orientation="vertical"])
   > :is(
-    [data-slot],
-    [ng-button],
-    [data-input],
+    button,
+    a,
+    input,
+    select,
+    textarea,
+    fieldset,
+    .button,
+    .input,
     [ng-input-group],
     [ng-select]
   ):last-child {
@@ -123,23 +195,25 @@
   border-end-end-radius: calc(var(--radius) - 2px);
 }
 
-:is([ng-button-group], [data-slot="button-group"]):is(
-    [orientation="vertical"],
-    [data-orientation="vertical"]
-  )
-  > :is([data-slot], [ng-button], [data-input], [ng-input-group], [ng-select])
-  ~ :is([ng-dropdown], [ng-popover], [ng-select])
+.button-group:is([orientation="vertical"], [data-orientation="vertical"])
   > :is(
-    [data-slot="dropdown-menu-trigger"],
-    [data-slot="popover-trigger"],
-    [data-slot="select-trigger"],
-    [ng-popover-trigger]
-  ) {
+    button,
+    a,
+    input,
+    select,
+    textarea,
+    fieldset,
+    .button,
+    .input,
+    [ng-input-group],
+    [ng-select]
+  )
+  ~ :is([ng-dropdown], [ng-popover], [ng-select])
+  > :is(.dropdown-menu-trigger, .popover-trigger, .select-trigger) {
   border-block-start-width: 0;
 }
 
-[data-slot="button-group-text"],
-[ng-button-group-text] {
+.button-group-text {
   display: flex;
   align-items: center;
   gap: calc(var(--spacing) * 2);
@@ -152,21 +226,20 @@
   box-shadow: var(--shadow-xs);
 }
 
-:is([data-slot="button-group-text"], [ng-button-group-text]) svg {
+.button-group-text svg {
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
   pointer-events: none;
 }
 
-[data-slot="button-group-separator"],
-[ng-button-group-separator] {
+.button-group-separator {
   position: relative;
   align-self: stretch;
   flex: none;
   background: var(--input);
 }
 
-:is([data-slot="button-group-separator"], [ng-button-group-separator]):is(
+.button-group-separator:is(
   [orientation="vertical"],
   [data-orientation="vertical"]
 ) {
@@ -175,7 +248,7 @@
   margin-block: 1px;
 }
 
-:is([data-slot="button-group-separator"], [ng-button-group-separator]):is(
+.button-group-separator:is(
   [orientation="horizontal"],
   [data-orientation="horizontal"]
 ) {

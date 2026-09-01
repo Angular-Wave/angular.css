@@ -5,16 +5,16 @@ description: >
   Grouped pressed-state buttons
 ---
 
-Use `data-slot="toggle-group"` with `role="group"` and
-`data-slot="toggle-group-item"` buttons.
+Use `class="toggle-group"` with `role="group"` and
+`class="toggle-group-item"` buttons.
 
 ```html
-<div data-slot="toggle-group" role="group" variant="outline">
-  <button ng-toggle data-slot="toggle-group-item" aria-pressed="true">
+<fieldset variant="outline" class="toggle-group">
+  <button aria-pressed="true" class="toggle-group-item toggle">
     Left
   </button>
-  <button ng-toggle data-slot="toggle-group-item">Center</button>
-</div>
+  <button class="toggle-group-item toggle">Center</button>
+</fieldset>
 ```
 
 ## Example

@@ -19,8 +19,8 @@ test("element drawer page runs the packaged canonical artifact", async ({
   expect(sourceRequests).toEqual([]);
 
   const root = page.locator("[ng-drawer]");
-  const trigger = root.locator("[ng-drawer-trigger]");
-  const content = root.locator("[ng-drawer-content]");
+  const trigger = root.locator(".drawer-trigger");
+  const content = root.locator(".drawer-content");
   await expect(content).toBeHidden();
   await trigger.click();
   await expect(content).toBeVisible();

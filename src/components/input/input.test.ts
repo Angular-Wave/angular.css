@@ -11,7 +11,7 @@ test("input artifact uses native state and AngularTS models without an AngularCS
     page.locator('script[src$="/js/angular-css.umd.js"]'),
   ).toHaveCount(1);
 
-  const inputs = page.locator("input[data-input]");
+  const inputs = page.locator("input.input");
   await expect(inputs).toHaveCount(4);
   await expect(page.locator("[ng-input]")).toHaveCount(0);
   await expect(inputs.first()).not.toHaveAttribute("data-empty");
@@ -59,9 +59,7 @@ test("input workflows preserve native states, compositions, forms, and RTL", asy
   await page.goto("/docs/static/examples/components/input-workflows.html");
 
   await expect(page.locator("[data-example]")).toHaveCount(15);
-  const inputs = page.locator(
-    "input[data-input]:not([data-slot='input-group-control'])",
-  );
+  const inputs = page.locator("input.input:not(.input-group-control)");
   expect(
     await inputs.evaluateAll((elements) =>
       elements.map((element) => element.getBoundingClientRect().height),

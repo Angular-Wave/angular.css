@@ -28,10 +28,9 @@ test("canonical artifact opens only as a context menu and skips disabled items",
   await page.goto(canonicalUrl);
   await expectBuiltArtifactRuntime(page);
   const root = page.locator("#context-menu-demo");
-  const trigger = root.locator("[ng-context-menu-trigger]");
-  const content = root.locator("[ng-context-menu-content]");
+  const trigger = root.locator(".context-menu-trigger");
+  const content = root.locator(".context-menu-content");
 
-  await expect(root).not.toHaveAttribute("data-slot");
   await expect(trigger).toHaveAttribute("aria-haspopup", "menu");
   await expect(content).toHaveAttribute("role", "menu");
   await expect(content).toBeHidden();
@@ -61,10 +60,10 @@ test("keyboard opening, submenu direction, escape, and external state compose", 
 }) => {
   await page.goto(canonicalUrl);
   const root = page.locator("#context-menu-demo");
-  const trigger = root.locator("[ng-context-menu-trigger]");
-  const content = root.locator("[ng-context-menu-content]");
-  const subTrigger = root.locator("[ng-context-menu-sub-trigger]");
-  const subContent = root.locator("[ng-context-menu-sub-content]");
+  const trigger = root.locator(".context-menu-trigger");
+  const content = root.locator(".context-menu-content");
+  const subTrigger = root.locator(".context-menu-sub-trigger");
+  const subContent = root.locator(".context-menu-sub-content");
 
   await trigger.focus();
   await trigger.press("Shift+F10");
@@ -100,23 +99,24 @@ test("workflow artifact preserves groups, shortcuts, icons, and destructive styl
     .getByRole("heading", { name: "Groups and shortcuts" })
     .locator("..");
 
-  await icons.locator("[ng-context-menu-trigger]").click({ button: "right" });
+  await icons.locator(".context-menu-trigger").click({ button: "right" });
   const deleteItem = icons.getByRole("menuitem", { name: "Delete" });
   await expect(deleteItem.locator("svg")).toHaveCount(1);
   await expect(deleteItem).toHaveAttribute("data-variant", "destructive");
   await deleteItem.click();
   await expect(icons.locator("output")).toContainText("Action: Delete");
 
-  await groups.locator("[ng-context-menu-trigger]").click({ button: "right" });
-  await expect(groups.locator("[ng-context-menu-group]")).toHaveCount(2);
-  await expect(
-    groups.locator("[ng-context-menu-group]").first(),
-  ).toHaveAttribute("role", "group");
-  await expect(groups.locator("[ng-context-menu-label]")).toHaveText([
+  await groups.locator(".context-menu-trigger").click({ button: "right" });
+  await expect(groups.locator(".context-menu-group")).toHaveCount(2);
+  await expect(groups.locator(".context-menu-group").first()).toHaveAttribute(
+    "role",
+    "group",
+  );
+  await expect(groups.locator(".context-menu-label")).toHaveText([
     "File",
     "Edit",
   ]);
-  await expect(groups.locator("[ng-context-menu-shortcut]")).toHaveCount(5);
+  await expect(groups.locator(".context-menu-shortcut")).toHaveCount(5);
   await expect(groups.getByRole("menuitem", { name: /Redo/ })).toBeDisabled();
 });
 
@@ -131,9 +131,7 @@ test("AngularTS owns checkbox and radio values while the menu reflects semantics
     .getByRole("heading", { name: "Radio groups" })
     .locator("..");
 
-  await checkbox
-    .locator("[ng-context-menu-trigger]")
-    .click({ button: "right" });
+  await checkbox.locator(".context-menu-trigger").click({ button: "right" });
   const bookmarks = checkbox.getByRole("menuitemcheckbox", {
     name: "Show Bookmarks Bar",
   });
@@ -141,12 +139,12 @@ test("AngularTS owns checkbox and radio values while the menu reflects semantics
   await bookmarks.click();
   await expect(checkbox.locator("output")).toContainText("Bookmarks: Off");
 
-  await radio.locator("[ng-context-menu-trigger]").click({ button: "right" });
+  await radio.locator(".context-menu-trigger").click({ button: "right" });
   const colm = radio.getByRole("menuitemradio", { name: "Colm Tuite" });
   await expect(colm).toHaveAttribute("aria-checked", "false");
   await colm.click();
   await expect(radio.locator("output")).toContainText("Person: colm");
-  await radio.locator("[ng-context-menu-trigger]").click({ button: "right" });
+  await radio.locator(".context-menu-trigger").click({ button: "right" });
   await expect(
     radio.getByRole("menuitemradio", { name: "Colm Tuite" }),
   ).toHaveAttribute("aria-checked", "true");
@@ -170,8 +168,8 @@ test("all six authored sides position a visible menu within the viewport", async
 
   for (let index = 0; index < expectedSides.length; index += 1) {
     const root = roots.nth(index);
-    const content = root.locator("[ng-context-menu-content]");
-    await root.locator("[ng-context-menu-trigger]").click({ button: "right" });
+    const content = root.locator(".context-menu-content");
+    await root.locator(".context-menu-trigger").click({ button: "right" });
     await expect(content).toBeVisible();
     await expect(content).toHaveAttribute("data-side", expectedSides[index]);
     const box = await content.boundingBox();
@@ -189,16 +187,16 @@ test("RTL artifact mirrors logical content and submenu keyboard direction", asyn
 }) => {
   await page.goto(rtlUrl);
   const root = page.locator("[ng-context-menu]");
-  const trigger = root.locator("[ng-context-menu-trigger]");
-  const content = root.locator("[ng-context-menu-content]");
-  const subTrigger = root.locator("[ng-context-menu-sub-trigger]");
-  const subContent = root.locator("[ng-context-menu-sub-content]");
+  const trigger = root.locator(".context-menu-trigger");
+  const content = root.locator(".context-menu-content");
+  const subTrigger = root.locator(".context-menu-sub-trigger");
+  const subContent = root.locator(".context-menu-sub-content");
 
   await expect(root).toHaveAttribute("data-direction", "rtl");
   await trigger.click({ button: "right" });
   await expect(content).toHaveAttribute("data-direction", "rtl");
   const firstItem = content.getByRole("menuitem", { name: /رجوع/ });
-  const shortcut = firstItem.locator("[ng-context-menu-shortcut]");
+  const shortcut = firstItem.locator(".context-menu-shortcut");
   const itemBox = await firstItem.boundingBox();
   const shortcutBox = await shortcut.boundingBox();
   expect(itemBox).not.toBeNull();

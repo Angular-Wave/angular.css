@@ -22,39 +22,30 @@ type PhysicalSide = "bottom" | "left" | "right" | "top";
 type MenuAlign = "center" | "end" | "start";
 type AnchorPoint = { x: number; y: number };
 
-const rootSelector = '[data-slot="context-menu"], [ng-context-menu]';
-const triggerSelector =
-  '[data-slot="context-menu-trigger"], [ng-context-menu-trigger]';
-const contentSelector =
-  '[data-slot="context-menu-content"], [ng-context-menu-content]';
-const subContentSelector =
-  '[data-slot="context-menu-sub-content"], [ng-context-menu-sub-content]';
+const rootSelector = ".context-menu, [ng-context-menu]";
+const triggerSelector = ".context-menu-trigger";
+const contentSelector = ".context-menu-content";
+const subContentSelector = ".context-menu-sub-content";
 const menuSurfaceSelector = `${contentSelector}, ${subContentSelector}`;
 const itemSelector = [
-  '[data-slot="context-menu-item"]',
-  "[ng-context-menu-item]",
-  '[data-slot="context-menu-checkbox-item"]',
-  "[ng-context-menu-checkbox-item]",
-  '[data-slot="context-menu-radio-item"]',
-  "[ng-context-menu-radio-item]",
-  '[data-slot="context-menu-sub-trigger"]',
-  "[ng-context-menu-sub-trigger]",
+  ".context-menu-item",
+  ".context-menu-item",
+  ".context-menu-checkbox-item",
+  ".context-menu-checkbox-item",
+  ".context-menu-radio-item",
+  ".context-menu-radio-item",
+  ".context-menu-sub-trigger",
+  ".context-menu-sub-trigger",
   '[role="menuitem"]',
   '[role="menuitemcheckbox"]',
   '[role="menuitemradio"]',
 ].join(", ");
-const checkboxSelector =
-  '[data-slot="context-menu-checkbox-item"], [ng-context-menu-checkbox-item]';
-const radioSelector =
-  '[data-slot="context-menu-radio-item"], [ng-context-menu-radio-item]';
-const subTriggerSelector =
-  '[data-slot="context-menu-sub-trigger"], [ng-context-menu-sub-trigger]';
-const groupSelector =
-  '[data-slot="context-menu-group"], [ng-context-menu-group], [data-slot="context-menu-radio-group"], [ng-context-menu-radio-group]';
-const labelSelector =
-  '[data-slot="context-menu-label"], [ng-context-menu-label]';
-const separatorSelector =
-  '[data-slot="context-menu-separator"], [ng-context-menu-separator]';
+const checkboxSelector = ".context-menu-checkbox-item";
+const radioSelector = ".context-menu-radio-item";
+const subTriggerSelector = ".context-menu-sub-trigger";
+const groupSelector = ".context-menu-group, .context-menu-radio-group";
+const labelSelector = ".context-menu-label";
+const separatorSelector = ".context-menu-separator";
 const sides = new Set<MenuSide>([
   "bottom",
   "inline-end",
@@ -127,11 +118,7 @@ export function contextMenuDirective(): ng.Directive {
       trigger.setAttribute("aria-haspopup", "menu");
       trigger.setAttribute("aria-controls", contentId);
       if (!trigger.hasAttribute("tabindex")) trigger.tabIndex = 0;
-      setAttributeIfChanged(
-        content,
-        "role",
-        content.getAttribute("role") ?? "menu",
-      );
+      setAttributeIfChanged(content, "role", "menu");
       setAttributeIfChanged(
         content,
         "tabindex",

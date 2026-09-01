@@ -5,15 +5,14 @@ description: >
   Native text input element
 ---
 
-Use native `input` elements for text-like controls. AngularCSS styles opt-in
-`data-input` controls and also supports `data-slot="input"` for explicit
-slot-based markup.
+Use native `input` elements for text-like controls. AngularCSS styles controls
+that opt in with `class="input"`.
 
 ```html
-<input data-input id="email" type="email" placeholder="Email" ng-model="email" />
+<input id="email" type="email" placeholder="Email" ng-model="email" class="input" />
 <span>Value: <span ng-bind="email"></span></span>
-<input data-input id="invalid-email" aria-invalid="true" placeholder="Email" />
-<input data-input id="avatar" type="file" />
+<input id="invalid-email" aria-invalid="true" placeholder="Email" class="input" />
+<input id="avatar" type="file" class="input" />
 ```
 
 ## Example

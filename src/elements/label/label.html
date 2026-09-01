@@ -10,13 +10,18 @@
 
   <body ng-app="ui" ng-cloak>
     <div class="grid w-full max-w-xl items-start gap-4 p-10">
-      <label ng-label for="email">Email</label>
-      <input data-input id="email" placeholder="Email" />
+      <label for="email" class="label">Email</label>
+      <input id="email" placeholder="Email" class="input" />
 
-      <label ng-label data-disabled="true" for="disabled-email"
+      <label data-disabled="true" for="disabled-email" class="label"
         >Disabled email</label
       >
-      <input data-input id="disabled-email" placeholder="Disabled" disabled />
+      <input
+        id="disabled-email"
+        placeholder="Disabled"
+        disabled
+        class="input"
+      />
     </div>
   </body>
 </html>

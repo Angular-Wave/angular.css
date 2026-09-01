@@ -5,13 +5,13 @@ description: >
   Native form text entry with a styling-only AngularCSS hook.
 ---
 
-Use `data-input` as the opt-in styling hook. The browser and AngularTS own the
+Use `class="input"` as the opt-in styling hook. The browser and AngularTS own the
 value, events, validation, required state, disabled state, and form behavior;
 AngularCSS does not register an Input directive or mirror those values.
 
 ```html
-<input data-input placeholder="Jane Doe" />
-<input data-input placeholder="Disabled" disabled />
+<input placeholder="Jane Doe" class="input" />
+<input placeholder="Disabled" disabled class="input" />
 ```
 
 ## Example
@@ -35,14 +35,11 @@ This is a styling-only HTML element or pattern. AngularCSS registers no runtime 
 
 ### Root styling selector
 
-- `data-input`
+- `.input`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="input"]`
-
-Slots are optional unless the usage example or behavior description identifies a required relationship.
-Use the named slots as stable Tailwind and CSS selectors.
+Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough.
 
 ## API
 
@@ -65,7 +62,7 @@ Native DOM events continue to work normally. AngularTS event directives such as
 
 ## Behavior
 
-Input is a styling-only native HTML component selected by `data-input`. AngularTS and the browser own the value, input events, model synchronization, validation, disabled state, required state, and form submission. AngularCSS registers no Input directive and does not mirror or replace that state.
+Input is a styling-only native control selected by `.input`. AngularTS and the browser own value, events, model synchronization, validation, disabled and required state, and form submission. AngularCSS registers no input directive.
 
 AngularCSS does not replace AngularTS interpolation, bindings, structural
 directives, form controllers, validation, or application state.
@@ -80,7 +77,7 @@ content come from the application.
 
 ## Customization
 
-Target semantic elements, styling slots, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

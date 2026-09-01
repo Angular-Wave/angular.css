@@ -5,33 +5,33 @@ description: >
   Application sidebar layout with collapsible state
 ---
 
-Use `ng-sidebar` for the navigation landmark inside `ng-sidebar-layout` and
+Use `ng-sidebar` on an `aside` inside `.sidebar-layout` and
 connect native button triggers with `aria-controls` or `data-sidebar-target`.
 Author physical side, visual variant, and collapse mode directly on the sidebar
 root.
 
 ```html
-<div ng-sidebar-layout>
+<div class="sidebar-layout">
   <aside id="app-sidebar" ng-sidebar side="left" collapsible="icon">
-    <header ng-sidebar-header>
-      <a ng-sidebar-menu-button href="/">Acme Inc.</a>
+    <header class="sidebar-header">
+      <a href="/" class="sidebar-menu-button">Acme Inc.</a>
     </header>
-    <div ng-sidebar-content>
-      <section ng-sidebar-group>
-        <div ng-sidebar-group-label>Workspace</div>
-        <div ng-sidebar-group-content>
-          <ul ng-sidebar-menu>
-            <li ng-sidebar-menu-item>
-              <a ng-sidebar-menu-button data-active="true" href="/dashboard">
+    <nav class="sidebar-content">
+      <section class="sidebar-group">
+        <h3 class="sidebar-group-label">Workspace</h3>
+        <div class="sidebar-group-content">
+          <ul class="sidebar-menu">
+            <li class="sidebar-menu-item">
+              <a data-active="true" href="/dashboard" class="sidebar-menu-button">
                 Dashboard
               </a>
             </li>
           </ul>
         </div>
       </section>
-    </div>
+    </nav>
   </aside>
-  <main ng-sidebar-inset>
+  <main class="sidebar-inset">
     <button aria-controls="app-sidebar">Toggle sidebar</button>
   </main>
 </div>
@@ -82,45 +82,10 @@ This component's root directive is `[ng-sidebar]`. Importing the package registe
 ### Directive selectors
 
 - `ng-sidebar`
-- `ng-sidebar-group`
-- `ng-sidebar-group-action`
-- `ng-sidebar-group-label`
-- `ng-sidebar-menu-action`
-- `ng-sidebar-menu-button`
-- `ng-sidebar-trigger`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="dropdown-menu"]`
-- `[data-slot="sidebar"]`
-- `[data-slot="sidebar-container"]`
-- `[data-slot="sidebar-content"]`
-- `[data-slot="sidebar-footer"]`
-- `[data-slot="sidebar-gap"]`
-- `[data-slot="sidebar-group"]`
-- `[data-slot="sidebar-group-action"]`
-- `[data-slot="sidebar-group-content"]`
-- `[data-slot="sidebar-group-label"]`
-- `[data-slot="sidebar-header"]`
-- `[data-slot="sidebar-inner"]`
-- `[data-slot="sidebar-input"]`
-- `[data-slot="sidebar-inset"]`
-- `[data-slot="sidebar-layout"]`
-- `[data-slot="sidebar-menu"]`
-- `[data-slot="sidebar-menu-action"]`
-- `[data-slot="sidebar-menu-badge"]`
-- `[data-slot="sidebar-menu-button"]`
-- `[data-slot="sidebar-menu-item"]`
-- `[data-slot="sidebar-menu-skeleton"]`
-- `[data-slot="sidebar-menu-sub"]`
-- `[data-slot="sidebar-menu-sub-button"]`
-- `[data-slot="sidebar-rail"]`
-- `[data-slot="sidebar-separator"]`
-- `[data-slot="sidebar-trigger"]`
-- `[data-slot="sidebar-wrapper"]`
-
-Place `ng-sidebar` inside `ng-sidebar-layout` and connect native button triggers with `aria-controls` or `data-sidebar-target`. Author `side=left|right`, `variant=sidebar|floating|inset`, and `collapsible=offcanvas|icon|none` on the root. Header, content, footer, inset, groups, menus, actions, badges, submenus, rail, separator, input, and skeleton are optional composition selectors. Prefer semantic `ng-sidebar-*` attributes when behavior or styling is supplied and do not duplicate them with `data-slot`; use `data-slot` only for styling-only primitives. Compose collapsible groups with `ng-collapsible` and action menus with `ng-dropdown`.
-Use the named slots as stable Tailwind and CSS selectors.
+Place `aside[ng-sidebar]` inside `.sidebar-layout` and connect native button triggers with `aria-controls`. The root directive inspects semantic descendants through sidebar part classes; no child sidebar directives are required. Author side, variant, and collapse mode on the root. Compose nested disclosure with Collapsible and action menus with Dropdown.
 
 ## API
 
@@ -179,7 +144,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-sidebar]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-sidebar]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

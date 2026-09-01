@@ -1,5 +1,4 @@
-input[type="checkbox"][ng-checkbox],
-input[type="checkbox"][data-slot="checkbox"] {
+input[type="checkbox"].checkbox {
   appearance: none;
 
   @apply relative size-4 shrink-0 rounded-sm border border-input bg-background

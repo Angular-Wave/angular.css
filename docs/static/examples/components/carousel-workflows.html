@@ -28,53 +28,53 @@
           ng-on-angularcss:carousel-ready="apiState=$event.detail"
           ng-on-angularcss:carousel-change="apiState=$event.detail"
         >
-          <div data-slot="carousel-content">
-            <div data-slot="carousel-track">
-              <article data-slot="carousel-item">
-                <section ng-card>
-                  <div data-slot="card-content" class="carousel-square">
+          <div class="carousel-content">
+            <ul class="carousel-track">
+              <li class="carousel-item">
+                <article class="card">
+                  <section class="carousel-square card-content">
                     <span>1</span>
-                  </div>
-                </section>
-              </article>
-              <article data-slot="carousel-item">
-                <section ng-card>
-                  <div data-slot="card-content" class="carousel-square">
+                  </section>
+                </article>
+              </li>
+              <li class="carousel-item">
+                <article class="card">
+                  <section class="carousel-square card-content">
                     <span>2</span>
-                  </div>
-                </section>
-              </article>
-              <article data-slot="carousel-item">
-                <section ng-card>
-                  <div data-slot="card-content" class="carousel-square">
+                  </section>
+                </article>
+              </li>
+              <li class="carousel-item">
+                <article class="card">
+                  <section class="carousel-square card-content">
                     <span>3</span>
-                  </div>
-                </section>
-              </article>
-              <article data-slot="carousel-item">
-                <section ng-card>
-                  <div data-slot="card-content" class="carousel-square">
+                  </section>
+                </article>
+              </li>
+              <li class="carousel-item">
+                <article class="card">
+                  <section class="carousel-square card-content">
                     <span>4</span>
-                  </div>
-                </section>
-              </article>
-              <article data-slot="carousel-item">
-                <section ng-card>
-                  <div data-slot="card-content" class="carousel-square">
+                  </section>
+                </article>
+              </li>
+              <li class="carousel-item">
+                <article class="card">
+                  <section class="carousel-square card-content">
                     <span>5</span>
-                  </div>
-                </section>
-              </article>
-            </div>
+                  </section>
+                </article>
+              </li>
+            </ul>
           </div>
           <button
-            data-slot="button"
-            ng-carousel-previous
+
+
             size="icon-sm"
             variant="outline"
             type="button"
             aria-label="Previous API slide"
-          >
+           class="button carousel-previous">
             <svg
               class="icon-sm lucide lucide-chevron-left"
               viewBox="0 0 24 24"
@@ -87,13 +87,13 @@
             </svg>
           </button>
           <button
-            data-slot="button"
-            ng-carousel-next
+
+
             size="icon-sm"
             variant="outline"
             type="button"
             aria-label="Next API slide"
-          >
+           class="button carousel-next">
             <svg
               class="icon-sm lucide lucide-chevron-right"
               viewBox="0 0 24 24"
@@ -122,78 +122,78 @@
           class="carousel-multiple-demo"
           aria-label="Multiple numbered slides"
         >
-          <div data-slot="carousel-content">
-            <div data-slot="carousel-track">
-              <article data-slot="carousel-item">
+          <div class="carousel-content">
+            <ul class="carousel-track">
+              <li class="carousel-item">
                 <div class="carousel-item-padding">
-                  <section ng-card>
-                    <div
-                      data-slot="card-content"
-                      class="carousel-square carousel-square-medium"
+                  <article class="card">
+                    <section
+
+                      class="carousel-square carousel-square-medium card-content"
                     >
                       <span>1</span>
-                    </div>
-                  </section>
+                    </section>
+                  </article>
                 </div>
-              </article>
-              <article data-slot="carousel-item">
+              </li>
+              <li class="carousel-item">
                 <div class="carousel-item-padding">
-                  <section ng-card>
-                    <div
-                      data-slot="card-content"
-                      class="carousel-square carousel-square-medium"
+                  <article class="card">
+                    <section
+
+                      class="carousel-square carousel-square-medium card-content"
                     >
                       <span>2</span>
-                    </div>
-                  </section>
+                    </section>
+                  </article>
                 </div>
-              </article>
-              <article data-slot="carousel-item">
+              </li>
+              <li class="carousel-item">
                 <div class="carousel-item-padding">
-                  <section ng-card>
-                    <div
-                      data-slot="card-content"
-                      class="carousel-square carousel-square-medium"
+                  <article class="card">
+                    <section
+
+                      class="carousel-square carousel-square-medium card-content"
                     >
                       <span>3</span>
-                    </div>
-                  </section>
+                    </section>
+                  </article>
                 </div>
-              </article>
-              <article data-slot="carousel-item">
+              </li>
+              <li class="carousel-item">
                 <div class="carousel-item-padding">
-                  <section ng-card>
-                    <div
-                      data-slot="card-content"
-                      class="carousel-square carousel-square-medium"
+                  <article class="card">
+                    <section
+
+                      class="carousel-square carousel-square-medium card-content"
                     >
                       <span>4</span>
-                    </div>
-                  </section>
+                    </section>
+                  </article>
                 </div>
-              </article>
-              <article data-slot="carousel-item">
+              </li>
+              <li class="carousel-item">
                 <div class="carousel-item-padding">
-                  <section ng-card>
-                    <div
-                      data-slot="card-content"
-                      class="carousel-square carousel-square-medium"
+                  <article class="card">
+                    <section
+
+                      class="carousel-square carousel-square-medium card-content"
                     >
                       <span>5</span>
-                    </div>
-                  </section>
+                    </section>
+                  </article>
                 </div>
-              </article>
-            </div>
+              </li>
+            </ul>
           </div>
           <button
-            data-slot="button"
-            ng-carousel-previous
+
+
             size="icon-sm"
             variant="outline"
             type="button"
             aria-label="Previous group"
-          >
+           class="button carousel-previous">
             <svg
               class="icon-sm lucide lucide-chevron-left"
               viewBox="0 0 24 24"
@@ -206,13 +206,13 @@
             </svg>
           </button>
           <button
-            data-slot="button"
-            ng-carousel-next
+
+
             size="icon-sm"
             variant="outline"
             type="button"
             aria-label="Next group"
-          >
+           class="button carousel-next">
             <svg
               class="icon-sm lucide lucide-chevron-right"
               viewBox="0 0 24 24"
@@ -239,78 +239,78 @@
           class="carousel-vertical-demo"
           aria-label="Vertical numbered slides"
         >
-          <div data-slot="carousel-content">
-            <div data-slot="carousel-track">
-              <article data-slot="carousel-item">
+          <div class="carousel-content">
+            <ul class="carousel-track">
+              <li class="carousel-item">
                 <div class="carousel-item-padding">
-                  <section ng-card>
-                    <div
-                      data-slot="card-content"
-                      class="carousel-vertical-card"
+                  <article class="card">
+                    <section
+
+                      class="carousel-vertical-card card-content"
                     >
                       <span>1</span>
-                    </div>
-                  </section>
+                    </section>
+                  </article>
                 </div>
-              </article>
-              <article data-slot="carousel-item">
+              </li>
+              <li class="carousel-item">
                 <div class="carousel-item-padding">
-                  <section ng-card>
-                    <div
-                      data-slot="card-content"
-                      class="carousel-vertical-card"
+                  <article class="card">
+                    <section
+
+                      class="carousel-vertical-card card-content"
                     >
                       <span>2</span>
-                    </div>
-                  </section>
+                    </section>
+                  </article>
                 </div>
-              </article>
-              <article data-slot="carousel-item">
+              </li>
+              <li class="carousel-item">
                 <div class="carousel-item-padding">
-                  <section ng-card>
-                    <div
-                      data-slot="card-content"
-                      class="carousel-vertical-card"
+                  <article class="card">
+                    <section
+
+                      class="carousel-vertical-card card-content"
                     >
                       <span>3</span>
-                    </div>
-                  </section>
+                    </section>
+                  </article>
                 </div>
-              </article>
-              <article data-slot="carousel-item">
+              </li>
+              <li class="carousel-item">
                 <div class="carousel-item-padding">
-                  <section ng-card>
-                    <div
-                      data-slot="card-content"
-                      class="carousel-vertical-card"
+                  <article class="card">
+                    <section
+
+                      class="carousel-vertical-card card-content"
                     >
                       <span>4</span>
-                    </div>
-                  </section>
+                    </section>
+                  </article>
                 </div>
-              </article>
-              <article data-slot="carousel-item">
+              </li>
+              <li class="carousel-item">
                 <div class="carousel-item-padding">
-                  <section ng-card>
-                    <div
-                      data-slot="card-content"
-                      class="carousel-vertical-card"
+                  <article class="card">
+                    <section
+
+                      class="carousel-vertical-card card-content"
                     >
                       <span>5</span>
-                    </div>
-                  </section>
+                    </section>
+                  </article>
                 </div>
-              </article>
-            </div>
+              </li>
+            </ul>
           </div>
           <button
-            data-slot="button"
-            ng-carousel-previous
+
+
             size="icon-sm"
             variant="outline"
             type="button"
             aria-label="Previous vertical slide"
-          >
+           class="button carousel-previous">
             <svg
               class="icon-sm lucide lucide-chevron-left"
               viewBox="0 0 24 24"
@@ -323,13 +323,13 @@
             </svg>
           </button>
           <button
-            data-slot="button"
-            ng-carousel-next
+
+
             size="icon-sm"
             variant="outline"
             type="button"
             aria-label="Next vertical slide"
-          >
+           class="button carousel-next">
             <svg
               class="icon-sm lucide lucide-chevron-right"
               viewBox="0 0 24 24"
@@ -358,63 +358,63 @@
           ng-on-angularcss:carousel-ready="autoplayState=$event.detail"
           ng-on-angularcss:carousel-change="autoplayState=$event.detail"
         >
-          <div data-slot="carousel-content">
-            <div data-slot="carousel-track">
-              <article data-slot="carousel-item">
+          <div class="carousel-content">
+            <ul class="carousel-track">
+              <li class="carousel-item">
                 <div class="carousel-item-padding">
-                  <section ng-card>
-                    <div data-slot="card-content" class="carousel-square">
+                  <article class="card">
+                    <section class="carousel-square card-content">
                       <span>1</span>
-                    </div>
-                  </section>
+                    </section>
+                  </article>
                 </div>
-              </article>
-              <article data-slot="carousel-item">
+              </li>
+              <li class="carousel-item">
                 <div class="carousel-item-padding">
-                  <section ng-card>
-                    <div data-slot="card-content" class="carousel-square">
+                  <article class="card">
+                    <section class="carousel-square card-content">
                       <span>2</span>
-                    </div>
-                  </section>
+                    </section>
+                  </article>
                 </div>
-              </article>
-              <article data-slot="carousel-item">
+              </li>
+              <li class="carousel-item">
                 <div class="carousel-item-padding">
-                  <section ng-card>
-                    <div data-slot="card-content" class="carousel-square">
+                  <article class="card">
+                    <section class="carousel-square card-content">
                       <span>3</span>
-                    </div>
-                  </section>
+                    </section>
+                  </article>
                 </div>
-              </article>
-              <article data-slot="carousel-item">
+              </li>
+              <li class="carousel-item">
                 <div class="carousel-item-padding">
-                  <section ng-card>
-                    <div data-slot="card-content" class="carousel-square">
+                  <article class="card">
+                    <section class="carousel-square card-content">
                       <span>4</span>
-                    </div>
-                  </section>
+                    </section>
+                  </article>
                 </div>
-              </article>
-              <article data-slot="carousel-item">
+              </li>
+              <li class="carousel-item">
                 <div class="carousel-item-padding">
-                  <section ng-card>
-                    <div data-slot="card-content" class="carousel-square">
+                  <article class="card">
+                    <section class="carousel-square card-content">
                       <span>5</span>
-                    </div>
-                  </section>
+                    </section>
+                  </article>
                 </div>
-              </article>
-            </div>
+              </li>
+            </ul>
           </div>
           <button
-            data-slot="button"
-            ng-carousel-previous
+
+
             size="icon-sm"
             variant="outline"
             type="button"
             aria-label="Previous autoplay slide"
-          >
+           class="button carousel-previous">
             <svg
               class="icon-sm lucide lucide-chevron-left"
               viewBox="0 0 24 24"
@@ -427,13 +427,13 @@
             </svg>
           </button>
           <button
-            data-slot="button"
-            ng-carousel-next
+
+
             size="icon-sm"
             variant="outline"
             type="button"
             aria-label="Next autoplay slide"
-          >
+           class="button carousel-next">
             <svg
               class="icon-sm lucide lucide-chevron-right"
               viewBox="0 0 24 24"

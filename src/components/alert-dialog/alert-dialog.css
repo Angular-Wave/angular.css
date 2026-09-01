@@ -1,5 +1,4 @@
-[data-slot="alert-dialog-content"],
-[ng-alert-dialog-content] {
+.alert-dialog-content {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -17,18 +16,15 @@
   transform: translate(-50%, -50%);
 }
 
-[data-slot="alert-dialog-content"]:not([data-size="sm"]),
-[ng-alert-dialog-content]:not([data-size="sm"]) {
+.alert-dialog-content:not([data-size="sm"]) {
   --alert-dialog-size: default;
 }
 
-[data-slot="alert-dialog-content"][data-size="sm"],
-[ng-alert-dialog-content][data-size="sm"] {
+.alert-dialog-content[data-size="sm"] {
   --alert-dialog-size: sm;
 }
 
-[data-slot="alert-dialog-header"],
-[ng-alert-dialog-header] {
+.alert-dialog-header {
   display: grid;
   grid-template-rows: auto 1fr;
   place-items: center;
@@ -36,15 +32,12 @@
   text-align: center;
 }
 
-:is([data-slot="alert-dialog-header"], [ng-alert-dialog-header]):has(
-  > :is([data-slot="alert-dialog-media"], [ng-alert-dialog-media])
-) {
+.alert-dialog-header:has(> .alert-dialog-media) {
   grid-template-rows: auto auto 1fr;
   column-gap: calc(var(--spacing) * 6);
 }
 
-[data-slot="alert-dialog-media"],
-[ng-alert-dialog-media] {
+.alert-dialog-media {
   display: inline-flex;
   width: calc(var(--spacing) * 16);
   height: calc(var(--spacing) * 16);
@@ -56,117 +49,81 @@
   color: var(--foreground);
 }
 
-:is([data-slot="alert-dialog-media"], [ng-alert-dialog-media]) > svg {
+.alert-dialog-media > svg {
   width: calc(var(--spacing) * 8);
   height: calc(var(--spacing) * 8);
 }
 
-[data-slot="alert-dialog-footer"],
-[ng-alert-dialog-footer] {
+.alert-dialog-footer {
   display: flex;
   flex-direction: column-reverse;
   gap: calc(var(--spacing) * 2);
 }
 
-:is(
-    [data-slot="alert-dialog-content"],
-    [ng-alert-dialog-content]
-  )[data-size="sm"]
-  > :is([data-slot="alert-dialog-footer"], [ng-alert-dialog-footer]) {
+:is(.alert-dialog-content)[data-size="sm"] > .alert-dialog-footer {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-:is(
-    [data-slot="alert-dialog-content"],
-    [ng-alert-dialog-content]
-  )[data-size="sm"]
-  > :is([data-slot="alert-dialog-footer"], [ng-alert-dialog-footer])
-  > :is(
-    [data-slot="alert-dialog-action"],
-    [ng-alert-dialog-action],
-    [data-slot="alert-dialog-cancel"],
-    [ng-alert-dialog-cancel]
-  ) {
+:is(.alert-dialog-content)[data-size="sm"]
+  > .alert-dialog-footer
+  > :is(.alert-dialog-action, .alert-dialog-cancel) {
   width: 100%;
 }
 
-[data-slot="alert-dialog-title"],
-[ng-alert-dialog-title] {
+.alert-dialog-title {
   color: inherit;
   font-size: var(--text-lg);
   font-weight: var(--font-weight-medium);
   line-height: var(--leading-normal);
 }
 
-[data-slot="alert-dialog-description"],
-[ng-alert-dialog-description] {
+.alert-dialog-description {
   color: var(--muted-foreground);
   font-size: var(--text-sm);
   line-height: 1.5;
   text-wrap: balance;
 }
 
-:is([data-slot="alert-dialog-description"], [ng-alert-dialog-description]) a {
+.alert-dialog-description a {
   color: inherit;
   text-decoration-line: underline;
   text-underline-offset: 3px;
 }
 
-:is([data-slot="alert-dialog-description"], [ng-alert-dialog-description])
-  a:hover {
+.alert-dialog-description a:hover {
   color: var(--foreground);
 }
 
 @media (width >= 40rem) {
-  [data-slot="alert-dialog-content"]:not([data-size="sm"]),
-  [ng-alert-dialog-content]:not([data-size="sm"]) {
+  .alert-dialog-content:not([data-size="sm"]) {
     max-width: 32rem;
   }
 
-  :is([data-slot="alert-dialog-content"], [ng-alert-dialog-content]):not(
-      [data-size="sm"]
-    )
-    > :is([data-slot="alert-dialog-header"], [ng-alert-dialog-header]) {
+  .alert-dialog-content:not([data-size="sm"]) > .alert-dialog-header {
     place-items: start;
     text-align: start;
   }
 
-  :is([data-slot="alert-dialog-content"], [ng-alert-dialog-content]):not(
-      [data-size="sm"]
-    )
-    > :is([data-slot="alert-dialog-header"], [ng-alert-dialog-header]):has(
-      > :is([data-slot="alert-dialog-media"], [ng-alert-dialog-media])
-    ) {
+  .alert-dialog-content:not([data-size="sm"])
+    > .alert-dialog-header:has(> .alert-dialog-media) {
     grid-template-columns: auto minmax(0, 1fr);
     grid-template-rows: auto 1fr;
   }
 
-  :is([data-slot="alert-dialog-content"], [ng-alert-dialog-content]):not(
-      [data-size="sm"]
-    )
-    > :is([data-slot="alert-dialog-header"], [ng-alert-dialog-header])
-    > :is([data-slot="alert-dialog-media"], [ng-alert-dialog-media]) {
+  .alert-dialog-content:not([data-size="sm"])
+    > .alert-dialog-header
+    > .alert-dialog-media {
     grid-row: span 2;
   }
 
-  :is([data-slot="alert-dialog-content"], [ng-alert-dialog-content]):not(
-      [data-size="sm"]
-    )
-    > :is([data-slot="alert-dialog-header"], [ng-alert-dialog-header])
-    > :is(
-      [data-slot="alert-dialog-title"],
-      [ng-alert-dialog-title],
-      [data-slot="alert-dialog-description"],
-      [ng-alert-dialog-description]
-    ) {
+  .alert-dialog-content:not([data-size="sm"])
+    > .alert-dialog-header
+    > :is(.alert-dialog-title, .alert-dialog-description) {
     grid-column-start: 2;
   }
 
-  :is([data-slot="alert-dialog-content"], [ng-alert-dialog-content]):not(
-      [data-size="sm"]
-    )
-    > :is([data-slot="alert-dialog-footer"], [ng-alert-dialog-footer]) {
+  .alert-dialog-content:not([data-size="sm"]) > .alert-dialog-footer {
     flex-direction: row;
     justify-content: flex-end;
   }

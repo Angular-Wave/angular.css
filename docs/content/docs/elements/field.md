@@ -5,21 +5,21 @@ description: >
   Semantic form field layout
 ---
 
-Use field slots to group controls, labels, descriptions, and errors. The
+Use field parts to group controls, labels, descriptions, and errors. The
 contract is HTML-first: `fieldset`, `legend`, `label`, `p`, and plain wrappers
-carry `data-slot` attributes.
+carry `class` attributes.
 
 ```html
-<div data-slot="field">
-  <label ng-label data-slot="field-label" for="email">Email</label>
-  <input data-input id="email" type="email" placeholder="Email" />
-  <p data-slot="field-description">Use your work email.</p>
+<div class="field">
+  <label for="email" class="field-label label">Email</label>
+  <input id="email" type="email" placeholder="Email" class="input" />
+  <p class="field-description">Use your work email.</p>
 </div>
 
-<div data-slot="field" data-invalid>
-  <label ng-label data-slot="field-label" for="invalid-email">Email</label>
-  <input data-input id="invalid-email" aria-invalid="true" />
-  <p data-slot="field-error" role="alert">Enter a valid email.</p>
+<div data-invalid class="field">
+  <label for="invalid-email" class="field-label label">Email</label>
+  <input id="invalid-email" aria-invalid="true" class="input" />
+  <p class="field-error">Enter a valid email.</p>
 </div>
 ```
 

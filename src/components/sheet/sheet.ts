@@ -19,12 +19,8 @@ export function sheetDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
       const getContent = (): HTMLElement | null =>
-        queryAll<HTMLElement>(
-          element,
-          '[data-slot="sheet-content"], [ng-sheet-content]',
-        ).find(
-          (candidate) =>
-            candidate.closest('[data-slot="sheet"], [ng-sheet]') === element,
+        queryAll<HTMLElement>(element, ".sheet-content").find(
+          (candidate) => candidate.closest(".sheet, [ng-sheet]") === element,
         ) ?? null;
       const syncSide = (): void => {
         const content = getContent();
@@ -37,15 +33,13 @@ export function sheetDirective(): ng.Directive {
       };
 
       bindOverlay(scope, element, {
-        rootSelector: '[data-slot="sheet"], [ng-sheet]',
-        closeSelector:
-          '[data-slot="sheet-close"], [ng-sheet-close], [data-sheet-close]',
-        contentSelector: '[data-slot="sheet-content"], [ng-sheet-content]',
-        descriptionSelector:
-          '[data-slot="sheet-description"], [ng-sheet-description]',
-        overlaySelector: '[data-slot="sheet-overlay"], [ng-sheet-overlay]',
-        titleSelector: '[data-slot="sheet-title"], [ng-sheet-title]',
-        triggerSelector: '[data-slot="sheet-trigger"], [ng-sheet-trigger]',
+        rootSelector: ".sheet, [ng-sheet]",
+        closeSelector: ".sheet-close, [data-sheet-close]",
+        contentSelector: ".sheet-content",
+        descriptionSelector: ".sheet-description",
+        overlaySelector: ".sheet-overlay",
+        titleSelector: ".sheet-title",
+        triggerSelector: ".sheet-trigger",
         closeOnOutsideClick: true,
       });
 

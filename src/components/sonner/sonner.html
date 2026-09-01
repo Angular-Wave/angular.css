@@ -18,34 +18,31 @@
   >
     <main class="sonner-demo visual-example">
       <button
-        ng-button
         type="button"
         variant="outline"
         ng-click="canonical.visible = true; canonical.status = 'Toast shown'"
+        class="button"
       >
         Show Toast
       </button>
-      <p class="output" role="status">{{ canonical.status }}</p>
+      <output class="output">{{ canonical.status }}</output>
     </main>
 
     <div ng-toaster position="bottom-right" aria-label="Notifications">
-      <section data-slot="toast" ng-if="canonical.visible">
-        <div data-slot="toast-content">
-          <h3 data-slot="toast-title">Event has been created</h3>
-          <p data-slot="toast-description">
-            Sunday, December 03, 2023 at 9:00 AM
-          </p>
-        </div>
+      <li ng-if="canonical.visible" class="toast">
+        <section class="toast-content">
+          <h3 class="toast-title">Event has been created</h3>
+          <p class="toast-description">Sunday, December 03, 2023 at 9:00 AM</p>
+        </section>
         <button
-          data-slot="button"
-          ng-toast-action
           variant="outline"
           size="sm"
           ng-click="canonical.visible = false; canonical.status = 'Undo selected'"
+          class="button toast-action"
         >
           Undo
         </button>
-      </section>
+      </li>
     </div>
   </body>
 </html>

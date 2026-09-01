@@ -12,9 +12,7 @@ test("canonical collapsible keeps order state in AngularTS and panel state in th
   await page.goto(canonicalUrl);
   const root = page.locator("[ng-collapsible]");
   const trigger = page.getByRole("button", { name: "Toggle details" });
-  const content = page.locator(
-    `:is([data-slot=collapsible-content], [ng-collapsible-content])`,
-  );
+  const content = page.locator(`.collapsible-content`);
 
   await expect(page.locator("body")).toHaveAttribute(
     "data-example",
@@ -54,11 +52,7 @@ test("collapsible workflows cover native details, custom settings, and RTL", asy
   await expect(product).not.toHaveAttribute("open", "");
   await product.locator("summary").press("Enter");
   await expect(product).toHaveAttribute("open", "");
-  await expect(
-    product.locator(
-      `:is([data-slot=collapsible-content], [ng-collapsible-content])`,
-    ),
-  ).toBeVisible();
+  await expect(product.locator(`.collapsible-content`)).toBeVisible();
 
   await expect(settings.locator("input")).toHaveCount(4);
   await expect(settings.locator("input:visible")).toHaveCount(2);
@@ -69,11 +63,7 @@ test("collapsible workflows cover native details, custom settings, and RTL", asy
 
   await expect(rtl).toHaveAttribute("dir", "rtl");
   await rtl.getByRole("button", { name: "تبديل التفاصيل" }).click();
-  await expect(
-    rtl.locator(
-      `:is([data-slot=collapsible-content], [ng-collapsible-content])`,
-    ),
-  ).toBeVisible();
+  await expect(rtl.locator(`.collapsible-content`)).toBeVisible();
 });
 
 test("collapsible file tree expands nested folders without hiding sibling files", async ({

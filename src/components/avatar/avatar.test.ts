@@ -3,9 +3,9 @@ import { expect, test } from "@playwright/test";
 test("avatar uses fallback when image is missing", async ({ page }) => {
   await page.goto("/docs/static/examples/components/avatar.html");
   const avatar = page.locator("[ng-avatar]").first();
-  const fallback = avatar.locator("[data-slot=avatar-fallback]");
+  const fallback = avatar.locator(".avatar-fallback");
 
-  await avatar.locator("[data-slot=avatar-image]").evaluate((image) => {
+  await avatar.locator(".avatar-image").evaluate((image) => {
     (image as HTMLImageElement).src = "/missing-avatar.png";
   });
 
@@ -18,7 +18,7 @@ test("avatar switches to loaded state when image emits load", async ({
 }) => {
   await page.goto("/docs/static/examples/components/avatar.html");
   const avatar = page.locator("[ng-avatar]").first();
-  const fallback = avatar.locator("[data-slot=avatar-fallback]");
+  const fallback = avatar.locator(".avatar-fallback");
 
   await expect(avatar).toHaveAttribute("data-state", "loaded");
   await expect(fallback).toBeHidden();

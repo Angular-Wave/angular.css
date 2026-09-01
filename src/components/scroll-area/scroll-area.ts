@@ -11,18 +11,14 @@ type ScrollAreaScope = ng.Scope;
 export function scrollAreaDirective(): ng.Directive {
   return {
     link(scope: ScrollAreaScope, element: HTMLElement) {
-      const viewport = query(
-        element,
-        '[data-slot="scroll-area-viewport"], [ng-scroll-area-viewport]',
-        HTMLElement,
-      );
+      const viewport = query(element, ".scroll-area-viewport", HTMLElement);
       if (!viewport) return;
 
       viewport.setAttribute(
         "tabindex",
         viewport.getAttribute("tabindex") ?? "0",
       );
-      viewport.setAttribute("role", viewport.getAttribute("role") ?? "region");
+      viewport.setAttribute("role", "region");
       viewport.setAttribute(
         "aria-label",
         viewport.getAttribute("aria-label") ??
@@ -125,11 +121,7 @@ export function scrollAreaDirective(): ng.Directive {
           ? scrollbar.clientWidth
           : scrollbar.clientHeight;
         const maxScroll = Math.max(0, scrollSize - viewportSize);
-        const thumb = query(
-          scrollbar,
-          '[data-slot="scroll-area-thumb"], [ng-scroll-area-thumb]',
-          HTMLElement,
-        );
+        const thumb = query(scrollbar, ".scroll-area-thumb", HTMLElement);
         if (!thumb || trackSize <= 0 || scrollSize <= 0) return;
 
         const thumbSize = Math.max(
@@ -177,30 +169,28 @@ export function scrollAreaDirective(): ng.Directive {
             viewport.scrollTop + viewport.clientHeight >= viewport.scrollHeight,
           ),
         );
-        queryAll<HTMLElement>(
-          element,
-          '[data-slot="scroll-area-scrollbar"], [ng-scroll-area-scrollbar]',
-        ).forEach((scrollbar) => {
-          const orientation =
-            scrollbar.getAttribute("data-orientation") === "horizontal"
-              ? "horizontal"
-              : "vertical";
-          scrollbar.setAttribute("data-orientation", orientation);
-          scrollbar.setAttribute("aria-hidden", "true");
-          scrollbar.setAttribute(
-            "data-visible",
-            orientation === "horizontal"
-              ? (element.getAttribute("data-scrollable-x") ?? "false")
-              : (element.getAttribute("data-scrollable-y") ?? "false"),
-          );
-          syncScrollbar(scrollbar, orientation);
-        });
-        queryAll<HTMLElement>(
-          element,
-          '[data-slot="scroll-area-thumb"], [ng-scroll-area-thumb]',
-        ).forEach((thumb) => {
-          thumb.setAttribute("aria-hidden", "true");
-        });
+        queryAll<HTMLElement>(element, ".scroll-area-scrollbar").forEach(
+          (scrollbar) => {
+            const orientation =
+              scrollbar.getAttribute("data-orientation") === "horizontal"
+                ? "horizontal"
+                : "vertical";
+            scrollbar.setAttribute("data-orientation", orientation);
+            scrollbar.setAttribute("aria-hidden", "true");
+            scrollbar.setAttribute(
+              "data-visible",
+              orientation === "horizontal"
+                ? (element.getAttribute("data-scrollable-x") ?? "false")
+                : (element.getAttribute("data-scrollable-y") ?? "false"),
+            );
+            syncScrollbar(scrollbar, orientation);
+          },
+        );
+        queryAll<HTMLElement>(element, ".scroll-area-thumb").forEach(
+          (thumb) => {
+            thumb.setAttribute("aria-hidden", "true");
+          },
+        );
       };
 
       const observedElements = new Set<Element>();

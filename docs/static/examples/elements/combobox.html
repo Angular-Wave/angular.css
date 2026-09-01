@@ -21,34 +21,34 @@
         ng-combobox
         ng-on-angularcss:combobox-select="basic.selected=$event.detail.value; basic.query=$event.detail.value"
       >
-        <div ng-combobox-control>
+        <div class="combobox-control">
           <input
-            ng-combobox-input
+
             aria-label="Framework"
             ng-model="basic.query"
             placeholder="Select a framework"
-          />
+           class="combobox-input"/>
           <button
-            ng-combobox-trigger
+
             type="button"
             aria-label="Show frameworks"
-          ></button>
+           class="combobox-trigger"></button>
         </div>
-        <div ng-combobox-content aria-label="Framework options">
-          <div ng-combobox-empty>No items found.</div>
-          <div ng-combobox-list>
-            <div ng-combobox-collection>
-              <div
-                ng-combobox-item
+        <ul aria-label="Framework options" class="combobox-content">
+          <div class="combobox-empty">No items found.</div>
+          <div class="combobox-list">
+            <ul class="combobox-collection">
+              <li
+
                 ng-repeat="framework in frameworks | filter:basic.query"
                 data-value="{{ framework }}"
                 ng-attr-aria-selected="{{ basic.selected === framework }}"
-              >
+               class="combobox-item">
                 {{ framework }}
-              </div>
-            </div>
+              </li>
+            </ul>
           </div>
-        </div>
+        </ul>
       </div>
 
       <div
@@ -57,34 +57,34 @@
         auto-highlight
         ng-on-angularcss:combobox-select="automatic.selected=$event.detail.value; automatic.query=$event.detail.value"
       >
-        <div ng-combobox-control>
+        <div class="combobox-control">
           <input
-            ng-combobox-input
+
             aria-label="Auto-highlight framework"
             ng-model="automatic.query"
             placeholder="Select a framework"
-          />
+           class="combobox-input"/>
           <button
-            ng-combobox-trigger
+
             type="button"
             aria-label="Show auto-highlight frameworks"
-          ></button>
+           class="combobox-trigger"></button>
         </div>
-        <div ng-combobox-content aria-label="Auto-highlight framework options">
-          <div ng-combobox-empty>No items found.</div>
-          <div ng-combobox-list>
-            <div ng-combobox-collection>
-              <div
-                ng-combobox-item
+        <ul aria-label="Auto-highlight framework options" class="combobox-content">
+          <div class="combobox-empty">No items found.</div>
+          <div class="combobox-list">
+            <ul class="combobox-collection">
+              <li
+
                 ng-repeat="framework in frameworks | filter:automatic.query"
                 data-value="{{ framework }}"
                 ng-attr-aria-selected="{{ automatic.selected === framework }}"
-              >
+               class="combobox-item">
                 {{ framework }}
-              </div>
-            </div>
+              </li>
+            </ul>
           </div>
-        </div>
+        </ul>
       </div>
 
       <output class="output visually-hidden" aria-live="polite">

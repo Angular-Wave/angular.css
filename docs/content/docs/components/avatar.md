@@ -6,17 +6,17 @@ description: >
 ---
 
 Use `ng-avatar` with optional `avatar-image`, `avatar-fallback`, and
-`avatar-badge`, or wrap multiple avatars with `ng-avatar-group`.
+`avatar-badge`, or wrap multiple avatars with `.avatar-group`.
 
 ```html
 <span ng-avatar>
-  <span data-slot="avatar-fallback">JD</span>
-  <span data-slot="avatar-badge"></span>
+  <span class="avatar-fallback">JD</span>
+  <span class="avatar-badge"></span>
 </span>
 
-<span data-slot="avatar-group">
-  <span ng-avatar><span data-slot="avatar-fallback">AB</span></span>
-  <span data-slot="avatar-group-count">+3</span>
+<span class="avatar-group">
+  <span ng-avatar><span class="avatar-fallback">AB</span></span>
+  <span class="avatar-group-count">+3</span>
 </span>
 ```
 
@@ -27,7 +27,7 @@ Use `ng-avatar` with optional `avatar-image`, `avatar-fallback`, and
 ## Variants And Composition
 
 Use `size="sm"`, the default size, or `size="lg"`. Badge icons, grouped counts,
-RTL layouts, and dropdown triggers compose from the same semantic slots without
+RTL layouts, and dropdown triggers compose from the same semantic parts without
 changing Avatar behavior.
 
 {{< example src="examples/components/avatar-workflows.html" title="Avatar variants and composition" height="620" >}}
@@ -46,20 +46,10 @@ This component's root directive is `[ng-avatar]`. Importing the package register
 ### Directive selectors
 
 - `ng-avatar`
-- `ng-avatar-fallback`
-- `ng-avatar-image`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="avatar"]`
-- `[data-slot="avatar-badge"]`
-- `[data-slot="avatar-fallback"]`
-- `[data-slot="avatar-group"]`
-- `[data-slot="avatar-group-count"]`
-- `[data-slot="avatar-image"]`
-
-Slots are optional unless the usage example or behavior description identifies a required relationship.
-Use the named slots as stable Tailwind and CSS selectors.
+Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough.
 
 ## API
 
@@ -101,7 +91,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-avatar]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-avatar]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

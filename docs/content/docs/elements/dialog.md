@@ -10,11 +10,11 @@ as the component page.
 
 ```html
 <section ng-dialog>
-  <button ng-dialog-trigger>Edit profile</button>
-  <div ng-dialog-overlay></div>
-  <section ng-dialog-content>
-    <h2 ng-dialog-title>Edit profile</h2>
-  </section>
+  <button class="dialog-trigger">Edit profile</button>
+  <div class="dialog-overlay"></div>
+  <dialog class="dialog-content">
+    <h2 class="dialog-title">Edit profile</h2>
+  </dialog>
 </section>
 ```
 

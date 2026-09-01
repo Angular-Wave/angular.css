@@ -3,8 +3,7 @@ import { expect, test } from "@playwright/test";
 const canonicalUrl = "/docs/static/examples/components/toggle-group.html";
 const workflowsUrl =
   "/docs/static/examples/components/toggle-group-workflows.html";
-const itemSelector =
-  ':is([data-slot="toggle-group-item"], [ng-toggle-group-item])';
+const itemSelector = ".toggle-group-item";
 
 test("published toggle group enforces single selection and mirrors application state", async ({
   page,
@@ -13,7 +12,7 @@ test("published toggle group enforces single selection and mirrors application s
   const group = page.locator("[ng-toggle-group]");
   const items = group.locator(itemSelector);
 
-  await expect(group).toHaveAttribute("role", "group");
+  expect(await group.getAttribute("role")).toBeNull();
   await expect(items.nth(1)).toHaveAttribute("data-state", "on");
   await expect(items.nth(1)).toHaveAttribute("tabindex", "0");
   await items.nth(0).click();

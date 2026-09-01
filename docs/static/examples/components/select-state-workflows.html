@@ -17,19 +17,17 @@
     <main class="select-state-workflows visual-example">
       <div class="select-state-controls">
         <button
-          ng-button
+
           type="button"
           data-variant="outline"
-          ng-click="externalOpen=!externalOpen"
-        >
+          ng-click="externalOpen=!externalOpen" class="button">
           Toggle popup
         </button>
         <button
-          ng-button
+
           type="button"
           data-variant="outline"
-          ng-click="includeArchived=!includeArchived"
-        >
+          ng-click="includeArchived=!includeArchived" class="button">
           Toggle archived option
         </button>
       </div>
@@ -41,27 +39,27 @@
         ng-on-angularcss:select="status=$event.detail.value; externalOpen=false"
         ng-on-angularcss:select-open-change="externalOpen=$event.detail.open"
       >
-        <button ng-select-trigger type="button" aria-label="Status">
+        <button type="button" aria-label="Status" class="select-trigger">
           <span
-            ng-select-value
+
             ng-bind="status === 'doing' ? 'In progress' : status === 'done' ? 'Done' : status === 'archived' ? 'Archived' : 'Todo'"
-          ></span>
+           class="select-value"></span>
         </button>
-        <div ng-select-content data-align-trigger="false">
-          <div ng-select-group>
-            <div ng-select-label>Workflow</div>
-            <div ng-select-item data-value="todo" aria-selected="true">
+        <ul data-align-trigger="false" class="select-content">
+          <div class="select-group">
+            <div class="select-label">Workflow</div>
+            <li data-value="todo" aria-selected="true" class="select-item">
               Todo
-            </div>
-            <div ng-select-item data-value="doing" aria-disabled="true">
+            </li>
+            <li data-value="doing" aria-disabled="true" class="select-item">
               In progress
-            </div>
-            <div ng-select-item data-value="done">Done</div>
-            <div ng-select-item data-value="archived" ng-if="includeArchived">
+            </li>
+            <li data-value="done" class="select-item">Done</li>
+            <li data-value="archived" ng-if="includeArchived" class="select-item">
               Archived
-            </div>
+            </li>
           </div>
-        </div>
+        </ul>
       </div>
 
       <output class="select-state-output" aria-live="polite">

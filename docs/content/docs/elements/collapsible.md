@@ -8,9 +8,9 @@ description: >
 Prefer native `details` and `summary` when possible.
 
 ```html
-<details data-slot="collapsible">
-  <summary data-slot="collapsible-trigger">Order details</summary>
-  <div data-slot="collapsible-content">Shipping address and item details.</div>
+<details class="collapsible">
+  <summary class="collapsible-trigger">Order details</summary>
+  <div class="collapsible-content">Shipping address and item details.</div>
 </details>
 ```
 

@@ -36,7 +36,7 @@ export function dropdownDirective(): ng.Directive {
     link(scope: DropdownScope, element: HTMLElement) {
       const button = element.querySelector("button");
       const panel = element.querySelector<HTMLElement>(
-        '[role="menu"], [data-slot="dropdown-menu-content"], [ng-dropdown-content]',
+        'menu, [role="menu"], .dropdown-menu-content',
       );
 
       if (!button || !panel) return;
@@ -79,7 +79,7 @@ export function dropdownDirective(): ng.Directive {
       button.setAttribute("aria-haspopup", "true");
       button.setAttribute("aria-expanded", "false");
       button.setAttribute("aria-controls", panelId);
-      panel.setAttribute("role", panel.getAttribute("role") ?? "menu");
+      panel.setAttribute("role", "menu");
       panel.setAttribute("tabindex", panel.getAttribute("tabindex") ?? "-1");
       panel.setAttribute("aria-labelledby", button.id);
 
@@ -108,7 +108,15 @@ export function dropdownDirective(): ng.Directive {
       const refreshMenuItemRoles = () => {
         queryMenuItems(panel).forEach((item) => {
           if (!item.hasAttribute("role")) {
-            item.setAttribute("role", "menuitem");
+            const role = item.matches(".dropdown-menu-checkbox-item")
+              ? "menuitemcheckbox"
+              : item.matches(".dropdown-menu-radio-item")
+                ? "menuitemradio"
+                : "menuitem";
+            item.setAttribute("role", role);
+            if (role !== "menuitem" && !item.hasAttribute("aria-checked")) {
+              item.setAttribute("aria-checked", "false");
+            }
           }
         });
       };

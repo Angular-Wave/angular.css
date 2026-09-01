@@ -17,29 +17,29 @@
         ng-on-angularcss:select="fruit=$event.detail.value"
       >
         <button
-          ng-select-trigger
+
           type="button"
           aria-label="Fruit"
           data-placeholder="{{ fruit === '' }}"
-        >
+         class="select-trigger">
           <span
-            ng-select-value
+
             ng-bind="fruit === 'apple' ? 'Apple' : fruit === 'banana' ? 'Banana' : fruit === 'blueberry' ? 'Blueberry' : fruit === 'grapes' ? 'Grapes' : fruit === 'pineapple' ? 'Pineapple' : 'Select a fruit'"
-          ></span>
+           class="select-value"></span>
         </button>
-        <div ng-select-content>
-          <div ng-select-group>
-            <div ng-select-label>Fruits</div>
-            <div ng-select-item data-value="" aria-selected="true">
+        <ul class="select-content">
+          <div class="select-group">
+            <div class="select-label">Fruits</div>
+            <li data-value="" aria-selected="true" class="select-item">
               Select a fruit
-            </div>
-            <div ng-select-item data-value="apple">Apple</div>
-            <div ng-select-item data-value="banana">Banana</div>
-            <div ng-select-item data-value="blueberry">Blueberry</div>
-            <div ng-select-item data-value="grapes">Grapes</div>
-            <div ng-select-item data-value="pineapple">Pineapple</div>
+            </li>
+            <li data-value="apple" class="select-item">Apple</li>
+            <li data-value="banana" class="select-item">Banana</li>
+            <li data-value="blueberry" class="select-item">Blueberry</li>
+            <li data-value="grapes" class="select-item">Grapes</li>
+            <li data-value="pineapple" class="select-item">Pineapple</li>
           </div>
-        </div>
+        </ul>
       </div>
       <output class="output visually-hidden" aria-live="polite">
         Selected: <span ng-bind="fruit || 'none'"></span>

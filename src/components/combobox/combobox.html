@@ -15,52 +15,46 @@
     ng-init="frameworks=['AngularTS', 'AngularCSS', 'Tailwind CSS']; state={ query: '', selected: 'AngularTS' }"
   >
     <div ng-combobox>
-      <label data-slot="label" for="framework">Framework</label>
-      <div data-slot="combobox-control">
+      <label for="framework" class="label">Framework</label>
+      <div class="combobox-control">
         <input
-          data-input
           id="framework"
-          role="combobox"
           ng-model="state.query"
           placeholder="Search frameworks..."
+          class="input"
         />
         <button
-          ng-combobox-trigger
           variant="outline"
           size="icon"
           aria-label="Open options"
+          class="combobox-trigger"
         >
           v
         </button>
       </div>
-      <div
-        data-slot="combobox-content"
-        role="listbox"
-        aria-label="Framework options"
-      >
-        <section data-slot="combobox-group">
-          <h3 data-slot="combobox-group-label">Libraries</h3>
-          <div
+      <ul aria-label="Framework options" class="combobox-content">
+        <section class="combobox-group">
+          <h3 class="combobox-group-label">Libraries</h3>
+          <li
             ng-repeat="framework in frameworks | filter:state.query"
-            data-slot="combobox-item"
-            role="option"
             data-value="{{ framework }}"
             ng-click="state.selected=framework; state.query=framework"
+            class="combobox-item"
           >
             {{ framework }}
-          </div>
+          </li>
         </section>
         <p
-          data-slot="combobox-empty"
           ng-if="(frameworks | filter:state.query).length === 0"
+          class="combobox-empty"
         >
           No frameworks found.
         </p>
-      </div>
+      </ul>
       <button
-        ng-combobox-clear
         ng-click="state.query=''; state.selected=''"
         variant="ghost"
+        class="combobox-clear"
       >
         Clear selection
       </button>

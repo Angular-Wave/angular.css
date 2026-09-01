@@ -16,34 +16,28 @@
     ng-init="otp={a:'1',b:'2',c:'3',d:'4',e:'5',f:'6'}"
     data-example="input-otp-demo"
   >
-    <div
+    <fieldset
       ng-input-otp
-      class="input-otp-demo visual-example"
+      class="input-otp-demo visual-example input-otp"
       aria-label="One-time password"
     >
-      <div data-slot="input-otp-group">
-        <span data-slot="input-otp-slot"
-          ><input id="otp-1" ng-model="otp.a" maxlength="1"
-        /></span>
-        <span data-slot="input-otp-slot"
-          ><input ng-model="otp.b" maxlength="1"
-        /></span>
-        <span data-slot="input-otp-slot"
-          ><input ng-model="otp.c" maxlength="1"
-        /></span>
-        <span data-slot="input-otp-slot"
-          ><input ng-model="otp.d" maxlength="1"
-        /></span>
-        <span data-slot="input-otp-slot"
-          ><input ng-model="otp.e" maxlength="1"
-        /></span>
-        <span data-slot="input-otp-slot"
-          ><input ng-model="otp.f" maxlength="1"
-        /></span>
+      <div class="input-otp-group">
+        <span
+           class="input-otp-slot"><input id="otp-1" ng-model="otp.a" maxlength="1" /></span>
+        <span
+           class="input-otp-slot"><input ng-model="otp.b" maxlength="1" /></span>
+        <span
+           class="input-otp-slot"><input ng-model="otp.c" maxlength="1" /></span>
+        <span
+           class="input-otp-slot"><input ng-model="otp.d" maxlength="1" /></span>
+        <span
+           class="input-otp-slot"><input ng-model="otp.e" maxlength="1" /></span>
+        <span
+           class="input-otp-slot"><input ng-model="otp.f" maxlength="1" /></span>
       </div>
-    </div>
-    <p class="visually-hidden" role="status" aria-live="polite">
+    </fieldset>
+    <output class="visually-hidden" aria-live="polite">
       Code: {{ otp.a + otp.b + otp.c + otp.d + otp.e + otp.f }}
-    </p>
+    </output>
   </body>
 </html>

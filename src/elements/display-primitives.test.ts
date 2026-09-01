@@ -12,11 +12,13 @@ test("published skeleton example exposes decorative and labeled loading states",
   await expect(labeled).toHaveAttribute("aria-label", "Loading avatar");
 });
 
-test("published spinner example exposes status semantics", async ({ page }) => {
+test("published spinner example exposes labeled loading state", async ({
+  page,
+}) => {
   await page.goto("/docs/static/examples/elements/spinner.html");
 
-  const spinner = page.locator("[ng-spinner]");
-  await expect(spinner).toHaveAttribute("role", "status");
+  const spinner = page.locator(".spinner");
+  expect(await spinner.getAttribute("role")).toBeNull();
   await expect(spinner).toHaveAttribute("aria-live", "polite");
   await expect(spinner).toHaveAttribute("aria-label", "Loading");
   await expect(spinner).toHaveAttribute("aria-busy", "true");

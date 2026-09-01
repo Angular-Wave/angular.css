@@ -5,13 +5,13 @@ description: >
   Inline status and metadata labels
 ---
 
-Use `data-slot="badge"` or `ng-badge` on an inline element. Variants are exposed
+Use `class="badge"` on an inline element. Variants are exposed
 through the `variant` attribute.
 
 ```html
-<span data-slot="badge">Badge</span>
-<span data-slot="badge" variant="secondary">Secondary</span>
-<span data-slot="badge" variant="outline">Outline</span>
+<span class="badge">Badge</span>
+<span variant="secondary" class="badge">Secondary</span>
+<span variant="outline" class="badge">Outline</span>
 ```
 
 ## Example

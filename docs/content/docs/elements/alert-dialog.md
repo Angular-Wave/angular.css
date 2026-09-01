@@ -5,15 +5,15 @@ description: >
   Confirmation dialog structure
 ---
 
-Use alert dialog slots for destructive or confirmation flows that need a clear
+Use alert dialog parts for destructive or confirmation flows that need a clear
 action and cancel target.
 
 ```html
-<section data-slot="alert-dialog">
-  <div data-slot="alert-dialog-overlay"></div>
-  <div data-slot="alert-dialog-content" role="alertdialog" aria-modal="true">
-    <h2 data-slot="alert-dialog-title">Delete project?</h2>
-  </div>
+<section class="alert-dialog">
+  <div class="alert-dialog-overlay"></div>
+  <dialog aria-modal="true" class="alert-dialog-content">
+    <h2 class="alert-dialog-title">Delete project?</h2>
+  </dialog>
 </section>
 ```
 

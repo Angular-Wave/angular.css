@@ -10,12 +10,12 @@ the component entrypoint.
 
 ```html
 <section ng-sheet side="right">
-  <button ng-sheet-trigger>Open</button>
-  <div ng-sheet-overlay></div>
-  <aside ng-sheet-content>
-    <h2 ng-sheet-title>Settings</h2>
-    <button ng-sheet-close>Close</button>
-  </aside>
+  <button class="sheet-trigger">Open</button>
+  <div class="sheet-overlay"></div>
+  <dialog class="sheet-content">
+    <h2 class="sheet-title">Settings</h2>
+    <button class="sheet-close">Close</button>
+  </dialog>
 </section>
 ```
 

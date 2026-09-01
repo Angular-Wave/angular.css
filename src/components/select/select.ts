@@ -11,19 +11,16 @@ type Direction = "ltr" | "rtl";
 
 let selectIdCounter = 0;
 
-const contentSelector = '[data-slot="select-content"], [ng-select-content]';
-const groupSelector = '[data-slot="select-group"], [ng-select-group]';
-const itemSelector = '[data-slot="select-item"], [ng-select-item]';
-const labelSelector = '[data-slot="select-label"], [ng-select-label]';
-const rootSelector = '[data-slot="select"], [ng-select]';
-const scrollDownSelector =
-  '[data-slot="select-scroll-down-button"], [ng-select-scroll-down-button]';
-const scrollUpSelector =
-  '[data-slot="select-scroll-up-button"], [ng-select-scroll-up-button]';
-const separatorSelector =
-  '[data-slot="select-separator"], [ng-select-separator]';
-const triggerSelector = '[data-slot="select-trigger"], [ng-select-trigger]';
-const valueSelector = '[data-slot="select-value"], [ng-select-value]';
+const contentSelector = ".select-content";
+const groupSelector = ".select-group";
+const itemSelector = ".select-item";
+const labelSelector = ".select-label";
+const rootSelector = ".select, [ng-select]";
+const scrollDownSelector = ".select-scroll-down-button";
+const scrollUpSelector = ".select-scroll-up-button";
+const separatorSelector = ".select-separator";
+const triggerSelector = ".select-trigger";
+const valueSelector = ".select-value";
 
 const setAttributeIfChanged = (
   element: HTMLElement,
@@ -67,19 +64,11 @@ export function selectDirective(): ng.Directive {
         trigger.id || `select-trigger-${String(selectIdCounter++)}`;
       content.id = contentId;
       trigger.id = triggerId;
-      setAttributeIfChanged(
-        trigger,
-        "role",
-        trigger.getAttribute("role") ?? "combobox",
-      );
+      setAttributeIfChanged(trigger, "role", "combobox");
       setAttributeIfChanged(trigger, "aria-haspopup", "listbox");
       setAttributeIfChanged(trigger, "aria-controls", contentId);
       setAttributeIfChanged(trigger, "aria-autocomplete", "none");
-      setAttributeIfChanged(
-        content,
-        "role",
-        content.getAttribute("role") ?? "listbox",
-      );
+      setAttributeIfChanged(content, "role", "listbox");
       setAttributeIfChanged(content, "aria-labelledby", triggerId);
       setAttributeIfChanged(content, "tabindex", "-1");
 
@@ -283,11 +272,7 @@ export function selectDirective(): ng.Directive {
 
       const bindItem = (item: HTMLElement) => {
         if (!item.id) item.id = `select-item-${String(selectIdCounter++)}`;
-        setAttributeIfChanged(
-          item,
-          "role",
-          item.getAttribute("role") ?? "option",
-        );
+        setAttributeIfChanged(item, "role", "option");
         setAttributeIfChanged(item, "tabindex", "-1");
         if (isDisabled(item)) {
           setAttributeIfChanged(item, "aria-disabled", "true");

@@ -1,12 +1,10 @@
-[data-slot="breadcrumb"],
-[ng-breadcrumb] {
+.breadcrumb {
   display: block;
   color: var(--muted-foreground);
   font-size: var(--text-sm);
 }
 
-[data-slot="breadcrumb-list"],
-[ng-breadcrumb-list] {
+.breadcrumb-list {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -14,43 +12,37 @@
   list-style: none;
 }
 
-[data-slot="breadcrumb-item"],
-[ng-breadcrumb-item] {
+.breadcrumb-item {
   display: inline-flex;
   align-items: center;
   gap: calc(var(--spacing) * 1.5);
 }
 
-[data-slot="breadcrumb-link"],
-[ng-breadcrumb-link] {
+.breadcrumb-link {
   color: var(--muted-foreground);
   text-decoration: none;
   transition: color 150ms ease;
 }
 
-[data-slot="breadcrumb-link"]:hover,
-[ng-breadcrumb-link]:hover {
+.breadcrumb-link:hover {
   color: var(--foreground);
 }
 
-[data-slot="breadcrumb-page"],
-[ng-breadcrumb-page] {
+.breadcrumb-page {
   color: var(--foreground);
   font-weight: var(--font-weight-medium);
 }
 
-[data-slot="breadcrumb-separator"],
-[ng-breadcrumb-separator],
-[data-slot="breadcrumb-ellipsis"],
-[ng-breadcrumb-ellipsis] {
+.breadcrumb-separator,
+.breadcrumb-ellipsis {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: var(--muted-foreground);
 }
 
-:is([data-slot="breadcrumb-separator"], [ng-breadcrumb-separator]) > svg,
-:is([data-slot="breadcrumb-ellipsis"], [ng-breadcrumb-ellipsis]) > svg {
+.breadcrumb-separator > svg,
+.breadcrumb-ellipsis > svg {
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
 }

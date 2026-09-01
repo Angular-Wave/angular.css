@@ -23,13 +23,13 @@
           aria-label="Sidebar and content layout"
           class="resizable-reference-layout"
         >
-          <section ng-resizable-panel style="--panel-size: 1">
+          <section style="--panel-size: 1" class="resizable-panel">
             <div class="resizable-panel-content"><strong>Sidebar</strong></div>
           </section>
-          <div ng-resizable-handle aria-label="Resize sidebar and content">
-            <span ng-resizable-handle-grip aria-hidden="true"></span>
+          <div aria-label="Resize sidebar and content" class="resizable-handle">
+            <span aria-hidden="true" class="resizable-handle-grip"></span>
           </div>
-          <section ng-resizable-panel style="--panel-size: 3">
+          <section style="--panel-size: 3" class="resizable-panel">
             <div class="resizable-panel-content"><strong>Content</strong></div>
           </section>
         </div>
@@ -45,19 +45,19 @@
           class="resizable-reference-layout"
         >
           <section
-            ng-resizable-panel
+
             data-min-size="0.5"
             data-max-size="3.5"
             style="--panel-size: 1"
-          >
+           class="resizable-panel">
             <div class="resizable-panel-content"><strong>Header</strong></div>
           </section>
-          <div ng-resizable-handle aria-label="Resize header and content"></div>
+          <div aria-label="Resize header and content" class="resizable-handle"></div>
           <section
-            ng-resizable-panel
+
             data-min-size="0.5"
             style="--panel-size: 3"
-          >
+           class="resizable-panel">
             <div class="resizable-panel-content"><strong>Content</strong></div>
           </section>
         </div>
@@ -76,31 +76,31 @@
           class="resizable-reference-layout"
           dir="rtl"
         >
-          <section ng-resizable-panel style="--panel-size: 1">
+          <section style="--panel-size: 1" class="resizable-panel">
             <div class="resizable-panel-content"><strong>واحد</strong></div>
           </section>
-          <div ng-resizable-handle aria-label="تغيير حجم اللوحات">
-            <span ng-resizable-handle-grip aria-hidden="true"></span>
+          <div aria-label="تغيير حجم اللوحات" class="resizable-handle">
+            <span aria-hidden="true" class="resizable-handle-grip"></span>
           </div>
-          <section ng-resizable-panel style="--panel-size: 1">
+          <section style="--panel-size: 1" class="resizable-panel">
             <div
               ng-resizable-panel-group
               orientation="vertical"
               aria-label="تغيير حجم اللوحتين الثانية والثالثة"
               dir="rtl"
             >
-              <section ng-resizable-panel style="--panel-size: 1">
+              <section style="--panel-size: 1" class="resizable-panel">
                 <div class="resizable-panel-content">
                   <strong>اثنان</strong>
                 </div>
               </section>
               <div
-                ng-resizable-handle
+
                 aria-label="تغيير حجم اللوحتين الثانية والثالثة"
-              >
-                <span ng-resizable-handle-grip aria-hidden="true"></span>
+               class="resizable-handle">
+                <span aria-hidden="true" class="resizable-handle-grip"></span>
               </div>
-              <section ng-resizable-panel style="--panel-size: 3">
+              <section style="--panel-size: 3" class="resizable-panel">
                 <div class="resizable-panel-content">
                   <strong>ثلاثة</strong>
                 </div>

@@ -3,8 +3,7 @@ import type {} from "@angular-wave/angular.ts";
 import { onDestroy, queryAll } from "../../internal/dom";
 import { syncNativeControlState } from "../../internal/form";
 
-const thumbSelector =
-  'input[type="range"][ng-slider-thumb], input[type="range"][data-slot="slider-thumb"]';
+const thumbSelector = 'input[type="range"].slider-thumb';
 const orientations = new Set(["horizontal", "vertical"]);
 
 type SliderOrientation = "horizontal" | "vertical";
@@ -59,11 +58,7 @@ const syncInput = (
   const state = sliderValue(element);
 
   syncNativeControlState(element);
-  setAttributeIfChanged(
-    element,
-    "role",
-    element.getAttribute("role") ?? "slider",
-  );
+  setAttributeIfChanged(element, "role", "slider");
   setAttributeIfChanged(element, "aria-orientation", orientation);
   setAttributeIfChanged(element, "data-orientation", orientation);
   setAttributeIfChanged(element, "aria-valuemin", String(state.min));

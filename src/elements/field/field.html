@@ -10,25 +10,25 @@
 
   <body ng-app="ui" ng-cloak>
     <form class="grid w-full max-w-xl items-start gap-6 p-10">
-      <fieldset data-slot="field-set">
-        <legend data-slot="field-legend">Profile</legend>
+      <fieldset class="field-set">
+        <legend class="field-legend">Profile</legend>
 
-        <div data-slot="field-group">
-          <div data-slot="field">
-            <label ng-label data-slot="field-label" for="name">Name</label>
-            <input data-input id="name" placeholder="Jane Doe" />
-            <p data-slot="field-description">Use your public display name.</p>
+        <div class="field-group">
+          <div class="field">
+            <label for="name" class="field-label label">Name</label>
+            <input id="name" placeholder="Jane Doe" class="input" />
+            <p class="field-description">Use your public display name.</p>
           </div>
 
-          <div data-slot="field" data-invalid>
-            <label ng-label data-slot="field-label" for="email">Email</label>
+          <div data-invalid class="field">
+            <label for="email" class="field-label label">Email</label>
             <input
-              data-input
               id="email"
               placeholder="Email"
               aria-invalid="true"
+              class="input"
             />
-            <p data-slot="field-error" role="alert">Enter a valid email.</p>
+            <p class="field-error">Enter a valid email.</p>
           </div>
         </div>
       </fieldset>

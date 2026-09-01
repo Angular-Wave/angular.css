@@ -5,15 +5,15 @@ description: >
   A semantic button group that coordinates pressed-state selection.
 ---
 
-Use `ng-toggle-group` with `role="group"` and
-`button[data-slot="toggle-group-item"]`.
+Use `ng-toggle-group` on a `fieldset` containing native
+`button.toggle-group-item` controls. The directive supplies any required roles.
 
 ```html
-<div ng-toggle-group role="group" variant="outline">
-  <button data-slot="toggle-group-item" aria-pressed="true">Left</button>
-  <button data-slot="toggle-group-item">Center</button>
-  <button data-slot="toggle-group-item">Right</button>
-</div>
+<fieldset ng-toggle-group variant="outline" class="toggle-group">
+  <button aria-pressed="true" class="toggle-group-item">Left</button>
+  <button class="toggle-group-item">Center</button>
+  <button class="toggle-group-item">Right</button>
+</fieldset>
 ```
 
 ## Example
@@ -38,15 +38,10 @@ This component's root directive is `[ng-toggle-group]`. Importing the package re
 ### Directive selectors
 
 - `ng-toggle-group`
-- `ng-toggle-group-item`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="toggle-group"]`
-- `[data-slot="toggle-group-item"]`
-
-Slots are optional unless the usage example or behavior description identifies a required relationship.
-Use the named slots as stable Tailwind and CSS selectors.
+Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough.
 
 ## API
 
@@ -99,7 +94,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-toggle-group]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-toggle-group]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

@@ -10,7 +10,7 @@ native range inputs inside an `ng-slider` container for multi-thumb ranges;
 AngularTS continues to own each input model.
 
 ```html
-<label ng-label for="volume">Volume</label>
+<label for="volume" class="label">Volume</label>
 <input ng-slider id="volume" type="range" min="0" max="100" ng-model="volume" />
 <span>Volume: <span ng-bind="volume"></span></span>
 ```

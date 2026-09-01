@@ -2,46 +2,39 @@
   <section class="vstack">
     <h2>Input group</h2>
 
-    <div data-slot="field">
-      <label ng-label data-slot="field-label" for="input-group-search"
-        >Search</label
-      >
-      <div data-slot="input-group" role="group">
+    <div class="field">
+      <label for="input-group-search" class="field-label label">Search</label>
+      <fieldset class="input-group">
         <input
-          data-input
-          data-slot="input-group-control"
           id="input-group-search"
           placeholder="Search documentation..."
+          class="input-group-control input"
         />
-        <div data-slot="input-group-addon" data-align="inline-start">
+        <div data-align="inline-start" class="input-group-addon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <path d="m21 21-4.34-4.34" />
             <circle cx="11" cy="11" r="8" />
           </svg>
         </div>
-        <div data-slot="input-group-addon" data-align="inline-end">
+        <div data-align="inline-end" class="input-group-addon">
           <kbd>Ctrl K</kbd>
         </div>
-      </div>
+      </fieldset>
     </div>
 
-    <div data-slot="field">
-      <label ng-label data-slot="field-label" for="input-group-url">URL</label>
-      <div data-slot="input-group" role="group">
-        <div data-slot="input-group-addon" data-align="inline-start">
-          <span data-slot="input-group-text">https://</span>
+    <div class="field">
+      <label for="input-group-url" class="field-label label">URL</label>
+      <fieldset class="input-group">
+        <div data-align="inline-start" class="input-group-addon">
+          <span class="input-group-text">https://</span>
         </div>
-        <input
-          data-input
-          data-slot="input-group-control"
-          id="input-group-url"
-        />
-        <div data-slot="input-group-addon" data-align="inline-end">
-          <button ng-button data-slot="input-group-button" variant="ghost">
+        <input id="input-group-url" class="input-group-control input" />
+        <div data-align="inline-end" class="input-group-addon">
+          <button variant="ghost" class="input-group-button button">
             Copy
           </button>
         </div>
-      </div>
+      </fieldset>
     </div>
   </section>
 </main>

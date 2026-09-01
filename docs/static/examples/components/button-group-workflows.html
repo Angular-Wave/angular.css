@@ -21,95 +21,91 @@
         aria-labelledby="button-group-toolbar-heading"
       >
         <h2 id="button-group-toolbar-heading">Toolbar</h2>
-        <div ng-button-group role="group" aria-label="Message actions">
-          <div ng-button-group>
+        <fieldset aria-label="Message actions" class="button-group">
+          <div class="button-group">
             <button
-              ng-button
               type="button"
               variant="outline"
               size="icon"
               aria-label="Go Back"
+              class="button"
             >
               ←
             </button>
           </div>
-          <div ng-button-group>
+          <div class="button-group">
             <button
-              ng-button
               type="button"
               variant="outline"
               ng-click="toolbarAction = 'Archive'"
+              class="button"
             >
               Archive
             </button>
             <button
-              ng-button
               type="button"
               variant="outline"
               ng-click="toolbarAction = 'Report'"
+              class="button"
             >
               Report
             </button>
           </div>
-          <div ng-button-group>
+          <div class="button-group">
             <button
-              ng-button
               type="button"
               variant="outline"
               ng-click="toolbarAction = 'Snooze'"
+              class="button"
             >
               Snooze
             </button>
-            <span ng-dropdown data-slot="dropdown-menu">
+            <span ng-dropdown class="dropdown-menu">
               <button
-                ng-button
                 type="button"
-                data-slot="dropdown-menu-trigger"
                 variant="outline"
                 size="icon"
                 aria-label="More Options"
+                class="dropdown-menu-trigger button"
               >
                 •••
               </button>
-              <span
-                data-slot="dropdown-menu-content"
-                class="button-group-toolbar-menu"
-              >
-                <span data-slot="dropdown-menu-group">
+              <menu class="button-group-toolbar-menu dropdown-menu-content">
+                <span class="dropdown-menu-group">
                   <button
-                    data-slot="dropdown-menu-item"
                     ng-click="toolbarAction = 'Mark as Read'"
+                    class="dropdown-menu-item"
                   >
                     Mark as Read
                   </button>
                   <button
-                    data-slot="dropdown-menu-item"
                     ng-click="toolbarAction = 'Archive'"
+                    class="dropdown-menu-item"
                   >
                     Archive
                   </button>
                   <button
-                    data-slot="dropdown-menu-item"
                     ng-click="toolbarAction = 'Snooze'"
+                    class="dropdown-menu-item"
                   >
                     Snooze
                   </button>
                 </span>
-                <span data-slot="dropdown-menu-separator"></span>
+                <span class="dropdown-menu-separator"></span>
                 <button
-                  data-slot="dropdown-menu-item"
                   data-variant="destructive"
                   ng-click="toolbarAction = 'Trash'"
+                  class="dropdown-menu-item"
                 >
                   Trash
                 </button>
-              </span>
+              </menu>
             </span>
           </div>
-        </div>
-        <p class="button-group-output" role="status">
+        </fieldset>
+        <output class="button-group-output">
           Action: {{ toolbarAction }}
-        </p>
+        </output>
       </section>
 
       <section
@@ -117,43 +113,31 @@
         aria-labelledby="button-group-dropdown-heading"
       >
         <h2 id="button-group-dropdown-heading">Split dropdown</h2>
-        <div ng-button-group role="group" aria-label="Follow actions">
-          <button ng-button type="button" variant="outline">Follow</button>
-          <span ng-dropdown data-slot="dropdown-menu">
+        <fieldset aria-label="Follow actions" class="button-group">
+          <button type="button" variant="outline" class="button">Follow</button>
+          <span ng-dropdown class="dropdown-menu">
             <button
-              ng-button
               type="button"
-              data-slot="dropdown-menu-trigger"
               variant="outline"
               aria-label="More follow actions"
+              class="dropdown-menu-trigger button"
             ></button>
-            <span
-              data-slot="dropdown-menu-content"
-              class="button-group-follow-menu"
-            >
-              <span data-slot="dropdown-menu-group">
-                <button data-slot="dropdown-menu-item">
-                  Mute Conversation
-                </button>
-                <button data-slot="dropdown-menu-item">Mark as Read</button>
-                <button data-slot="dropdown-menu-item">
-                  Report Conversation
-                </button>
-                <button data-slot="dropdown-menu-item">Block User</button>
-                <button data-slot="dropdown-menu-item">
-                  Share Conversation
-                </button>
-                <button data-slot="dropdown-menu-item">
-                  Copy Conversation
-                </button>
+            <menu class="button-group-follow-menu dropdown-menu-content">
+              <span class="dropdown-menu-group">
+                <button class="dropdown-menu-item">Mute Conversation</button>
+                <button class="dropdown-menu-item">Mark as Read</button>
+                <button class="dropdown-menu-item">Report Conversation</button>
+                <button class="dropdown-menu-item">Block User</button>
+                <button class="dropdown-menu-item">Share Conversation</button>
+                <button class="dropdown-menu-item">Copy Conversation</button>
               </span>
-              <span data-slot="dropdown-menu-separator"></span>
-              <button data-slot="dropdown-menu-item" data-variant="destructive">
+              <span class="dropdown-menu-separator"></span>
+              <button data-variant="destructive" class="dropdown-menu-item">
                 Delete Conversation
               </button>
-            </span>
+            </menu>
           </span>
-        </div>
+        </fieldset>
       </section>
 
       <section
@@ -161,19 +145,19 @@
         aria-labelledby="button-group-input-heading"
       >
         <h2 id="button-group-input-heading">Search input</h2>
-        <div ng-button-group>
+        <div class="button-group">
           <input
-            data-input
             ng-model="searchTerm"
             placeholder="Search..."
             aria-label="Search query"
+            class="input"
           />
           <button
-            ng-button
             type="button"
             variant="outline"
             aria-label="Search"
             ng-click="toolbarAction = searchTerm || 'Search'"
+            class="button"
           >
             ⌕
           </button>
@@ -186,29 +170,26 @@
         aria-labelledby="button-group-nested-heading"
       >
         <h2 id="button-group-nested-heading">Nested input group</h2>
-        <div ng-button-group class="button-group-pill">
-          <div ng-button-group>
+        <div class="button-group-pill button-group">
+          <div class="button-group">
             <button
-              ng-button
               type="button"
               variant="outline"
               size="icon"
               aria-label="Add attachment"
+              class="button"
             >
               +
             </button>
           </div>
-          <div ng-button-group>
-            <div ng-input-group>
+          <div class="button-group">
+            <div ng-input-group class="input-group">
               <input
-                data-input
-                data-slot="input-group-control"
                 placeholder="Send a message..."
                 aria-label="Message"
+                class="input-group-control input"
               />
-              <span data-slot="input-group-addon" data-align="inline-end"
-                >⌁</span
-              >
+              <span data-align="inline-end" class="input-group-addon">⌁</span>
             </div>
           </div>
         </div>
@@ -219,35 +200,34 @@
         aria-labelledby="button-group-voice-heading"
       >
         <h2 id="button-group-voice-heading">Voice mode</h2>
-        <div ng-button-group class="button-group-pill">
-          <div ng-button-group>
+        <div class="button-group-pill button-group">
+          <div class="button-group">
             <button
-              ng-button
               type="button"
               variant="outline"
               size="icon"
               aria-label="Add message item"
+              class="button"
             >
               +
             </button>
           </div>
-          <div ng-button-group>
-            <div ng-input-group>
+          <div class="button-group">
+            <div ng-input-group class="input-group">
               <input
-                data-input
-                data-slot="input-group-control"
                 placeholder="{{ voiceEnabled ? 'Record and send audio...' : 'Send a message...' }}"
                 ng-disabled="voiceEnabled"
                 aria-label="Voice message"
+                class="input-group-control input"
               />
-              <span data-slot="input-group-addon" data-align="inline-end">
+              <span data-align="inline-end" class="input-group-addon">
                 <button
-                  data-slot="input-group-button"
                   type="button"
                   size="icon-xs"
                   aria-label="Voice Mode"
                   aria-pressed="{{ voiceEnabled }}"
                   ng-click="voiceEnabled = !voiceEnabled"
+                  class="input-group-button"
                 >
                   ⌁
                 </button>
@@ -262,29 +242,28 @@
         aria-labelledby="button-group-popover-heading"
       >
         <h2 id="button-group-popover-heading">Popover</h2>
-        <div ng-button-group>
-          <button ng-button type="button" variant="outline">◇ Copilot</button>
+        <div class="button-group">
+          <button type="button" variant="outline" class="button">
+            ◇ Copilot
+          </button>
           <span ng-popover>
             <button
-              ng-button
               type="button"
-              ng-popover-trigger
               variant="outline"
               size="icon"
               aria-label="Open Popover"
+              class="popover-trigger button"
             >
               ⌄
             </button>
-            <section
-              data-slot="popover-content"
+            <aside
               data-side="bottom"
-              role="dialog"
               aria-label="Copilot task"
-              class="button-group-popover-content"
+              class="button-group-popover-content popover-content"
             >
-              <header data-slot="popover-header">
-                <h3 data-slot="popover-title">Start a new task with Copilot</h3>
-                <p data-slot="popover-description">
+              <header class="popover-header">
+                <h3 class="popover-title">Start a new task with Copilot</h3>
+                <p class="popover-description">
                   Describe your task in natural language.
                 </p>
               </header>
@@ -292,12 +271,12 @@
                 >Task Description</label
               >
               <textarea
-                ng-textarea
                 id="copilot-task"
                 placeholder="I need to..."
+                class="textarea"
               ></textarea>
               <p class="muted">Copilot will open a pull request for review.</p>
-            </section>
+            </aside>
           </span>
         </div>
       </section>
@@ -307,65 +286,60 @@
         aria-labelledby="button-group-select-heading"
       >
         <h2 id="button-group-select-heading">Currency select</h2>
-        <div ng-button-group>
-          <div ng-button-group>
+        <div class="button-group">
+          <div class="button-group">
             <div ng-select>
               <button
                 type="button"
-                data-slot="select-trigger"
                 aria-label="Currency"
+                class="select-trigger"
               >
-                <span data-slot="select-value">{{ currency }}</span>
+                <span class="select-value">{{ currency }}</span>
               </button>
-              <div data-slot="select-content">
-                <div data-slot="select-group">
-                  <div
-                    data-slot="select-item"
-                    role="option"
-                    aria-label="$ US Dollar"
-                    data-description="US Dollar"
-                    data-value="$"
-                    ng-click="currency = '$'"
-                  >
-                    $
-                  </div>
-                  <div
-                    data-slot="select-item"
-                    role="option"
-                    aria-label="€ Euro"
-                    data-description="Euro"
-                    data-value="€"
-                    ng-click="currency = '€'"
-                  >
-                    €
-                  </div>
-                  <div
-                    data-slot="select-item"
-                    role="option"
-                    aria-label="£ British Pound"
-                    data-description="British Pound"
-                    data-value="£"
-                    ng-click="currency = '£'"
-                  >
-                    £
-                  </div>
-                </div>
-              </div>
+              <ul class="select-content">
+                <li
+                  aria-label="$ US Dollar"
+                  data-description="US Dollar"
+                  data-value="$"
+                  ng-click="currency = '$'"
+                  class="select-item"
+                >
+                  $
+                </li>
+                <li
+                  aria-label="€ Euro"
+                  data-description="Euro"
+                  data-value="€"
+                  ng-click="currency = '€'"
+                  class="select-item"
+                >
+                  €
+                </li>
+                <li
+                  aria-label="£ British Pound"
+                  data-description="British Pound"
+                  data-value="£"
+                  ng-click="currency = '£'"
+                  class="select-item"
+                >
+                  £
+                </li>
+              </ul>
             </div>
             <input
-              data-input
               placeholder="10.00"
               inputmode="numeric"
               aria-label="Amount"
+              class="input"
             />
           </div>
-          <div ng-button-group>
+          <div class="button-group">
             <button
-              ng-button
               type="button"
               variant="outline"
               size="icon"
               aria-label="Send"
+              class="button"
             >
               →
             </button>
@@ -380,55 +354,55 @@
         lang="ar"
       >
         <h2 id="button-group-rtl-heading">اتجاه من اليمين إلى اليسار</h2>
-        <div ng-button-group role="group" aria-label="إجراءات الرسالة">
-          <div ng-button-group>
-            <button ng-button type="button" variant="outline">أرشفة</button>
-            <button ng-button type="button" variant="outline">تقرير</button>
+        <fieldset aria-label="إجراءات الرسالة" class="button-group">
+          <div class="button-group">
+            <button type="button" variant="outline" class="button">
+              أرشفة
+            </button>
+            <button type="button" variant="outline" class="button">
+              تقرير
+            </button>
           </div>
-          <div ng-button-group>
-            <button ng-button type="button" variant="outline">تأجيل</button>
-            <span ng-dropdown data-slot="dropdown-menu">
+          <div class="button-group">
+            <button type="button" variant="outline" class="button">
+              تأجيل
+            </button>
+            <span ng-dropdown class="dropdown-menu">
               <button
-                ng-button
                 type="button"
-                data-slot="dropdown-menu-trigger"
                 variant="outline"
                 size="icon"
                 aria-label="المزيد من الخيارات"
+                class="dropdown-menu-trigger button"
               >
                 •••
               </button>
-              <span
-                data-slot="dropdown-menu-content"
-                class="button-group-toolbar-menu"
-              >
+              <menu class="button-group-toolbar-menu dropdown-menu-content">
                 <button
-                  data-slot="dropdown-menu-item"
                   ng-click="rtlAction = 'وضع علامة كمقروء'"
+                  class="dropdown-menu-item"
                 >
                   وضع علامة كمقروء
                 </button>
                 <button
-                  data-slot="dropdown-menu-item"
                   ng-click="rtlAction = 'أرشفة'"
+                  class="dropdown-menu-item"
                 >
                   أرشفة
                 </button>
-                <span data-slot="dropdown-menu-separator"></span>
+                <span class="dropdown-menu-separator"></span>
                 <button
-                  data-slot="dropdown-menu-item"
                   data-variant="destructive"
                   ng-click="rtlAction = 'سلة المهملات'"
+                  class="dropdown-menu-item"
                 >
                   سلة المهملات
                 </button>
-              </span>
+              </menu>
             </span>
           </div>
-        </div>
-        <p class="button-group-output" role="status">
-          الإجراء: {{ rtlAction }}
-        </p>
+        </fieldset>
+        <output class="button-group-output"> الإجراء: {{ rtlAction }} </output>
       </section>
     </main>
   </body>

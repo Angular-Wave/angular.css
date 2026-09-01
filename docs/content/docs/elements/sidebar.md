@@ -5,12 +5,12 @@ description: >
   Application sidebar layout
 ---
 
-Use sidebar layout, sidebar, group, menu, and inset slots for app shells.
+Use sidebar layout, sidebar, group, menu, and inset parts for app shells.
 
 ```html
-<div data-slot="sidebar-layout">
-  <aside data-slot="sidebar"></aside>
-  <main data-slot="sidebar-inset"></main>
+<div class="sidebar-layout">
+  <aside class="sidebar"></aside>
+  <main class="sidebar-inset"></main>
 </div>
 ```
 

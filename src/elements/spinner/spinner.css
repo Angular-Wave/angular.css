@@ -1,5 +1,4 @@
-[data-slot="spinner"],
-[ng-spinner] {
+.spinner {
   display: inline-block;
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
@@ -7,14 +6,12 @@
   animation: angularcss-spinner-spin 1s linear infinite;
 }
 
-[data-slot="spinner"][data-size="sm"],
-[ng-spinner][data-size="sm"] {
+.spinner[data-size="sm"] {
   width: calc(var(--spacing) * 3);
   height: calc(var(--spacing) * 3);
 }
 
-[data-slot="spinner"][data-size="lg"],
-[ng-spinner][data-size="lg"] {
+.spinner[data-size="lg"] {
   width: calc(var(--spacing) * 5);
   height: calc(var(--spacing) * 5);
 }

@@ -12,9 +12,9 @@ keyboard control.
 
 ```html
 <div ng-resizable-panel-group aria-label="Resizable layout">
-  <section ng-resizable-panel style="--panel-size: 1">Preview</section>
-  <div ng-resizable-handle role="separator" aria-orientation="vertical"></div>
-  <section ng-resizable-panel>Details</section>
+  <section style="--panel-size: 1" class="resizable-panel">Preview</section>
+  <hr aria-orientation="vertical"  class="resizable-handle"/>
+  <section class="resizable-panel">Details</section>
 </div>
 ```
 
@@ -22,7 +22,7 @@ Set `orientation="vertical"` on the group to stack panels. Handles receive
 separator roles, orientation, value bounds, current values, and `aria-controls`
 relationships. Dragging or pressing Arrow, Home, and End keys updates adjacent
 panel `--panel-size` values within `data-min-size` and `data-max-size`; RTL
-reverses horizontal changes. Add a `resizable-handle-grip` slot when the handle
+reverses horizontal changes. Add a `resizable-handle-grip` part when the handle
 should have a visible grip.
 
 ## Example
@@ -51,18 +51,10 @@ This component's root directive is `[ng-resizable-panel-group]`. Importing the p
 ### Directive selectors
 
 - `ng-resizable-panel-group`
-- `ng-resizable-handle`
-- `ng-resizable-panel`
 
-### Styling slots
+### Semantic structure
 
-- `[data-slot="resizable-handle"]`
-- `[data-slot="resizable-handle-grip"]`
-- `[data-slot="resizable-panel"]`
-- `[data-slot="resizable-panel-group"]`
-
-Alternate direct panel and handle children inside each panel group. Nested groups belong inside a panel. The visible grip is optional. Use either `ng-resizable-*` selectors or `data-slot` hooks on each element; do not duplicate both.
-Use the named slots as stable Tailwind and CSS selectors.
+Alternate direct `.resizable-panel` and `.resizable-handle` children inside each panel group. The root directive inspects those children; no child directives are required. Nested groups belong inside a panel.
 
 ## API
 
@@ -86,7 +78,7 @@ Use the named slots as stable Tailwind and CSS selectors.
 | `data-step` | Input | Stable component state or styling hook. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
 | `orientation` | Input | Layout direction: `horizontal` or `vertical`. |
-| `role` | Input/output | Explicit semantic role when native HTML does not provide one. |
+| `role` | Output | Explicit semantic role when native HTML does not provide one. |
 | `tabindex` | Input/output | Keyboard focus order for composite descendants. |
 
 `Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
@@ -119,7 +111,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-resizable-panel-group]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-resizable-panel-group]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

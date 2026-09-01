@@ -12,24 +12,23 @@
   <body ng-app="ui" ng-cloak ng-init="goal=350" data-example="drawer-rtl">
     <main class="drawer-demo visual-example">
       <section id="rtl-goal-drawer" ng-drawer>
-        <button ng-drawer-trigger ng-button variant="outline">فتح الدرج</button>
-        <div ng-drawer-overlay></div>
-        <section ng-drawer-content>
-          <div ng-drawer-handle></div>
+        <button variant="outline" class="drawer-trigger button">فتح الدرج</button>
+        <div class="drawer-overlay"></div>
+        <dialog class="drawer-content">
+          <div class="drawer-handle"></div>
           <div class="drawer-goal-panel">
-            <header ng-drawer-header>
-              <h2 ng-drawer-title>نقل الهدف</h2>
-              <p ng-drawer-description>حدد هدف نشاطك اليومي.</p>
+            <header class="drawer-header">
+              <h2 class="drawer-title">نقل الهدف</h2>
+              <p class="drawer-description">حدد هدف نشاطك اليومي.</p>
             </header>
             <div class="drawer-goal-body">
               <div class="drawer-goal-control">
                 <button
-                  ng-button
+
                   variant="outline"
                   size="icon-sm"
                   aria-label="تقليل"
-                  ng-click="goal=goal-10"
-                >
+                  ng-click="goal=goal-10" class="button">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -45,12 +44,11 @@
                   <span>سعرات حرارية/يوم</span>
                 </div>
                 <button
-                  ng-button
+
                   variant="outline"
                   size="icon-sm"
                   aria-label="زيادة"
-                  ng-click="goal=goal+10"
-                >
+                  ng-click="goal=goal+10" class="button">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -76,12 +74,12 @@
                 <span data-height="70"></span>
               </div>
             </div>
-            <footer ng-drawer-footer>
-              <button ng-button>إرسال</button>
-              <button ng-drawer-close ng-button variant="outline">إلغاء</button>
+            <footer class="drawer-footer">
+              <button class="button">إرسال</button>
+              <button variant="outline" class="drawer-close button">إلغاء</button>
             </footer>
           </div>
-        </section>
+        </dialog>
       </section>
     </main>
   </body>

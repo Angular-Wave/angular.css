@@ -58,34 +58,24 @@ test("published calendar renders complete months and updates AngularTS state", a
   await page.goto("/docs/static/examples/components/calendar.html");
 
   const calendar = page.locator("[ng-calendar]");
-  const title = page.locator(
-    ":is([data-slot=calendar-title], [ng-calendar-title])",
-  );
-  const days = page.locator(":is([data-slot=calendar-day], [ng-calendar-day])");
+  const title = page.locator(".calendar-title");
+  const days = page.locator(".calendar-day");
   await expect(title.getByRole("combobox", { name: "Month" })).toHaveValue("4");
   await expect(title.getByRole("combobox", { name: "Year" })).toHaveValue(
     "2026",
   );
   await expect(days).toHaveCount(42);
 
-  await page
-    .locator(
-      ":is([data-slot=calendar-day], [ng-calendar-day])[data-value='2026-05-20']",
-    )
-    .click();
+  await page.locator(".calendar-day[data-value='2026-05-20']").click();
   await expect(calendar).toHaveAttribute("data-value", "2026-05-20");
   await expect(page.locator(".output")).toContainText("Selected: 2026-05-20");
 
-  await page
-    .locator(":is([data-slot=calendar-next], [ng-calendar-next])")
-    .click();
+  await page.locator(".calendar-next").click();
   await expect(title.getByRole("combobox", { name: "Month" })).toHaveValue("5");
   await expect(calendar).toHaveAttribute("data-month", "2026-06");
   await expect(days).toHaveCount(42);
 
-  await page
-    .locator(":is([data-slot=calendar-previous], [ng-calendar-previous])")
-    .click();
+  await page.locator(".calendar-previous").click();
   await expect(title.getByRole("combobox", { name: "Month" })).toHaveValue("4");
 });
 
@@ -122,9 +112,7 @@ test("published calendar workflow page covers basic, booked, caption, multiple, 
   );
 
   const range = calendars.nth(4);
-  await expect(
-    range.locator(`:is([data-slot=calendar-month], [ng-calendar-month])`),
-  ).toHaveCount(2);
+  await expect(range.locator(`.calendar-month`)).toHaveCount(2);
   await expect(range.locator(`[data-range-middle="true"]`)).toHaveCount(4);
   await expect(range.locator(`[data-value="2026-09-10"]`)).toHaveAttribute(
     "data-range",
@@ -138,11 +126,7 @@ test("published calendar workflow page covers basic, booked, caption, multiple, 
   );
 
   const weekNumbers = calendars.nth(5);
-  await expect(
-    weekNumbers.locator(
-      `:is([data-slot=calendar-week-number], [ng-calendar-week-number])`,
-    ),
-  ).toHaveCount(6);
+  await expect(weekNumbers.locator(`.calendar-week-number`)).toHaveCount(6);
 });
 
 test("published calendar compositions keep custom content and application state functional", async ({
@@ -156,9 +140,7 @@ test("published calendar compositions keep custom content and application state 
   await expect(calendars).toHaveCount(5);
 
   const custom = calendars.nth(0);
-  await expect(
-    custom.locator(`:is([data-slot=calendar-day], [ng-calendar-day])`),
-  ).toHaveCount(42);
+  await expect(custom.locator(`.calendar-day`)).toHaveCount(42);
   await expect(custom.locator(`[data-range-middle="true"]`)).toHaveCount(4);
   await expect(custom.locator(`[data-value="2026-09-12"] span`)).toHaveText(
     "$120",
@@ -183,14 +165,18 @@ test("published calendar compositions keep custom content and application state 
 
   const rtl = calendars.nth(3);
   await expect(rtl).toHaveAttribute("data-direction", "rtl");
-  await expect(
-    rtl.locator(`:is([data-slot=calendar-weekday], [ng-calendar-weekday])`),
-  ).toHaveText(["ح", "ن", "ث", "ر", "خ", "ج", "س"]);
+  await expect(rtl.locator(`.calendar-weekday`)).toHaveText([
+    "ح",
+    "ن",
+    "ث",
+    "ر",
+    "خ",
+    "ج",
+    "س",
+  ]);
 
   const hijri = calendars.nth(4);
-  await expect(
-    hijri.locator(`:is([data-slot=calendar-day], [ng-calendar-day])`),
-  ).toHaveCount(42);
+  await expect(hijri.locator(`.calendar-day`)).toHaveCount(42);
   await hijri.locator(`[data-value="2025-06-15"]`).click();
   await expect(page.locator(".calendar-workflow-output").nth(4)).toContainText(
     "2025-06-15",
@@ -202,7 +188,7 @@ test("published card workflows use local media and retain AngularTS RTL form sta
 }) => {
   await page.goto("/docs/static/examples/components/card-workflows.html");
 
-  await expect(page.locator("[ng-card]")).toHaveCount(3);
+  await expect(page.locator(".card")).toHaveCount(3);
   await expect(page.locator(".card-cover-image")).toHaveAttribute(
     "src",
     "../../images/avatars/01.png",
@@ -218,7 +204,7 @@ test("published card workflows use local media and retain AngularTS RTL form sta
   await expect(page.locator(".card-workflow-output").nth(1)).toContainText(
     "jane@example.com",
   );
-  const smallCard = page.locator("[ng-card]").nth(2);
+  const smallCard = page.locator(".card").nth(2);
   await expect(smallCard).toHaveAttribute("size", "sm");
   await smallCard.getByRole("button", { name: "See what's new" }).click();
   await expect(page.locator(".card-workflow-output").nth(2)).toHaveText(
@@ -233,7 +219,7 @@ test("published carousel pages cover every reference workflow with functional HT
 
   const workflows = page.locator("[ng-carousel]");
   await expect(workflows).toHaveCount(4);
-  await workflows.nth(0).locator("[ng-carousel-next]").click();
+  await workflows.nth(0).locator(".carousel-next").click();
   await expect(page.locator(".carousel-status").first()).toHaveText(
     "Slide 2 of 5",
   );
@@ -248,13 +234,10 @@ test("published carousel pages cover every reference workflow with functional HT
   const compositions = page.locator("[ng-carousel]");
   await expect(compositions).toHaveCount(3);
   await expect(compositions.first()).toHaveAttribute("data-direction", "rtl");
-  await compositions.first().locator("[ng-carousel-next]").click();
+  await compositions.first().locator(".carousel-next").click();
   await expect(compositions.first()).toHaveAttribute("data-index", "1");
   await expect(
-    compositions
-      .first()
-      .locator(`:is([data-slot=carousel-item], [ng-carousel-item])`)
-      .nth(1),
+    compositions.first().locator(`.carousel-item`).nth(1),
   ).toContainText("٢");
 });
 
@@ -262,41 +245,25 @@ test("published chart pages cover every reference workflow with functional HTML"
   page,
 }) => {
   await page.goto("/docs/static/examples/components/chart.html");
-  await expect(
-    page.locator(`:is([data-slot=chart-bar-group], [ng-chart-bar-group])`),
-  ).toHaveCount(6);
-  await expect(
-    page.locator(`:is([data-slot=chart-bar], [ng-chart-bar])`),
-  ).toHaveCount(12);
+  await expect(page.locator(`.chart-bar-group`)).toHaveCount(6);
+  await expect(page.locator(`.chart-bar`)).toHaveCount(12);
   expect(
-    (
-      await page
-        .locator(`:is([data-slot=chart-bar], [ng-chart-bar])`)
-        .first()
-        .boundingBox()
-    )?.height,
+    (await page.locator(`.chart-bar`).first().boundingBox())?.height,
   ).toBeGreaterThan(90);
 
   await page.goto("/docs/static/examples/components/chart-workflows.html");
-  await expect(page.locator("[ng-chart]")).toHaveCount(4);
+  await expect(page.locator(".chart")).toHaveCount(4);
   const tooltipWorkflow = page.locator(
     "[aria-labelledby='chart-tooltip-heading']",
   );
-  await tooltipWorkflow
-    .locator(`:is([data-slot=chart-bar-group], [ng-chart-bar-group])`)
-    .first()
-    .hover();
-  await expect(
-    tooltipWorkflow.locator(
-      `:is([data-slot=chart-tooltip], [ng-chart-tooltip])`,
-    ),
-  ).toContainText("Desktop186");
+  await tooltipWorkflow.locator(`.chart-bar-group`).first().hover();
+  await expect(tooltipWorkflow.locator(`.chart-tooltip`)).toContainText(
+    "Desktop186",
+  );
 
   await page.goto("/docs/static/examples/components/chart-compositions.html");
   const controls = page.locator(".chart-series-controls > button");
-  const firstBar = page
-    .locator(`.chart-daily-bars :is([data-slot=chart-bar], [ng-chart-bar])`)
-    .first();
+  const firstBar = page.locator(`.chart-daily-bars .chart-bar`).first();
   await controls.nth(1).click();
   await expect(firstBar).toHaveAttribute("data-value", "36%");
   await expect(page.locator(`.chart-composition[dir="rtl"]`)).toHaveAttribute(
@@ -304,9 +271,7 @@ test("published chart pages cover every reference workflow with functional HTML"
     "rtl",
   );
   await expect(
-    page.locator(
-      `.chart-tooltip-gallery :is([data-slot=chart-tooltip], [ng-chart-tooltip])`,
-    ),
+    page.locator(`.chart-tooltip-gallery .chart-tooltip`),
   ).toHaveCount(4);
 });
 
@@ -315,13 +280,13 @@ test("published checkbox pages cover every reference workflow with functional HT
 }) => {
   await page.goto("/docs/static/examples/components/checkbox.html");
   const terms = page.locator("#terms-checkbox");
-  await expect(page.locator("[ng-checkbox]")).toHaveCount(4);
+  await expect(page.locator(".checkbox")).toHaveCount(4);
   await terms.check();
   await expect(terms).toBeChecked();
   await expect(page.getByRole("status")).toContainText("Terms accepted");
 
   await page.goto("/docs/static/examples/components/checkbox-workflows.html");
-  await expect(page.locator("[ng-checkbox]")).toHaveCount(12);
+  await expect(page.locator(".checkbox")).toHaveCount(12);
   await expect(page.locator("#terms-checkbox-desc")).toBeChecked();
   await expect(page.locator("#toggle-checkbox-disabled")).toBeDisabled();
   await expect(page.locator("#terms-checkbox-invalid")).toHaveAttribute(
@@ -337,7 +302,7 @@ test("published checkbox pages cover every reference workflow with functional HT
   const table = page.getByRole("table", { name: "Team members" });
   await expect(table.locator("tbody tr")).toHaveCount(4);
   await page.getByRole("checkbox", { name: "Select all rows" }).check();
-  await expect(table.locator("tbody [ng-checkbox]:checked")).toHaveCount(4);
+  await expect(table.locator("tbody .checkbox:checked")).toHaveCount(4);
   await page.getByLabel("Select Marcus Rodriguez").uncheck();
   await expect(
     page.getByRole("checkbox", { name: "Select all rows" }),
@@ -419,9 +384,7 @@ test("published date-picker workflows retain AngularTS model ownership", async (
   await expect(time).toHaveValue("14:45:00");
 
   const rtlCalendar = page
-    .locator(
-      `:is([data-slot=popover-content], [ng-popover-content])[aria-label="اختر تاريخًا"]`,
-    )
+    .locator(`.popover-content[aria-label="اختر تاريخًا"]`)
     .locator("[ng-calendar]");
   await expect(rtlCalendar).toHaveAttribute("data-direction", "rtl");
 });
@@ -464,7 +427,7 @@ test("docs iframe examples render without stale AngularTS bindings", async ({
       );
       const legacySwitchAttributes = Array.from(
         document.body.querySelectorAll(
-          "[ng-switch], [ngswitch], [ng-switch-when], [ngswitchwhen], [ng-switch-default], [ngswitchdefault]",
+          "[ng-switch], [ngswitch], [ngswitchwhen], [ngswitchdefault]",
         ),
         (element) => element.outerHTML,
       );
@@ -625,9 +588,7 @@ test("form examples preserve AngularTS ng-model ownership", async ({
   await expect(compact).toBeChecked();
 
   await page.goto("/docs/static/examples/components/input-otp.html");
-  const otpInputs = page.locator(
-    ":is([data-slot=input-otp-slot], [ng-input-otp-slot]) input",
-  );
+  const otpInputs = page.locator(".input-otp-slot input");
   await expect(otpInputs).toHaveCount(6);
   await otpInputs.nth(0).fill("9");
   await expect(page.getByRole("status")).toContainText("Code: 923456");
@@ -645,14 +606,8 @@ test("form examples preserve AngularTS ng-model ownership", async ({
   );
 
   await page.goto("/docs/static/examples/components/select.html");
-  await page
-    .locator(":is([data-slot=select-trigger], [ng-select-trigger])")
-    .click();
-  await page
-    .locator(
-      ":is([data-slot=select-item], [ng-select-item])[data-value='pineapple']",
-    )
-    .click();
+  await page.locator(".select-trigger").click();
+  await page.locator(".select-item[data-value='pineapple']").click();
   await expect(page.locator(".output").first()).toContainText(
     "Selected: pineapple",
   );

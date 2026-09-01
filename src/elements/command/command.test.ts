@@ -42,5 +42,5 @@ test("element artifact runs packaged Command behavior without source constructio
 
   await input.fill("missing");
   await expect(root).toHaveAttribute("data-empty", "true");
-  await expect(root.locator("[ng-command-empty]")).toBeVisible();
+  await expect(root.locator(".command-empty")).toBeVisible();
 });
