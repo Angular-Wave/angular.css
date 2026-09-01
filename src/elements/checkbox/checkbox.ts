@@ -1,1 +1,2 @@
-export { checkboxDirective } from "../../components/checkbox/checkbox";
+/** Styling-only HTML entry; no TypeScript behavior is exported. */
+export {};

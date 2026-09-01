@@ -68,6 +68,7 @@
 }
 
 :is(select[ng-native-select], select[data-slot="native-select"]):is(
+  :invalid,
   [aria-invalid="true"],
   [data-invalid="true"]
 ) {
@@ -81,6 +82,7 @@
 }
 
 :is(select[ng-native-select], select[data-slot="native-select"]):is(
+  [size="sm"],
   [data-size="sm"]
 ),
 [data-slot="native-select-wrapper"][data-size="sm"] select {

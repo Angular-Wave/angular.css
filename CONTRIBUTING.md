@@ -1,4 +1,23 @@
-# Contributing to AngularTS
+# Contributing to AngularCSS
+
+## AngularCSS HTML-first policy
+
+Before adding or changing an AngularCSS catalog entry, use this ownership order:
+
+1. Native HTML owns semantics, activation, form state, and validation.
+2. CSS owns presentation and consumes authored attributes directly.
+3. AngularTS owns application data, expressions, commands, and rendering.
+4. AngularCSS TypeScript is allowed only for a remaining composite interaction
+   such as coordinated focus, keyboard navigation, disclosure, or geometry.
+
+Do not add a directive merely to set `data-slot`, copy authored attributes,
+mirror native state, generate semantics that can be written in HTML, or wrap
+existing AngularTS functionality. Add each catalog entry to
+`scripts/component-policy.ts` with its classification and rationale. The
+registry check requires styling-only TypeScript entrypoints to remain empty.
+
+Functional tests must navigate to the built standalone HTML examples. They
+must not import TypeScript source or construct directives in the page.
 
 We'd love for you to contribute to our source code and to make AngularTS even better than it is
 today! Here are the guidelines we'd like you to follow:

@@ -1,1 +1,2 @@
-export { separatorDirective } from "../../components/separator/separator";
+/** Styling-only HTML entry; no TypeScript behavior is exported. */
+export {};

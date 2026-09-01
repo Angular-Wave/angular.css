@@ -6,11 +6,9 @@ test("native select element example exercises the built functional artifact", as
   await page.goto("/docs/static/examples/elements/native-select.html");
 
   const select = page.getByRole("combobox", { name: "Status" });
-  await expect(select).toHaveAttribute("data-empty", "true");
+  await expect(select).toHaveValue("");
   await select.selectOption("done");
   await expect(select).toHaveValue("done");
-  await expect(select).toHaveAttribute("data-value", "done");
-  await expect(select).toHaveAttribute("data-empty", "false");
 
   const sourceRequests = await page.evaluate(() =>
     performance

@@ -1,1 +1,2 @@
-export { breadcrumbDirective } from "../../components/breadcrumb/breadcrumb";
+/** Styling-only HTML entry; no TypeScript behavior is exported. */
+export {};

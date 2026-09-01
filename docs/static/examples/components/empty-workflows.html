@@ -11,11 +11,7 @@
   </head>
   <body ng-app="ui" ng-cloak ng-init="emptyQuery='';emptyAction='Ready'">
     <main class="empty-workflow-grid" aria-label="Empty state workflows">
-      <section
-        ng-empty
-        data-example="empty-avatar"
-        class="empty-workflow"
-      >
+      <section ng-empty data-example="empty-avatar" class="empty-workflow">
         <div data-slot="empty-header">
           <div data-slot="empty-media">
             <span ng-avatar class="empty-avatar-large"
@@ -137,11 +133,7 @@
           <a href="#learn">Learn more</a>
         </div>
       </section>
-      <section
-        ng-empty
-        data-example="empty-input-group"
-        class="empty-workflow"
-      >
+      <section ng-empty data-example="empty-input-group" class="empty-workflow">
         <div data-slot="empty-header">
           <h2 data-slot="empty-title">404 - Not Found</h2>
           <p data-slot="empty-description">

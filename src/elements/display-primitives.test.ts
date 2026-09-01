@@ -8,10 +8,8 @@ test("published skeleton example exposes decorative and labeled loading states",
   const decorative = page.locator("#decorative-skeleton");
   const labeled = page.locator("#labeled-skeleton");
   await expect(decorative).toHaveAttribute("aria-hidden", "true");
-  await expect(decorative).toHaveAttribute("data-loading", "true");
   await expect(labeled).not.toHaveAttribute("aria-hidden", "true");
   await expect(labeled).toHaveAttribute("aria-label", "Loading avatar");
-  await expect(labeled).toHaveAttribute("data-loading", "true");
 });
 
 test("published spinner example exposes status semantics", async ({ page }) => {
@@ -22,7 +20,6 @@ test("published spinner example exposes status semantics", async ({ page }) => {
   await expect(spinner).toHaveAttribute("aria-live", "polite");
   await expect(spinner).toHaveAttribute("aria-label", "Loading");
   await expect(spinner).toHaveAttribute("aria-busy", "true");
-  await expect(spinner).toHaveAttribute("data-loading", "true");
 });
 
 test("published table example records row count and column scopes", async ({
@@ -30,9 +27,8 @@ test("published table example records row count and column scopes", async ({
 }) => {
   await page.goto("/docs/static/examples/elements/table.html");
 
-  const table = page.locator("[ng-table]");
-  await expect(table).toHaveAttribute("data-row-count", "3");
-  await expect(table).toHaveAttribute("data-column-count", "4");
+  await expect(page.locator("tbody tr")).toHaveCount(3);
+  await expect(page.locator("thead th")).toHaveCount(4);
   await expect(page.locator("thead th").first()).toHaveAttribute(
     "scope",
     "col",

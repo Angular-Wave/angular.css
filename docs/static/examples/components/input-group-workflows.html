@@ -34,18 +34,26 @@
         </symbol>
         <symbol id="ig-eye-off" viewBox="0 0 24 24">
           <path d="m2 2 20 20"></path>
-          <path d="M6.7 6.7C4.8 8 3.3 9.8 2.5 12c1.5 4 5.2 7 9.5 7 1.5 0 2.9-.3 4.1-.9"></path>
-          <path d="M10.7 5.1A10 10 0 0 1 12 5c4.3 0 8 3 9.5 7a10.8 10.8 0 0 1-2.1 3.4"></path>
+          <path
+            d="M6.7 6.7C4.8 8 3.3 9.8 2.5 12c1.5 4 5.2 7 9.5 7 1.5 0 2.9-.3 4.1-.9"
+          ></path>
+          <path
+            d="M10.7 5.1A10 10 0 0 1 12 5c4.3 0 8 3 9.5 7a10.8 10.8 0 0 1-2.1 3.4"
+          ></path>
         </symbol>
         <symbol id="ig-star" viewBox="0 0 24 24">
-          <path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1Z"></path>
+          <path
+            d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1Z"
+          ></path>
         </symbol>
         <symbol id="ig-info" viewBox="0 0 24 24">
           <circle cx="12" cy="12" r="10"></circle>
           <path d="M12 16v-4M12 8h.01"></path>
         </symbol>
         <symbol id="ig-link" viewBox="0 0 24 24">
-          <path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"></path>
+          <path
+            d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"
+          ></path>
           <path d="M14 11a5 5 0 0 0-7.1-.1l-2 2A5 5 0 0 0 12 20l1.1-1.1"></path>
         </symbol>
       </defs>
@@ -60,25 +68,50 @@
         <h2 id="input-group-basic-title">States</h2>
         <div data-slot="field-group">
           <div data-slot="field">
-            <label ng-label data-slot="field-label" for="ig-default">Default</label>
+            <label ng-label data-slot="field-label" for="ig-default"
+              >Default</label
+            >
             <input data-input id="ig-default" placeholder="Placeholder" />
           </div>
           <div data-slot="field">
-            <label ng-label data-slot="field-label" for="ig-basic">Input group</label>
+            <label ng-label data-slot="field-label" for="ig-basic"
+              >Input group</label
+            >
             <div ng-input-group>
-              <input data-input data-slot="input-group-control" id="ig-basic" placeholder="Placeholder" />
+              <input
+                data-input
+                data-slot="input-group-control"
+                id="ig-basic"
+                placeholder="Placeholder"
+              />
             </div>
           </div>
           <div data-slot="field" data-disabled="true">
-            <label ng-label data-slot="field-label" for="ig-disabled">Disabled</label>
+            <label ng-label data-slot="field-label" for="ig-disabled"
+              >Disabled</label
+            >
             <div ng-input-group>
-              <input data-input data-slot="input-group-control" id="ig-disabled" placeholder="This field is disabled" disabled />
+              <input
+                data-input
+                data-slot="input-group-control"
+                id="ig-disabled"
+                placeholder="This field is disabled"
+                disabled
+              />
             </div>
           </div>
           <div data-slot="field" data-invalid="true">
-            <label ng-label data-slot="field-label" for="ig-invalid">Invalid</label>
+            <label ng-label data-slot="field-label" for="ig-invalid"
+              >Invalid</label
+            >
             <div ng-input-group>
-              <input data-input data-slot="input-group-control" id="ig-invalid" placeholder="This field is invalid" aria-invalid="true" />
+              <input
+                data-input
+                data-slot="input-group-control"
+                id="ig-invalid"
+                placeholder="This field is invalid"
+                aria-invalid="true"
+              />
             </div>
           </div>
         </div>
@@ -91,26 +124,49 @@
       >
         <h2 id="input-group-position-title">Inline addons</h2>
         <div ng-input-group>
-          <input data-input data-slot="input-group-control" ng-model="query" placeholder="Search..." aria-label="Search documentation" />
+          <input
+            data-input
+            data-slot="input-group-control"
+            ng-model="query"
+            placeholder="Search..."
+            aria-label="Search documentation"
+          />
           <div data-slot="input-group-addon" data-align="inline-start">
             <svg aria-hidden="true"><use href="#ig-search"></use></svg>
           </div>
-          <div data-slot="input-group-addon" data-align="inline-end">{{ query ? '12 results' : 'No query' }}</div>
+          <div data-slot="input-group-addon" data-align="inline-end">
+            {{ query ? '12 results' : 'No query' }}
+          </div>
         </div>
         <div ng-input-group>
-          <input data-input data-slot="input-group-control" type="password" placeholder="Enter password" aria-label="Password" />
+          <input
+            data-input
+            data-slot="input-group-control"
+            type="password"
+            placeholder="Enter password"
+            aria-label="Password"
+          />
           <div data-slot="input-group-addon" data-align="inline-end">
             <svg aria-hidden="true"><use href="#ig-eye-off"></use></svg>
           </div>
         </div>
         <div ng-input-group>
-          <input data-input data-slot="input-group-control" id="ig-command-search" placeholder="Search commands..." />
+          <input
+            data-input
+            data-slot="input-group-control"
+            id="ig-command-search"
+            placeholder="Search commands..."
+          />
           <div data-slot="input-group-addon">
             <svg aria-hidden="true"><use href="#ig-search"></use></svg>
           </div>
-          <div data-slot="input-group-addon" data-align="inline-end"><kbd ng-kbd>⌘K</kbd></div>
+          <div data-slot="input-group-addon" data-align="inline-end">
+            <kbd ng-kbd>⌘K</kbd>
+          </div>
         </div>
-        <p class="input-group-output" role="status">Query: {{ query || 'none' }}</p>
+        <p class="input-group-output" role="status">
+          Query: {{ query || 'none' }}
+        </p>
       </section>
 
       <section
@@ -120,16 +176,38 @@
       >
         <h2 id="input-group-icon-title">Icons</h2>
         <div ng-input-group>
-          <input data-input data-slot="input-group-control" type="email" placeholder="Enter your email" aria-label="Email with icon" />
-          <div data-slot="input-group-addon"><svg aria-hidden="true"><use href="#ig-mail"></use></svg></div>
+          <input
+            data-input
+            data-slot="input-group-control"
+            type="email"
+            placeholder="Enter your email"
+            aria-label="Email with icon"
+          />
+          <div data-slot="input-group-addon">
+            <svg aria-hidden="true"><use href="#ig-mail"></use></svg>
+          </div>
         </div>
         <div ng-input-group>
-          <input data-input data-slot="input-group-control" placeholder="Card number" aria-label="Verified card number" />
-          <div data-slot="input-group-addon"><svg aria-hidden="true"><use href="#ig-card"></use></svg></div>
-          <div data-slot="input-group-addon" data-align="inline-end"><svg aria-hidden="true"><use href="#ig-check"></use></svg></div>
+          <input
+            data-input
+            data-slot="input-group-control"
+            placeholder="Card number"
+            aria-label="Verified card number"
+          />
+          <div data-slot="input-group-addon">
+            <svg aria-hidden="true"><use href="#ig-card"></use></svg>
+          </div>
+          <div data-slot="input-group-addon" data-align="inline-end">
+            <svg aria-hidden="true"><use href="#ig-check"></use></svg>
+          </div>
         </div>
         <div ng-input-group>
-          <input data-input data-slot="input-group-control" placeholder="Favorite card" aria-label="Favorite card" />
+          <input
+            data-input
+            data-slot="input-group-control"
+            placeholder="Favorite card"
+            aria-label="Favorite card"
+          />
           <div data-slot="input-group-addon" data-align="inline-end">
             <svg aria-hidden="true"><use href="#ig-star"></use></svg>
             <svg aria-hidden="true"><use href="#ig-info"></use></svg>
@@ -144,18 +222,44 @@
       >
         <h2 id="input-group-text-title">Text addons</h2>
         <div ng-input-group>
-          <div data-slot="input-group-addon"><span data-slot="input-group-text">$</span></div>
-          <input data-input data-slot="input-group-control" inputmode="decimal" placeholder="0.00" aria-label="Amount" />
-          <div data-slot="input-group-addon" data-align="inline-end"><span data-slot="input-group-text">USD</span></div>
+          <div data-slot="input-group-addon">
+            <span data-slot="input-group-text">$</span>
+          </div>
+          <input
+            data-input
+            data-slot="input-group-control"
+            inputmode="decimal"
+            placeholder="0.00"
+            aria-label="Amount"
+          />
+          <div data-slot="input-group-addon" data-align="inline-end">
+            <span data-slot="input-group-text">USD</span>
+          </div>
         </div>
         <div ng-input-group>
-          <div data-slot="input-group-addon"><span data-slot="input-group-text">https://</span></div>
-          <input data-input data-slot="input-group-control" placeholder="example.com" aria-label="Website" />
-          <div data-slot="input-group-addon" data-align="inline-end"><span data-slot="input-group-text">.com</span></div>
+          <div data-slot="input-group-addon">
+            <span data-slot="input-group-text">https://</span>
+          </div>
+          <input
+            data-input
+            data-slot="input-group-control"
+            placeholder="example.com"
+            aria-label="Website"
+          />
+          <div data-slot="input-group-addon" data-align="inline-end">
+            <span data-slot="input-group-text">.com</span>
+          </div>
         </div>
         <div ng-input-group>
-          <input data-input data-slot="input-group-control" placeholder="Enter your username" aria-label="Company username" />
-          <div data-slot="input-group-addon" data-align="inline-end"><span data-slot="input-group-text">@company.com</span></div>
+          <input
+            data-input
+            data-slot="input-group-control"
+            placeholder="Enter your username"
+            aria-label="Company username"
+          />
+          <div data-slot="input-group-addon" data-align="inline-end">
+            <span data-slot="input-group-text">@company.com</span>
+          </div>
         </div>
       </section>
 
@@ -167,39 +271,75 @@
         <h2 id="input-group-addons-title">Addon positions</h2>
         <div class="input-group-pair-grid">
           <div data-slot="field">
-            <label ng-label data-slot="field-label" for="ig-addon-start">Inline start and end</label>
+            <label ng-label data-slot="field-label" for="ig-addon-start"
+              >Inline start and end</label
+            >
             <div ng-input-group>
-              <input data-input data-slot="input-group-control" id="ig-addon-start" />
-              <div data-slot="input-group-addon"><svg aria-hidden="true"><use href="#ig-search"></use></svg></div>
-              <div data-slot="input-group-addon" data-align="inline-end"><svg aria-hidden="true"><use href="#ig-info"></use></svg></div>
+              <input
+                data-input
+                data-slot="input-group-control"
+                id="ig-addon-start"
+              />
+              <div data-slot="input-group-addon">
+                <svg aria-hidden="true"><use href="#ig-search"></use></svg>
+              </div>
+              <div data-slot="input-group-addon" data-align="inline-end">
+                <svg aria-hidden="true"><use href="#ig-info"></use></svg>
+              </div>
             </div>
           </div>
           <div data-slot="field">
-            <label ng-label data-slot="field-label" for="ig-addon-header">Block start</label>
+            <label ng-label data-slot="field-label" for="ig-addon-header"
+              >Block start</label
+            >
             <div ng-input-group>
-              <input data-input data-slot="input-group-control" id="ig-addon-header" />
+              <input
+                data-input
+                data-slot="input-group-control"
+                id="ig-addon-header"
+              />
               <div data-slot="input-group-addon" data-align="block-start">
                 <span data-slot="input-group-text">First name</span>
-                <svg class="input-group-push-end" aria-hidden="true"><use href="#ig-info"></use></svg>
+                <svg class="input-group-push-end" aria-hidden="true">
+                  <use href="#ig-info"></use>
+                </svg>
               </div>
             </div>
           </div>
           <div data-slot="field">
-            <label ng-label data-slot="field-label" for="ig-addon-footer">Block end</label>
+            <label ng-label data-slot="field-label" for="ig-addon-footer"
+              >Block end</label
+            >
             <div ng-input-group>
-              <input data-input data-slot="input-group-control" id="ig-addon-footer" />
+              <input
+                data-input
+                data-slot="input-group-control"
+                id="ig-addon-footer"
+              />
               <div data-slot="input-group-addon" data-align="block-end">
                 <span data-slot="input-group-text">20/240 characters</span>
-                <svg class="input-group-push-end" aria-hidden="true"><use href="#ig-info"></use></svg>
+                <svg class="input-group-push-end" aria-hidden="true">
+                  <use href="#ig-info"></use>
+                </svg>
               </div>
             </div>
           </div>
           <div data-slot="field">
-            <label ng-label data-slot="field-label" for="ig-addon-optional">Label and optional text</label>
+            <label ng-label data-slot="field-label" for="ig-addon-optional"
+              >Label and optional text</label
+            >
             <div ng-input-group>
-              <div data-slot="input-group-addon"><label ng-label for="ig-addon-optional">Label</label></div>
-              <input data-input data-slot="input-group-control" id="ig-addon-optional" />
-              <div data-slot="input-group-addon" data-align="inline-end"><span data-slot="input-group-text">(optional)</span></div>
+              <div data-slot="input-group-addon">
+                <label ng-label for="ig-addon-optional">Label</label>
+              </div>
+              <input
+                data-input
+                data-slot="input-group-control"
+                id="ig-addon-optional"
+              />
+              <div data-slot="input-group-addon" data-align="inline-end">
+                <span data-slot="input-group-text">(optional)</span>
+              </div>
             </div>
           </div>
         </div>
@@ -212,18 +352,44 @@
       >
         <h2 id="input-group-kbd-title">Keyboard hints</h2>
         <div ng-input-group>
-          <input data-input data-slot="input-group-control" placeholder="Search for apps..." aria-label="Search apps" />
-          <div data-slot="input-group-addon" data-align="inline-end">Ask AI</div>
-          <div data-slot="input-group-addon" data-align="inline-end"><kbd ng-kbd>Tab</kbd></div>
+          <input
+            data-input
+            data-slot="input-group-control"
+            placeholder="Search for apps..."
+            aria-label="Search apps"
+          />
+          <div data-slot="input-group-addon" data-align="inline-end">
+            Ask AI
+          </div>
+          <div data-slot="input-group-addon" data-align="inline-end">
+            <kbd ng-kbd>Tab</kbd>
+          </div>
         </div>
         <div ng-input-group>
-          <input data-input data-slot="input-group-control" ng-model="username" aria-label="Username" />
-          <div data-slot="input-group-addon" data-align="inline-end"><span class="input-group-valid-icon"><svg aria-hidden="true"><use href="#ig-check"></use></svg></span></div>
+          <input
+            data-input
+            data-slot="input-group-control"
+            ng-model="username"
+            aria-label="Username"
+          />
+          <div data-slot="input-group-addon" data-align="inline-end">
+            <span class="input-group-valid-icon"
+              ><svg aria-hidden="true"><use href="#ig-check"></use></svg
+            ></span>
+          </div>
         </div>
         <p class="input-group-success">This username is available.</p>
         <div ng-input-group data-disabled="true">
-          <input data-input data-slot="input-group-control" value="shadcn" aria-label="Loading username" disabled />
-          <div data-slot="input-group-addon" data-align="inline-end"><span ng-spinner data-size="sm" aria-label="Loading"></span></div>
+          <input
+            data-input
+            data-slot="input-group-control"
+            value="shadcn"
+            aria-label="Loading username"
+            disabled
+          />
+          <div data-slot="input-group-addon" data-align="inline-end">
+            <span ng-spinner data-size="sm" aria-label="Loading"></span>
+          </div>
         </div>
       </section>
 
@@ -234,18 +400,40 @@
       >
         <h2 id="input-group-label-title">Labels in addons</h2>
         <div ng-input-group>
-          <input data-input data-slot="input-group-control" id="ig-email-name" placeholder="shadcn" />
-          <div data-slot="input-group-addon"><label ng-label for="ig-email-name">@</label></div>
+          <input
+            data-input
+            data-slot="input-group-control"
+            id="ig-email-name"
+            placeholder="shadcn"
+          />
+          <div data-slot="input-group-addon">
+            <label ng-label for="ig-email-name">@</label>
+          </div>
         </div>
         <div ng-input-group>
-          <input data-input data-slot="input-group-control" id="ig-email-address" placeholder="shadcn@example.com" />
+          <input
+            data-input
+            data-slot="input-group-control"
+            id="ig-email-address"
+            placeholder="shadcn@example.com"
+          />
           <div data-slot="input-group-addon" data-align="block-start">
             <label ng-label for="ig-email-address">Email</label>
             <span ng-tooltip class="input-group-push-end">
-              <button ng-button ng-tooltip-trigger data-slot="input-group-button" data-size="icon-xs" variant="ghost" type="button" aria-label="Email help">
+              <button
+                ng-button
+                ng-tooltip-trigger
+                data-slot="input-group-button"
+                data-size="icon-xs"
+                variant="ghost"
+                type="button"
+                aria-label="Email help"
+              >
                 <svg aria-hidden="true"><use href="#ig-info"></use></svg>
               </button>
-              <span ng-tooltip-content side="top">We'll use this to send notifications.</span>
+              <span ng-tooltip-content side="top"
+                >We'll use this to send notifications.</span
+              >
             </span>
           </div>
         </div>
@@ -260,8 +448,15 @@
         <div ng-button-group>
           <label data-slot="button-group-text" for="ig-url">https://</label>
           <div ng-input-group>
-            <input data-input data-slot="input-group-control" id="ig-url" aria-label="URL" />
-            <div data-slot="input-group-addon" data-align="inline-end"><svg aria-hidden="true"><use href="#ig-link"></use></svg></div>
+            <input
+              data-input
+              data-slot="input-group-control"
+              id="ig-url"
+              aria-label="URL"
+            />
+            <div data-slot="input-group-addon" data-align="inline-end">
+              <svg aria-hidden="true"><use href="#ig-link"></use></svg>
+            </div>
           </div>
           <span data-slot="button-group-text">.com</span>
         </div>
@@ -274,32 +469,68 @@
       >
         <article ng-card>
           <header data-slot="card-header">
-            <h2 data-slot="card-title" id="input-group-card-title">Card with input group</h2>
-            <p data-slot="card-description">Collect contact details and feedback.</p>
+            <h2 data-slot="card-title" id="input-group-card-title">
+              Card with input group
+            </h2>
+            <p data-slot="card-description">
+              Collect contact details and feedback.
+            </p>
           </header>
           <div data-slot="card-content">
             <div data-slot="field-group">
               <div data-slot="field">
-                <label ng-label data-slot="field-label" for="ig-card-email">Email address</label>
+                <label ng-label data-slot="field-label" for="ig-card-email"
+                  >Email address</label
+                >
                 <div ng-input-group>
-                  <input data-input data-slot="input-group-control" id="ig-card-email" type="email" placeholder="you@example.com" />
-                  <div data-slot="input-group-addon" data-align="inline-end"><svg aria-hidden="true"><use href="#ig-mail"></use></svg></div>
+                  <input
+                    data-input
+                    data-slot="input-group-control"
+                    id="ig-card-email"
+                    type="email"
+                    placeholder="you@example.com"
+                  />
+                  <div data-slot="input-group-addon" data-align="inline-end">
+                    <svg aria-hidden="true"><use href="#ig-mail"></use></svg>
+                  </div>
                 </div>
               </div>
               <div data-slot="field">
-                <label ng-label data-slot="field-label" for="ig-card-site">Website URL</label>
+                <label ng-label data-slot="field-label" for="ig-card-site"
+                  >Website URL</label
+                >
                 <div ng-input-group>
-                  <div data-slot="input-group-addon"><span data-slot="input-group-text">https://</span></div>
-                  <input data-input data-slot="input-group-control" id="ig-card-site" placeholder="example.com" />
-                  <div data-slot="input-group-addon" data-align="inline-end"><svg aria-hidden="true"><use href="#ig-link"></use></svg></div>
+                  <div data-slot="input-group-addon">
+                    <span data-slot="input-group-text">https://</span>
+                  </div>
+                  <input
+                    data-input
+                    data-slot="input-group-control"
+                    id="ig-card-site"
+                    placeholder="example.com"
+                  />
+                  <div data-slot="input-group-addon" data-align="inline-end">
+                    <svg aria-hidden="true"><use href="#ig-link"></use></svg>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           <footer data-slot="card-footer" class="input-group-card-actions">
-            <button ng-button variant="outline" type="button" ng-click="cardStatus='Cancelled'">Cancel</button>
-            <button ng-button type="button" ng-click="cardStatus='Submitted'">Submit</button>
-            <span class="input-group-output" role="status">{{ cardStatus }}</span>
+            <button
+              ng-button
+              variant="outline"
+              type="button"
+              ng-click="cardStatus='Cancelled'"
+            >
+              Cancel
+            </button>
+            <button ng-button type="button" ng-click="cardStatus='Submitted'">
+              Submit
+            </button>
+            <span class="input-group-output" role="status"
+              >{{ cardStatus }}</span
+            >
           </footer>
         </article>
       </section>

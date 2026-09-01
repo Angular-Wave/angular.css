@@ -17,50 +17,77 @@
   >
     <main class="textarea-workflows visual-example">
       <div data-slot="field">
-      <label ng-label data-slot="field-label" for="docs-textarea-message">Message</label>
-      <textarea
-        ng-textarea
-        id="docs-textarea-message"
-        placeholder="Add a message"
-        ng-model="message"
-      ></textarea>
-      <p data-slot="field-description">Add context for your request.</p>
+        <label ng-label data-slot="field-label" for="docs-textarea-message"
+          >Message</label
+        >
+        <textarea
+          ng-textarea
+          id="docs-textarea-message"
+          placeholder="Add a message"
+          ng-model="message"
+        ></textarea>
+        <p data-slot="field-description">Add context for your request.</p>
       </div>
 
       <div data-slot="field" data-disabled="true">
-      <label ng-label data-slot="field-label" for="docs-textarea-disabled">Disabled</label>
-      <textarea
-        ng-textarea
-        id="docs-textarea-disabled"
-        placeholder="Disabled"
-        disabled
-      ></textarea>
+        <label ng-label data-slot="field-label" for="docs-textarea-disabled"
+          >Disabled</label
+        >
+        <textarea
+          ng-textarea
+          id="docs-textarea-disabled"
+          placeholder="Disabled"
+          disabled
+        ></textarea>
       </div>
 
       <div data-slot="field" data-invalid="true">
-      <label ng-label data-slot="field-label" for="docs-textarea-invalid">Invalid</label>
-      <textarea
-        ng-textarea
-        id="docs-textarea-invalid"
-        placeholder="Invalid"
-        aria-invalid="true"
-      ></textarea>
-      <p data-slot="field-error" role="alert">A message is required.</p>
+        <label ng-label data-slot="field-label" for="docs-textarea-invalid"
+          >Invalid</label
+        >
+        <textarea
+          ng-textarea
+          id="docs-textarea-invalid"
+          placeholder="Invalid"
+          aria-invalid="true"
+        ></textarea>
+        <p data-slot="field-error" role="alert">A message is required.</p>
       </div>
 
       <div data-slot="field" class="textarea-button-demo">
-        <label ng-label data-slot="field-label" for="docs-textarea-reply">Reply</label>
-        <textarea ng-textarea id="docs-textarea-reply" placeholder="Type your message here."></textarea>
-        <button ng-button type="button" ng-click="textareaAction='Message sent'">Send message</button>
+        <label ng-label data-slot="field-label" for="docs-textarea-reply"
+          >Reply</label
+        >
+        <textarea
+          ng-textarea
+          id="docs-textarea-reply"
+          placeholder="Type your message here."
+        ></textarea>
+        <button
+          ng-button
+          type="button"
+          ng-click="textareaAction='Message sent'"
+        >
+          Send message
+        </button>
       </div>
 
       <div data-slot="field" dir="rtl" lang="ar">
-        <label ng-label data-slot="field-label" for="docs-textarea-rtl">رسالتك</label>
-        <textarea ng-textarea id="docs-textarea-rtl" ng-model="rtlMessage" placeholder="اكتب رسالتك هنا."></textarea>
+        <label ng-label data-slot="field-label" for="docs-textarea-rtl"
+          >رسالتك</label
+        >
+        <textarea
+          ng-textarea
+          id="docs-textarea-rtl"
+          ng-model="rtlMessage"
+          placeholder="اكتب رسالتك هنا."
+        ></textarea>
         <p data-slot="field-description">سيتم إرسال رد إلى بريدك الإلكتروني.</p>
       </div>
 
-      <p class="output textarea-output" role="status">Message: {{ message ? message : "empty" }} · {{ textareaAction }}</p>
+      <p class="output textarea-output" role="status">
+        Message: {{ message ? message : "empty" }} · {{ textareaAction }}
+      </p>
     </main>
   </body>
 </html>

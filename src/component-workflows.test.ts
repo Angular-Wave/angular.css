@@ -32,7 +32,9 @@ test("button workflows preserve reference variants, sizes, loading, and RTL", as
   await expect(
     page.getByRole("button", { name: "Downloading" }),
   ).toBeDisabled();
-  await expect(page.getByRole("status")).toHaveCount(2);
+  await expect(
+    page.locator('[aria-label="Loading buttons"] [ng-spinner]'),
+  ).toHaveCount(2);
   await expect(page.getByLabel("RTL buttons")).toHaveAttribute("dir", "rtl");
   await expect(page.getByRole("button", { name: "Get Started" })).toHaveCSS(
     "border-radius",
@@ -40,7 +42,7 @@ test("button workflows preserve reference variants, sizes, loading, and RTL", as
   );
   const login = page.getByRole("link", { name: "Login" });
   await expect(login).toHaveAttribute("href", "#login");
-  await expect(login).toHaveAttribute("data-variant", "secondary");
+  await expect(login).toHaveAttribute("variant", "secondary");
   expect((await login.boundingBox())!.height).toBeCloseTo(32, 0);
   await expect(page.locator(".workflow-stack")).toHaveScreenshot(
     "button-workflows-desktop.png",
@@ -97,7 +99,9 @@ test("badge workflows preserve link, icon, loading, and RTL compositions", async
     "href",
     "#link",
   );
-  await expect(page.getByRole("status")).toHaveCount(2);
+  await expect(
+    page.locator('[aria-label="Badges with loading status"] [ng-spinner]'),
+  ).toHaveCount(2);
   await expect(page.getByLabel("RTL badges")).toHaveAttribute("dir", "rtl");
   await expect(page.locator(".workflow-stack")).toHaveScreenshot(
     "badge-workflows-desktop.png",
@@ -1041,7 +1045,7 @@ test("alert workflows preserve action, color, destructive, and RTL compositions"
   });
   expect(warningColors.foreground).toBe(warningColors.token);
 
-  const destructive = page.locator(`[ng-alert][data-variant="destructive"]`);
+  const destructive = page.locator(`[ng-alert][variant="destructive"]`);
   const destructiveColors = await destructive.evaluate((element) => {
     const probe = document.createElement("span");
     probe.style.color = "var(--error)";
@@ -1361,21 +1365,21 @@ test("breadcrumb workflows preserve separators, ellipsis, dropdown composition, 
     await expect(currentPage).toHaveAttribute("role", "link");
   }
 
-  const generatedSeparators = page.locator(
-    '[data-breadcrumb-generated="separator"]',
+  const cssSeparators = page.locator(
+    '[data-slot="breadcrumb-separator"]:empty',
   );
-  await expect(generatedSeparators).toHaveCount(6);
+  await expect(cssSeparators).toHaveCount(6);
   expect(
-    await generatedSeparators.evaluateAll((icons) =>
-      icons.map((icon) => {
-        const box = icon.getBoundingClientRect();
+    await cssSeparators.evaluateAll((separators) =>
+      separators.map((separator) => {
+        const box = separator.getBoundingClientRect();
         return { height: box.height, width: box.width };
       }),
     ),
   ).toEqual(Array(6).fill({ height: 14, width: 14 }));
-  await expect(
-    page.locator('[data-breadcrumb-generated="ellipsis"]'),
-  ).toHaveCount(2);
+  await expect(page.locator('[data-slot="breadcrumb-ellipsis"]')).toHaveCount(
+    2,
+  );
 
   const collapsedTrigger = page.getByRole("button", {
     name: "Toggle breadcrumb menu",
@@ -1669,7 +1673,7 @@ test("card workflows preserve local image media, logical RTL layout, and form co
     "jane@example.com",
   );
   const smallCard = cards.nth(2);
-  await expect(smallCard).toHaveAttribute("data-size", "sm");
+  await expect(smallCard).toHaveAttribute("size", "sm");
   await expect(smallCard).toHaveCSS("gap", "12px");
   await smallCard.getByRole("button", { name: "See what's new" }).click();
   await expect(page.locator(".card-workflow-output").nth(2)).toHaveText(
@@ -1843,7 +1847,10 @@ test("chart compositions preserve active series, RTL, and tooltip variants", asy
   ).toContainText("Mobile150");
 
   const rtl = page.locator(`.chart-composition[dir="rtl"] [ng-chart]`);
-  await expect(rtl).toHaveAttribute("data-direction", "rtl");
+  await expect(page.locator('.chart-composition[dir="rtl"]')).toHaveAttribute(
+    "dir",
+    "rtl",
+  );
   await expect(
     rtl.locator(`:is([data-slot=chart-bar-group], [ng-chart-bar-group])`),
   ).toHaveCount(6);
@@ -1881,7 +1888,7 @@ test("checkbox workflows preserve reference states, grouping, and RTL layout", a
   await expect(page.getByRole("status")).toContainText("CDs true");
   await expect(page.locator("#toggle-checkbox-disabled")).toBeDisabled();
   await expect(page.locator("#terms-checkbox-invalid")).toHaveAttribute(
-    "data-invalid",
+    "aria-invalid",
     "true",
   );
 
@@ -1917,7 +1924,6 @@ test("checkbox table keeps selection and selected-row state synchronized", async
   const table = page.getByRole("table", { name: "Team members" });
   const rows = table.locator("tbody tr");
   const selectAll = page.getByRole("checkbox", { name: "Select all rows" });
-  await expect(table).toHaveAttribute("data-row-count", "4");
   await expect(rows).toHaveCount(4);
   await expect(rows.nth(0)).toHaveAttribute("data-state", "selected");
 
@@ -2001,7 +2007,7 @@ test("collapsible file tree expands nested reference folders", async ({
   );
 });
 
-test("switch workflows preserve sizes, validation, choice cards, button state, and RTL", async ({
+test("switch workflows preserve native sizes, validation, choice cards, and RTL", async ({
   page,
 }) => {
   await page.setViewportSize({ height: 760, width: 900 });
@@ -2012,10 +2018,9 @@ test("switch workflows preserve sizes, validation, choice cards, button state, a
   const disabled = page.locator("#switch-disabled-unchecked");
   const invalid = page.locator("#switch-terms");
   const selectedChoice = page.locator(
-    '.switch-choice:has([ng-switch-control][data-state="checked"])',
+    ".switch-choice:has([ng-switch-control]:checked)",
   );
   const rtl = page.locator('[aria-label="RTL switch"]');
-  const button = page.locator("#switch-button-control");
 
   const [smallBox, standardBox] = await Promise.all([
     small.boundingBox(),
@@ -2025,13 +2030,10 @@ test("switch workflows preserve sizes, validation, choice cards, button state, a
   expect(standardBox).not.toBeNull();
   expect(smallBox!.width).toBeLessThan(standardBox!.width);
   await expect(disabled).toBeDisabled();
-  await expect(disabled).toHaveAttribute("data-disabled", "true");
-  await expect(invalid).toHaveAttribute("data-invalid", "true");
+  await expect(invalid).toHaveAttribute("aria-invalid", "true");
   await expect(selectedChoice).toHaveCount(1);
   await expect(rtl).toHaveAttribute("dir", "rtl");
 
-  await button.click();
-  await expect(button).toHaveAttribute("aria-checked", "true");
   await page.mouse.move(880, 740);
   await expect(page.locator(".switch-workflows")).toHaveScreenshot(
     "switch-workflows-desktop.png",
@@ -2048,7 +2050,7 @@ test("radio group workflows preserve model state, choice cards, fieldsets, valid
   );
 
   const groups = page.locator("[ng-radio-group]");
-  const checked = page.locator('[ng-radio-group-item][data-state="checked"]');
+  const checked = page.locator("[ng-radio-group-item]:checked");
   const disabled = page.locator("#disabled-1");
   const invalid = page.locator('[name="notification"][aria-invalid="true"]');
   const rtl = page.locator('[aria-label="RTL density options"]');
@@ -2066,14 +2068,9 @@ test("radio group workflows preserve model state, choice cards, fieldsets, valid
   await expect(rtl).toHaveAttribute("dir", "rtl");
 
   await page.locator("#pro-plan").check();
-  await expect(page.locator("#pro-plan")).toHaveAttribute(
-    "data-state",
-    "checked",
-  );
+  await expect(page.locator("#pro-plan")).toBeChecked();
   await expect(
-    page.locator(
-      '.radio-choice:has([ng-radio-group-item][data-state="checked"])',
-    ),
+    page.locator(".radio-choice:has([ng-radio-group-item]:checked)"),
   ).toHaveCount(1);
   await page.mouse.move(880, 740);
   await expect(page.locator(".radio-group-workflows")).toHaveScreenshot(

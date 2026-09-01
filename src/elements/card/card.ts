@@ -1,1 +1,2 @@
-export { cardDirective } from "../../components/card/card";
+/** Styling-only HTML entry; no TypeScript behavior is exported. */
+export {};

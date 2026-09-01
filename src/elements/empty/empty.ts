@@ -1,1 +1,2 @@
-export { emptyDirective } from "../../components/empty/empty";
+/** Styling-only HTML entry; no TypeScript behavior is exported. */
+export {};

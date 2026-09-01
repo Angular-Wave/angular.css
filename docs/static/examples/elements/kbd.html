@@ -18,28 +18,51 @@
     <main class="kbd-workflows visual-example">
       <section class="kbd-row">
         <span>Open command menu</span>
-        <span data-slot="kbd-group"><kbd ng-kbd>Ctrl</kbd><kbd ng-kbd>K</kbd></span>
+        <span data-slot="kbd-group"
+          ><kbd ng-kbd>Ctrl</kbd><kbd ng-kbd>K</kbd></span
+        >
         <span>or</span>
         <kbd ng-kbd aria-label="Slash">/</kbd>
       </section>
 
-      <button ng-button variant="outline" type="button" ng-click="kbdAction='Saved'">
-        Save changes <span data-slot="kbd-group"><kbd ng-kbd>Ctrl</kbd><kbd ng-kbd>S</kbd></span>
+      <button
+        ng-button
+        variant="outline"
+        type="button"
+        ng-click="kbdAction='Saved'"
+      >
+        Save changes
+        <span data-slot="kbd-group"
+          ><kbd ng-kbd>Ctrl</kbd><kbd ng-kbd>S</kbd></span
+        >
       </button>
 
       <div ng-input-group>
-        <input data-input data-slot="input-group-control" placeholder="Search..." aria-label="Search with shortcut" />
-        <div data-slot="input-group-addon" data-align="inline-end"><kbd ng-kbd>⌘K</kbd></div>
+        <input
+          data-input
+          data-slot="input-group-control"
+          placeholder="Search..."
+          aria-label="Search with shortcut"
+        />
+        <div data-slot="input-group-addon" data-align="inline-end">
+          <kbd ng-kbd>⌘K</kbd>
+        </div>
       </div>
 
       <span ng-tooltip>
-        <button ng-button ng-tooltip-trigger variant="outline" type="button">Keyboard help</button>
-        <span ng-tooltip-content side="top">Press <kbd ng-kbd>?</kbd> to open help.</span>
+        <button ng-button ng-tooltip-trigger variant="outline" type="button">
+          Keyboard help
+        </button>
+        <span ng-tooltip-content side="top"
+          >Press <kbd ng-kbd>?</kbd> to open help.</span
+        >
       </span>
 
       <section class="kbd-row" dir="rtl" lang="ar">
         <span>فتح قائمة الأوامر</span>
-        <span data-slot="kbd-group"><kbd ng-kbd>Ctrl</kbd><kbd ng-kbd>K</kbd></span>
+        <span data-slot="kbd-group"
+          ><kbd ng-kbd>Ctrl</kbd><kbd ng-kbd>K</kbd></span
+        >
       </section>
 
       <p class="kbd-output" role="status">{{ kbdAction }}</p>

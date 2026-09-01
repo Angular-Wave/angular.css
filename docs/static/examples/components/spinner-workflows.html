@@ -19,7 +19,7 @@
         <svg
           ng-spinner
           id="processing-spinner"
-          role="img"
+          role="status"
           aria-live="assertive"
           aria-label="Processing data"
           style="width: 12px; height: 12px"
@@ -33,7 +33,7 @@
             stroke-linecap="round"
           />
         </svg>
-        <svg ng-spinner viewBox="0 0 24 24" fill="none">
+        <svg ng-spinner viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path
             d="M21 12a9 9 0 1 1-6.22-8.56"
             stroke="currentColor"
@@ -43,6 +43,7 @@
         </svg>
         <svg
           ng-spinner
+          aria-hidden="true"
           style="width: 24px; height: 24px"
           viewBox="0 0 24 24"
           fill="none"
@@ -56,6 +57,7 @@
         </svg>
         <svg
           ng-spinner
+          aria-hidden="true"
           style="width: 32px; height: 32px"
           viewBox="0 0 24 24"
           fill="none"
@@ -165,7 +167,12 @@
         </button>
       </div>
 
-      <section ng-empty class="spinner-empty-demo">
+      <section
+        ng-empty
+        class="spinner-empty-demo"
+        role="status"
+        aria-live="polite"
+      >
         <div data-slot="empty-header">
           <div data-slot="empty-media" variant="icon">
             <svg ng-spinner viewBox="0 0 24 24" fill="none">

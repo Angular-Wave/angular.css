@@ -1,1 +1,2 @@
-export { inputDirective } from "../../components/input/input";
+/** Styling-only HTML entry; no TypeScript behavior is exported. */
+export {};

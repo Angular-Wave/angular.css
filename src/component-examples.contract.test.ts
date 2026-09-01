@@ -262,11 +262,11 @@ const contracts: Record<string, Contract> = {
     const buttons = page.getByRole("button");
     await expect(buttons).toHaveCount(2);
     await expect(page.getByRole("button", { name: "Button" })).toHaveAttribute(
-      "data-variant",
+      "variant",
       "outline",
     );
     await expect(page.getByRole("button", { name: "Submit" })).toHaveAttribute(
-      "data-size",
+      "size",
       "icon",
     );
   },
@@ -274,7 +274,7 @@ const contracts: Record<string, Contract> = {
     const copy = page.getByRole("button", { name: "Copy" });
     const separators = slot(page, "button-group-separator");
     const verticalSeparators = page.locator(
-      '[data-slot="button-group-separator"][data-orientation="vertical"]',
+      '[data-slot="button-group-separator"][orientation="vertical"]',
     );
     await expect(slot(page, "button-group")).toHaveCount(6);
     await expect(separators).toHaveCount(3);
@@ -282,7 +282,7 @@ const contracts: Record<string, Contract> = {
     await expect(verticalSeparators.first()).toHaveCSS("width", "1px");
     await expect(
       page.getByRole("group", { name: "Media controls" }),
-    ).toHaveAttribute("data-orientation", "vertical");
+    ).toHaveAttribute("orientation", "vertical");
     await copy.click();
     await expect(page.locator(".output")).toContainText("Action: Copy");
     await expect(copy).not.toHaveAttribute("aria-pressed");
@@ -322,7 +322,7 @@ const contracts: Record<string, Contract> = {
     await expect(slot(page, "chart-bar-group")).toHaveCount(6);
     await expect(bars).toHaveCount(12);
     await expect(bars.nth(2)).toHaveAttribute("data-value", "100%");
-    await expect(bars.nth(2)).toHaveCSS("--value", "100%");
+    expect((await bars.nth(2).boundingBox())?.height).toBeGreaterThan(150);
   },
   checkbox: async (page) => {
     const checkbox = page.locator("#terms-checkbox");
@@ -331,7 +331,7 @@ const contracts: Record<string, Contract> = {
     await expect(page.locator("[ng-checkbox]")).toHaveCount(4);
     await checkbox.check();
     await expect(page.getByRole("status")).toContainText("Terms accepted");
-    await expect(checkbox).toHaveAttribute("data-state", "checked");
+    await expect(checkbox).toBeChecked();
     expect(
       await checkbox.evaluate(
         (element) => getComputedStyle(element, "::after").display,
@@ -433,10 +433,7 @@ const contracts: Record<string, Contract> = {
     await expect(root).toHaveAttribute("data-open", "false");
   },
   direction: async (page) => {
-    await expect(page.locator("#direction-rtl")).toHaveAttribute(
-      "data-direction",
-      "rtl",
-    );
+    await expect(page.locator("#direction-rtl")).toHaveAttribute("dir", "rtl");
   },
   drawer: async (page) => {
     const root = page.locator("[ng-drawer]");
@@ -584,7 +581,7 @@ const contracts: Record<string, Contract> = {
     await expect(slot(page, "native-select-icon")).toBeVisible();
     await expect(select.locator("option")).toHaveCount(5);
     await select.selectOption("done");
-    await expect(select).toHaveAttribute("data-value", "done");
+    await expect(select).toHaveValue("done");
   },
   "navigation-menu": async (page) => {
     const nav = page.getByRole("navigation", { name: "Primary navigation" });
@@ -638,7 +635,6 @@ const contracts: Record<string, Contract> = {
     const timed = page.locator(".progress-demo-timed");
     await expect(timed).toHaveAttribute("aria-valuenow", "66");
     await expect(timed).toHaveAttribute("aria-valuemax", "100");
-    await expect(timed).toHaveAttribute("data-value", "66");
     await expect(timed.locator('[data-slot="progress-track"]')).toHaveCSS(
       "height",
       "4px",
@@ -646,11 +642,8 @@ const contracts: Record<string, Contract> = {
 
     const labeled = page.locator(".progress-demo-labeled");
     const label = labeled.locator('[data-slot="progress-label"]');
-    await expect(label).toHaveAttribute("id", /progress-label-\d+/);
-    await expect(labeled).toHaveAttribute(
-      "aria-labelledby",
-      (await label.getAttribute("id")) ?? "",
-    );
+    await expect(label).toHaveText("Upload progress");
+    await expect(labeled).toHaveAttribute("aria-label", "Upload progress");
     await expect(labeled.locator('[data-slot="progress-value"]')).toHaveText(
       "56%",
     );
@@ -660,7 +653,7 @@ const contracts: Record<string, Contract> = {
     await expect(slot(page, "radio-group")).toBeVisible();
     await compact.check();
     await expect(page.locator(".output")).toContainText("compact");
-    await expect(compact).toHaveAttribute("data-state", "checked");
+    await expect(compact).toBeChecked();
     expect(
       await compact.evaluate(
         (element) => getComputedStyle(element, "::after").display,

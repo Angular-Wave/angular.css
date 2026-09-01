@@ -15,12 +15,10 @@ test("radio-group element example exercises the built functional artifact", asyn
 
   await expect(group).toHaveAttribute("role", "radiogroup");
   await expect(radios.nth(1)).toBeChecked();
-  await expect(radios.nth(1)).toHaveAttribute("data-state", "checked");
 
   await radios.nth(2).check();
-  await expect(radios.nth(1)).toHaveAttribute("data-state", "unchecked");
-  await expect(radios.nth(2)).toHaveAttribute("data-state", "checked");
-  await expect(radios.nth(2)).toHaveAttribute("aria-checked", "true");
+  await expect(radios.nth(1)).not.toBeChecked();
+  await expect(radios.nth(2)).toBeChecked();
 
   const sourceRequests = await page.evaluate(() =>
     performance

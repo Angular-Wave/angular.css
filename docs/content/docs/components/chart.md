@@ -54,30 +54,18 @@ Install AngularCSS once, load its stylesheet, and include the `ui` module in
 your AngularTS application. See [Installation]({{< relref
 "/docs/get-started/installation" >}}) for the complete setup.
 
-This component's root directive is `[ng-chart]`. Importing the package registers it with the AngularCSS `ui` module; there is no per-component JavaScript registration step.
+This is a styling-only HTML element or pattern. AngularCSS registers no runtime directive for it. Authored chart markup, semantics, and CSS variables provide the contract.
 
 ## Anatomy
 
-### Directive selectors
+### Root styling selector
 
-- `ng-chart`
-- `ng-chart-axis`
-- `ng-chart-axis-item`
-- `ng-chart-bar`
-- `ng-chart-grid`
-- `ng-chart-legend`
-- `ng-chart-legend-item`
-- `ng-chart-swatch`
-- `ng-chart-tooltip`
-- `ng-chart-tooltip-indicator`
-- `ng-chart-tooltip-item`
-- `ng-chart-tooltip-items`
+- `data-slot="chart"`
 
 ### Styling slots
 
 - `[data-slot="chart"]`
 - `[data-slot="chart-axis"]`
-- `[data-slot="chart-axis-item"]`
 - `[data-slot="chart-bar"]`
 - `[data-slot="chart-bar-group"]`
 - `[data-slot="chart-bar-groups"]`
@@ -105,19 +93,9 @@ Use the named slots as stable Tailwind and CSS selectors.
 
 ### Attributes and state
 
-| Attribute | Access | Purpose |
-| --- | --- | --- |
-| `aria-hidden` | Input/output | ARIA relationship or state. |
-| `aria-label` | Input/output | Accessible name when visible text is insufficient. |
-| `data-color` | Input | Stable component state or styling hook. |
-| `data-direction` | Input/output | Stable component state or styling hook. |
-| `data-label` | Input | Stable component state or styling hook. |
-| `data-value` | Input | Stable component state or styling hook. |
-| `data-visible` | Output | Stable component state or styling hook. |
-| `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
-| `role` | Input/output | Explicit semantic role when native HTML does not provide one. |
+This component has no directive-specific attributes beyond its semantic HTML.
 
-`Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
+Attributes remain authored HTML, native state, or AngularTS inputs. AngularCSS does not write element state.
 
 ### CSS custom properties
 
@@ -148,7 +126,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-chart]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target semantic elements, styling slots, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

@@ -17,27 +17,29 @@
         </caption>
         <thead data-slot="table-header">
           <tr data-slot="table-row">
-            <th data-slot="table-head">Invoice</th>
-            <th data-slot="table-head">Status</th>
-            <th data-slot="table-head">Method</th>
-            <th data-slot="table-head" class="text-right">Amount</th>
+            <th data-slot="table-head" scope="col">Invoice</th>
+            <th data-slot="table-head" scope="col">Status</th>
+            <th data-slot="table-head" scope="col">Method</th>
+            <th data-slot="table-head" class="text-right" scope="col">
+              Amount
+            </th>
           </tr>
         </thead>
         <tbody data-slot="table-body">
           <tr data-slot="table-row">
-            <th data-slot="table-cell">INV001</th>
+            <th data-slot="table-cell" scope="row">INV001</th>
             <td data-slot="table-cell">Paid</td>
             <td data-slot="table-cell">Card</td>
             <td data-slot="table-cell" class="text-right">$250.00</td>
           </tr>
           <tr data-slot="table-row">
-            <th data-slot="table-cell">INV002</th>
+            <th data-slot="table-cell" scope="row">INV002</th>
             <td data-slot="table-cell">Pending</td>
             <td data-slot="table-cell">PayPal</td>
             <td data-slot="table-cell" class="text-right">$150.00</td>
           </tr>
           <tr data-slot="table-row">
-            <th data-slot="table-cell">INV003</th>
+            <th data-slot="table-cell" scope="row">INV003</th>
             <td data-slot="table-cell">Unpaid</td>
             <td data-slot="table-cell">Transfer</td>
             <td data-slot="table-cell" class="text-right">$350.00</td>

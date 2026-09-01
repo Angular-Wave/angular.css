@@ -29,7 +29,9 @@
             {{ dropdownDemo.archive ? 'Archive added' : 'Add archive item' }}
           </button>
           <div ng-dropdown aria-label="Account commands">
-            <button type="button" data-slot="dropdown-menu-trigger">Open</button>
+            <button type="button" data-slot="dropdown-menu-trigger">
+              Open
+            </button>
             <div data-slot="dropdown-menu-content">
               <div data-slot="dropdown-menu-group">
                 <div data-slot="dropdown-menu-label">My Account</div>
@@ -52,7 +54,10 @@
         </div>
       </section>
 
-      <section class="dropdown-workflow" aria-labelledby="dropdown-avatar-title">
+      <section
+        class="dropdown-workflow"
+        aria-labelledby="dropdown-avatar-title"
+      >
         <h2 id="dropdown-avatar-title">Avatar trigger</h2>
         <div ng-dropdown class="dropdown-avatar-demo">
           <button
@@ -186,7 +191,9 @@
       >
         <h2 id="dropdown-actions-title">Actions and submenu</h2>
         <div ng-dropdown>
-          <button type="button" data-slot="dropdown-menu-trigger">Actions</button>
+          <button type="button" data-slot="dropdown-menu-trigger">
+            Actions
+          </button>
           <div data-slot="dropdown-menu-content" class="dropdown-menu-wide">
             <div data-slot="dropdown-menu-group">
               <button data-slot="dropdown-menu-item">

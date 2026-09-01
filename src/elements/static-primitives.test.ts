@@ -34,21 +34,21 @@ test("static feedback and display primitives run from packaged artifacts", async
 
   await openElementArtifact(page, "badge");
   await expect(page.getByText("Secondary", { exact: true })).toHaveAttribute(
-    "data-variant",
+    "variant",
     "secondary",
   );
   await expect(page.getByText("Outline", { exact: true })).toHaveAttribute(
-    "data-variant",
+    "variant",
     "outline",
   );
 
   await openElementArtifact(page, "button");
   await expect(page.getByRole("button", { name: "Button" })).toHaveAttribute(
-    "data-variant",
+    "variant",
     "outline",
   );
   await expect(page.getByRole("button", { name: "Submit" })).toHaveAttribute(
-    "data-size",
+    "size",
     "icon",
   );
 });
@@ -58,7 +58,7 @@ test("media and layout primitives expose their packaged state", async ({
 }) => {
   await openElementArtifact(page, "aspect-ratio");
   const ratio = page.locator("[ng-aspect-ratio]");
-  await expect(ratio).toHaveAttribute("data-ratio", "16 / 9");
+  await expect(ratio).toHaveAttribute("ratio", "16 / 9");
   await expect(ratio).toHaveCSS("--ratio", "16 / 9");
   await expect(ratio.getByRole("img", { name: "Photo" })).toBeVisible();
 
@@ -71,14 +71,11 @@ test("media and layout primitives expose their packaged state", async ({
   );
 
   await openElementArtifact(page, "direction");
-  await expect(page.locator("#direction-default")).toHaveAttribute(
-    "data-direction",
+  await expect(page.locator("#direction-default")).toHaveCSS(
+    "direction",
     "ltr",
   );
-  await expect(page.locator("#direction-rtl")).toHaveAttribute(
-    "data-direction",
-    "rtl",
-  );
+  await expect(page.locator("#direction-rtl")).toHaveAttribute("dir", "rtl");
   await expect(page.locator("#direction-nested")).toHaveCSS("direction", "rtl");
 });
 
@@ -107,19 +104,18 @@ test("navigation and data-display artifacts preserve generated semantics", async
   const chart = page.locator("[ng-chart]");
   await expect(chart).toHaveAttribute("role", "img");
   await expect(chart.locator('[data-slot="chart-bar"]')).toHaveCount(12);
-  await expect(chart.locator('[data-slot="chart-bar"]').first()).toHaveCSS(
-    "--value",
-    "61%",
-  );
+  await expect(
+    chart.locator('[data-slot="chart-bar"]').first(),
+  ).toHaveAttribute("data-value", "61%");
 });
 
-test("card artifact reports its authored anatomy", async ({ page }) => {
+test("card artifact exposes its authored anatomy", async ({ page }) => {
   await openElementArtifact(page, "card");
   const card = page.locator("[ng-card]");
-  await expect(card).toHaveAttribute("data-has-header", "true");
-  await expect(card).toHaveAttribute("data-has-content", "true");
-  await expect(card).toHaveAttribute("data-has-footer", "true");
-  await expect(card).toHaveAttribute("data-has-action", "true");
+  await expect(card.locator('[data-slot="card-header"]')).toHaveCount(1);
+  await expect(card.locator('[data-slot="card-content"]')).toHaveCount(1);
+  await expect(card.locator('[data-slot="card-footer"]')).toHaveCount(1);
+  await expect(card.locator('[data-slot="card-action"]')).toHaveCount(1);
   await expect(
     page.getByRole("heading", { name: "Login to your account" }),
   ).toBeVisible();

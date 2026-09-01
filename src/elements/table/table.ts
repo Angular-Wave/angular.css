@@ -1,1 +1,2 @@
-export { tableDirective } from "../../components/table/table";
+/** Styling-only HTML entry; no TypeScript behavior is exported. */
+export {};

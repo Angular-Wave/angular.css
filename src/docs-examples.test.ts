@@ -219,7 +219,7 @@ test("published card workflows use local media and retain AngularTS RTL form sta
     "jane@example.com",
   );
   const smallCard = page.locator("[ng-card]").nth(2);
-  await expect(smallCard).toHaveAttribute("data-size", "sm");
+  await expect(smallCard).toHaveAttribute("size", "sm");
   await smallCard.getByRole("button", { name: "See what's new" }).click();
   await expect(page.locator(".card-workflow-output").nth(2)).toHaveText(
     "Showing report updates",
@@ -268,9 +268,14 @@ test("published chart pages cover every reference workflow with functional HTML"
   await expect(
     page.locator(`:is([data-slot=chart-bar], [ng-chart-bar])`),
   ).toHaveCount(12);
-  await expect(
-    page.locator(`:is([data-slot=chart-bar], [ng-chart-bar])`).first(),
-  ).toHaveCSS("--value", "61%");
+  expect(
+    (
+      await page
+        .locator(`:is([data-slot=chart-bar], [ng-chart-bar])`)
+        .first()
+        .boundingBox()
+    )?.height,
+  ).toBeGreaterThan(90);
 
   await page.goto("/docs/static/examples/components/chart-workflows.html");
   await expect(page.locator("[ng-chart]")).toHaveCount(4);
@@ -294,9 +299,10 @@ test("published chart pages cover every reference workflow with functional HTML"
     .first();
   await controls.nth(1).click();
   await expect(firstBar).toHaveAttribute("data-value", "36%");
-  await expect(
-    page.locator(`.chart-composition[dir="rtl"] [ng-chart]`),
-  ).toHaveAttribute("data-direction", "rtl");
+  await expect(page.locator(`.chart-composition[dir="rtl"]`)).toHaveAttribute(
+    "dir",
+    "rtl",
+  );
   await expect(
     page.locator(
       `.chart-tooltip-gallery :is([data-slot=chart-tooltip], [ng-chart-tooltip])`,
@@ -311,7 +317,7 @@ test("published checkbox pages cover every reference workflow with functional HT
   const terms = page.locator("#terms-checkbox");
   await expect(page.locator("[ng-checkbox]")).toHaveCount(4);
   await terms.check();
-  await expect(terms).toHaveAttribute("data-state", "checked");
+  await expect(terms).toBeChecked();
   await expect(page.getByRole("status")).toContainText("Terms accepted");
 
   await page.goto("/docs/static/examples/components/checkbox-workflows.html");
@@ -319,7 +325,7 @@ test("published checkbox pages cover every reference workflow with functional HT
   await expect(page.locator("#terms-checkbox-desc")).toBeChecked();
   await expect(page.locator("#toggle-checkbox-disabled")).toBeDisabled();
   await expect(page.locator("#terms-checkbox-invalid")).toHaveAttribute(
-    "data-invalid",
+    "aria-invalid",
     "true",
   );
   await page.locator("#connected-servers").check();
@@ -329,7 +335,7 @@ test("published checkbox pages cover every reference workflow with functional HT
     "/docs/static/examples/components/checkbox-compositions.html",
   );
   const table = page.getByRole("table", { name: "Team members" });
-  await expect(table).toHaveAttribute("data-row-count", "4");
+  await expect(table.locator("tbody tr")).toHaveCount(4);
   await page.getByRole("checkbox", { name: "Select all rows" }).check();
   await expect(table.locator("tbody [ng-checkbox]:checked")).toHaveCount(4);
   await page.getByLabel("Select Marcus Rodriguez").uncheck();
@@ -584,8 +590,7 @@ test("form examples preserve AngularTS ng-model ownership", async ({
   await expect(page.getByRole("status")).toContainText("Terms not accepted");
   await terms.check();
   await expect(page.getByRole("status")).toContainText("Terms accepted");
-  await expect(terms).toHaveAttribute("data-state", "checked");
-  await expect(terms).toHaveAttribute("aria-checked", "true");
+  await expect(terms).toBeChecked();
 
   await page.goto("/docs/static/examples/components/switch.html");
   const mode = page.locator("#airplane-mode");
@@ -596,8 +601,7 @@ test("form examples preserve AngularTS ng-model ownership", async ({
   await expect(page.locator(".output").first()).toContainText(
     "Mode enabled: true",
   );
-  await expect(mode).toHaveAttribute("data-state", "checked");
-  await expect(mode).toHaveAttribute("aria-checked", "true");
+  await expect(mode).toBeChecked();
 
   await page.goto("/docs/static/examples/components/textarea.html");
   const message = page.locator("#docs-textarea-message");
@@ -605,13 +609,12 @@ test("form examples preserve AngularTS ng-model ownership", async ({
   await expect(page.locator(".output").first()).toContainText(
     "Message: Accessible components",
   );
-  await expect(message).toHaveAttribute("data-empty", "false");
+  await expect(message).toHaveValue("Accessible components");
 
   await page.goto("/docs/static/examples/components/native-select.html");
   const status = page.getByLabel("Status");
   await status.selectOption("done");
   await expect(status).toHaveValue("done");
-  await expect(status).toHaveAttribute("data-value", "done");
 
   await page.goto("/docs/static/examples/components/radio-group.html");
   const compact = page.locator("#density-compact");
@@ -619,7 +622,7 @@ test("form examples preserve AngularTS ng-model ownership", async ({
   await expect(page.locator(".output").first()).toContainText(
     "Selected: compact",
   );
-  await expect(compact).toHaveAttribute("data-state", "checked");
+  await expect(compact).toBeChecked();
 
   await page.goto("/docs/static/examples/components/input-otp.html");
   const otpInputs = page.locator(

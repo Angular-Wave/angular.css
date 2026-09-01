@@ -1,1 +1,2 @@
-export { directionDirective } from "../../components/direction/direction";
+/** Styling-only HTML entry; no TypeScript behavior is exported. */
+export {};

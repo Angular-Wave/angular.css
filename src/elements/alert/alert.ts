@@ -1,1 +1,2 @@
-export { alertDirective } from "../../components/alert/alert";
+/** Styling-only HTML entry; no TypeScript behavior is exported. */
+export {};

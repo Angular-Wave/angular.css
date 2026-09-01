@@ -13,7 +13,15 @@
     <div class="spinner-demo visual-example">
       <div ng-item variant="muted">
         <div data-slot="item-media">
-          <svg ng-spinner viewBox="0 0 24 24" fill="none">
+          <svg
+            ng-spinner
+            viewBox="0 0 24 24"
+            fill="none"
+            role="status"
+            aria-live="polite"
+            aria-label="Loading"
+            aria-busy="true"
+          >
             <path
               d="M21 12a9 9 0 1 1-6.22-8.56"
               stroke="currentColor"

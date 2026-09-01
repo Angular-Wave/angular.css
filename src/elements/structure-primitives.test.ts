@@ -31,7 +31,7 @@ test("empty, item, keyboard, and separator artifacts expose semantic structure",
 
   await openElementArtifact(page, "item");
   await expect(page.locator("#outline-item")).toHaveAttribute(
-    "data-variant",
+    "variant",
     "outline",
   );
   await expect(page.locator("#disabled-item")).toHaveAttribute(
@@ -40,14 +40,8 @@ test("empty, item, keyboard, and separator artifacts expose semantic structure",
   );
 
   await openElementArtifact(page, "kbd");
-  await expect(page.locator("[ng-kbd]").first()).toHaveAttribute(
-    "aria-label",
-    "Keyboard shortcut Ctrl",
-  );
-  await expect(page.locator("[ng-kbd]").nth(2)).toHaveAttribute(
-    "aria-label",
-    "Slash",
-  );
+  await expect(page.locator("[ng-kbd]").first()).toHaveText("Ctrl");
+  await expect(page.locator("[ng-kbd]").nth(2)).toHaveAccessibleName("Slash");
 
   await openElementArtifact(page, "separator");
   await expect(page.locator("[ng-separator]").first()).toHaveAttribute(
@@ -78,14 +72,10 @@ test("field and label artifacts connect controls, descriptions, errors, and Angu
   await expect(page.getByText("Enter a valid email.")).toHaveCount(0);
 
   await openElementArtifact(page, "label");
-  await expect(page.locator('label[for="email"]')).toHaveAttribute(
-    "data-associated",
-    "true",
-  );
-  await expect(page.locator('label[for="name"]')).toHaveAttribute(
-    "data-disabled",
-    "false",
-  );
+  const emailControl = page.locator("#email");
+  await page.locator('label[for="email"]').click();
+  await expect(emailControl).toBeFocused();
+  await expect(page.locator("#name")).toBeEnabled();
 });
 
 test("input-group artifact associates its visible addon with the control", async ({

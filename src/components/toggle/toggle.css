@@ -21,8 +21,11 @@
   background: var(--muted);
 }
 
-[data-slot="toggle"][data-disabled="true"],
-[ng-toggle][data-disabled="true"] {
+:is([data-slot="toggle"], [ng-toggle]):is(
+  :disabled,
+  [aria-disabled="true"],
+  [data-disabled="true"]
+) {
   pointer-events: none;
   opacity: 0.5;
 }

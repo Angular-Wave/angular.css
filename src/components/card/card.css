@@ -11,13 +11,11 @@
   font-size: var(--text-sm);
 }
 
-[data-slot="card"]:not([data-size="sm"]),
-[ng-card]:not([data-size="sm"]) {
+:is([data-slot="card"], [ng-card]):not(:is([size="sm"], [data-size="sm"])) {
   padding-block: calc(var(--spacing) * 4);
 }
 
-[data-slot="card"][data-size="sm"],
-[ng-card][data-size="sm"] {
+:is([data-slot="card"], [ng-card]):is([size="sm"], [data-size="sm"]) {
   gap: calc(var(--spacing) * 3);
   padding-block: calc(var(--spacing) * 3);
 }
@@ -38,7 +36,7 @@
   padding-inline: calc(var(--spacing) * 4);
 }
 
-:is([data-slot="card"], [ng-card])[data-size="sm"]
+:is([data-slot="card"], [ng-card]):is([size="sm"], [data-size="sm"])
   :is([data-slot="card-header"], [ng-card-header]) {
   padding-inline: calc(var(--spacing) * 3);
 }
@@ -58,7 +56,7 @@
   font-weight: var(--font-weight-medium);
 }
 
-:is([data-slot="card"], [ng-card])[data-size="sm"]
+:is([data-slot="card"], [ng-card]):is([size="sm"], [data-size="sm"])
   :is([data-slot="card-title"], [ng-card-title]) {
   font-size: var(--text-sm);
 }
@@ -82,7 +80,7 @@
   padding-inline: calc(var(--spacing) * 4);
 }
 
-:is([data-slot="card"], [ng-card])[data-size="sm"]
+:is([data-slot="card"], [ng-card]):is([size="sm"], [data-size="sm"])
   :is([data-slot="card-content"], [ng-card-content]) {
   padding-inline: calc(var(--spacing) * 3);
 }
@@ -97,7 +95,7 @@
   background: color-mix(in srgb, var(--muted) 50%, transparent);
 }
 
-:is([data-slot="card"], [ng-card])[data-size="sm"]
+:is([data-slot="card"], [ng-card]):is([size="sm"], [data-size="sm"])
   :is([data-slot="card-footer"], [ng-card-footer]) {
   padding: calc(var(--spacing) * 3);
 }

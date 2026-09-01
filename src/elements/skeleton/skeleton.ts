@@ -1,1 +1,2 @@
-export { skeletonDirective } from "../../components/skeleton/skeleton";
+/** Styling-only HTML entry; no TypeScript behavior is exported. */
+export {};

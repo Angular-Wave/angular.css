@@ -1,6 +1,8 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { basename, join } from "node:path";
 
+import { componentPolicy } from "./component-policy.ts";
+
 const listTypeScriptFiles = (directory) =>
   readdirSync(directory)
     .flatMap((entry) => {
@@ -22,6 +24,19 @@ for (const file of listTypeScriptFiles("src/elements")) {
 
   if (!existsSync(componentPath)) {
     failures.push(`${file}: missing canonical component file ${componentPath}`);
+    continue;
+  }
+
+  const policy = componentPolicy[componentName];
+  if (!policy) {
+    failures.push(`${file}: missing HTML-first policy classification`);
+    continue;
+  }
+
+  if (policy.kind === "element") {
+    if (!/export \{\};$/.test(source)) {
+      failures.push(`${file}: styling-only element entrypoints must export no behavior`);
+    }
     continue;
   }
 

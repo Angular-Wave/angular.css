@@ -45,17 +45,13 @@ Install AngularCSS once, load its stylesheet, and include the `ui` module in
 your AngularTS application. See [Installation]({{< relref
 "/docs/get-started/installation" >}}) for the complete setup.
 
-This component's root directive is `[ng-card]`. Importing the package registers it with the AngularCSS `ui` module; there is no per-component JavaScript registration step.
+This is a styling-only HTML element or pattern. AngularCSS registers no runtime directive for it. A card is a styled semantic HTML composition without runtime behavior.
 
 ## Anatomy
 
-### Directive selectors
+### Root styling selector
 
-- `ng-card`
-- `ng-card-action`
-- `ng-card-content`
-- `ng-card-footer`
-- `ng-card-header`
+- `data-slot="card"`
 
 ### Styling slots
 
@@ -74,20 +70,13 @@ Use the named slots as stable Tailwind and CSS selectors.
 
 ### Attributes and state
 
-| Attribute | Access | Purpose |
-| --- | --- | --- |
-| `data-has-action` | Output | Stable component state or styling hook. |
-| `data-has-content` | Output | Stable component state or styling hook. |
-| `data-has-footer` | Output | Stable component state or styling hook. |
-| `data-has-header` | Output | Stable component state or styling hook. |
-| `data-size` | Output | Stable component state or styling hook. |
-| `size` | Input | Visual size token supported by the component stylesheet. |
+This component has no directive-specific attributes beyond its semantic HTML.
 
-`Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
+Attributes remain authored HTML, native state, or AngularTS inputs. AngularCSS does not write element state.
 
 ### CSS custom properties
 
-This directive does not write component-specific CSS custom properties.
+This styling hook does not define component-specific CSS custom properties.
 
 ### DOM events
 
@@ -113,7 +102,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-card]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target semantic elements, styling slots, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

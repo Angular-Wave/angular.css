@@ -25,6 +25,11 @@
           ng-progress
           value="{{ demoValue }}"
           max="100"
+          role="progressbar"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="{{ demoValue }}"
+          style="--value: {{ demoValue }}%"
           aria-labelledby="progress-timed-title"
           class="progress-demo-timed"
         >
@@ -35,9 +40,20 @@
       </section>
 
       <section>
-        <div ng-progress value="56" max="100" class="progress-demo-labeled">
+        <div
+          ng-progress
+          value="56"
+          max="100"
+          role="progressbar"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="56"
+          aria-label="Upload progress"
+          style="--value: 56%"
+          class="progress-demo-labeled"
+        >
           <span data-slot="progress-label">Upload progress</span>
-          <span data-slot="progress-value"></span>
+          <span data-slot="progress-value">56%</span>
           <span data-slot="progress-track">
             <span data-slot="progress-indicator"></span>
           </span>

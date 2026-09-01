@@ -29,7 +29,7 @@ Install AngularCSS once, load its stylesheet, and include the `ui` module in
 your AngularTS application. See [Installation]({{< relref
 "/docs/get-started/installation" >}}) for the complete setup.
 
-This component is styling-only and uses the `[data-input]` hook on a native HTML element. AngularCSS registers no runtime directive for it.
+This is a styling-only HTML element or pattern. AngularCSS registers no runtime directive for it. Native input behavior, validation, and AngularTS models provide the contract.
 
 ## Anatomy
 
@@ -50,7 +50,7 @@ Use the named slots as stable Tailwind and CSS selectors.
 
 This component has no directive-specific attributes beyond its semantic HTML.
 
-`Input` attributes remain native HTML or AngularTS inputs. AngularCSS does not write component state.
+Attributes remain authored HTML, native state, or AngularTS inputs. AngularCSS does not write element state.
 
 ### CSS custom properties
 
@@ -80,7 +80,7 @@ content come from the application.
 
 ## Customization
 
-Target `[data-input]`, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
+Target semantic elements, styling slots, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

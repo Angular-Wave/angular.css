@@ -1,1 +1,2 @@
-export { radioGroupDirective } from "../../components/radio-group/radio-group";
+/** Styling-only HTML entry; no TypeScript behavior is exported. */
+export {};

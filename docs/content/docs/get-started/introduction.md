@@ -6,17 +6,18 @@ description:
   customizable CSS.
 ---
 
-AngularCSS provides foundational interface components for AngularTS. A component
-is an HTML contract: a root directive, semantic native elements, optional named
-slots, observable state attributes, and a stylesheet you can override.
+AngularCSS provides HTML-first styles and focused interface components for
+AngularTS. Most interface elements are semantic HTML styled directly by CSS.
+TypeScript components are reserved for interactions that native HTML, CSS, and
+AngularTS do not already provide.
 
 ```html
-<button ng-button variant="outline">Save changes</button>
+<button variant="outline">Save changes</button>
 ```
 
-The HTML remains readable before the directive runs. The native `button` retains
-its browser behavior, and `ng-button` adds stable variant and state hooks for
-styling.
+No directive runs for this button. The browser owns activation and disabled
+state, AngularTS owns application commands, and CSS targets the native element
+and authored variant directly.
 
 ## Three layers
 
@@ -24,14 +25,15 @@ styling.
    other native elements whenever they fit the interaction.
 2. **AngularTS owns application state.** Use `ng-model`, `ng-click`, validation,
    interpolation, and structural directives for values and business behavior.
-3. **AngularCSS owns component behavior.** Directives add keyboard navigation,
-   focus management, ARIA relationships, and mirrored `data-*` styling state
-   when native HTML is not sufficient.
+3. **AngularCSS fills genuine interaction gaps.** Components add composite
+   keyboard navigation, focus management, disclosure coordination, and dynamic
+   accessibility relationships only when the first two layers are insufficient.
 
 This boundary prevents a component from creating a second form model, template
-engine, or validation system over AngularTS.
+engine, validation system, or styling-state mirror over AngularTS and the
+browser.
 
-## HTML-first contracts
+## Behavioral components
 
 Complex components are composed from named parts rather than hidden templates:
 
@@ -50,8 +52,8 @@ The component page lists every supported directive, slot, state, and event.
 
 ## What is included
 
-- 55 canonical components covering actions, forms, disclosure, overlays,
-  navigation, feedback, layout, and data display.
+- 55 documented catalog entries split between styling-only HTML elements and
+  focused behavioral components.
 - TypeScript declarations generated from the canonical source.
 - A compiled CSS entrypoint with Radix color tokens and Tailwind-compatible
   selectors.

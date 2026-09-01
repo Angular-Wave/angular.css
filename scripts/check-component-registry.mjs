@@ -1,6 +1,8 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { basename, join } from "node:path";
 
+import { componentPolicy } from "./component-policy.ts";
+
 const indexSource = readFileSync("src/index.ts", "utf8");
 
 const listCanonicalComponentFiles = () =>
@@ -33,33 +35,65 @@ const registrations = new Map(
 );
 
 const failures = [];
-const stylingOnlyComponents = new Set(["input"]);
+const componentFiles = listCanonicalComponentFiles();
+const componentNames = componentFiles
+  .map((file) => basename(file, ".ts"))
+  .sort();
+const policyNames = Object.keys(componentPolicy).sort();
 
-for (const file of listCanonicalComponentFiles()) {
+if (JSON.stringify(componentNames) !== JSON.stringify(policyNames)) {
+  failures.push(
+    "scripts/component-policy.ts: policy entries must exactly match canonical component directories",
+  );
+}
+
+for (const file of componentFiles) {
   const componentName = basename(file, ".ts");
   const importPath = `${componentName}/${componentName}`;
   const source = readFileSync(file, "utf8");
   const exportedDirective = source.match(
     /export function ([A-Za-z0-9_$]+Directive)\(/,
   )?.[1];
+  const importedDirective = imports.get(importPath);
 
-  if (!exportedDirective) {
-    failures.push(
-      `${file}: canonical component must export a directive factory`,
-    );
+  const policy = componentPolicy[componentName];
+  if (!policy) {
+    failures.push(`${file}: missing HTML-first policy classification`);
     continue;
   }
 
-  if (stylingOnlyComponents.has(componentName)) {
-    if (registrations.has(exportedDirective)) {
+  if (policy.kind === "element") {
+    if (
+      source.trim() !==
+      "/** Styling-only HTML entry; native HTML, CSS, and AngularTS own behavior. */\nexport {};"
+    ) {
       failures.push(
-        `${file}: styling-only ${exportedDirective} must not be registered`,
+        `${file}: style-only element TypeScript must remain an empty compatibility entrypoint`,
+      );
+    }
+    if (exportedDirective) {
+      failures.push(
+        `${file}: style-only element must not export ${exportedDirective}`,
+      );
+    }
+    if (
+      importedDirective ||
+      (exportedDirective && registrations.has(exportedDirective))
+    ) {
+      failures.push(
+        `${file}: style-only element must not be imported or registered`,
       );
     }
     continue;
   }
 
-  const importedDirective = imports.get(importPath);
+  if (!exportedDirective) {
+    failures.push(
+      `${file}: behavioral component must export a directive factory`,
+    );
+    continue;
+  }
+
   if (importedDirective !== exportedDirective) {
     failures.push(
       `${file}: src/index.ts must import ${exportedDirective} from ./components/${importPath}`,

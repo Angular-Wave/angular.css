@@ -1,1 +1,2 @@
-export { kbdDirective } from "../../components/kbd/kbd";
+/** Styling-only HTML entry; no TypeScript behavior is exported. */
+export {};

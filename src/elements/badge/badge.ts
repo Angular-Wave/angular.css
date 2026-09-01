@@ -1,1 +1,2 @@
-export { badgeDirective } from "../../components/badge/badge";
+/** Styling-only HTML entry; no TypeScript behavior is exported. */
+export {};

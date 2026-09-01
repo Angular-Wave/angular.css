@@ -1,1 +1,2 @@
-export { buttonGroupDirective } from "../../components/button-group/button-group";
+/** Styling-only HTML entry; no TypeScript behavior is exported. */
+export {};

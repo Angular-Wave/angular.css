@@ -1,6 +1,8 @@
 import { existsSync, readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 
+import { componentNames } from "./component-policy.ts";
+
 const listFiles = (directory) => {
   if (!existsSync(directory)) return [];
 
@@ -11,11 +13,6 @@ const listFiles = (directory) => {
     })
     .sort();
 };
-
-const componentNames = readdirSync("src/components")
-  .filter((entry) => statSync(join("src/components", entry)).isDirectory())
-  .filter((entry) => existsSync(join("src/components", entry, `${entry}.ts`)))
-  .sort();
 
 const expectedComponentTypes = new Set(
   componentNames.map((name) => join("@types", "components", name, `${name}.d.ts`)),

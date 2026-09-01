@@ -1,6 +1,6 @@
 {
   "name": "@angular-wave/angular.css",
-  "description": "A design foundation for your AngularTS app",
+  "description": "HTML-first styles and focused components for AngularTS",
   "license": "MIT",
   "version": "0.0.1",
   "type": "module",

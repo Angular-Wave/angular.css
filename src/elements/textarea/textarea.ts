@@ -1,1 +1,2 @@
-export { textareaDirective } from "../../components/textarea/textarea";
+/** Styling-only HTML entry; no TypeScript behavior is exported. */
+export {};

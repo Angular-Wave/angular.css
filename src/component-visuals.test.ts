@@ -146,7 +146,7 @@ const assertGeometry = async (
     await expect(
       page
         .locator(
-          ':is([data-slot="button-group-separator"], [ng-button-group-separator])[data-orientation="vertical"]',
+          ':is([data-slot="button-group-separator"], [ng-button-group-separator])[orientation="vertical"]',
         )
         .first(),
     ).toHaveCSS("width", "1px");

@@ -5,3 +5,15 @@
   overflow: hidden;
   aspect-ratio: var(--ratio, 16 / 9);
 }
+
+:is([data-slot="aspect-ratio"], [ng-aspect-ratio])[ratio="1 / 1"] {
+  --ratio: 1 / 1;
+}
+
+:is([data-slot="aspect-ratio"], [ng-aspect-ratio])[ratio="9 / 16"] {
+  --ratio: 9 / 16;
+}
+
+:is([data-slot="aspect-ratio"], [ng-aspect-ratio])[ratio="16 / 9"] {
+  --ratio: 16 / 9;
+}

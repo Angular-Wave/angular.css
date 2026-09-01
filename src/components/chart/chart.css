@@ -51,7 +51,8 @@
   pointer-events: none;
 }
 
-[data-slot="chart"][data-direction="rtl"] [data-slot="chart-plot"],
+:is([data-slot="chart"], [ng-chart]):is([dir="rtl"], [data-direction="rtl"])
+  [data-slot="chart-plot"],
 [ng-chart][data-direction="rtl"] [ng-chart-plot],
 [ng-chart][data-direction="rtl"] [data-slot="chart-plot"] {
   border-inline-start: 0;
@@ -89,7 +90,8 @@
   gap: calc(var(--spacing) * 1);
 }
 
-[data-slot="chart"][data-direction="rtl"] [data-slot="chart-bars"],
+:is([data-slot="chart"], [ng-chart]):is([dir="rtl"], [data-direction="rtl"])
+  [data-slot="chart-bars"],
 [ng-chart][data-direction="rtl"] [ng-chart-bars],
 [ng-chart][data-direction="rtl"] [data-slot="chart-bars"] {
   flex-direction: row-reverse;
@@ -100,10 +102,13 @@
   display: grid;
   width: 100%;
   min-width: calc(var(--spacing) * 6);
-  height: var(--value, 50%);
+  height: var(--value, attr(data-value type(<percentage>), 50%));
   align-items: end;
   border-radius: calc(var(--radius) - 2px) calc(var(--radius) - 2px) 0 0;
-  background: var(--chart-color, var(--chart-1));
+  background: var(
+    --chart-color,
+    attr(data-color type(<color>), var(--chart-1))
+  );
 }
 
 [data-slot="chart-legend"],
@@ -177,9 +182,13 @@
   width: calc(var(--spacing) * 2.5);
   height: calc(var(--spacing) * 2.5);
   flex: 0 0 auto;
-  border: 1px solid var(--chart-color, var(--chart-1));
+  border: 1px solid
+    var(--chart-color, attr(data-color type(<color>), var(--chart-1)));
   border-radius: 2px;
-  background: var(--chart-color, var(--chart-1));
+  background: var(
+    --chart-color,
+    attr(data-color type(<color>), var(--chart-1))
+  );
 }
 
 :is(
@@ -220,5 +229,8 @@
   width: calc(var(--spacing) * 2.5);
   height: calc(var(--spacing) * 2.5);
   border-radius: 999px;
-  background: var(--chart-color, var(--chart-1));
+  background: var(
+    --chart-color,
+    attr(data-color type(<color>), var(--chart-1))
+  );
 }

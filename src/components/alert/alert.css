@@ -35,7 +35,10 @@
   padding-inline-end: calc(var(--spacing) * 18);
 }
 
-:is([ng-alert], [data-slot="alert"])[data-variant="destructive"] {
+:is([ng-alert], [data-slot="alert"]):is(
+  [variant="destructive"],
+  [data-variant="destructive"]
+) {
   color: var(--error);
 }
 
@@ -64,7 +67,10 @@
   text-wrap: balance;
 }
 
-:is([ng-alert], [data-slot="alert"])[data-variant="destructive"]
+:is([ng-alert], [data-slot="alert"]):is(
+    [variant="destructive"],
+    [data-variant="destructive"]
+  )
   > [data-slot="alert-description"] {
   color: color-mix(in srgb, var(--error) 90%, transparent);
 }

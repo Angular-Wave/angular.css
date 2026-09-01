@@ -1,1 +1,2 @@
-export { nativeSelectDirective } from "../../components/native-select/native-select";
+/** Styling-only HTML entry; no TypeScript behavior is exported. */
+export {};

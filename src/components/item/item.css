@@ -7,13 +7,13 @@
 }
 
 :is([data-slot="item-group"], [ng-item-group]):has(
-  > :is([data-slot="item"], [ng-item])[data-size="sm"]
+  > :is([data-slot="item"], [ng-item]):is([size="sm"], [data-size="sm"])
 ) {
   gap: calc(var(--spacing) * 2.5);
 }
 
 :is([data-slot="item-group"], [ng-item-group]):has(
-  > :is([data-slot="item"], [ng-item])[data-size="xs"]
+  > :is([data-slot="item"], [ng-item]):is([size="xs"], [data-size="xs"])
 ) {
   gap: calc(var(--spacing) * 2);
 }
@@ -52,15 +52,13 @@
   background: color-mix(in srgb, var(--muted) 50%, transparent);
 }
 
-[data-slot="item"][data-size="sm"],
-[ng-item][data-size="sm"] {
+:is([data-slot="item"], [ng-item]):is([size="sm"], [data-size="sm"]) {
   gap: calc(var(--spacing) * 2.5);
   padding-block: calc(var(--spacing) * 2.5);
   padding-inline: calc(var(--spacing) * 3);
 }
 
-[data-slot="item"][data-size="xs"],
-[ng-item][data-size="xs"] {
+:is([data-slot="item"], [ng-item]):is([size="xs"], [data-size="xs"]) {
   gap: calc(var(--spacing) * 2);
   padding-block: calc(var(--spacing) * 2);
   padding-inline: calc(var(--spacing) * 2.5);
@@ -94,13 +92,13 @@
   border-radius: calc(var(--radius) - 2px);
 }
 
-:is([data-slot="item"], [ng-item])[data-size="sm"]
+:is([data-slot="item"], [ng-item]):is([size="sm"], [data-size="sm"])
   :is([data-slot="item-media"], [ng-item-media])[variant="image"] {
   width: calc(var(--spacing) * 8);
   height: calc(var(--spacing) * 8);
 }
 
-:is([data-slot="item"], [ng-item])[data-size="xs"]
+:is([data-slot="item"], [ng-item]):is([size="xs"], [data-size="xs"])
   :is([data-slot="item-media"], [ng-item-media])[variant="image"] {
   width: calc(var(--spacing) * 6);
   height: calc(var(--spacing) * 6);
@@ -161,7 +159,7 @@
   text-align: start;
 }
 
-:is([data-slot="item"], [ng-item])[data-size="xs"]
+:is([data-slot="item"], [ng-item]):is([size="xs"], [data-size="xs"])
   :is([data-slot="item-description"], [ng-item-description]) {
   font-size: var(--text-xs);
 }

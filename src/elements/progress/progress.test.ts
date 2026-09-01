@@ -13,7 +13,6 @@ test("progress element entrypoint exercises the built functional artifact", asyn
 
   const timed = page.locator(".progress-demo-timed");
   await expect(timed).toHaveAttribute("aria-valuenow", "66");
-  await expect(timed).toHaveAttribute("data-value", "66");
   await expect(page.locator(".progress-demo-labeled")).toHaveAccessibleName(
     "Upload progress",
   );

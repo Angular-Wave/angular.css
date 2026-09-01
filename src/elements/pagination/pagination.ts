@@ -1,1 +1,2 @@
-export { paginationDirective } from "../../components/pagination/pagination";
+/** Styling-only HTML entry; no TypeScript behavior is exported. */
+export {};

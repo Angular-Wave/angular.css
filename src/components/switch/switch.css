@@ -1,4 +1,4 @@
-input[type="checkbox"][ng-switch-control],
+input[type="checkbox"]:is([ng-switch-control], [data-slot="switch"]),
 button[ng-switch-control],
 [data-slot="switch"] {
   @apply relative inline-flex h-[18.4px] w-8 shrink-0 items-center rounded-full
@@ -9,11 +9,11 @@ button[ng-switch-control],
     dark:bg-input/80 dark:aria-invalid:ring-error/40;
 }
 
-input[type="checkbox"][ng-switch-control] {
+input[type="checkbox"]:is([ng-switch-control], [data-slot="switch"]) {
   appearance: none;
 }
 
-input[type="checkbox"][ng-switch-control]::after,
+input[type="checkbox"]:is([ng-switch-control], [data-slot="switch"])::after,
 button[ng-switch-control]::after,
 [data-slot="switch"] [data-slot="switch-thumb"] {
   content: "";
@@ -22,19 +22,22 @@ button[ng-switch-control]::after,
     ring-0 transition-transform;
 }
 
-input[type="checkbox"][ng-switch-control]:checked,
+input[type="checkbox"]:is([ng-switch-control], [data-slot="switch"]):checked,
 button[ng-switch-control][aria-checked="true"],
 [data-slot="switch"][data-state="checked"] {
   @apply bg-primary;
 }
 
-input[type="checkbox"][ng-switch-control]:checked::after,
+input[type="checkbox"]:is(
+    [ng-switch-control],
+    [data-slot="switch"]
+  ):checked::after,
 button[ng-switch-control][aria-checked="true"]::after,
 [data-slot="switch"][data-state="checked"] [data-slot="switch-thumb"] {
   @apply translate-x-[14px];
 }
 
-input[type="checkbox"][ng-switch-control][size="sm"],
+input[type="checkbox"]:is([ng-switch-control], [data-slot="switch"])[size="sm"],
 button[ng-switch-control][size="sm"],
 [data-slot="switch"][data-size="sm"] {
   @apply h-4 w-7;

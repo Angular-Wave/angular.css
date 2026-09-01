@@ -8,10 +8,9 @@ test("element entrypoint example is a functional checkbox page", async ({
   const checkboxes = page.locator("[ng-checkbox]");
   const terms = page.locator("#terms-checkbox");
   await expect(checkboxes).toHaveCount(4);
-  await expect(terms).toHaveAttribute("data-state", "unchecked");
+  await expect(terms).not.toBeChecked();
 
   await terms.check();
-  await expect(terms).toHaveAttribute("data-state", "checked");
-  await expect(terms).toHaveAttribute("aria-checked", "true");
+  await expect(terms).toBeChecked();
   await expect(page.getByRole("status")).toContainText("Terms accepted");
 });

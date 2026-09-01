@@ -105,7 +105,7 @@
   [ng-pagination-previous],
   [data-slot="pagination-next"],
   [ng-pagination-next]
-)[data-disabled="true"] {
+):is([aria-disabled="true"], [data-disabled="true"]) {
   pointer-events: none;
   opacity: 0.5;
 }

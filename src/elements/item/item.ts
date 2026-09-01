@@ -1,1 +1,2 @@
-export { itemDirective } from "../../components/item/item";
+/** Styling-only HTML entry; no TypeScript behavior is exported. */
+export {};

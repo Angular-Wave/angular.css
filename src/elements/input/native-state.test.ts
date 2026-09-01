@@ -35,13 +35,13 @@ test("native text-control artifacts synchronize browser and AngularTS state", as
   await openElementArtifact(page, "textarea");
   const message = page.getByLabel("Message");
   await message.fill("Packaged artifact");
-  await expect(message).toHaveAttribute("data-empty", "false");
+  await expect(message).toHaveValue("Packaged artifact");
   await expect(page.locator(".output")).toContainText(
     "Message: Packaged artifact",
   );
   await expect(page.getByLabel("Disabled")).toBeDisabled();
   await expect(page.getByLabel("Invalid")).toHaveAttribute(
-    "data-invalid",
+    "aria-invalid",
     "true",
   );
 });
@@ -57,15 +57,13 @@ test("native choice artifacts preserve checked state and keyboard interaction", 
     })
     .first();
   await terms.check();
-  await expect(terms).toHaveAttribute("data-state", "checked");
-  await expect(terms).toHaveAttribute("aria-checked", "true");
+  await expect(terms).toBeChecked();
   await expect(page.getByRole("status")).toContainText("Terms accepted");
 
   await openElementArtifact(page, "switch");
   const switchControl = page.getByRole("switch", { name: "Airplane Mode" });
   await switchControl.check();
-  await expect(switchControl).toHaveAttribute("data-state", "checked");
-  await expect(switchControl).toHaveAttribute("aria-checked", "true");
+  await expect(switchControl).toBeChecked();
   await expect(page.locator(".output")).toContainText("true");
 
   await openElementArtifact(page, "radio-group");
@@ -95,8 +93,6 @@ test("native range and select artifacts expose synchronized values", async ({
   const select = page.getByRole("combobox", { name: "Status" });
   await select.selectOption("done");
   await expect(select).toHaveValue("done");
-  await expect(select).toHaveAttribute("data-value", "done");
-  await expect(select).toHaveAttribute("data-empty", "false");
 });
 
 test("button-group, toggle, and progress artifacts keep commands and state connected", async ({
@@ -122,7 +118,6 @@ test("button-group, toggle, and progress artifacts keep commands and state conne
     name: "Upload progress",
   });
   await expect(labeled).toHaveAttribute("aria-valuenow", "56");
-  await expect(labeled).toHaveAttribute("data-value", "56");
   await expect(labeled.locator('[data-slot="progress-value"]')).toHaveText(
     "56%",
   );

@@ -17,7 +17,7 @@
   >
     <main class="button-group-canonical visual-example">
       <div class="button-group-size-stack" aria-label="Button group sizes">
-        <div ng-button-group aria-label="State ownership">
+        <div ng-button-group role="group" aria-label="State ownership">
           <button
             ng-button
             id="button-group-unmanaged"
@@ -59,7 +59,7 @@
             </svg>
           </button>
         </div>
-        <div ng-button-group>
+        <div ng-button-group role="group">
           <button ng-button type="button" variant="outline">Default</button>
           <button ng-button type="button" variant="outline">Button</button>
           <button ng-button type="button" variant="outline">Group</button>
@@ -81,7 +81,7 @@
             </svg>
           </button>
         </div>
-        <div ng-button-group>
+        <div ng-button-group role="group">
           <button ng-button type="button" variant="outline" size="lg">
             Large
           </button>
@@ -111,7 +111,12 @@
         </div>
       </div>
 
-      <div ng-button-group orientation="vertical" aria-label="Media controls">
+      <div
+        ng-button-group
+        role="group"
+        orientation="vertical"
+        aria-label="Media controls"
+      >
         <button
           ng-button
           type="button"
@@ -153,7 +158,7 @@
       </div>
 
       <div class="button-group-canonical-row">
-        <div ng-button-group>
+        <div ng-button-group role="group">
           <button
             ng-button
             type="button"
@@ -163,7 +168,10 @@
           >
             Copy
           </button>
-          <span data-slot="button-group-separator"></span>
+          <span
+            data-slot="button-group-separator"
+            orientation="vertical"
+          ></span>
           <button
             ng-button
             type="button"
@@ -174,7 +182,7 @@
             Paste
           </button>
         </div>
-        <div ng-button-group>
+        <div ng-button-group role="group">
           <button
             ng-button
             type="button"
@@ -183,7 +191,10 @@
           >
             Button
           </button>
-          <span data-slot="button-group-separator"></span>
+          <span
+            data-slot="button-group-separator"
+            orientation="vertical"
+          ></span>
           <button
             ng-button
             type="button"

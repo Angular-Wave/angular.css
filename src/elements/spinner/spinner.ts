@@ -1,1 +1,2 @@
-export { spinnerDirective } from "../../components/spinner/spinner";
+/** Styling-only HTML entry; no TypeScript behavior is exported. */
+export {};

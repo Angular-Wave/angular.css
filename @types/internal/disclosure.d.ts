@@ -1,14 +1,15 @@
 export declare function restoreFocus(element: HTMLElement | null): void;
-export declare function bindEscapeClose(targets: HTMLElement[], isOpen: () => boolean, close: () => void): () => void;
-export type OverlayParts = {
+export declare function bindEscapeClose(elements: HTMLElement[], isOpen: () => boolean, close: () => void): () => void;
+export interface OverlayParts {
     closeSelector: string;
     contentSelector: string;
-    contentRole?: "alertdialog" | "dialog";
-    closeOnOverlayClick?: boolean;
-    overlaySelector: string;
-    closeOnOutsideClick?: boolean;
     descriptionSelector?: string;
+    overlaySelector: string;
     titleSelector?: string;
     triggerSelector?: string;
-};
-export declare function bindOverlay(scope: ng.Scope, element: HTMLElement, { closeSelector, contentRole, contentSelector, closeOnOverlayClick, overlaySelector, closeOnOutsideClick, descriptionSelector, titleSelector, triggerSelector: internalTriggerSelector, }: OverlayParts): void;
+    rootSelector?: string;
+    contentRole?: "alertdialog" | "dialog";
+    closeOnOverlayClick?: boolean;
+    closeOnOutsideClick?: boolean;
+}
+export declare function bindOverlay(scope: ng.Scope | null | undefined, element: HTMLElement, parts: OverlayParts): void;

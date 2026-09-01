@@ -1,1 +1,2 @@
-export { progressDirective } from "../../components/progress/progress";
+/** Styling-only HTML entry; no TypeScript behavior is exported. */
+export {};

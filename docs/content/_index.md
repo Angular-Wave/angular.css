@@ -5,9 +5,9 @@ title: AngularCSS
 <section class="angularcss-home">
   <h1>AngularCSS</h1>
   <p>
-    Semantic, HTML-first components for AngularTS. Add accessible behavior with
-    TypeScript directives, then customize every visual detail with Tailwind or
-    ordinary CSS.
+    HTML-first styles and focused components for AngularTS. Style semantic HTML
+    directly, add TypeScript only for missing interaction, and customize every
+    visual detail with Tailwind or ordinary CSS.
   </p>
   <nav aria-label="Start with AngularCSS">
     <a href="{{< relref "/docs/get-started/installation" >}}">Install</a>
@@ -19,8 +19,8 @@ title: AngularCSS
 
 <section class="angularcss-home-catalog">
   <header>
-    <h2>All components</h2>
-    <p>Browse every canonical AngularCSS component and its live HTML example.</p>
+    <h2>Elements and components</h2>
+    <p>Browse every styled HTML element, behavioral component, and live example.</p>
   </header>
   {{< component-catalog section="/docs/components" >}}
 </section>

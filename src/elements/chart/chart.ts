@@ -1,1 +1,2 @@
-export { chartDirective } from "../../components/chart/chart";
+/** Styling-only HTML entry; no TypeScript behavior is exported. */
+export {};

@@ -9,11 +9,6 @@ test("element entrypoint example is a complete functional chart page", async ({
   const bars = chart.locator(`:is([data-slot=chart-bar], [ng-chart-bar])`);
 
   await expect(chart).toHaveAttribute("role", "img");
-  await expect(chart).toHaveAttribute("data-direction", "ltr");
   await expect(bars).toHaveCount(12);
-  await expect(bars.first()).toHaveAttribute(
-    "aria-label",
-    "January desktop: 61%",
-  );
-  await expect(bars.first()).toHaveCSS("--value", "61%");
+  await expect(bars.first()).toHaveAttribute("data-value", "61%");
 });

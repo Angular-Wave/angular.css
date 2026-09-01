@@ -1,1 +1,2 @@
-export { aspectRatioDirective } from "../../components/aspect-ratio/aspect-ratio";
+/** Styling-only HTML entry; no TypeScript behavior is exported. */
+export {};

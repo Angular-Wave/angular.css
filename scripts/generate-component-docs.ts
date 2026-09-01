@@ -7,6 +7,8 @@ import {
 } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 
+import { componentPolicy } from "./component-policy.ts";
+
 const START = "<!-- angularcss-reference:start -->";
 const END = "<!-- angularcss-reference:end -->";
 const ELEMENT_START = "<!-- angularcss-element-reference:start -->";
@@ -579,9 +581,11 @@ const referenceFor = (component: string): string => {
     join("src/components", component, `${component}.css`),
   );
   const directive = directiveByComponent.get(component);
-  const stylingOnly = component === "input";
+  const stylingOnly = componentPolicy[component]?.kind === "element";
   const rootSelector = stylingOnly
-    ? "data-input"
+    ? component === "input"
+      ? "data-input"
+      : `data-slot=\"${component}\"`
     : directive
       ? toSelector(directive)
       : `ng-${component}`;
@@ -627,7 +631,7 @@ const referenceFor = (component: string): string => {
     accessibilityByCategory[category] ??
     accessibilityByCategory.layout;
   const installationDescription = stylingOnly
-    ? "This component is styling-only and uses the `[data-input]` hook on a native HTML element. AngularCSS registers no runtime directive for it."
+    ? `This is a styling-only HTML element or pattern. AngularCSS registers no runtime directive for it. ${componentPolicy[component]?.rationale ?? ""}`
     : "This component's root directive is `[" +
       rootSelector +
       "]`. Importing the package registers it with the AngularCSS `ui` module; there is no per-component JavaScript registration step.";
@@ -635,13 +639,13 @@ const referenceFor = (component: string): string => {
     ? "### Root styling selector"
     : "### Directive selectors";
   const stateOwnership = stylingOnly
-    ? "`Input` attributes remain native HTML or AngularTS inputs. AngularCSS does not write component state."
+    ? "Attributes remain authored HTML, native state, or AngularTS inputs. AngularCSS does not write element state."
     : "`Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.";
   const cssVariableFallback = stylingOnly
     ? "This styling hook does not define component-specific CSS custom properties."
     : "This directive does not write component-specific CSS custom properties.";
   const customization = stylingOnly
-    ? "Target `[data-input]`, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet."
+    ? "Target semantic elements, styling slots, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet."
     : "Target `[" +
       rootSelector +
       "]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.";

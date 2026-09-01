@@ -27,6 +27,11 @@
           ng-progress
           value="{{ progressWorkflow.controlled }}"
           max="100"
+          role="progressbar"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="{{ progressWorkflow.controlled }}"
+          style="--value: {{ progressWorkflow.controlled }}%"
           aria-labelledby="progress-controlled-title"
         >
           <span data-slot="progress-track">
@@ -46,7 +51,18 @@
       </section>
 
       <section lang="ar">
-        <div ng-progress value="56" max="100" dir="rtl">
+        <div
+          ng-progress
+          value="56"
+          max="100"
+          role="progressbar"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="56"
+          aria-label="Upload progress"
+          style="--value: 56%"
+          dir="rtl"
+        >
           <span data-slot="progress-label">تقدم الرفع</span>
           <span data-slot="progress-value" data-value-format="custom">٥٦%</span>
           <span data-slot="progress-track">

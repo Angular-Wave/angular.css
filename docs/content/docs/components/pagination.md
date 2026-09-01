@@ -36,19 +36,13 @@ Install AngularCSS once, load its stylesheet, and include the `ui` module in
 your AngularTS application. See [Installation]({{< relref
 "/docs/get-started/installation" >}}) for the complete setup.
 
-This component's root directive is `[ng-pagination]`. Importing the package registers it with the AngularCSS `ui` module; there is no per-component JavaScript registration step.
+This is a styling-only HTML element or pattern. AngularCSS registers no runtime directive for it. Native navigation, lists, links, and authored current state are sufficient.
 
 ## Anatomy
 
-### Directive selectors
+### Root styling selector
 
-- `ng-pagination`
-- `ng-pagination-content`
-- `ng-pagination-ellipsis`
-- `ng-pagination-item`
-- `ng-pagination-link`
-- `ng-pagination-next`
-- `ng-pagination-previous`
+- `data-slot="pagination"`
 
 ### Styling slots
 
@@ -71,16 +65,14 @@ Use the named slots as stable Tailwind and CSS selectors.
 | --- | --- | --- |
 | `aria-current` | Input | Current item or date state. |
 | `aria-disabled` | Input | Semantic disabled state. |
-| `aria-label` | Input | Accessible name when visible text is insufficient. |
 | `data-active` | Input | Stable component state or styling hook. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
-| `role` | Input | Explicit semantic role when native HTML does not provide one. |
 
-`Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
+Attributes remain authored HTML, native state, or AngularTS inputs. AngularCSS does not write element state.
 
 ### CSS custom properties
 
-This directive does not write component-specific CSS custom properties.
+This styling hook does not define component-specific CSS custom properties.
 
 ### DOM events
 
@@ -106,7 +98,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-pagination]`, the documented `data-slot` selectors, and generated `data-*` states from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target semantic elements, styling slots, native state selectors, and authored ARIA attributes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

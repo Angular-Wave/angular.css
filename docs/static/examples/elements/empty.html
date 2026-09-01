@@ -10,7 +10,12 @@
     <script src="../../js/angular-css.umd.js"></script>
   </head>
   <body ng-app="ui" ng-cloak data-example="empty-demo">
-    <section ng-empty class="empty-demo visual-example">
+    <section
+      ng-empty
+      class="empty-demo visual-example"
+      role="status"
+      aria-live="polite"
+    >
       <div data-slot="empty-header">
         <div data-slot="empty-media" variant="icon">
           <svg
