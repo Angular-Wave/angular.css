@@ -4,10 +4,6 @@ import { query, onDestroy } from "../../internal/dom";
 
 let fieldIdCounter = 0;
 
-type FieldScope = ng.Scope & {
-  $on?: (eventName: string, callback: () => void) => void;
-};
-
 const findControl = (element: HTMLElement): HTMLElement | null => {
   return query(
     element,
@@ -38,7 +34,7 @@ const isElementVisible = (node: Element | null): node is HTMLElement => {
 
 export function fieldDirective(): ng.Directive {
   return {
-    link(_scope: FieldScope, element: HTMLElement) {
+    link(_scope: ng.Scope, element: HTMLElement) {
       if (!element.hasAttribute("role")) {
         element.setAttribute("role", "group");
       }

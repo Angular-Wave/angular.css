@@ -56,7 +56,7 @@ export function onDestroy(
   scope: ng.Scope | null | undefined,
   cleanup: () => void,
 ): void {
-  if (typeof scope?.$on === "function") {
-    scope.$on("$destroy", cleanup);
+  if (scope) {
+    scope.on("$destroy", cleanup);
   }
 }

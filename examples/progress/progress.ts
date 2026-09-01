@@ -12,7 +12,7 @@ class ProgressDemoController {
       scope.demoValue = 66;
     }, 500);
 
-    scope.$on("$destroy", () => window.clearTimeout(this.timer));
+    scope.on("$destroy", () => window.clearTimeout(this.timer));
   }
 }
 

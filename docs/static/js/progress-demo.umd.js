@@ -9,7 +9,7 @@
             this.timer = window.setTimeout(() => {
                 scope.demoValue = 66;
             }, 500);
-            scope.$on("$destroy", () => window.clearTimeout(this.timer));
+            scope.on("$destroy", () => window.clearTimeout(this.timer));
         }
     }
     window.angular

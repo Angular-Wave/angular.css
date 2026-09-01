@@ -1,4 +1,4 @@
-/* Version: 0.0.1 - September 1, 2026 02:53:42 */
+/* Version: 0.0.1 - September 1, 2026 03:01:40 */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
     typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -34,8 +34,8 @@
         return (currentIndex + direction + length) % length;
     }
     function onDestroy(scope, cleanup) {
-        if (typeof scope?.$on === "function") {
-            scope.$on("$destroy", cleanup);
+        if (scope) {
+            scope.on("$destroy", cleanup);
         }
     }
 
