@@ -16,15 +16,14 @@
     data-example="dialog-rtl"
   >
     <main class="dialog-demo visual-example">
-      <section id="rtl-profile-dialog" ng-dialog>
-        <button variant="outline" class="dialog-trigger button">
+      <section id="rtl-profile-dialog" class="dialog">
+        <button variant="outline" class="dialog-trigger button" type="button" commandfor="rtl-profile-dialog-content" command="show-modal">
           تعديل الملف الشخصي
         </button>
-        <div class="dialog-overlay"></div>
-        <dialog class="dialog-content">
+        <dialog class="dialog-content" id="rtl-profile-dialog-content" closedby="any" aria-labelledby="rtl-profile-dialog-title" aria-describedby="rtl-profile-dialog-description">
           <header class="dialog-header">
-            <h2 class="dialog-title">تعديل الملف الشخصي</h2>
-            <p class="dialog-description">
+            <h2 class="dialog-title" id="rtl-profile-dialog-title">تعديل الملف الشخصي</h2>
+            <p class="dialog-description" id="rtl-profile-dialog-description">
               غيّر بيانات ملفك الشخصي ثم احفظ التعديلات.
             </p>
           </header>
@@ -39,10 +38,10 @@
             </div>
           </div>
           <footer class="dialog-footer">
-            <button variant="outline" data-dialog-close class="button">إلغاء</button>
-            <button data-dialog-close class="button">حفظ التغييرات</button>
+            <button variant="outline" class="button" commandfor="rtl-profile-dialog-content" command="close">إلغاء</button>
+            <button class="button" commandfor="rtl-profile-dialog-content" command="close">حفظ التغييرات</button>
           </footer>
-          <button variant="ghost" size="icon-sm" class="dialog-close button">
+          <button variant="ghost" size="icon-sm" class="dialog-close button" commandfor="rtl-profile-dialog-content" command="close">
             <svg
               viewBox="0 0 24 24"
               fill="none"

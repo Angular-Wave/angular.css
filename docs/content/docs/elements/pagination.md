@@ -28,9 +28,7 @@ Use `nav` with `aria-label="pagination"` and mark the current page with
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `pagination` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete pagination component reference]({{< relref
 "/docs/components/pagination" >}}) for selectors, slots, attributes, generated

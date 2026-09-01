@@ -23,12 +23,12 @@
         <p id="external-help" class="component-state-help">
           Enter an invoice total.
         </p>
-        <div ng-input-group id="described-group" class="input-group">
+        <div id="described-group" class="input-group">
           <input
 
 
             aria-label="Invoice total"
-            aria-describedby="external-help"
+            aria-describedby="external-help currency-code"
            class="input-group-control input"/>
           <span id="currency-code" class="input-group-addon">USD</span>
           <span
@@ -46,7 +46,7 @@
         aria-labelledby="button-group-title"
       >
         <h2 id="button-group-title">Action button</h2>
-        <div ng-input-group id="button-group" class="input-group">
+        <div id="button-group" class="input-group">
           <input
 
 
@@ -69,11 +69,11 @@
         aria-labelledby="dynamic-group-title"
       >
         <h2 id="dynamic-group-title">Conditional addon</h2>
-        <div ng-input-group id="dynamic-group" class="input-group">
+        <div id="dynamic-group" class="input-group">
           <input
 
 
-            aria-label="Budget"
+            ng-attr-aria-label="{{ showCurrency ? 'Budget in USD' : 'Budget' }}"
             aria-describedby="budget-help"
            class="input-group-control input"/>
           <span
@@ -100,7 +100,7 @@
         aria-labelledby="hidden-group-title"
       >
         <h2 id="hidden-group-title">Hidden addon</h2>
-        <div ng-input-group id="hidden-group" class="input-group">
+        <div id="hidden-group" class="input-group">
           <input
 
 

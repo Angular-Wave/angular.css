@@ -5,16 +5,14 @@ description: >
   Edge anchored overlay panels
 ---
 
-The element entrypoint exposes the same semantic Sheet implementation and CSS as
-the component entrypoint.
+The styling entrypoint exposes the same native Sheet structure and CSS.
 
 ```html
-<section ng-sheet side="right">
-  <button class="sheet-trigger">Open</button>
-  <div class="sheet-overlay"></div>
-  <dialog class="sheet-content">
+<section class="sheet">
+  <button commandfor="settings-sheet" command="show-modal">Open</button>
+  <dialog id="settings-sheet" data-side="right" class="sheet-content">
     <h2 class="sheet-title">Settings</h2>
-    <button class="sheet-close">Close</button>
+    <button commandfor="settings-sheet" command="close">Close</button>
   </dialog>
 </section>
 ```
@@ -26,9 +24,7 @@ the component entrypoint.
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `sheet` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete sheet component reference]({{< relref
 "/docs/components/sheet" >}}) for selectors, slots, attributes, generated

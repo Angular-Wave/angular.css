@@ -2,17 +2,23 @@
 title: toggle-group
 category: 'action'
 description: >
-  A semantic button group that coordinates pressed-state selection.
+  Native radio or checkbox groups with a toggle-button presentation.
 ---
 
-Use `ng-toggle-group` on a `fieldset` containing native
-`button.toggle-group-item` controls. The directive supplies any required roles.
+Use radios sharing a name for single selection, or checkboxes for independent
+multiple selection.
 
 ```html
-<fieldset ng-toggle-group variant="outline" class="toggle-group">
-  <button aria-pressed="true" class="toggle-group-item">Left</button>
-  <button class="toggle-group-item">Center</button>
-  <button class="toggle-group-item">Right</button>
+<fieldset variant="outline" class="toggle-group">
+  <legend class="visually-hidden">Alignment</legend>
+  <label class="toggle-group-item">
+    <input type="radio" name="alignment" value="left" ng-model="alignment" />
+    Left
+  </label>
+  <label class="toggle-group-item">
+    <input type="radio" name="alignment" value="center" ng-model="alignment" />
+    Center
+  </label>
 </fieldset>
 ```
 
@@ -31,13 +37,13 @@ Install AngularCSS once, load its stylesheet, and include the `ui` module in
 your AngularTS application. See [Installation]({{< relref
 "/docs/get-started/installation" >}}) for the complete setup.
 
-This component's root directive is `[ng-toggle-group]`. Importing the package registers it with the AngularCSS `ui` module; there is no per-component JavaScript registration step.
+This is a styling-only HTML element or pattern. AngularCSS registers no runtime directive for it. Native radio and checkbox groups own single or multiple selection, focus, keyboard behavior, and forms.
 
 ## Anatomy
 
-### Directive selectors
+### Root styling selector
 
-- `ng-toggle-group`
+- `.toggle-group`
 
 ### Semantic structure
 
@@ -47,28 +53,13 @@ Use native elements for authored structure. Component classes are optional visua
 
 ### Attributes and state
 
-| Attribute | Access | Purpose |
-| --- | --- | --- |
-| `aria-disabled` | Input | Semantic disabled state. |
-| `aria-pressed` | Input/output | ARIA relationship or state. |
-| `data-direction` | Output | Stable component state or styling hook. |
-| `data-disabled` | Output | Stable component state or styling hook. |
-| `data-orientation` | Output | Stable component state or styling hook. |
-| `data-state` | Input/output | Stable component state or styling hook. |
-| `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
-| `disabled` | Input | Disables native or component interaction. |
-| `multiple` | Input | Allows more than one item to remain selected or open. |
-| `orientation` | Input | Layout direction: `horizontal` or `vertical`. |
-| `role` | Input/output | Explicit semantic role when native HTML does not provide one. |
-| `spacing` | Input | Authored option or semantic HTML attribute observed by the directive. |
-| `tabindex` | Input/output | Keyboard focus order for composite descendants. |
-| `type` | Input | Component or native behavior variant. |
+This component has no directive-specific attributes beyond its semantic HTML.
 
-`Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
+Attributes remain authored HTML, native state, or AngularTS inputs. AngularCSS does not write element state.
 
 ### CSS custom properties
 
-- `--gap`
+This styling hook does not define component-specific CSS custom properties.
 
 ### DOM events
 
@@ -79,7 +70,7 @@ Native DOM events continue to work normally. AngularTS event directives such as
 
 ## Behavior
 
-The directive mirrors interaction state for styling and supplies only the keyboard behavior required by the component contract. Application commands and business state remain in AngularTS expressions.
+Toggle Group is a styling-only native `fieldset`: use radios sharing a `name` for single selection and checkboxes for multiple selection. The browser owns selection, arrow-key radio navigation, disabled state, focus, validation, and form submission; AngularTS `ng-model` owns application state. AngularCSS registers no toggle-group directive.
 
 AngularCSS does not replace AngularTS interpolation, bindings, structural
 directives, form controllers, validation, or application state.
@@ -94,7 +85,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-toggle-group]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

@@ -8,9 +8,12 @@ test("popover element example exercises the built functional artifact", async ({
   const trigger = page.locator(".popover-trigger");
   const content = page.locator(".popover-content");
   await expect(content).toBeHidden();
+  await expect(content).toHaveAttribute("popover", "");
+  const contentId = await content.getAttribute("id");
+  if (!contentId) throw new Error("Popover content requires an id");
+  await expect(trigger).toHaveAttribute("popovertarget", contentId);
   await trigger.click();
   await expect(content).toBeVisible();
-  await expect(trigger).toHaveAttribute("aria-expanded", "true");
   await expect(page.locator("#popover-width")).toBeFocused();
   await page.keyboard.press("Escape");
   await expect(content).toBeHidden();

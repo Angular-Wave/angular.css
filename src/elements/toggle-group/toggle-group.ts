@@ -1,1 +1,2 @@
-export { toggleGroupDirective } from "../../components/toggle-group/toggle-group";
+/** Styling-only HTML entry; native HTML, CSS, and AngularTS own behavior. */
+export {};

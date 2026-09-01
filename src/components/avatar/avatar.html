@@ -3,33 +3,62 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
-    <link rel="stylesheet" href="../../css/angular.css" />
-    <link rel="stylesheet" href="../example.css" />
-    <script src="../../js/angular-ts.umd.js"></script>
-    <script src="../../js/angular-css.umd.js"></script>
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
   </head>
-  <body ng-app="ui" ng-cloak>
-    <div class="row">
-      <span ng-avatar>
+  <body
+    ng-app="ui"
+    ng-cloak
+    data-example="avatar-badge avatar-basic avatar-demo avatar-group avatar-group-count"
+  >
+    <div class="avatar-demo visual-example">
+      <span class="avatar">
+        <img
+          class="avatar-grayscale avatar-image"
+          src="../../images/avatars/01.png"
+          alt="Profile portrait"
+        />
+        <span class="avatar-fallback">CN</span>
+      </span>
+      <span class="avatar">
+        <img
+          src="../../images/avatars/02.png"
+          alt="Profile portrait"
+          class="avatar-image"
+        />
+        <span class="avatar-fallback">ER</span>
+        <span data-variant="success" class="avatar-badge"></span>
+      </span>
+      <span class="avatar" aria-label="Jane Doe">
         <span class="avatar-fallback">JD</span>
-        <span class="avatar-badge"></span>
       </span>
-      <span ng-avatar data-size="sm">
-        <span class="avatar-fallback">AT</span>
-      </span>
-      <span ng-avatar data-size="lg">
-        <span class="avatar-fallback">UI</span>
-      </span>
-      <span class="avatar-group">
-        <span ng-avatar>
-          <span class="avatar-fallback">AB</span>
+      <span class="avatar-grayscale avatar-group">
+        <span class="avatar">
+          <img
+            src="../../images/avatars/01.png"
+            alt="Profile portrait"
+            class="avatar-image"
+          />
+          <span class="avatar-fallback">CN</span>
         </span>
-        <span ng-avatar>
-          <span class="avatar-fallback">CD</span>
+        <span class="avatar">
+          <img
+            src="../../images/avatars/03.png"
+            alt="Profile portrait"
+            class="avatar-image"
+          />
+          <span class="avatar-fallback">LR</span>
         </span>
-        <span ng-avatar>
-          <span class="avatar-fallback">EF</span>
+        <span class="avatar">
+          <img
+            src="../../images/avatars/04.png"
+            alt="Profile portrait"
+            class="avatar-image"
+          />
+          <span class="avatar-fallback">ER</span>
         </span>
         <span class="avatar-group-count">+3</span>
       </span>

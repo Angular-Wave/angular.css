@@ -21,9 +21,7 @@ Prefer native `details` and `summary` when possible.
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `collapsible` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete collapsible component reference]({{< relref
 "/docs/components/collapsible" >}}) for selectors, slots, attributes, generated

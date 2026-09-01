@@ -23,9 +23,7 @@ Use native `progress`. Compose its label and value with native `label` and
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `progress` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete progress component reference]({{< relref
 "/docs/components/progress" >}}) for selectors, slots, attributes, generated

@@ -21,43 +21,38 @@
         aria-labelledby="scroll-tags-heading"
       >
         <h2 id="scroll-tags-heading">Tags</h2>
-        <div
-          ng-scroll-area
-          class="scroll-area-tags"
+        <section
+          class="scroll-area scroll-area-tags"
           id="vertical-scroll-area"
+          tabindex="0"
           aria-label="Release tags"
         >
-          <div class="scroll-area-viewport">
-            <div class="scroll-tag-list">
-              <span>v1.2.0-beta.50</span>
-              <div class="separator"></div>
-              <span>v1.2.0-beta.49</span>
-              <div class="separator"></div>
-              <span>v1.2.0-beta.48</span>
-              <div class="separator"></div>
-              <span>v1.2.0-beta.47</span>
-              <div class="separator"></div>
-              <span>v1.2.0-beta.46</span>
-              <div class="separator"></div>
-              <span>v1.2.0-beta.45</span>
-              <div class="separator"></div>
-              <span>v1.2.0-beta.44</span>
-              <div class="separator"></div>
-              <span>v1.2.0-beta.43</span>
-              <div class="separator"></div>
-              <span>v1.2.0-beta.42</span>
-              <div class="separator"></div>
-              <span>v1.2.0-beta.41</span>
-              <div class="separator"></div>
-              <span>v1.2.0-beta.40</span>
-              <div class="separator"></div>
-              <span>v1.2.0-beta.39</span>
-            </div>
+          <div class="scroll-tag-list">
+            <span>v1.2.0-beta.50</span>
+            <div class="separator"></div>
+            <span>v1.2.0-beta.49</span>
+            <div class="separator"></div>
+            <span>v1.2.0-beta.48</span>
+            <div class="separator"></div>
+            <span>v1.2.0-beta.47</span>
+            <div class="separator"></div>
+            <span>v1.2.0-beta.46</span>
+            <div class="separator"></div>
+            <span>v1.2.0-beta.45</span>
+            <div class="separator"></div>
+            <span>v1.2.0-beta.44</span>
+            <div class="separator"></div>
+            <span>v1.2.0-beta.43</span>
+            <div class="separator"></div>
+            <span>v1.2.0-beta.42</span>
+            <div class="separator"></div>
+            <span>v1.2.0-beta.41</span>
+            <div class="separator"></div>
+            <span>v1.2.0-beta.40</span>
+            <div class="separator"></div>
+            <span>v1.2.0-beta.39</span>
           </div>
-          <div data-orientation="vertical" class="scroll-area-scrollbar">
-            <div class="scroll-area-thumb"></div>
-          </div>
-        </div>
+        </section>
       </section>
 
       <section
@@ -65,50 +60,45 @@
         aria-labelledby="scroll-art-heading"
       >
         <h2 id="scroll-art-heading">Artwork</h2>
-        <div
-          ng-scroll-area
-          class="scroll-area-artwork"
+        <section
+          class="scroll-area scroll-area-artwork"
           id="horizontal-scroll-area"
+          tabindex="0"
           aria-label="Featured artists"
         >
-          <div class="scroll-area-viewport">
-            <div class="scroll-artwork-row">
-              <figure>
-                <img
-                  src="../../images/avatars/01.png"
-                  alt="Portrait by Ornella Binni"
-                />
-                <figcaption>Photo by <strong>Ornella Binni</strong></figcaption>
-              </figure>
-              <figure>
-                <img
-                  src="../../images/avatars/02.png"
-                  alt="Portrait by Tom Byrom"
-                />
-                <figcaption>Photo by <strong>Tom Byrom</strong></figcaption>
-              </figure>
-              <figure>
-                <img
-                  src="../../images/avatars/03.png"
-                  alt="Portrait by Vladimir Malyavko"
-                />
-                <figcaption>
-                  Photo by <strong>Vladimir Malyavko</strong>
-                </figcaption>
-              </figure>
-              <figure>
-                <img
-                  src="../../images/avatars/04.png"
-                  alt="Portrait by Sarah Chen"
-                />
-                <figcaption>Photo by <strong>Sarah Chen</strong></figcaption>
-              </figure>
-            </div>
+          <div class="scroll-artwork-row">
+            <figure>
+              <img
+                src="../../images/avatars/01.png"
+                alt="Portrait by Ornella Binni"
+              />
+              <figcaption>Photo by <strong>Ornella Binni</strong></figcaption>
+            </figure>
+            <figure>
+              <img
+                src="../../images/avatars/02.png"
+                alt="Portrait by Tom Byrom"
+              />
+              <figcaption>Photo by <strong>Tom Byrom</strong></figcaption>
+            </figure>
+            <figure>
+              <img
+                src="../../images/avatars/03.png"
+                alt="Portrait by Vladimir Malyavko"
+              />
+              <figcaption>
+                Photo by <strong>Vladimir Malyavko</strong>
+              </figcaption>
+            </figure>
+            <figure>
+              <img
+                src="../../images/avatars/04.png"
+                alt="Portrait by Sarah Chen"
+              />
+              <figcaption>Photo by <strong>Sarah Chen</strong></figcaption>
+            </figure>
           </div>
-          <div data-orientation="horizontal" class="scroll-area-scrollbar">
-            <div class="scroll-area-thumb"></div>
-          </div>
-        </div>
+        </section>
       </section>
 
       <section
@@ -118,35 +108,31 @@
         <header>
           <h2 id="scroll-dynamic-heading">Dynamic content</h2>
           <button
-
             type="button"
             variant="outline"
             size="sm"
-            ng-click="showOverflow = !showOverflow" class="button">
+            ng-click="showOverflow = !showOverflow"
+            class="button"
+          >
             {{ showOverflow ? 'Remove content' : 'Add content' }}
           </button>
         </header>
-        <div
-          ng-scroll-area
-          class="scroll-area-dynamic"
+        <section
+          class="scroll-area scroll-area-dynamic"
           id="dynamic-scroll-area"
+          tabindex="0"
           aria-label="Dynamic release notes"
         >
-          <div class="scroll-area-viewport">
-            <div class="scroll-dynamic-content">
-              <p>Current release</p>
-              <div ng-if="showOverflow" class="scroll-dynamic-overflow">
-                <p>Compatibility notes</p>
-                <p>Migration details</p>
-                <p>API changes</p>
-                <p>Resolved issues</p>
-              </div>
+          <div class="scroll-dynamic-content">
+            <p>Current release</p>
+            <div ng-if="showOverflow" class="scroll-dynamic-overflow">
+              <p>Compatibility notes</p>
+              <p>Migration details</p>
+              <p>API changes</p>
+              <p>Resolved issues</p>
             </div>
           </div>
-          <div data-orientation="vertical" class="scroll-area-scrollbar">
-            <div class="scroll-area-thumb"></div>
-          </div>
-        </div>
+        </section>
       </section>
 
       <section
@@ -158,44 +144,40 @@
         <header>
           <h2 id="scroll-rtl-heading">العلامات</h2>
           <button
-
             type="button"
             variant="outline"
             size="sm"
-            ng-click="scrollDirection = scrollDirection === 'rtl' ? 'ltr' : 'rtl'" class="button">
+            ng-click="scrollDirection = scrollDirection === 'rtl' ? 'ltr' : 'rtl'"
+            class="button"
+          >
             Change direction
           </button>
         </header>
-        <div
-          ng-scroll-area
-          class="scroll-area-tags"
+        <section
+          class="scroll-area scroll-area-tags"
           id="rtl-scroll-area"
           dir="{{ scrollDirection }}"
+          tabindex="0"
           aria-label="علامات الإصدار"
         >
-          <div class="scroll-area-viewport">
-            <div class="scroll-tag-list">
-              <span>v1.2.0-beta.50</span>
-              <div class="separator"></div>
-              <span>v1.2.0-beta.49</span>
-              <div class="separator"></div>
-              <span>v1.2.0-beta.48</span>
-              <div class="separator"></div>
-              <span>v1.2.0-beta.47</span>
-              <div class="separator"></div>
-              <span>v1.2.0-beta.46</span>
-              <div class="separator"></div>
-              <span>v1.2.0-beta.45</span>
-              <div class="separator"></div>
-              <span>v1.2.0-beta.44</span>
-              <div class="separator"></div>
-              <span>v1.2.0-beta.43</span>
-            </div>
+          <div class="scroll-tag-list">
+            <span>v1.2.0-beta.50</span>
+            <div class="separator"></div>
+            <span>v1.2.0-beta.49</span>
+            <div class="separator"></div>
+            <span>v1.2.0-beta.48</span>
+            <div class="separator"></div>
+            <span>v1.2.0-beta.47</span>
+            <div class="separator"></div>
+            <span>v1.2.0-beta.46</span>
+            <div class="separator"></div>
+            <span>v1.2.0-beta.45</span>
+            <div class="separator"></div>
+            <span>v1.2.0-beta.44</span>
+            <div class="separator"></div>
+            <span>v1.2.0-beta.43</span>
           </div>
-          <div data-orientation="vertical" class="scroll-area-scrollbar">
-            <div class="scroll-area-thumb"></div>
-          </div>
-        </div>
+        </section>
       </section>
     </main>
   </body>

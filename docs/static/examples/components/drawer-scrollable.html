@@ -16,15 +16,14 @@
     data-example="drawer-scrollable-content"
   >
     <main class="drawer-scroll-demo visual-example">
-      <section id="scrollable-drawer" ng-drawer side="right">
-        <button variant="outline" class="drawer-trigger button">
+      <section id="scrollable-drawer" side="right" class="drawer">
+        <button variant="outline" class="drawer-trigger button" type="button" commandfor="scrollable-drawer-content" command="show-modal">
           Scrollable Content
         </button>
-        <div class="drawer-overlay"></div>
-        <dialog class="drawer-content">
+        <dialog class="drawer-content" id="scrollable-drawer-content" closedby="any" aria-labelledby="scrollable-drawer-title" aria-describedby="scrollable-drawer-description" data-side="right">
           <header class="drawer-header">
-            <h2 class="drawer-title">Move Goal</h2>
-            <p class="drawer-description">Set your daily activity goal.</p>
+            <h2 class="drawer-title" id="scrollable-drawer-title">Move Goal</h2>
+            <p class="drawer-description" id="scrollable-drawer-description">Set your daily activity goal.</p>
           </header>
           <div class="drawer-scroll-copy drawer-body">
             <p ng-repeat="item in paragraphs">
@@ -35,7 +34,7 @@
           </div>
           <footer class="drawer-footer">
             <button class="button">Submit</button>
-            <button variant="outline" class="drawer-close button">Cancel</button>
+            <button variant="outline" class="drawer-close button" commandfor="scrollable-drawer-content" command="close">Cancel</button>
           </footer>
         </dialog>
       </section>

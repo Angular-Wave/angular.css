@@ -22,9 +22,7 @@ Use native `kbd` elements with `class="kbd"`. Group shortcuts with
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `kbd` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete kbd component reference]({{< relref
 "/docs/components/kbd" >}}) for selectors, slots, attributes, generated

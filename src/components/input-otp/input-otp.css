@@ -1,88 +1,72 @@
-.input-otp,
-[ng-input-otp] {
-  display: flex;
-  align-items: center;
-}
+.input-otp {
+  --otp-cell-size: calc(var(--spacing) * 8);
 
-.input-otp[data-disabled="true"],
-[ng-input-otp][data-disabled="true"] {
-  opacity: 0.5;
-}
-
-.input-otp-group {
-  display: flex;
-  align-items: center;
-  border-radius: var(--radius);
-}
-
-.input-otp[data-invalid="true"] .input-otp-group {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--error) 20%, transparent);
-}
-
-.input-otp-slot {
-  position: relative;
-  display: inline-flex;
-  width: calc(var(--spacing) * 8);
-  height: calc(var(--spacing) * 8);
-  align-items: center;
-  justify-content: center;
+  width: calc(var(--otp-cell-size) * 6);
+  height: var(--otp-cell-size);
   border: 1px solid var(--input);
-  border-inline-end-width: 0;
-  background: transparent;
+  border-radius: var(--radius);
+  background-color: var(--background);
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent 0 calc(var(--otp-cell-size) - 1px),
+    var(--input) calc(var(--otp-cell-size) - 1px) var(--otp-cell-size)
+  );
   color: var(--foreground);
+  padding: 0 0 0 calc((var(--otp-cell-size) - 1ch) / 2);
+  font-family: var(--font-mono);
   font-size: var(--text-sm);
+  letter-spacing: calc(var(--otp-cell-size) - 1ch);
   line-height: 1;
+  outline: none;
   transition:
-    color 150ms ease,
     border-color 150ms ease,
     box-shadow 150ms ease;
 }
 
-.input-otp-slot:first-child {
-  border-start-start-radius: var(--radius);
-  border-end-start-radius: var(--radius);
+.input-otp[size="4"] {
+  width: calc(var(--otp-cell-size) * 4);
 }
 
-.input-otp-slot:last-child {
-  border-inline-end-width: 1px;
-  border-start-end-radius: var(--radius);
-  border-end-end-radius: var(--radius);
-}
-
-.input-otp-slot[data-active="true"],
-.input-otp-slot:focus-within {
-  z-index: 1;
+.input-otp:focus-visible {
   border-color: var(--ring);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
-.input-otp-slot[aria-invalid="true"] {
+.input-otp:user-invalid,
+.input-otp[aria-invalid="true"] {
   border-color: var(--error);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--error) 20%, transparent);
 }
 
-.input-otp[data-invalid="true"] .input-otp-slot,
-[ng-input-otp][data-invalid="true"] .input-otp-slot {
-  border-color: var(--error);
+.input-otp:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
-.input-otp-slot > :is(input, span) {
-  width: 100%;
-  height: 100%;
-  border: 0;
-  background: transparent;
-  color: inherit;
-  text-align: center;
-  font: inherit;
-  outline: none;
+.input-otp-grouped {
+  background-image:
+    linear-gradient(
+      to right,
+      transparent calc(50% - 1px),
+      var(--foreground) calc(50% - 1px) calc(50% + 1px),
+      transparent calc(50% + 1px)
+    ),
+    repeating-linear-gradient(
+      to right,
+      transparent 0 calc(var(--otp-cell-size) - 1px),
+      var(--input) calc(var(--otp-cell-size) - 1px) var(--otp-cell-size)
+    );
 }
 
-.input-otp-separator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.input-otp-large {
+  --otp-cell-size: calc(var(--spacing) * 11);
+
+  height: calc(var(--spacing) * 12);
+  font-size: var(--text-lg);
 }
 
-.input-otp-separator > svg {
-  width: calc(var(--spacing) * 4);
-  height: calc(var(--spacing) * 4);
+@media (width <= 480px) {
+  .input-otp-large {
+    --otp-cell-size: calc(var(--spacing) * 9);
+  }
 }

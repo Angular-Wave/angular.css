@@ -13,31 +13,27 @@
     ng-app="ui"
     ng-cloak
     class="input-otp-example-body"
-    ng-init="otp={a:'1',b:'2',c:'3',d:'4',e:'5',f:'6'}"
+    ng-init="otp='123456'"
     data-example="input-otp-demo"
   >
-    <fieldset
-      ng-input-otp
-      class="input-otp-demo visual-example input-otp"
-      aria-label="One-time password"
-    >
-      <div class="input-otp-group">
-        <span
-           class="input-otp-slot"><input id="otp-1" ng-model="otp.a" maxlength="1" /></span>
-        <span
-           class="input-otp-slot"><input ng-model="otp.b" maxlength="1" /></span>
-        <span
-           class="input-otp-slot"><input ng-model="otp.c" maxlength="1" /></span>
-        <span
-           class="input-otp-slot"><input ng-model="otp.d" maxlength="1" /></span>
-        <span
-           class="input-otp-slot"><input ng-model="otp.e" maxlength="1" /></span>
-        <span
-           class="input-otp-slot"><input ng-model="otp.f" maxlength="1" /></span>
-      </div>
-    </fieldset>
-    <output class="visually-hidden" aria-live="polite">
-      Code: {{ otp.a + otp.b + otp.c + otp.d + otp.e + otp.f }}
-    </output>
+    <div class="stack-sm">
+      <label for="one-time-code" class="label">One-time code</label>
+      <input
+        id="one-time-code"
+        class="input-otp visual-example"
+        name="one-time-code"
+        inputmode="numeric"
+        autocomplete="one-time-code"
+        pattern="[0-9]{6}"
+        minlength="6"
+        maxlength="6"
+        size="6"
+        ng-model="otp"
+        required
+      />
+      <output class="visually-hidden" aria-live="polite">
+        Code: {{ otp }}
+      </output>
+    </div>
   </body>
 </html>

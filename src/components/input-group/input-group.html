@@ -3,48 +3,29 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
-    <link rel="stylesheet" href="../../css/angular.css" />
-    <link rel="stylesheet" href="../example.css" />
-    <script src="../../js/angular-ts.umd.js"></script>
-    <script src="../../js/angular-css.umd.js"></script>
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
   </head>
   <body ng-app="ui" ng-cloak>
     <main class="stack">
       <div class="field">
-        <label for="input-group-search" class="field-label label">
-          Search
-        </label>
-        <div ng-input-group class="input-group">
+        <label for="search" class="field-label label">Search</label>
+        <div class="input-group">
           <input
-            id="input-group-search"
+            id="search"
             placeholder="Search documentation..."
             class="input-group-control input"
           />
-          <div data-align="inline-start" class="input-group-addon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path d="m21 21-4.34-4.34" />
-              <circle cx="11" cy="11" r="8" />
-            </svg>
-          </div>
-          <div data-align="inline-end" class="input-group-addon">
-            <kbd>Ctrl K</kbd>
-          </div>
-        </div>
-      </div>
-
-      <div class="field">
-        <label for="input-group-url" class="field-label label">URL</label>
-        <div ng-input-group class="input-group">
-          <div data-align="inline-start" class="input-group-addon">
-            <span class="input-group-text">https://</span>
-          </div>
-          <input id="input-group-url" class="input-group-control input" />
-          <div data-align="inline-end" class="input-group-addon">
-            <button variant="ghost" class="input-group-button button">
-              Copy
-            </button>
-          </div>
+          <label
+            for="search"
+            data-align="inline-start"
+            class="input-group-addon"
+          >
+            <span aria-hidden="true">Search</span>
+          </label>
         </div>
       </div>
     </main>

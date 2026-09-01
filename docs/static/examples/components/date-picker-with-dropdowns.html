@@ -18,20 +18,20 @@
     data-example="data-picker-with-dropdowns"
   >
     <main class="date-picker-dropdown-demo visual-example">
-      <fieldset ng-field class="date-picker-dropdown-field">
+      <fieldset class="date-picker-dropdown-field field">
         <label for="date-picker-with-dropdowns" class="field-label">Date</label>
-        <span ng-popover id="date-picker-dropdown-popover">
+        <span id="date-picker-dropdown-popover" class="popover">
           <button
             id="date-picker-with-dropdowns"
             type="button"
-
-
             variant="outline"
             class="date-picker-trigger date-picker-trigger-between popover-trigger button"
+            popovertarget="popover-date-picker-with-dropdowns-1-content"
           >
             <span
               >{{ picker.dropdownDate ? picker.format(picker.dropdownDate) :
-              'Pick a date' }}</span>
+              'Pick a date' }}</span
+            >
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -43,11 +43,12 @@
             </svg>
           </button>
           <aside
-
-            side="bottom"
-            align="start"
             class="calendar-popover-content date-picker-dropdown-content popover-content"
             aria-label="Choose a date with dropdowns"
+            id="popover-date-picker-with-dropdowns-1-content"
+            data-side="bottom"
+            data-align="start"
+            popover
           >
             <section
               ng-calendar
@@ -62,12 +63,11 @@
               <header class="calendar-header">
                 <button
                   type="button"
-
-
                   size="icon"
                   variant="ghost"
                   aria-label="Previous dropdown month"
-                 class="calendar-previous button">
+                  class="calendar-previous button"
+                >
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -81,12 +81,11 @@
                 <h3 class="calendar-title"></h3>
                 <button
                   type="button"
-
-
                   size="icon"
                   variant="ghost"
                   aria-label="Next dropdown month"
-                 class="calendar-next button">
+                  class="calendar-next button"
+                >
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -102,11 +101,12 @@
             </section>
             <footer class="date-picker-dropdown-footer">
               <button
-
                 type="button"
                 variant="outline"
                 size="sm"
-                ng-click="picker.finishDropdown()" class="button">
+                ng-click="picker.finishDropdown()"
+                class="button"
+              >
                 Done
               </button>
             </footer>

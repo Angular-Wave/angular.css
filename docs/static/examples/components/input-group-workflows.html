@@ -75,7 +75,7 @@
           <div class="field">
             <label for="ig-basic"
                class="field-label label">Input group</label>
-            <div ng-input-group class="input-group">
+            <div class="input-group">
               <input
 
 
@@ -87,7 +87,7 @@
           <div data-disabled="true" class="field">
             <label for="ig-disabled"
                class="field-label label">Disabled</label>
-            <div ng-input-group class="input-group">
+            <div class="input-group">
               <input
 
 
@@ -100,7 +100,7 @@
           <div data-invalid="true" class="field">
             <label for="ig-invalid"
                class="field-label label">Invalid</label>
-            <div ng-input-group class="input-group">
+            <div class="input-group">
               <input
 
 
@@ -119,7 +119,7 @@
         aria-labelledby="input-group-position-title"
       >
         <h2 id="input-group-position-title">Inline addons</h2>
-        <div ng-input-group class="input-group">
+        <div class="input-group">
           <input
 
 
@@ -134,7 +134,7 @@
             {{ query ? '12 results' : 'No query' }}
           </div>
         </div>
-        <div ng-input-group class="input-group">
+        <div class="input-group">
           <input
 
 
@@ -146,16 +146,16 @@
             <svg aria-hidden="true"><use href="#ig-eye-off"></use></svg>
           </div>
         </div>
-        <div ng-input-group class="input-group">
+        <div class="input-group">
           <input
 
 
             id="ig-command-search"
             placeholder="Search commands..."
            class="input-group-control input" />
-          <div class="input-group-addon">
+          <label for="ig-command-search" class="input-group-addon">
             <svg aria-hidden="true"><use href="#ig-search"></use></svg>
-          </div>
+          </label>
           <div data-align="inline-end" class="input-group-addon">
             <kbd class="kbd">⌘K</kbd>
           </div>
@@ -171,7 +171,7 @@
         aria-labelledby="input-group-icon-title"
       >
         <h2 id="input-group-icon-title">Icons</h2>
-        <div ng-input-group class="input-group">
+        <div class="input-group">
           <input
 
 
@@ -183,7 +183,7 @@
             <svg aria-hidden="true"><use href="#ig-mail"></use></svg>
           </div>
         </div>
-        <div ng-input-group class="input-group">
+        <div class="input-group">
           <input
 
 
@@ -197,7 +197,7 @@
             <svg aria-hidden="true"><use href="#ig-check"></use></svg>
           </div>
         </div>
-        <div ng-input-group class="input-group">
+        <div class="input-group">
           <input
 
 
@@ -217,7 +217,7 @@
         aria-labelledby="input-group-text-title"
       >
         <h2 id="input-group-text-title">Text addons</h2>
-        <div ng-input-group class="input-group">
+        <div class="input-group">
           <div class="input-group-addon">
             <span class="input-group-text">$</span>
           </div>
@@ -232,7 +232,7 @@
             <span class="input-group-text">USD</span>
           </div>
         </div>
-        <div ng-input-group class="input-group">
+        <div class="input-group">
           <div class="input-group-addon">
             <span class="input-group-text">https://</span>
           </div>
@@ -246,7 +246,7 @@
             <span class="input-group-text">.com</span>
           </div>
         </div>
-        <div ng-input-group class="input-group">
+        <div class="input-group">
           <input
 
 
@@ -269,7 +269,7 @@
           <div class="field">
             <label for="ig-addon-start"
                class="field-label label">Inline start and end</label>
-            <div ng-input-group class="input-group">
+            <div class="input-group">
               <input
 
 
@@ -286,7 +286,7 @@
           <div class="field">
             <label for="ig-addon-header"
                class="field-label label">Block start</label>
-            <div ng-input-group class="input-group">
+            <div class="input-group">
               <input
 
 
@@ -303,7 +303,7 @@
           <div class="field">
             <label for="ig-addon-footer"
                class="field-label label">Block end</label>
-            <div ng-input-group class="input-group">
+            <div class="input-group">
               <input
 
 
@@ -320,7 +320,7 @@
           <div class="field">
             <label for="ig-addon-optional"
                class="field-label label">Label and optional text</label>
-            <div ng-input-group class="input-group">
+            <div class="input-group">
               <div class="input-group-addon">
                 <label for="ig-addon-optional" class="label">Label</label>
               </div>
@@ -343,7 +343,7 @@
         aria-labelledby="input-group-kbd-title"
       >
         <h2 id="input-group-kbd-title">Keyboard hints</h2>
-        <div ng-input-group class="input-group">
+        <div class="input-group">
           <input
 
 
@@ -357,7 +357,7 @@
             <kbd class="kbd">Tab</kbd>
           </div>
         </div>
-        <div ng-input-group class="input-group">
+        <div class="input-group">
           <input
 
 
@@ -370,7 +370,7 @@
           </div>
         </div>
         <p class="input-group-success">This username is available.</p>
-        <div ng-input-group data-disabled="true" class="input-group">
+        <div data-disabled="true" class="input-group">
           <input
 
 
@@ -390,7 +390,7 @@
         aria-labelledby="input-group-label-title"
       >
         <h2 id="input-group-label-title">Labels in addons</h2>
-        <div ng-input-group class="input-group">
+        <div class="input-group">
           <input
 
 
@@ -401,7 +401,7 @@
             <label for="ig-email-name" class="label">@</label>
           </div>
         </div>
-        <div ng-input-group class="input-group">
+        <div class="input-group">
           <input
 
 
@@ -437,7 +437,7 @@
         <h2 id="input-group-button-group-title">Button group</h2>
         <div class="button-group">
           <label for="ig-url" class="button-group-text">https://</label>
-          <div ng-input-group class="input-group">
+          <div class="input-group">
             <input
 
 
@@ -471,7 +471,7 @@
               <div class="field">
                 <label for="ig-card-email"
                    class="field-label label">Email address</label>
-                <div ng-input-group class="input-group">
+                <div class="input-group">
                   <input
 
 
@@ -487,7 +487,7 @@
               <div class="field">
                 <label for="ig-card-site"
                    class="field-label label">Website URL</label>
-                <div ng-input-group class="input-group">
+                <div class="input-group">
                   <div class="input-group-addon">
                     <span class="input-group-text">https://</span>
                   </div>

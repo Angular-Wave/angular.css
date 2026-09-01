@@ -18,19 +18,28 @@
       <section class="popover-workflow-section">
         <header class="workflow-heading"><h2>Basic</h2></header>
         <div class="popover-stage popover-basic-stage">
-          <span ng-popover aria-label="Basic popover">
+          <span aria-label="Basic popover" class="popover">
             <button
-
               type="button"
               variant="outline"
-
-             class="popover-trigger button">
+              class="popover-trigger button"
+              popovertarget="popover-popover-workflows-1-content"
+            >
               Open Popover
             </button>
-            <aside align="start" aria-label="Dimensions" class="popover-content">
+            <aside
+              aria-label="Dimensions"
+              class="popover-content"
+              id="popover-popover-workflows-1-content"
+              popover
+              data-side="bottom"
+              data-align="start"
+            >
               <header class="popover-header">
                 <h3 class="popover-title">Dimensions</h3>
-                <p class="popover-description">Set the dimensions for the layer.</p>
+                <p class="popover-description">
+                  Set the dimensions for the layer.
+                </p>
               </header>
             </aside>
           </span>
@@ -40,31 +49,35 @@
       <section class="popover-workflow-section">
         <header class="workflow-heading"><h2>Form</h2></header>
         <div class="popover-stage popover-form-stage">
-          <span ng-popover aria-label="Form popover">
+          <span aria-label="Form popover" class="popover">
             <button
-
               type="button"
               variant="outline"
-
-             class="popover-trigger button">
+              class="popover-trigger button"
+              popovertarget="popover-popover-workflows-2-content"
+            >
               Edit dimensions
             </button>
             <aside
-
               class="popover-form-content popover-content"
-              align="start"
               aria-label="Edit dimensions"
+              id="popover-popover-workflows-2-content"
+              data-side="bottom"
+              data-align="start"
+              popover
             >
               <header class="popover-header">
                 <h3 class="popover-title">Dimensions</h3>
-                <p class="popover-description">Set the dimensions for the layer.</p>
+                <p class="popover-description">
+                  Set the dimensions for the layer.
+                </p>
               </header>
               <div class="popover-form-fields">
-                <fieldset ng-field orientation="horizontal">
+                <fieldset orientation="horizontal" class="field">
                   <span class="field-label">Width</span>
                   <input value="100%" aria-label="Width" class="input" />
                 </fieldset>
-                <fieldset ng-field orientation="horizontal">
+                <fieldset orientation="horizontal" class="field">
                   <span class="field-label">Height</span>
                   <input value="25px" aria-label="Height" class="input" />
                 </fieldset>
@@ -77,56 +90,62 @@
       <section class="popover-workflow-section popover-alignment-section">
         <header class="workflow-heading"><h2>Alignment</h2></header>
         <div class="popover-alignment-row">
-          <span ng-popover aria-label="Start aligned popover">
+          <span aria-label="Start aligned popover" class="popover">
             <button
-
               type="button"
               size="sm"
               variant="outline"
-
-             class="popover-trigger button">
+              class="popover-trigger button"
+              popovertarget="popover-popover-workflows-3-content"
+            >
               Start
             </button>
             <aside
-
               class="popover-compact-content popover-content"
-              align="start"
+              id="popover-popover-workflows-3-content"
+              data-side="bottom"
+              data-align="start"
+              popover
             >
               Aligned to start
             </aside>
           </span>
-          <span ng-popover aria-label="Center aligned popover">
+          <span aria-label="Center aligned popover" class="popover">
             <button
-
               type="button"
               size="sm"
               variant="outline"
-
-             class="popover-trigger button">
+              class="popover-trigger button"
+              popovertarget="popover-popover-workflows-4-content"
+            >
               Center
             </button>
             <aside
-
               class="popover-compact-content popover-content"
-              align="center"
+              id="popover-popover-workflows-4-content"
+              data-side="bottom"
+              data-align="center"
+              popover
             >
               Aligned to center
             </aside>
           </span>
-          <span ng-popover aria-label="End aligned popover">
+          <span aria-label="End aligned popover" class="popover">
             <button
-
               type="button"
               size="sm"
               variant="outline"
-
-             class="popover-trigger button">
+              class="popover-trigger button"
+              popovertarget="popover-popover-workflows-5-content"
+            >
               End
             </button>
             <aside
-
               class="popover-compact-content popover-content"
-              align="end"
+              id="popover-popover-workflows-5-content"
+              data-side="bottom"
+              data-align="end"
+              popover
             >
               Aligned to end
             </aside>
@@ -137,48 +156,62 @@
       <section class="popover-workflow-section popover-state-section">
         <header class="workflow-heading"><h2>State</h2></header>
         <div class="popover-state-row">
-          <span ng-popover aria-label="Disabled popover">
+          <span aria-label="Disabled popover" class="popover">
             <button
-
               type="button"
               variant="outline"
-
               disabled
-             class="popover-trigger button">
+              class="popover-trigger button"
+              popovertarget="popover-popover-workflows-6-content"
+            >
               Disabled
             </button>
-            <aside class="popover-content">Unavailable</aside>
+            <aside
+              class="popover-content"
+              id="popover-popover-workflows-6-content"
+              popover
+              data-side="bottom"
+              data-align="center"
+            >
+              Unavailable
+            </aside>
           </span>
-          <span ng-popover aria-label="First sibling popover">
+          <span aria-label="First sibling popover" class="popover">
             <button
-
               type="button"
               variant="outline"
-
-             class="popover-trigger button">
+              class="popover-trigger button"
+              popovertarget="popover-popover-workflows-7-content"
+            >
               First
             </button>
             <aside
-
               class="popover-compact-content popover-content"
               aria-label="First panel"
+              id="popover-popover-workflows-7-content"
+              data-side="bottom"
+              data-align="center"
+              popover
             >
               First panel
             </aside>
           </span>
-          <span ng-popover aria-label="Second sibling popover">
+          <span aria-label="Second sibling popover" class="popover">
             <button
-
               type="button"
               variant="outline"
-
-             class="popover-trigger button">
+              class="popover-trigger button"
+              popovertarget="popover-popover-workflows-8-content"
+            >
               Second
             </button>
             <aside
-
               class="popover-compact-content popover-content"
               aria-label="Second panel"
+              id="popover-popover-workflows-8-content"
+              data-side="bottom"
+              data-align="center"
+              popover
             >
               Second panel
             </aside>

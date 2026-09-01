@@ -42,14 +42,15 @@ test("developer index links every canonical component to functional HTML", async
   await page.getByRole("link", { name: "accordion", exact: true }).click();
   await expect(page).toHaveURL(/\/examples\/components\/accordion\.html$/);
 
-  const trigger = page.getByRole("button", {
-    name: "What are your shipping options?",
+  const trigger = page.locator("summary", {
+    hasText: "What are your shipping options?",
   });
-  await expect(trigger).toHaveAttribute("aria-expanded", "true");
+  const item = trigger.locator("..");
+  await expect(item).toHaveAttribute("open", "");
   await trigger.click();
-  await expect(trigger).toHaveAttribute("aria-expanded", "false");
+  await expect(item).not.toHaveAttribute("open", "");
   await trigger.click();
-  await expect(trigger).toHaveAttribute("aria-expanded", "true");
+  await expect(item).toHaveAttribute("open", "");
 });
 
 test("published calendar renders complete months and updates AngularTS state", async ({
@@ -313,12 +314,10 @@ test("published collapsible pages cover every reference workflow with functional
   page,
 }) => {
   await page.goto("/docs/static/examples/components/collapsible.html");
-  const trigger = page.getByRole("button", { name: "Toggle details" });
+  const root = page.locator("details.collapsible");
+  const trigger = root.locator(":scope > summary");
   await trigger.click();
-  await expect(page.locator("[ng-collapsible]")).toHaveAttribute(
-    "data-state",
-    "open",
-  );
+  await expect(root).toHaveAttribute("open", "");
   await expect(
     page.getByText("Shipping address", { exact: true }),
   ).toBeVisible();
@@ -329,9 +328,7 @@ test("published collapsible pages cover every reference workflow with functional
   await page.locator(".collapsible-product summary").click();
   await expect(page.getByText("Learn More", { exact: true })).toBeVisible();
   const settings = page.locator(".collapsible-settings");
-  await page
-    .getByRole("button", { name: "Toggle additional radius settings" })
-    .click();
+  await settings.locator("details > summary").click();
   await expect(settings.locator("input:visible")).toHaveCount(4);
 
   await page.goto(
@@ -352,7 +349,7 @@ test("published date-picker workflows retain AngularTS model ownership", async (
   const basicTrigger = page.locator("#date-picker-basic");
   await basicTrigger.click();
   const basicCalendar = page
-    .getByRole("dialog", { name: "Choose a basic date" })
+    .getByRole("complementary", { name: "Choose a basic date" })
     .locator("[ng-calendar]");
   await basicCalendar.locator(`[data-value="2026-09-12"]`).click();
   await expect(basicTrigger).toContainText("September 12, 2026");
@@ -361,7 +358,7 @@ test("published date-picker workflows retain AngularTS model ownership", async (
   const rangeTrigger = page.locator("#date-picker-range");
   await rangeTrigger.click();
   const rangeCalendar = page
-    .getByRole("dialog", { name: "Choose a date range" })
+    .getByRole("complementary", { name: "Choose a date range" })
     .locator("[ng-calendar]");
   await rangeCalendar.locator(`[data-value="2026-09-10"]`).first().click();
   await rangeCalendar.locator(`[data-value="2026-09-12"]`).first().click();
@@ -588,19 +585,23 @@ test("form examples preserve AngularTS ng-model ownership", async ({
   await expect(compact).toBeChecked();
 
   await page.goto("/docs/static/examples/components/input-otp.html");
-  const otpInputs = page.locator(".input-otp-slot input");
-  await expect(otpInputs).toHaveCount(6);
-  await otpInputs.nth(0).fill("9");
+  const otpInput = page.getByLabel("One-time code");
+  await expect(otpInput).toHaveAttribute("autocomplete", "one-time-code");
+  await otpInput.fill("923456");
   await expect(page.getByRole("status")).toContainText("Code: 923456");
 
   await page.goto("/docs/static/examples/components/field.html");
   const email = page.locator("#demo-profile-email");
-  await expect(email).toHaveAttribute("aria-describedby", /field-message-/);
-  await email.fill("jane@example.com");
-  await expect(page.locator("[ng-field]").nth(1)).toHaveAttribute(
-    "data-invalid",
-    "false",
+  await expect(email).toHaveAttribute(
+    "aria-describedby",
+    "demo-profile-email-error",
   );
+  await email.fill("jane@example.com");
+  expect(
+    await email.evaluate((control: HTMLInputElement) =>
+      control.checkValidity(),
+    ),
+  ).toBe(true);
   await expect(page.locator(".output").first()).toContainText(
     "jane@example.com",
   );

@@ -10,7 +10,7 @@ Use `fieldset.radio-group` with a native `legend`, then use
 
 ```html
 <fieldset class="radio-group">
-  <fieldset ng-field orientation="horizontal">
+  <div class="field" orientation="horizontal">
     <input
 
       id="default"
@@ -18,7 +18,7 @@ Use `fieldset.radio-group` with a native `legend`, then use
       type="radio"
       value="default"  class="radio-group-item"/>
     <label for="default" class="label">Default</label>
-  </fieldset>
+  </div>
 </fieldset>
 ```
 

@@ -18,7 +18,7 @@ test("element sheet page runs the packaged canonical artifact", async ({
   );
   expect(sourceRequests).toEqual([]);
 
-  const root = page.locator("[ng-sheet]");
+  const root = page.locator(".sheet");
   const trigger = root.locator(".sheet-trigger");
   const content = root.locator(".sheet-content");
   await expect(content).toBeHidden();

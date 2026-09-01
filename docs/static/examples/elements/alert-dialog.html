@@ -16,22 +16,29 @@
   >
     <section
       id="confirmation-dialog"
-      ng-alert-dialog
       class="alert-dialog-demo visual-example alert-dialog"
     >
       <button
 
         type="button"
+        commandfor="confirmation-dialog-content"
+        command="show-modal"
         variant="outline"
 
        class="alert-dialog-trigger button">
         Show Dialog
       </button>
-      <div class="alert-dialog-overlay"></div>
-      <dialog data-size="default" class="alert-dialog-content">
+      <dialog
+        id="confirmation-dialog-content"
+        closedby="closerequest"
+        aria-labelledby="confirmation-dialog-title"
+        aria-describedby="confirmation-dialog-description"
+        data-size="default"
+        class="alert-dialog-content"
+      >
         <header class="alert-dialog-header">
-          <h2 class="alert-dialog-title">Are you absolutely sure?</h2>
-          <p class="alert-dialog-description">
+          <h2 id="confirmation-dialog-title" class="alert-dialog-title">Are you absolutely sure?</h2>
+          <p id="confirmation-dialog-description" class="alert-dialog-description">
             This action cannot be undone. This will permanently delete your
             account from our servers.
           </p>
@@ -40,12 +47,19 @@
           <button
 
             type="button"
+            commandfor="confirmation-dialog-content"
+            command="close"
             variant="outline"
 
            class="alert-dialog-cancel button">
             Cancel
           </button>
-          <button type="button" class="alert-dialog-action button">
+          <button
+            type="button"
+            commandfor="confirmation-dialog-content"
+            command="close"
+            class="alert-dialog-action button"
+          >
             Continue
           </button>
         </footer>

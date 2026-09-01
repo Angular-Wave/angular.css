@@ -6,32 +6,28 @@ description:
   Build an interactive accordion and connect ordinary AngularTS state inside it.
 ---
 
-This page builds an accordion with native headings and buttons. AngularCSS owns
-the disclosure interaction; AngularTS owns the application value inside the
-panel.
+This page builds an accordion with native `details` and `summary`. The browser
+owns disclosure; AngularTS owns the application value inside the panel.
 
 ## Add the HTML
 
 ```html
 <section ng-app="app">
-  <div ng-accordion>
-    <article>
-      <h2>
-        <button type="button">Profile</button>
-      </h2>
+  <div class="accordion">
+    <details name="profile-sections" open>
+      <summary>Profile</summary>
       <div>
         <label for="display-name">Display name</label>
         <input id="display-name" ng-model="profile.name" class="input" />
         <output>Preview: {{ profile.name || "Unnamed" }}</output>
       </div>
-    </article>
+    </details>
   </div>
 </section>
 ```
 
-The direct accordion children are items. Each item contains a heading button
-followed by its panel. The directive creates trigger-panel relationships and
-synchronizes expanded, hidden, open, and focus state.
+Each direct child is a native disclosure item. The browser creates the trigger
+relationship and owns open state, focus, and keyboard activation.
 
 ## Create the application module
 
@@ -52,16 +48,18 @@ AngularCSS does not parse or store that value.
 1. Press Tab until the accordion trigger receives focus.
 2. Press Enter or Space to open and close the panel.
 3. Enter a display name and confirm the preview updates.
-4. Inspect the trigger's `aria-expanded` and the panel's `data-open` state.
+4. Inspect the `details` element's native `open` state.
 
 ## Add multiple panels
 
-Add another sibling item inside `[ng-accordion]`. By default, opening it closes
-the current item. Add `multiple` to the root when several panels may remain
-open:
+Add another sibling `details` with the same `name` to make the group exclusive.
+Omit `name` when several panels may remain open:
 
 ```html
-<div ng-accordion multiple>...</div>
+<div class="accordion">
+  <details>...</details>
+  <details>...</details>
+</div>
 ```
 
 ## Next step

@@ -17,15 +17,14 @@
   >
     <main class="drawer-dialog-demo visual-example">
       <div class="drawer-dialog-desktop">
-        <section id="responsive-profile-dialog" ng-dialog>
-          <button variant="outline" class="dialog-trigger button">
+        <section id="responsive-profile-dialog" class="dialog">
+          <button variant="outline" class="dialog-trigger button" type="button" commandfor="responsive-profile-dialog-content" command="show-modal">
             Edit Profile
           </button>
-          <div class="dialog-overlay"></div>
-          <dialog class="drawer-profile-dialog dialog-content">
+          <dialog class="drawer-profile-dialog dialog-content" id="responsive-profile-dialog-content" closedby="any" aria-labelledby="responsive-profile-dialog-title" aria-describedby="responsive-profile-dialog-description">
             <header class="dialog-header">
-              <h2 class="dialog-title">Edit profile</h2>
-              <p class="dialog-description">
+              <h2 class="dialog-title" id="responsive-profile-dialog-title">Edit profile</h2>
+              <p class="dialog-description" id="responsive-profile-dialog-description">
                 Make changes to your profile here. Click save when you're done.
               </p>
             </header>
@@ -45,7 +44,7 @@
 
                   ng-model="profile.username" class="input" />
               </div>
-              <button type="submit" data-dialog-close class="button">
+              <button type="button" class="button" commandfor="responsive-profile-dialog-content" command="close">
                 Save changes
               </button>
             </form>
@@ -54,16 +53,15 @@
       </div>
 
       <div class="drawer-dialog-mobile">
-        <section id="responsive-profile-drawer" ng-drawer>
-          <button variant="outline" class="drawer-trigger button">
+        <section id="responsive-profile-drawer" class="drawer">
+          <button variant="outline" class="drawer-trigger button" type="button" commandfor="responsive-profile-drawer-content" command="show-modal">
             Edit Profile
           </button>
-          <div class="drawer-overlay"></div>
-          <dialog class="drawer-content">
+          <dialog class="drawer-content" id="responsive-profile-drawer-content" closedby="any" aria-labelledby="responsive-profile-drawer-title" aria-describedby="responsive-profile-drawer-description" data-side="bottom">
             <div class="drawer-handle"></div>
             <header class="drawer-header">
-              <h2 class="drawer-title">Edit profile</h2>
-              <p class="drawer-description">
+              <h2 class="drawer-title" id="responsive-profile-drawer-title">Edit profile</h2>
+              <p class="drawer-description" id="responsive-profile-drawer-description">
                 Make changes to your profile here. Click save when you're done.
               </p>
             </header>
@@ -83,10 +81,15 @@
 
                   ng-model="profile.username" class="input" />
               </div>
-              <button type="submit" class="button">Save changes</button>
+              <button
+                type="button"
+                commandfor="responsive-profile-drawer-content"
+                command="close"
+                class="button"
+              >Save changes</button>
             </form>
             <footer class="drawer-footer">
-              <button variant="outline" class="drawer-close button">
+              <button variant="outline" class="drawer-close button" commandfor="responsive-profile-drawer-content" command="close">
                 Cancel
               </button>
             </footer>

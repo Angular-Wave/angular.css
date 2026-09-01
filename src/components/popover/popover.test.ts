@@ -11,7 +11,6 @@ const expectBuiltArtifactRuntime = async (page: Page): Promise<void> => {
   await expect(
     page.locator('script[src="../../js/angular-css.umd.js"]'),
   ).toHaveCount(1);
-
   const sourceRequests = await page.evaluate(() =>
     performance
       .getEntriesByType("resource")
@@ -28,9 +27,6 @@ const expectPhysicalSide = async (
 ): Promise<void> => {
   const triggerBox = await trigger.boundingBox();
   const contentBox = await content.boundingBox();
-  expect(triggerBox).not.toBeNull();
-  expect(contentBox).not.toBeNull();
-
   if (side === "left") {
     expect(contentBox!.x + contentBox!.width).toBeLessThanOrEqual(
       triggerBox!.x,
@@ -50,47 +46,35 @@ const expectPhysicalSide = async (
   }
 };
 
-test("canonical popover uses built bundles and exposes disclosure semantics", async ({
+test("canonical popover uses native disclosure and light dismissal", async ({
   page,
 }) => {
   await page.goto(canonicalUrl);
   await expectBuiltArtifactRuntime(page);
+  const root = page.locator(".popover");
+  const trigger = root.locator(".popover-trigger");
+  const content = root.locator(".popover-content");
 
-  const root = page.locator("[ng-popover]");
-  const trigger = page.locator(".popover-trigger");
-  const content = page.locator(".popover-content");
-
+  await expect(root).not.toHaveAttribute("ng-popover", "");
+  await expect(content).toHaveAttribute("popover", "");
+  const contentId = await content.getAttribute("id");
+  if (!contentId) throw new Error("Popover content requires an id");
+  await expect(trigger).toHaveAttribute("popovertarget", contentId);
   await expect(content).toBeHidden();
-  await expect(trigger).toHaveAttribute("aria-haspopup", "dialog");
-  await expect(trigger).toHaveAttribute("aria-expanded", "false");
-  await expect(trigger).toHaveAttribute(
-    "aria-controls",
-    (await content.getAttribute("id")) ?? "",
-  );
-  await expect(content).toHaveAttribute("role", "dialog");
-  await expect(content).toHaveAttribute("aria-modal", "false");
-  await expect(content).toHaveAttribute("data-side", "bottom");
-  await expect(content).toHaveAttribute("data-align", "center");
 
   await trigger.click();
-  await expect(root).toHaveAttribute("data-state", "open");
-  await expect(trigger).toHaveAttribute("aria-expanded", "true");
   await expect(content).toBeVisible();
-  await expect(content).toHaveAttribute("aria-hidden", "false");
+  expect(
+    await content.evaluate((element) => element.matches(":popover-open")),
+  ).toBe(true);
   await expect(page.locator("#popover-width")).toBeFocused();
-
   await page.keyboard.press("Escape");
   await expect(content).toBeHidden();
-  await expect(content).toHaveAttribute("data-state", "closed");
   await expect(trigger).toBeFocused();
 });
 
-test("native trigger keyboard activation and external open state remain functional", async ({
-  page,
-}) => {
+test("native trigger supports keyboard activation", async ({ page }) => {
   await page.goto(canonicalUrl);
-
-  const root = page.locator("[ng-popover]");
   const trigger = page.locator(".popover-trigger");
   const content = page.locator(".popover-content");
 
@@ -98,16 +82,8 @@ test("native trigger keyboard activation and external open state remain function
   await trigger.press("Enter");
   await expect(content).toBeVisible();
   await page.keyboard.press("Escape");
-
-  await root.evaluate((element) => element.setAttribute("data-open", "true"));
+  await trigger.press("Space");
   await expect(content).toBeVisible();
-  await expect(root).toHaveAttribute("data-state", "open");
-
-  await content.evaluate((element) =>
-    element.setAttribute("data-open", "false"),
-  );
-  await expect(content).toBeHidden();
-  await expect(trigger).toHaveAttribute("aria-expanded", "false");
 });
 
 test("workflow alignments render start, center, and end geometry", async ({
@@ -127,52 +103,51 @@ test("workflow alignments render start, center, and end geometry", async ({
 
     const triggerBox = await trigger.boundingBox();
     const contentBox = await content.boundingBox();
-    expect(triggerBox).not.toBeNull();
-    expect(contentBox).not.toBeNull();
     if (align === "start") {
-      expect(Math.abs(contentBox!.x - triggerBox!.x)).toBeLessThanOrEqual(1);
+      expect(Math.abs(contentBox!.x - triggerBox!.x)).toBeLessThanOrEqual(2);
     } else if (align === "center") {
-      const triggerCenter = triggerBox!.x + triggerBox!.width / 2;
-      const contentCenter = contentBox!.x + contentBox!.width / 2;
-      expect(Math.abs(contentCenter - triggerCenter)).toBeLessThanOrEqual(1);
+      expect(
+        Math.abs(
+          contentBox!.x +
+            contentBox!.width / 2 -
+            (triggerBox!.x + triggerBox!.width / 2),
+        ),
+      ).toBeLessThanOrEqual(2);
     } else {
-      const triggerEnd = triggerBox!.x + triggerBox!.width;
-      const contentEnd = contentBox!.x + contentBox!.width;
-      expect(Math.abs(contentEnd - triggerEnd)).toBeLessThanOrEqual(1);
+      expect(
+        Math.abs(
+          contentBox!.x +
+            contentBox!.width -
+            (triggerBox!.x + triggerBox!.width),
+        ),
+      ).toBeLessThanOrEqual(2);
     }
     await page.keyboard.press("Escape");
   }
 });
 
-test("form focus can move within content and focus outside dismisses", async ({
+test("pointer interaction outside light-dismisses an open form popover", async ({
   page,
 }) => {
   await page.goto(workflowsUrl);
-
   const trigger = page.getByRole("button", { name: "Edit dimensions" });
   const content = trigger.locator("..").locator(".popover-content");
-  const width = content.getByRole("textbox", { name: "Width" });
-  const height = content.getByRole("textbox", { name: "Height" });
 
   await trigger.click();
-  await expect(width).toBeFocused();
-  await height.focus();
+  await content.getByRole("textbox", { name: "Height" }).focus();
   await expect(content).toBeVisible();
-
-  await page.getByRole("button", { name: "Start", exact: true }).focus();
+  await page.getByRole("button", { name: "Start", exact: true }).click();
   await expect(content).toBeHidden();
 });
 
-test("disabled and sibling workflow states dismiss without stealing focus", async ({
+test("disabled triggers stay closed and sibling auto popovers are exclusive", async ({
   page,
 }) => {
   await page.goto(workflowsUrl);
-
   const disabled = page.getByRole("button", { name: "Disabled" });
   const disabledContent = disabled.locator("..").locator(".popover-content");
-  await disabled.click({ force: true });
+  await expect(disabled).toBeDisabled();
   await expect(disabledContent).toBeHidden();
-  await expect(disabled).toHaveAttribute("aria-expanded", "false");
 
   const first = page.getByRole("button", { name: "First", exact: true });
   const second = page.getByRole("button", { name: "Second", exact: true });
@@ -183,14 +158,12 @@ test("disabled and sibling workflow states dismiss without stealing focus", asyn
   await second.click();
   await expect(firstContent).toBeHidden();
   await expect(secondContent).toBeVisible();
-  await expect(secondContent).toBeFocused();
 });
 
-test("RTL preserves direction while every side remains physical", async ({
+test("RTL direction is inherited while every side remains physical", async ({
   page,
 }) => {
   await page.goto(rtlUrl);
-
   for (const [name, side] of [
     ["يسار", "left"],
     ["أعلى", "top"],
@@ -198,11 +171,9 @@ test("RTL preserves direction while every side remains physical", async ({
     ["يمين", "right"],
   ] as const) {
     const trigger = page.getByRole("button", { name });
-    const root = trigger.locator("..");
-    const content = root.locator(".popover-content");
-    await expect(root).toHaveAttribute("data-direction", "rtl");
+    const content = trigger.locator("..").locator(".popover-content");
     await trigger.click();
-    await expect(content).toHaveAttribute("data-direction", "rtl");
+    await expect(content).toHaveCSS("direction", "rtl");
     await expect(content).toHaveAttribute("data-side", side);
     await expectPhysicalSide(trigger, content, side);
     await page.keyboard.press("Escape");

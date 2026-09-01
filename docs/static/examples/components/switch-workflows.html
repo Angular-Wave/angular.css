@@ -18,62 +18,63 @@
     <main class="switch-workflows">
       <section class="switch-workflow-section" aria-label="Switch sizes">
         <div class="switch-size-list field-group">
-          <fieldset ng-field orientation="horizontal">
+          <fieldset orientation="horizontal" class="field">
             <input
-
               id="switch-size-sm"
               type="checkbox"
               size="sm"
-              ng-model="small" class="switch" />
+              ng-model="small"
+              class="switch"
+            />
             <label for="switch-size-sm" class="label">Small</label>
           </fieldset>
-          <fieldset ng-field orientation="horizontal">
+          <fieldset orientation="horizontal" class="field">
             <input
-
               id="switch-size-default"
               type="checkbox"
               size="default"
-              ng-model="standard" class="switch" />
+              ng-model="standard"
+              class="switch"
+            />
             <label for="switch-size-default" class="label">Default</label>
           </fieldset>
         </div>
       </section>
 
       <section class="switch-workflow-section" aria-label="Disabled switch">
-        <fieldset
-          ng-field
-          orientation="horizontal"
-
-          data-disabled="true"
-        >
+        <fieldset orientation="horizontal" data-disabled="true" class="field">
           <input
-
             id="switch-disabled-unchecked"
             type="checkbox"
-            disabled class="switch" />
+            disabled
+            class="switch"
+          />
           <label for="switch-disabled-unchecked" class="label">Disabled</label>
         </fieldset>
       </section>
 
       <section class="switch-workflow-section" aria-label="Switch description">
-        <fieldset ng-field orientation="horizontal">
+        <fieldset orientation="horizontal" class="field">
           <div class="field-content">
-            <label for="switch-focus-mode" class="label">Share across devices</label>
+            <label for="switch-focus-mode" class="label"
+              >Share across devices</label
+            >
             <p class="field-description">
               Focus is shared across devices, and turns off when you leave the
               app.
             </p>
           </div>
           <input
-
             id="switch-focus-mode"
             type="checkbox"
-            ng-model="focus" class="switch" />
+            ng-model="focus"
+            class="switch"
+          />
         </fieldset>
       </section>
 
       <section class="switch-workflow-section" aria-label="Invalid switch">
-        <fieldset ng-field orientation="horizontal" data-invalid="true">
+        <fieldset orientation="horizontal" data-invalid="true" class="field">
           <div class="field-content">
             <label for="switch-terms" class="label">
               Accept terms and conditions
@@ -83,11 +84,12 @@
             </p>
           </div>
           <input
-
             id="switch-terms"
             type="checkbox"
             aria-invalid="true"
-            ng-model="terms" class="switch" />
+            ng-model="terms"
+            class="switch"
+          />
         </fieldset>
       </section>
 
@@ -97,7 +99,7 @@
       >
         <div class="switch-choice-list field-group">
           <label for="switch-share" class="switch-choice label">
-            <fieldset ng-field orientation="horizontal">
+            <fieldset orientation="horizontal" class="field">
               <span class="field-content">
                 <span class="field-title">Share across devices</span>
                 <span class="field-description">
@@ -106,14 +108,15 @@
                 </span>
               </span>
               <input
-
                 id="switch-share"
                 type="checkbox"
-                ng-model="share" class="switch" />
+                ng-model="share"
+                class="switch"
+              />
             </fieldset>
           </label>
           <label for="switch-notifications" class="switch-choice label">
-            <fieldset ng-field orientation="horizontal">
+            <fieldset orientation="horizontal" class="field">
               <span class="field-content">
                 <span class="field-title">Enable notifications</span>
                 <span class="field-description">
@@ -121,10 +124,11 @@
                 </span>
               </span>
               <input
-
                 id="switch-notifications"
                 type="checkbox"
-                ng-model="notifications" class="switch" />
+                ng-model="notifications"
+                class="switch"
+              />
             </fieldset>
           </label>
         </div>
@@ -136,7 +140,7 @@
         dir="rtl"
         lang="ar"
       >
-        <fieldset ng-field orientation="horizontal">
+        <fieldset orientation="horizontal" class="field">
           <div class="field-content">
             <label for="switch-focus-mode-rtl" class="label">
               المشاركة عبر الأجهزة
@@ -147,10 +151,11 @@
             </p>
           </div>
           <input
-
             id="switch-focus-mode-rtl"
             type="checkbox"
-            dir="rtl" class="switch" />
+            dir="rtl"
+            class="switch"
+          />
         </fieldset>
       </section>
     </main>

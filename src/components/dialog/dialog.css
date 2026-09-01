@@ -14,7 +14,7 @@
   transform: translate(-50%, -50%);
 }
 
-.dialog-content[data-direction="rtl"] {
+.dialog-content:dir(rtl) {
   transform: translate(50%, -50%);
 }
 

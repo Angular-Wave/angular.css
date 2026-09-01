@@ -16,13 +16,12 @@
     data-example="sheet-side"
   >
     <main class="sheet-sides-demo visual-example">
-      <section ng-sheet side="top">
-        <button variant="outline" class="sheet-trigger button">Top</button>
-        <div class="sheet-overlay"></div>
-        <dialog data-size="half" class="sheet-content">
+      <section side="top" class="sheet">
+        <button variant="outline" class="sheet-trigger button" type="button" commandfor="sheet-native-624-content" command="show-modal">Top</button>
+        <dialog data-size="half" class="sheet-content" id="sheet-native-624-content" closedby="any" aria-labelledby="sheet-native-624-title" aria-describedby="sheet-native-624-description" data-side="top">
           <header class="sheet-header">
-            <h2 class="sheet-title">Edit profile</h2>
-            <p class="sheet-description">
+            <h2 class="sheet-title" id="sheet-native-624-title">Edit profile</h2>
+            <p class="sheet-description" id="sheet-native-624-description">
               Make changes to your profile here. Click save when you're done.
             </p>
           </header>
@@ -35,17 +34,16 @@
           </div>
           <footer class="sheet-footer">
             <button class="button">Save changes</button>
-            <button data-sheet-close variant="outline" class="button">Cancel</button>
+            <button variant="outline" class="button" commandfor="sheet-native-624-content" command="close">Cancel</button>
           </footer>
         </dialog>
       </section>
-      <section ng-sheet side="right">
-        <button variant="outline" class="sheet-trigger button">Right</button>
-        <div class="sheet-overlay"></div>
-        <dialog class="sheet-content">
+      <section side="right" class="sheet">
+        <button variant="outline" class="sheet-trigger button" type="button" commandfor="sheet-native-1974-content" command="show-modal">Right</button>
+        <dialog class="sheet-content" id="sheet-native-1974-content" closedby="any" aria-labelledby="sheet-native-1974-title" aria-describedby="sheet-native-1974-description" data-side="right">
           <header class="sheet-header">
-            <h2 class="sheet-title">Edit profile</h2>
-            <p class="sheet-description">
+            <h2 class="sheet-title" id="sheet-native-1974-title">Edit profile</h2>
+            <p class="sheet-description" id="sheet-native-1974-description">
               Make changes to your profile here. Click save when you're done.
             </p>
           </header>
@@ -58,17 +56,16 @@
           </div>
           <footer class="sheet-footer">
             <button class="button">Save changes</button>
-            <button data-sheet-close variant="outline" class="button">Cancel</button>
+            <button variant="outline" class="button" commandfor="sheet-native-1974-content" command="close">Cancel</button>
           </footer>
         </dialog>
       </section>
-      <section ng-sheet side="bottom">
-        <button variant="outline" class="sheet-trigger button">Bottom</button>
-        <div class="sheet-overlay"></div>
-        <dialog data-size="half" class="sheet-content">
+      <section side="bottom" class="sheet">
+        <button variant="outline" class="sheet-trigger button" type="button" commandfor="sheet-native-3320-content" command="show-modal">Bottom</button>
+        <dialog data-size="half" class="sheet-content" id="sheet-native-3320-content" closedby="any" aria-labelledby="sheet-native-3320-title" aria-describedby="sheet-native-3320-description" data-side="bottom">
           <header class="sheet-header">
-            <h2 class="sheet-title">Edit profile</h2>
-            <p class="sheet-description">
+            <h2 class="sheet-title" id="sheet-native-3320-title">Edit profile</h2>
+            <p class="sheet-description" id="sheet-native-3320-description">
               Make changes to your profile here. Click save when you're done.
             </p>
           </header>
@@ -81,17 +78,16 @@
           </div>
           <footer class="sheet-footer">
             <button class="button">Save changes</button>
-            <button data-sheet-close variant="outline" class="button">Cancel</button>
+            <button variant="outline" class="button" commandfor="sheet-native-3320-content" command="close">Cancel</button>
           </footer>
         </dialog>
       </section>
-      <section ng-sheet side="left">
-        <button variant="outline" class="sheet-trigger button">Left</button>
-        <div class="sheet-overlay"></div>
-        <dialog class="sheet-content">
+      <section side="left" class="sheet">
+        <button variant="outline" class="sheet-trigger button" type="button" commandfor="sheet-native-4686-content" command="show-modal">Left</button>
+        <dialog class="sheet-content" id="sheet-native-4686-content" closedby="any" aria-labelledby="sheet-native-4686-title" aria-describedby="sheet-native-4686-description" data-side="left">
           <header class="sheet-header">
-            <h2 class="sheet-title">Edit profile</h2>
-            <p class="sheet-description">
+            <h2 class="sheet-title" id="sheet-native-4686-title">Edit profile</h2>
+            <p class="sheet-description" id="sheet-native-4686-description">
               Make changes to your profile here. Click save when you're done.
             </p>
           </header>
@@ -104,7 +100,7 @@
           </div>
           <footer class="sheet-footer">
             <button class="button">Save changes</button>
-            <button data-sheet-close variant="outline" class="button">Cancel</button>
+            <button variant="outline" class="button" commandfor="sheet-native-4686-content" command="close">Cancel</button>
           </footer>
         </dialog>
       </section>

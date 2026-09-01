@@ -5,14 +5,12 @@ description: >
   Modal dialog structure
 ---
 
-This compatibility entrypoint renders the same packaged semantic Dialog artifact
-as the component page.
+This styling entrypoint uses the same native Dialog artifact as the component page.
 
 ```html
-<section ng-dialog>
-  <button class="dialog-trigger">Edit profile</button>
-  <div class="dialog-overlay"></div>
-  <dialog class="dialog-content">
+<section class="dialog">
+  <button commandfor="profile-dialog" command="show-modal">Edit profile</button>
+  <dialog id="profile-dialog" class="dialog-content">
     <h2 class="dialog-title">Edit profile</h2>
   </dialog>
 </section>
@@ -25,9 +23,7 @@ as the component page.
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `dialog` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete dialog component reference]({{< relref
 "/docs/components/dialog" >}}) for selectors, slots, attributes, generated

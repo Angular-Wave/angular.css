@@ -4,13 +4,12 @@ test("collapsible element example exposes the synced functional HTML contract", 
   page,
 }) => {
   await page.goto("/docs/static/examples/elements/collapsible.html");
-  const root = page.locator("[ng-collapsible]");
-  const trigger = page.getByRole("button", { name: "Toggle details" });
+  const root = page.locator("details.collapsible");
+  const trigger = root.locator(":scope > summary");
   const content = page.locator(`.collapsible-content`);
 
-  await expect(root).toHaveAttribute("data-state", "closed");
+  await expect(root).not.toHaveAttribute("open", "");
   await trigger.click();
-  await expect(root).toHaveAttribute("data-state", "open");
-  await expect(trigger).toHaveAttribute("aria-expanded", "true");
+  await expect(root).toHaveAttribute("open", "");
   await expect(content).toBeVisible();
 });

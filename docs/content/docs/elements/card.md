@@ -25,9 +25,7 @@ Cards are CSS-first semantic article compositions.
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `card` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete card component reference]({{< relref
 "/docs/components/card" >}}) for selectors, slots, attributes, generated

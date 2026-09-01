@@ -1,1 +1,2 @@
-export { inputGroupDirective } from "../../components/input-group/input-group";
+/** Styling-only HTML entry; native HTML, CSS, and AngularTS own behavior. */
+export {};

@@ -3,88 +3,72 @@ import { expect, test } from "@playwright/test";
 const canonicalUrl = "/docs/static/examples/components/toggle-group.html";
 const workflowsUrl =
   "/docs/static/examples/components/toggle-group-workflows.html";
-const itemSelector = ".toggle-group-item";
 
-test("published toggle group enforces single selection and mirrors application state", async ({
+test("native radio toggle group owns single selection and AngularTS state", async ({
   page,
 }) => {
   await page.goto(canonicalUrl);
-  const group = page.locator("[ng-toggle-group]");
-  const items = group.locator(itemSelector);
+  const radios = page.getByRole("radio");
 
-  expect(await group.getAttribute("role")).toBeNull();
-  await expect(items.nth(1)).toHaveAttribute("data-state", "on");
-  await expect(items.nth(1)).toHaveAttribute("tabindex", "0");
-  await items.nth(0).click();
-  await items.nth(2).click();
-  await expect(items.nth(0)).toHaveAttribute("aria-pressed", "false");
-  await expect(items.nth(1)).toHaveAttribute("aria-pressed", "false");
-  await expect(items.nth(2)).toHaveAttribute("aria-pressed", "true");
+  await expect(radios).toHaveCount(3);
+  await expect(page.getByRole("radio", { name: "Center" })).toBeChecked();
+  await page.getByRole("radio", { name: "Right" }).check();
+  await expect(page.getByRole("radio", { name: "Right" })).toBeChecked();
+  await expect(page.getByRole("radio", { name: "Center" })).not.toBeChecked();
   await expect(page.locator(".output")).toContainText("Alignment: right");
 });
 
-test("published workflow supports independent multiple selection", async ({
+test("native checkbox toggle group owns independent multiple selection", async ({
   page,
 }) => {
   await page.goto(workflowsUrl);
   const group = page.locator("#multiple-toggle-group");
-  const items = group.locator(itemSelector);
+  const bold = group.getByRole("checkbox", { name: "Bold" });
+  const underline = group.getByRole("checkbox", { name: "Underline" });
 
-  await expect(items.nth(0)).toHaveAttribute("data-state", "on");
-  await expect(items.nth(1)).toHaveAttribute("data-state", "on");
-  await items.nth(2).click();
-  await items.nth(0).click();
-  await expect(items.nth(0)).toHaveAttribute("aria-pressed", "false");
-  await expect(items.nth(1)).toHaveAttribute("aria-pressed", "true");
-  await expect(items.nth(2)).toHaveAttribute("aria-pressed", "true");
+  await expect(bold).toBeChecked();
+  await underline.check();
+  await bold.uncheck();
+  await expect(bold).not.toBeChecked();
+  await expect(underline).toBeChecked();
 });
 
-test("published workflow skips disabled items during arrow navigation", async ({
-  page,
-}) => {
+test("native radio navigation skips disabled controls", async ({ page }) => {
   await page.goto(workflowsUrl);
   const group = page.locator("#keyboard-toggle-group");
-  const items = group.locator(itemSelector);
+  const bold = group.getByRole("radio", { name: "Bold" });
+  const italic = group.getByRole("radio", { name: "Italic" });
+  const underline = group.getByRole("radio", { name: "Underline" });
 
-  await items.nth(0).focus();
-  await items.nth(0).press("ArrowRight");
-  await expect(items.nth(2)).toBeFocused();
-  await expect(items.nth(0)).toHaveAttribute("aria-pressed", "false");
-  await expect(items.nth(1)).toHaveAttribute("data-disabled", "true");
-  await expect(items.nth(2)).toHaveAttribute("aria-pressed", "true");
-  await expect(items.nth(2)).toHaveAttribute("tabindex", "0");
+  await expect(italic).toBeDisabled();
+  await bold.focus();
+  await bold.press("ArrowRight");
+  await expect(underline).toBeFocused();
+  await expect(underline).toBeChecked();
 });
 
-test("published workflow applies root disabled state to every item", async ({
-  page,
-}) => {
+test("native fieldset disables every toggle", async ({ page }) => {
   await page.goto(workflowsUrl);
-  const group = page.locator("#disabled-toggle-group");
-  const items = group.locator(itemSelector);
+  const controls = page.locator("#disabled-toggle-group input");
 
-  await expect(group).toHaveAttribute("data-disabled", "true");
-  await expect(items).toHaveCount(3);
-  for (const item of await items.all()) {
-    await expect(item).toHaveAttribute("data-disabled", "true");
-    await expect(item).toHaveAttribute("tabindex", "-1");
-  }
+  await expect(controls).toHaveCount(3);
+  for (const control of await controls.all())
+    await expect(control).toBeDisabled();
 });
 
-test("published workflow mirrors orientation, spacing, and live direction", async ({
+test("authored orientation, spacing, and direction remain CSS and AngularTS state", async ({
   page,
 }) => {
   await page.goto(workflowsUrl);
   const vertical = page.locator("#vertical-toggle-group");
   const rtl = page.locator("#rtl-toggle-group");
-  const rtlItems = rtl.locator(itemSelector);
 
-  await expect(vertical).toHaveAttribute("data-orientation", "vertical");
-  await expect(vertical).toHaveCSS("--gap", "1");
-  await expect(rtl).toHaveAttribute("data-direction", "rtl");
-  await rtlItems.nth(0).focus();
-  await rtlItems.nth(0).press("ArrowRight");
-  await expect(rtlItems.nth(2)).toBeFocused();
-
+  await expect(vertical).toHaveCSS("flex-direction", "column");
+  await expect(vertical).toHaveCSS("gap", "4px");
+  await expect(rtl).toHaveCSS("direction", "rtl");
   await page.getByRole("button", { name: "Change direction" }).click();
-  await expect(rtl).toHaveAttribute("data-direction", "ltr");
+  await expect(rtl).toHaveCSS("direction", "ltr");
+
+  await page.getByRole("radio", { name: "Aa Bold" }).check();
+  await expect(page.locator(".output")).toContainText("font-bold");
 });

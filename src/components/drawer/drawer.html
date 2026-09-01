@@ -3,37 +3,122 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
-    <link rel="stylesheet" href="../../css/angular.css" />
-    <link rel="stylesheet" href="../example.css" />
-    <script src="../../js/angular-ts.umd.js"></script>
-    <script src="../../js/angular-css.umd.js"></script>
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
   </head>
-  <body ng-app="ui" ng-cloak style="padding: 0">
-    <button
-      variant="outline"
-      aria-controls="billing-drawer"
-      style="position: absolute; left: 24px; top: 24px; z-index: 60"
-      class="button"
-    >
-      Open drawer
-    </button>
-    <section
-      id="billing-drawer"
-      ng-drawer
-      data-open="false"
-      style="height: 370px"
-    >
-      <div class="drawer-overlay"></div>
-      <dialog aria-label="Billing period" class="drawer-content">
-        <div class="drawer-handle"></div>
-        <header class="drawer-header">
-          <h2 class="drawer-title">Billing period</h2>
-          <p class="drawer-description">
-            Choose a cycle before creating the invoice.
-          </p>
-        </header>
-      </dialog>
-    </section>
+  <body
+    ng-app="ui"
+    ng-cloak
+    ng-init="goal=350; submittedGoal=350"
+    data-example="drawer-demo"
+  >
+    <main class="drawer-demo visual-example">
+      <section id="goal-drawer" class="drawer">
+        <button
+          commandfor="goal-drawer-content"
+          command="show-modal"
+          variant="outline"
+          class="drawer-trigger button"
+        >
+          Open Drawer
+        </button>
+        <dialog
+          id="goal-drawer-content"
+          closedby="any"
+          aria-labelledby="goal-drawer-title"
+          aria-describedby="goal-drawer-description"
+          data-side="bottom"
+          class="drawer-content"
+        >
+          <div class="drawer-handle"></div>
+          <div class="drawer-goal-panel">
+            <header class="drawer-header">
+              <h2 id="goal-drawer-title" class="drawer-title">Move Goal</h2>
+              <p id="goal-drawer-description" class="drawer-description">
+                Set your daily activity goal.
+              </p>
+            </header>
+            <div class="drawer-goal-body">
+              <div class="drawer-goal-control">
+                <button
+                  variant="outline"
+                  size="icon-sm"
+                  aria-label="Decrease"
+                  ng-disabled="goal <= 200"
+                  ng-click="goal=goal-10"
+                  class="button"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14"></path>
+                  </svg>
+                </button>
+                <div class="drawer-goal-value">
+                  <strong ng-bind="goal"></strong>
+                  <span>Calories/day</span>
+                </div>
+                <button
+                  variant="outline"
+                  size="icon-sm"
+                  aria-label="Increase"
+                  ng-disabled="goal >= 400"
+                  ng-click="goal=goal+10"
+                  class="button"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 5v14"></path>
+                    <path d="M5 12h14"></path>
+                  </svg>
+                </button>
+              </div>
+              <div class="drawer-goal-chart" aria-hidden="true">
+                <span data-height="80"></span><span data-height="60"></span>
+                <span data-height="40"></span><span data-height="60"></span>
+                <span data-height="40"></span><span data-height="56"></span>
+                <span data-height="38"></span><span data-height="48"></span>
+                <span data-height="60"></span><span data-height="40"></span>
+                <span data-height="56"></span><span data-height="38"></span>
+                <span data-height="70"></span>
+              </div>
+            </div>
+            <footer class="drawer-footer">
+              <button
+                commandfor="goal-drawer-content"
+                command="close"
+                ng-click="submittedGoal=goal"
+                class="button"
+              >
+                Submit
+              </button>
+              <button
+                commandfor="goal-drawer-content"
+                command="close"
+                variant="outline"
+                class="drawer-close button"
+              >
+                Cancel
+              </button>
+            </footer>
+          </div>
+        </dialog>
+      </section>
+      <output class="drawer-output" aria-live="polite">
+        Submitted goal: <span ng-bind="submittedGoal"></span>
+      </output>
+    </main>
   </body>
 </html>

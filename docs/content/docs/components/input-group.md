@@ -5,13 +5,13 @@ description: >
   Grouped input controls and addon content with shared focus/description wiring.
 ---
 
-Use `ng-input-group` with one native control and optional styling parts for
-addons, text, and buttons. AngularTS continues to own the model and actions.
+Use `.input-group` with one native control and optional authored addons, text,
+and buttons. AngularTS continues to own the model and actions.
 
 ```html
-<div ng-input-group class="input-group">
-  <input placeholder="Search"  class="input-group-control"/>
-  <div data-align="inline-start" class="input-group-addon">🔍</div>
+<div class="input-group">
+  <input id="search" placeholder="Search" class="input-group-control" />
+  <label for="search" data-align="inline-start" class="input-group-addon">Search</label>
   <div data-align="inline-end" class="input-group-addon">⌘K</div>
 </div>
 ```
@@ -65,36 +65,29 @@ Install AngularCSS once, load its stylesheet, and include the `ui` module in
 your AngularTS application. See [Installation]({{< relref
 "/docs/get-started/installation" >}}) for the complete setup.
 
-This component's root directive is `[ng-input-group]`. Importing the package registers it with the AngularCSS `ui` module; there is no per-component JavaScript registration step.
+This is a styling-only HTML element or pattern. AngularCSS registers no runtime directive for it. Native controls and labels own behavior; CSS provides grouped presentation.
 
 ## Anatomy
 
-### Directive selectors
+### Root styling selector
 
-- `ng-input-group`
+- `.input-group`
 
 ### Semantic structure
 
-Use one native input, textarea, select, combobox, or spinbutton control per root. Addons may be placed at inline-start, inline-end, block-start, or block-end with `data-align`. Clicking non-button addon content focuses the control; buttons, menus, tooltips, and popovers retain their existing component behavior. AngularTS owns values, validation, counters, submission, and all application actions.
+Use one native input, textarea, select, combobox, or spinbutton inside `.input-group`. Addons may be placed at inline-start, inline-end, block-start, or block-end with `data-align`. Buttons, menus, tooltips, and popovers retain their own behavior.
 
 ## API
 
 ### Attributes and state
 
-| Attribute | Access | Purpose |
-| --- | --- | --- |
-| `aria-describedby` | Input/output | ARIA relationship or state. |
-| `aria-hidden` | Input | ARIA relationship or state. |
-| `data-addon-count` | Output | Stable component state or styling hook. |
-| `data-has-addon` | Output | Stable component state or styling hook. |
-| `data-has-button` | Output | Stable component state or styling hook. |
-| `role` | Input/output | Explicit semantic role when native HTML does not provide one. |
+This component has no directive-specific attributes beyond its semantic HTML.
 
-`Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
+Attributes remain authored HTML, native state, or AngularTS inputs. AngularCSS does not write element state.
 
 ### CSS custom properties
 
-This directive does not write component-specific CSS custom properties.
+This styling hook does not define component-specific CSS custom properties.
 
 ### DOM events
 
@@ -105,14 +98,14 @@ Native DOM events continue to work normally. AngularTS event directives such as
 
 ## Behavior
 
-Native form state and AngularTS `ng-model`, validation, and submission remain the source of truth. AngularCSS mirrors that state into stable styling and accessibility hooks.
+Input Group is styling-only. Native controls own focus, values, validation, and submission. Use a native `label` addon when clicking addon text should focus the control; AngularTS owns dynamic text and actions.
 
 AngularCSS does not replace AngularTS interpolation, bindings, structural
 directives, form controllers, validation, or application state.
 
 ## Accessibility
 
-Associate every control with a visible label. Native required, disabled, and invalid semantics are preserved and mirrored rather than replaced.
+Keep one clearly labeled native control in each group. Use `aria-describedby` for explanatory addon text, `aria-hidden` for decorative text, and a native `label for` when an addon should focus the control.
 
 Authored accessible names and relationships are preserved. Test the final
 composition with keyboard navigation and assistive technology because labels and
@@ -120,7 +113,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-input-group]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

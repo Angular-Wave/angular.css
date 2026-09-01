@@ -38,13 +38,13 @@ browser.
 Complex components are composed from named parts rather than hidden templates:
 
 ```html
-<div ng-collapsible>
-  <button class="collapsible-trigger">Account settings</button>
+<details class="collapsible">
+  <summary>Account settings</summary>
   <section class="collapsible-content">
     <label for="display-name">Display name</label>
     <input id="display-name" ng-model="profile.name" class="input" />
   </section>
-</div>
+</details>
 ```
 
 You control the elements, content, AngularTS expressions, and Tailwind classes.

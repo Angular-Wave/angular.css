@@ -19,9 +19,7 @@ Use native `label` elements with `for` and `class="label"`.
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `label` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete label component reference]({{< relref
 "/docs/components/label" >}}) for selectors, slots, attributes, generated

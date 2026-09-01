@@ -1,15 +1,14 @@
-[ng-accordion],
 .accordion {
   display: flex;
   width: 100%;
   flex-direction: column;
 }
 
-:is([ng-accordion], .accordion) > .accordion-item:not(:last-child) {
+.accordion > details:not(:last-child) {
   border-block-end: 1px solid var(--border);
 }
 
-:is([ng-accordion], .accordion) .accordion-trigger {
+.accordion summary {
   position: relative;
   display: flex;
   width: 100%;
@@ -24,6 +23,7 @@
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
   line-height: 1.25;
+  list-style: none;
   text-align: start;
   cursor: pointer;
   outline: none;
@@ -33,58 +33,50 @@
     color 120ms ease;
 }
 
-:is([ng-accordion], .accordion) .accordion-trigger:hover {
+.accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.accordion summary::after {
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+  flex: 0 0 auto;
+  border-inline-end: 1.5px solid currentcolor;
+  border-block-end: 1.5px solid currentcolor;
+  margin-inline-start: auto;
+  color: var(--muted-foreground);
+  content: "";
+  pointer-events: none;
+  transform: translateY(1px) rotate(45deg) scale(0.55);
+  transition: transform 200ms ease;
+}
+
+.accordion summary:hover {
   text-decoration-line: underline;
   text-underline-offset: 4px;
 }
 
-:is([ng-accordion], .accordion) .accordion-trigger:focus-visible {
+.accordion summary:focus-visible {
   border-color: var(--ring);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
-:is([ng-accordion], .accordion)
-  .accordion-trigger:is(:disabled, [aria-disabled="true"]) {
+.accordion details[open] > summary::after {
+  transform: translateY(4px) rotate(225deg) scale(0.55);
+}
+
+.accordion details[inert] > summary {
   pointer-events: none;
   opacity: 0.5;
 }
 
-:is([ng-accordion], .accordion) .accordion-trigger .accordion-trigger-icon {
-  width: calc(var(--spacing) * 4);
-  height: calc(var(--spacing) * 4);
-  flex-shrink: 0;
-  color: var(--muted-foreground);
-  margin-inline-start: auto;
-  pointer-events: none;
-  transform: translateY(2px);
-  transition: transform 200ms ease;
-}
-
-:is([ng-accordion], .accordion)
-  :is(.accordion-trigger)[aria-expanded="true"]
-  .accordion-trigger-icon {
-  transform: translateY(2px) rotate(180deg);
-}
-
-:is([ng-accordion], .accordion) :is(.accordion-content, .accordion-panel) {
+.accordion :is(.accordion-content, .accordion-panel) {
   display: flex;
-  max-height: 0;
   overflow: hidden;
   flex-direction: column;
+  padding-block-end: calc(var(--spacing) * 4);
   color: var(--foreground);
   font-size: var(--text-sm);
   line-height: 1.5;
   text-wrap: balance;
-  transition:
-    max-height 200ms ease-out,
-    padding 200ms ease-out;
-}
-
-:is([ng-accordion], .accordion)
-  :is(.accordion-content, .accordion-panel)[data-open="true"] {
-  max-height: 100vh;
-  padding-block-end: calc(var(--spacing) * 4);
-  transition:
-    max-height 200ms ease-in,
-    padding 200ms ease-in;
 }

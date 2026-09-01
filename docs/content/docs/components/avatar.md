@@ -5,17 +5,17 @@ description: >
   User avatar, fallback, badge, and group primitives.
 ---
 
-Use `ng-avatar` with optional `avatar-image`, `avatar-fallback`, and
-`avatar-badge`, or wrap multiple avatars with `.avatar-group`.
+Use `.avatar` with a native image or authored fallback, plus an optional badge.
+Wrap multiple avatars with `.avatar-group`.
 
 ```html
-<span ng-avatar>
+<span class="avatar" aria-label="Jane Doe">
   <span class="avatar-fallback">JD</span>
   <span class="avatar-badge"></span>
 </span>
 
 <span class="avatar-group">
-  <span ng-avatar><span class="avatar-fallback">AB</span></span>
+  <span class="avatar"><img src="avatar.jpg" alt="Alex Brown" /></span>
   <span class="avatar-group-count">+3</span>
 </span>
 ```
@@ -39,33 +39,29 @@ Install AngularCSS once, load its stylesheet, and include the `ui` module in
 your AngularTS application. See [Installation]({{< relref
 "/docs/get-started/installation" >}}) for the complete setup.
 
-This component's root directive is `[ng-avatar]`. Importing the package registers it with the AngularCSS `ui` module; there is no per-component JavaScript registration step.
+This is a styling-only HTML element or pattern. AngularCSS registers no runtime directive for it. Native images, alternative text, authored fallback content, and CSS provide the contract.
 
 ## Anatomy
 
-### Directive selectors
+### Root styling selector
 
-- `ng-avatar`
+- `.avatar`
 
 ### Semantic structure
 
-Use native elements for authored structure. Component classes are optional visual hooks when an HTML relationship is not specific enough.
+Apply `.avatar` to a wrapper containing either an image or authored fallback content. Badges are optional. Use `.avatar-group` for several avatars and `.avatar-group-count` for a remaining count.
 
 ## API
 
 ### Attributes and state
 
-| Attribute | Access | Purpose |
-| --- | --- | --- |
-| `data-size` | Input/output | Stable component state or styling hook. |
-| `data-state` | Output | Stable component state or styling hook. |
-| `size` | Input | Visual size token supported by the component stylesheet. |
+This component has no directive-specific attributes beyond its semantic HTML.
 
-`Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
+Attributes remain authored HTML, native state, or AngularTS inputs. AngularCSS does not write element state.
 
 ### CSS custom properties
 
-This directive does not write component-specific CSS custom properties.
+This styling hook does not define component-specific CSS custom properties.
 
 ### DOM events
 
@@ -76,14 +72,14 @@ Native DOM events continue to work normally. AngularTS event directives such as
 
 ## Behavior
 
-The directive reflects media loading and fallback state. The application remains responsible for the source URL, alternative text, and content lifecycle.
+Avatar is a styling-only authored HTML pattern. Native `img` loading and alternative text remain browser behavior; use a fallback-only avatar when no image is available, or AngularTS structural directives when application state chooses between sources.
 
 AngularCSS does not replace AngularTS interpolation, bindings, structural
 directives, form controllers, validation, or application state.
 
 ## Accessibility
 
-Provide useful alternative text for meaningful media. Mark decorative media as hidden and ensure fallback content communicates the same identity.
+Give meaningful portrait images useful alternative text. Give fallback-only avatars an accessible name when initials are ambiguous, and keep decorative status badges out of repeated announcements.
 
 Authored accessible names and relationships are preserved. Test the final
 composition with keyboard navigation and assistive technology because labels and
@@ -91,7 +87,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-avatar]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

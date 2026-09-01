@@ -3,26 +3,68 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
-    <link rel="stylesheet" href="../../css/angular.css" />
-    <link rel="stylesheet" href="../example.css" />
-    <script src="../../js/angular-ts.umd.js"></script>
-    <script src="../../js/angular-css.umd.js"></script>
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
   </head>
-  <body ng-app="ui" ng-cloak>
-    <button aria-controls="delete-dialog" style="margin: 1rem">
-      Delete project
-    </button>
-    <section id="delete-dialog" ng-alert-dialog class="alert-dialog">
-      <div class="alert-dialog-overlay"></div>
-      <dialog class="alert-dialog-content">
+  <body
+    ng-app="ui"
+    ng-cloak
+    data-example="alert-dialog-basic alert-dialog-demo"
+  >
+    <section
+      id="confirmation-dialog"
+      class="alert-dialog-demo visual-example alert-dialog"
+    >
+      <button
+        type="button"
+        commandfor="confirmation-dialog-content"
+        command="show-modal"
+        variant="outline"
+        class="alert-dialog-trigger button"
+      >
+        Show Dialog
+      </button>
+      <dialog
+        id="confirmation-dialog-content"
+        closedby="closerequest"
+        aria-labelledby="confirmation-dialog-title"
+        aria-describedby="confirmation-dialog-description"
+        data-size="default"
+        class="alert-dialog-content"
+      >
         <header class="alert-dialog-header">
-          <h2 class="alert-dialog-title">Delete this item?</h2>
-          <p class="alert-dialog-description">This action cannot be undone.</p>
+          <h2 id="confirmation-dialog-title" class="alert-dialog-title">
+            Are you absolutely sure?
+          </h2>
+          <p
+            id="confirmation-dialog-description"
+            class="alert-dialog-description"
+          >
+            This action cannot be undone. This will permanently delete your
+            account from our servers.
+          </p>
         </header>
         <footer class="alert-dialog-footer">
-          <button class="alert-dialog-cancel">Cancel</button>
-          <button class="alert-dialog-action">Continue</button>
+          <button
+            type="button"
+            commandfor="confirmation-dialog-content"
+            command="close"
+            variant="outline"
+            class="alert-dialog-cancel button"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            commandfor="confirmation-dialog-content"
+            command="close"
+            class="alert-dialog-action button"
+          >
+            Continue
+          </button>
         </footer>
       </dialog>
     </section>

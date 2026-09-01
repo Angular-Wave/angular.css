@@ -24,9 +24,7 @@ Use native `textarea` elements with `class="textarea"` for multiline input.
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `textarea` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete textarea component reference]({{< relref
 "/docs/components/textarea" >}}) for selectors, slots, attributes, generated

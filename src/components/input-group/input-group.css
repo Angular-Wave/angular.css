@@ -1,5 +1,4 @@
-.input-group,
-[ng-input-group] {
+.input-group {
   position: relative;
   display: flex;
   height: calc(var(--spacing) * 8);

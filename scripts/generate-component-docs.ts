@@ -156,6 +156,16 @@ const behaviorByCategory: Record<string, string> = {
 };
 
 const behaviorByComponent: Record<string, string> = {
+  field:
+    "Field is a styling-only semantic form composition. Native labels, validation, and `aria-describedby` own relationships; AngularTS forms and structural directives own model, error visibility, and submission state.",
+  "input-group":
+    "Input Group is styling-only. Native controls own focus, values, validation, and submission. Use a native `label` addon when clicking addon text should focus the control; AngularTS owns dynamic text and actions.",
+  avatar:
+    "Avatar is a styling-only authored HTML pattern. Native `img` loading and alternative text remain browser behavior; use a fallback-only avatar when no image is available, or AngularTS structural directives when application state chooses between sources.",
+  "alert-dialog":
+    "A native `dialog` opened with `command=show-modal` owns top-layer rendering, modal focus, Escape, background isolation, and trigger focus restoration. Use `closedby=closerequest` when pointer light-dismiss must be disabled. AngularCSS registers no alert-dialog directive.",
+  accordion:
+    "Native `details` and `summary` own disclosure, focus, and keyboard behavior. Give sibling details the same `name` for an exclusive accordion, or omit `name` when several panels may remain open. AngularCSS registers no accordion directive.",
   calendar:
     "The directive owns generated Gregorian month grids, local-date navigation, selectable day state, range and multiple-selection signaling, disabled and booked constraints, caption controls, week numbers, keyboard grid movement, and synchronized authored attributes. AngularTS remains responsible for application models, parsed text, commands, validation, and composed popover state. Natural-language and non-Gregorian conversion remain explicit application adapters; the packaged Date Picker demo uses locally bundled `chrono-node` without adding a second model implementation.",
   carousel:
@@ -169,15 +179,17 @@ const behaviorByComponent: Record<string, string> = {
   "context-menu":
     "The directive owns right-click and keyboard disclosure, cursor-relative side placement with viewport collision constraints, menu and submenu focus movement, disabled-item skipping, Escape and outside dismissal, direction-aware submenu keys, semantic roles, and open-state reflection. AngularTS remains responsible for command execution, checkbox and radio values, controlled application state, and structural rendering.",
   dialog:
-    "The directive owns modal disclosure, directly owned trigger and content relationships, initial focus, Tab containment, focus-in containment, Escape and overlay dismissal, background inertness, document scroll locking, controlled `data-open` state, direction reflection, and trigger focus restoration. AngularTS remains responsible for form models, validation, submission, authored content, and application state.",
+    "A native `dialog` opened with `command=show-modal` owns top-layer rendering, modal focus, Escape, background isolation, and trigger focus restoration. Declarative `command=close` controls dismiss it. AngularTS remains responsible for form models, validation, submission, authored content, and application state.",
   drawer:
-    "The directive owns modal disclosure, direct-root trigger and content relationships, bottom, top, left, or right side reflection, initial focus, focus containment, Escape and overlay dismissal, background inertness, document scroll locking, controlled `data-open` state, text direction, and trigger focus restoration. AngularTS remains responsible for form models, goal values, validation, submission, responsive application composition, and authored content.",
+    "A native `dialog` owns modal disclosure, focus, Escape, background isolation, and restoration. Authored `data-side` selects CSS edge placement. AngularTS remains responsible for form models, goal values, validation, submission, responsive application composition, and authored content.",
   collapsible:
-    "Native `details` and `summary` own disclosure behavior whenever the composition permits it. The directive reflects native open state and supplies trigger/panel relationships. For compositions with persistent siblings, a native button can trigger one panel while AngularTS remains responsible for any controlled application model.",
+    "Native `details` and `summary` own disclosure, focus, and keyboard behavior. Use `open` for initial state and AngularTS only when application state must observe or control the native element. AngularCSS registers no collapsible directive.",
   "hover-card":
     "The directive owns delayed pointer and focus disclosure, physical side placement, Escape closure, and synchronized open state. It is non-modal and does not trap focus. Applications own preview content and may control the authored `data-open` attribute.",
   input:
     "Input is a styling-only native control selected by `.input`. AngularTS and the browser own value, events, model synchronization, validation, disabled and required state, and form submission. AngularCSS registers no input directive.",
+  "input-otp":
+    "Input OTP is one styling-only native `input`. The browser owns typing, editing, paste, password-manager autofill, `autocomplete=one-time-code`, input mode, length, pattern validation, and form submission; AngularTS `ng-model` owns application state. AngularCSS registers no input-otp directive.",
   menubar:
     "The directive owns top-level roving focus, menu and submenu disclosure, enabled-item navigation, Escape and outside-click closure, DOM-order synchronization for dynamically inserted menus, and direction-aware horizontal keys. AngularTS remains responsible for command execution, checkbox and radio values, and structural content such as `ng-if`.",
   "native-select":
@@ -190,18 +202,22 @@ const behaviorByComponent: Record<string, string> = {
     "The native `progress` element owns progressbar semantics and determinate or indeterminate state. Native `label` and `output` elements provide optional context. AngularTS may bind `value`; AngularCSS registers no progress directive.",
   "radio-group":
     "A native `fieldset` and `legend` group radio inputs sharing one `name`. The browser owns selection, arrow-key behavior, disabled state, validation, and form submission; AngularTS `ng-model` owns application state. AngularCSS registers no radio-group directive.",
+  "scroll-area":
+    "A focusable semantic region with `overflow: auto` uses the browser's native scrolling, keyboard behavior, pointer interaction, direction handling, and scrollbar geometry. AngularTS may insert or remove content; native layout updates the overflow automatically. AngularCSS registers no scroll-area directive.",
   resizable:
     "The directive owns pairwise pointer and keyboard resizing, minimum and maximum bounds, direct-child panel/handle ownership, direction-aware deltas, and synchronized separator state. AngularTS or the application owns authored orientation, initial/external sizes, structural insertion, persistence, and business layout decisions.",
   select:
     "The native `select` owns values, option groups, keyboard interaction, disabled state, validation, and form submission. AngularTS supplies option registration, `ng-model`, validators, and form-state classes. AngularCSS registers no select directive.",
   sheet:
-    "The directive owns modal disclosure, physical side reflection, direct-child ownership, focus containment, Escape and exact-overlay dismissal, background isolation, document scroll locking, and focus restoration. AngularTS remains responsible for form values, validation, submission, language, authored content, and controlled application state.",
+    "A native `dialog` owns modal disclosure, focus, Escape, background isolation, and restoration. Authored `data-side` selects CSS edge placement. AngularTS remains responsible for form values, validation, submission, language, and authored content.",
   sidebar:
     "The directive reflects authored side, variant, collapsible, direction, responsive, active-item, group, and trigger state. It owns only sidebar collapse and accessibility synchronization; `collapsible=none` stays expanded, off-canvas collapse hides the landmark, and icon collapse keeps visible controls accessible. AngularTS remains responsible for controlled open state, shortcuts, filtering, routing, application actions, and structural rendering. Compose nested disclosure with the existing Collapsible primitive and menus with the existing Dropdown primitive.",
   popover:
-    "The directive owns non-modal disclosure, initial focus into the first interactive descendant, outside pointer and focus dismissal, Escape closure, focus restoration, physical side placement, and cross-axis alignment. It does not trap focus. AngularTS remains responsible for authored content, form values, and application state, including controlled `data-open` state.",
+    "The native Popover API owns non-modal disclosure, top-layer rendering, outside pointer dismissal, and Escape closure. `popovertarget` connects the invoker to the `popover` element. AngularTS remains responsible for authored content, form values, and application state.",
   tooltip:
     "The directive owns immediate hover and focus disclosure, Escape closure, synchronized controlled open state, text direction, and physical side placement. Tooltip content is descriptive, non-interactive, and never receives focus. AngularTS remains responsible for application state and the trigger action.",
+  "toggle-group":
+    "Toggle Group is a styling-only native `fieldset`: use radios sharing a `name` for single selection and checkboxes for multiple selection. The browser owns selection, arrow-key radio navigation, disabled state, focus, validation, and form submission; AngularTS `ng-model` owns application state. AngularCSS registers no toggle-group directive.",
 };
 
 const accessibilityByCategory: Record<string, string> = {
@@ -235,6 +251,18 @@ const accessibilityByCategory: Record<string, string> = {
 };
 
 const accessibilityByComponent: Record<string, string> = {
+  field:
+    "Connect every control to a native label. Give descriptions and errors stable IDs and author `aria-describedby` on the control. Use native `fieldset` and `legend` only for actual groups of related controls.",
+  "input-group":
+    "Keep one clearly labeled native control in each group. Use `aria-describedby` for explanatory addon text, `aria-hidden` for decorative text, and a native `label for` when an addon should focus the control.",
+  avatar:
+    "Give meaningful portrait images useful alternative text. Give fallback-only avatars an accessible name when initials are ambiguous, and keep decorative status badges out of repeated announcements.",
+  "alert-dialog":
+    "Connect the native dialog to a concise title and consequence description with `aria-labelledby` and `aria-describedby`. Put the least destructive action first in focus order and use `closedby=closerequest` when outside dismissal would be unsafe.",
+  accordion:
+    "Use a direct `summary` as the accessible trigger for each `details` item. The browser exposes disclosure state and keyboard activation. Use `inert` only when an entire unavailable disclosure must be removed from interaction.",
+  collapsible:
+    "Use a direct `summary` as the accessible trigger. The browser exposes disclosure state and provides Enter and Space activation without authored roles or ARIA state.",
   calendar:
     "Give the calendar or its visible title a useful accessible name. Generated weekdays are column headers; week numbers are row headers; day buttons expose selected, current, disabled, outside, booked, and range state. Arrow keys, Home, End, Page Up, and Page Down move through the date grid, while RTL reverses horizontal movement. Date Picker triggers must keep an accessible name and preserve focus through the composed Popover.",
   carousel:
@@ -248,11 +276,11 @@ const accessibilityByComponent: Record<string, string> = {
   "context-menu":
     "Give the trigger and menu useful accessible names. The trigger exposes `aria-haspopup`, `aria-controls`, and expanded state; items receive menuitem, menuitemcheckbox, or menuitemradio roles; groups and separators remain semantic; disabled items are skipped. Shift+F10 or the Context Menu key opens from the keyboard, arrow keys move focus, logical submenu keys follow text direction, and Escape restores focus.",
   dialog:
-    "Use a visible title and description. The trigger is connected to content with `aria-controls` and expanded state; content receives dialog, modal, labelled-by, described-by, hidden, and focusability semantics. While open, focus remains in the topmost dialog, background branches are inert, Escape dismisses, and focus returns to the invoking trigger.",
+    "Use a visible title and description connected with `aria-labelledby` and `aria-describedby`. Native modal dialogs contain focus, isolate the background, close on Escape, and restore focus to their declarative invoker.",
   drawer:
-    "Use a visible title and description. The trigger exposes dialog popup, controls, and expanded relationships; content receives dialog, modal, labelled-by, described-by, hidden, side, direction, and focusability state. While open, background branches are inert, focus remains contained, Escape dismisses, and focus returns to the invoking trigger.",
+    "Use a visible title and description connected to the native dialog. Keep the physical edge as presentation only; content order, focus order, and inherited text direction remain semantic.",
   sheet:
-    "Use a visible title and description. The trigger exposes dialog popup, controls, and expanded relationships; content receives dialog, modal, labelled-by, described-by, hidden, physical side, direction, and focusability state. While open, background branches are inert, focus remains contained, Escape or the exact overlay dismisses, and focus returns to the invoking trigger.",
+    "Use a visible title and description connected to the native dialog. Keep the physical edge as presentation only; content order, focus order, and inherited text direction remain semantic.",
   sidebar:
     "Give the sidebar landmark and icon-only actions useful accessible names. Triggers expose `aria-controls` and expanded state, groups are associated with visible labels, and the current destination uses `aria-current=page`. Off-canvas collapse hides the landmark and restores trigger focus when necessary; icon collapse preserves access to its visible controls. Keep DOM order aligned with physical placement and use native links for destinations.",
   "hover-card":
@@ -276,7 +304,7 @@ const accessibilityByComponent: Record<string, string> = {
   select:
     "Use a visible `label` connected by `for` and `id`, or provide another accessible name. Preserve native option, optgroup, multiple, disabled, required, invalid, and direction semantics; AngularTS reflects model and validation state without replacing them.",
   popover:
-    "Use a native button trigger and give the non-modal dialog an accessible name through a visible title or `aria-label`. Focus enters the first interactive descendant, outside focus and Escape dismiss the panel, and Escape restores trigger focus.",
+    "Use a native button invoker and give the popover content a useful accessible name when its context is not otherwise clear. Escape and pointer light-dismiss are browser behavior; add `autofocus` only when moving focus into the content is appropriate.",
   tooltip:
     'The trigger exposes `aria-describedby` while the content uses `role="tooltip"`. Tooltips open from hover and keyboard focus, close on Escape, and must not contain interactive controls or essential information. Wrap a disabled button in a hoverable trigger only when its unavailable state needs explanation.',
 };
@@ -342,7 +370,7 @@ const readAttributesByComponent: Record<string, string[]> = {
   "native-select": ["aria-invalid", "disabled", "required"],
   "navigation-menu": ["align", "data-open", "data-state", "dir", "disabled"],
   pagination: ["aria-current", "aria-disabled", "data-active", "dir"],
-  popover: ["align", "side"],
+  popover: ["data-align", "data-side", "popover", "popovertarget"],
   progress: ["dir", "max", "value"],
   "radio-group": [
     "aria-invalid",
@@ -441,6 +469,12 @@ const writtenAttributesByComponent: Record<string, string[]> = {
 };
 
 const slotGuidanceByComponent: Record<string, string> = {
+  avatar:
+    "Apply `.avatar` to a wrapper containing either an image or authored fallback content. Badges are optional. Use `.avatar-group` for several avatars and `.avatar-group-count` for a remaining count.",
+  "alert-dialog":
+    "Use `.alert-dialog` as an optional composition wrapper, a native button with `command=show-modal`, and `dialog.alert-dialog-content`. Close controls use `command=close`; no overlay element or nested AngularCSS attributes are required.",
+  accordion:
+    "Use `.accordion` around direct `details` children. Each item requires a direct `summary` followed by authored content. Apply the same `name` to sibling details for exclusive disclosure.",
   carousel:
     "The content viewport and its direct track child are required. Items must be direct track children. Navigation controls and dots are optional.",
   chart:
@@ -452,19 +486,19 @@ const slotGuidanceByComponent: Record<string, string> = {
   "context-menu":
     "A context menu root requires one focusable trigger and one menu element. The root directive inspects semantic descendants through context-menu part classes; no child directives are required. Groups, separators, shortcuts, checked items, and submenus are optional.",
   dialog:
-    "A dialog root requires one native button trigger, one overlay, and one native dialog content element. The root directive inspects descendants through dialog part classes; no child directives are required. Title and description are strongly recommended; header, body, and footer are optional.",
+    "Use `.dialog` as an optional composition wrapper, a native button with `command=show-modal`, and `dialog.dialog-content`. Close controls use `command=close`; no overlay element or nested AngularCSS attributes are required.",
   drawer:
-    "A drawer root requires one native button trigger, one overlay, and one native dialog content element. The root directive inspects descendants through drawer part classes; no child directives are required. Use `side` for placement. Title, description, handle, header, body, and footer are optional.",
+    "Use `.drawer` as an optional wrapper, a native invoker button, and `dialog.drawer-content` with authored `data-side`. Close controls use `command=close`; no overlay element is required.",
   sheet:
-    "A sheet root requires one native button trigger, one overlay, and one native dialog content element. The root directive inspects descendants through sheet part classes; no child directives are required. Use `side` for placement. Title, description, header, body, and footer are optional.",
+    "Use `.sheet` as an optional wrapper, a native invoker button, and `dialog.sheet-content` with authored `data-side`. Close controls use `command=close`; no overlay element is required.",
   sidebar:
     "Place `aside[ng-sidebar]` inside `.sidebar-layout` and connect native button triggers with `aria-controls`. The root directive inspects semantic descendants through sidebar part classes; no child sidebar directives are required. Author side, variant, and collapse mode on the root. Compose nested disclosure with Collapsible and action menus with Dropdown.",
   collapsible:
-    "A trigger and content panel are required. Prefer direct `summary` and panel children of native `details`; use a native button trigger only when the composition cannot be represented by `details`.",
+    "Apply `.collapsible` to a native `details` element with a direct `summary` followed by authored content. No nested AngularCSS attributes are required.",
   "hover-card":
     "A keyboard-focusable trigger and one preview content element are required. Title and description slots are optional semantic styling hooks inside the preview.",
   "input-group":
-    "Use one native input, textarea, select, combobox, or spinbutton control per root. Addons may be placed at inline-start, inline-end, block-start, or block-end with `data-align`. Clicking non-button addon content focuses the control; buttons, menus, tooltips, and popovers retain their existing component behavior. AngularTS owns values, validation, counters, submission, and all application actions.",
+    "Use one native input, textarea, select, combobox, or spinbutton inside `.input-group`. Addons may be placed at inline-start, inline-end, block-start, or block-end with `data-align`. Buttons, menus, tooltips, and popovers retain their own behavior.",
   menubar:
     "Each menu requires one native button trigger and one menu content element. The root directive inspects semantic descendants through menubar part classes; no child directives are required. Groups, separators, shortcuts, checked items, and submenus are optional.",
   "native-select":
@@ -474,7 +508,7 @@ const slotGuidanceByComponent: Record<string, string> = {
   pagination:
     "Use a native `nav` containing a `ul` or `ol` with direct `li` children. Page, previous, and next controls remain native links. Ellipsis is optional. Compose rows-per-page controls beside Pagination with existing native form components; Pagination does not own that model.",
   popover:
-    "A native button trigger and one content element are required. Header, title, and description selectors are optional semantic styling hooks. Use native form controls inside the content; AngularTS owns their values and validation.",
+    "Connect a native button's `popovertarget` to one element with the matching `id` and `popover`. Header, title, and description selectors are optional styling hooks. Use native form controls inside the content; AngularTS owns their values and validation.",
   progress:
     "Use a native `progress.progress` element. For a visible label and value, compose it with native `label` and `output` elements inside `.progress-group`.",
   "radio-group":
@@ -755,12 +789,16 @@ for (const component of componentNames) {
   const authoredElement = addExampleHeading(
     stripElementReference(currentElement),
   );
+  const elementContract =
+    componentPolicy[component]?.kind === "element"
+      ? `This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.`
+      : `This element entrypoint re-exports the canonical \`${component}\` TypeScript
+implementation. It does not define separate behavior, state, accessibility, or
+CSS APIs.`;
   const expectedElement = `${authoredElement}\n\n${ELEMENT_START}
 ## Canonical reference
 
-This element entrypoint re-exports the canonical \`${component}\` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+${elementContract}
 
 Read the [complete ${component} component reference]({{< relref
 "/docs/components/${component}" >}}) for selectors, slots, attributes, generated

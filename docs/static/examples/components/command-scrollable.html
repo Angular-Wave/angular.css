@@ -17,23 +17,37 @@
   >
     <main class="command-scrollable-demo visual-example">
       <button
-
         type="button"
         data-variant="outline"
-        aria-controls="scrollable-command-dialog" class="button">
+        aria-controls="scrollable-command-dialog-content"
+        class="button"
+        commandfor="scrollable-command-dialog-content"
+        command="show-modal"
+      >
         Open Menu
       </button>
       <section
         id="scrollable-command-dialog"
-        class="command-dialog-shell"
-        ng-dialog
+        class="command-dialog-shell dialog"
         data-open="false"
       >
-        <div class="dialog-overlay"></div>
-        <dialog class="dialog-content">
+        <dialog
+          class="dialog-content"
+          id="scrollable-command-dialog-content"
+          closedby="any"
+          aria-labelledby="scrollable-command-dialog-title"
+          aria-describedby="scrollable-command-dialog-description"
+        >
           <header class="visually-hidden">
-            <h2 class="dialog-title">Scrollable Command Palette</h2>
-            <p class="dialog-description">Search all application commands.</p>
+            <h2 class="dialog-title" id="scrollable-command-dialog-title">
+              Scrollable Command Palette
+            </h2>
+            <p
+              class="dialog-description"
+              id="scrollable-command-dialog-description"
+            >
+              Search all application commands.
+            </p>
           </header>
           <section ng-command aria-label="Scrollable command menu">
             <div class="command-input-wrapper">
@@ -50,42 +64,45 @@
                   </svg>
                 </span>
                 <input
-
                   aria-label="Search all commands"
                   ng-model="scroll.query"
                   placeholder="Type a command or search..."
-                 class="command-input"/>
+                  class="command-input"
+                />
               </div>
             </div>
             <ul class="command-list">
               <p class="command-empty">No results found.</p>
               <section ng-repeat="group in commandGroups" class="command-group">
                 <h3 ng-bind="group.label" class="command-group-heading"></h3>
-                <li
-
-                  data-dialog-close
-                  ng-repeat="item in group.items | filter:scroll.query"
-                  ng-click="scroll.selected=item.label"
-                 class="command-item">
-                  <svg
-
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                   class="command-item-icon">
-                    <path d="M6 2h9l3 3v17H6z"></path>
-                    <path d="M14 2v4h4"></path>
-                  </svg>
-                  <span ng-bind="item.label"></span>
-                  <span
-
-                    ng-if="item.shortcut"
-                    ng-bind="item.shortcut"
-                   class="command-shortcut"></span>
+                <li ng-repeat="item in group.items | filter:scroll.query">
+                  <button
+                    type="button"
+                    ng-click="scroll.selected=item.label"
+                    class="command-item"
+                    commandfor="scrollable-command-dialog-content"
+                    command="close"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                      class="command-item-icon"
+                    >
+                      <path d="M6 2h9l3 3v17H6z"></path>
+                      <path d="M14 2v4h4"></path>
+                    </svg>
+                    <span ng-bind="item.label"></span>
+                    <span
+                      ng-if="item.shortcut"
+                      ng-bind="item.shortcut"
+                      class="command-shortcut"
+                    ></span>
+                  </button>
                 </li>
                 <div class="command-separator"></div>
               </section>

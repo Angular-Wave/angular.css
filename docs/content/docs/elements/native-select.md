@@ -26,9 +26,7 @@ Use native `select` for simple option lists. Wrap the select in
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `native-select` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete native-select component reference]({{< relref
 "/docs/components/native-select" >}}) for selectors, slots, attributes, generated

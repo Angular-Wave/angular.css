@@ -47,7 +47,7 @@ boundaries; Enter activates the current option through its ordinary click
 handler. Pointer movement updates the same active state.
 
 For a modal palette, place `ng-command` directly inside `.dialog-content`. Use
-the existing Dialog trigger and `data-dialog-close` behavior hooks instead of
+native Dialog invoker and close commands instead of
 reproducing modal focus, Escape, outside-dismissal, or focus-restoration logic
 in Command. Application shortcuts such as Ctrl J remain AngularTS `ng-keydown`
 expressions.

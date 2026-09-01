@@ -97,7 +97,7 @@ test("workflow HTML preserves icon triggers and submenu keyboard behavior", asyn
     name: "Open account menu",
   });
   await expect(avatarTrigger.locator(":scope > svg")).toHaveCount(0);
-  await expect(avatarTrigger.locator("[ng-avatar]")).toBeVisible();
+  await expect(avatarTrigger.locator(".avatar")).toBeVisible();
   await avatarTrigger.click();
   await expect(
     page.locator(".dropdown-avatar-demo").getByRole("menu"),

@@ -1,77 +1,32 @@
-.scroll-area,
-[ng-scroll-area] {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius);
-}
-
-.scroll-area-viewport {
-  width: 100%;
-  height: 100%;
+.scroll-area {
   overflow: auto;
-  border-radius: inherit;
+  border-radius: var(--radius);
   outline: none;
-  scrollbar-width: none;
+  scrollbar-color: var(--border) transparent;
+  scrollbar-width: thin;
 }
 
-:is(.scroll-area-viewport)::-webkit-scrollbar {
-  display: none;
+.scroll-area:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
-.scroll-area-scrollbar {
-  display: flex;
-  touch-action: none;
-  padding: 1px;
-  user-select: none;
-  cursor: pointer;
-}
-
-.scroll-area-scrollbar[data-visible="false"] {
-  display: none;
-}
-
-.scroll-area-scrollbar[data-orientation="vertical"] {
-  position: absolute;
-  top: 0;
-  right: 0;
+.scroll-area::-webkit-scrollbar {
   width: calc(var(--spacing) * 2.5);
-  height: 100%;
-}
-
-.scroll-area[data-direction="rtl"]
-  .scroll-area-scrollbar[data-orientation="vertical"],
-[ng-scroll-area][data-direction="rtl"]
-  .scroll-area-scrollbar[data-orientation="vertical"] {
-  right: auto;
-  left: 0;
-}
-
-.scroll-area-scrollbar[data-orientation="horizontal"] {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
   height: calc(var(--spacing) * 2.5);
 }
 
-.scroll-area-thumb {
-  position: relative;
-  flex: 0 0 auto;
+.scroll-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-area::-webkit-scrollbar-thumb {
+  border: 1px solid transparent;
   border-radius: 9999px;
   background: var(--border);
-  transition: background-color 120ms ease;
-  will-change: transform;
+  background-clip: padding-box;
 }
 
-.scroll-area-scrollbar:hover .scroll-area-thumb {
+.scroll-area::-webkit-scrollbar-thumb:hover {
   background: var(--muted-foreground);
-}
-
-:is(.scroll-area-scrollbar)[data-orientation="vertical"] > .scroll-area-thumb {
-  width: 100%;
-}
-
-:is(.scroll-area-scrollbar)[data-orientation="horizontal"]
-  > .scroll-area-thumb {
-  height: 100%;
+  background-clip: padding-box;
 }

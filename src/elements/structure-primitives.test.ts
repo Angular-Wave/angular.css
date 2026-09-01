@@ -64,14 +64,24 @@ test("field and label artifacts connect controls, descriptions, errors, and Angu
   await openElementArtifact(page, "field");
   const name = page.getByLabel("Name");
   const email = page.getByLabel("Email");
-  await expect(name).toHaveAttribute("aria-describedby", /field-message-/);
-  await expect(email).toHaveAttribute("aria-describedby", /field-message-/);
-  await expect(email).toHaveAttribute("aria-invalid", "true");
+  await expect(name).toHaveAttribute(
+    "aria-describedby",
+    "demo-profile-name-description",
+  );
+  await expect(email).toHaveAttribute(
+    "aria-describedby",
+    "demo-profile-email-error",
+  );
+  expect(
+    await email.evaluate((control: HTMLInputElement) =>
+      control.checkValidity(),
+    ),
+  ).toBe(false);
   await name.fill("Ada Lovelace");
   await email.fill("ada@example.com");
   await expect(page.locator(".output")).toContainText("Ada Lovelace");
   await expect(page.locator(".output")).toContainText("ada@example.com");
-  await expect(page.getByText("Enter a valid email.")).toHaveCount(0);
+  await expect(page.getByText("Enter a valid email.")).toBeHidden();
 
   await openElementArtifact(page, "label");
   const emailControl = page.locator("#email");
@@ -84,13 +94,10 @@ test("input-group artifact associates its visible addon with the control", async
   page,
 }) => {
   await openElementArtifact(page, "input-group");
-  const group = page.locator("[ng-input-group]");
+  const group = page.locator(".input-group");
   const input = page.getByLabel("Search");
-  await expect(group).toHaveAttribute("data-has-addon", "true");
-  await expect(group).toHaveAttribute("data-addon-count", "1");
-  await expect(group).toHaveAttribute("data-has-button", "false");
-  const addonId = await group.locator(".input-group-addon").getAttribute("id");
-  await expect(input).toHaveAttribute("aria-describedby", addonId ?? "");
+  await group.locator(".input-group-addon").click();
+  await expect(input).toBeFocused();
 });
 
 test("navigation and pagination artifacts preserve native navigation semantics", async ({
@@ -119,22 +126,25 @@ test("navigation and pagination artifacts preserve native navigation semantics",
   ).toHaveAttribute("href", "#previous");
 });
 
-test("scroll-area artifact exposes both overflow axes and synchronized scroll state", async ({
+test("scroll-area artifact exposes native overflow on both axes", async ({
   page,
 }) => {
   await openElementArtifact(page, "scroll-area");
-  const root = page.locator("[ng-scroll-area]");
-  const viewport = page.locator(".scroll-area-viewport");
-  await expect(viewport).toHaveAttribute("tabindex", "0");
-  await expect(viewport).toHaveAttribute("role", "region");
-  await expect(viewport).toHaveAttribute("aria-label", "Scrollable content");
-  await expect(root).toHaveAttribute("data-scrollable-x", "true");
-  await expect(root).toHaveAttribute("data-scrollable-y", "true");
-  await viewport.evaluate((element) => {
+  const root = page.locator(".scroll-area");
+  await expect(root).toHaveAttribute("tabindex", "0");
+  await expect(root).toHaveAttribute("aria-label", "Release tags");
+  expect(
+    await root.evaluate((element) => element.scrollWidth > element.clientWidth),
+  ).toBe(true);
+  expect(
+    await root.evaluate(
+      (element) => element.scrollHeight > element.clientHeight,
+    ),
+  ).toBe(true);
+  await root.evaluate((element) => {
     element.scrollTop = 12;
     element.scrollLeft = 18;
-    element.dispatchEvent(new Event("scroll"));
   });
-  await expect(root).toHaveAttribute("data-scroll-top", "12");
-  await expect(root).toHaveAttribute("data-scroll-left", "18");
+  expect(await root.evaluate((element) => element.scrollTop)).toBe(12);
+  expect(await root.evaluate((element) => element.scrollLeft)).toBe(18);
 });

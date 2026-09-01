@@ -3,23 +3,35 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Popover</title>
     <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
-    <link rel="stylesheet" href="/docs/assets/angular.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
     <link rel="stylesheet" href="/docs/static/examples/example.css" />
     <script src="/docs/static/js/angular-ts.umd.js"></script>
     <script src="/docs/static/js/angular-css.umd.js"></script>
   </head>
-  <body ng-app="ui" ng-cloak class="popover-example-body">
+  <body
+    ng-app="ui"
+    ng-cloak
+    class="popover-example-body"
+    data-example="popover-demo"
+  >
     <main class="popover-demo visual-example">
-      <span ng-popover aria-label="Dimensions popover">
-        <button type="button" variant="outline" class="popover-trigger button">
+      <span aria-label="Dimensions popover" class="popover">
+        <button
+          type="button"
+          variant="outline"
+          class="popover-trigger button"
+          popovertarget="popover-popover-1-content"
+        >
           Open popover
         </button>
         <aside
           class="popover-demo-content popover-content"
-          side="bottom"
           aria-label="Dimensions"
+          id="popover-popover-1-content"
+          data-side="bottom"
+          data-align="center"
+          popover
         >
           <header class="popover-header">
             <h2 class="popover-title">Dimensions</h2>
@@ -27,32 +39,20 @@
           </header>
           <div class="popover-dimension-fields">
             <div class="popover-dimension-field">
-              <label for="source-popover-width" class="label">Width</label>
-              <input id="source-popover-width" value="100%" class="input" />
+              <label for="popover-width" class="label">Width</label>
+              <input id="popover-width" value="100%" autofocus class="input" />
             </div>
             <div class="popover-dimension-field">
-              <label for="source-popover-max-width" class="label"
-                >Max. width</label
-              >
-              <input
-                id="source-popover-max-width"
-                value="300px"
-                class="input"
-              />
+              <label for="popover-max-width" class="label">Max. width</label>
+              <input id="popover-max-width" value="300px" class="input" />
             </div>
             <div class="popover-dimension-field">
-              <label for="source-popover-height" class="label">Height</label>
-              <input id="source-popover-height" value="25px" class="input" />
+              <label for="popover-height" class="label">Height</label>
+              <input id="popover-height" value="25px" class="input" />
             </div>
             <div class="popover-dimension-field">
-              <label for="source-popover-max-height" class="label">
-                Max. height
-              </label>
-              <input
-                id="source-popover-max-height"
-                value="none"
-                class="input"
-              />
+              <label for="popover-max-height" class="label">Max. height</label>
+              <input id="popover-max-height" value="none" class="input" />
             </div>
           </div>
         </aside>

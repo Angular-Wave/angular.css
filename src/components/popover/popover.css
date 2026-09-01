@@ -1,6 +1,4 @@
-.popover,
-[ng-popover] {
-  position: relative;
+.popover {
   display: inline-flex;
   width: fit-content;
 }
@@ -10,10 +8,11 @@
 }
 
 .popover-content {
-  position: absolute;
+  position: fixed;
+  inset: auto;
   z-index: 50;
-  display: flex;
   width: 18rem;
+  margin: 0;
   flex-direction: column;
   gap: calc(var(--spacing) * 2.5);
   border: 0;
@@ -27,102 +26,83 @@
     var(--shadow-md);
   outline: none;
   opacity: 0;
-  pointer-events: none;
-  transform: translate(var(--popover-x, 0), var(--popover-y, 0))
-    translate(var(--popover-motion-x, 0), var(--popover-motion-y, 2px))
-    scale(0.98);
+  transform: scale(0.98);
   transition:
+    display 150ms allow-discrete,
+    overlay 150ms allow-discrete,
     opacity 150ms ease,
     transform 150ms ease;
 }
 
-.popover-content[data-direction="rtl"] {
+.popover-content:not(:popover-open) {
+  display: none;
+}
+
+.popover-content:popover-open {
+  display: flex;
+  opacity: 1;
+  transform: scale(1);
+
+  @starting-style {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+.popover-content:dir(rtl) {
   direction: rtl;
 }
 
-.popover-content[align] {
+.popover-content[data-align] {
   text-align: start;
 }
 
-.popover-content[data-open="true"] {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translate(var(--popover-x, 0), var(--popover-y, 0)) translate(0, 0)
-    scale(1);
+.popover-content[data-side="bottom"][data-align="start"] {
+  position-area: block-end span-inline-end;
 }
 
-.popover-content[data-side="bottom"] {
-  top: calc(100% + var(--spacing));
-
-  --popover-motion-y: -2px;
-
-  transform-origin: top;
+.popover-content[data-side="bottom"][data-align="center"] {
+  position-area: block-end center;
 }
 
-.popover-content[data-side="top"] {
-  bottom: calc(100% + var(--spacing));
-
-  --popover-motion-y: 2px;
-
-  transform-origin: bottom;
+.popover-content[data-side="bottom"][data-align="end"] {
+  position-area: block-end span-inline-start;
 }
 
-.popover-content[data-side="left"] {
-  right: calc(100% + var(--spacing));
-
-  --popover-motion-x: 2px;
-  --popover-motion-y: 0;
-
-  transform-origin: right;
+.popover-content[data-side="top"][data-align="start"] {
+  position-area: block-start span-inline-end;
 }
 
-.popover-content[data-side="right"] {
-  left: calc(100% + var(--spacing));
-
-  --popover-motion-x: -2px;
-  --popover-motion-y: 0;
-
-  transform-origin: left;
+.popover-content[data-side="top"][data-align="center"] {
+  position-area: block-start center;
 }
 
-.popover-content:is(
-    [data-side="bottom"],
-    [data-side="top"]
-  )[data-align="center"] {
-  left: 50%;
-
-  --popover-x: -50%;
+.popover-content[data-side="top"][data-align="end"] {
+  position-area: block-start span-inline-start;
 }
 
-.popover-content:is(
-    [data-side="bottom"],
-    [data-side="top"]
-  )[data-align="start"] {
-  inset-inline-start: 0;
+.popover-content[data-side="left"][data-align="start"] {
+  position-area: left span-bottom;
 }
 
-.popover-content:is([data-side="bottom"], [data-side="top"])[data-align="end"] {
-  inset-inline-end: 0;
+.popover-content[data-side="left"][data-align="center"] {
+  position-area: left center;
 }
 
-.popover-content:is(
-    [data-side="left"],
-    [data-side="right"]
-  )[data-align="center"] {
-  top: 50%;
-
-  --popover-y: -50%;
+.popover-content[data-side="left"][data-align="end"] {
+  position-area: left span-top;
 }
 
-.popover-content:is(
-    [data-side="left"],
-    [data-side="right"]
-  )[data-align="start"] {
-  top: 0;
+.popover-content[data-side="right"][data-align="start"] {
+  position-area: right span-bottom;
 }
 
-.popover-content:is([data-side="left"], [data-side="right"])[data-align="end"] {
-  bottom: 0;
+.popover-content[data-side="right"][data-align="center"] {
+  position-area: right center;
+}
+
+.popover-content[data-side="right"][data-align="end"] {
+  position-area: right span-top;
 }
 
 .popover-header {

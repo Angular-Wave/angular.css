@@ -16,21 +16,32 @@
     data-example="dialog-demo"
   >
     <main class="dialog-demo visual-example">
-      <section id="profile-dialog" ng-dialog>
-        <button variant="outline" class="dialog-trigger button">
+      <section id="profile-dialog" class="dialog">
+        <button
+          commandfor="profile-dialog-content"
+          command="show-modal"
+          variant="outline"
+          class="dialog-trigger button"
+        >
           Edit profile
         </button>
-        <div class="dialog-overlay">
-          <span class="dialog-overlay-probe" aria-hidden="true"></span>
-        </div>
-        <dialog class="dialog-content">
+        <dialog
+          id="profile-dialog-content"
+          closedby="any"
+          aria-labelledby="profile-dialog-title"
+          aria-describedby="profile-dialog-description"
+          class="dialog-content"
+        >
           <header class="dialog-header">
-            <h2 class="dialog-title">Edit profile</h2>
-            <p class="dialog-description">
+            <h2 id="profile-dialog-title" class="dialog-title">Edit profile</h2>
+            <p id="profile-dialog-description" class="dialog-description">
               Make changes to your profile here. Click save when you're done.
             </p>
           </header>
-          <form class="dialog-profile-form" ng-submit="savedName=profile.name">
+          <form
+            method="dialog"
+            class="dialog-profile-form"
+          >
             <div class="dialog-form-row">
               <label for="dialog-name" class="label">Name</label>
               <input id="dialog-name" ng-model="profile.name" class="input" />
@@ -43,19 +54,33 @@
                 ng-model="profile.username" class="input" />
             </div>
             <footer class="dialog-footer">
-              <button variant="outline" data-dialog-close class="button">
+              <button
+                type="button"
+                commandfor="profile-dialog-content"
+                command="close"
+                variant="outline"
+                class="button"
+              >
                 Cancel
               </button>
               <button
 
-                type="submit"
-                data-dialog-close
+                type="button"
+                commandfor="profile-dialog-content"
+                command="close"
                 ng-click="savedName=profile.name" class="button">
                 Save changes
               </button>
             </footer>
           </form>
-          <button variant="ghost" size="icon-sm" class="dialog-close button">
+          <button
+            type="button"
+            commandfor="profile-dialog-content"
+            command="close"
+            variant="ghost"
+            size="icon-sm"
+            class="dialog-close button"
+          >
             <svg
               viewBox="0 0 24 24"
               fill="none"

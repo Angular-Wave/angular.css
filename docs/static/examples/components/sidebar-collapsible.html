@@ -33,25 +33,24 @@
           </a>
         </header>
         <nav class="sidebar-content">
-          <div ng-collapsible open class="sidebar-group-collapsible">
-            <section class="sidebar-group">
-              <h3 class="sidebar-group-label">
-                <button
-                  type="button"
-                  class="sidebar-collapsible-trigger collapsible-trigger"
-                >
-                  Help
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    aria-hidden="true"
-                  >
-                    <path d="m6 9 6 6 6-6"></path>
-                  </svg>
-                </button>
-              </h3>
+          <details
+            open
+            class="collapsible sidebar-group sidebar-group-collapsible"
+          >
+            <summary
+              class="sidebar-group-label sidebar-collapsible-trigger"
+            >
+              Help
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="m6 9 6 6 6-6"></path>
+              </svg>
+            </summary>
               <div class="collapsible-content">
                 <div class="sidebar-group-content">
                   <ul class="sidebar-menu">
@@ -89,18 +88,17 @@
                   </ul>
                 </div>
               </div>
-            </section>
-          </div>
+          </details>
           <section class="sidebar-group">
             <h3 class="sidebar-group-label">Guide</h3>
             <div class="sidebar-group-content">
               <ul class="sidebar-menu">
-                <li
-                  ng-collapsible
-                  open
-                  class="sidebar-menu-collapsible sidebar-menu-item"
-                >
-                  <button class="collapsible-trigger sidebar-menu-button">
+                <li class="sidebar-menu-item">
+                  <details
+                    open
+                    class="collapsible sidebar-menu-collapsible"
+                  >
+                  <summary class="sidebar-menu-button">
                     <span>Getting Started</span>
                     <svg
                       class="sidebar-collapsible-chevron"
@@ -112,7 +110,7 @@
                     >
                       <path d="m9 18 6-6-6-6"></path>
                     </svg>
-                  </button>
+                  </summary>
                   <div class="collapsible-content">
                     <ul class="sidebar-menu-sub">
                       <li class="sidebar-menu-sub-item">
@@ -130,12 +128,11 @@
                       </li>
                     </ul>
                   </div>
+                  </details>
                 </li>
-                <li
-                  ng-collapsible
-                  class="sidebar-menu-collapsible sidebar-menu-item"
-                >
-                  <button class="collapsible-trigger sidebar-menu-button">
+                <li class="sidebar-menu-item">
+                  <details class="collapsible sidebar-menu-collapsible">
+                  <summary class="sidebar-menu-button">
                     <span>Build Your Application</span>
                     <svg
                       class="sidebar-collapsible-chevron"
@@ -147,7 +144,7 @@
                     >
                       <path d="m9 18 6-6-6-6"></path>
                     </svg>
-                  </button>
+                  </summary>
                   <div class="collapsible-content">
                     <ul class="sidebar-menu-sub">
                       <li class="sidebar-menu-sub-item">
@@ -167,12 +164,11 @@
                       </li>
                     </ul>
                   </div>
+                  </details>
                 </li>
-                <li
-                  ng-collapsible
-                  class="sidebar-menu-collapsible sidebar-menu-item"
-                >
-                  <button class="collapsible-trigger sidebar-menu-button">
+                <li class="sidebar-menu-item">
+                  <details class="collapsible sidebar-menu-collapsible">
+                  <summary class="sidebar-menu-button">
                     <span>API Reference</span>
                     <svg
                       class="sidebar-collapsible-chevron"
@@ -184,7 +180,7 @@
                     >
                       <path d="m9 18 6-6-6-6"></path>
                     </svg>
-                  </button>
+                  </summary>
                   <div class="collapsible-content">
                     <ul class="sidebar-menu-sub">
                       <li class="sidebar-menu-sub-item">
@@ -199,6 +195,7 @@
                       </li>
                     </ul>
                   </div>
+                  </details>
                 </li>
               </ul>
             </div>

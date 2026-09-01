@@ -4,24 +4,23 @@ description: >
   Expandable content sections
 ---
 
-Use `ng-accordion` on a container whose direct children contain a heading with a
-button followed by a panel.
+Use `.accordion` around native `details` elements. Give sibling items the same
+`name` when opening one item should close the others.
 
 ```html
-<div ng-accordion>
-  <div>
-    <h3><button type="button">Section 1</button></h3>
+<div class="accordion">
+  <details name="sections" open>
+    <summary>Section 1</summary>
     <div>Content for section 1</div>
-  </div>
-  <div>
-    <h3><button type="button">Section 2</button></h3>
+  </details>
+  <details name="sections">
+    <summary>Section 2</summary>
     <div>Content for section 2</div>
-  </div>
+  </details>
 </div>
 ```
 
-Set `multiple` or `type="multiple"` to allow more than one section to remain
-open.
+Omit `name` to allow more than one section to remain open.
 
 ## Example
 
@@ -30,9 +29,7 @@ open.
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `accordion` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete accordion component reference]({{< relref
 "/docs/components/accordion" >}}) for selectors, slots, attributes, generated

@@ -12,7 +12,7 @@
   <body
     ng-app="ui"
     ng-cloak
-    ng-init="fontWeight = 'normal'; pageDirection = 'rtl'"
+    ng-init="fontWeight='normal'; pageDirection='rtl'; bold=true; italic=true"
     data-example="toggle-group-demo toggle-group-disabled toggle-group-font-weight-selector toggle-group-outline toggle-group-rtl toggle-group-sizes toggle-group-spacing toggle-group-vertical"
   >
     <main
@@ -21,58 +21,20 @@
       <section aria-labelledby="toggle-format-heading">
         <header><h2 id="toggle-format-heading">Formatting</h2></header>
         <fieldset
-          ng-toggle-group
-          multiple
+          class="toggle-group"
           variant="outline"
-          aria-label="Text formatting"
-          id="multiple-toggle-group" class="toggle-group">
-          <button
-
-            type="button"
-            aria-label="Toggle bold"
-            aria-pressed="true"
-           class="toggle-group-item">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              aria-hidden="true"
-            >
-              <path d="M6 4h7a4 4 0 0 1 0 8H6zM6 12h8a4 4 0 0 1 0 8H6z" />
-            </svg>
-          </button>
-          <button
-
-            type="button"
-            aria-label="Toggle italic"
-            aria-pressed="true"
-           class="toggle-group-item">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              aria-hidden="true"
-            >
-              <path d="M10 4h7M7 20h7M14 4 10 20" />
-            </svg>
-          </button>
-          <button
-
-            type="button"
-            aria-label="Toggle underline"
-           class="toggle-group-item">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              aria-hidden="true"
-            >
-              <path d="M6 4v6a6 6 0 0 0 12 0V4M4 20h16" />
-            </svg>
-          </button>
+          id="multiple-toggle-group"
+        >
+          <legend class="visually-hidden">Text formatting</legend>
+          <label class="toggle-group-item"
+            ><input type="checkbox" ng-model="bold" />Bold</label
+          >
+          <label class="toggle-group-item"
+            ><input type="checkbox" ng-model="italic" />Italic</label
+          >
+          <label class="toggle-group-item"
+            ><input type="checkbox" />Underline</label
+          >
         </fieldset>
       </section>
 
@@ -81,83 +43,92 @@
           <h2 id="toggle-keyboard-heading">Keyboard navigation</h2>
         </header>
         <fieldset
-          ng-toggle-group
+          class="toggle-group"
           variant="outline"
-          aria-label="Text style"
-          id="keyboard-toggle-group" class="toggle-group">
-          <button
-
-            type="button"
-            aria-pressed="true"
-           class="toggle-group-item">
-            Bold
-          </button>
-          <button
-
-            type="button"
-            aria-disabled="true"
-           class="toggle-group-item">
-            Italic
-          </button>
-          <button type="button" class="toggle-group-item">Underline</button>
+          id="keyboard-toggle-group"
+        >
+          <legend class="visually-hidden">Text style</legend>
+          <label class="toggle-group-item"
+            ><input type="radio" name="style" value="bold" checked />Bold</label
+          >
+          <label class="toggle-group-item"
+            ><input
+              type="radio"
+              name="style"
+              value="italic"
+              disabled
+            />Italic</label
+          >
+          <label class="toggle-group-item"
+            ><input
+              type="radio"
+              name="style"
+              value="underline"
+            />Underline</label
+          >
         </fieldset>
       </section>
 
       <section aria-labelledby="toggle-disabled-heading">
         <header><h2 id="toggle-disabled-heading">Disabled</h2></header>
-        <fieldset
-          ng-toggle-group
-          disabled
-          aria-label="Disabled formatting"
-          id="disabled-toggle-group" class="toggle-group">
-          <button type="button" class="toggle-group-item">Bold</button>
-          <button type="button" class="toggle-group-item">Italic</button>
-          <button type="button" class="toggle-group-item">Underline</button>
+        <fieldset class="toggle-group" id="disabled-toggle-group" disabled>
+          <legend class="visually-hidden">Disabled formatting</legend>
+          <label class="toggle-group-item"><input type="checkbox" />Bold</label>
+          <label class="toggle-group-item"
+            ><input type="checkbox" />Italic</label
+          >
+          <label class="toggle-group-item"
+            ><input type="checkbox" />Underline</label
+          >
         </fieldset>
       </section>
 
       <section aria-labelledby="toggle-weight-heading">
         <header><h2 id="toggle-weight-heading">Font weight</h2></header>
         <fieldset
-          ng-toggle-group
+          class="toggle-group"
           variant="outline"
           spacing="2"
           size="lg"
-          aria-label="Font weight"
-          id="font-weight-toggle-group" class="toggle-group">
-          <button
-
-            class="toggle-weight-item toggle-group-item"
-            type="button"
-            ng-click="fontWeight = 'light'"
+          id="font-weight-toggle-group"
+        >
+          <legend class="visually-hidden">Font weight</legend>
+          <label class="toggle-weight-item toggle-group-item"
+            ><input
+              type="radio"
+              name="weight"
+              value="light"
+              ng-model="fontWeight"
+            /><strong style="font-weight: 300">Aa</strong
+            ><span>Light</span></label
           >
-            <strong style="font-weight: 300">Aa</strong><span>Light</span>
-          </button>
-          <button
-
-            class="toggle-weight-item toggle-group-item"
-            type="button"
-            aria-pressed="true"
-            ng-click="fontWeight = 'normal'"
+          <label class="toggle-weight-item toggle-group-item"
+            ><input
+              type="radio"
+              name="weight"
+              value="normal"
+              ng-model="fontWeight"
+            /><strong style="font-weight: 400">Aa</strong
+            ><span>Normal</span></label
           >
-            <strong style="font-weight: 400">Aa</strong><span>Normal</span>
-          </button>
-          <button
-
-            class="toggle-weight-item toggle-group-item"
-            type="button"
-            ng-click="fontWeight = 'medium'"
+          <label class="toggle-weight-item toggle-group-item"
+            ><input
+              type="radio"
+              name="weight"
+              value="medium"
+              ng-model="fontWeight"
+            /><strong style="font-weight: 500">Aa</strong
+            ><span>Medium</span></label
           >
-            <strong style="font-weight: 500">Aa</strong><span>Medium</span>
-          </button>
-          <button
-
-            class="toggle-weight-item toggle-group-item"
-            type="button"
-            ng-click="fontWeight = 'bold'"
+          <label class="toggle-weight-item toggle-group-item"
+            ><input
+              type="radio"
+              name="weight"
+              value="bold"
+              ng-model="fontWeight"
+            /><strong style="font-weight: 700">Aa</strong
+            ><span>Bold</span></label
           >
-            <strong style="font-weight: 700">Aa</strong><span>Bold</span>
-          </button>
         </fieldset>
         <output class="output">Selected: font-{{ fontWeight }}</output>
       </section>
@@ -165,38 +136,28 @@
       <section aria-labelledby="toggle-sizes-heading">
         <header><h2 id="toggle-sizes-heading">Sizes and spacing</h2></header>
         <div class="toggle-group-size-stack">
-          <fieldset
-          ng-toggle-group
-            size="sm"
-            variant="outline"
-            aria-label="Small position" class="toggle-group">
-            <button
-
-              type="button"
-              aria-pressed="true"
-             class="toggle-group-item">
-              Top
-            </button>
-            <button type="button" class="toggle-group-item">Bottom</button>
-            <button type="button" class="toggle-group-item">Left</button>
-            <button type="button" class="toggle-group-item">Right</button>
+          <fieldset class="toggle-group" size="sm" variant="outline">
+            <legend class="visually-hidden">Small position</legend>
+            <label class="toggle-group-item"
+              ><input type="radio" name="small-position" checked />Top</label
+            >
+            <label class="toggle-group-item"
+              ><input type="radio" name="small-position" />Bottom</label
+            >
           </fieldset>
           <fieldset
-          ng-toggle-group
+            class="toggle-group"
             variant="outline"
             spacing="2"
-            aria-label="Spaced position"
-            id="spaced-toggle-group" class="toggle-group">
-            <button
-
-              type="button"
-              aria-pressed="true"
-             class="toggle-group-item">
-              Top
-            </button>
-            <button type="button" class="toggle-group-item">Bottom</button>
-            <button type="button" class="toggle-group-item">Left</button>
-            <button type="button" class="toggle-group-item">Right</button>
+            id="spaced-toggle-group"
+          >
+            <legend class="visually-hidden">Spaced position</legend>
+            <label class="toggle-group-item"
+              ><input type="radio" name="spaced-position" checked />Top</label
+            >
+            <label class="toggle-group-item"
+              ><input type="radio" name="spaced-position" />Bottom</label
+            >
           </fieldset>
         </div>
       </section>
@@ -204,61 +165,53 @@
       <section aria-labelledby="toggle-vertical-heading">
         <header><h2 id="toggle-vertical-heading">Vertical</h2></header>
         <fieldset
-          ng-toggle-group
-          multiple
+          class="toggle-group"
           orientation="vertical"
           spacing="1"
-          aria-label="Vertical formatting"
-          id="vertical-toggle-group" class="toggle-group">
-          <button
-
-            type="button"
-            aria-pressed="true"
-           class="toggle-group-item">
-            Bold
-          </button>
-          <button
-
-            type="button"
-            aria-pressed="true"
-           class="toggle-group-item">
-            Italic
-          </button>
-          <button type="button" class="toggle-group-item">Underline</button>
+          id="vertical-toggle-group"
+        >
+          <legend class="visually-hidden">Vertical formatting</legend>
+          <label class="toggle-group-item"
+            ><input type="checkbox" checked />Bold</label
+          >
+          <label class="toggle-group-item"
+            ><input type="checkbox" checked />Italic</label
+          >
+          <label class="toggle-group-item"
+            ><input type="checkbox" />Underline</label
+          >
         </fieldset>
       </section>
 
       <section
-        aria-labelledby="toggle-rtl-heading"
         dir="{{ pageDirection }}"
         lang="ar"
         id="toggle-rtl-shell"
+        aria-labelledby="toggle-rtl-heading"
       >
         <header>
           <h2 id="toggle-rtl-heading">اتجاه العرض</h2>
           <button
-
             type="button"
             variant="outline"
             size="sm"
-            ng-click="pageDirection = pageDirection === 'rtl' ? 'ltr' : 'rtl'" class="button">
+            class="button"
+            ng-click="pageDirection = pageDirection === 'rtl' ? 'ltr' : 'rtl'"
+          >
             Change direction
           </button>
         </header>
-        <fieldset
-          ng-toggle-group
-          variant="outline"
-          aria-label="طريقة العرض"
-          id="rtl-toggle-group" class="toggle-group">
-          <button
-
-            type="button"
-            aria-pressed="true"
-           class="toggle-group-item">
-            قائمة
-          </button>
-          <button type="button" class="toggle-group-item">شبكة</button>
-          <button type="button" class="toggle-group-item">بطاقات</button>
+        <fieldset class="toggle-group" variant="outline" id="rtl-toggle-group">
+          <legend class="visually-hidden">طريقة العرض</legend>
+          <label class="toggle-group-item"
+            ><input type="radio" name="view" value="list" checked />قائمة</label
+          >
+          <label class="toggle-group-item"
+            ><input type="radio" name="view" value="grid" />شبكة</label
+          >
+          <label class="toggle-group-item"
+            ><input type="radio" name="view" value="cards" />بطاقات</label
+          >
         </fieldset>
       </section>
     </main>

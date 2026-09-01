@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 const statesUrl = "/docs/static/examples/components/field-state-workflows.html";
 
-test("field links visible descriptions and errors to its control", async ({
+test("field keeps authored descriptions and errors connected to its control", async ({
   page,
 }) => {
   await page.goto(statesUrl);
@@ -25,44 +25,62 @@ test("field links visible descriptions and errors to its control", async ({
   );
 });
 
-test("field mirrors an authored invalid state", async ({ page }) => {
-  await page.goto(statesUrl);
-
-  await expect(page.locator("#explicit-invalid-field")).toHaveAttribute(
-    "data-invalid",
-    "true",
-  );
-});
-
-test("field mirrors native required validity", async ({ page }) => {
-  await page.goto(statesUrl);
-
-  const field = page.locator("#required-field");
-  const input = page.locator("#required-email");
-  await expect(field).toHaveAttribute("data-invalid", "true");
-  await expect(input).toHaveAttribute("aria-invalid", "true");
-
-  await input.fill("jane@example.com");
-  await expect(field).toHaveAttribute("data-invalid", "false");
-  await expect(input).toHaveAttribute("aria-invalid", "false");
-});
-
-test("field tracks a control inserted by an AngularTS structural binding", async ({
+test("field styles an authored invalid state without mirroring attributes", async ({
   page,
 }) => {
   await page.goto(statesUrl);
 
-  const field = page.locator("#dynamic-field");
+  const field = page.locator("#explicit-invalid-field");
+  await expect(field.locator("input")).toHaveAttribute("aria-invalid", "true");
+  await expect(field.locator("label")).toHaveCSS("color", /rgb\(/);
+});
+
+test("field relies on native required validity", async ({ page }) => {
+  await page.goto(statesUrl);
+
+  const field = page.locator("#required-field");
+  const input = page.locator("#required-email");
+  expect(
+    await input.evaluate((control: HTMLInputElement) =>
+      control.checkValidity(),
+    ),
+  ).toBe(false);
+  await expect(field).not.toHaveAttribute("data-invalid", /.+/);
+
+  await input.fill("jane@example.com");
+  expect(
+    await input.evaluate((control: HTMLInputElement) =>
+      control.checkValidity(),
+    ),
+  ).toBe(true);
+});
+
+test("field supports a control inserted by an AngularTS structural binding", async ({
+  page,
+}) => {
+  await page.goto(statesUrl);
+
   const input = page.locator("#dynamic-email");
   await expect(input).toHaveCount(0);
   await page.getByRole("button", { name: "Add email field" }).click();
 
   await expect(input).toBeVisible();
-  await expect(field).toHaveAttribute("data-invalid", "true");
-  await expect(input).toHaveAttribute("aria-describedby", /field-message-\d+/);
+  await expect(input).toHaveAttribute(
+    "aria-describedby",
+    "dynamic-email-description",
+  );
+  expect(
+    await input.evaluate((control: HTMLInputElement) =>
+      control.checkValidity(),
+    ),
+  ).toBe(false);
 
   await input.fill("team@example.com");
-  await expect(field).toHaveAttribute("data-invalid", "false");
+  expect(
+    await input.evaluate((control: HTMLInputElement) =>
+      control.checkValidity(),
+    ),
+  ).toBe(true);
 });
 
 test("field workflows compose controls, responsive layout, and RTL", async ({
@@ -72,16 +90,10 @@ test("field workflows compose controls, responsive layout, and RTL", async ({
   await page.goto("/docs/static/examples/components/field-workflows.html");
 
   await expect(page.locator("[data-example]")).toHaveCount(13);
-  const fields = page.locator("[ng-field]");
+  const fields = page.locator(".field");
   expect(await fields.count()).toBeGreaterThan(20);
-  for (const field of await fields.all()) {
-    const tagName = await field.evaluate((element) => element.tagName);
-    if (tagName === "FIELDSET") {
-      await expect(field).not.toHaveAttribute("role", "group");
-    } else {
-      await expect(field).toHaveAttribute("role", "group");
-    }
-  }
+  for (const field of await fields.all())
+    await expect(field).not.toHaveAttribute("role", "group");
 
   await page.getByLabel("External disks").check();
   await expect(page.getByLabel("External disks")).toBeChecked();

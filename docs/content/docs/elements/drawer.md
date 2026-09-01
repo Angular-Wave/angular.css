@@ -5,14 +5,12 @@ description: >
   Bottom anchored drawer panels
 ---
 
-This compatibility entrypoint renders the same packaged semantic Drawer artifact
-as the component page.
+This styling entrypoint uses the same native Drawer artifact as the component page.
 
 ```html
-<section ng-drawer>
-  <button class="drawer-trigger">Open Drawer</button>
-  <div class="drawer-overlay"></div>
-  <dialog class="drawer-content">
+<section class="drawer">
+  <button commandfor="goal-drawer" command="show-modal">Open Drawer</button>
+  <dialog id="goal-drawer" data-side="bottom" class="drawer-content">
     <div class="drawer-handle"></div>
   </dialog>
 </section>
@@ -25,9 +23,7 @@ as the component page.
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `drawer` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete drawer component reference]({{< relref
 "/docs/components/drawer" >}}) for selectors, slots, attributes, generated

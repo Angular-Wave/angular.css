@@ -24,9 +24,7 @@ Group OTP parts with `class="input-otp-group"` and mark the active part with
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `input-otp` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete input-otp component reference]({{< relref
 "/docs/components/input-otp" >}}) for selectors, slots, attributes, generated

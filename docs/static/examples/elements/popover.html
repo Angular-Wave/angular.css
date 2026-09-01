@@ -16,15 +16,22 @@
     data-example="popover-demo"
   >
     <main class="popover-demo visual-example">
-      <span ng-popover aria-label="Dimensions popover">
-        <button type="button" variant="outline" class="popover-trigger button">
+      <span aria-label="Dimensions popover" class="popover">
+        <button
+          type="button"
+          variant="outline"
+          class="popover-trigger button"
+          popovertarget="popover-popover-1-content"
+        >
           Open popover
         </button>
         <aside
-
           class="popover-demo-content popover-content"
-          side="bottom"
           aria-label="Dimensions"
+          id="popover-popover-1-content"
+          data-side="bottom"
+          data-align="center"
+          popover
         >
           <header class="popover-header">
             <h2 class="popover-title">Dimensions</h2>
@@ -33,7 +40,7 @@
           <div class="popover-dimension-fields">
             <div class="popover-dimension-field">
               <label for="popover-width" class="label">Width</label>
-              <input id="popover-width" value="100%" class="input" />
+              <input id="popover-width" value="100%" autofocus class="input" />
             </div>
             <div class="popover-dimension-field">
               <label for="popover-max-width" class="label">Max. width</label>

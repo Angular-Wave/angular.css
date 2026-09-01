@@ -11,33 +11,36 @@
   </head>
   <body ng-app="ui" ng-cloak ng-init="alignment='center'">
     <div class="stack-sm">
-      <fieldset ng-toggle-group class="row toggle-group" variant="outline">
-        <button
-
-          aria-pressed="false"
-          ng-click="alignment='left'"
-          type="button"
-         class="toggle-group-item">
+      <fieldset class="toggle-group visual-example" variant="outline">
+        <legend class="visually-hidden">Text alignment</legend>
+        <label class="toggle-group-item">
+          <input
+            type="radio"
+            name="alignment"
+            value="left"
+            ng-model="alignment"
+          />
           Left
-        </button>
-        <button
-
-          aria-pressed="true"
-          ng-click="alignment='center'"
-          type="button"
-         class="toggle-group-item">
+        </label>
+        <label class="toggle-group-item">
+          <input
+            type="radio"
+            name="alignment"
+            value="center"
+            ng-model="alignment"
+          />
           Center
-        </button>
-        <button
-
-          aria-pressed="false"
-          ng-click="alignment='right'"
-          type="button"
-         class="toggle-group-item">
+        </label>
+        <label class="toggle-group-item">
+          <input
+            type="radio"
+            name="alignment"
+            value="right"
+            ng-model="alignment"
+          />
           Right
-        </button>
+        </label>
       </fieldset>
-
       <div class="output">Alignment: <span ng-bind="alignment"></span></div>
     </div>
   </body>

@@ -22,9 +22,7 @@ controller should render the panel open.
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `popover` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete popover component reference]({{< relref
 "/docs/components/popover" >}}) for selectors, slots, attributes, generated

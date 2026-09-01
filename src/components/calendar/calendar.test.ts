@@ -186,13 +186,14 @@ test("Date Picker basic, demo, and date-of-birth compositions use real popovers 
   await expect(page.locator("[ng-calendar]")).toHaveCount(8);
 
   const basic = page.locator("#date-picker-basic-popover");
+  const basicContent = basic.locator(".popover-content");
   await page.locator("#date-picker-basic").click();
-  await expect(basic).toHaveAttribute("data-open", "true");
+  await expect(basicContent).toBeVisible();
   await basic.locator('[data-value="2026-09-12"]').click();
   await expect(page.locator("#date-picker-basic")).toContainText(
     "September 12, 2026",
   );
-  await expect(basic).toHaveAttribute("data-open", "true");
+  await expect(basicContent).toBeVisible();
 
   const demo = page.locator("#date-picker-demo-popover");
   await demo.locator(".popover-trigger").click();
@@ -200,7 +201,7 @@ test("Date Picker basic, demo, and date-of-birth compositions use real popovers 
   await expect(demo.locator(".popover-trigger")).toContainText(
     "September 13, 2026",
   );
-  await expect(demo).toHaveAttribute("data-open", "true");
+  await expect(demo.locator(".popover-content")).toBeVisible();
 
   const dob = page.locator("#date-picker-dob-popover");
   await page.locator("#date-picker-dob").click();
@@ -209,7 +210,7 @@ test("Date Picker basic, demo, and date-of-birth compositions use real popovers 
   await expect(page.locator("#date-picker-dob")).toContainText(
     "September 14, 2026",
   );
-  await expect(dob).toHaveAttribute("data-open", "false");
+  await expect(dob.locator(".popover-content")).toBeHidden();
 });
 
 test("Date Picker dropdown composition keeps selection open until Done", async ({
@@ -220,21 +221,22 @@ test("Date Picker dropdown composition keeps selection open until Done", async (
   await expectBuiltArtifactRuntime(page, true);
 
   const popover = page.locator("#date-picker-dropdown-popover");
+  const content = popover.locator(".popover-content");
   await page.locator("#date-picker-with-dropdowns").click();
-  await expect(popover).toHaveAttribute("data-open", "true");
+  await expect(content).toBeVisible();
   await expect(popover.getByRole("combobox", { name: "Month" })).toBeVisible();
   await expect(popover.getByRole("combobox", { name: "Year" })).toBeVisible();
   await popover.locator('[data-value="2026-09-16"]').click();
   await expect(page.locator("#date-picker-with-dropdowns")).toContainText(
     "September 16, 2026",
   );
-  await expect(popover).toHaveAttribute("data-open", "true");
+  await expect(content).toBeVisible();
   await expect(page.locator(".date-picker-dropdown-demo")).toHaveScreenshot(
     "date-picker-with-dropdowns-open-desktop.png",
     { animations: "disabled" },
   );
   await page.getByRole("button", { name: "Done" }).click();
-  await expect(popover).toHaveAttribute("data-open", "false");
+  await expect(content).toBeHidden();
   await expect(page.locator("#date-picker-with-dropdowns")).toBeFocused();
 });
 
@@ -247,14 +249,14 @@ test("Date Picker text and natural-language inputs synchronize through AngularTS
   await input.fill("October 05, 2026");
   await input.press("ArrowDown");
   const inputPopover = page.locator("#date-picker-input-popover");
-  await expect(inputPopover).toHaveAttribute("data-open", "true");
+  await expect(inputPopover.locator(".popover-content")).toBeVisible();
   await expect(inputPopover.locator("[ng-calendar]")).toHaveAttribute(
     "data-month",
     "2026-10",
   );
   await inputPopover.locator('[data-value="2026-10-06"]').click();
   await expect(input).toHaveValue("October 06, 2026");
-  await expect(inputPopover).toHaveAttribute("data-open", "false");
+  await expect(inputPopover.locator(".popover-content")).toBeHidden();
 
   const natural = page.getByRole("textbox", { name: "Schedule Date" });
   await natural.fill("October 5, 2026");
@@ -269,7 +271,7 @@ test("Date Picker text and natural-language inputs synchronize through AngularTS
   );
   await naturalPopover.locator('[data-value="2026-10-06"]').click();
   await expect(natural).toHaveValue("October 06, 2026");
-  await expect(naturalPopover).toHaveAttribute("data-open", "false");
+  await expect(naturalPopover.locator(".popover-content")).toBeHidden();
 });
 
 test("Date Picker range, RTL, and time compositions remain functional and contained", async ({
@@ -287,15 +289,12 @@ test("Date Picker range, RTL, and time compositions remain functional and contai
   await expect(page.locator("#date-picker-range")).toContainText(
     "Sep 20, 2026 - Sep 23, 2026",
   );
-  await expect(range).toHaveAttribute("data-open", "true");
+  await expect(range.locator(".popover-content")).toBeVisible();
 
   await page.keyboard.press("Escape");
   const rtl = page.locator("#date-picker-rtl-popover");
   await rtl.locator(".popover-trigger").click();
-  await expect(rtl.locator("[ng-calendar]")).toHaveAttribute(
-    "data-direction",
-    "rtl",
-  );
+  await expect(rtl.locator("[ng-calendar]")).toHaveCSS("direction", "rtl");
   await expect(rtl.locator(".calendar-weekday").first()).toContainText("ح");
 
   await page.keyboard.press("Escape");
@@ -305,7 +304,7 @@ test("Date Picker range, RTL, and time compositions remain functional and contai
   await expect(page.locator("#date-picker-time-date")).toContainText(
     "Sep 12, 2026",
   );
-  await expect(time).toHaveAttribute("data-open", "false");
+  await expect(time.locator(".popover-content")).toBeHidden();
   await page.locator("#date-picker-time-value").fill("11:45:30");
   await expect(page.locator("#date-picker-time-value")).toHaveValue("11:45:30");
 

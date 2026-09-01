@@ -1,4 +1,4 @@
-/* Version: 0.0.1 - September 1, 2026 20:39:58 */
+/* Version: 0.0.1 - September 2, 2026 00:53:54 */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
     typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -37,221 +37,6 @@
         if (scope) {
             scope.on("$destroy", cleanup);
         }
-    }
-
-    let accordionIdCounter = 0;
-    const isBooleanAttribute = (value) => value === "" || value === "true";
-    const isElementClosed = (value) => value === "closed" || value === "0" || value === "false";
-    const setAttributeIfChanged$g = (element, name, value) => {
-        if (element.getAttribute(name) !== value) {
-            element.setAttribute(name, value);
-        }
-    };
-    const resolveItems = (element) => {
-        const explicit = Array.from(element.children).filter((child) => child instanceof HTMLElement &&
-            (child.matches(".accordion-item") || child.matches(".accordion-item")));
-        if (explicit.length) {
-            return explicit;
-        }
-        return Array.from(element.children).filter((child) => child instanceof HTMLElement);
-    };
-    const resolveHeader = (item) => {
-        return (item.querySelector(".accordion-header") ??
-            (item.firstElementChild instanceof HTMLElement
-                ? item.firstElementChild
-                : null));
-    };
-    const resolvePanel = (item, header) => {
-        return (item.querySelector(".accordion-content") ??
-            item.querySelector(".accordion-panel") ??
-            (header.nextElementSibling instanceof HTMLElement
-                ? header.nextElementSibling
-                : item.lastElementChild instanceof HTMLElement
-                    ? item.lastElementChild
-                    : null));
-    };
-    const resolveTrigger = (header) => {
-        const slotTrigger = header.querySelector(".accordion-trigger") ??
-            header.querySelector("button.accordion-trigger");
-        const trigger = slotTrigger ?? header.querySelector("button");
-        if (trigger instanceof HTMLButtonElement)
-            return trigger;
-        return header instanceof HTMLButtonElement ? header : null;
-    };
-    const setItemState = (item, open) => {
-        const header = resolveHeader(item);
-        const panel = header ? resolvePanel(item, header) : null;
-        const trigger = header ? resolveTrigger(header) : null;
-        if (!header || !panel || !trigger)
-            return;
-        const itemState = open ? "open" : "closed";
-        setAttributeIfChanged$g(item, "data-state", itemState);
-        setAttributeIfChanged$g(header, "data-state", itemState);
-        setAttributeIfChanged$g(trigger, "aria-expanded", String(open));
-        setAttributeIfChanged$g(trigger, "data-state", itemState);
-        setAttributeIfChanged$g(panel, "data-open", String(open));
-        setAttributeIfChanged$g(panel, "data-state", itemState);
-        setAttributeIfChanged$g(panel, "aria-hidden", String(!open));
-    };
-    function accordionDirective() {
-        return {
-            link(scope, element) {
-                const items = resolveItems(element);
-                const allowsMultiple = element.hasAttribute("multiple") ||
-                    element.getAttribute("type") === "multiple" ||
-                    element.getAttribute("data-type") === "multiple";
-                const isItemDisabled = (item, button) => button.disabled ||
-                    button.getAttribute("aria-disabled") === "true" ||
-                    isBooleanAttribute(item.getAttribute("data-disabled")) ||
-                    item.hasAttribute("disabled");
-                const isPanelOpen = (item) => {
-                    const header = resolveHeader(item);
-                    if (!header)
-                        return false;
-                    const panel = resolvePanel(item, header);
-                    const trigger = resolveTrigger(header);
-                    if (!panel || !trigger)
-                        return false;
-                    const triggerOpen = trigger.getAttribute("aria-expanded") === "true";
-                    const itemOpen = item.getAttribute("data-state") === "open";
-                    const panelOpen = panel.getAttribute("data-state") === "open" ||
-                        panel.getAttribute("data-open") === "true";
-                    return triggerOpen || itemOpen || panelOpen;
-                };
-                const cleanupButtons = [];
-                let hasInitialOpen = false;
-                let reflectingState = false;
-                const setItemStateFromDirective = (item, open) => {
-                    reflectingState = true;
-                    setItemState(item, open);
-                    queueMicrotask(() => {
-                        reflectingState = false;
-                    });
-                };
-                items.forEach((item) => {
-                    const header = resolveHeader(item);
-                    if (!header)
-                        return;
-                    const panel = resolvePanel(item, header);
-                    const button = resolveTrigger(header);
-                    if (!button || !panel)
-                        return;
-                    if (!button.querySelector("svg")) {
-                        button.insertAdjacentHTML("beforeend", `
-              <svg xmlns="http://www.w3.org/2000/svg"
-
-                   aria-hidden="true"
-                   width="24" height="24"
-                   fill="none"
-                   viewBox="0 0 24 24"
-                   stroke-width="2"
-                   stroke-linecap="round"
-                   stroke-linejoin="round"
-                   stroke="currentColor" class="accordion-trigger-icon">
-                <path d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-              </svg>
-            `);
-                    }
-                    const id = button.id || `accordion-btn-${accordionIdCounter.toString(36)}`;
-                    const panelId = button.id
-                        ? `${button.id}-panel`
-                        : `accordion-panel-${accordionIdCounter.toString(36)}`;
-                    accordionIdCounter += 1;
-                    button.id = id;
-                    panel.id = panelId;
-                    button.setAttribute("aria-controls", panelId);
-                    if (panel.tagName !== "SECTION" && !panel.hasAttribute("role")) {
-                        panel.setAttribute("role", "region");
-                    }
-                    panel.setAttribute("aria-labelledby", id);
-                    const initiallyOpen = isPanelOpen(item);
-                    const isClosed = isElementClosed(item.getAttribute("data-state"));
-                    const open = isClosed
-                        ? false
-                        : allowsMultiple
-                            ? initiallyOpen
-                            : initiallyOpen && !hasInitialOpen;
-                    if (open)
-                        hasInitialOpen = true;
-                    setItemStateFromDirective(item, open);
-                    const handleClick = () => {
-                        if (isItemDisabled(item, button))
-                            return;
-                        const isOpen = isPanelOpen(item);
-                        const nextOpen = !isOpen;
-                        if (!allowsMultiple) {
-                            items.forEach((otherItem) => {
-                                setItemStateFromDirective(otherItem, false);
-                            });
-                        }
-                        setItemStateFromDirective(item, nextOpen);
-                    };
-                    const handleKeydown = (event) => {
-                        if (event.key !== "ArrowDown" &&
-                            event.key !== "ArrowUp" &&
-                            event.key !== "Home" &&
-                            event.key !== "End") {
-                            return;
-                        }
-                        event.preventDefault();
-                        const buttons = items
-                            .map((nextItem) => {
-                            const itemHeader = resolveHeader(nextItem);
-                            if (!itemHeader)
-                                return null;
-                            const itemTrigger = resolveTrigger(itemHeader);
-                            if (!itemTrigger || isItemDisabled(nextItem, itemTrigger)) {
-                                return null;
-                            }
-                            return itemTrigger;
-                        })
-                            .filter((itemTrigger) => Boolean(itemTrigger));
-                        const currentIndex = buttons.indexOf(button);
-                        if (currentIndex === -1)
-                            return;
-                        const nextButton = event.key === "Home"
-                            ? buttons[0]
-                            : event.key === "End"
-                                ? buttons[buttons.length - 1]
-                                : buttons[(currentIndex +
-                                    (event.key === "ArrowDown" ? 1 : -1) +
-                                    buttons.length) %
-                                    buttons.length];
-                        nextButton.focus();
-                    };
-                    button.addEventListener("click", handleClick);
-                    button.addEventListener("keydown", handleKeydown);
-                    cleanupButtons.push(() => {
-                        button.removeEventListener("click", handleClick);
-                        button.removeEventListener("keydown", handleKeydown);
-                    });
-                });
-                const syncExternalState = () => {
-                    if (reflectingState)
-                        return;
-                    let opened = false;
-                    items.forEach((item) => {
-                        const open = item.getAttribute("data-state") === "open";
-                        const nextOpen = allowsMultiple ? open : open && !opened;
-                        if (nextOpen)
-                            opened = true;
-                        setItemStateFromDirective(item, nextOpen);
-                    });
-                };
-                const stateObserver = new MutationObserver(syncExternalState);
-                stateObserver.observe(element, {
-                    attributes: true,
-                    attributeFilter: ["data-state"],
-                    subtree: true,
-                });
-                onDestroy(scope, () => {
-                    stateObserver.disconnect();
-                    cleanupButtons.forEach((cleanup) => {
-                        cleanup();
-                    });
-                });
-            },
-        };
     }
 
     const itemSelector$5 = 'a[href], button, [role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]';
@@ -674,465 +459,6 @@
                     cleanupSubmenus();
                 };
                 onDestroy(scope, destroy);
-            },
-        };
-    }
-
-    let overlayIdCounter = 0;
-    let scrollLockCount = 0;
-    let documentElementOverflow = "";
-    let bodyOverflow = "";
-    const openOverlayStack = [];
-    const focusableSelector$1 = [
-        "a[href]",
-        "button",
-        "input",
-        "select",
-        "textarea",
-        '[tabindex]:not([tabindex="-1"])',
-        '[contenteditable="true"]',
-    ].join(", ");
-    const setAttributeIfChanged$f = (element, name, value) => {
-        if (element.getAttribute(name) !== value) {
-            element.setAttribute(name, value);
-        }
-    };
-    function restoreFocus(element) {
-        if (element?.isConnected && !isDisabled(element)) {
-            element.focus({ preventScroll: true });
-        }
-    }
-    function bindEscapeClose(elements, isOpen, close) {
-        const handleKeydown = (event) => {
-            if (event.key !== "Escape" || !isOpen())
-                return;
-            event.preventDefault();
-            close();
-        };
-        elements.forEach((element) => {
-            element.addEventListener("keydown", handleKeydown);
-        });
-        return () => {
-            elements.forEach((element) => {
-                element.removeEventListener("keydown", handleKeydown);
-            });
-        };
-    }
-    const lockDocumentScroll = () => {
-        if (scrollLockCount === 0) {
-            documentElementOverflow = document.documentElement.style.overflow;
-            bodyOverflow = document.body.style.overflow;
-            document.documentElement.style.overflow = "hidden";
-            document.body.style.overflow = "hidden";
-        }
-        scrollLockCount += 1;
-    };
-    const unlockDocumentScroll = () => {
-        scrollLockCount = Math.max(0, scrollLockCount - 1);
-        if (scrollLockCount === 0) {
-            document.documentElement.style.overflow = documentElementOverflow;
-            document.body.style.overflow = bodyOverflow;
-        }
-    };
-    function bindOverlay(scope, element, parts) {
-        const rootSelector = parts.rootSelector;
-        const isOwned = (candidate) => !rootSelector || candidate.closest(rootSelector) === element;
-        const ownedAll = (selector) => queryAll(element, selector).filter(isOwned);
-        const owned = (selector) => selector ? (ownedAll(selector)[0] ?? null) : null;
-        if (!element.id) {
-            element.id = `overlay-${String(overlayIdCounter++)}`;
-        }
-        const directionOwner = element.closest("[dir]") ?? element;
-        const boundTriggers = new Set();
-        const boundCloseButtons = new Set();
-        const boundOverlays = new Set();
-        const inertSnapshots = new Map();
-        let internalOpen = element.getAttribute("data-open") === "true" ||
-            owned(parts.contentSelector)?.getAttribute("data-open") === "true";
-        let initialized = false;
-        let isolated = false;
-        let activeTrigger = null;
-        let redirectingFocus = false;
-        const getContent = () => owned(parts.contentSelector);
-        const getOverlay = () => owned(parts.overlaySelector);
-        const getInternalTriggers = () => parts.triggerSelector ? ownedAll(parts.triggerSelector) : [];
-        const getExternalTriggers = () => [
-            ...new Set([
-                ...queryAll(document, `[aria-controls="${CSS.escape(element.id)}"]`),
-                ...queryAll(document, `[data-overlay-target="${CSS.escape(element.id)}"]`),
-            ]),
-        ].filter((trigger) => !element.contains(trigger));
-        const getTriggers = () => [
-            ...getInternalTriggers(),
-            ...getExternalTriggers(),
-        ];
-        const isTopmost = () => openOverlayStack[openOverlayStack.length - 1] === element;
-        const removeFromStack = () => {
-            const index = openOverlayStack.lastIndexOf(element);
-            if (index >= 0)
-                openOverlayStack.splice(index, 1);
-        };
-        const isolateBackground = () => {
-            if (isolated)
-                return;
-            let branch = element;
-            let parent = branch.parentElement;
-            while (parent) {
-                Array.from(parent.children).forEach((sibling) => {
-                    if (sibling === branch ||
-                        !(sibling instanceof HTMLElement) ||
-                        /^(LINK|SCRIPT|STYLE)$/.test(sibling.tagName) ||
-                        inertSnapshots.has(sibling)) {
-                        return;
-                    }
-                    inertSnapshots.set(sibling, {
-                        ariaHidden: sibling.getAttribute("aria-hidden"),
-                        inert: sibling.inert,
-                    });
-                    sibling.inert = true;
-                    sibling.setAttribute("aria-hidden", "true");
-                });
-                if (parent === document.body)
-                    break;
-                branch = parent;
-                parent = parent.parentElement;
-            }
-            lockDocumentScroll();
-            isolated = true;
-        };
-        const restoreBackground = () => {
-            if (!isolated)
-                return;
-            inertSnapshots.forEach((snapshot, sibling) => {
-                sibling.inert = snapshot.inert;
-                if (snapshot.ariaHidden === null) {
-                    sibling.removeAttribute("aria-hidden");
-                }
-                else {
-                    sibling.setAttribute("aria-hidden", snapshot.ariaHidden);
-                }
-            });
-            inertSnapshots.clear();
-            unlockDocumentScroll();
-            isolated = false;
-        };
-        const getFocusableItems = () => {
-            const content = getContent();
-            if (!content)
-                return [];
-            return queryAll(content, focusableSelector$1).filter((item) => {
-                if (!isOwned(item) ||
-                    isDisabled(item) ||
-                    item.closest("[hidden], [inert]")) {
-                    return false;
-                }
-                const style = getComputedStyle(item);
-                return style.display !== "none" && style.visibility !== "hidden";
-            });
-        };
-        const focusClosest = () => {
-            const content = getContent();
-            if (!content)
-                return;
-            const autofocus = ownedAll("[autofocus]").find((candidate) => content.contains(candidate));
-            (autofocus ?? getFocusableItems().at(0) ?? content).focus({
-                preventScroll: true,
-            });
-        };
-        const reflectState = () => {
-            const content = getContent();
-            const overlay = getOverlay();
-            const state = internalOpen ? "open" : "closed";
-            setAttributeIfChanged$f(element, "data-open", String(internalOpen));
-            setAttributeIfChanged$f(element, "data-state", state);
-            if (content) {
-                setAttributeIfChanged$f(content, "data-open", String(internalOpen));
-                setAttributeIfChanged$f(content, "data-state", state);
-                setAttributeIfChanged$f(content, "aria-hidden", String(!internalOpen));
-                setOpenState(content, internalOpen);
-            }
-            if (overlay) {
-                setAttributeIfChanged$f(overlay, "data-state", state);
-                setAttributeIfChanged$f(overlay, "aria-hidden", String(!internalOpen));
-                setOpenState(overlay, internalOpen);
-            }
-            getTriggers().forEach((trigger) => {
-                setAttributeIfChanged$f(trigger, "data-state", state);
-                setAttributeIfChanged$f(trigger, "aria-expanded", String(internalOpen));
-            });
-        };
-        const setOpen = (nextOpen, restoreOnClose = true) => {
-            const wasOpen = initialized && internalOpen;
-            const opening = nextOpen && !wasOpen;
-            const closing = !nextOpen && wasOpen;
-            internalOpen = nextOpen;
-            reflectState();
-            if (opening) {
-                removeFromStack();
-                openOverlayStack.push(element);
-                isolateBackground();
-                focusClosest();
-            }
-            else if (closing) {
-                removeFromStack();
-                restoreBackground();
-                if (restoreOnClose) {
-                    restoreFocus(activeTrigger ?? getTriggers().at(0) ?? null);
-                }
-            }
-            initialized = true;
-        };
-        const handleTriggerClick = (event) => {
-            const trigger = event.currentTarget;
-            if (!(trigger instanceof HTMLElement) || isDisabled(trigger))
-                return;
-            event.preventDefault();
-            activeTrigger = trigger;
-            setOpen(!internalOpen);
-        };
-        const handleCloseClick = (event) => {
-            const closeButton = event.currentTarget;
-            if (!(closeButton instanceof HTMLElement) || isDisabled(closeButton))
-                return;
-            event.preventDefault();
-            setOpen(false);
-        };
-        const handleOverlayClick = (event) => {
-            if (parts.closeOnOverlayClick === false ||
-                event.target !== event.currentTarget) {
-                return;
-            }
-            setOpen(false);
-        };
-        const syncDirection = () => {
-            const direction = element.closest("[dir]")?.getAttribute("dir") === "rtl"
-                ? "rtl"
-                : "ltr";
-            setAttributeIfChanged$f(element, "data-direction", direction);
-            const content = getContent();
-            if (content)
-                setAttributeIfChanged$f(content, "data-direction", direction);
-            const overlay = getOverlay();
-            if (overlay)
-                setAttributeIfChanged$f(overlay, "data-direction", direction);
-        };
-        const syncInteractiveParts = () => {
-            const content = getContent();
-            if (content) {
-                if (!content.id)
-                    content.id = `${element.id}-content`;
-                const contentRole = parts.contentRole ?? "dialog";
-                if (content.tagName !== "DIALOG" || contentRole !== "dialog") {
-                    setAttributeIfChanged$f(content, "role", contentRole);
-                }
-                setAttributeIfChanged$f(content, "aria-modal", "true");
-                if (!content.hasAttribute("tabindex"))
-                    content.tabIndex = -1;
-                const title = owned(parts.titleSelector);
-                if (title) {
-                    if (!title.id)
-                        title.id = `${element.id}-title`;
-                    setAttributeIfChanged$f(content, "aria-labelledby", title.id);
-                }
-                const description = owned(parts.descriptionSelector);
-                if (description) {
-                    if (!description.id)
-                        description.id = `${element.id}-description`;
-                    setAttributeIfChanged$f(content, "aria-describedby", description.id);
-                }
-            }
-            getInternalTriggers().forEach((trigger) => {
-                if (content)
-                    setAttributeIfChanged$f(trigger, "aria-controls", content.id);
-                setAttributeIfChanged$f(trigger, "aria-haspopup", "dialog");
-                if (trigger instanceof HTMLButtonElement &&
-                    !trigger.hasAttribute("type")) {
-                    trigger.type = "button";
-                }
-            });
-            getTriggers().forEach((trigger) => {
-                if (trigger.getAttribute("data-overlay-target") === element.id) {
-                    setAttributeIfChanged$f(trigger, "aria-controls", element.id);
-                }
-                setAttributeIfChanged$f(trigger, "aria-haspopup", "dialog");
-                if (trigger instanceof HTMLButtonElement &&
-                    !trigger.hasAttribute("type")) {
-                    trigger.type = "button";
-                }
-                if (!boundTriggers.has(trigger)) {
-                    trigger.addEventListener("click", handleTriggerClick);
-                    boundTriggers.add(trigger);
-                }
-            });
-            ownedAll(parts.closeSelector).forEach((closeButton) => {
-                if (closeButton instanceof HTMLButtonElement &&
-                    !closeButton.hasAttribute("type")) {
-                    closeButton.type = "button";
-                }
-                if (!boundCloseButtons.has(closeButton)) {
-                    closeButton.addEventListener("click", handleCloseClick);
-                    boundCloseButtons.add(closeButton);
-                }
-            });
-            ownedAll(parts.overlaySelector).forEach((overlay) => {
-                if (!boundOverlays.has(overlay)) {
-                    overlay.addEventListener("click", handleOverlayClick);
-                    boundOverlays.add(overlay);
-                }
-            });
-            reflectState();
-        };
-        const handleDocumentClick = (event) => {
-            if (!internalOpen ||
-                !isTopmost() ||
-                parts.closeOnOutsideClick !== true ||
-                !(event.target instanceof Node) ||
-                element.contains(event.target) ||
-                getTriggers().some((trigger) => trigger.contains(event.target))) {
-                return;
-            }
-            setOpen(false, false);
-        };
-        const handleDocumentKeydown = (event) => {
-            if (!internalOpen || !isTopmost())
-                return;
-            if (event.key === "Escape") {
-                event.preventDefault();
-                setOpen(false);
-                return;
-            }
-            if (event.key !== "Tab")
-                return;
-            const content = getContent();
-            const focusableItems = getFocusableItems();
-            if (!content || focusableItems.length === 0) {
-                event.preventDefault();
-                content?.focus({ preventScroll: true });
-                return;
-            }
-            const currentIndex = focusableItems.indexOf(document.activeElement);
-            const nextIndex = event.shiftKey
-                ? currentIndex <= 0
-                    ? focusableItems.length - 1
-                    : currentIndex - 1
-                : currentIndex < 0 || currentIndex === focusableItems.length - 1
-                    ? 0
-                    : currentIndex + 1;
-            event.preventDefault();
-            focusableItems[nextIndex].focus({ preventScroll: true });
-        };
-        const handleDocumentFocus = (event) => {
-            const content = getContent();
-            if (redirectingFocus ||
-                !internalOpen ||
-                !isTopmost() ||
-                !content ||
-                !(event.target instanceof Node) ||
-                content.contains(event.target)) {
-                return;
-            }
-            redirectingFocus = true;
-            focusClosest();
-            redirectingFocus = false;
-        };
-        const openObserver = new MutationObserver((records) => {
-            if (records.some((record) => record.target === element && record.attributeName === "data-open")) {
-                const nextOpen = element.getAttribute("data-open") === "true";
-                if (nextOpen !== internalOpen)
-                    setOpen(nextOpen);
-            }
-            syncDirection();
-        });
-        openObserver.observe(element, {
-            attributes: true,
-            attributeFilter: ["data-open", "dir"],
-        });
-        const partsObserver = new MutationObserver(syncInteractiveParts);
-        partsObserver.observe(document.body, { childList: true, subtree: true });
-        const directionObserver = directionOwner === element ? null : new MutationObserver(syncDirection);
-        directionObserver?.observe(directionOwner, {
-            attributes: true,
-            attributeFilter: ["dir"],
-        });
-        syncDirection();
-        syncInteractiveParts();
-        setOpen(internalOpen);
-        document.addEventListener("click", handleDocumentClick);
-        document.addEventListener("keydown", handleDocumentKeydown);
-        document.addEventListener("focusin", handleDocumentFocus);
-        onDestroy(scope, () => {
-            openObserver.disconnect();
-            partsObserver.disconnect();
-            directionObserver?.disconnect();
-            boundTriggers.forEach((trigger) => {
-                trigger.removeEventListener("click", handleTriggerClick);
-            });
-            boundCloseButtons.forEach((closeButton) => {
-                closeButton.removeEventListener("click", handleCloseClick);
-            });
-            boundOverlays.forEach((overlay) => {
-                overlay.removeEventListener("click", handleOverlayClick);
-            });
-            document.removeEventListener("click", handleDocumentClick);
-            document.removeEventListener("keydown", handleDocumentKeydown);
-            document.removeEventListener("focusin", handleDocumentFocus);
-            removeFromStack();
-            restoreBackground();
-        });
-    }
-
-    function alertDialogDirective() {
-        return {
-            link(scope, element) {
-                bindOverlay(scope, element, {
-                    rootSelector: ".alert-dialog, [ng-alert-dialog]",
-                    closeSelector: ".alert-dialog-cancel, .alert-dialog-action, [data-alert-dialog-close]",
-                    contentSelector: ".alert-dialog-content",
-                    contentRole: "alertdialog",
-                    descriptionSelector: ".alert-dialog-description",
-                    closeOnOverlayClick: false,
-                    overlaySelector: ".alert-dialog-overlay",
-                    titleSelector: ".alert-dialog-title",
-                    triggerSelector: ".alert-dialog-trigger",
-                    closeOnOutsideClick: false,
-                });
-            },
-        };
-    }
-
-    function avatarDirective() {
-        return {
-            link(scope, element) {
-                const size = element.getAttribute("size") ??
-                    element.getAttribute("data-size") ??
-                    "default";
-                element.setAttribute("data-size", size);
-                const image = query(element, ".avatar-image", HTMLImageElement);
-                const fallback = query(element, ".avatar-fallback", HTMLElement);
-                const setState = (state) => {
-                    element.setAttribute("data-state", state);
-                    if (image)
-                        image.hidden = state === "fallback";
-                    if (fallback)
-                        fallback.hidden = state === "loaded";
-                };
-                if (!image) {
-                    setState("fallback");
-                    return;
-                }
-                const handleLoad = () => {
-                    setState("loaded");
-                };
-                const handleError = () => {
-                    setState("fallback");
-                };
-                image.addEventListener("load", handleLoad);
-                image.addEventListener("error", handleError);
-                setState(image.complete && image.naturalWidth > 0 ? "loaded" : "fallback");
-                onDestroy(scope, () => {
-                    image.removeEventListener("load", handleLoad);
-                    image.removeEventListener("error", handleError);
-                });
             },
         };
     }
@@ -1827,7 +1153,7 @@
     }
 
     let calendarIdCounter = 0;
-    const setAttributeIfChanged$e = (element, name, value) => {
+    const setAttributeIfChanged$9 = (element, name, value) => {
         if (element.getAttribute(name) !== value) {
             element.setAttribute(name, value);
         }
@@ -1921,7 +1247,7 @@
                     if (renderKey === renderedMonth && grid.childElementCount > 0)
                         return;
                     renderedMonth = renderKey;
-                    setAttributeIfChanged$e(element, "data-month", monthValue);
+                    setAttributeIfChanged$9(element, "data-month", monthValue);
                     const title = element.querySelector(".calendar-title");
                     if (title) {
                         const captionLayout = element.getAttribute("data-caption-layout") ?? "label";
@@ -2116,17 +1442,17 @@
                                         value > rangeStart &&
                                         value < rangeEnd)
                                 : value === singleValue;
-                        setAttributeIfChanged$e(day, "aria-selected", String(selected));
-                        setAttributeIfChanged$e(day, "data-selected", String(selected));
-                        setAttributeIfChanged$e(day, "data-state", selected ? "selected" : "idle");
+                        setAttributeIfChanged$9(day, "aria-selected", String(selected));
+                        setAttributeIfChanged$9(day, "data-selected", String(selected));
+                        setAttributeIfChanged$9(day, "data-state", selected ? "selected" : "idle");
                         if (selectionMode === "range") {
-                            setAttributeIfChanged$e(day, "data-range-start", String(value === rangeStart));
-                            setAttributeIfChanged$e(day, "data-range-end", String(value === rangeEnd));
-                            setAttributeIfChanged$e(day, "data-range-middle", String(Boolean(rangeStart &&
+                            setAttributeIfChanged$9(day, "data-range-start", String(value === rangeStart));
+                            setAttributeIfChanged$9(day, "data-range-end", String(value === rangeEnd));
+                            setAttributeIfChanged$9(day, "data-range-middle", String(Boolean(rangeStart &&
                                 rangeEnd &&
                                 value > rangeStart &&
                                 value < rangeEnd)));
-                            setAttributeIfChanged$e(day, "data-range", value === rangeStart
+                            setAttributeIfChanged$9(day, "data-range", value === rangeStart
                                 ? "start"
                                 : value === rangeEnd
                                     ? "end"
@@ -2137,7 +1463,7 @@
                                         ? "middle"
                                         : "none");
                         }
-                        setAttributeIfChanged$e(day, "tabindex", day === focusedDay ? "0" : "-1");
+                        setAttributeIfChanged$9(day, "tabindex", day === focusedDay ? "0" : "-1");
                     });
                 };
                 const selectDay = (selectedDay, emit = true) => {
@@ -2157,7 +1483,7 @@
                             selectedValues.add(selectedValue);
                         }
                         values = [...selectedValues].sort();
-                        setAttributeIfChanged$e(element, "data-values", values.join(","));
+                        setAttributeIfChanged$9(element, "data-values", values.join(","));
                     }
                     else if (selectionMode === "range") {
                         const selectedDate = parseDateValue(selectedValue);
@@ -2172,7 +1498,7 @@
                         else {
                             const minNights = Math.max(0, Number(element.getAttribute("data-min-nights") ?? 0));
                             if (differenceInCalendarDays(selectedDate, startDate) < minNights) {
-                                setAttributeIfChanged$e(element, "data-range-invalid", "true");
+                                setAttributeIfChanged$9(element, "data-range-invalid", "true");
                                 element.dispatchEvent(new CustomEvent("angularcss:calendar-range-invalid", {
                                     bubbles: true,
                                     detail: {
@@ -2186,13 +1512,13 @@
                             }
                             rangeEnd = selectedValue;
                         }
-                        setAttributeIfChanged$e(element, "data-range-invalid", "false");
-                        setAttributeIfChanged$e(element, "data-range-start-value", rangeStart);
-                        setAttributeIfChanged$e(element, "data-range-end-value", rangeEnd);
+                        setAttributeIfChanged$9(element, "data-range-invalid", "false");
+                        setAttributeIfChanged$9(element, "data-range-start-value", rangeStart);
+                        setAttributeIfChanged$9(element, "data-range-end-value", rangeEnd);
                         values = [rangeStart, rangeEnd].filter(Boolean);
                     }
                     syncSelectionState(selectionMode, values, rangeStart, rangeEnd, selectedDay);
-                    setAttributeIfChanged$e(element, "data-value", selectedValue);
+                    setAttributeIfChanged$9(element, "data-value", selectedValue);
                     if (emit) {
                         element.dispatchEvent(new CustomEvent("angularcss:calendar-select", {
                             bubbles: true,
@@ -2207,13 +1533,13 @@
                     }
                 };
                 const bindDay = (day) => {
-                    setAttributeIfChanged$e(day, "role", "gridcell");
-                    setAttributeIfChanged$e(day, "tabindex", day.getAttribute("tabindex") ?? "-1");
+                    setAttributeIfChanged$9(day, "role", "gridcell");
+                    setAttributeIfChanged$9(day, "tabindex", day.getAttribute("tabindex") ?? "-1");
                     const disabled = isDisabled(day);
-                    setAttributeIfChanged$e(day, "data-disabled", String(disabled));
-                    setAttributeIfChanged$e(day, "aria-disabled", String(disabled));
+                    setAttributeIfChanged$9(day, "data-disabled", String(disabled));
+                    setAttributeIfChanged$9(day, "aria-disabled", String(disabled));
                     const outside = day.getAttribute("data-outside") === "true";
-                    setAttributeIfChanged$e(day, "data-outside", String(outside));
+                    setAttributeIfChanged$9(day, "data-outside", String(outside));
                     const range = day.getAttribute("data-range-start") === "true"
                         ? "start"
                         : day.getAttribute("data-range-end") === "true"
@@ -2221,8 +1547,8 @@
                             : day.getAttribute("data-range-middle") === "true"
                                 ? "middle"
                                 : "none";
-                    setAttributeIfChanged$e(day, "data-range", range);
-                    setAttributeIfChanged$e(day, "data-state", day.getAttribute("aria-selected") === "true" ||
+                    setAttributeIfChanged$9(day, "data-range", range);
+                    setAttributeIfChanged$9(day, "data-state", day.getAttribute("aria-selected") === "true" ||
                         day.getAttribute("data-selected") === "true"
                         ? "selected"
                         : "idle");
@@ -2230,13 +1556,13 @@
                     const currentLabel = day.getAttribute("aria-label");
                     if (label &&
                         (!currentLabel || currentLabel === generatedLabels.get(day))) {
-                        setAttributeIfChanged$e(day, "aria-label", label);
+                        setAttributeIfChanged$9(day, "aria-label", label);
                         generatedLabels.set(day, label);
                     }
                     if (day.getAttribute("data-today") === "true") {
                         if (!day.hasAttribute("aria-current"))
                             generatedCurrent.add(day);
-                        setAttributeIfChanged$e(day, "aria-current", day.getAttribute("aria-current") ?? "date");
+                        setAttributeIfChanged$9(day, "aria-current", day.getAttribute("aria-current") ?? "date");
                     }
                     else if (generatedCurrent.has(day)) {
                         day.removeAttribute("aria-current");
@@ -2322,7 +1648,7 @@
                 };
                 const showMonth = (month, focusedValue, selectFocused = false) => {
                     const monthValue = formatDateValue(startOfMonth(month)).slice(0, 7);
-                    setAttributeIfChanged$e(element, "data-month", monthValue);
+                    setAttributeIfChanged$9(element, "data-month", monthValue);
                     renderedMonth = "";
                     renderGeneratedMonth();
                     syncCalendar();
@@ -2376,7 +1702,7 @@
                     if (title && !element.hasAttribute("aria-label")) {
                         if (!title.id)
                             title.id = `calendar-title-${String(calendarIdCounter++)}`;
-                        setAttributeIfChanged$e(element, "aria-labelledby", title.id);
+                        setAttributeIfChanged$9(element, "aria-labelledby", title.id);
                     }
                     queryAll(element, ".calendar-row").forEach((row) => {
                         row.setAttribute("role", "row");
@@ -2385,7 +1711,7 @@
                         weekday.setAttribute("role", "columnheader");
                     });
                     queryAll(element, ".calendar-week-number").forEach((weekNumber) => {
-                        setAttributeIfChanged$e(weekNumber, "role", "rowheader");
+                        setAttributeIfChanged$9(weekNumber, "role", "rowheader");
                     });
                     days = queryAll(element, ".calendar-day");
                     days.forEach(bindDay);
@@ -4351,7 +3677,7 @@
     const DOT_SELECTOR = ".carousel-dot";
     const PREVIOUS_SELECTOR = ".carousel-previous";
     const NEXT_SELECTOR = ".carousel-next";
-    const setAttributeIfChanged$d = (element, name, value) => {
+    const setAttributeIfChanged$8 = (element, name, value) => {
         if (element.getAttribute(name) !== value) {
             element.setAttribute(name, value);
         }
@@ -4425,24 +3751,24 @@
                     const items = getItems();
                     const dots = getDots();
                     if (element.tagName !== "SECTION" && !element.hasAttribute("role")) {
-                        setAttributeIfChanged$d(element, "role", "region");
+                        setAttributeIfChanged$8(element, "role", "region");
                     }
-                    setAttributeIfChanged$d(element, "aria-roledescription", "carousel");
-                    setAttributeIfChanged$d(element, "tabindex", element.getAttribute("tabindex") ?? "0");
-                    setAttributeIfChanged$d(element, "data-orientation", getOrientation());
-                    setAttributeIfChanged$d(element, "data-direction", getDirection());
-                    setAttributeIfChanged$d(element, "data-item-count", String(items.length));
+                    setAttributeIfChanged$8(element, "aria-roledescription", "carousel");
+                    setAttributeIfChanged$8(element, "tabindex", element.getAttribute("tabindex") ?? "0");
+                    setAttributeIfChanged$8(element, "data-orientation", getOrientation());
+                    setAttributeIfChanged$8(element, "data-direction", getDirection());
+                    setAttributeIfChanged$8(element, "data-item-count", String(items.length));
                     items.forEach((item, index) => {
-                        setAttributeIfChanged$d(item, "role", "group");
-                        setAttributeIfChanged$d(item, "aria-roledescription", "slide");
-                        setAttributeIfChanged$d(item, "aria-label", item.getAttribute("aria-label") ??
+                        setAttributeIfChanged$8(item, "role", "group");
+                        setAttributeIfChanged$8(item, "aria-roledescription", "slide");
+                        setAttributeIfChanged$8(item, "aria-label", item.getAttribute("aria-label") ??
                             `${String(index + 1)} of ${String(items.length)}`);
-                        setAttributeIfChanged$d(item, "data-index", String(index));
+                        setAttributeIfChanged$8(item, "data-index", String(index));
                     });
                     dots.forEach((dot, index) => {
-                        setAttributeIfChanged$d(dot, "aria-label", dot.getAttribute("aria-label") ??
+                        setAttributeIfChanged$8(dot, "aria-label", dot.getAttribute("aria-label") ??
                             `Go to slide ${String(index + 1)}`);
-                        setAttributeIfChanged$d(dot, "data-index", String(index));
+                        setAttributeIfChanged$8(dot, "data-index", String(index));
                     });
                 };
                 const getSelectedItemIndex = () => {
@@ -4465,18 +3791,18 @@
                     const detail = createDetail();
                     const itemsInView = new Set(api.slidesInView());
                     const dots = getDots();
-                    setAttributeIfChanged$d(element, "data-index", String(detail.index));
-                    setAttributeIfChanged$d(element, "data-count", String(detail.count));
-                    setAttributeIfChanged$d(element, "data-can-scroll-previous", String(api.canScrollPrev()));
-                    setAttributeIfChanged$d(element, "data-can-scroll-next", String(api.canScrollNext()));
+                    setAttributeIfChanged$8(element, "data-index", String(detail.index));
+                    setAttributeIfChanged$8(element, "data-count", String(detail.count));
+                    setAttributeIfChanged$8(element, "data-can-scroll-previous", String(api.canScrollPrev()));
+                    setAttributeIfChanged$8(element, "data-can-scroll-next", String(api.canScrollNext()));
                     getItems().forEach((item, index) => {
-                        setAttributeIfChanged$d(item, "data-active", String(index === detail.itemIndex));
-                        setAttributeIfChanged$d(item, "aria-hidden", String(!itemsInView.has(index)));
+                        setAttributeIfChanged$8(item, "data-active", String(index === detail.itemIndex));
+                        setAttributeIfChanged$8(item, "aria-hidden", String(!itemsInView.has(index)));
                     });
                     dots.forEach((dot, index) => {
                         const active = index === detail.index;
-                        setAttributeIfChanged$d(dot, "data-active", String(active));
-                        setAttributeIfChanged$d(dot, "aria-current", active ? "true" : "false");
+                        setAttributeIfChanged$8(dot, "data-active", String(active));
+                        setAttributeIfChanged$8(dot, "aria-current", active ? "true" : "false");
                         dot.toggleAttribute("hidden", index >= detail.count);
                     });
                     const previous = query(element, PREVIOUS_SELECTOR, HTMLElement);
@@ -4596,72 +3922,6 @@
         };
     }
 
-    let collapsibleIdCounter = 0;
-    function collapsibleDirective() {
-        return {
-            link(scope, element) {
-                const trigger = query(element, ".collapsible-trigger, button", HTMLElement);
-                const content = query(element, ".collapsible-content", HTMLElement);
-                if (!trigger || !content)
-                    return;
-                const contentId = content.id || `collapsible-content-${String(collapsibleIdCounter++)}`;
-                const triggerId = trigger.id || `collapsible-trigger-${String(collapsibleIdCounter++)}`;
-                content.id = contentId;
-                trigger.id = triggerId;
-                trigger.setAttribute("aria-controls", contentId);
-                if (!content.hasAttribute("aria-labelledby")) {
-                    content.setAttribute("aria-labelledby", triggerId);
-                }
-                const setOpen = (open) => {
-                    element.setAttribute("data-state", open ? "open" : "closed");
-                    if (element instanceof HTMLDetailsElement && element.open !== open) {
-                        element.open = open;
-                    }
-                    trigger.setAttribute("aria-expanded", String(open));
-                    trigger.setAttribute("data-state", open ? "open" : "closed");
-                    content.setAttribute("data-state", open ? "open" : "closed");
-                    setOpenState(content, open);
-                };
-                const readOpenState = () => {
-                    const controlledOpen = element.getAttribute("data-open");
-                    if (controlledOpen !== null)
-                        return controlledOpen === "true";
-                    return (element.getAttribute("open") === "true" ||
-                        element.hasAttribute("open"));
-                };
-                setOpen(readOpenState());
-                const observer = new MutationObserver(() => {
-                    setOpen(readOpenState());
-                });
-                observer.observe(element, {
-                    attributes: true,
-                    attributeFilter: ["data-open", "open"],
-                });
-                const details = element instanceof HTMLDetailsElement ? element : null;
-                const handleToggle = () => {
-                    if (details)
-                        setOpen(details.open);
-                };
-                const handleClick = () => {
-                    if (!details)
-                        setOpen(Boolean(content.hidden));
-                };
-                if (details) {
-                    details.addEventListener("toggle", handleToggle);
-                }
-                else {
-                    trigger.addEventListener("click", handleClick);
-                }
-                onDestroy(scope, () => {
-                    observer.disconnect();
-                    details?.removeEventListener("toggle", handleToggle);
-                    if (!details)
-                        trigger.removeEventListener("click", handleClick);
-                });
-            },
-        };
-    }
-
     let comboboxIdCounter = 0;
     const anchorSelector = ".combobox-control, .combobox-chips";
     const chipSelector = ".combobox-chip";
@@ -4675,7 +3935,7 @@
     const rootSelector$2 = ".combobox, [ng-combobox]";
     const separatorSelector$2 = ".combobox-separator";
     const triggerSelector$4 = ".combobox-trigger";
-    const setAttributeIfChanged$c = (element, name, value) => {
+    const setAttributeIfChanged$7 = (element, name, value) => {
         if (element.getAttribute(name) !== value)
             element.setAttribute(name, value);
     };
@@ -4697,13 +3957,13 @@
                 const inputId = input.id || `combobox-input-${String(comboboxIdCounter++)}`;
                 content.id = contentId;
                 input.id = inputId;
-                setAttributeIfChanged$c(input, "role", "combobox");
-                setAttributeIfChanged$c(input, "aria-controls", contentId);
-                setAttributeIfChanged$c(input, "aria-haspopup", "listbox");
-                setAttributeIfChanged$c(input, "aria-autocomplete", input.getAttribute("aria-autocomplete") ?? "list");
-                setAttributeIfChanged$c(content, "role", "listbox");
+                setAttributeIfChanged$7(input, "role", "combobox");
+                setAttributeIfChanged$7(input, "aria-controls", contentId);
+                setAttributeIfChanged$7(input, "aria-haspopup", "listbox");
+                setAttributeIfChanged$7(input, "aria-autocomplete", input.getAttribute("aria-autocomplete") ?? "list");
+                setAttributeIfChanged$7(content, "role", "listbox");
                 if (!content.hasAttribute("aria-label")) {
-                    setAttributeIfChanged$c(content, "aria-labelledby", inputId);
+                    setAttributeIfChanged$7(content, "aria-labelledby", inputId);
                 }
                 const ownsAriaInvalid = !input.hasAttribute("aria-invalid");
                 let items = [];
@@ -4733,16 +3993,16 @@
                     const disabled = isDisabled(input);
                     const invalid = isInvalid();
                     const multiple = isMultiple();
-                    setAttributeIfChanged$c(element, "data-direction", direction);
-                    setAttributeIfChanged$c(content, "data-direction", direction);
-                    setAttributeIfChanged$c(element, "data-disabled", String(disabled));
-                    setAttributeIfChanged$c(input, "aria-disabled", String(disabled));
-                    setAttributeIfChanged$c(element, "data-invalid", String(invalid));
-                    setAttributeIfChanged$c(element, "data-multiple", String(multiple));
-                    setAttributeIfChanged$c(content, "aria-multiselectable", String(multiple));
-                    setAttributeIfChanged$c(content, "data-chips", String(Boolean(owned(".combobox-chips", HTMLElement))));
+                    setAttributeIfChanged$7(element, "data-direction", direction);
+                    setAttributeIfChanged$7(content, "data-direction", direction);
+                    setAttributeIfChanged$7(element, "data-disabled", String(disabled));
+                    setAttributeIfChanged$7(input, "aria-disabled", String(disabled));
+                    setAttributeIfChanged$7(element, "data-invalid", String(invalid));
+                    setAttributeIfChanged$7(element, "data-multiple", String(multiple));
+                    setAttributeIfChanged$7(content, "aria-multiselectable", String(multiple));
+                    setAttributeIfChanged$7(content, "data-chips", String(Boolean(owned(".combobox-chips", HTMLElement))));
                     if (ownsAriaInvalid) {
-                        setAttributeIfChanged$c(input, "aria-invalid", String(invalid));
+                        setAttributeIfChanged$7(input, "aria-invalid", String(invalid));
                     }
                 };
                 const positionContent = () => {
@@ -4757,10 +4017,10 @@
                     const projectedBottom = rootBox.top + top + contentHeight;
                     if (projectedBottom > window.innerHeight - 4) {
                         top = anchor.offsetTop - contentHeight - 6;
-                        setAttributeIfChanged$c(content, "data-side", "top");
+                        setAttributeIfChanged$7(content, "data-side", "top");
                     }
                     else {
-                        setAttributeIfChanged$c(content, "data-side", "bottom");
+                        setAttributeIfChanged$7(content, "data-side", "bottom");
                     }
                     content.style.setProperty("--combobox-content-top", `${String(Math.round(top))}px`);
                     content.style.setProperty("--combobox-anchor-width", `${String(Math.round(anchorBox.width))}px`);
@@ -4776,14 +4036,14 @@
                         nextOpen = false;
                     open = nextOpen;
                     const state = open ? "open" : "closed";
-                    setAttributeIfChanged$c(element, "data-open", String(open));
-                    setAttributeIfChanged$c(element, "data-state", state);
-                    setAttributeIfChanged$c(content, "data-state", state);
-                    setAttributeIfChanged$c(content, "aria-hidden", String(!open));
-                    setAttributeIfChanged$c(input, "aria-expanded", String(open));
+                    setAttributeIfChanged$7(element, "data-open", String(open));
+                    setAttributeIfChanged$7(element, "data-state", state);
+                    setAttributeIfChanged$7(content, "data-state", state);
+                    setAttributeIfChanged$7(content, "aria-hidden", String(!open));
+                    setAttributeIfChanged$7(input, "aria-expanded", String(open));
                     ownedAll(triggerSelector$4).forEach((trigger) => {
-                        setAttributeIfChanged$c(trigger, "data-state", state);
-                        setAttributeIfChanged$c(trigger, "aria-expanded", String(open));
+                        setAttributeIfChanged$7(trigger, "data-state", state);
+                        setAttributeIfChanged$7(trigger, "aria-expanded", String(open));
                     });
                     setOpenState(content, open);
                     if (open)
@@ -4796,7 +4056,7 @@
                 const clearHighlight = () => {
                     activeItem = null;
                     items.forEach((item) => {
-                        setAttributeIfChanged$c(item, "data-highlighted", "false");
+                        setAttributeIfChanged$7(item, "data-highlighted", "false");
                     });
                     input.removeAttribute("aria-activedescendant");
                 };
@@ -4807,9 +4067,9 @@
                     }
                     activeItem = item;
                     items.forEach((candidate) => {
-                        setAttributeIfChanged$c(candidate, "data-highlighted", String(candidate === item));
+                        setAttributeIfChanged$7(candidate, "data-highlighted", String(candidate === item));
                     });
-                    setAttributeIfChanged$c(input, "aria-activedescendant", item.id);
+                    setAttributeIfChanged$7(input, "aria-activedescendant", item.id);
                     if (open)
                         item.scrollIntoView({ block: "nearest" });
                 };
@@ -4836,7 +4096,7 @@
                         return;
                     const multiple = isMultiple();
                     const value = item.getAttribute("data-value") ?? item.textContent.trim();
-                    setAttributeIfChanged$c(element, "data-value", value);
+                    setAttributeIfChanged$7(element, "data-value", value);
                     element.dispatchEvent(new CustomEvent("angularcss:combobox-select", {
                         bubbles: true,
                         detail: { item, multiple, value },
@@ -4848,18 +4108,18 @@
                 const bindItem = (item) => {
                     if (!item.id)
                         item.id = `combobox-item-${String(comboboxIdCounter++)}`;
-                    setAttributeIfChanged$c(item, "role", "option");
+                    setAttributeIfChanged$7(item, "role", "option");
                     const semanticLabel = item.querySelector(".item-title, .combobox-item-label");
                     if (semanticLabel?.textContent.trim()) {
-                        setAttributeIfChanged$c(item, "aria-label", semanticLabel.textContent.trim());
+                        setAttributeIfChanged$7(item, "aria-label", semanticLabel.textContent.trim());
                     }
-                    setAttributeIfChanged$c(item, "tabindex", "-1");
-                    setAttributeIfChanged$c(item, "data-disabled", String(isDisabled(item)));
+                    setAttributeIfChanged$7(item, "tabindex", "-1");
+                    setAttributeIfChanged$7(item, "data-disabled", String(isDisabled(item)));
                     if (!item.hasAttribute("aria-selected")) {
-                        setAttributeIfChanged$c(item, "aria-selected", "false");
+                        setAttributeIfChanged$7(item, "aria-selected", "false");
                     }
                     if (isDisabled(item))
-                        setAttributeIfChanged$c(item, "aria-disabled", "true");
+                        setAttributeIfChanged$7(item, "aria-disabled", "true");
                     if (itemCleanups.has(item))
                         return;
                     const handleClick = () => {
@@ -4878,11 +4138,11 @@
                         control.type = "button";
                     }
                     if (kind === "trigger") {
-                        setAttributeIfChanged$c(control, "aria-controls", contentId);
-                        setAttributeIfChanged$c(control, "aria-haspopup", "listbox");
+                        setAttributeIfChanged$7(control, "aria-controls", contentId);
+                        setAttributeIfChanged$7(control, "aria-haspopup", "listbox");
                         if (!control.hasAttribute("aria-label") &&
                             !control.textContent.trim()) {
-                            setAttributeIfChanged$c(control, "aria-label", "Show options");
+                            setAttributeIfChanged$7(control, "aria-label", "Show options");
                         }
                         const handleClick = (event) => {
                             event.preventDefault();
@@ -4894,9 +4154,9 @@
                         });
                         return;
                     }
-                    setAttributeIfChanged$c(control, "aria-label", control.getAttribute("aria-label") ?? "Clear selection");
+                    setAttributeIfChanged$7(control, "aria-label", control.getAttribute("aria-label") ?? "Clear selection");
                     const handleClick = () => {
-                        setAttributeIfChanged$c(element, "data-value", "");
+                        setAttributeIfChanged$7(element, "data-value", "");
                         element.dispatchEvent(new CustomEvent("angularcss:combobox-clear", { bubbles: true }));
                         input.focus({ preventScroll: true });
                     };
@@ -4917,17 +4177,17 @@
                         bindControl(control, "clear");
                     });
                     ownedAll(groupSelector$2).forEach((group) => {
-                        setAttributeIfChanged$c(group, "role", "group");
+                        setAttributeIfChanged$7(group, "role", "group");
                         const label = queryAll(group, groupLabelSelector).find((candidate) => candidate.closest(groupSelector$2) === group);
                         if (!label)
                             return;
                         if (!label.id)
                             label.id = `combobox-label-${String(comboboxIdCounter++)}`;
-                        setAttributeIfChanged$c(group, "aria-labelledby", label.id);
+                        setAttributeIfChanged$7(group, "aria-labelledby", label.id);
                     });
                     ownedAll(separatorSelector$2).forEach((separator) => {
-                        setAttributeIfChanged$c(separator, "role", "separator");
-                        setAttributeIfChanged$c(separator, "aria-orientation", "horizontal");
+                        setAttributeIfChanged$7(separator, "role", "separator");
+                        setAttributeIfChanged$7(separator, "aria-orientation", "horizontal");
                     });
                     itemCleanups.forEach((cleanup, item) => {
                         if (!item.isConnected || !isOwned(item)) {
@@ -4943,11 +4203,11 @@
                     });
                     const visible = visibleItems(true);
                     const empty = visible.length === 0;
-                    setAttributeIfChanged$c(element, "data-empty", String(empty));
-                    setAttributeIfChanged$c(content, "data-empty", String(empty));
+                    setAttributeIfChanged$7(element, "data-empty", String(empty));
+                    setAttributeIfChanged$7(content, "data-empty", String(empty));
                     ownedAll(emptySelector$1).forEach((emptySlot) => {
-                        setAttributeIfChanged$c(emptySlot, "role", "status");
-                        setAttributeIfChanged$c(emptySlot, "data-visible", String(empty));
+                        setAttributeIfChanged$7(emptySlot, "role", "status");
+                        setAttributeIfChanged$7(emptySlot, "data-visible", String(empty));
                         if (emptySlot.hidden === empty)
                             emptySlot.hidden = !empty;
                     });
@@ -5123,7 +4383,7 @@
     const rootSelector$1 = ".command, [ng-command]";
     const separatorSelector$1 = ".command-separator";
     const shortcutSelector = ".command-shortcut";
-    const setAttributeIfChanged$b = (element, name, value) => {
+    const setAttributeIfChanged$6 = (element, name, value) => {
         if (element.getAttribute(name) !== value)
             element.setAttribute(name, value);
     };
@@ -5167,11 +4427,11 @@
                     }
                     items.forEach((candidate) => {
                         const selected = candidate === activeItem;
-                        setAttributeIfChanged$b(candidate, "aria-selected", String(selected));
-                        setAttributeIfChanged$b(candidate, "data-selected", String(selected));
+                        setAttributeIfChanged$6(candidate, "aria-selected", String(selected));
+                        setAttributeIfChanged$6(candidate, "data-selected", String(selected));
                     });
                     if (activeItem) {
-                        setAttributeIfChanged$b(input, "aria-activedescendant", activeItem.id);
+                        setAttributeIfChanged$6(input, "aria-activedescendant", activeItem.id);
                         if (scroll)
                             activeItem.scrollIntoView({ block: "nearest" });
                     }
@@ -5196,11 +4456,11 @@
                 const bindItem = (item) => {
                     if (!item.id)
                         item.id = `command-item-${String(commandIdCounter++)}`;
-                    setAttributeIfChanged$b(item, "role", "option");
-                    setAttributeIfChanged$b(item, "tabindex", "-1");
-                    setAttributeIfChanged$b(item, "data-disabled", String(isDisabled(item)));
+                    setAttributeIfChanged$6(item, "role", "option");
+                    setAttributeIfChanged$6(item, "tabindex", "-1");
+                    setAttributeIfChanged$6(item, "data-disabled", String(isDisabled(item)));
                     if (isDisabled(item)) {
-                        setAttributeIfChanged$b(item, "aria-disabled", "true");
+                        setAttributeIfChanged$6(item, "aria-disabled", "true");
                     }
                     if (itemCleanups.has(item))
                         return;
@@ -5233,34 +4493,34 @@
                     if (list) {
                         if (!list.id)
                             list.id = `command-list-${String(commandIdCounter++)}`;
-                        setAttributeIfChanged$b(list, "role", "listbox");
-                        setAttributeIfChanged$b(input, "aria-controls", list.id);
+                        setAttributeIfChanged$6(list, "role", "listbox");
+                        setAttributeIfChanged$6(input, "aria-controls", list.id);
                     }
                     ownedAll(groupSelector$1).forEach((group) => {
-                        setAttributeIfChanged$b(group, "role", "group");
+                        setAttributeIfChanged$6(group, "role", "group");
                         const heading = queryAll(group, groupHeadingSelector).find((candidate) => candidate.closest(groupSelector$1) === group);
                         if (!heading)
                             return;
                         if (!heading.id) {
                             heading.id = `command-group-heading-${String(commandIdCounter++)}`;
                         }
-                        setAttributeIfChanged$b(group, "aria-labelledby", heading.id);
+                        setAttributeIfChanged$6(group, "aria-labelledby", heading.id);
                     });
                     ownedAll(separatorSelector$1).forEach((separator) => {
-                        setAttributeIfChanged$b(separator, "role", "separator");
-                        setAttributeIfChanged$b(separator, "aria-orientation", "horizontal");
+                        setAttributeIfChanged$6(separator, "role", "separator");
+                        setAttributeIfChanged$6(separator, "aria-orientation", "horizontal");
                     });
                     ownedAll(shortcutSelector).forEach((shortcut) => {
-                        setAttributeIfChanged$b(shortcut, "aria-hidden", "true");
+                        setAttributeIfChanged$6(shortcut, "aria-hidden", "true");
                     });
                     const rendered = renderedItems();
                     const empty = rendered.length === 0;
-                    setAttributeIfChanged$b(element, "data-direction", getDirection());
-                    setAttributeIfChanged$b(element, "data-empty", String(empty));
-                    setAttributeIfChanged$b(input, "aria-expanded", String(!empty));
+                    setAttributeIfChanged$6(element, "data-direction", getDirection());
+                    setAttributeIfChanged$6(element, "data-empty", String(empty));
+                    setAttributeIfChanged$6(input, "aria-expanded", String(!empty));
                     ownedAll(emptySelector).forEach((emptySlot) => {
-                        setAttributeIfChanged$b(emptySlot, "role", "status");
-                        setAttributeIfChanged$b(emptySlot, "data-visible", String(empty));
+                        setAttributeIfChanged$6(emptySlot, "role", "status");
+                        setAttributeIfChanged$6(emptySlot, "data-visible", String(empty));
                     });
                     const enabled = enabledItems();
                     const authoredSelected = enabled.find((item) => item.getAttribute("aria-selected") === "true" ||
@@ -5291,8 +4551,8 @@
                         activeItem.click();
                     }
                 };
-                setAttributeIfChanged$b(input, "role", "combobox");
-                setAttributeIfChanged$b(input, "aria-autocomplete", input.getAttribute("aria-autocomplete") ?? "list");
+                setAttributeIfChanged$6(input, "role", "combobox");
+                setAttributeIfChanged$6(input, "aria-autocomplete", input.getAttribute("aria-autocomplete") ?? "list");
                 const observer = new MutationObserver(syncStructure);
                 observer.observe(element, {
                     attributes: true,
@@ -5352,7 +4612,7 @@
     const groupSelector = ".context-menu-group, .context-menu-radio-group";
     const labelSelector = ".context-menu-label";
     const separatorSelector = ".context-menu-separator";
-    const sides$3 = new Set([
+    const sides$2 = new Set([
         "bottom",
         "inline-end",
         "inline-start",
@@ -5360,8 +4620,8 @@
         "right",
         "top",
     ]);
-    const alignments$1 = new Set(["center", "end", "start"]);
-    const setAttributeIfChanged$a = (element, name, value) => {
+    const alignments = new Set(["center", "end", "start"]);
+    const setAttributeIfChanged$5 = (element, name, value) => {
         if (element.getAttribute(name) !== value)
             element.setAttribute(name, value);
     };
@@ -5393,13 +4653,13 @@
                 };
                 const getAuthoredSide = () => {
                     const value = content.getAttribute("side") ?? content.dataset.side;
-                    return value && sides$3.has(value)
+                    return value && sides$2.has(value)
                         ? value
                         : "right";
                 };
                 const getAlign = () => {
                     const value = content.getAttribute("align") ?? content.dataset.align;
-                    return value && alignments$1.has(value)
+                    return value && alignments.has(value)
                         ? value
                         : "start";
                 };
@@ -5409,8 +4669,8 @@
                 trigger.setAttribute("aria-controls", contentId);
                 if (!trigger.hasAttribute("tabindex"))
                     trigger.tabIndex = 0;
-                setAttributeIfChanged$a(content, "role", "menu");
-                setAttributeIfChanged$a(content, "tabindex", content.getAttribute("tabindex") ?? "-1");
+                setAttributeIfChanged$5(content, "role", "menu");
+                setAttributeIfChanged$5(content, "tabindex", content.getAttribute("tabindex") ?? "-1");
                 const menuItems = (surface) => queryAll(surface, itemSelector$2).filter((item) => {
                     if (!isOwned(item))
                         return false;
@@ -5422,18 +4682,18 @@
                     getComputedStyle(item).display !== "none");
                 const syncSemantics = () => {
                     ownedAll(menuSurfaceSelector).forEach((surface) => {
-                        setAttributeIfChanged$a(surface, "role", "menu");
+                        setAttributeIfChanged$5(surface, "role", "menu");
                         if (!surface.hasAttribute("tabindex"))
                             surface.tabIndex = -1;
                     });
                     ownedAll(groupSelector).forEach((group) => {
-                        setAttributeIfChanged$a(group, "role", "group");
+                        setAttributeIfChanged$5(group, "role", "group");
                     });
                     ownedAll(labelSelector).forEach((label) => {
-                        setAttributeIfChanged$a(label, "role", "presentation");
+                        setAttributeIfChanged$5(label, "role", "presentation");
                     });
                     ownedAll(separatorSelector).forEach((separator) => {
-                        setAttributeIfChanged$a(separator, "role", "separator");
+                        setAttributeIfChanged$5(separator, "role", "separator");
                     });
                     ownedAll(itemSelector$2).forEach((item) => {
                         const role = item.matches(checkboxSelector)
@@ -5441,23 +4701,23 @@
                             : item.matches(radioSelector)
                                 ? "menuitemradio"
                                 : "menuitem";
-                        setAttributeIfChanged$a(item, "role", role);
+                        setAttributeIfChanged$5(item, "role", role);
                         if (!item.hasAttribute("tabindex"))
                             item.tabIndex = -1;
                         if ((role === "menuitemcheckbox" || role === "menuitemradio") &&
                             !item.hasAttribute("aria-checked")) {
-                            setAttributeIfChanged$a(item, "aria-checked", "false");
+                            setAttributeIfChanged$5(item, "aria-checked", "false");
                         }
                         if (isDisabled(item)) {
-                            setAttributeIfChanged$a(item, "aria-disabled", "true");
-                            setAttributeIfChanged$a(item, "data-disabled", "true");
+                            setAttributeIfChanged$5(item, "aria-disabled", "true");
+                            setAttributeIfChanged$5(item, "data-disabled", "true");
                         }
                     });
                 };
                 const syncDirection = () => {
                     const direction = getDirection();
-                    setAttributeIfChanged$a(element, "data-direction", direction);
-                    setAttributeIfChanged$a(content, "data-direction", direction);
+                    setAttributeIfChanged$5(element, "data-direction", direction);
+                    setAttributeIfChanged$5(content, "data-direction", direction);
                 };
                 let anchorPoint = null;
                 let open = element.getAttribute("data-open") === "true" ||
@@ -5511,13 +4771,13 @@
                     content.style.setProperty("--context-menu-left", `${String(Math.round(left - rootRect.left + element.scrollLeft))}px`);
                     content.style.setProperty("--context-menu-top", `${String(Math.round(top - rootRect.top + element.scrollTop))}px`);
                     content.style.setProperty("--context-menu-available-height", `${String(Math.max(0, Math.round(window.innerHeight - margin * 2)))}px`);
-                    setAttributeIfChanged$a(content, "data-side", authoredSide);
-                    setAttributeIfChanged$a(content, "data-align", align);
+                    setAttributeIfChanged$5(content, "data-side", authoredSide);
+                    setAttributeIfChanged$5(content, "data-align", align);
                 };
                 const focusItem = (item, surface) => {
                     menuItems(surface).forEach((candidate) => {
                         candidate.tabIndex = candidate === item ? 0 : -1;
-                        setAttributeIfChanged$a(candidate, "data-highlighted", String(candidate === item));
+                        setAttributeIfChanged$5(candidate, "data-highlighted", String(candidate === item));
                     });
                     item.focus({ preventScroll: true });
                 };
@@ -5547,13 +4807,13 @@
                     const wasOpen = open;
                     open = nextOpen;
                     const state = open ? "open" : "closed";
-                    setAttributeIfChanged$a(element, "data-open", String(open));
-                    setAttributeIfChanged$a(element, "data-state", state);
-                    setAttributeIfChanged$a(trigger, "aria-expanded", String(open));
-                    setAttributeIfChanged$a(trigger, "data-state", state);
-                    setAttributeIfChanged$a(content, "data-open", String(open));
-                    setAttributeIfChanged$a(content, "data-state", state);
-                    setAttributeIfChanged$a(content, "aria-hidden", String(!open));
+                    setAttributeIfChanged$5(element, "data-open", String(open));
+                    setAttributeIfChanged$5(element, "data-state", state);
+                    setAttributeIfChanged$5(trigger, "aria-expanded", String(open));
+                    setAttributeIfChanged$5(trigger, "data-state", state);
+                    setAttributeIfChanged$5(content, "data-open", String(open));
+                    setAttributeIfChanged$5(content, "data-state", state);
+                    setAttributeIfChanged$5(content, "aria-hidden", String(!open));
                     setOpenState(content, open);
                     if (open) {
                         requestAnimationFrame(() => {
@@ -5565,7 +4825,7 @@
                     else {
                         menuItems(content).forEach((item) => {
                             item.tabIndex = -1;
-                            setAttributeIfChanged$a(item, "data-highlighted", "false");
+                            setAttributeIfChanged$5(item, "data-highlighted", "false");
                         });
                         if (wasOpen && options.restoreFocus) {
                             trigger.focus({ preventScroll: true });
@@ -5654,7 +4914,7 @@
                     if (!item || !surface || !isOwned(item) || isDisabled(item))
                         return;
                     menuItems(surface).forEach((candidate) => {
-                        setAttributeIfChanged$a(candidate, "data-highlighted", String(candidate === item));
+                        setAttributeIfChanged$5(candidate, "data-highlighted", String(candidate === item));
                     });
                 };
                 const handlePointerDownOutside = (event) => {
@@ -5740,159 +5000,8 @@
         };
     }
 
-    function dialogDirective() {
-        return {
-            link(scope, element) {
-                bindOverlay(scope, element, {
-                    rootSelector: ".dialog, [ng-dialog]",
-                    closeSelector: ".dialog-close, [data-dialog-close]",
-                    contentSelector: ".dialog-content",
-                    descriptionSelector: ".dialog-description",
-                    overlaySelector: ".dialog-overlay",
-                    titleSelector: ".dialog-title",
-                    triggerSelector: ".dialog-trigger",
-                    closeOnOutsideClick: true,
-                });
-            },
-        };
-    }
-
-    const drawerSides = new Set(["bottom", "left", "right", "top"]);
-    const setAttributeIfChanged$9 = (element, name, value) => {
-        if (element.getAttribute(name) !== value) {
-            element.setAttribute(name, value);
-        }
-    };
-    function drawerDirective() {
-        return {
-            link(scope, element) {
-                const getContent = () => queryAll(element, ".drawer-content").find((candidate) => candidate.closest(".drawer, [ng-drawer]") === element) ?? null;
-                const syncSide = () => {
-                    const content = getContent();
-                    const authoredSide = element.getAttribute("side") ??
-                        element.getAttribute("direction") ??
-                        content?.getAttribute("side") ??
-                        content?.getAttribute("direction");
-                    const side = authoredSide && drawerSides.has(authoredSide)
-                        ? authoredSide
-                        : "bottom";
-                    setAttributeIfChanged$9(element, "data-side", side);
-                    if (content)
-                        setAttributeIfChanged$9(content, "data-side", side);
-                };
-                bindOverlay(scope, element, {
-                    rootSelector: ".drawer, [ng-drawer]",
-                    closeSelector: ".drawer-close, [data-drawer-close]",
-                    contentSelector: ".drawer-content",
-                    descriptionSelector: ".drawer-description",
-                    overlaySelector: ".drawer-overlay",
-                    titleSelector: ".drawer-title",
-                    triggerSelector: ".drawer-trigger",
-                    closeOnOutsideClick: true,
-                });
-                const sideObserver = new MutationObserver(syncSide);
-                sideObserver.observe(element, {
-                    attributes: true,
-                    attributeFilter: ["direction", "side"],
-                    childList: true,
-                    subtree: true,
-                });
-                syncSide();
-                onDestroy(scope, () => {
-                    sideObserver.disconnect();
-                });
-            },
-        };
-    }
-
-    let fieldIdCounter = 0;
-    const findControl = (element) => {
-        return query(element, "input, textarea, select, button, .combobox-input", HTMLElement);
-    };
-    const findDescription = (element) => {
-        return query(element, ".field-description", HTMLElement);
-    };
-    const findError = (element) => {
-        return query(element, ".field-error", HTMLElement);
-    };
-    const isElementVisible = (node) => {
-        return node instanceof HTMLElement && !node.hidden;
-    };
-    function fieldDirective() {
-        return {
-            link(_scope, element) {
-                if (element.tagName !== "FIELDSET" && !element.hasAttribute("role")) {
-                    element.setAttribute("role", "group");
-                }
-                const resolveControl = () => findControl(element);
-                let currentControl = null;
-                const handleFormStateChange = () => {
-                    sync();
-                };
-                const bindControl = (control) => {
-                    if (control === currentControl)
-                        return;
-                    currentControl?.removeEventListener("input", handleFormStateChange);
-                    currentControl?.removeEventListener("change", handleFormStateChange);
-                    currentControl = control;
-                    currentControl?.addEventListener("input", handleFormStateChange);
-                    currentControl?.addEventListener("change", handleFormStateChange);
-                };
-                const sync = () => {
-                    const control = resolveControl();
-                    bindControl(control);
-                    const description = findDescription(element);
-                    const error = findError(element);
-                    const visibleError = isElementVisible(error);
-                    const nativeInvalid = control?.matches(":invalid") ?? false;
-                    const invalid = visibleError ||
-                        nativeInvalid ||
-                        control?.getAttribute("aria-invalid") === "true";
-                    element.setAttribute("data-invalid", String(invalid));
-                    if (!control)
-                        return;
-                    const describedBy = [description, error]
-                        .filter(isElementVisible)
-                        .map((part) => {
-                        part.id = part.id || `field-message-${String(fieldIdCounter++)}`;
-                        return part.id;
-                    });
-                    const nextAriaDescribedBy = describedBy.join(" ");
-                    if (nextAriaDescribedBy.length > 0) {
-                        if (control.getAttribute("aria-describedby") !== nextAriaDescribedBy) {
-                            control.setAttribute("aria-describedby", nextAriaDescribedBy);
-                        }
-                    }
-                    else {
-                        control.removeAttribute("aria-describedby");
-                    }
-                };
-                const observer = new MutationObserver(() => {
-                    sync();
-                });
-                observer.observe(element, {
-                    childList: true,
-                    attributes: true,
-                    subtree: true,
-                    attributeFilter: [
-                        "aria-invalid",
-                        "class",
-                        "disabled",
-                        "hidden",
-                        "required",
-                    ],
-                });
-                sync();
-                onDestroy(_scope, () => {
-                    observer.disconnect();
-                    bindControl(null);
-                });
-            },
-        };
-    }
-
     let hoverCardIdCounter = 0;
-    const sides$2 = new Set(["bottom", "left", "right", "top"]);
+    const sides$1 = new Set(["bottom", "left", "right", "top"]);
     const delayFor = (element, attribute, fallback) => {
         const authored = element.getAttribute(attribute);
         if (authored === null)
@@ -5918,7 +5027,7 @@
                 };
                 const syncSide = () => {
                     const authored = content.getAttribute("side") ?? content.getAttribute("data-side");
-                    const side = authored && sides$2.has(authored) ? authored : "bottom";
+                    const side = authored && sides$1.has(authored) ? authored : "bottom";
                     if (content.getAttribute("data-side") !== side) {
                         content.setAttribute("data-side", side);
                     }
@@ -6062,208 +5171,6 @@
                     content.removeEventListener("focusin", handleFocus);
                     content.removeEventListener("focusout", handleBlur);
                     document.removeEventListener("keydown", handleEscape);
-                });
-            },
-        };
-    }
-
-    let inputGroupIdCounter = 0;
-    const addonSelector = ".input-group-addon";
-    const buttonSelector = ".input-group-button";
-    const controlSelector = "input, textarea, select, .combobox-input";
-    function inputGroupDirective() {
-        return {
-            link(scope, element) {
-                let describedControl = null;
-                let managedDescriptionIds = new Set();
-                if (element.tagName !== "FIELDSET" && !element.hasAttribute("role")) {
-                    element.setAttribute("role", "group");
-                }
-                const removeManagedDescriptions = (control) => {
-                    if (!control || managedDescriptionIds.size === 0)
-                        return;
-                    const remaining = (control.getAttribute("aria-describedby") ?? "")
-                        .split(/\s+/)
-                        .filter((id) => id && !managedDescriptionIds.has(id));
-                    if (remaining.length) {
-                        control.setAttribute("aria-describedby", remaining.join(" "));
-                    }
-                    else {
-                        control.removeAttribute("aria-describedby");
-                    }
-                };
-                const sync = () => {
-                    const addons = queryAll(element, addonSelector);
-                    const control = query(element, controlSelector, HTMLElement);
-                    const visibleAddonIds = addons
-                        .filter((addon) => addon.getAttribute("aria-hidden") !== "true")
-                        .map((addon) => {
-                        addon.id =
-                            addon.id || `input-group-addon-${String(inputGroupIdCounter++)}`;
-                        return addon.id;
-                    });
-                    element.setAttribute("data-has-addon", String(addons.length > 0));
-                    element.setAttribute("data-has-button", String(Boolean(query(element, buttonSelector))));
-                    element.setAttribute("data-addon-count", String(addons.length));
-                    if (control !== describedControl) {
-                        removeManagedDescriptions(describedControl);
-                        describedControl = control;
-                        managedDescriptionIds = new Set();
-                    }
-                    if (!control)
-                        return;
-                    const current = control.getAttribute("aria-describedby");
-                    const tokens = new Set((current ?? "").split(/\s+/).filter(Boolean));
-                    managedDescriptionIds.forEach((id) => tokens.delete(id));
-                    visibleAddonIds.forEach((id) => tokens.add(id));
-                    managedDescriptionIds = new Set(visibleAddonIds);
-                    if (tokens.size) {
-                        control.setAttribute("aria-describedby", Array.from(tokens).join(" "));
-                    }
-                    else {
-                        control.removeAttribute("aria-describedby");
-                    }
-                };
-                const observer = new MutationObserver(sync);
-                observer.observe(element, {
-                    attributes: true,
-                    attributeFilter: ["aria-hidden"],
-                    childList: true,
-                    subtree: true,
-                });
-                sync();
-                const focusControlFromAddon = (event) => {
-                    const target = event.target;
-                    if (!(target instanceof Element))
-                        return;
-                    const addon = target.closest(addonSelector);
-                    if (!addon || !element.contains(addon) || target.closest("button")) {
-                        return;
-                    }
-                    query(element, controlSelector, HTMLElement)?.focus();
-                };
-                element.addEventListener("click", focusControlFromAddon);
-                onDestroy(scope, () => {
-                    observer.disconnect();
-                    element.removeEventListener("click", focusControlFromAddon);
-                    removeManagedDescriptions(describedControl);
-                });
-            },
-        };
-    }
-
-    const setAttributeIfChanged$8 = (element, name, value) => {
-        if (element.getAttribute(name) !== value) {
-            element.setAttribute(name, value);
-        }
-    };
-    function inputOtpDirective() {
-        return {
-            link(scope, element) {
-                let inputs = queryAll(element, "input");
-                const cleanupInputs = new WeakMap();
-                const focusInput = (index) => {
-                    const input = inputs.at(index);
-                    if (input)
-                        input.focus();
-                };
-                const syncValue = () => {
-                    const value = inputs.map((input) => input.value).join("");
-                    element.setAttribute("data-value", value);
-                    setAttributeIfChanged$8(element, "data-complete", String(inputs.length > 0 && inputs.every((input) => input.value)));
-                    setAttributeIfChanged$8(element, "data-disabled", String(inputs.some((input) => input.disabled)));
-                    setAttributeIfChanged$8(element, "data-invalid", String(inputs.some((input) => input.getAttribute("aria-invalid") === "true" ||
-                        !input.validity.valid)));
-                };
-                const bindInput = (input) => {
-                    if (cleanupInputs.has(input))
-                        return;
-                    input.setAttribute("autocomplete", input.autocomplete || "one-time-code");
-                    input.setAttribute("inputmode", input.getAttribute("inputmode") ?? "numeric");
-                    if (!input.hasAttribute("maxlength")) {
-                        input.setAttribute("maxlength", "1");
-                    }
-                    input.setAttribute("aria-label", input.getAttribute("aria-label") ??
-                        `Digit ${String(inputs.indexOf(input) + 1)}`);
-                    const handleInput = () => {
-                        input.value = input.value.slice(-1);
-                        syncValue();
-                        if (input.value)
-                            focusInput(inputs.indexOf(input) + 1);
-                    };
-                    const handleKeydown = (event) => {
-                        if (event.key === "Backspace" && !input.value) {
-                            focusInput(inputs.indexOf(input) - 1);
-                        }
-                    };
-                    const handlePaste = (event) => {
-                        const pasted = event.clipboardData?.getData("text").trim();
-                        if (!pasted)
-                            return;
-                        event.preventDefault();
-                        const startIndex = inputs.indexOf(input);
-                        pasted
-                            .slice(0, inputs.length - startIndex)
-                            .split("")
-                            .forEach((character, offset) => {
-                            const target = inputs[startIndex + offset];
-                            target.value = character;
-                            target.dispatchEvent(new Event("input", { bubbles: true }));
-                        });
-                        syncValue();
-                        focusInput(Math.min(startIndex + pasted.length, inputs.length - 1));
-                    };
-                    const handleFocus = () => {
-                        queryAll(element, ".input-otp-slot").forEach((slot) => {
-                            setAttributeIfChanged$8(slot, "data-active", String(slot.contains(input)));
-                        });
-                    };
-                    const handleBlur = () => {
-                        const slot = input.closest(".input-otp-slot");
-                        if (slot)
-                            setAttributeIfChanged$8(slot, "data-active", "false");
-                    };
-                    input.addEventListener("input", handleInput);
-                    input.addEventListener("keydown", handleKeydown);
-                    input.addEventListener("paste", handlePaste);
-                    input.addEventListener("focus", handleFocus);
-                    input.addEventListener("blur", handleBlur);
-                    cleanupInputs.set(input, () => {
-                        input.removeEventListener("input", handleInput);
-                        input.removeEventListener("keydown", handleKeydown);
-                        input.removeEventListener("paste", handlePaste);
-                        input.removeEventListener("focus", handleFocus);
-                        input.removeEventListener("blur", handleBlur);
-                    });
-                };
-                const syncInputs = () => {
-                    inputs = queryAll(element, "input");
-                    inputs.forEach((input, index) => {
-                        bindInput(input);
-                        input.setAttribute("aria-label", input.getAttribute("aria-label") ?? `Digit ${String(index + 1)}`);
-                    });
-                    syncValue();
-                };
-                const observer = new MutationObserver(syncInputs);
-                observer.observe(element, {
-                    attributes: true,
-                    attributeFilter: [
-                        "aria-invalid",
-                        "data-invalid",
-                        "disabled",
-                        "maxlength",
-                        "required",
-                        "value",
-                    ],
-                    childList: true,
-                    subtree: true,
-                });
-                syncInputs();
-                onDestroy(scope, () => {
-                    observer.disconnect();
-                    queryAll(element, "input").forEach((input) => {
-                        cleanupInputs.get(input)?.();
-                    });
                 });
             },
         };
@@ -7088,153 +5995,6 @@
         };
     }
 
-    let popoverIdCounter = 0;
-    const alignments = new Set(["center", "end", "start"]);
-    const sides$1 = new Set(["bottom", "left", "right", "top"]);
-    const focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]), [contenteditable="true"]';
-    const setAttributeIfChanged$7 = (element, name, value) => {
-        if (element.getAttribute(name) !== value) {
-            element.setAttribute(name, value);
-        }
-    };
-    function popoverDirective() {
-        return {
-            link(scope, element) {
-                const directionOwner = element.closest("[dir]") ?? element;
-                const trigger = query(element, ".popover-trigger", HTMLElement);
-                const content = query(element, ".popover-content", HTMLElement);
-                if (!trigger || !content)
-                    return;
-                const getDirection = () => element.closest("[dir]")?.getAttribute("dir") === "rtl"
-                    ? "rtl"
-                    : "ltr";
-                const syncDirection = () => {
-                    const direction = getDirection();
-                    setAttributeIfChanged$7(element, "data-direction", direction);
-                    setAttributeIfChanged$7(content, "data-direction", direction);
-                };
-                const syncPlacement = () => {
-                    const authoredSide = content.getAttribute("side") ?? content.getAttribute("data-side");
-                    const side = authoredSide && sides$1.has(authoredSide) ? authoredSide : "bottom";
-                    const authoredAlign = content.getAttribute("align") ?? content.getAttribute("data-align");
-                    const align = authoredAlign && alignments.has(authoredAlign)
-                        ? authoredAlign
-                        : "center";
-                    setAttributeIfChanged$7(content, "data-side", side);
-                    setAttributeIfChanged$7(content, "data-align", align);
-                };
-                const contentId = content.id || `popover-content-${String(popoverIdCounter++)}`;
-                content.id = contentId;
-                trigger.setAttribute("aria-haspopup", "dialog");
-                trigger.setAttribute("aria-controls", contentId);
-                content.setAttribute("role", "dialog");
-                content.setAttribute("aria-modal", content.getAttribute("aria-modal") ?? "false");
-                content.setAttribute("tabindex", content.getAttribute("tabindex") ?? "-1");
-                let open = element.getAttribute("data-open") === "true" ||
-                    content.getAttribute("data-open") === "true";
-                let initialized = false;
-                const focusContent = () => {
-                    const firstFocusable = content.querySelector(focusableSelector);
-                    (firstFocusable ?? content).focus({ preventScroll: true });
-                };
-                const setOpen = (nextOpen, restoreOnClose = true) => {
-                    const wasOpen = open;
-                    const shouldFocus = nextOpen && (!wasOpen || !initialized);
-                    const state = nextOpen ? "open" : "closed";
-                    open = nextOpen;
-                    setAttributeIfChanged$7(element, "data-open", String(nextOpen));
-                    setAttributeIfChanged$7(element, "data-state", state);
-                    setAttributeIfChanged$7(trigger, "data-state", state);
-                    setAttributeIfChanged$7(trigger, "aria-expanded", String(nextOpen));
-                    setAttributeIfChanged$7(trigger, "aria-controls", contentId);
-                    setAttributeIfChanged$7(content, "data-state", state);
-                    setAttributeIfChanged$7(content, "aria-hidden", String(!nextOpen));
-                    setOpenState(content, nextOpen);
-                    if (!nextOpen && wasOpen && restoreOnClose) {
-                        restoreFocus(trigger);
-                    }
-                    else if (shouldFocus) {
-                        focusContent();
-                    }
-                    initialized = true;
-                };
-                const handleTriggerClick = (event) => {
-                    event.preventDefault();
-                    if (isDisabled(trigger))
-                        return;
-                    setOpen(!open);
-                };
-                const closeOnOutsideClick = (event) => {
-                    if (open &&
-                        event.target instanceof Node &&
-                        !element.contains(event.target)) {
-                        setOpen(false, false);
-                    }
-                };
-                const closeOnFocusOutside = (event) => {
-                    if (open &&
-                        event.target instanceof Node &&
-                        !element.contains(event.target)) {
-                        setOpen(false, false);
-                    }
-                };
-                const syncFromAttribute = (source) => {
-                    const nextOpen = source.getAttribute("data-open") === "true";
-                    if (nextOpen !== open) {
-                        setOpen(nextOpen);
-                    }
-                };
-                const openObserver = new MutationObserver((records) => {
-                    syncPlacement();
-                    if (records.some((record) => record.attributeName === "data-open")) {
-                        syncFromAttribute(content);
-                    }
-                });
-                openObserver.observe(content, {
-                    attributes: true,
-                    attributeFilter: [
-                        "align",
-                        "data-align",
-                        "data-open",
-                        "data-side",
-                        "side",
-                    ],
-                });
-                const rootOpenObserver = new MutationObserver(() => {
-                    syncDirection();
-                    syncFromAttribute(element);
-                });
-                rootOpenObserver.observe(element, {
-                    attributes: true,
-                    attributeFilter: ["data-open", "dir"],
-                });
-                const directionObserver = directionOwner === element ? null : new MutationObserver(syncDirection);
-                directionObserver?.observe(directionOwner, {
-                    attributes: true,
-                    attributeFilter: ["dir"],
-                });
-                syncDirection();
-                syncPlacement();
-                setOpen(open);
-                const cleanupEscapeClose = bindEscapeClose([trigger, content], () => open, () => {
-                    setOpen(false);
-                });
-                trigger.addEventListener("click", handleTriggerClick);
-                document.addEventListener("click", closeOnOutsideClick);
-                document.addEventListener("focusin", closeOnFocusOutside);
-                onDestroy(scope, () => {
-                    openObserver.disconnect();
-                    rootOpenObserver.disconnect();
-                    directionObserver?.disconnect();
-                    cleanupEscapeClose();
-                    trigger.removeEventListener("click", handleTriggerClick);
-                    document.removeEventListener("click", closeOnOutsideClick);
-                    document.removeEventListener("focusin", closeOnFocusOutside);
-                });
-            },
-        };
-    }
-
     const DEFAULT_MIN_SIZE = 0.25;
     const DEFAULT_MAX_SIZE = 4;
     const DEFAULT_STEP = 0.25;
@@ -7249,7 +6009,7 @@
         const value = Number(rawValue);
         return Number.isFinite(value) ? value : fallback;
     };
-    const setAttributeIfChanged$6 = (element, name, value) => {
+    const setAttributeIfChanged$4 = (element, name, value) => {
         if (element.getAttribute(name) !== value) {
             element.setAttribute(name, value);
         }
@@ -7278,17 +6038,17 @@
                 const getDefaultHandleOrientation = () => getGroupOrientation() === "vertical" ? "horizontal" : "vertical";
                 const syncOrientation = () => {
                     const groupOrientation = getGroupOrientation();
-                    setAttributeIfChanged$6(element, "data-orientation", groupOrientation);
-                    setAttributeIfChanged$6(element, "data-direction", element.closest("[dir]")?.getAttribute("dir") === "rtl"
+                    setAttributeIfChanged$4(element, "data-orientation", groupOrientation);
+                    setAttributeIfChanged$4(element, "data-direction", element.closest("[dir]")?.getAttribute("dir") === "rtl"
                         ? "rtl"
                         : "ltr");
                     handles.forEach((handle) => {
                         if (!handle.hasAttribute("aria-orientation") ||
                             ownedHandleOrientations.has(handle)) {
-                            setAttributeIfChanged$6(handle, "aria-orientation", getDefaultHandleOrientation());
+                            setAttributeIfChanged$4(handle, "aria-orientation", getDefaultHandleOrientation());
                             ownedHandleOrientations.add(handle);
                         }
-                        setAttributeIfChanged$6(handle, "data-orientation", handle.getAttribute("aria-orientation") ?? "vertical");
+                        setAttributeIfChanged$4(handle, "data-orientation", handle.getAttribute("aria-orientation") ?? "vertical");
                     });
                 };
                 const syncHandle = (handle, before) => {
@@ -7422,18 +6182,18 @@
                         if (before) {
                             if (!before.id)
                                 before.id = `resizable-panel-${String(resizableIdCounter++)}`;
-                            setAttributeIfChanged$6(before, "data-index", String(index));
-                            setAttributeIfChanged$6(before, "data-size", String(panelSize(before)));
+                            setAttributeIfChanged$4(before, "data-index", String(index));
+                            setAttributeIfChanged$4(before, "data-size", String(panelSize(before)));
                             syncHandle(handle, before);
                         }
                         if (after) {
                             if (!after.id)
                                 after.id = `resizable-panel-${String(resizableIdCounter++)}`;
-                            setAttributeIfChanged$6(after, "data-index", String(index + 1));
-                            setAttributeIfChanged$6(after, "data-size", String(panelSize(after)));
+                            setAttributeIfChanged$4(after, "data-index", String(index + 1));
+                            setAttributeIfChanged$4(after, "data-size", String(panelSize(after)));
                         }
                         if (before && after) {
-                            setAttributeIfChanged$6(handle, "aria-controls", `${before.id} ${after.id}`);
+                            setAttributeIfChanged$4(handle, "aria-controls", `${before.id} ${after.id}`);
                         }
                     });
                 };
@@ -7468,232 +6228,6 @@
         };
     }
 
-    /**
-     * Enhances a scrollable layout primitive by exposing scroll-state hooks and making
-     * the viewport focusable with minimal semantic defaults.
-     */
-    function scrollAreaDirective() {
-        return {
-            link(scope, element) {
-                const viewport = query(element, ".scroll-area-viewport", HTMLElement);
-                if (!viewport)
-                    return;
-                viewport.setAttribute("tabindex", viewport.getAttribute("tabindex") ?? "0");
-                viewport.setAttribute("role", "region");
-                viewport.setAttribute("aria-label", viewport.getAttribute("aria-label") ??
-                    element.getAttribute("aria-label") ??
-                    "Scrollable content");
-                const getDirection = () => viewport.closest("[dir]")?.getAttribute("dir") === "rtl"
-                    ? "rtl"
-                    : "ltr";
-                const syncDirection = () => {
-                    const direction = getDirection();
-                    element.setAttribute("data-direction", direction);
-                    viewport.setAttribute("data-direction", direction);
-                };
-                const scrollbarCleanups = new Map();
-                const bindScrollbar = (scrollbar, orientation) => {
-                    if (scrollbarCleanups.has(scrollbar))
-                        return;
-                    const handlePointerDown = (event) => {
-                        if (event.button !== 0)
-                            return;
-                        event.preventDefault();
-                        scrollbar.setPointerCapture(event.pointerId);
-                        const updateScroll = (pointerEvent) => {
-                            const bounds = scrollbar.getBoundingClientRect();
-                            const horizontal = orientation === "horizontal";
-                            const trackSize = horizontal ? bounds.width : bounds.height;
-                            const viewportSize = horizontal
-                                ? viewport.clientWidth
-                                : viewport.clientHeight;
-                            const scrollSize = horizontal
-                                ? viewport.scrollWidth
-                                : viewport.scrollHeight;
-                            const maxScroll = Math.max(0, scrollSize - viewportSize);
-                            if (trackSize <= 0 || maxScroll <= 0)
-                                return;
-                            const pointer = horizontal
-                                ? pointerEvent.clientX - bounds.left
-                                : pointerEvent.clientY - bounds.top;
-                            const thumbSize = Math.max(18, trackSize * Math.min(1, viewportSize / scrollSize));
-                            const fraction = Math.max(0, Math.min(1, (pointer - thumbSize / 2) / (trackSize - thumbSize)));
-                            const nextScroll = fraction * maxScroll;
-                            if (horizontal) {
-                                viewport.scrollLeft =
-                                    getDirection() === "rtl" ? -nextScroll : nextScroll;
-                            }
-                            else {
-                                viewport.scrollTop = nextScroll;
-                            }
-                        };
-                        const handlePointerMove = (pointerEvent) => {
-                            if (pointerEvent.pointerId === event.pointerId) {
-                                updateScroll(pointerEvent);
-                            }
-                        };
-                        const handlePointerUp = (pointerEvent) => {
-                            if (pointerEvent.pointerId !== event.pointerId)
-                                return;
-                            scrollbar.removeEventListener("pointermove", handlePointerMove);
-                            scrollbar.removeEventListener("pointerup", handlePointerUp);
-                            scrollbar.removeEventListener("pointercancel", handlePointerUp);
-                        };
-                        updateScroll(event);
-                        scrollbar.addEventListener("pointermove", handlePointerMove);
-                        scrollbar.addEventListener("pointerup", handlePointerUp);
-                        scrollbar.addEventListener("pointercancel", handlePointerUp);
-                    };
-                    scrollbar.addEventListener("pointerdown", handlePointerDown);
-                    scrollbarCleanups.set(scrollbar, () => {
-                        scrollbar.removeEventListener("pointerdown", handlePointerDown);
-                    });
-                };
-                const syncScrollbar = (scrollbar, orientation) => {
-                    const horizontal = orientation === "horizontal";
-                    const viewportSize = horizontal
-                        ? viewport.clientWidth
-                        : viewport.clientHeight;
-                    const scrollSize = horizontal
-                        ? viewport.scrollWidth
-                        : viewport.scrollHeight;
-                    const scrollPosition = horizontal
-                        ? Math.abs(viewport.scrollLeft)
-                        : viewport.scrollTop;
-                    const trackSize = horizontal
-                        ? scrollbar.clientWidth
-                        : scrollbar.clientHeight;
-                    const maxScroll = Math.max(0, scrollSize - viewportSize);
-                    const thumb = query(scrollbar, ".scroll-area-thumb", HTMLElement);
-                    if (!thumb || trackSize <= 0 || scrollSize <= 0)
-                        return;
-                    const thumbSize = Math.max(18, trackSize * Math.min(1, viewportSize / scrollSize));
-                    const offset = maxScroll > 0
-                        ? (Math.min(maxScroll, scrollPosition) / maxScroll) *
-                            (trackSize - thumbSize)
-                        : 0;
-                    thumb.style.setProperty(horizontal ? "width" : "height", `${String(thumbSize)}px`);
-                    thumb.style.setProperty("transform", horizontal
-                        ? `translateX(${String(offset)}px)`
-                        : `translateY(${String(offset)}px)`);
-                    thumb.setAttribute("data-size", String(Math.round(thumbSize)));
-                    thumb.setAttribute("data-offset", String(Math.round(offset)));
-                    bindScrollbar(scrollbar, orientation);
-                };
-                const syncState = () => {
-                    syncDirection();
-                    element.setAttribute("data-scrollable-y", String(viewport.scrollHeight > viewport.clientHeight));
-                    element.setAttribute("data-scrollable-x", String(viewport.scrollWidth > viewport.clientWidth));
-                    element.setAttribute("data-scroll-top", String(viewport.scrollTop));
-                    element.setAttribute("data-scroll-left", String(viewport.scrollLeft));
-                    element.setAttribute("data-scroll-at-top", String(viewport.scrollTop <= 0));
-                    element.setAttribute("data-scroll-at-bottom", String(viewport.scrollTop + viewport.clientHeight >= viewport.scrollHeight));
-                    queryAll(element, ".scroll-area-scrollbar").forEach((scrollbar) => {
-                        const orientation = scrollbar.getAttribute("data-orientation") === "horizontal"
-                            ? "horizontal"
-                            : "vertical";
-                        scrollbar.setAttribute("data-orientation", orientation);
-                        scrollbar.setAttribute("aria-hidden", "true");
-                        scrollbar.setAttribute("data-visible", orientation === "horizontal"
-                            ? (element.getAttribute("data-scrollable-x") ?? "false")
-                            : (element.getAttribute("data-scrollable-y") ?? "false"));
-                        syncScrollbar(scrollbar, orientation);
-                    });
-                    queryAll(element, ".scroll-area-thumb").forEach((thumb) => {
-                        thumb.setAttribute("aria-hidden", "true");
-                    });
-                };
-                const observedElements = new Set();
-                const resizeObserver = typeof ResizeObserver === "function"
-                    ? new ResizeObserver(syncState)
-                    : null;
-                const observeElementSize = (target) => {
-                    if (!resizeObserver || observedElements.has(target))
-                        return;
-                    observedElements.add(target);
-                    resizeObserver.observe(target);
-                };
-                const observeContentSize = () => {
-                    observeElementSize(viewport);
-                    Array.from(viewport.children).forEach(observeElementSize);
-                };
-                const mutationObserver = new MutationObserver(() => {
-                    observeContentSize();
-                    syncState();
-                });
-                const directionObserver = new MutationObserver(() => {
-                    syncDirection();
-                });
-                viewport.addEventListener("scroll", syncState);
-                mutationObserver.observe(viewport, {
-                    attributes: true,
-                    attributeFilter: ["class", "dir", "hidden", "style"],
-                    childList: true,
-                    subtree: true,
-                });
-                directionObserver.observe(element, {
-                    attributes: true,
-                    attributeFilter: ["dir"],
-                });
-                observeContentSize();
-                syncState();
-                onDestroy(scope, () => {
-                    viewport.removeEventListener("scroll", syncState);
-                    mutationObserver.disconnect();
-                    directionObserver.disconnect();
-                    resizeObserver?.disconnect();
-                    scrollbarCleanups.forEach((cleanup) => {
-                        cleanup();
-                    });
-                    scrollbarCleanups.clear();
-                });
-            },
-        };
-    }
-
-    const sheetSides = new Set(["bottom", "left", "right", "top"]);
-    const setAttributeIfChanged$5 = (element, name, value) => {
-        if (element.getAttribute(name) !== value) {
-            element.setAttribute(name, value);
-        }
-    };
-    function sheetDirective() {
-        return {
-            link(scope, element) {
-                const getContent = () => queryAll(element, ".sheet-content").find((candidate) => candidate.closest(".sheet, [ng-sheet]") === element) ?? null;
-                const syncSide = () => {
-                    const content = getContent();
-                    const authoredSide = element.getAttribute("side") ?? content?.getAttribute("side");
-                    const side = authoredSide && sheetSides.has(authoredSide) ? authoredSide : "right";
-                    setAttributeIfChanged$5(element, "data-side", side);
-                    if (content)
-                        setAttributeIfChanged$5(content, "data-side", side);
-                };
-                bindOverlay(scope, element, {
-                    rootSelector: ".sheet, [ng-sheet]",
-                    closeSelector: ".sheet-close, [data-sheet-close]",
-                    contentSelector: ".sheet-content",
-                    descriptionSelector: ".sheet-description",
-                    overlaySelector: ".sheet-overlay",
-                    titleSelector: ".sheet-title",
-                    triggerSelector: ".sheet-trigger",
-                    closeOnOutsideClick: true,
-                });
-                const sideObserver = new MutationObserver(syncSide);
-                sideObserver.observe(element, {
-                    attributes: true,
-                    attributeFilter: ["side"],
-                    childList: true,
-                    subtree: true,
-                });
-                syncSide();
-                onDestroy(scope, () => {
-                    sideObserver.disconnect();
-                });
-            },
-        };
-    }
-
     let sidebarIdCounter = 0;
     const selectors = {
         group: ".sidebar-group",
@@ -7708,7 +6242,7 @@
         variant: new Set(["floating", "inset", "sidebar"]),
     };
     const getDataState = (collapsed) => collapsed ? "collapsed" : "expanded";
-    const setAttributeIfChanged$4 = (element, name, value) => {
+    const setAttributeIfChanged$3 = (element, name, value) => {
         if (element.getAttribute(name) !== value) {
             element.setAttribute(name, value);
         }
@@ -7730,16 +6264,16 @@
                     ? "rtl"
                     : "ltr";
                 const syncDirection = () => {
-                    setAttributeIfChanged$4(element, "data-direction", getDirection());
+                    setAttributeIfChanged$3(element, "data-direction", getDirection());
                 };
                 const syncResponsive = () => {
-                    setAttributeIfChanged$4(element, "data-mobile", String(mobileQuery.matches));
+                    setAttributeIfChanged$3(element, "data-mobile", String(mobileQuery.matches));
                 };
                 const getCollapsed = () => element.getAttribute("data-state") === getDataState(true);
                 const syncOptions = () => {
                     const reflect = (name, fallback) => {
                         const authored = element.getAttribute(name);
-                        setAttributeIfChanged$4(element, `data-${name}`, authored && sidebarOptions[name].has(authored)
+                        setAttributeIfChanged$3(element, `data-${name}`, authored && sidebarOptions[name].has(authored)
                             ? authored
                             : fallback);
                     };
@@ -7753,12 +6287,12 @@
                     }
                     const hidden = collapsed && element.getAttribute("data-collapsible") === "offcanvas";
                     const nextState = getDataState(collapsed);
-                    setAttributeIfChanged$4(element, "data-open", String(!collapsed));
-                    setAttributeIfChanged$4(element, "data-state", nextState);
-                    setAttributeIfChanged$4(element, "aria-hidden", String(hidden));
+                    setAttributeIfChanged$3(element, "data-open", String(!collapsed));
+                    setAttributeIfChanged$3(element, "data-state", nextState);
+                    setAttributeIfChanged$3(element, "aria-hidden", String(hidden));
                     cleanupTriggers.forEach((_, trigger) => {
-                        setAttributeIfChanged$4(trigger, "aria-expanded", String(!collapsed));
-                        setAttributeIfChanged$4(trigger, "data-state", collapsed ? "closed" : "open");
+                        setAttributeIfChanged$3(trigger, "aria-expanded", String(!collapsed));
+                        setAttributeIfChanged$3(trigger, "data-state", collapsed ? "closed" : "open");
                     });
                     if (hidden && element.contains(document.activeElement)) {
                         cleanupTriggers.keys().next().value?.focus();
@@ -7777,7 +6311,7 @@
                             return;
                         if (!label.id)
                             label.id = `sidebar-group-label-${String(sidebarIdCounter++)}`;
-                        setAttributeIfChanged$4(group, "aria-labelledby", label.id);
+                        setAttributeIfChanged$3(group, "aria-labelledby", label.id);
                     });
                     queryAll(element, selectors.menuButton).forEach((button) => {
                         if (button instanceof HTMLButtonElement &&
@@ -7788,7 +6322,7 @@
                         const active = dataActive === null
                             ? button.getAttribute("aria-current") === "page"
                             : dataActive === "true";
-                        setAttributeIfChanged$4(button, "data-active", String(active));
+                        setAttributeIfChanged$3(button, "data-active", String(active));
                         if (active && !button.hasAttribute("aria-current")) {
                             button.setAttribute("aria-current", "page");
                             ownedCurrent.add(button);
@@ -7809,10 +6343,10 @@
                     if (cleanupTriggers.has(trigger))
                         return;
                     if (element.id) {
-                        setAttributeIfChanged$4(trigger, "aria-controls", element.id);
+                        setAttributeIfChanged$3(trigger, "aria-controls", element.id);
                     }
-                    setAttributeIfChanged$4(trigger, "aria-expanded", String(!getCollapsed()));
-                    setAttributeIfChanged$4(trigger, "data-state", getCollapsed() ? "closed" : "open");
+                    setAttributeIfChanged$3(trigger, "aria-expanded", String(!getCollapsed()));
+                    setAttributeIfChanged$3(trigger, "data-state", getCollapsed() ? "closed" : "open");
                     if (trigger instanceof HTMLButtonElement &&
                         !trigger.hasAttribute("type")) {
                         trigger.type = "button";
@@ -7906,7 +6440,7 @@
 
     const thumbSelector = 'input[type="range"].slider-thumb';
     const orientations = new Set(["horizontal", "vertical"]);
-    const setAttributeIfChanged$3 = (element, name, value) => {
+    const setAttributeIfChanged$2 = (element, name, value) => {
         if (element.getAttribute(name) !== value) {
             element.setAttribute(name, value);
         }
@@ -7936,16 +6470,16 @@
     const syncInput = (element, orientation = orientationFor(element)) => {
         const state = sliderValue(element);
         syncNativeControlState(element);
-        setAttributeIfChanged$3(element, "role", "slider");
-        setAttributeIfChanged$3(element, "aria-orientation", orientation);
-        setAttributeIfChanged$3(element, "data-orientation", orientation);
-        setAttributeIfChanged$3(element, "aria-valuemin", String(state.min));
-        setAttributeIfChanged$3(element, "aria-valuemax", String(state.max));
-        setAttributeIfChanged$3(element, "aria-valuenow", String(state.value));
-        setAttributeIfChanged$3(element, "data-invalid", String(element.getAttribute("aria-invalid") === "true" ||
+        setAttributeIfChanged$2(element, "role", "slider");
+        setAttributeIfChanged$2(element, "aria-orientation", orientation);
+        setAttributeIfChanged$2(element, "data-orientation", orientation);
+        setAttributeIfChanged$2(element, "aria-valuemin", String(state.min));
+        setAttributeIfChanged$2(element, "aria-valuemax", String(state.max));
+        setAttributeIfChanged$2(element, "aria-valuenow", String(state.value));
+        setAttributeIfChanged$2(element, "data-invalid", String(element.getAttribute("aria-invalid") === "true" ||
             element.matches(":invalid")));
         element.style.setProperty("--value", `${String(state.percent)}%`);
-        setAttributeIfChanged$3(element, "data-value", String(state.value));
+        setAttributeIfChanged$2(element, "data-value", String(state.value));
         return state;
     };
     const bindNativeSlider = (element) => {
@@ -7984,7 +6518,7 @@
                 ? "rtl"
                 : "ltr";
             const states = thumbs.map((input, index) => {
-                setAttributeIfChanged$3(input, "data-index", String(index));
+                setAttributeIfChanged$2(input, "data-index", String(index));
                 return syncInput(input, orientation);
             });
             const minAttribute = element.getAttribute("min");
@@ -8011,9 +6545,9 @@
             });
             const start = physicalPercents.length ? Math.min(...physicalPercents) : 0;
             const end = physicalPercents.length ? Math.max(...physicalPercents) : 0;
-            setAttributeIfChanged$3(element, "data-orientation", orientation);
-            setAttributeIfChanged$3(element, "data-disabled", String(thumbs.length > 0 && thumbs.every((input) => input.disabled)));
-            setAttributeIfChanged$3(element, "data-values", states.map(({ value }) => value).join(","));
+            setAttributeIfChanged$2(element, "data-orientation", orientation);
+            setAttributeIfChanged$2(element, "data-disabled", String(thumbs.length > 0 && thumbs.every((input) => input.disabled)));
+            setAttributeIfChanged$2(element, "data-values", states.map(({ value }) => value).join(","));
             element.style.setProperty("--range-start", `${String(start)}%`);
             element.style.setProperty("--range-end", `${String(end)}%`);
         };
@@ -8211,7 +6745,7 @@
         warning: TriangleAlert,
     };
     let toastIdCounter = 0;
-    const setAttributeIfChanged$2 = (element, name, value) => {
+    const setAttributeIfChanged$1 = (element, name, value) => {
         if (element.getAttribute(name) !== value) {
             element.setAttribute(name, value);
         }
@@ -8256,9 +6790,9 @@
                     }
                 };
                 const bindToast = (toast) => {
-                    setAttributeIfChanged$2(toast, "role", "status");
-                    setAttributeIfChanged$2(toast, "aria-live", toast.getAttribute("aria-live") ?? "polite");
-                    setAttributeIfChanged$2(toast, "aria-atomic", toast.getAttribute("aria-atomic") ?? "true");
+                    setAttributeIfChanged$1(toast, "role", "status");
+                    setAttributeIfChanged$1(toast, "aria-live", toast.getAttribute("aria-live") ?? "polite");
+                    setAttributeIfChanged$1(toast, "aria-atomic", toast.getAttribute("aria-atomic") ?? "true");
                     const relationships = generatedRelationships.get(toast) ?? {};
                     const title = toast.querySelector(titleSelector);
                     const description = toast.querySelector(descriptionSelector);
@@ -8268,7 +6802,7 @@
                         if (!title.id)
                             title.id = `toast-title-${String(toastIdCounter++)}`;
                         if (!labelledby || labelledby === relationships.labelledby) {
-                            setAttributeIfChanged$2(toast, "aria-labelledby", title.id);
+                            setAttributeIfChanged$1(toast, "aria-labelledby", title.id);
                             relationships.labelledby = title.id;
                         }
                     }
@@ -8282,7 +6816,7 @@
                             description.id = `toast-description-${String(toastIdCounter++)}`;
                         }
                         if (!describedby || describedby === relationships.describedby) {
-                            setAttributeIfChanged$2(toast, "aria-describedby", description.id);
+                            setAttributeIfChanged$1(toast, "aria-describedby", description.id);
                             relationships.describedby = description.id;
                         }
                     }
@@ -8314,16 +6848,16 @@
                         nextType = dataType;
                         typeSource = "data-type";
                     }
-                    setAttributeIfChanged$2(toast, "data-type", nextType);
+                    setAttributeIfChanged$1(toast, "data-type", nextType);
                     mirroredTypes.set(toast, { source: typeSource, value: nextType });
                     const icon = toast.querySelector(":scope > .toast-icon");
                     if (icon && nextType !== "default") {
                         syncGeneratedIcon(icon, nextType);
                     }
                     const open = !toast.hidden;
-                    setAttributeIfChanged$2(toast, "aria-hidden", String(!open));
-                    setAttributeIfChanged$2(toast, "data-state", open ? "open" : "closed");
-                    setAttributeIfChanged$2(toast, "data-visible", String(open));
+                    setAttributeIfChanged$1(toast, "aria-hidden", String(!open));
+                    setAttributeIfChanged$1(toast, "data-state", open ? "open" : "closed");
+                    setAttributeIfChanged$1(toast, "data-visible", String(open));
                 };
                 const bindActionButton = (button) => {
                     if (button instanceof HTMLButtonElement &&
@@ -8335,7 +6869,7 @@
                     if (cleanupButtons.has(button))
                         return;
                     bindActionButton(button);
-                    setAttributeIfChanged$2(button, "aria-label", button.getAttribute("aria-label") ?? "Close toast");
+                    setAttributeIfChanged$1(button, "aria-label", button.getAttribute("aria-label") ?? "Close toast");
                     const icon = button.querySelector(".sonner-icon");
                     if (icon)
                         syncGeneratedIcon(icon, "close");
@@ -8579,151 +7113,6 @@
         };
     }
 
-    const setAttributeIfChanged$1 = (element, name, value) => {
-        if (element.getAttribute(name) !== value) {
-            element.setAttribute(name, value);
-        }
-    };
-    function toggleGroupDirective() {
-        return {
-            link(scope, element) {
-                const directionOwner = element.closest("[dir]") ?? element;
-                const itemSelector = ".toggle-group-item, button[aria-pressed]";
-                let items = [];
-                const allowsMultiple = element.hasAttribute("multiple") ||
-                    element.getAttribute("type") === "multiple";
-                const cleanupItems = new Map();
-                if (element.tagName !== "FIELDSET" && !element.hasAttribute("role")) {
-                    element.setAttribute("role", "group");
-                }
-                const isGroupDisabled = () => element.hasAttribute("disabled") ||
-                    element.getAttribute("aria-disabled") === "true";
-                const isItemDisabled = (item) => isGroupDisabled() ||
-                    item.hasAttribute("disabled") ||
-                    item.getAttribute("aria-disabled") === "true";
-                const getDirection = () => element.closest("[dir]")?.getAttribute("dir") === "rtl"
-                    ? "rtl"
-                    : "ltr";
-                const getOrientation = () => element.getAttribute("orientation") === "vertical"
-                    ? "vertical"
-                    : "horizontal";
-                const syncChrome = () => {
-                    setAttributeIfChanged$1(element, "data-direction", getDirection());
-                    setAttributeIfChanged$1(element, "data-orientation", getOrientation());
-                    setAttributeIfChanged$1(element, "data-disabled", String(isGroupDisabled()));
-                    const spacing = element.getAttribute("spacing");
-                    if (spacing && /^\d+(?:\.\d+)?$/.test(spacing)) {
-                        element.style.setProperty("--gap", spacing);
-                    }
-                    else {
-                        element.style.removeProperty("--gap");
-                    }
-                    const enabled = items.filter((item) => !isItemDisabled(item));
-                    const tabStop = enabled.find((item) => item.getAttribute("tabindex") === "0") ??
-                        enabled.find((item) => item.getAttribute("aria-pressed") === "true") ??
-                        enabled[0];
-                    items.forEach((item) => {
-                        setAttributeIfChanged$1(item, "data-disabled", String(isItemDisabled(item)));
-                        item.setAttribute("tabindex", item === tabStop ? "0" : "-1");
-                    });
-                };
-                const setPressed = (item, pressed) => {
-                    item.setAttribute("aria-pressed", String(pressed));
-                    item.setAttribute("data-state", pressed ? "on" : "off");
-                };
-                const enabledItems = () => items.filter((item) => !isItemDisabled(item));
-                const bindItem = (item) => {
-                    if (cleanupItems.has(item))
-                        return;
-                    setPressed(item, item.getAttribute("aria-pressed") === "true" ||
-                        item.getAttribute("data-state") === "on");
-                    const handleClick = () => {
-                        if (isItemDisabled(item))
-                            return;
-                        const nextPressed = item.getAttribute("aria-pressed") !== "true";
-                        if (!allowsMultiple) {
-                            items.forEach((otherItem) => {
-                                if (otherItem !== item)
-                                    setPressed(otherItem, false);
-                            });
-                        }
-                        setPressed(item, nextPressed);
-                        items.forEach((otherItem) => {
-                            otherItem.setAttribute("tabindex", otherItem === item ? "0" : "-1");
-                        });
-                    };
-                    const handleKeydown = (event) => {
-                        if (event.key !== "ArrowRight" &&
-                            event.key !== "ArrowDown" &&
-                            event.key !== "ArrowLeft" &&
-                            event.key !== "ArrowUp") {
-                            return;
-                        }
-                        const enabled = enabledItems();
-                        const currentIndex = enabled.indexOf(item);
-                        if (currentIndex < 0)
-                            return;
-                        event.preventDefault();
-                        const forward = event.key === "ArrowRight" || event.key === "ArrowDown";
-                        const rtlHorizontal = getOrientation() === "horizontal" && getDirection() === "rtl";
-                        const direction = forward === !rtlHorizontal ? 1 : -1;
-                        const nextItem = enabled[nextIndex(currentIndex, enabled.length, direction)];
-                        items.forEach((otherItem) => {
-                            otherItem.setAttribute("tabindex", otherItem === nextItem ? "0" : "-1");
-                        });
-                        nextItem.focus();
-                        if (!allowsMultiple) {
-                            items.forEach((otherItem) => {
-                                setPressed(otherItem, false);
-                            });
-                            setPressed(nextItem, true);
-                        }
-                    };
-                    item.addEventListener("click", handleClick);
-                    item.addEventListener("keydown", handleKeydown);
-                    cleanupItems.set(item, () => {
-                        item.removeEventListener("click", handleClick);
-                        item.removeEventListener("keydown", handleKeydown);
-                    });
-                };
-                const sync = () => {
-                    items = queryAll(element, itemSelector);
-                    items.forEach(bindItem);
-                    syncChrome();
-                };
-                const observer = new MutationObserver(sync);
-                observer.observe(element, {
-                    attributes: true,
-                    attributeFilter: [
-                        "aria-disabled",
-                        "data-disabled",
-                        "data-orientation",
-                        "dir",
-                        "disabled",
-                        "orientation",
-                        "spacing",
-                    ],
-                    childList: true,
-                    subtree: true,
-                });
-                sync();
-                const directionObserver = directionOwner === element ? null : new MutationObserver(sync);
-                directionObserver?.observe(directionOwner, {
-                    attributes: true,
-                    attributeFilter: ["dir"],
-                });
-                onDestroy(scope, () => {
-                    observer.disconnect();
-                    directionObserver?.disconnect();
-                    cleanupItems.forEach((cleanup) => {
-                        cleanup();
-                    });
-                    cleanupItems.clear();
-                });
-            },
-        };
-    }
-
     let tooltipIdCounter = 0;
     const sides = new Set(["bottom", "left", "right", "top"]);
     const setAttributeIfChanged = (element, name, value) => {
@@ -8856,33 +7245,20 @@
     const globalScope = globalThis;
     const angular = globalScope.angular;
     const angularCssDirectives = [
-        ["ngAccordion", accordionDirective],
         ["ngDropdown", dropdownDirective],
-        ["ngAlertDialog", alertDialogDirective],
-        ["ngAvatar", avatarDirective],
         ["ngCalendar", calendarDirective],
         ["ngCarousel", carouselDirective],
-        ["ngCollapsible", collapsibleDirective],
         ["ngCombobox", comboboxDirective],
         ["ngCommand", commandDirective],
         ["ngContextMenu", contextMenuDirective],
-        ["ngDialog", dialogDirective],
-        ["ngDrawer", drawerDirective],
-        ["ngField", fieldDirective],
         ["ngHoverCard", hoverCardDirective],
-        ["ngInputGroup", inputGroupDirective],
-        ["ngInputOtp", inputOtpDirective],
         ["ngMenubar", menubarDirective],
         ["ngNavigationMenu", navigationMenuDirective],
-        ["ngPopover", popoverDirective],
         ["ngResizablePanelGroup", resizablePanelGroupDirective],
-        ["ngScrollArea", scrollAreaDirective],
-        ["ngSheet", sheetDirective],
         ["ngSidebar", sidebarDirective],
         ["ngSlider", sliderDirective],
         ["ngToaster", toasterDirective],
         ["ngTabs", tabsDirective],
-        ["ngToggleGroup", toggleGroupDirective],
         ["ngTooltip", tooltipDirective],
     ];
     function registerAngularCss(ng = angular) {

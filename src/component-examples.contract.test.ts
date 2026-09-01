@@ -9,8 +9,11 @@ const componentNames = readdirSync("src/components")
   .filter((entry) => existsSync(join("src/components", entry, `${entry}.ts`)))
   .sort();
 const elementNames = new Set([
+  "accordion",
   "alert",
+  "alert-dialog",
   "aspect-ratio",
+  "avatar",
   "badge",
   "breadcrumb",
   "button",
@@ -18,24 +21,34 @@ const elementNames = new Set([
   "card",
   "chart",
   "checkbox",
+  "collapsible",
+  "dialog",
   "direction",
+  "drawer",
   "empty",
+  "field",
   "input",
+  "input-group",
+  "input-otp",
   "item",
   "kbd",
   "label",
   "native-select",
   "pagination",
+  "popover",
   "progress",
   "radio-group",
+  "scroll-area",
   "select",
   "separator",
+  "sheet",
   "skeleton",
   "spinner",
   "switch",
   "table",
   "textarea",
   "toggle",
+  "toggle-group",
 ]);
 
 const slot = (page: Page, name: string) =>
@@ -170,22 +183,19 @@ const assertVisualContract = async (page: Page, component: string) => {
 
 const contracts: Record<string, Contract> = {
   accordion: async (page) => {
-    const trigger = page.getByRole("button", {
-      name: "What are your shipping options?",
-    });
-    const icon = trigger.locator(`.accordion-trigger-icon`);
-    await expect(slot(page, "accordion")).toBeVisible();
-    await expect(trigger).toHaveAttribute("aria-expanded", "true");
+    const root = page.locator(".accordion");
+    const firstItem = root.locator("details").first();
+    const trigger = firstItem.locator("summary");
+    await expect(root).toBeVisible();
+    await expect(firstItem).toHaveAttribute("open", "");
     await trigger.click();
-    await expect(trigger).toHaveAttribute("aria-expanded", "false");
-    await page
-      .getByRole("button", { name: "What is your return policy?" })
-      .click();
+    await expect(firstItem).not.toHaveAttribute("open", "");
+    const returnItem = root.locator("details").nth(1);
+    await returnItem.locator("summary").click();
+    await expect(returnItem).toHaveAttribute("open", "");
     await expect(
       page.getByText(/Returns are accepted within 30 days/),
     ).toBeVisible();
-    await expect(icon).toHaveCount(1);
-    await expect(icon).toHaveAttribute("aria-hidden", "true");
   },
   alert: async (page) => {
     await expect(page.locator(".alert")).toHaveCount(2);
@@ -201,19 +211,16 @@ const contracts: Record<string, Contract> = {
     await expect(slot(page, "alert-icon")).toHaveCount(2);
   },
   "alert-dialog": async (page) => {
-    const root = slot(page, "alert-dialog");
     const trigger = slot(page, "alert-dialog-trigger");
     const content = slot(page, "alert-dialog-content");
     await expect(trigger).toBeVisible();
     await expect(content).toBeHidden();
     await expect(trigger).toHaveAttribute(
-      "aria-controls",
+      "commandfor",
       "confirmation-dialog-content",
     );
     await trigger.click();
-    await expect(root).toHaveAttribute("data-open", "true");
-    await expect(content).toHaveAttribute("role", "alertdialog");
-    await expect(content).toHaveAttribute("aria-modal", "true");
+    await expect(content).toHaveAttribute("open", "");
     await expect(content).toHaveAttribute(
       "aria-labelledby",
       "confirmation-dialog-title",
@@ -226,8 +233,7 @@ const contracts: Record<string, Contract> = {
     await expect(content).toBeHidden();
     await expect(trigger).toBeFocused();
     await trigger.click();
-    await expect(root).toHaveAttribute("data-open", "true");
-    await expect(page.getByRole("alertdialog")).toBeVisible();
+    await expect(page.getByRole("dialog")).toBeVisible();
     await page.getByRole("button", { name: "Continue" }).click();
     await expect(content).toBeHidden();
   },
@@ -238,16 +244,18 @@ const contracts: Record<string, Contract> = {
   },
   avatar: async (page) => {
     const avatars = slot(page, "avatar");
-    await expect(avatars).toHaveCount(5);
+    await expect(avatars).toHaveCount(6);
     await expect(slot(page, "avatar-image")).toHaveCount(5);
     await expect(slot(page, "avatar-image").first()).toBeVisible();
-    await expect(slot(page, "avatar-fallback").first()).toBeHidden();
+    await expect(page.locator('.avatar[aria-label="Jane Doe"]')).toContainText(
+      "JD",
+    );
     await expect(slot(page, "avatar-group-count")).toBeVisible();
     expect(
       await avatars.evaluateAll((items) =>
         items.map((item) => getComputedStyle(item).width),
       ),
-    ).toEqual(["32px", "32px", "32px", "32px", "32px"]);
+    ).toEqual(["32px", "32px", "32px", "32px", "32px", "32px"]);
     await expect(avatars.nth(0)).toHaveCSS("overflow", "visible");
     expect(
       await avatars
@@ -361,13 +369,14 @@ const contracts: Record<string, Contract> = {
     ).toBe("block");
   },
   collapsible: async (page) => {
-    const root = page.locator("[ng-collapsible]");
-    const trigger = page.getByRole("button", { name: "Toggle details" });
-    await expect(root).toHaveAttribute("data-state", "closed");
-    await expect(page.getByText("Status", { exact: true })).toBeVisible();
+    const root = page.locator("details.collapsible");
+    const trigger = root.locator(":scope > summary");
+    await expect(root).not.toHaveAttribute("open", "");
+    await expect(page.getByText("Status", { exact: true })).toBeHidden();
     await trigger.click();
-    await expect(root).toHaveAttribute("data-state", "open");
-    await expect(page.getByRole("status")).toContainText("expanded");
+    await expect(root).toHaveAttribute("open", "");
+    await expect(page.getByText("Status", { exact: true })).toBeVisible();
+    await expect(root.locator(".collapsible-content")).toBeVisible();
   },
   combobox: async (page) => {
     const roots = page.locator("[ng-combobox]");
@@ -439,31 +448,31 @@ const contracts: Record<string, Contract> = {
     );
   },
   dialog: async (page) => {
-    const root = page.locator("[ng-dialog]");
+    const root = page.locator(".dialog");
     const trigger = page.getByRole("button", { name: "Edit profile" });
     await expect(trigger).toBeVisible();
-    await expect(root).toHaveAttribute("data-open", "false");
+    await expect(root.locator("dialog")).toBeHidden();
     await trigger.click();
     await expect(page.getByRole("dialog")).toBeVisible();
     await expect(page.locator("#dialog-name")).toBeFocused();
     await page.getByRole("button", { name: "Cancel" }).click();
-    await expect(root).toHaveAttribute("data-open", "false");
+    await expect(root.locator("dialog")).toBeHidden();
   },
   direction: async (page) => {
     await expect(page.locator("#direction-rtl")).toHaveAttribute("dir", "rtl");
   },
   drawer: async (page) => {
-    const root = page.locator("[ng-drawer]");
+    const root = page.locator(".drawer");
     const trigger = page.getByRole("button", { name: "Open Drawer" });
     const content = page.locator(".drawer-content");
     await expect(trigger).toBeVisible();
-    await expect(root).toHaveAttribute("data-open", "false");
-    await expect(root).toHaveAttribute("data-side", "bottom");
+    await expect(content).toBeHidden();
     await trigger.click();
-    await expect(root).toHaveAttribute("data-open", "true");
+    await expect(content).toHaveAttribute("open", "");
+    await expect(content).toHaveAttribute("data-side", "bottom");
     expect(await content.getAttribute("role")).toBeNull();
     await page.getByRole("button", { name: "Cancel" }).click();
-    await expect(root).toHaveAttribute("data-open", "false");
+    await expect(content).toBeHidden();
   },
   dropdown: async (page) => {
     const trigger = page.getByRole("button", { name: "Options" });
@@ -501,11 +510,21 @@ const contracts: Record<string, Contract> = {
   },
   field: async (page) => {
     const email = page.locator("#demo-profile-email");
-    await expect(email).toHaveAttribute("aria-describedby", /field-message-/);
-    await expect(email).toHaveAttribute("aria-invalid", "true");
+    await expect(email).toHaveAttribute(
+      "aria-describedby",
+      "demo-profile-email-error",
+    );
+    expect(
+      await email.evaluate((control: HTMLInputElement) =>
+        control.checkValidity(),
+      ),
+    ).toBe(false);
     await email.fill("jane@example.com");
-    await expect(email).toHaveAttribute("aria-invalid", "false");
-    await expect(email).not.toHaveAttribute("aria-describedby", /.+/);
+    expect(
+      await email.evaluate((control: HTMLInputElement) =>
+        control.checkValidity(),
+      ),
+    ).toBe(true);
     await expect(page.locator(".output")).toContainText("jane@example.com");
   },
   "hover-card": async (page) => {
@@ -525,23 +544,19 @@ const contracts: Record<string, Contract> = {
   },
   "input-group": async (page) => {
     const input = page.locator(".input-group-control");
-    const group = slot(page, "input-group");
-    await input.focus();
-    await expect(input).toHaveAttribute(
-      "aria-describedby",
-      /input-group-addon-/,
+    await page.locator('label[for="search"].input-group-addon').click();
+    await expect(input).toBeFocused();
+    await expect(page.locator(".input-group")).not.toHaveAttribute(
+      "data-addon-count",
+      /.+/,
     );
-    await expect(group).not.toHaveCSS("box-shadow", "none");
   },
   "input-otp": async (page) => {
-    const inputs = slot(page, "input-otp-slot").locator("input");
-    await expect(inputs).toHaveCount(6);
-    await expect(page.locator("[ng-input-otp]")).toHaveAttribute(
-      "data-value",
-      "123456",
-    );
-    await inputs.nth(0).fill("9");
-    await expect(inputs.nth(1)).toBeFocused();
+    const input = page.getByLabel("One-time code");
+    await expect(input).toHaveValue("123456");
+    await expect(input).toHaveAttribute("autocomplete", "one-time-code");
+    await expect(input).toHaveAttribute("maxlength", "6");
+    await input.fill("923456");
     await expect(page.getByRole("status")).toContainText("Code: 923456");
   },
   item: async (page) => {
@@ -635,10 +650,12 @@ const contracts: Record<string, Contract> = {
   },
   popover: async (page) => {
     const trigger = page.getByRole("button", { name: "Open popover" });
-    await expect(trigger).toHaveAttribute("aria-expanded", "false");
+    const content = slot(page, "popover-content");
+    const contentId = await content.getAttribute("id");
+    if (!contentId) throw new Error("Popover content requires an id");
+    await expect(trigger).toHaveAttribute("popovertarget", contentId);
     await trigger.click();
-    await expect(trigger).toHaveAttribute("aria-expanded", "true");
-    await expect(slot(page, "popover-content")).toBeVisible();
+    await expect(content).toBeVisible();
   },
   progress: async (page) => {
     const timed = page.locator(".progress-demo-timed");
@@ -684,16 +701,24 @@ const contracts: Record<string, Contract> = {
     await expect(handle).not.toHaveAttribute("data-resizing", "true");
   },
   "scroll-area": async (page) => {
-    const root = page.locator("[ng-scroll-area]");
-    const viewport = page.locator(".scroll-area-viewport");
-    await viewport.evaluate((element) => {
+    const root = page.locator(".scroll-area");
+    await expect(root).toHaveAttribute("tabindex", "0");
+    await expect(root).toHaveAttribute("aria-label", "Release tags");
+    const overflow = await root.evaluate((element) => ({
+      x: element.scrollWidth > element.clientWidth,
+      y: element.scrollHeight > element.clientHeight,
+    }));
+    expect(overflow).toEqual({ x: true, y: true });
+    await root.evaluate((element) => {
       element.scrollTop = element.scrollHeight;
       element.scrollLeft = element.scrollWidth;
-      element.dispatchEvent(new Event("scroll"));
     });
-    await expect(root).toHaveAttribute("data-scroll-at-bottom", "true");
-    await expect(root).toHaveAttribute("data-scrollable-y", "true");
-    await expect(root).toHaveAttribute("data-scrollable-x", "true");
+    expect(await root.evaluate((element) => element.scrollTop)).toBeGreaterThan(
+      0,
+    );
+    expect(
+      await root.evaluate((element) => Math.abs(element.scrollLeft)),
+    ).toBeGreaterThan(0);
   },
   select: async (page) => {
     const select = page.getByRole("combobox", { name: "Fruit" });
@@ -717,12 +742,11 @@ const contracts: Record<string, Contract> = {
     await expect(trigger).toBeVisible();
     await expect(content).toBeHidden();
     await trigger.click();
-    await expect(root).toHaveAttribute("data-open", "true");
+    await expect(content).toHaveAttribute("open", "");
     await expect(content).toHaveAttribute("data-side", "right");
     expect(await content.getAttribute("role")).toBeNull();
-    await expect(content).toHaveAttribute("aria-modal", "true");
     await page.getByRole("button", { name: "Close", exact: true }).click();
-    await expect(root).toHaveAttribute("data-open", "false");
+    await expect(content).toBeHidden();
     await expect(trigger).toBeFocused();
   },
   sidebar: async (page) => {
@@ -809,9 +833,9 @@ const contracts: Record<string, Contract> = {
     await expect(page.locator(".output")).toContainText("Bold: on");
   },
   "toggle-group": async (page) => {
-    const left = page.getByRole("button", { name: "Left" });
-    await left.click();
-    await expect(left).toHaveAttribute("aria-pressed", "true");
+    const left = page.getByRole("radio", { name: "Left" });
+    await left.check();
+    await expect(left).toBeChecked();
     await expect(page.locator(".output")).toContainText("Alignment: left");
   },
   tooltip: async (page) => {

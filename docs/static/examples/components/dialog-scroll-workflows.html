@@ -17,15 +17,14 @@
     <main class="dialog-workflow-grid visual-example">
       <section class="dialog-workflow" aria-labelledby="scroll-heading">
         <h2 id="scroll-heading">Scrollable content</h2>
-        <div id="scroll-dialog" ng-dialog>
-          <button variant="outline" class="dialog-trigger button">
+        <div id="scroll-dialog" class="dialog">
+          <button variant="outline" class="dialog-trigger button" type="button" commandfor="scroll-dialog-content" command="show-modal">
             Read profile
           </button>
-          <div class="dialog-overlay"></div>
-          <dialog data-size="wide" class="dialog-content">
+          <dialog data-size="wide" class="dialog-content" id="scroll-dialog-content" closedby="any" aria-labelledby="scroll-dialog-title" aria-describedby="scroll-dialog-description">
             <header class="dialog-header">
-              <h3 class="dialog-title">About Pedro Duarte</h3>
-              <p class="dialog-description">A short professional biography.</p>
+              <h3 class="dialog-title" id="scroll-dialog-title">About Pedro Duarte</h3>
+              <p class="dialog-description" id="scroll-dialog-description">A short professional biography.</p>
             </header>
             <div class="dialog-prose dialog-body">
               <p>
@@ -53,7 +52,7 @@
                 remains independently scrollable inside the viewport.
               </p>
             </div>
-            <button variant="ghost" size="icon-sm" class="dialog-close button">
+            <button variant="ghost" size="icon-sm" class="dialog-close button" commandfor="scroll-dialog-content" command="close">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -72,15 +71,14 @@
 
       <section class="dialog-workflow" aria-labelledby="sticky-heading">
         <h2 id="sticky-heading">Sticky footer</h2>
-        <div id="sticky-dialog" ng-dialog>
-          <button variant="outline" class="dialog-trigger button">
+        <div id="sticky-dialog" class="dialog">
+          <button variant="outline" class="dialog-trigger button" type="button" commandfor="sticky-dialog-content" command="show-modal">
             Review notes
           </button>
-          <div class="dialog-overlay"></div>
-          <dialog data-size="wide" class="dialog-content">
+          <dialog data-size="wide" class="dialog-content" id="sticky-dialog-content" closedby="any" aria-labelledby="sticky-dialog-title" aria-describedby="sticky-dialog-description">
             <header class="dialog-header">
-              <h3 class="dialog-title">Release notes</h3>
-              <p class="dialog-description">
+              <h3 class="dialog-title" id="sticky-dialog-title">Release notes</h3>
+              <p class="dialog-description" id="sticky-dialog-description">
                 Review the changes included in this release.
               </p>
             </header>
@@ -110,10 +108,10 @@
               </p>
             </div>
             <footer class="dialog-footer">
-              <button variant="outline" data-dialog-close class="button">
+              <button variant="outline" class="button" commandfor="sticky-dialog-content" command="close">
                 Cancel
               </button>
-              <button data-dialog-close class="button">Confirm</button>
+              <button class="button" commandfor="sticky-dialog-content" command="close">Confirm</button>
             </footer>
           </dialog>
         </div>

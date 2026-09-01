@@ -13,14 +13,16 @@
     <main class="stack">
       <div class="field">
         <label for="search" class="field-label label">Search</label>
-        <div ng-input-group class="input-group">
+        <div class="input-group">
           <input
 
 
             id="search"
             placeholder="Search documentation..."
            class="input-group-control input" />
-          <div data-align="inline-start" class="input-group-addon">⌕</div>
+          <label for="search" data-align="inline-start" class="input-group-addon">
+            <span aria-hidden="true">⌕</span>
+          </label>
         </div>
       </div>
     </main>

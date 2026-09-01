@@ -22,8 +22,7 @@ legend.field-legend {
   @apply flex w-full flex-col gap-5;
 }
 
-.field,
-[ng-field] {
+.field {
   @apply flex w-full flex-col gap-2;
 
   &[orientation="horizontal"],
@@ -48,6 +47,8 @@ legend.field-legend {
     @apply flex-col gap-2 md:flex-row md:items-center md:gap-3;
   }
 
+  &:has(:invalid),
+  &:has([aria-invalid="true"]),
   &[data-invalid="true"],
   &[aria-invalid="true"] {
     .field-label {
@@ -67,17 +68,15 @@ legend.field-legend {
 .field-label {
   @apply flex w-fit items-center gap-2 text-sm leading-snug font-medium;
 
-  &:has(> :is(.field, [ng-field])) {
+  &:has(> .field) {
     @apply w-full flex-col items-start rounded-lg border border-border;
 
-    > :is(.field, [ng-field]) {
+    > .field {
       @apply p-2.5;
     }
   }
 
-  &:has(
-    > :is(.field, [ng-field]) :is(.checkbox, .radio-group-item, .switch):checked
-  ) {
+  &:has(> .field :is(.checkbox, .radio-group-item, .switch):checked) {
     border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
     background: color-mix(in srgb, var(--primary) 5%, transparent);
   }

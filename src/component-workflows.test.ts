@@ -134,7 +134,7 @@ test("spinner workflows retain size inside composed components", async ({
     "16px",
   );
   await expect(
-    page.getByLabel("Spinner input groups").locator("[ng-input-group]"),
+    page.getByLabel("Spinner input groups").locator(".input-group"),
   ).toHaveCount(2);
   await expect(page.locator(".spinner-rtl-demo")).toHaveAttribute("dir", "rtl");
   await expect(page.locator(".spinner")).toHaveCount(14);
@@ -159,32 +159,33 @@ test("accordion state workflows preserve basic, disabled, and multiple behavior"
     "/docs/static/examples/components/accordion-state-workflows.html",
   );
 
-  const basicTrigger = page.getByRole("button", {
-    name: "How do I reset my password?",
-  });
-  await expect(basicTrigger).toHaveAttribute("aria-expanded", "true");
+  const basicItem = page.locator(".accordion-item").first();
+  const basicTrigger = basicItem.locator("summary");
+  await expect(basicItem).toHaveAttribute("open", "");
   await basicTrigger.click();
-  await expect(basicTrigger).toHaveAttribute("aria-expanded", "false");
+  await expect(basicItem).not.toHaveAttribute("open", "");
 
-  const disabledTrigger = page.getByRole("button", {
-    name: "Premium feature information",
+  const disabledItem = page.locator("details", {
+    has: page.getByText("Premium feature information", { exact: true }),
   });
-  await expect(disabledTrigger).toBeDisabled();
-  await expect(disabledTrigger).toHaveAttribute("aria-expanded", "false");
+  await expect(disabledItem).toHaveAttribute("inert", "");
+  await disabledItem.locator("summary").click({ force: true });
+  await expect(disabledItem).not.toHaveAttribute("open", "");
 
-  const notificationTrigger = page.getByRole("button", {
-    name: "Notification Settings",
+  const notificationItem = page.locator("details", {
+    has: page.getByText("Notification Settings", { exact: true }),
   });
-  const privacyTrigger = page.getByRole("button", {
-    name: "Privacy & Security",
+  const privacyItem = page.locator("details", {
+    has: page.getByText("Privacy & Security", { exact: true }),
   });
-  await expect(notificationTrigger).toHaveAttribute("aria-expanded", "true");
+  const privacyTrigger = privacyItem.locator("summary");
+  await expect(notificationItem).toHaveAttribute("open", "");
   await privacyTrigger.click();
-  await expect(notificationTrigger).toHaveAttribute("aria-expanded", "true");
-  await expect(privacyTrigger).toHaveAttribute("aria-expanded", "true");
+  await expect(notificationItem).toHaveAttribute("open", "");
+  await expect(privacyItem).toHaveAttribute("open", "");
 
   await basicTrigger.click();
-  await expect(basicTrigger).toHaveAttribute("aria-expanded", "true");
+  await expect(basicItem).toHaveAttribute("open", "");
   await page.mouse.move(890, 750);
 
   await expect(page.locator(".accordion-workflow-grid")).toHaveScreenshot(
@@ -221,27 +222,30 @@ test("accordion layout workflows preserve borders, card composition, and RTL", a
 
   const rtlSection = page.locator("[dir='rtl']");
   await expect(rtlSection).toHaveAttribute("lang", "ar");
-  const rtlTrigger = rtlSection.getByRole("button", {
-    name: "كيف يمكنني إعادة تعيين كلمة المرور؟",
+  const rtlItem = rtlSection.locator("details", {
+    has: page.getByText("كيف يمكنني إعادة تعيين كلمة المرور؟", {
+      exact: true,
+    }),
   });
+  const rtlTrigger = rtlItem.locator("summary");
   const triggerBox = await rtlTrigger.boundingBox();
-  const iconBox = await rtlTrigger
-    .locator(".accordion-trigger-icon")
-    .boundingBox();
   expect(triggerBox).not.toBeNull();
-  expect(iconBox).not.toBeNull();
-  expect(iconBox!.x).toBeLessThan(triggerBox!.x + triggerBox!.width / 2);
+  await expect(rtlTrigger).toHaveCSS("direction", "rtl");
+  await expect(rtlTrigger).toHaveCSS("text-align", "start");
 
-  const secondRtlTrigger = rtlSection.getByRole("button", {
-    name: "هل يمكنني تغيير خطة الاشتراك الخاصة بي؟",
+  const secondRtlItem = rtlSection.locator("details", {
+    has: page.getByText("هل يمكنني تغيير خطة الاشتراك الخاصة بي؟", {
+      exact: true,
+    }),
   });
+  const secondRtlTrigger = secondRtlItem.locator("summary");
   await secondRtlTrigger.click();
-  await expect(rtlTrigger).toHaveAttribute("aria-expanded", "false");
-  await expect(secondRtlTrigger).toHaveAttribute("aria-expanded", "true");
+  await expect(rtlItem).not.toHaveAttribute("open", "");
+  await expect(secondRtlItem).toHaveAttribute("open", "");
 
   await rtlTrigger.click();
-  await expect(rtlTrigger).toHaveAttribute("aria-expanded", "true");
-  await expect(secondRtlTrigger).toHaveAttribute("aria-expanded", "false");
+  await expect(rtlItem).toHaveAttribute("open", "");
+  await expect(secondRtlItem).not.toHaveAttribute("open", "");
   await page.mouse.move(890, 770);
 
   await expect(page.locator(".accordion-workflow-grid")).toHaveScreenshot(
@@ -328,7 +332,7 @@ test("hover card workflows preserve physical sides, mobile framing, and RTL", as
     .locator("..")
     .locator(".hover-card-content");
   await expect(rtlContent).toBeVisible();
-  await expect(rtlContent).toHaveAttribute("data-direction", "rtl");
+  await expect(rtlContent).toHaveCSS("direction", "rtl");
   await expect(page.locator(".hover-card-workflow")).toHaveScreenshot(
     "hover-card-rtl-desktop.png",
     { animations: "disabled" },
@@ -369,7 +373,7 @@ test("popover examples preserve Nova surfaces, alignment, mobile framing, and RT
     .getByRole("button", { name: "أعلى", exact: true })
     .locator("..")
     .locator(".popover-content");
-  await expect(rtlContent).toHaveAttribute("data-direction", "rtl");
+  await expect(rtlContent).toHaveCSS("direction", "rtl");
   await expect(page.locator(".popover-rtl-workflow")).toHaveScreenshot(
     "popover-rtl-desktop.png",
     { animations: "disabled" },
@@ -716,18 +720,22 @@ test("command examples preserve Nova standalone, dialog, scrollable, mobile, and
     "/docs/static/examples/components/command-dialog-workflows.html",
   );
   await page.getByRole("button", { name: "Open Grouped Menu" }).click();
-  await expect(page.locator(".command-dialog-workflows")).toHaveScreenshot(
-    "command-dialog-workflows-desktop.png",
-    { animations: "disabled" },
-  );
+  await expect(
+    page.getByRole("dialog", { name: "Grouped Command Palette" }),
+  ).toBeVisible();
+  await expect(page).toHaveScreenshot("command-dialog-workflows-desktop.png", {
+    animations: "disabled",
+  });
 
   await page.setViewportSize({ height: 1000, width: 390 });
   await page.reload();
   await page.getByRole("button", { name: "Open Menu", exact: true }).click();
-  await expect(page.locator(".command-dialog-workflows")).toHaveScreenshot(
-    "command-dialog-workflows-mobile.png",
-    { animations: "disabled" },
-  );
+  await expect(
+    page.getByRole("dialog", { name: "Command Palette" }),
+  ).toBeVisible();
+  await expect(page).toHaveScreenshot("command-dialog-workflows-mobile.png", {
+    animations: "disabled",
+  });
 
   await page.setViewportSize({ height: 680, width: 900 });
   await page.goto("/docs/static/examples/components/command-scrollable.html");
@@ -825,7 +833,11 @@ test("dialog examples preserve modal, close, scroll, mobile, and RTL visuals", a
   await expect(page).toHaveScreenshot("dialog-custom-close-desktop.png", {
     animations: "disabled",
   });
-  await page.locator("#share-dialog [data-dialog-close]").click();
+  await page
+    .locator("#share-dialog [command='close']")
+    .filter({ hasText: "Close" })
+    .first()
+    .click();
   await page.getByRole("button", { name: "Open dialog" }).click();
   await expect(page).toHaveScreenshot("dialog-no-close-desktop.png", {
     animations: "disabled",
@@ -932,7 +944,7 @@ test("sheet examples preserve profile, close, side, mobile, and RTL visuals", as
   await page.goto("/docs/static/examples/components/sheet-sides.html");
   await page.getByRole("button", { name: "Right" }).click();
   await page
-    .locator("[ng-sheet]")
+    .locator(".sheet")
     .nth(1)
     .locator(".sheet-body")
     .evaluate((element) => {
@@ -970,7 +982,10 @@ test("sidebar examples preserve controlled, anatomy, collapse, and RTL visuals",
 
   await page.setViewportSize({ height: 700, width: 900 });
   await page.goto("/docs/static/examples/components/sidebar-collapsible.html");
-  await page.getByRole("button", { name: "Build Your Application" }).click();
+  await page
+    .locator("summary")
+    .filter({ hasText: "Build Your Application" })
+    .click();
   await expect(page).toHaveScreenshot("sidebar-collapsible-desktop.png", {
     animations: "disabled",
   });
@@ -1136,7 +1151,7 @@ test("alert dialog workflows preserve size, media, destructive, focus, and RTL b
   });
   await rtlTrigger.click();
   const rtlContent = content("rtl-confirmation-dialog");
-  await expect(rtlContent).toHaveAttribute("data-direction", "rtl");
+  await expect(rtlContent).toHaveCSS("direction", "rtl");
   const rtlContentBox = await rtlContent.boundingBox();
   const rtlTitleBox = await rtlContent
     .locator(".alert-dialog-title")
@@ -1221,13 +1236,13 @@ test("avatar workflows preserve badges, group counts, sizes, dropdown compositio
   await page.setViewportSize({ height: 620, width: 900 });
   await page.goto("/docs/static/examples/components/avatar-workflows.html");
 
-  const sizeAvatars = page.getByLabel("Avatar sizes").locator("[ng-avatar]");
+  const sizeAvatars = page.getByLabel("Avatar sizes").locator(".avatar");
   await expect(sizeAvatars).toHaveCount(3);
   expect(
     await sizeAvatars.evaluateAll((avatars) =>
       avatars.map((avatar) => ({
         height: avatar.getBoundingClientRect().height,
-        size: avatar.getAttribute("data-size"),
+        size: avatar.getAttribute("size") ?? "default",
         width: avatar.getBoundingClientRect().width,
       })),
     ),
@@ -1274,7 +1289,7 @@ test("avatar workflows preserve badges, group counts, sizes, dropdown compositio
 
   const trigger = page.getByRole("button", { name: "Open user menu" });
   expect(await trigger.boundingBox()).toMatchObject({ height: 36, width: 36 });
-  expect(await trigger.locator("[ng-avatar]").boundingBox()).toMatchObject({
+  expect(await trigger.locator(".avatar").boundingBox()).toMatchObject({
     height: 32,
     width: 32,
   });
@@ -1436,8 +1451,8 @@ test("button group workflows preserve command, form, overlay, nested, and RTL co
 
   const popoverTrigger = page.getByRole("button", { name: "Open Popover" });
   await popoverTrigger.click();
-  const copilotDialog = page.getByRole("dialog", { name: "Copilot task" });
-  await expect(copilotDialog).toBeVisible();
+  const copilotPopover = page.getByLabel("Copilot task");
+  await expect(copilotPopover).toBeVisible();
   await expect(page.locator(".button-group-popover-stage")).toHaveScreenshot(
     "button-group-popover-open-desktop.png",
     { animations: "disabled" },
@@ -1801,7 +1816,7 @@ test("checkbox workflows preserve reference states, grouping, and RTL layout", a
 
   const rtl = page.locator(".checkbox-workflow-rtl");
   await expect(rtl).toHaveAttribute("dir", "rtl");
-  const rtlField = rtl.locator(`:is(.field, [ng-field])`).first();
+  const rtlField = rtl.locator(".field").first();
   const [controlBox, labelBox] = await Promise.all([
     rtlField.locator(".checkbox").boundingBox(),
     rtlField.locator("label").boundingBox(),
@@ -1869,12 +1884,12 @@ test("collapsible workflows preserve native disclosure, settings, and RTL behavi
   const settings = page.locator(".collapsible-settings");
   await expect(settings.locator("input:visible")).toHaveCount(2);
   await page
-    .getByRole("button", { name: "Toggle additional radius settings" })
+    .locator('summary[aria-label="Toggle additional radius settings"]')
     .click();
   await expect(settings.locator("input:visible")).toHaveCount(4);
 
   const rtl = page.locator(".collapsible-workflow-wide");
-  await rtl.getByRole("button", { name: "تبديل التفاصيل" }).click();
+  await rtl.locator("summary").click();
   await expect(rtl.locator(`.collapsible-content`)).toBeVisible();
   await expect(page.locator(".collapsible-workflow-grid")).toHaveScreenshot(
     "collapsible-workflows-desktop.png",

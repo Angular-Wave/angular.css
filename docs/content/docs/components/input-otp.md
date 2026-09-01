@@ -2,19 +2,22 @@
 title: input-otp
 category: 'form'
 description: >
-  Multi-digit OTP inputs with automatic focus movement and paste handling.
+  A native one-time-code input with a segmented visual treatment.
 ---
 
-Use `ng-input-otp` on a fieldset containing grouped `.input-otp-slot` inputs.
+Use one native input. The browser owns editing, paste, autofill, and validation.
 
 ```html
-<fieldset ng-input-otp class="input-otp">
-  <div class="input-otp-group">
-    <span class="input-otp-slot">
-    <input />
-    </span>
-  </div>
-</fieldset>
+<label for="code">One-time code</label>
+<input
+  id="code"
+  class="input-otp"
+  autocomplete="one-time-code"
+  inputmode="numeric"
+  pattern="[0-9]{6}"
+  maxlength="6"
+  ng-model="code"
+/>
 ```
 
 ## Example
@@ -28,13 +31,13 @@ Install AngularCSS once, load its stylesheet, and include the `ui` module in
 your AngularTS application. See [Installation]({{< relref
 "/docs/get-started/installation" >}}) for the complete setup.
 
-This component's root directive is `[ng-input-otp]`. Importing the package registers it with the AngularCSS `ui` module; there is no per-component JavaScript registration step.
+This is a styling-only HTML element or pattern. AngularCSS registers no runtime directive for it. One native input provides text entry, paste, autofill, validation, and AngularTS model binding.
 
 ## Anatomy
 
-### Directive selectors
+### Root styling selector
 
-- `ng-input-otp`
+- `.input-otp`
 
 ### Semantic structure
 
@@ -44,24 +47,13 @@ Use native elements for authored structure. Component classes are optional visua
 
 ### Attributes and state
 
-| Attribute | Access | Purpose |
-| --- | --- | --- |
-| `aria-invalid` | Input | Validation state mirrored from the control. |
-| `aria-label` | Input/output | Accessible name when visible text is insufficient. |
-| `autocomplete` | Output | Authored option or semantic HTML attribute observed by the directive. |
-| `data-active` | Output | Stable component state or styling hook. |
-| `data-complete` | Output | Stable component state or styling hook. |
-| `data-disabled` | Output | Stable component state or styling hook. |
-| `data-invalid` | Output | Stable component state or styling hook. |
-| `data-value` | Output | Stable component state or styling hook. |
-| `inputmode` | Input/output | Authored option or semantic HTML attribute observed by the directive. |
-| `maxlength` | Input/output | Authored option or semantic HTML attribute observed by the directive. |
+This component has no directive-specific attributes beyond its semantic HTML.
 
-`Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
+Attributes remain authored HTML, native state, or AngularTS inputs. AngularCSS does not write element state.
 
 ### CSS custom properties
 
-This directive does not write component-specific CSS custom properties.
+This styling hook does not define component-specific CSS custom properties.
 
 ### DOM events
 
@@ -72,7 +64,7 @@ Native DOM events continue to work normally. AngularTS event directives such as
 
 ## Behavior
 
-Native form state and AngularTS `ng-model`, validation, and submission remain the source of truth. AngularCSS mirrors that state into stable styling and accessibility hooks.
+Input OTP is one styling-only native `input`. The browser owns typing, editing, paste, password-manager autofill, `autocomplete=one-time-code`, input mode, length, pattern validation, and form submission; AngularTS `ng-model` owns application state. AngularCSS registers no input-otp directive.
 
 AngularCSS does not replace AngularTS interpolation, bindings, structural
 directives, form controllers, validation, or application state.
@@ -87,7 +79,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-input-otp]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

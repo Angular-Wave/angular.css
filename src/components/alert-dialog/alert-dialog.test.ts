@@ -20,87 +20,79 @@ const expectBuiltArtifactRuntime = async (page: Page): Promise<void> => {
   expect(sourceRequests).toEqual([]);
 };
 
-test("canonical artifact owns alert-dialog semantics and focus restoration", async ({
+test("canonical alert dialog uses native modal semantics and focus restoration", async ({
   page,
 }) => {
   await page.goto(canonicalUrl);
   await expectBuiltArtifactRuntime(page);
   const root = page.locator("#confirmation-dialog");
   const trigger = root.locator(".alert-dialog-trigger");
-  const content = root.locator(".alert-dialog-content");
+  const content = root.locator("dialog");
   const cancel = root.getByRole("button", { name: "Cancel" });
 
   await expect(content).toBeHidden();
   await expect(trigger).toHaveAttribute(
-    "aria-controls",
+    "commandfor",
     "confirmation-dialog-content",
   );
   await trigger.click();
-  await expect(content).toBeVisible();
-  await expect(content).toHaveAttribute("role", "alertdialog");
-  await expect(content).toHaveAttribute("aria-modal", "true");
-  await expect(content).toHaveAttribute("aria-labelledby", /-title$/);
-  await expect(content).toHaveAttribute("aria-describedby", /-description$/);
+  await expect(content).toHaveAttribute("open", "");
+  expect(await content.evaluate((dialog) => dialog.matches(":modal"))).toBe(
+    true,
+  );
+  await expect(content).toHaveAttribute(
+    "aria-labelledby",
+    "confirmation-dialog-title",
+  );
   await expect(cancel).toBeFocused();
   await cancel.click();
   await expect(content).toBeHidden();
   await expect(trigger).toBeFocused();
 });
 
-test("alert dialogs ignore overlay and outside clicks but close on Escape", async ({
+test("closedby prevents light dismissal but allows Escape", async ({
   page,
 }) => {
   await page.goto(canonicalUrl);
   const root = page.locator("#confirmation-dialog");
   const trigger = root.locator(".alert-dialog-trigger");
-  const content = root.locator(".alert-dialog-content");
+  const content = root.locator("dialog");
 
   await trigger.click();
-  await root.locator(".alert-dialog-overlay").dispatchEvent("click");
-  await expect(content).toBeVisible();
-  await page.evaluate(() => {
-    document.body.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-  });
+  await expect(content).toHaveAttribute("closedby", "closerequest");
+  await page.mouse.click(2, 2);
   await expect(content).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(content).toBeHidden();
   await expect(trigger).toBeFocused();
 });
 
-test("action buttons close and AngularTS remains the application state owner", async ({
+test("workflow actions close while AngularTS owns application state", async ({
   page,
 }) => {
   await page.goto(workflowsUrl);
   await expectBuiltArtifactRuntime(page);
   const root = page.locator("#delete-chat-dialog");
   const trigger = root.getByRole("button", { name: "Delete Chat" });
-  const content = root.locator(".alert-dialog-content");
 
   await trigger.click();
   await root.getByRole("button", { name: "Delete", exact: true }).click();
-  await expect(content).toBeHidden();
+  await expect(root.locator("dialog")).toBeHidden();
   await expect(page.getByRole("status")).toContainText("Chat: deleted");
   await expect(trigger).toBeFocused();
 });
 
-test("workflow artifact preserves sizes, media, and RTL direction", async ({
+test("workflow preserves sizes, media, and inherited RTL direction", async ({
   page,
 }) => {
   await page.goto(workflowsUrl);
   const small = page.locator("#accessory-media-dialog");
   await small.locator(".alert-dialog-trigger").click();
-  await expect(small.locator(".alert-dialog-content")).toHaveAttribute(
-    "data-size",
-    "sm",
-  );
+  await expect(small.locator("dialog")).toHaveAttribute("data-size", "sm");
   await expect(small.locator(".alert-dialog-media")).toBeVisible();
   await page.keyboard.press("Escape");
 
   const rtl = page.locator("#rtl-confirmation-dialog");
   await rtl.locator(".alert-dialog-trigger").click();
-  await expect(rtl).toHaveAttribute("data-direction", "rtl");
-  await expect(rtl.locator(".alert-dialog-content")).toHaveAttribute(
-    "data-direction",
-    "rtl",
-  );
+  await expect(rtl.locator("dialog")).toHaveCSS("direction", "rtl");
 });

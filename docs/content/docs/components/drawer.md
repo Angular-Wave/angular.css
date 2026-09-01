@@ -5,19 +5,17 @@ description: >
   Bottom anchored drawer panels
 ---
 
-Drawers are modal edge panels with a trigger, overlay, content, and optional
-handle, header, scroll body, and footer. AngularCSS owns modal disclosure and
-side geometry; AngularTS owns values and actions inside the panel.
+Drawers are native modal dialogs with CSS edge placement and optional handle,
+header, scroll body, and footer. AngularTS owns values and actions inside them.
 
 ```html
-<section ng-drawer side="bottom">
-  <button class="drawer-trigger">Open Drawer</button>
-  <div class="drawer-overlay"></div>
-  <dialog class="drawer-content">
+<section class="drawer">
+  <button commandfor="goal-drawer" command="show-modal">Open Drawer</button>
+  <dialog id="goal-drawer" data-side="bottom" class="drawer-content">
     <div class="drawer-handle"></div>
     <h2 class="drawer-title">Move Goal</h2>
     <p class="drawer-description">Set your daily activity goal.</p>
-    <button class="drawer-close">Cancel</button>
+    <button commandfor="goal-drawer" command="close">Cancel</button>
   </dialog>
 </section>
 ```
@@ -54,17 +52,17 @@ Install AngularCSS once, load its stylesheet, and include the `ui` module in
 your AngularTS application. See [Installation]({{< relref
 "/docs/get-started/installation" >}}) for the complete setup.
 
-This component's root directive is `[ng-drawer]`. Importing the package registers it with the AngularCSS `ui` module; there is no per-component JavaScript registration step.
+This is a styling-only HTML element or pattern. AngularCSS registers no runtime directive for it. A native dialog provides modal behavior; CSS supplies edge placement.
 
 ## Anatomy
 
-### Directive selectors
+### Root styling selector
 
-- `ng-drawer`
+- `.drawer`
 
 ### Semantic structure
 
-A drawer root requires one native button trigger, one overlay, and one native dialog content element. The root directive inspects descendants through drawer part classes; no child directives are required. Use `side` for placement. Title, description, handle, header, body, and footer are optional.
+Use `.drawer` as an optional wrapper, a native invoker button, and `dialog.drawer-content` with authored `data-side`. Close controls use `command=close`; no overlay element is required.
 
 ## API
 
@@ -92,11 +90,11 @@ A drawer root requires one native button trigger, one overlay, and one native di
 | `tabindex` | Output | Keyboard focus order for composite descendants. |
 | `type` | Output | Component or native behavior variant. |
 
-`Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
+Attributes remain authored HTML, native state, or AngularTS inputs. AngularCSS does not write element state.
 
 ### CSS custom properties
 
-This directive does not write component-specific CSS custom properties.
+This styling hook does not define component-specific CSS custom properties.
 
 ### DOM events
 
@@ -107,14 +105,14 @@ Native DOM events continue to work normally. AngularTS event directives such as
 
 ## Behavior
 
-The directive owns modal disclosure, direct-root trigger and content relationships, bottom, top, left, or right side reflection, initial focus, focus containment, Escape and overlay dismissal, background inertness, document scroll locking, controlled `data-open` state, text direction, and trigger focus restoration. AngularTS remains responsible for form models, goal values, validation, submission, responsive application composition, and authored content.
+A native `dialog` owns modal disclosure, focus, Escape, background isolation, and restoration. Authored `data-side` selects CSS edge placement. AngularTS remains responsible for form models, goal values, validation, submission, responsive application composition, and authored content.
 
 AngularCSS does not replace AngularTS interpolation, bindings, structural
 directives, form controllers, validation, or application state.
 
 ## Accessibility
 
-Use a visible title and description. The trigger exposes dialog popup, controls, and expanded relationships; content receives dialog, modal, labelled-by, described-by, hidden, side, direction, and focusability state. While open, background branches are inert, focus remains contained, Escape dismisses, and focus returns to the invoking trigger.
+Use a visible title and description connected to the native dialog. Keep the physical edge as presentation only; content order, focus order, and inherited text direction remain semantic.
 
 Authored accessible names and relationships are preserved. Test the final
 composition with keyboard navigation and assistive technology because labels and
@@ -122,7 +120,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-drawer]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

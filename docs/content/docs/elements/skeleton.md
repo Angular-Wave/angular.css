@@ -21,9 +21,7 @@ Use `class="skeleton"` on a block element and control its size with normal CSS.
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `skeleton` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete skeleton component reference]({{< relref
 "/docs/components/skeleton" >}}) for selectors, slots, attributes, generated

@@ -5,20 +5,18 @@ description: >
   Modal dialog structure
 ---
 
-Compose a modal from semantic trigger, overlay, content, header, footer, title,
-and description selectors. AngularCSS owns disclosure and modal focus behavior;
-AngularTS owns form values and application actions inside the dialog.
+Compose a modal from a declarative invoker and native `dialog`. The browser owns
+modal focus and disclosure; AngularTS owns form values and application actions.
 
 ```html
-<section ng-dialog>
-  <button class="dialog-trigger">Edit profile</button>
-  <div class="dialog-overlay"></div>
-  <dialog class="dialog-content">
+<section class="dialog">
+  <button commandfor="profile-dialog" command="show-modal">Edit profile</button>
+  <dialog id="profile-dialog" class="dialog-content">
     <header class="dialog-header">
       <h2 class="dialog-title">Edit profile</h2>
       <p class="dialog-description">Update your public profile.</p>
     </header>
-    <button data-dialog-close>Save changes</button>
+    <button commandfor="profile-dialog" command="close">Save changes</button>
   </dialog>
 </section>
 ```
@@ -54,17 +52,17 @@ Install AngularCSS once, load its stylesheet, and include the `ui` module in
 your AngularTS application. See [Installation]({{< relref
 "/docs/get-started/installation" >}}) for the complete setup.
 
-This component's root directive is `[ng-dialog]`. Importing the package registers it with the AngularCSS `ui` module; there is no per-component JavaScript registration step.
+This is a styling-only HTML element or pattern. AngularCSS registers no runtime directive for it. Native dialog provides top-layer modal behavior, focus, and restoration.
 
 ## Anatomy
 
-### Directive selectors
+### Root styling selector
 
-- `ng-dialog`
+- `.dialog`
 
 ### Semantic structure
 
-A dialog root requires one native button trigger, one overlay, and one native dialog content element. The root directive inspects descendants through dialog part classes; no child directives are required. Title and description are strongly recommended; header, body, and footer are optional.
+Use `.dialog` as an optional composition wrapper, a native button with `command=show-modal`, and `dialog.dialog-content`. Close controls use `command=close`; no overlay element or nested AngularCSS attributes are required.
 
 ## API
 
@@ -89,11 +87,11 @@ A dialog root requires one native button trigger, one overlay, and one native di
 | `tabindex` | Output | Keyboard focus order for composite descendants. |
 | `type` | Output | Component or native behavior variant. |
 
-`Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
+Attributes remain authored HTML, native state, or AngularTS inputs. AngularCSS does not write element state.
 
 ### CSS custom properties
 
-This directive does not write component-specific CSS custom properties.
+This styling hook does not define component-specific CSS custom properties.
 
 ### DOM events
 
@@ -104,14 +102,14 @@ Native DOM events continue to work normally. AngularTS event directives such as
 
 ## Behavior
 
-The directive owns modal disclosure, directly owned trigger and content relationships, initial focus, Tab containment, focus-in containment, Escape and overlay dismissal, background inertness, document scroll locking, controlled `data-open` state, direction reflection, and trigger focus restoration. AngularTS remains responsible for form models, validation, submission, authored content, and application state.
+A native `dialog` opened with `command=show-modal` owns top-layer rendering, modal focus, Escape, background isolation, and trigger focus restoration. Declarative `command=close` controls dismiss it. AngularTS remains responsible for form models, validation, submission, authored content, and application state.
 
 AngularCSS does not replace AngularTS interpolation, bindings, structural
 directives, form controllers, validation, or application state.
 
 ## Accessibility
 
-Use a visible title and description. The trigger is connected to content with `aria-controls` and expanded state; content receives dialog, modal, labelled-by, described-by, hidden, and focusability semantics. While open, focus remains in the topmost dialog, background branches are inert, Escape dismisses, and focus returns to the invoking trigger.
+Use a visible title and description connected with `aria-labelledby` and `aria-describedby`. Native modal dialogs contain focus, isolate the background, close on Escape, and restore focus to their declarative invoker.
 
 Authored accessible names and relationships are preserved. Test the final
 composition with keyboard navigation and assistive technology because labels and
@@ -119,7 +117,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-dialog]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

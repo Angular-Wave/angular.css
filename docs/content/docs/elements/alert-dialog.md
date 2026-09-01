@@ -10,8 +10,8 @@ action and cancel target.
 
 ```html
 <section class="alert-dialog">
-  <div class="alert-dialog-overlay"></div>
-  <dialog aria-modal="true" class="alert-dialog-content">
+  <button commandfor="delete-dialog" command="show-modal">Delete</button>
+  <dialog id="delete-dialog" closedby="closerequest" class="alert-dialog-content">
     <h2 class="alert-dialog-title">Delete project?</h2>
   </dialog>
 </section>
@@ -24,9 +24,7 @@ action and cancel target.
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `alert-dialog` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete alert-dialog component reference]({{< relref
 "/docs/components/alert-dialog" >}}) for selectors, slots, attributes, generated

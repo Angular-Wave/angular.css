@@ -14,17 +14,18 @@
       <fieldset class="field-set">
         <legend class="field-legend">Profile</legend>
         <div class="field-group">
-          <fieldset ng-field>
+          <div class="field">
             <label for="demo-profile-name"
                class="field-label label">Name</label>
             <input
 
               id="demo-profile-name"
+              aria-describedby="demo-profile-name-description"
               placeholder="Jane Doe"
               ng-model="name" class="input" />
-            <p class="field-description">Use your public display name.</p>
-          </fieldset>
-          <fieldset data-invalid ng-field>
+            <p id="demo-profile-name-description" class="field-description">Use your public display name.</p>
+          </div>
+          <div class="field">
             <label for="demo-profile-email" class="field-label label">
               Email
             </label>
@@ -34,11 +35,12 @@
               type="email"
               placeholder="Enter an email"
               required
+              aria-describedby="demo-profile-email-error"
               ng-model="email" class="input" />
-            <p ng-if="!email" class="field-error">
+            <p id="demo-profile-email-error" ng-show="!email" class="field-error">
               Enter a valid email.
             </p>
-          </fieldset>
+          </div>
         </div>
       </fieldset>
       <div class="output">

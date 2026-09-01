@@ -3,39 +3,59 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
-    <link rel="stylesheet" href="../../css/angular.css" />
-    <link rel="stylesheet" href="../example.css" />
-    <script src="../../js/angular-ts.umd.js"></script>
-    <script src="../../js/angular-css.umd.js"></script>
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
   </head>
-  <body ng-app="ui" ng-cloak ng-init="name='Jane Doe'">
+  <body ng-app="ui" ng-cloak ng-init="name='Jane Doe'; email=''">
     <form class="stack">
       <fieldset class="field-set">
         <legend class="field-legend">Profile</legend>
         <div class="field-group">
-          <fieldset ng-field>
-            <label for="profile-name" class="field-label label"> Name </label>
+          <div class="field">
+            <label for="demo-profile-name" class="field-label label"
+              >Name</label
+            >
             <input
-              id="profile-name"
-              placeholder="Enter your name"
+              id="demo-profile-name"
+              aria-describedby="demo-profile-name-description"
+              placeholder="Jane Doe"
               ng-model="name"
               class="input"
             />
-            <p class="field-description">Use your public display name.</p>
-          </fieldset>
-          <fieldset data-invalid ng-field>
-            <label for="profile-email" class="field-label label"> Email </label>
+            <p id="demo-profile-name-description" class="field-description">
+              Use your public display name.
+            </p>
+          </div>
+          <div class="field">
+            <label for="demo-profile-email" class="field-label label">
+              Email
+            </label>
             <input
-              id="profile-email"
-              placeholder="Email"
-              aria-invalid="true"
+              id="demo-profile-email"
+              type="email"
+              placeholder="Enter an email"
+              required
+              aria-describedby="demo-profile-email-error"
+              ng-model="email"
               class="input"
             />
-            <p class="field-error">Enter a valid email.</p>
-          </fieldset>
+            <p
+              id="demo-profile-email-error"
+              ng-show="!email"
+              class="field-error"
+            >
+              Enter a valid email.
+            </p>
+          </div>
         </div>
       </fieldset>
+      <div class="output">
+        Preview: <span ng-bind="name"></span>
+        <span ng-bind="email ? '(' + email + ')' : '(email required)'"></span>
+      </div>
     </form>
   </body>
 </html>

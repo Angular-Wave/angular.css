@@ -1,5 +1,6 @@
 @import "tailwindcss/theme.css" source(none);
 @import "tailwindcss/utilities.css" source(none);
+@import "../node_modules/@angular-wave/angular.ts/dist/angular.css";
 @import "@radix-ui/colors/slate.css";
 @import "@radix-ui/colors/slate-dark.css";
 @import "@radix-ui/colors/blue.css";

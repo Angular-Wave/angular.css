@@ -1,7 +1,1 @@
-details:is(.collapsible, [ng-collapsible]) > summary {
-  list-style: none;
-}
-
-details:is(.collapsible, [ng-collapsible]) > summary::-webkit-details-marker {
-  display: none;
-}
+@import "../../components/collapsible/collapsible.css";

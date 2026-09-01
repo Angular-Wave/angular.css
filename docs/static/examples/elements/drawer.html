@@ -16,17 +16,28 @@
     data-example="drawer-demo"
   >
     <main class="drawer-demo visual-example">
-      <section id="goal-drawer" ng-drawer>
-        <button variant="outline" class="drawer-trigger button">
+      <section id="goal-drawer" class="drawer">
+        <button
+          commandfor="goal-drawer-content"
+          command="show-modal"
+          variant="outline"
+          class="drawer-trigger button"
+        >
           Open Drawer
         </button>
-        <div class="drawer-overlay"></div>
-        <dialog class="drawer-content">
+        <dialog
+          id="goal-drawer-content"
+          closedby="any"
+          aria-labelledby="goal-drawer-title"
+          aria-describedby="goal-drawer-description"
+          data-side="bottom"
+          class="drawer-content"
+        >
           <div class="drawer-handle"></div>
           <div class="drawer-goal-panel">
             <header class="drawer-header">
-              <h2 class="drawer-title">Move Goal</h2>
-              <p class="drawer-description">Set your daily activity goal.</p>
+              <h2 id="goal-drawer-title" class="drawer-title">Move Goal</h2>
+              <p id="goal-drawer-description" class="drawer-description">Set your daily activity goal.</p>
             </header>
             <div class="drawer-goal-body">
               <div class="drawer-goal-control">
@@ -83,8 +94,18 @@
               </div>
             </div>
             <footer class="drawer-footer">
-              <button ng-click="submittedGoal=goal" class="button">Submit</button>
-              <button variant="outline" class="drawer-close button">
+              <button
+                commandfor="goal-drawer-content"
+                command="close"
+                ng-click="submittedGoal=goal"
+                class="button"
+              >Submit</button>
+              <button
+                commandfor="goal-drawer-content"
+                command="close"
+                variant="outline"
+                class="drawer-close button"
+              >
                 Cancel
               </button>
             </footer>

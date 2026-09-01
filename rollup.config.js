@@ -112,4 +112,13 @@ export default [
     },
     plugins: applicationPlugins,
   },
+  {
+    input: "examples/command/command.ts",
+    output: {
+      file: "docs/static/js/command-demo.umd.js",
+      format: "iife",
+      name: "commandDemo",
+    },
+    plugins: applicationPlugins,
+  },
 ];

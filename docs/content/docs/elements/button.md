@@ -14,9 +14,7 @@ description: >
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `button` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete button component reference]({{< relref
 "/docs/components/button" >}}) for selectors, slots, attributes, generated

@@ -3028,7 +3028,7 @@
             if (event && event.key !== "ArrowDown")
                 return;
             event?.preventDefault();
-            document.getElementById(id)?.setAttribute("data-open", "true");
+            this.popover(id)?.showPopover();
         }
         selectBasic(value) {
             this.basicDate = value;
@@ -3082,7 +3082,10 @@
             this.closePopover("date-picker-time-popover");
         }
         closePopover(id) {
-            document.getElementById(id)?.setAttribute("data-open", "false");
+            this.popover(id)?.hidePopover();
+        }
+        popover(id) {
+            return document.getElementById(id)?.querySelector("[popover]") ?? null;
         }
     }
     window.angular

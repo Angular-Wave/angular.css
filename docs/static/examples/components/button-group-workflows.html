@@ -183,7 +183,7 @@
             </button>
           </div>
           <div class="button-group">
-            <div ng-input-group class="input-group">
+            <div class="input-group">
               <input
                 placeholder="Send a message..."
                 aria-label="Message"
@@ -213,7 +213,7 @@
             </button>
           </div>
           <div class="button-group">
-            <div ng-input-group class="input-group">
+            <div class="input-group">
               <input
                 placeholder="{{ voiceEnabled ? 'Record and send audio...' : 'Send a message...' }}"
                 ng-disabled="voiceEnabled"
@@ -246,21 +246,21 @@
           <button type="button" variant="outline" class="button">
             ◇ Copilot
           </button>
-          <span ng-popover>
+          <span class="popover">
             <button
               type="button"
               variant="outline"
               size="icon"
               aria-label="Open Popover"
               class="popover-trigger button"
-            >
+             popovertarget="popover-button-group-workflows-1-content">
               ⌄
             </button>
             <aside
               data-side="bottom"
               aria-label="Copilot task"
               class="button-group-popover-content popover-content"
-            >
+             id="popover-button-group-workflows-1-content" data-align="center" popover>
               <header class="popover-header">
                 <h3 class="popover-title">Start a new task with Copilot</h3>
                 <p class="popover-description">

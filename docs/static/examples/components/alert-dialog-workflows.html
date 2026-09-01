@@ -17,17 +17,16 @@
   >
     <main class="alert-dialog-workflows">
       <div class="alert-dialog-trigger-grid" aria-label="Alert dialog examples">
-        <section id="share-project-dialog" ng-alert-dialog class="alert-dialog">
+        <section id="share-project-dialog" class="alert-dialog">
           <button
 
             type="button"
             variant="outline"
 
-           class="alert-dialog-trigger button">
+           class="alert-dialog-trigger button" commandfor="share-project-dialog-content" command="show-modal">
             Share Project
           </button>
-          <div class="alert-dialog-overlay"></div>
-          <dialog data-size="default" class="alert-dialog-content">
+          <dialog data-size="default" class="alert-dialog-content" id="share-project-dialog-content" closedby="closerequest" aria-labelledby="share-project-dialog-title" aria-describedby="share-project-dialog-description">
             <header class="alert-dialog-header">
               <div aria-hidden="true" class="alert-dialog-media">
                 <svg viewBox="0 0 24 24" fill="none">
@@ -46,8 +45,8 @@
                   />
                 </svg>
               </div>
-              <h2 class="alert-dialog-title">Share this project?</h2>
-              <p class="alert-dialog-description">
+              <h2 class="alert-dialog-title" id="share-project-dialog-title">Share this project?</h2>
+              <p class="alert-dialog-description" id="share-project-dialog-description">
                 Anyone with the link will be able to view and edit this project.
               </p>
             </header>
@@ -57,32 +56,31 @@
                 type="button"
                 variant="outline"
 
-               class="alert-dialog-cancel button">
+               class="alert-dialog-cancel button" commandfor="share-project-dialog-content" command="close">
                 Cancel
               </button>
-              <button type="button" class="alert-dialog-action button">
+              <button type="button" class="alert-dialog-action button" commandfor="share-project-dialog-content" command="close">
                 Share
               </button>
             </footer>
           </dialog>
         </section>
 
-        <section id="accessory-dialog" ng-alert-dialog class="alert-dialog">
+        <section id="accessory-dialog" class="alert-dialog">
           <button
 
             type="button"
             variant="outline"
 
-           class="alert-dialog-trigger button">
+           class="alert-dialog-trigger button" commandfor="accessory-dialog-content" command="show-modal">
             Show Small Dialog
           </button>
-          <div class="alert-dialog-overlay"></div>
-          <dialog data-size="sm" class="alert-dialog-content">
+          <dialog data-size="sm" class="alert-dialog-content" id="accessory-dialog-content" closedby="closerequest" aria-labelledby="accessory-dialog-title" aria-describedby="accessory-dialog-description">
             <header class="alert-dialog-header">
-              <h2 class="alert-dialog-title">
+              <h2 class="alert-dialog-title" id="accessory-dialog-title">
                 Allow accessory to connect?
               </h2>
-              <p class="alert-dialog-description">
+              <p class="alert-dialog-description" id="accessory-dialog-description">
                 Do you want to allow the USB accessory to connect to this
                 device?
               </p>
@@ -93,27 +91,26 @@
                 type="button"
                 variant="outline"
 
-               class="alert-dialog-cancel button">
+               class="alert-dialog-cancel button" commandfor="accessory-dialog-content" command="close">
                 Don't allow
               </button>
-              <button type="button" class="alert-dialog-action button">
+              <button type="button" class="alert-dialog-action button" commandfor="accessory-dialog-content" command="close">
                 Allow
               </button>
             </footer>
           </dialog>
         </section>
 
-        <section id="accessory-media-dialog" ng-alert-dialog class="alert-dialog">
+        <section id="accessory-media-dialog" class="alert-dialog">
           <button
 
             type="button"
             variant="outline"
 
-           class="alert-dialog-trigger button">
+           class="alert-dialog-trigger button" commandfor="accessory-media-dialog-content" command="show-modal">
             Show Small Dialog With Media
           </button>
-          <div class="alert-dialog-overlay"></div>
-          <dialog data-size="sm" class="alert-dialog-content">
+          <dialog data-size="sm" class="alert-dialog-content" id="accessory-media-dialog-content" closedby="closerequest" aria-labelledby="accessory-media-dialog-title" aria-describedby="accessory-media-dialog-description">
             <header class="alert-dialog-header">
               <div aria-hidden="true" class="alert-dialog-media">
                 <svg viewBox="0 0 24 24" fill="none">
@@ -126,10 +123,10 @@
                   />
                 </svg>
               </div>
-              <h2 class="alert-dialog-title">
+              <h2 class="alert-dialog-title" id="accessory-media-dialog-title">
                 Allow accessory to connect?
               </h2>
-              <p class="alert-dialog-description">
+              <p class="alert-dialog-description" id="accessory-media-dialog-description">
                 Do you want to allow the USB accessory to connect to this
                 device?
               </p>
@@ -140,27 +137,26 @@
                 type="button"
                 variant="outline"
 
-               class="alert-dialog-cancel button">
+               class="alert-dialog-cancel button" commandfor="accessory-media-dialog-content" command="close">
                 Don't allow
               </button>
-              <button type="button" class="alert-dialog-action button">
+              <button type="button" class="alert-dialog-action button" commandfor="accessory-media-dialog-content" command="close">
                 Allow
               </button>
             </footer>
           </dialog>
         </section>
 
-        <section id="delete-chat-dialog" ng-alert-dialog class="alert-dialog">
+        <section id="delete-chat-dialog" class="alert-dialog">
           <button
 
             type="button"
             variant="destructive"
 
-           class="alert-dialog-trigger button">
+           class="alert-dialog-trigger button" commandfor="delete-chat-dialog-content" command="show-modal">
             Delete Chat
           </button>
-          <div class="alert-dialog-overlay"></div>
-          <dialog data-size="sm" class="alert-dialog-content">
+          <dialog data-size="sm" class="alert-dialog-content" id="delete-chat-dialog-content" closedby="closerequest" aria-labelledby="delete-chat-dialog-title" aria-describedby="delete-chat-dialog-description">
             <header class="alert-dialog-header">
               <div
 
@@ -177,8 +173,8 @@
                   />
                 </svg>
               </div>
-              <h2 class="alert-dialog-title">Delete chat?</h2>
-              <p class="alert-dialog-description">
+              <h2 class="alert-dialog-title" id="delete-chat-dialog-title">Delete chat?</h2>
+              <p class="alert-dialog-description" id="delete-chat-dialog-description">
                 This will permanently delete this chat conversation. View
                 <a href="#settings">Settings</a> to delete saved memories.
               </p>
@@ -189,7 +185,7 @@
                 type="button"
                 variant="outline"
 
-               class="alert-dialog-cancel button">
+               class="alert-dialog-cancel button" commandfor="delete-chat-dialog-content" command="close">
                 Cancel
               </button>
               <button
@@ -198,7 +194,7 @@
                 variant="destructive"
 
                 ng-click="chatDeleted=true"
-               class="alert-dialog-action button">
+               class="alert-dialog-action button" commandfor="delete-chat-dialog-content" command="close">
                 Delete
               </button>
             </footer>
@@ -206,20 +202,19 @@
         </section>
 
         <div class="alert-dialog-rtl-triggers" dir="rtl" lang="ar">
-          <section id="rtl-confirmation-dialog" ng-alert-dialog class="alert-dialog">
+          <section id="rtl-confirmation-dialog" class="alert-dialog">
             <button
 
               type="button"
               variant="outline"
 
-             class="alert-dialog-trigger button">
+             class="alert-dialog-trigger button" commandfor="rtl-confirmation-dialog-content" command="show-modal">
               إظهار الحوار
             </button>
-            <div class="alert-dialog-overlay"></div>
-            <dialog data-size="default" class="alert-dialog-content">
+            <dialog data-size="default" class="alert-dialog-content" id="rtl-confirmation-dialog-content" closedby="closerequest" aria-labelledby="rtl-confirmation-dialog-title" aria-describedby="rtl-confirmation-dialog-description">
               <header class="alert-dialog-header">
-                <h2 class="alert-dialog-title">هل أنت متأكد تمامًا؟</h2>
-                <p class="alert-dialog-description">
+                <h2 class="alert-dialog-title" id="rtl-confirmation-dialog-title">هل أنت متأكد تمامًا؟</h2>
+                <p class="alert-dialog-description" id="rtl-confirmation-dialog-description">
                   لا يمكن التراجع عن هذا الإجراء. سيؤدي هذا إلى حذف حسابك
                   نهائيًا من خوادمنا.
                 </p>
@@ -230,27 +225,26 @@
                   type="button"
                   variant="outline"
 
-                 class="alert-dialog-cancel button">
+                 class="alert-dialog-cancel button" commandfor="rtl-confirmation-dialog-content" command="close">
                   إلغاء
                 </button>
-                <button type="button" class="alert-dialog-action button">
+                <button type="button" class="alert-dialog-action button" commandfor="rtl-confirmation-dialog-content" command="close">
                   متابعة
                 </button>
               </footer>
             </dialog>
           </section>
 
-          <section id="rtl-accessory-dialog" ng-alert-dialog class="alert-dialog">
+          <section id="rtl-accessory-dialog" class="alert-dialog">
             <button
 
               type="button"
               variant="outline"
 
-             class="alert-dialog-trigger button">
+             class="alert-dialog-trigger button" commandfor="rtl-accessory-dialog-content" command="show-modal">
               إظهار الحوار (صغير)
             </button>
-            <div class="alert-dialog-overlay"></div>
-            <dialog data-size="sm" class="alert-dialog-content">
+            <dialog data-size="sm" class="alert-dialog-content" id="rtl-accessory-dialog-content" closedby="closerequest" aria-labelledby="rtl-accessory-dialog-title" aria-describedby="rtl-accessory-dialog-description">
               <header class="alert-dialog-header">
                 <div aria-hidden="true" class="alert-dialog-media">
                   <svg viewBox="0 0 24 24" fill="none">
@@ -263,8 +257,8 @@
                     />
                   </svg>
                 </div>
-                <h2 class="alert-dialog-title">السماح للملحق بالاتصال؟</h2>
-                <p class="alert-dialog-description">
+                <h2 class="alert-dialog-title" id="rtl-accessory-dialog-title">السماح للملحق بالاتصال؟</h2>
+                <p class="alert-dialog-description" id="rtl-accessory-dialog-description">
                   هل تريد السماح لملحق USB بالاتصال بهذا الجهاز؟
                 </p>
               </header>
@@ -274,10 +268,10 @@
                   type="button"
                   variant="outline"
 
-                 class="alert-dialog-cancel button">
+                 class="alert-dialog-cancel button" commandfor="rtl-accessory-dialog-content" command="close">
                   عدم السماح
                 </button>
-                <button type="button" class="alert-dialog-action button">
+                <button type="button" class="alert-dialog-action button" commandfor="rtl-accessory-dialog-content" command="close">
                   السماح
                 </button>
               </footer>

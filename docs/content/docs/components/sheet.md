@@ -5,23 +5,20 @@ description: >
   Edge anchored overlay panels
 ---
 
-Use one `ng-sheet` root with semantic child elements identified by sheet part
-classes. Author `side` on the
-root or content as `right`, `left`, `top`, or `bottom`; the directive reflects
-the resolved physical viewport edge to `data-side`.
+Use a native `dialog` and declarative invoker. Author `data-side` on the dialog
+as `right`, `left`, `top`, or `bottom`; CSS owns only physical placement.
 
 ```html
-<section ng-sheet side="right">
-  <button class="sheet-trigger">Open</button>
-  <div class="sheet-overlay"></div>
-  <dialog class="sheet-content">
+<section class="sheet">
+  <button commandfor="profile-sheet" command="show-modal">Open</button>
+  <dialog id="profile-sheet" data-side="right" class="sheet-content">
     <header class="sheet-header">
       <h2 class="sheet-title">Edit profile</h2>
       <p class="sheet-description">Update your account details.</p>
     </header>
     <div class="sheet-body">Content</div>
     <footer class="sheet-footer">
-      <button data-sheet-close>Close</button>
+      <button commandfor="profile-sheet" command="close">Close</button>
     </footer>
   </dialog>
 </section>
@@ -59,17 +56,17 @@ Install AngularCSS once, load its stylesheet, and include the `ui` module in
 your AngularTS application. See [Installation]({{< relref
 "/docs/get-started/installation" >}}) for the complete setup.
 
-This component's root directive is `[ng-sheet]`. Importing the package registers it with the AngularCSS `ui` module; there is no per-component JavaScript registration step.
+This is a styling-only HTML element or pattern. AngularCSS registers no runtime directive for it. A native dialog provides modal behavior; CSS supplies edge placement.
 
 ## Anatomy
 
-### Directive selectors
+### Root styling selector
 
-- `ng-sheet`
+- `.sheet`
 
 ### Semantic structure
 
-A sheet root requires one native button trigger, one overlay, and one native dialog content element. The root directive inspects descendants through sheet part classes; no child directives are required. Use `side` for placement. Title, description, header, body, and footer are optional.
+Use `.sheet` as an optional wrapper, a native invoker button, and `dialog.sheet-content` with authored `data-side`. Close controls use `command=close`; no overlay element is required.
 
 ## API
 
@@ -96,11 +93,11 @@ A sheet root requires one native button trigger, one overlay, and one native dia
 | `tabindex` | Output | Keyboard focus order for composite descendants. |
 | `type` | Output | Component or native behavior variant. |
 
-`Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
+Attributes remain authored HTML, native state, or AngularTS inputs. AngularCSS does not write element state.
 
 ### CSS custom properties
 
-This directive does not write component-specific CSS custom properties.
+This styling hook does not define component-specific CSS custom properties.
 
 ### DOM events
 
@@ -111,14 +108,14 @@ Native DOM events continue to work normally. AngularTS event directives such as
 
 ## Behavior
 
-The directive owns modal disclosure, physical side reflection, direct-child ownership, focus containment, Escape and exact-overlay dismissal, background isolation, document scroll locking, and focus restoration. AngularTS remains responsible for form values, validation, submission, language, authored content, and controlled application state.
+A native `dialog` owns modal disclosure, focus, Escape, background isolation, and restoration. Authored `data-side` selects CSS edge placement. AngularTS remains responsible for form values, validation, submission, language, and authored content.
 
 AngularCSS does not replace AngularTS interpolation, bindings, structural
 directives, form controllers, validation, or application state.
 
 ## Accessibility
 
-Use a visible title and description. The trigger exposes dialog popup, controls, and expanded relationships; content receives dialog, modal, labelled-by, described-by, hidden, physical side, direction, and focusability state. While open, background branches are inert, focus remains contained, Escape or the exact overlay dismisses, and focus returns to the invoking trigger.
+Use a visible title and description connected to the native dialog. Keep the physical edge as presentation only; content order, focus order, and inherited text direction remain semantic.
 
 Authored accessible names and relationships are preserved. Test the final
 composition with keyboard navigation and assistive technology because labels and
@@ -126,7 +123,7 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-sheet]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
 Read [Styling with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state

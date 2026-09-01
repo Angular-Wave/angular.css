@@ -18,7 +18,7 @@
     fieldset,
     .button,
     .input,
-    [ng-input-group]
+    .input-group
   ) {
   position: relative;
   border-start-end-radius: 0;
@@ -35,7 +35,7 @@
     fieldset,
     .button,
     .input,
-    [ng-input-group]
+    .input-group
   )
   ~ :is(
     button,
@@ -46,7 +46,7 @@
     fieldset,
     .button,
     .input,
-    [ng-input-group]
+    .input-group
   ) {
   border-inline-start-width: 0;
   border-start-start-radius: 0;
@@ -63,14 +63,14 @@
     fieldset,
     .button,
     .input,
-    [ng-input-group]
+    .input-group
   ):last-child {
   border-start-end-radius: calc(var(--radius) - 2px);
   border-end-end-radius: calc(var(--radius) - 2px);
 }
 
 .button-group
-  > :is([ng-dropdown], [ng-popover])
+  > :is([ng-dropdown], .popover)
   > :is(.dropdown-menu-trigger, .popover-trigger, button) {
   border-radius: inherit;
 }
@@ -85,9 +85,9 @@
     fieldset,
     .button,
     .input,
-    [ng-input-group]
+    .input-group
   )
-  ~ :is([ng-dropdown], [ng-popover])
+  ~ :is([ng-dropdown], .popover)
   > :is(.dropdown-menu-trigger, .popover-trigger, button) {
   border-inline-start-width: 0;
 }
@@ -102,7 +102,7 @@
     fieldset,
     .button,
     .input,
-    [ng-input-group]
+    .input-group
   ):focus-visible,
 .button-group
   > :is(
@@ -114,7 +114,7 @@
     fieldset,
     .button,
     .input,
-    [ng-input-group]
+    .input-group
   ):focus-within {
   z-index: 10;
 }
@@ -133,7 +133,7 @@
     fieldset,
     .button,
     .input,
-    [ng-input-group]
+    .input-group
   ) {
   border-radius: 0;
   border-start-start-radius: calc(var(--radius) - 2px);
@@ -150,7 +150,7 @@
     fieldset,
     .button,
     .input,
-    [ng-input-group]
+    .input-group
   )
   ~ :is(
     button,
@@ -161,7 +161,7 @@
     fieldset,
     .button,
     .input,
-    [ng-input-group]
+    .input-group
   ) {
   border-block-start-width: 0;
   border-start-start-radius: 0;
@@ -178,7 +178,7 @@
     fieldset,
     .button,
     .input,
-    [ng-input-group]
+    .input-group
   ):last-child {
   border-end-start-radius: calc(var(--radius) - 2px);
   border-end-end-radius: calc(var(--radius) - 2px);
@@ -194,9 +194,9 @@
     fieldset,
     .button,
     .input,
-    [ng-input-group]
+    .input-group
   )
-  ~ :is([ng-dropdown], [ng-popover])
+  ~ :is([ng-dropdown], .popover)
   > :is(.dropdown-menu-trigger, .popover-trigger, button) {
   border-block-start-width: 0;
 }

@@ -15,7 +15,6 @@ const expectBuiltArtifactRuntime = async (page: Page): Promise<void> => {
   const resources = await page.evaluate(() =>
     performance.getEntriesByType("resource").map((entry) => entry.name),
   );
-
   expect(resources.some((url) => url.endsWith("/angular-ts.umd.js"))).toBe(
     true,
   );
@@ -29,88 +28,60 @@ const expectBuiltArtifactRuntime = async (page: Page): Promise<void> => {
   ).toEqual([]);
 };
 
-test("canonical accordion preserves initial state and single-item behavior", async ({
+test("canonical accordion uses native exclusive disclosure", async ({
   page,
 }) => {
   await page.goto(canonicalUrl);
   await expectBuiltArtifactRuntime(page);
-  const root = page.locator("[ng-accordion]");
-  const items = page.locator(`.accordion-item`);
-  const triggers = page.locator(`.accordion-trigger`);
-  const panels = page.locator(`.accordion-content`);
+  const root = page.locator(".accordion");
+  const items = root.locator(":scope > details");
+  const triggers = root.locator(":scope > details > summary");
 
-  await expect(triggers).toHaveCount(3);
-  await expect(triggers.nth(0)).toHaveAttribute("aria-expanded", "true");
-  await expect(panels.nth(0)).toHaveAttribute("data-open", "true");
-
-  await triggers.nth(1).click();
-  await expect(items.nth(0)).toHaveAttribute("data-state", "closed");
-  await expect(items.nth(1)).toHaveAttribute("data-state", "open");
-  await expect(triggers.nth(0)).toHaveAttribute("aria-expanded", "false");
-  await expect(triggers.nth(1)).toHaveAttribute("aria-expanded", "true");
+  await expect(root).not.toHaveAttribute("ng-accordion", "");
+  await expect(items).toHaveCount(3);
+  await expect(items.nth(0)).toHaveAttribute("open", "");
+  await expect(items.nth(0)).toHaveAttribute("name", "shipping-questions");
 
   await triggers.nth(1).click();
-  await expect(items.nth(1)).toHaveAttribute("data-state", "closed");
-  await expect(panels.nth(1)).toHaveAttribute("data-open", "false");
+  await expect(items.nth(0)).not.toHaveAttribute("open", "");
+  await expect(items.nth(1)).toHaveAttribute("open", "");
+
+  await triggers.nth(1).click();
+  await expect(items.nth(1)).not.toHaveAttribute("open", "");
 });
 
-test("canonical accordion supplies semantic relationships and keyboard focus", async ({
+test("canonical accordion delegates keyboard behavior to summary", async ({
   page,
 }) => {
   await page.goto(canonicalUrl);
-  const items = page.locator(`.accordion-item`);
-  const triggers = page.locator(`.accordion-trigger`);
-  const panels = page.locator(`.accordion-content`);
+  const root = page.locator(".accordion");
+  const items = root.locator(":scope > details");
+  const triggers = root.locator(":scope > details > summary");
 
-  await expect(triggers.nth(0)).toHaveAttribute(
-    "aria-controls",
-    (await panels.nth(0).getAttribute("id")) ?? "",
-  );
-  await expect(panels.nth(0)).toHaveAttribute("role", "region");
-  await expect(panels.nth(0)).toHaveAttribute(
-    "aria-labelledby",
-    (await triggers.nth(0).getAttribute("id")) ?? "",
-  );
-
-  await triggers.nth(0).focus();
-  await triggers.nth(0).press("ArrowDown");
-  await expect(triggers.nth(1)).toBeFocused();
-  await triggers.nth(1).press("End");
+  await triggers.nth(1).focus();
+  await triggers.nth(1).press("Enter");
+  await expect(items.nth(1)).toHaveAttribute("open", "");
+  await triggers.nth(1).press("Space");
+  await expect(items.nth(1)).not.toHaveAttribute("open", "");
+  await triggers.nth(1).press("Tab");
   await expect(triggers.nth(2)).toBeFocused();
-  await triggers.nth(2).press("Home");
-  await expect(triggers.nth(0)).toBeFocused();
-
-  await items.evaluateAll((allItems) => {
-    allItems[0].setAttribute("data-state", "closed");
-    allItems[2].setAttribute("data-state", "open");
-  });
-  await expect(triggers.nth(2)).toHaveAttribute("aria-expanded", "true");
-  await expect(panels.nth(2)).toHaveAttribute("data-open", "true");
-  await expect(items.nth(0)).toHaveAttribute("data-state", "closed");
 });
 
-test("accordion workflow page covers multiple and disabled behavior", async ({
+test("accordion workflow covers independent and inert disclosures", async ({
   page,
 }) => {
   await page.goto(statesUrl);
   await expectBuiltArtifactRuntime(page);
-  const multiple = page.locator(
-    '[ng-accordion][aria-label="Settings questions"]',
+  const multiple = page.locator('.accordion[aria-label="Settings questions"]');
+  const multipleItems = multiple.locator(":scope > details");
+  const disabled = page.locator(
+    '.accordion[aria-label="Feature availability questions"] details[inert]',
   );
-  const multipleTriggers = multiple.locator(".accordion-trigger");
-  const multiplePanels = multiple.locator(`.accordion-content`);
-  const disabledRoot = page.locator(
-    '[ng-accordion][aria-label="Feature availability questions"]',
-  );
-  const disabledTriggers = disabledRoot.locator(".accordion-trigger");
 
-  await expect(multiple).toHaveAttribute("multiple", "");
-  await multipleTriggers.nth(1).click();
-  await expect(multiplePanels.nth(0)).toHaveAttribute("data-open", "true");
-  await expect(multiplePanels.nth(1)).toHaveAttribute("data-open", "true");
-
-  await expect(disabledTriggers.nth(1)).toBeDisabled();
-  await disabledTriggers.nth(0).focus();
-  await disabledTriggers.nth(0).press("ArrowDown");
-  await expect(disabledTriggers.nth(2)).toBeFocused();
+  await multipleItems.nth(1).locator("summary").click();
+  await expect(multipleItems.nth(0)).toHaveAttribute("open", "");
+  await expect(multipleItems.nth(1)).toHaveAttribute("open", "");
+  await expect(multipleItems.nth(0)).not.toHaveAttribute("name", /.+/);
+  await expect(disabled).toHaveCount(1);
+  await expect(disabled).not.toHaveAttribute("open", "");
 });

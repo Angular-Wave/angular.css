@@ -120,7 +120,6 @@ test("basic dialog composes focus, filtering, activation, close, and restore beh
   await expect(content).toBeHidden();
 
   await trigger.click();
-  await expect(dialog).toHaveAttribute("data-open", "true");
   await expect(content).toBeVisible();
   const input = content.getByRole("combobox");
   await expect(input).toBeFocused();
@@ -175,12 +174,10 @@ test("application-owned Ctrl+J state opens the composed command dialog", async (
   const content = dialog.locator(".dialog-content");
   await expect(content).toBeHidden();
   await page.keyboard.press("Control+j");
-  await expect(dialog).toHaveAttribute("data-open", "true");
   await expect(content).toBeVisible();
   await expect(content.getByRole("combobox")).toBeFocused();
   await page.keyboard.press("Escape");
   await expect(content).toBeHidden();
-  await expect(dialog).toHaveAttribute("data-open", "false");
 });
 
 test("scrollable dialog constrains a complete command inventory and scrolls active items", async ({

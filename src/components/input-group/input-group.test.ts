@@ -10,9 +10,7 @@ const textareaWorkflowsUrl =
   "/docs/static/examples/components/input-group-textarea-workflows.html";
 const rtlUrl = "/docs/static/examples/components/input-group-rtl.html";
 
-test("input group links visible addons without replacing external descriptions", async ({
-  page,
-}) => {
+test("input group preserves authored addon descriptions", async ({ page }) => {
   await page.goto(statesUrl);
 
   const group = page.locator("#described-group");
@@ -21,8 +19,7 @@ test("input group links visible addons without replacing external descriptions",
     "aria-describedby",
     "external-help currency-code",
   );
-  await expect(group).toHaveAttribute("data-has-addon", "true");
-  await expect(group).toHaveAttribute("data-addon-count", "2");
+  await expect(group).not.toHaveAttribute("data-addon-count", /.+/);
 });
 
 test("input group exposes and operates an addon button", async ({ page }) => {
@@ -30,40 +27,32 @@ test("input group exposes and operates an addon button", async ({ page }) => {
 
   const group = page.locator("#button-group");
   const input = group.locator("input");
-  await expect(group).toHaveAttribute("data-has-button", "true");
   await expect(input).toHaveValue("AngularCSS");
   await group.getByRole("button", { name: "Clear" }).click();
   await expect(input).toHaveValue("");
 });
 
-test("input group links addons inserted by an AngularTS structural binding", async ({
+test("input group lets AngularTS own dynamic addon context", async ({
   page,
 }) => {
   await page.goto(statesUrl);
 
-  const group = page.locator("#dynamic-group");
-  const input = group.locator("input");
-  await expect(group).toHaveAttribute("data-addon-count", "0");
+  const input = page.locator("#dynamic-group input");
+  await expect(input).toHaveAttribute("aria-label", "Budget");
   await page.getByRole("button", { name: "Add currency" }).click();
 
   await expect(page.locator("#dynamic-addon")).toBeVisible();
-  await expect(input).toHaveAttribute(
-    "aria-describedby",
-    "budget-help dynamic-addon",
-  );
-  await expect(group).toHaveAttribute("data-addon-count", "1");
+  await expect(input).toHaveAttribute("aria-label", "Budget in USD");
+  await expect(input).toHaveAttribute("aria-describedby", "budget-help");
 });
 
-test("input group removes hidden addon descriptions and preserves external ids", async ({
+test("input group preserves external descriptions as addons change", async ({
   page,
 }) => {
   await page.goto(statesUrl);
 
   const input = page.locator("#hidden-group input");
-  await expect(input).toHaveAttribute(
-    "aria-describedby",
-    "price-help addon-price",
-  );
+  await expect(input).toHaveAttribute("aria-describedby", "price-help");
   await page
     .getByRole("button", { name: "Toggle currency description" })
     .click();
@@ -143,7 +132,7 @@ test("input group menu, tooltip, popover, and button compositions are functional
 
   await page.getByRole("button", { name: "Security details" }).click();
   await expect(
-    page.getByRole("dialog", { name: "Security details" }),
+    page.getByRole("complementary", { name: "Security details" }),
   ).toBeVisible();
   await page.keyboard.press("Escape");
 

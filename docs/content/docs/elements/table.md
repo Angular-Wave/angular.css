@@ -26,9 +26,7 @@ Use native table elements with part classes for styling hooks.
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `table` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete table component reference]({{< relref
 "/docs/components/table" >}}) for selectors, slots, attributes, generated

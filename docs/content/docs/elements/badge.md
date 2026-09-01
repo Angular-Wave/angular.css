@@ -21,9 +21,7 @@ through the `variant` attribute.
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `badge` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete badge component reference]({{< relref
 "/docs/components/badge" >}}) for selectors, slots, attributes, generated

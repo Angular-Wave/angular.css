@@ -7,9 +7,9 @@ export interface CatalogEntryPolicy {
 
 export const componentPolicy = {
   accordion: {
-    kind: "component",
+    kind: "element",
     rationale:
-      "Coordinates disclosure state, focus, and composite keyboard navigation.",
+      "Native details, summary, open, and name provide disclosure and exclusive-group behavior.",
   },
   alert: {
     kind: "element",
@@ -17,18 +17,18 @@ export const componentPolicy = {
       "Authored alert semantics and CSS provide the complete contract.",
   },
   "alert-dialog": {
-    kind: "component",
+    kind: "element",
     rationale:
-      "Coordinates modal disclosure, focus containment, and restoration.",
+      "Native dialog and declarative invoker commands provide modal behavior.",
   },
   "aspect-ratio": {
     kind: "element",
     rationale: "CSS aspect-ratio provides the complete layout behavior.",
   },
   avatar: {
-    kind: "component",
+    kind: "element",
     rationale:
-      "Coordinates asynchronous image loading and fallback visibility.",
+      "Native images, alternative text, authored fallback content, and CSS provide the contract.",
   },
   badge: {
     kind: "element",
@@ -75,9 +75,9 @@ export const componentPolicy = {
       "Native checkbox state and CSS pseudo-classes provide the complete contract.",
   },
   collapsible: {
-    kind: "component",
+    kind: "element",
     rationale:
-      "Coordinates disclosure for native details and composed trigger-panel layouts.",
+      "Native details and summary provide the complete disclosure contract.",
   },
   combobox: {
     kind: "component",
@@ -95,9 +95,9 @@ export const componentPolicy = {
       "Coordinates context disclosure, placement, nested focus, and keyboard navigation.",
   },
   dialog: {
-    kind: "component",
+    kind: "element",
     rationale:
-      "Coordinates triggers, modal disclosure, focus containment, and restoration.",
+      "Native dialog provides top-layer modal behavior, focus, and restoration.",
   },
   direction: {
     kind: "element",
@@ -105,9 +105,9 @@ export const componentPolicy = {
       "The native dir attribute and CSS logical properties provide the contract.",
   },
   drawer: {
-    kind: "component",
+    kind: "element",
     rationale:
-      "Coordinates modal disclosure and focus for edge-anchored content.",
+      "A native dialog provides modal behavior; CSS supplies edge placement.",
   },
   dropdown: {
     kind: "component",
@@ -120,9 +120,9 @@ export const componentPolicy = {
       "An empty state is styled authored content with optional native status semantics.",
   },
   field: {
-    kind: "component",
+    kind: "element",
     rationale:
-      "Maintains dynamic accessible relationships between controls and validation messages.",
+      "Native labels, descriptions, validation, and AngularTS forms provide the contract.",
   },
   "hover-card": {
     kind: "component",
@@ -135,14 +135,14 @@ export const componentPolicy = {
       "Native input behavior, validation, and AngularTS models provide the contract.",
   },
   "input-group": {
-    kind: "component",
+    kind: "element",
     rationale:
-      "Maintains dynamic accessible addon relationships and composite focus behavior.",
+      "Native controls and labels own behavior; CSS provides grouped presentation.",
   },
   "input-otp": {
-    kind: "component",
+    kind: "element",
     rationale:
-      "Coordinates multi-slot input, focus movement, deletion, and paste distribution.",
+      "One native input provides text entry, paste, autofill, validation, and AngularTS model binding.",
   },
   item: {
     kind: "element",
@@ -180,9 +180,9 @@ export const componentPolicy = {
       "Native navigation, lists, links, and authored current state are sufficient.",
   },
   popover: {
-    kind: "component",
+    kind: "element",
     rationale:
-      "Coordinates trigger disclosure, focus, collision-aware placement, and dismissal.",
+      "The Popover API owns disclosure, top-layer rendering, and light dismissal.",
   },
   progress: {
     kind: "element",
@@ -200,9 +200,9 @@ export const componentPolicy = {
       "Coordinates pointer and keyboard resizing with panel constraints.",
   },
   "scroll-area": {
-    kind: "component",
+    kind: "element",
     rationale:
-      "Coordinates custom scrollbars, viewport geometry, and scroll state.",
+      "Native overflow regions own scrolling, keyboard input, direction, and scrollbar interaction.",
   },
   select: {
     kind: "element",
@@ -215,9 +215,9 @@ export const componentPolicy = {
       "Native hr or authored separator semantics and CSS are sufficient.",
   },
   sheet: {
-    kind: "component",
+    kind: "element",
     rationale:
-      "Coordinates modal disclosure and focus for edge-anchored content.",
+      "A native dialog provides modal behavior; CSS supplies edge placement.",
   },
   sidebar: {
     kind: "component",
@@ -270,9 +270,9 @@ export const componentPolicy = {
       "A native button with authored aria-pressed and AngularTS state is sufficient.",
   },
   "toggle-group": {
-    kind: "component",
+    kind: "element",
     rationale:
-      "Coordinates roving focus and single or multiple selection across toggles.",
+      "Native radio and checkbox groups own single or multiple selection, focus, keyboard behavior, and forms.",
   },
   tooltip: {
     kind: "component",

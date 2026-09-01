@@ -82,7 +82,7 @@ class DatePickerDemoController {
   openPopover(id: string, event?: KeyboardEvent): void {
     if (event && event.key !== "ArrowDown") return;
     event?.preventDefault();
-    document.getElementById(id)?.setAttribute("data-open", "true");
+    this.popover(id)?.showPopover();
   }
 
   selectBasic(value: string): void {
@@ -147,7 +147,11 @@ class DatePickerDemoController {
   }
 
   private closePopover(id: string): void {
-    document.getElementById(id)?.setAttribute("data-open", "false");
+    this.popover(id)?.hidePopover();
+  }
+
+  private popover(id: string): HTMLElement | null {
+    return document.getElementById(id)?.querySelector<HTMLElement>("[popover]") ?? null;
   }
 }
 

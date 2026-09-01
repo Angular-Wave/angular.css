@@ -14,16 +14,16 @@ them when a workflow needs behavior from more than one primitive.
 Combine field, label, input, description, and AngularTS validation:
 
 ```html
-<fieldset ng-field>
+<div class="field">
   <label for="email" class="label">Email</label>
   <input id="email" name="email" ng-model="profile.email" required class="input" />
   <p class="field-description">Used for account notices.</p>
   <p ng-if="profileForm.email.invalid" class="field-error">Enter a valid email.</p>
-</fieldset>
+</div>
 ```
 
 The native input and AngularTS form controller own the value and validity. The
-field component connects helper and error text to the control.
+field styles the authored label, helper, and error text around the control.
 
 ## Date picker
 
@@ -41,9 +41,8 @@ execution.
 
 ## Collapsible sidebar group
 
-Place `ng-collapsible` inside a sidebar group rather than creating separate
-sidebar collapse behavior. Sidebar owns its global expanded state and responsive
-hooks; collapsible owns its trigger-panel relationship.
+Place native `details.collapsible` inside a sidebar group. Sidebar owns its
+global expanded state and responsive hooks; the browser owns nested disclosure.
 
 ## Composition rules
 

@@ -200,7 +200,7 @@
     padding 200ms linear;
 }
 
-.sidebar-menu-button > span:not([aria-hidden="true"], [ng-avatar]) {
+.sidebar-menu-button > span:not([aria-hidden="true"], .avatar) {
   max-width: var(--sidebar-width, 16rem);
   overflow: hidden;
   opacity: 1;
@@ -297,7 +297,7 @@
 
 :is(.sidebar, [ng-sidebar])[data-state="collapsed"][data-collapsible="icon"]
   .sidebar-menu-button
-  > span:not([aria-hidden="true"], [ng-avatar]) {
+  > span:not([aria-hidden="true"], .avatar) {
   max-width: 0;
   opacity: 0;
 }
@@ -374,7 +374,7 @@
   .sidebar,
   [ng-sidebar],
   .sidebar-menu-button,
-  .sidebar-menu-button > span:not([aria-hidden="true"], [ng-avatar]) {
+  .sidebar-menu-button > span:not([aria-hidden="true"], .avatar) {
     transition-duration: 0ms;
   }
 }

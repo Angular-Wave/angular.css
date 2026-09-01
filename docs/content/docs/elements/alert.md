@@ -26,9 +26,7 @@ the following paragraph is the description, and an optional SVG may provide an i
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `alert` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete alert component reference]({{< relref
 "/docs/components/alert" >}}) for selectors, slots, attributes, generated

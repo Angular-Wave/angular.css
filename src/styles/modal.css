@@ -1,19 +1,16 @@
 .dialog,
-[ng-dialog],
 .drawer,
-[ng-drawer],
 .sheet,
-[ng-sheet] {
+.alert-dialog {
   display: contents;
 }
 
-.alert-dialog-overlay,
-.dialog-overlay,
-.drawer-overlay,
-.sheet-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 50;
+:is(
+  .alert-dialog-content,
+  .dialog-content,
+  .drawer-content,
+  .sheet-content
+)::backdrop {
   background: color-mix(in srgb, black 10%, transparent);
   backdrop-filter: blur(4px);
 }
@@ -24,10 +21,20 @@
   position: fixed;
   z-index: 51;
   overflow: hidden;
+  margin: 0;
   background: var(--popover);
   color: var(--popover-foreground);
   font-size: var(--text-sm);
   line-height: 1.4;
+}
+
+:is(
+  .alert-dialog-content,
+  .dialog-content,
+  .drawer-content,
+  .sheet-content
+):not([open]) {
+  display: none;
 }
 
 .drawer-content,

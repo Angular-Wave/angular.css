@@ -214,13 +214,11 @@ body {
   transition: transform 150ms ease;
 }
 
-.sidebar-group-collapsible[data-state='open']
-  .sidebar-collapsible-trigger
-  > svg {
+.sidebar-group-collapsible[open] .sidebar-collapsible-trigger > svg {
   transform: rotate(180deg);
 }
 
-.sidebar-menu-collapsible[data-state='open'] .sidebar-collapsible-chevron {
+.sidebar-menu-collapsible[open] .sidebar-collapsible-chevron {
   transform: rotate(90deg);
 }
 
@@ -479,12 +477,12 @@ body {
   line-height: 1.25rem;
 }
 
-.input-group-workflow > :is([ng-input-group], .field-group) {
+.input-group-workflow > :is(.input-group, .field-group) {
   width: 100%;
 }
 
-.input-group-workflow :is([ng-input-group], .input-group) svg,
-.input-group-rtl-workflow [ng-input-group] svg {
+.input-group-workflow .input-group svg,
+.input-group-rtl-workflow .input-group svg {
   width: 1rem;
   height: 1rem;
   fill: none;
@@ -555,7 +553,7 @@ body {
   border-radius: 9999px;
 }
 
-.input-group-workflow [ng-popover],
+.input-group-workflow .popover,
 .input-group-workflow .input-group-overlay-control {
   flex: none;
 }
@@ -761,7 +759,7 @@ body {
   gap: 20px;
 }
 
-.kbd-workflows > [ng-input-group] {
+.kbd-workflows > .input-group {
   width: 100%;
 }
 
@@ -1287,13 +1285,13 @@ body .visually-hidden {
   cursor: pointer;
 }
 
-.switch-choice > [ng-field] {
+.switch-choice > .field {
   padding: 10px;
   border: 1px solid var(--border);
   border-radius: 8px;
 }
 
-.switch-choice:has(.switch:checked) > [ng-field] {
+.switch-choice:has(.switch:checked) > .field {
   border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
   background: color-mix(in srgb, var(--primary) 5%, transparent);
 }
@@ -1346,13 +1344,13 @@ body .visually-hidden {
   cursor: pointer;
 }
 
-.radio-choice > [ng-field] {
+.radio-choice > .field {
   padding: 10px;
   border: 1px solid var(--border);
   border-radius: 8px;
 }
 
-.radio-choice:has(.radio-group-item:checked) > [ng-field] {
+.radio-choice:has(.radio-group-item:checked) > .field {
   border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
   background: color-mix(in srgb, var(--primary) 5%, transparent);
 }
@@ -1577,7 +1575,7 @@ body .visually-hidden {
   --radius: 9999px;
 }
 
-.button-group-workflows :is(.input, :is(.input-group, [ng-input-group])) {
+.button-group-workflows :is(.input, .input-group) {
   width: min(16rem, 48vw);
 }
 
@@ -1668,7 +1666,7 @@ body .visually-hidden {
   width: 16rem;
 }
 
-.popover-form-fields [ng-field] {
+.popover-form-fields .field {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 
@@ -1923,7 +1921,7 @@ body .visually-hidden {
     grid-column: auto;
   }
 
-  .button-group-workflows :is(.input, :is(.input-group, [ng-input-group])) {
+  .button-group-workflows :is(.input, .input-group) {
     width: min(12rem, 52vw);
   }
 }
@@ -2377,7 +2375,7 @@ body .visually-hidden {
   line-height: 1.25rem;
 }
 
-.component-state-section > :is(.card, [ng-input-group], [ng-field]) {
+.component-state-section > :is(.card, .input-group, .field) {
   width: min(100%, 22rem);
 }
 
@@ -2561,13 +2559,13 @@ body .visually-hidden {
   background: transparent;
 }
 
-.empty-avatar-group [ng-avatar] {
+.empty-avatar-group .avatar {
   width: 48px;
   height: 48px;
   border: 2px solid var(--background);
 }
 
-.empty-avatar-group [ng-avatar] + [ng-avatar] {
+.empty-avatar-group .avatar + .avatar {
   margin-inline-start: -12px;
 }
 
@@ -3021,7 +3019,7 @@ kbd {
   font-size: var(--text-xs);
 }
 
-.calendar-time-footer [ng-input-group] {
+.calendar-time-footer .input-group {
   width: 7.5rem;
 }
 
@@ -3051,7 +3049,7 @@ kbd {
   gap: 24px;
 }
 
-.date-picker-grid:has([ng-popover][data-open='true']) {
+.date-picker-grid:has(.popover-content:popover-open) {
   min-height: calc(100vh - 3rem);
 }
 
@@ -3065,7 +3063,7 @@ kbd {
   grid-column: span 2;
 }
 
-.date-picker-workflow [ng-popover],
+.date-picker-workflow .popover,
 .date-picker-workflow .popover-trigger {
   width: 100%;
 }
@@ -3096,8 +3094,8 @@ kbd {
   width: min(100%, 20rem);
 }
 
-.date-picker-input-field [ng-input-group],
-.date-picker-natural-field [ng-input-group] {
+.date-picker-input-field .input-group,
+.date-picker-natural-field .input-group {
   overflow: visible;
 }
 
@@ -3111,7 +3109,7 @@ kbd {
   gap: 12px;
 }
 
-.date-picker-time-fields [ng-field] {
+.date-picker-time-fields .field {
   min-width: 0;
 }
 
@@ -3130,7 +3128,7 @@ kbd {
   appearance: none;
 }
 
-.date-picker-workflow .input-group-addon [ng-popover],
+.date-picker-workflow .input-group-addon .popover,
 .date-picker-workflow .input-group-addon .popover-trigger {
   width: auto;
 }
@@ -3156,7 +3154,7 @@ kbd {
   width: 18rem;
 }
 
-.date-picker-dropdown-field [ng-popover],
+.date-picker-dropdown-field .popover,
 .date-picker-dropdown-field .popover-trigger {
   width: 100%;
 }
@@ -3664,7 +3662,6 @@ kbd {
   text-align: center;
 }
 
-.input-otp-workflow .input-otp-separator path,
 .input-otp-form-card path {
   stroke: currentcolor;
   stroke-width: 2;
@@ -3699,16 +3696,6 @@ kbd {
   gap: 16px;
 }
 
-.input-otp-large .input-otp-slot {
-  width: 44px;
-  height: 48px;
-  font-size: 1.25rem;
-}
-
-.input-otp-large .input-otp-separator {
-  margin-inline: 8px;
-}
-
 .input-otp-form-field .field-description a,
 .input-otp-support a {
   color: inherit;
@@ -3720,7 +3707,7 @@ kbd {
   background: transparent;
 }
 
-.input-otp-form-footer :is(.field, [ng-field]) {
+.input-otp-form-footer .field {
   width: 100%;
 }
 
@@ -3741,14 +3728,6 @@ kbd {
   .input-otp-form-label-row {
     align-items: flex-start;
   }
-
-  .input-otp-large .input-otp-slot {
-    width: 36px;
-  }
-
-  .input-otp-large .input-otp-separator {
-    margin-inline: 2px;
-  }
 }
 
 .collapsible-order-demo {
@@ -3758,9 +3737,22 @@ kbd {
   gap: 8px;
 }
 
-.collapsible-order-header,
-.collapsible-order-demo > .collapsible-trigger {
+.collapsible-order-summary {
   display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-radius: calc(var(--radius) - 2px);
+  cursor: pointer;
+}
+
+.collapsible-order-summary:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.collapsible-order-header {
+  display: flex;
+  width: 100%;
   min-height: 32px;
   align-items: center;
   justify-content: space-between;
@@ -3768,9 +3760,7 @@ kbd {
   padding-inline: 16px;
 }
 
-.collapsible-order-header h4,
-.collapsible-order-demo h4 {
-  margin: 0;
+.collapsible-order-title {
   font-size: var(--text-sm);
   font-weight: var(--font-weight-semibold);
   line-height: 1.25rem;
@@ -3787,17 +3777,11 @@ kbd {
   border-radius: calc(var(--radius) - 2px);
   background: transparent;
   color: var(--foreground);
-  cursor: pointer;
+  cursor: inherit;
 }
 
-.collapsible-icon-button:hover {
+.collapsible-order-summary:hover .collapsible-icon-button {
   background: var(--muted);
-}
-
-.collapsible-icon-button:focus-visible {
-  border-color: var(--ring);
-  outline: 3px solid color-mix(in srgb, var(--ring) 50%, transparent);
-  outline-offset: 0;
 }
 
 .collapsible-icon-button svg {
@@ -3825,6 +3809,7 @@ kbd {
 
 .collapsible-order-status {
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
 }
@@ -3942,23 +3927,36 @@ kbd {
 
 .collapsible-settings-more {
   display: grid;
-  grid-column: 1 / -1;
-  grid-template-columns: subgrid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
 }
 
-.collapsible-settings > .collapsible-trigger {
+.collapsible-settings-disclosure {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.collapsible-settings-disclosure > .collapsible-trigger {
   width: 36px;
   height: 36px;
-  flex: 0 0 36px;
+  grid-column: 1 / -1;
+  justify-self: end;
+  padding: 0;
+  list-style: none;
+}
+
+.collapsible-settings-disclosure > .collapsible-content {
+  grid-column: 1 / -1;
 }
 
 .collapsible-minimize,
-.collapsible-settings[data-state='open'] .collapsible-maximize {
+.collapsible-settings-disclosure[open] .collapsible-maximize {
   display: none;
 }
 
-.collapsible-settings[data-state='open'] .collapsible-minimize {
+.collapsible-settings-disclosure[open] .collapsible-minimize {
   display: block;
 }
 
@@ -4028,6 +4026,12 @@ kbd {
 
 .collapsible-file-tree details[open] > summary > .tree-chevron {
   transform: rotate(90deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collapsible-product > summary svg {
+    transition: none;
+  }
 }
 
 @media (width <= 700px) {
@@ -4241,8 +4245,8 @@ kbd {
   gap: 20px;
 }
 
-.checkbox-demo :is(.field, [ng-field])[orientation='horizontal'],
-.checkbox-workflow :is(.field, [ng-field])[orientation='horizontal'] {
+.checkbox-demo .field[orientation='horizontal'],
+.checkbox-workflow .field[orientation='horizontal'] {
   gap: 8px;
 }
 
@@ -4570,11 +4574,11 @@ kbd {
   gap: 0;
 }
 
-.item-avatar-stack [ng-avatar] {
+.item-avatar-stack .avatar {
   border: 2px solid var(--background);
 }
 
-.item-avatar-stack [ng-avatar] + [ng-avatar] {
+.item-avatar-stack .avatar + .avatar {
   margin-inline-start: -8px;
 }
 
@@ -5012,7 +5016,7 @@ kbd {
   padding: 0;
 }
 
-.dropdown-avatar-demo > .dropdown-menu-trigger [ng-avatar] {
+.dropdown-avatar-demo > .dropdown-menu-trigger .avatar {
   width: 32px;
   height: 32px;
 }
@@ -5184,7 +5188,7 @@ kbd {
 
 .combobox-workflow > [ng-combobox],
 .combobox-composition > [ng-combobox],
-.combobox-rtl-composition > [ng-field] {
+.combobox-rtl-composition > .field {
   width: min(100%, 20rem);
 }
 

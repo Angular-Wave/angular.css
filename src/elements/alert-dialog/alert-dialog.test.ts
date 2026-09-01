@@ -18,7 +18,7 @@ test("element alert-dialog page runs the packaged canonical artifact", async ({
   );
   expect(sourceRequests).toEqual([]);
 
-  const root = page.locator("[ng-alert-dialog]");
+  const root = page.locator(".alert-dialog");
   const trigger = root.locator(".alert-dialog-trigger");
   const content = root.locator(".alert-dialog-content");
   await trigger.click();

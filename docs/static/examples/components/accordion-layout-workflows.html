@@ -21,47 +21,32 @@
       >
         <h2 id="accordion-borders-title">Billing questions</h2>
         <div
-          ng-accordion
-          class="accordion-bordered"
+          class="accordion accordion-bordered"
           aria-label="Billing questions"
         >
-          <div data-state="open" class="accordion-item">
-            <h3>
-              <button type="button" class="accordion-trigger">
-                How does billing work?
-              </button>
-            </h3>
+          <details class="accordion-item" name="billing" open>
+            <summary>How does billing work?</summary>
             <div class="accordion-content">
               Billing is charged at the beginning of each monthly or annual
               cycle, and you can cancel anytime.
             </div>
-          </div>
-          <div class="accordion-item">
-            <h3>
-              <button type="button" class="accordion-trigger">
-                Is my data secure?
-              </button>
-            </h3>
+          </details>
+          <details class="accordion-item" name="billing">
+            <summary>Is my data secure?</summary>
             <div class="accordion-content">
               Data is encrypted at rest and in transit using industry-standard
               protocols.
             </div>
-          </div>
-          <div class="accordion-item">
-            <h3>
-              <button type="button" class="accordion-trigger">
-                What integrations do you support?
-              </button>
-            </h3>
+          </details>
+          <details class="accordion-item" name="billing">
+            <summary>What integrations do you support?</summary>
             <div class="accordion-content">
               Connect popular tools or build custom integrations with our API.
             </div>
-          </div>
+          </details>
         </div>
       </section>
-
       <article
-
         class="accordion-card-demo card"
         aria-labelledby="accordion-card-title"
       >
@@ -74,43 +59,33 @@
           </p>
         </header>
         <section class="card-content">
-          <div ng-accordion aria-label="Subscription and billing questions">
-            <div data-state="open" class="accordion-item">
-              <h3>
-                <button type="button" class="accordion-trigger">
-                  What subscription plans do you offer?
-                </button>
-              </h3>
+          <div
+            class="accordion"
+            aria-label="Subscription and billing questions"
+          >
+            <details class="accordion-item" name="subscription" open>
+              <summary>What subscription plans do you offer?</summary>
               <div class="accordion-content">
                 Choose Starter, Professional, or Enterprise based on storage,
                 API, and support needs.
               </div>
-            </div>
-            <div class="accordion-item">
-              <h3>
-                <button type="button" class="accordion-trigger">
-                  How does billing work?
-                </button>
-              </h3>
+            </details>
+            <details class="accordion-item" name="subscription">
+              <summary>How does billing work?</summary>
               <div class="accordion-content">
                 Billing occurs automatically at the start of each cycle.
               </div>
-            </div>
-            <div class="accordion-item">
-              <h3>
-                <button type="button" class="accordion-trigger">
-                  How do I cancel my subscription?
-                </button>
-              </h3>
+            </details>
+            <details class="accordion-item" name="subscription">
+              <summary>How do I cancel my subscription?</summary>
               <div class="accordion-content">
                 Cancel from account settings with access through the current
                 billing period.
               </div>
-            </div>
+            </details>
           </div>
         </section>
       </article>
-
       <section
         class="accordion-workflow-section accordion-workflow-wide"
         dir="rtl"
@@ -118,38 +93,26 @@
         aria-labelledby="accordion-rtl-title"
       >
         <h2 id="accordion-rtl-title">الأسئلة الشائعة</h2>
-        <div ng-accordion aria-label="الأسئلة الشائعة">
-          <div data-state="open" class="accordion-item">
-            <h3>
-              <button type="button" class="accordion-trigger">
-                كيف يمكنني إعادة تعيين كلمة المرور؟
-              </button>
-            </h3>
+        <div class="accordion" aria-label="الأسئلة الشائعة">
+          <details class="accordion-item" name="arabic-faq" open>
+            <summary>كيف يمكنني إعادة تعيين كلمة المرور؟</summary>
             <div class="accordion-content">
               انقر على نسيت كلمة المرور في صفحة تسجيل الدخول، وسنرسل لك رابطًا
               لإعادة تعيينها.
             </div>
-          </div>
-          <div class="accordion-item">
-            <h3>
-              <button type="button" class="accordion-trigger">
-                هل يمكنني تغيير خطة الاشتراك الخاصة بي؟
-              </button>
-            </h3>
+          </details>
+          <details class="accordion-item" name="arabic-faq">
+            <summary>هل يمكنني تغيير خطة الاشتراك الخاصة بي؟</summary>
             <div class="accordion-content">
               يمكنك ترقية خطتك أو تخفيضها في أي وقت من إعدادات الحساب.
             </div>
-          </div>
-          <div class="accordion-item">
-            <h3>
-              <button type="button" class="accordion-trigger">
-                ما هي طرق الدفع التي تقبلونها؟
-              </button>
-            </h3>
+          </details>
+          <details class="accordion-item" name="arabic-faq">
+            <summary>ما هي طرق الدفع التي تقبلونها؟</summary>
             <div class="accordion-content">
               نقبل بطاقات الائتمان وPayPal والتحويلات المصرفية.
             </div>
-          </div>
+          </details>
         </div>
       </section>
     </main>

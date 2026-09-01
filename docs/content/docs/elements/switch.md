@@ -27,9 +27,7 @@ AngularTS `ng-model`.
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `switch` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete switch component reference]({{< relref
 "/docs/components/switch" >}}) for selectors, slots, attributes, generated

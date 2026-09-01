@@ -399,17 +399,7 @@ button.booking-mobile-menu {
 }
 
 .booking-dialog {
-  position: fixed;
-  inset: 0;
-  z-index: 80;
-}
-
-.booking-dialog[data-open="false"] {
-  pointer-events: none;
-}
-
-.booking-dialog .dialog-overlay {
-  position: fixed;
+  display: contents;
 }
 
 .booking-dialog .dialog-content {

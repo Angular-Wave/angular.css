@@ -16,17 +16,31 @@
     data-example="sheet-demo"
   >
     <main class="sheet-demo visual-example">
-      <section id="profile-sheet" ng-sheet>
-        <button variant="outline" class="sheet-trigger button">Open</button>
-        <div class="sheet-overlay"></div>
-        <dialog class="sheet-content">
+      <section id="profile-sheet" class="sheet">
+        <button
+          commandfor="profile-sheet-content"
+          command="show-modal"
+          variant="outline"
+          class="sheet-trigger button"
+        >Open</button>
+        <dialog
+          id="profile-sheet-content"
+          closedby="any"
+          aria-labelledby="profile-sheet-title"
+          aria-describedby="profile-sheet-description"
+          data-side="right"
+          class="sheet-content"
+        >
           <header class="sheet-header">
-            <h2 class="sheet-title">Edit profile</h2>
-            <p class="sheet-description">
+            <h2 id="profile-sheet-title" class="sheet-title">Edit profile</h2>
+            <p id="profile-sheet-description" class="sheet-description">
               Make changes to your profile here. Click save when you're done.
             </p>
           </header>
-          <form class="sheet-profile-form" ng-submit="savedName=profile.name">
+          <form
+            method="dialog"
+            class="sheet-profile-form"
+          >
             <div class="sheet-profile-fields sheet-body">
               <div class="sheet-profile-field">
                 <label for="sheet-demo-name" class="label">Name</label>
@@ -47,17 +61,31 @@
             <footer class="sheet-footer">
               <button
 
-                type="submit"
-                data-sheet-close
+                type="button"
+                commandfor="profile-sheet-content"
+                command="close"
                 ng-click="savedName=profile.name" class="button">
                 Save changes
               </button>
-              <button data-sheet-close variant="outline" class="button">
+              <button
+                type="button"
+                commandfor="profile-sheet-content"
+                command="close"
+                variant="outline"
+                class="button"
+              >
                 Close
               </button>
             </footer>
           </form>
-          <button variant="ghost" size="icon-sm" class="sheet-close button">
+          <button
+            type="button"
+            commandfor="profile-sheet-content"
+            command="close"
+            variant="ghost"
+            size="icon-sm"
+            class="sheet-close button"
+          >
             <svg
               viewBox="0 0 24 24"
               fill="none"

@@ -40,8 +40,8 @@ root.
 The directive mirrors root options, responsive state, active destinations, group
 relationships, and trigger accessibility state. AngularTS may control
 `data-state`; it continues to own filtering, shortcuts, routing, and actions.
-Compose nested disclosure with `ng-collapsible` and action menus with
-`ng-dropdown`.
+Compose nested disclosure with native `details.collapsible` and action menus
+with `ng-dropdown`.
 
 ## Example
 

@@ -10,15 +10,14 @@ test("accordion element example exercises the built functional artifact", async 
   await expect(
     page.locator('script[src="../../js/angular-css.umd.js"]'),
   ).toHaveCount(1);
-  const root = page.locator("[ng-accordion]");
-  const triggers = page.locator(`.accordion-trigger`);
-  const panels = page.locator(`.accordion-content`);
+  const root = page.locator(".accordion");
+  const items = root.locator(":scope > details");
+  const triggers = root.locator(":scope > details > summary");
 
   await expect(triggers).toHaveCount(3);
   await triggers.nth(1).click();
-  await expect(triggers.nth(0)).toHaveAttribute("aria-expanded", "false");
-  await expect(triggers.nth(1)).toHaveAttribute("aria-expanded", "true");
-  await expect(panels.nth(1)).toHaveAttribute("data-open", "true");
+  await expect(items.nth(0)).not.toHaveAttribute("open", "");
+  await expect(items.nth(1)).toHaveAttribute("open", "");
 
   const sourceRequests = await page.evaluate(() =>
     performance

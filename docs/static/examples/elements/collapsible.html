@@ -13,26 +13,23 @@
     ng-app="ui"
     ng-cloak
     class="collapsible-example-body"
-    ng-init="orderOpen=false"
     data-example="collapsible-demo"
   >
-    <section ng-collapsible class="collapsible-order-demo visual-example">
-      <div class="collapsible-order-header">
-        <h4>Order #4189</h4>
-        <button
-
-          ng-click="orderOpen=!orderOpen"
-          class="collapsible-icon-button collapsible-trigger"
-        >
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="m7 15 5 5 5-5M7 9l5-5 5 5" />
-          </svg>
+    <details class="collapsible collapsible-order-demo visual-example">
+      <summary class="collapsible-order-summary">
+        <span class="collapsible-order-header">
+          <span class="collapsible-order-title">Order #4189</span>
+          <span class="collapsible-icon-button" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="m7 15 5 5 5-5M7 9l5-5 5 5" />
+            </svg>
+          </span>
           <span class="visually-hidden">Toggle details</span>
-        </button>
-      </div>
-      <div class="collapsible-order-status">
-        <span>Status</span><strong>Shipped</strong>
-      </div>
+        </span>
+        <span class="collapsible-order-status">
+          <span>Status</span><strong>Shipped</strong>
+        </span>
+      </summary>
       <div class="collapsible-order-content collapsible-content">
         <div class="collapsible-order-panel">
           <p><strong>Shipping address</strong></p>
@@ -43,9 +40,6 @@
           <p>2x Studio Headphones</p>
         </div>
       </div>
-    </section>
-    <output class="visually-hidden" aria-live="polite">
-      Order details {{ orderOpen ? 'expanded' : 'collapsed' }}.
-    </output>
+    </details>
   </body>
 </html>

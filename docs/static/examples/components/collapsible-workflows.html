@@ -22,7 +22,7 @@
         <h2 id="collapsible-basic-heading">Basic</h2>
         <div class="collapsible-basic-card card">
           <section class="card-content">
-            <details ng-collapsible class="collapsible-product">
+            <details class="collapsible collapsible-product">
               <summary class="collapsible-trigger">
                 <span>Product details</span>
                 <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -54,16 +54,39 @@
             </p>
           </header>
           <section class="card-content">
-            <section ng-collapsible class="collapsible-settings">
+            <section class="collapsible-settings">
               <div class="collapsible-settings-fields">
                 <label class="visually-hidden" for="radius-x">Radius X</label>
                 <input id="radius-x" type="number" value="0" class="input" />
                 <label class="visually-hidden" for="radius-y">Radius Y</label>
                 <input id="radius-y" type="number" value="0" class="input" />
-                <div
-
-                  class="collapsible-settings-more collapsible-content"
-                >
+                <details class="collapsible collapsible-settings-disclosure">
+                  <summary
+                    class="collapsible-trigger button"
+                    aria-label="Toggle additional radius settings"
+                  >
+                    <svg
+                      class="collapsible-maximize"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3m8 0h3a2 2 0 0 0 2-2v-3"
+                      />
+                    </svg>
+                    <svg
+                      class="collapsible-minimize"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3m8 0v-3a2 2 0 0 1 2-2h3"
+                      />
+                    </svg>
+                  </summary>
+                  <div class="collapsible-settings-more collapsible-content">
                   <label class="visually-hidden" for="radius-bottom-x"
                     >Bottom radius X</label>
                   <input
@@ -78,36 +101,9 @@
 
                     type="number"
                     value="0" class="input" />
-                </div>
+                  </div>
+                </details>
               </div>
-              <button
-
-
-                variant="outline"
-                size="icon"
-                aria-label="Toggle additional radius settings"
-               class="collapsible-trigger button">
-                <svg
-                  class="collapsible-maximize"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3m8 0h3a2 2 0 0 0 2-2v-3"
-                  />
-                </svg>
-                <svg
-                  class="collapsible-minimize"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3m8 0v-3a2 2 0 0 1 2-2h3"
-                  />
-                </svg>
-              </button>
             </section>
           </section>
         </div>
@@ -120,16 +116,16 @@
         lang="ar"
       >
         <h2 id="collapsible-rtl-heading">من اليمين إلى اليسار</h2>
-        <section ng-collapsible class="collapsible-order-demo">
-          <div class="collapsible-order-header">
+        <details class="collapsible collapsible-order-demo">
+          <summary class="collapsible-order-header">
             <h4>الطلب #4189</h4>
-            <button class="collapsible-icon-button collapsible-trigger">
+            <span class="collapsible-icon-button" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
                 <path d="m7 15 5 5 5-5M7 9l5-5 5 5" />
               </svg>
-              <span class="visually-hidden">تبديل التفاصيل</span>
-            </button>
-          </div>
+            </span>
+            <span class="visually-hidden">تبديل التفاصيل</span>
+          </summary>
           <div class="collapsible-order-status">
             <span>الحالة</span><strong>تم الشحن</strong>
           </div>
@@ -146,7 +142,7 @@
               <p>2x سماعات الاستوديو</p>
             </div>
           </div>
-        </section>
+        </details>
       </section>
     </main>
   </body>

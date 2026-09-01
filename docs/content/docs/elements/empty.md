@@ -24,9 +24,7 @@ Empty states compose media, title, description, and action content parts.
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `empty` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete empty component reference]({{< relref
 "/docs/components/empty" >}}) for selectors, slots, attributes, generated

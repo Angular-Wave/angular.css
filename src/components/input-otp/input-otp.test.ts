@@ -1,93 +1,91 @@
 import { expect, test } from "@playwright/test";
 
-const exampleUrl = "/docs/static/examples/components/input-otp.html";
+const canonicalUrl = "/docs/static/examples/components/input-otp.html";
+const workflowsUrl =
+  "/docs/static/examples/components/input-otp-workflows.html";
 
-const clearInputs = async (page: import("@playwright/test").Page) => {
-  const inputs = page.locator(`.input-otp-slot input`);
-  for (let index = 0; index < (await inputs.count()); index += 1) {
-    await inputs.nth(index).fill("");
-  }
-  return inputs;
-};
-
-test("input otp matches the six-slot reference and advances focus", async ({
+test("input OTP uses one native autofill-compatible control", async ({
   page,
 }) => {
-  await page.goto(exampleUrl);
-  const root = page.locator("[ng-input-otp]");
-  const inputs = page.locator(`.input-otp-slot input`);
+  await page.goto(canonicalUrl);
+  const input = page.getByLabel("One-time code");
 
-  await expect(page.locator("body")).toHaveAttribute(
-    "data-example",
-    "input-otp-demo",
-  );
-  await expect(inputs).toHaveCount(6);
-  await expect(root).toHaveAttribute("data-value", "123456");
-  await expect(root).toHaveAttribute("data-complete", "true");
-  await expect(inputs.nth(0)).toHaveAttribute("autocomplete", "one-time-code");
-  await expect(inputs.nth(0)).toHaveAttribute("inputmode", "numeric");
+  await expect(input).toHaveValue("123456");
+  await expect(input).toHaveAttribute("autocomplete", "one-time-code");
+  await expect(input).toHaveAttribute("inputmode", "numeric");
+  await expect(input).toHaveAttribute("maxlength", "6");
+  await expect(page.locator(".input-otp")).toHaveCount(1);
 
-  await inputs.nth(0).fill("9");
-  await expect(inputs.nth(1)).toBeFocused();
-  await expect(root).toHaveAttribute("data-value", "923456");
+  await input.fill("923456");
   await expect(page.getByRole("status")).toContainText("Code: 923456");
 });
 
-test("input otp distributes pasted characters across the published slots", async ({
+test("input OTP relies on native paste, editing, and maxlength", async ({
   page,
 }) => {
-  await page.goto(exampleUrl);
-  const inputs = await clearInputs(page);
-  const root = page.locator("[ng-input-otp]");
+  await page.goto(canonicalUrl);
+  const input = page.getByLabel("One-time code");
 
-  await inputs.nth(0).evaluate((input) => {
-    const event = new Event("paste", {
-      bubbles: true,
-      cancelable: true,
-    }) as ClipboardEvent;
-    Object.defineProperty(event, "clipboardData", {
-      value: { getData: () => "654321" },
-    });
-    input.dispatchEvent(event);
-  });
-
-  await expect(root).toHaveAttribute("data-value", "654321");
-  await expect(root).toHaveAttribute("data-complete", "true");
-  await expect(inputs.nth(5)).toBeFocused();
+  await input.fill("");
+  await input.pressSequentially("6543219");
+  await expect(input).toHaveValue("654321");
+  await input.press("Backspace");
+  await expect(input).toHaveValue("65432");
 });
 
-test("input otp binds a slot inserted into the functional page", async ({
+test("input OTP preserves native validity and disabled state", async ({
   page,
 }) => {
-  await page.goto(exampleUrl);
-  const group = page.locator(`.input-otp-group`);
-  await group.evaluate((element) => {
-    element.insertAdjacentHTML(
-      "beforeend",
-      '<span class="input-otp-slot"><input /></span>',
-    );
-  });
+  await page.goto(workflowsUrl);
+  const pattern = page.getByLabel("Security code");
+  const disabled = page.getByLabel("Disabled code");
 
-  const inputs = page.locator(`.input-otp-slot input`);
-  await expect(inputs).toHaveCount(7);
-  await expect(inputs.nth(6)).toHaveAttribute("autocomplete", "one-time-code");
-  await expect(inputs.nth(6)).toHaveAttribute("aria-label", "Digit 7");
+  expect(
+    await pattern.evaluate((control: HTMLInputElement) =>
+      control.checkValidity(),
+    ),
+  ).toBe(false);
+  await pattern.fill("123456");
+  expect(
+    await pattern.evaluate((control: HTMLInputElement) =>
+      control.checkValidity(),
+    ),
+  ).toBe(true);
+  await expect(disabled).toBeDisabled();
+  await expect(page.getByLabel("Invalid code")).toHaveAttribute(
+    "aria-invalid",
+    "true",
+  );
 });
 
-test("input otp mirrors native required, disabled, invalid, and active state", async ({
+test("input OTP workflows keep AngularTS model and direction ownership", async ({
   page,
 }) => {
-  await page.goto(exampleUrl);
-  const root = page.locator("[ng-input-otp]");
-  const inputs = await clearInputs(page);
-  const firstSlot = page.locator(`.input-otp-slot`).first();
+  await page.goto(workflowsUrl);
+  const controlled = page.getByLabel("Verification code");
+  const rtl = page.getByLabel("رمز التحقق");
 
-  await inputs.nth(0).evaluate((input) => input.setAttribute("required", ""));
-  await expect(root).toHaveAttribute("data-invalid", "true");
-  await inputs.nth(0).focus();
-  await expect(firstSlot).toHaveAttribute("data-active", "true");
-  await inputs.nth(0).fill("1");
-  await expect(root).toHaveAttribute("data-invalid", "false");
-  await inputs.nth(1).evaluate((input) => input.setAttribute("disabled", ""));
-  await expect(root).toHaveAttribute("data-disabled", "true");
+  await controlled.fill("987654");
+  await expect(page.locator(".input-otp-message")).toContainText(
+    "Code: 987654",
+  );
+  await expect(rtl).toHaveCSS("direction", "rtl");
+  await page.getByRole("button", { name: "Change direction" }).click();
+  await expect(rtl).toHaveCSS("direction", "ltr");
+  await expect(page.getByLabel("PIN")).toHaveAttribute("maxlength", "4");
+});
+
+test("input OTP composes with a native form", async ({ page }) => {
+  await page.goto(
+    "/docs/static/examples/components/input-otp-compositions.html",
+  );
+  const input = page.getByLabel("Verification code");
+
+  await page.getByRole("button", { name: "Resend Code" }).click();
+  await expect(page.getByRole("status")).toContainText("Code resent 1 time");
+  await input.fill("123456");
+  await page.getByRole("button", { name: "Verify" }).click();
+  await expect(page.getByRole("status")).toContainText(
+    "Verification submitted",
+  );
 });

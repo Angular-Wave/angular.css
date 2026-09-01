@@ -51,11 +51,11 @@ The component reference lists the exact root selector for every entry.
 Complex components expose named parts without rendering a hidden template:
 
 ```css
-[ng-dialog] .dialog-content {
+.dialog-content {
   @apply max-w-xl;
 }
 
-[ng-dialog] .dialog-footer {
+.dialog-footer {
   @apply justify-between;
 }
 ```

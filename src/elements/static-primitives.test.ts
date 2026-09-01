@@ -60,9 +60,9 @@ test("media and layout primitives expose their packaged state", async ({
   await expect(ratio.getByRole("img", { name: "Photo" })).toBeVisible();
 
   await openElementArtifact(page, "avatar");
-  const avatars = page.locator("[ng-avatar]");
-  await expect(avatars).toHaveCount(5);
-  await expect(avatars.first()).toHaveAttribute("data-state", "loaded");
+  const avatars = page.locator(".avatar");
+  await expect(avatars).toHaveCount(6);
+  await expect(avatars.first().locator("img")).toBeVisible();
   await expect(page.locator(".avatar-group-count")).toHaveText("+3");
 
   await openElementArtifact(page, "direction");

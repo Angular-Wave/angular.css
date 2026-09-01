@@ -20,13 +20,17 @@
         aria-labelledby="field-messages-title"
       >
         <h2 id="field-messages-title">Messages</h2>
-        <fieldset ng-field id="message-field">
+        <div id="message-field" class="field">
           <label for="message-control"
              class="field-label label">Name</label>
-          <input id="message-control" class="input" />
-          <p class="field-description">Use your public display name.</p>
-          <p class="field-error">The display name is already in use.</p>
-        </fieldset>
+          <input
+            id="message-control"
+            aria-describedby="message-description message-error"
+            class="input"
+          />
+          <p id="message-description" class="field-description">Use your public display name.</p>
+          <p id="message-error" class="field-error">The display name is already in use.</p>
+        </div>
       </section>
 
       <section
@@ -34,7 +38,7 @@
         aria-labelledby="field-invalid-title"
       >
         <h2 id="field-invalid-title">Invalid state</h2>
-        <fieldset ng-field id="explicit-invalid-field">
+        <div id="explicit-invalid-field" class="field">
           <label
 
 
@@ -43,7 +47,7 @@
             Workspace
           </label>
           <input id="explicit-invalid-control" aria-invalid="true" class="input" />
-        </fieldset>
+        </div>
       </section>
 
       <section
@@ -51,7 +55,7 @@
         aria-labelledby="field-required-title"
       >
         <h2 id="field-required-title">Native validation</h2>
-        <fieldset ng-field id="required-field">
+        <div id="required-field" class="field">
           <label for="required-email"
              class="field-label label">Email</label>
           <input
@@ -60,7 +64,7 @@
             type="email"
             required
             ng-model="state.requiredEmail" class="input" />
-        </fieldset>
+        </div>
       </section>
 
       <section
@@ -68,17 +72,18 @@
         aria-labelledby="field-dynamic-title"
       >
         <h2 id="field-dynamic-title">Conditional control</h2>
-        <fieldset ng-field id="dynamic-field">
+        <div id="dynamic-field" class="field">
           <label for="dynamic-email"
              class="field-label label">Team email</label>
-          <p class="field-description">Use the address for your team.</p>
+          <p id="dynamic-email-description" class="field-description">Use the address for your team.</p>
           <input
             ng-if="state.dynamicVisible"
 
             id="dynamic-email"
             type="email"
+            aria-describedby="dynamic-email-description"
             required class="input" />
-        </fieldset>
+        </div>
         <button
 
           variant="outline"

@@ -1,13 +1,5 @@
-.alert-dialog,
-[ng-alert-dialog] {
+.alert-dialog {
   position: relative;
-}
-
-.alert-dialog-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 40;
-  background: color-mix(in srgb, black 55%, transparent);
 }
 
 .alert-dialog-content {

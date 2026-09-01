@@ -6,7 +6,8 @@
     <title>AngularCSS Bookings</title>
     <link
       rel="stylesheet"
-      href="../../../css/tailwind-preflight.css" />
+      href="../../../css/tailwind-preflight.css"
+    />
     <link rel="stylesheet" href="../../../css/angular.css" />
     <link rel="stylesheet" href="./bookings.css" />
     <script src="../../../js/angular-ts.umd.js"></script>
@@ -23,7 +24,8 @@
         <a class="booking-brand" href="./" aria-label="OrbitPass home">O</a>
         <div class="booking-rail-primary">
           <a href="#search" aria-label="Search"
-            ><span ng-icon="search"></span></a>
+            ><span ng-icon="search"></span
+          ></a>
           <a class="is-active" href="#bookings" aria-label="Bookings">
             <span ng-icon="bookings"></span><small>Bookings</small>
           </a>
@@ -38,7 +40,7 @@
           <button type="button" aria-label="Notifications">
             <span ng-icon="bell"></span><span class="notification-dot"></span>
           </button>
-          <span ng-avatar data-size="sm">
+          <span data-size="sm" class="avatar">
             <span class="avatar-fallback">EE</span>
             <span aria-label="Online" class="avatar-badge"></span>
           </span>
@@ -56,10 +58,11 @@
           <header class="booking-sidebar-header sidebar-header">
             <strong>Bookings</strong>
             <button
-
               size="icon-sm"
               variant="ghost"
-              aria-label="Add booking" class="button">
+              aria-label="Add booking"
+              class="button"
+            >
               <span ng-icon="plus"></span>
             </button>
           </header>
@@ -108,7 +111,6 @@
           <div class="booking-title-row">
             <button
               class="booking-mobile-menu button"
-
               size="icon-sm"
               variant="outline"
               data-sidebar-target="booking-sidebar"
@@ -121,17 +123,16 @@
               <h1>Upcoming</h1>
             </div>
           </div>
-          <div ng-input-group class="booking-search input-group">
+          <div class="booking-search input-group">
             <span ng-icon="search" class="input-group-addon"></span>
             <input
-
-
               ng-model="bookings.query"
               data-change="bookings.updateVisible()"
               type="search"
               aria-label="Search bookings"
               placeholder="Search bookings"
-             class="input-group-control input" />
+              class="input-group-control input"
+            />
             <span data-align="inline-end" class="input-group-addon">
               <kbd>/</kbd>
             </span>
@@ -140,33 +141,26 @@
 
         <div class="booking-filterbar">
           <section ng-tabs>
-            <div
-
-              variant="line"
-              aria-label="Booking status"
-             class="tabs-list">
-              <button
-
-                ng-click="bookings.setStatus('All')"
-               class="tabs-trigger">
+            <div variant="line" aria-label="Booking status" class="tabs-list">
+              <button ng-click="bookings.setStatus('All')" class="tabs-trigger">
                 All
               </button>
               <button
-
                 ng-click="bookings.setStatus('Confirmed')"
-               class="tabs-trigger">
+                class="tabs-trigger"
+              >
                 Confirmed
               </button>
               <button
-
                 ng-click="bookings.setStatus('Pending')"
-               class="tabs-trigger">
+                class="tabs-trigger"
+              >
                 Pending
               </button>
               <button
-
                 ng-click="bookings.setStatus('Change Requested')"
-               class="tabs-trigger">
+                class="tabs-trigger"
+              >
                 Change requested
               </button>
             </div>
@@ -180,98 +174,107 @@
           </span>
         </div>
 
-        <section ng-scroll-area class="booking-scroll">
-          <div class="scroll-area-viewport">
-            <div class="booking-list" aria-live="polite">
-              <article
-                class="booking-row"
-                ng-repeat="booking in bookings.bookings"
-                ng-show="booking.visible"
+        <section
+          class="booking-scroll scroll-area"
+          tabindex="0"
+          aria-label="Bookings"
+        >
+          <div class="booking-list" aria-live="polite">
+            <article
+              class="booking-row"
+              ng-repeat="booking in bookings.bookings"
+              ng-show="booking.visible"
+            >
+              <button
+                class="booking-row-trigger"
+                type="button"
+                aria-controls="booking-detail-dialog-content"
+                commandfor="booking-detail-dialog-content"
+                command="show-modal"
+                ng-click="bookings.select(booking)"
               >
-                <button
-                  class="booking-row-trigger"
-                  type="button"
-                  aria-controls="booking-detail-dialog"
-                  ng-click="bookings.select(booking)"
-                >
-                  <span class="booking-summary">
-                    <span
-                      class="booking-reference"
-                      ng-bind="booking.reference"
-                    ></span>
-                    <span
-                      ><span ng-icon="ticket"></span><span ng-bind="booking.service"></span></span>
-                    <span
-                      ><span ng-icon="rocket"></span><span ng-bind="booking.vessel"></span></span>
-                    <span
+                <span class="booking-summary">
+                  <span
+                    class="booking-reference"
+                    ng-bind="booking.reference"
+                  ></span>
+                  <span
+                    ><span ng-icon="ticket"></span
+                    ><span ng-bind="booking.service"></span
+                  ></span>
+                  <span
+                    ><span ng-icon="rocket"></span
+                    ><span ng-bind="booking.vessel"></span
+                  ></span>
+                  <span
+                    variant="secondary"
+                    ng-class="bookings.statusClass(booking.status)"
+                    ng-bind="booking.status"
+                    class="badge"
+                  ></span>
+                </span>
 
-                      variant="secondary"
-                      ng-class="bookings.statusClass(booking.status)"
-                      ng-bind="booking.status" class="badge"></span>
+                <span class="booking-route">
+                  <span class="booking-place">
+                    <strong ng-bind="booking.origin"></strong>
+                    <span ng-bind="booking.departure"></span>
                   </span>
-
-                  <span class="booking-route">
-                    <span class="booking-place">
-                      <strong ng-bind="booking.origin"></strong>
-                      <span ng-bind="booking.departure"></span>
-                    </span>
-                    <span class="booking-journey" aria-hidden="true">
-                      <span class="booking-route-line"></span>
-                      <span ng-icon="plane"></span>
-                      <small ng-bind="booking.duration"></small>
-                    </span>
-                    <span class="booking-place booking-destination">
-                      <strong ng-bind="booking.destination"></strong>
-                      <span ng-bind="booking.arrival"></span>
-                    </span>
+                  <span class="booking-journey" aria-hidden="true">
+                    <span class="booking-route-line"></span>
+                    <span ng-icon="plane"></span>
+                    <small ng-bind="booking.duration"></small>
                   </span>
-
-                  <span class="booking-meta">
-                    <span
-                      ><span ng-icon="customer"></span><span ng-bind="booking.customer"></span></span>
-                    <span
-                      ><span ng-icon="ticket"></span><span ng-bind="booking.customerId"></span></span>
-                    <span
-                      ><span ng-icon="home"></span><span ng-bind="booking.cabin"></span></span>
-                    <span
-                      ><span ng-icon="luggage"></span><span ng-bind="booking.luggage"></span></span>
-                    <span
-                      ><span ng-icon="luggage"></span><span ng-bind="booking.allowance"></span></span>
+                  <span class="booking-place booking-destination">
+                    <strong ng-bind="booking.destination"></strong>
+                    <span ng-bind="booking.arrival"></span>
                   </span>
-                </button>
-              </article>
+                </span>
 
-              <section ng-show="bookings.empty" class="booking-empty empty">
-                <div class="empty-media">
-                  <span ng-icon="search"></span>
-                </div>
-                <h2 class="empty-title">No bookings found</h2>
-                <p class="empty-description">
-                  Try a different search or status.
-                </p>
-              </section>
-            </div>
-          </div>
-          <div data-orientation="vertical" class="scroll-area-scrollbar">
-            <div class="scroll-area-thumb"></div>
+                <span class="booking-meta">
+                  <span
+                    ><span ng-icon="customer"></span
+                    ><span ng-bind="booking.customer"></span
+                  ></span>
+                  <span
+                    ><span ng-icon="ticket"></span
+                    ><span ng-bind="booking.customerId"></span
+                  ></span>
+                  <span
+                    ><span ng-icon="home"></span
+                    ><span ng-bind="booking.cabin"></span
+                  ></span>
+                  <span
+                    ><span ng-icon="luggage"></span
+                    ><span ng-bind="booking.luggage"></span
+                  ></span>
+                  <span
+                    ><span ng-icon="luggage"></span
+                    ><span ng-bind="booking.allowance"></span
+                  ></span>
+                </span>
+              </button>
+            </article>
+
+            <section ng-show="bookings.empty" class="booking-empty empty">
+              <div class="empty-media">
+                <span ng-icon="search"></span>
+              </div>
+              <h2 class="empty-title">No bookings found</h2>
+              <p class="empty-description">Try a different search or status.</p>
+            </section>
           </div>
         </section>
       </main>
     </div>
 
-    <section
-      id="booking-detail-dialog"
-      class="booking-dialog"
-      ng-dialog
-      data-open="false"
-    >
-      <div class="dialog-overlay"></div>
+    <section id="booking-detail-dialog" class="booking-dialog dialog">
       <dialog
-
-
-        aria-modal="true"
+        id="booking-detail-dialog-content"
+        closedby="any"
         aria-labelledby="booking-dialog-title"
-       class="dialog-content">
+        aria-describedby="booking-dialog-description"
+        class="dialog-content"
+      >
         <header class="dialog-header">
           <span
             class="booking-dialog-reference"
@@ -280,7 +283,7 @@
           <h2 id="booking-dialog-title" class="dialog-title">
             Booking details
           </h2>
-          <p class="dialog-description">
+          <p id="booking-dialog-description" class="dialog-description">
             <span ng-bind="bookings.selected.customer"></span> traveling from
             <span ng-bind="bookings.selected.origin"></span> to
             <span ng-bind="bookings.selected.destination"></span>.
@@ -309,7 +312,14 @@
           </div>
         </dl>
         <footer class="dialog-footer">
-          <button variant="outline" data-dialog-close class="button">Close</button>
+          <button
+            commandfor="booking-detail-dialog-content"
+            command="close"
+            variant="outline"
+            class="button"
+          >
+            Close
+          </button>
           <button class="button">Open booking</button>
         </footer>
       </dialog>

@@ -65,15 +65,18 @@ const assertGeometry = async (
   }
 
   if (component === "accordion") {
-    const root = await page.locator("[ng-accordion]").boundingBox();
-    const triggers = page.locator(".accordion-trigger");
+    const root = await page.locator(".accordion").boundingBox();
+    const triggers = page.locator(".accordion > details > summary");
     const viewportWidth = await page.evaluate(
       () => document.documentElement.clientWidth,
     );
     expect(root).not.toBeNull();
     expect(root!.width).toBeCloseTo(Math.min(512, viewportWidth - 48), 0);
     await expect(triggers).toHaveCount(3);
-    await expect(triggers.first()).toHaveAttribute("aria-expanded", "true");
+    await expect(page.locator(".accordion > details").first()).toHaveAttribute(
+      "open",
+      "",
+    );
     return;
   }
 
@@ -180,15 +183,13 @@ const assertGeometry = async (
   }
 
   if (component === "avatar") {
-    const avatars = await page
-      .locator(":is(.avatar, [ng-avatar])")
-      .evaluateAll((items) =>
-        items.map((item) => {
-          const box = item.getBoundingClientRect();
-          return { height: box.height, width: box.width };
-        }),
-      );
-    expect(avatars).toHaveLength(5);
+    const avatars = await page.locator(".avatar").evaluateAll((items) =>
+      items.map((item) => {
+        const box = item.getBoundingClientRect();
+        return { height: box.height, width: box.width };
+      }),
+    );
+    expect(avatars).toHaveLength(6);
     expect(avatars).toEqual(avatars.map(() => ({ height: 32, width: 32 })));
     await expect(page.locator(".avatar-badge")).toHaveCSS("width", "10px");
     return;
@@ -302,13 +303,14 @@ const assertGeometry = async (
   if (component === "collapsible") {
     const viewportWidth = await page.evaluate(() => innerWidth);
     const root = page.locator(".collapsible-order-demo");
-    const trigger = page.getByRole("button", { name: "Toggle details" });
+    const trigger = root.locator(":scope > summary");
+    const icon = trigger.locator(".collapsible-icon-button");
     const rootBox = await root.boundingBox();
-    const triggerBox = await trigger.boundingBox();
+    const iconBox = await icon.boundingBox();
     expect(rootBox).not.toBeNull();
-    expect(triggerBox).not.toBeNull();
+    expect(iconBox).not.toBeNull();
     expect(rootBox!.width).toBeCloseTo(Math.min(350, viewportWidth - 48), 0);
-    expect(triggerBox).toMatchObject({ height: 32, width: 32 });
+    expect(iconBox).toMatchObject({ height: 32, width: 32 });
     await expect(page.getByText("Status", { exact: true })).toBeVisible();
     await expect(page.locator(`.collapsible-content`)).toBeHidden();
     await expect(trigger).toHaveCSS("box-shadow", "none");
@@ -316,28 +318,13 @@ const assertGeometry = async (
   }
 
   if (component === "input-otp") {
-    const slots = page.locator(`.input-otp-slot`);
-    const group = page.locator(`.input-otp-group`);
-    await expect(slots).toHaveCount(6);
-    expect(
-      await slots.evaluateAll((items) =>
-        items.map((item) => {
-          const box = item.getBoundingClientRect();
-          return { height: box.height, width: box.width };
-        }),
-      ),
-    ).toEqual(Array(6).fill({ height: 32, width: 32 }));
-    const groupBox = await group.boundingBox();
-    expect(groupBox).not.toBeNull();
-    expect(groupBox!.width).toBeCloseTo(192, 0);
-    await slots.nth(0).locator("input").focus();
-    await expect(slots.nth(0)).toHaveAttribute("data-active", "true");
-    await expect(slots.nth(0)).not.toHaveCSS("box-shadow", "none");
-    await slots
-      .nth(0)
-      .locator("input")
-      .evaluate((input) => input.blur());
-    await expect(slots.nth(0)).toHaveAttribute("data-active", "false");
+    const input = page.locator(".input-otp");
+    const box = await input.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.height).toBeCloseTo(32, 0);
+    expect(box!.width).toBeCloseTo(192, 0);
+    await input.focus();
+    await expect(input).not.toHaveCSS("box-shadow", "none");
     return;
   }
 

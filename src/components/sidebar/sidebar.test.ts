@@ -80,7 +80,7 @@ test("canonical artifact reflects options and AngularTS controlled state", async
   await expect(sidebar.locator(".sidebar-brand-mark")).toBeVisible();
   const sidebarCenter = collapsedBox!.x + collapsedBox!.width / 2;
   const centeredItems = sidebar.locator(
-    ".sidebar-brand-mark, .sidebar-menu-button > svg, .sidebar-menu-button > [ng-avatar]",
+    ".sidebar-brand-mark, .sidebar-menu-button > svg, .sidebar-menu-button > .avatar",
   );
   const centeredItemCount = await centeredItems.count();
   expect(centeredItemCount).toBeGreaterThan(0);
@@ -153,21 +153,21 @@ test("collapsible artifact composes existing disclosure behavior", async ({
   await page.goto(collapsibleUrl);
   await expectBuiltArtifactRuntime(page);
 
-  const help = page.getByRole("button", { name: "Help" });
-  const gettingStarted = page.getByRole("button", {
-    name: "Getting Started",
-  });
-  const build = page.getByRole("button", { name: "Build Your Application" });
-  await expect(help).toHaveAttribute("aria-expanded", "true");
+  const summary = (name: string) =>
+    page.locator("summary").filter({ hasText: name });
+  const help = summary("Help");
+  const gettingStarted = summary("Getting Started");
+  const build = summary("Build Your Application");
+  await expect(help.locator("..")).toHaveAttribute("open", "");
   await expect(page.getByRole("link", { name: "Support" })).toBeVisible();
   await help.click();
-  await expect(help).toHaveAttribute("aria-expanded", "false");
+  await expect(help.locator("..")).not.toHaveAttribute("open", "");
   await expect(page.getByRole("link", { name: "Support" })).toBeHidden();
 
-  await expect(gettingStarted).toHaveAttribute("aria-expanded", "true");
-  await expect(build).toHaveAttribute("aria-expanded", "false");
+  await expect(gettingStarted.locator("..")).toHaveAttribute("open", "");
+  await expect(build.locator("..")).not.toHaveAttribute("open", "");
   await build.click();
-  await expect(build).toHaveAttribute("aria-expanded", "true");
+  await expect(build.locator("..")).toHaveAttribute("open", "");
   await expect(page.getByRole("link", { name: "Data Fetching" })).toBeVisible();
 });
 

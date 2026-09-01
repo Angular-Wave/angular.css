@@ -19,7 +19,7 @@
       <section class="radio-workflow-section" aria-label="Plan choice cards">
         <fieldset class="radio-choice-list radio-group">
           <label for="plus-plan" class="radio-choice label">
-            <fieldset ng-field orientation="horizontal">
+            <fieldset orientation="horizontal" class="field">
               <span class="field-content">
                 <span class="field-title">Plus</span>
                 <span class="field-description">
@@ -27,33 +27,33 @@
                 </span>
               </span>
               <input
-
                 id="plus-plan"
                 name="plan-type"
                 type="radio"
                 value="plus"
-                ng-model="planType"  class="radio-group-item"/>
+                ng-model="planType"
+                class="radio-group-item"
+              />
             </fieldset>
           </label>
           <label for="pro-plan" class="radio-choice label">
-            <fieldset ng-field orientation="horizontal">
+            <fieldset orientation="horizontal" class="field">
               <span class="field-content">
                 <span class="field-title">Pro</span>
-                <span class="field-description">
-                  For growing businesses.
-                </span>
+                <span class="field-description"> For growing businesses. </span>
               </span>
               <input
-
                 id="pro-plan"
                 name="plan-type"
                 type="radio"
                 value="pro"
-                ng-model="planType"  class="radio-group-item"/>
+                ng-model="planType"
+                class="radio-group-item"
+              />
             </fieldset>
           </label>
           <label for="enterprise-plan" class="radio-choice label">
-            <fieldset ng-field orientation="horizontal">
+            <fieldset orientation="horizontal" class="field">
               <span class="field-content">
                 <span class="field-title">Enterprise</span>
                 <span class="field-description">
@@ -61,12 +61,13 @@
                 </span>
               </span>
               <input
-
                 id="enterprise-plan"
                 name="plan-type"
                 type="radio"
                 value="enterprise"
-                ng-model="planType"  class="radio-group-item"/>
+                ng-model="planType"
+                class="radio-group-item"
+              />
             </fieldset>
           </label>
         </fieldset>
@@ -74,14 +75,15 @@
 
       <section class="radio-workflow-section" aria-label="Density descriptions">
         <fieldset class="radio-description-list radio-group">
-          <fieldset ng-field orientation="horizontal">
+          <fieldset orientation="horizontal" class="field">
             <input
-
               id="desc-r1"
               name="density-description"
               type="radio"
               value="default"
-              ng-model="densityDescription"  class="radio-group-item"/>
+              ng-model="densityDescription"
+              class="radio-group-item"
+            />
             <div class="field-content">
               <label for="desc-r1" class="label">Default</label>
               <p class="field-description">
@@ -89,27 +91,29 @@
               </p>
             </div>
           </fieldset>
-          <fieldset ng-field orientation="horizontal">
+          <fieldset orientation="horizontal" class="field">
             <input
-
               id="desc-r2"
               name="density-description"
               type="radio"
               value="comfortable"
-              ng-model="densityDescription"  class="radio-group-item"/>
+              ng-model="densityDescription"
+              class="radio-group-item"
+            />
             <div class="field-content">
               <label for="desc-r2" class="label">Comfortable</label>
               <p class="field-description">More space between elements.</p>
             </div>
           </fieldset>
-          <fieldset ng-field orientation="horizontal">
+          <fieldset orientation="horizontal" class="field">
             <input
-
               id="desc-r3"
               name="density-description"
               type="radio"
               value="compact"
-              ng-model="densityDescription"  class="radio-group-item"/>
+              ng-model="densityDescription"
+              class="radio-group-item"
+            />
             <div class="field-content">
               <label for="desc-r3" class="label">Compact</label>
               <p class="field-description">
@@ -122,44 +126,42 @@
 
       <section class="radio-workflow-section" aria-label="Disabled radio">
         <fieldset class="radio-simple-list radio-group">
-          <fieldset
-            ng-field
-            orientation="horizontal"
-
-            data-disabled="true"
-          >
+          <fieldset orientation="horizontal" data-disabled="true" class="field">
             <input
-
               id="disabled-1"
               name="disabled-choice"
               type="radio"
               value="option1"
               disabled
-              ng-model="disabledChoice"  class="radio-group-item"/>
+              ng-model="disabledChoice"
+              class="radio-group-item"
+            />
             <label for="disabled-1" class="radio-plain-label label">
               Disabled
             </label>
           </fieldset>
-          <fieldset ng-field orientation="horizontal">
+          <fieldset orientation="horizontal" class="field">
             <input
-
               id="disabled-2"
               name="disabled-choice"
               type="radio"
               value="option2"
-              ng-model="disabledChoice"  class="radio-group-item"/>
+              ng-model="disabledChoice"
+              class="radio-group-item"
+            />
             <label for="disabled-2" class="radio-plain-label label">
               Option 2
             </label>
           </fieldset>
-          <fieldset ng-field orientation="horizontal">
+          <fieldset orientation="horizontal" class="field">
             <input
-
               id="disabled-3"
               name="disabled-choice"
               type="radio"
               value="option3"
-              ng-model="disabledChoice"  class="radio-group-item"/>
+              ng-model="disabledChoice"
+              class="radio-group-item"
+            />
             <label for="disabled-3" class="radio-plain-label label">
               Option 3
             </label>
@@ -179,38 +181,41 @@
             Yearly and lifetime plans offer significant savings.
           </p>
           <fieldset class="radio-group">
-            <fieldset ng-field orientation="horizontal">
+            <fieldset orientation="horizontal" class="field">
               <input
-
                 id="plan-monthly"
                 name="subscription"
                 type="radio"
                 value="monthly"
-                ng-model="subscription"  class="radio-group-item"/>
+                ng-model="subscription"
+                class="radio-group-item"
+              />
               <label for="plan-monthly" class="radio-plain-label label">
                 Monthly ($9.99/month)
               </label>
             </fieldset>
-            <fieldset ng-field orientation="horizontal">
+            <fieldset orientation="horizontal" class="field">
               <input
-
                 id="plan-yearly"
                 name="subscription"
                 type="radio"
                 value="yearly"
-                ng-model="subscription"  class="radio-group-item"/>
+                ng-model="subscription"
+                class="radio-group-item"
+              />
               <label for="plan-yearly" class="radio-plain-label label">
                 Yearly ($99.99/year)
               </label>
             </fieldset>
-            <fieldset ng-field orientation="horizontal">
+            <fieldset orientation="horizontal" class="field">
               <input
-
                 id="plan-lifetime"
                 name="subscription"
                 type="radio"
                 value="lifetime"
-                ng-model="subscription"  class="radio-group-item"/>
+                ng-model="subscription"
+                class="radio-group-item"
+              />
               <label for="plan-lifetime" class="radio-plain-label label">
                 Lifetime ($299.99)
               </label>
@@ -229,55 +234,55 @@
           </p>
           <fieldset class="radio-group">
             <fieldset
-              ng-field
               orientation="horizontal"
-
               data-invalid="true"
+              class="field"
             >
               <input
-
                 id="invalid-email"
                 name="notification"
                 type="radio"
                 value="email"
                 aria-invalid="true"
-                ng-model="notification"  class="radio-group-item"/>
+                ng-model="notification"
+                class="radio-group-item"
+              />
               <label for="invalid-email" class="radio-plain-label label">
                 Email only
               </label>
             </fieldset>
             <fieldset
-              ng-field
               orientation="horizontal"
-
               data-invalid="true"
+              class="field"
             >
               <input
-
                 id="invalid-sms"
                 name="notification"
                 type="radio"
                 value="sms"
                 aria-invalid="true"
-                ng-model="notification"  class="radio-group-item"/>
+                ng-model="notification"
+                class="radio-group-item"
+              />
               <label for="invalid-sms" class="radio-plain-label label">
                 SMS only
               </label>
             </fieldset>
             <fieldset
-              ng-field
               orientation="horizontal"
-
               data-invalid="true"
+              class="field"
             >
               <input
-
                 id="invalid-both"
                 name="notification"
                 type="radio"
                 value="both"
                 aria-invalid="true"
-                ng-model="notification"  class="radio-group-item"/>
+                ng-model="notification"
+                class="radio-group-item"
+              />
               <label for="invalid-both" class="radio-plain-label label">
                 Both Email &amp; SMS
               </label>
@@ -293,15 +298,16 @@
         lang="ar"
       >
         <fieldset class="radio-description-list radio-group" dir="rtl">
-          <fieldset ng-field orientation="horizontal">
+          <fieldset orientation="horizontal" class="field">
             <input
-
               id="r1-rtl"
               name="rtl-density"
               type="radio"
               value="default"
               dir="rtl"
-              ng-model="rtlDensity"  class="radio-group-item"/>
+              ng-model="rtlDensity"
+              class="radio-group-item"
+            />
             <div class="field-content">
               <label for="r1-rtl" dir="rtl" class="label">افتراضي</label>
               <p dir="rtl" class="field-description">
@@ -309,31 +315,31 @@
               </p>
             </div>
           </fieldset>
-          <fieldset ng-field orientation="horizontal">
+          <fieldset orientation="horizontal" class="field">
             <input
-
               id="r2-rtl"
               name="rtl-density"
               type="radio"
               value="comfortable"
               dir="rtl"
-              ng-model="rtlDensity"  class="radio-group-item"/>
+              ng-model="rtlDensity"
+              class="radio-group-item"
+            />
             <div class="field-content">
               <label for="r2-rtl" dir="rtl" class="label">مريح</label>
-              <p dir="rtl" class="field-description">
-                مساحة أكبر بين العناصر.
-              </p>
+              <p dir="rtl" class="field-description">مساحة أكبر بين العناصر.</p>
             </div>
           </fieldset>
-          <fieldset ng-field orientation="horizontal">
+          <fieldset orientation="horizontal" class="field">
             <input
-
               id="r3-rtl"
               name="rtl-density"
               type="radio"
               value="compact"
               dir="rtl"
-              ng-model="rtlDensity"  class="radio-group-item"/>
+              ng-model="rtlDensity"
+              class="radio-group-item"
+            />
             <div class="field-content">
               <label for="r3-rtl" dir="rtl" class="label">مضغوط</label>
               <p dir="rtl" class="field-description">

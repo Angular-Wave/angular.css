@@ -20,9 +20,7 @@ Set `--ratio` on `figure.aspect-ratio`.
 <!-- angularcss-element-reference:start -->
 ## Canonical reference
 
-This element entrypoint re-exports the canonical `aspect-ratio` TypeScript
-implementation. It does not define separate behavior, state, accessibility, or
-CSS APIs.
+This element entrypoint exports no runtime behavior. Native HTML, CSS, and AngularTS own the complete contract.
 
 Read the [complete aspect-ratio component reference]({{< relref
 "/docs/components/aspect-ratio" >}}) for selectors, slots, attributes, generated
