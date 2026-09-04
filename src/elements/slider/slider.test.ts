@@ -9,6 +9,6 @@ test("slider element example exercises native state through the built artifact",
   await expect(slider).toHaveAttribute("ng-slider", "");
   await slider.fill("35");
   await expect(page.locator('output[for="volume"]')).toHaveText("35");
-  await expect(slider).toHaveAttribute("aria-valuenow", "35");
+  await expect(slider).toHaveValue("35");
   await expect(slider).toHaveCSS("--value", "35%");
 });

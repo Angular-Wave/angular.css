@@ -4,7 +4,7 @@
   font-size: var(--text-sm);
 }
 
-.breadcrumb-list {
+.breadcrumb > ol {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -15,46 +15,45 @@
   overflow-wrap: anywhere;
 }
 
-.breadcrumb-item {
+.breadcrumb > ol > li {
   display: inline-flex;
   align-items: center;
   gap: calc(var(--spacing) * 1.5);
 }
 
-.breadcrumb-link {
+.breadcrumb a {
   color: var(--muted-foreground);
   text-decoration: none;
   transition: color 150ms ease;
 }
 
-.breadcrumb-link:hover {
+.breadcrumb a:hover {
   color: var(--foreground);
 }
 
-.breadcrumb-page {
+.breadcrumb [aria-current="page"] {
   color: var(--foreground);
   font-weight: var(--font-weight-normal);
 }
 
-.breadcrumb-separator,
-.breadcrumb-ellipsis {
+.breadcrumb > ol > li[aria-hidden="true"] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: var(--muted-foreground);
 }
 
-.breadcrumb-separator > svg {
+.breadcrumb > ol > li[aria-hidden="true"] > svg {
   width: calc(var(--spacing) * 3.5);
   height: calc(var(--spacing) * 3.5);
 }
 
-.breadcrumb-separator:empty {
+.breadcrumb > ol > li[aria-hidden="true"]:empty {
   width: calc(var(--spacing) * 3.5);
   height: calc(var(--spacing) * 3.5);
 }
 
-:is(.breadcrumb-separator):empty::before {
+.breadcrumb > ol > li[aria-hidden="true"]:empty::before {
   content: "";
   width: calc(var(--spacing) * 1.5);
   height: calc(var(--spacing) * 1.5);
@@ -63,27 +62,22 @@
   transform: rotate(45deg);
 }
 
-.breadcrumb-ellipsis {
+.breadcrumb :is(button, li) > span[aria-hidden="true"] {
   width: calc(var(--spacing) * 5);
   height: calc(var(--spacing) * 5);
 }
 
-.breadcrumb-ellipsis > svg {
+.breadcrumb :is(button, li) > span[aria-hidden="true"] > svg {
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
 }
 
-.breadcrumb-ellipsis:empty::before {
-  content: "...";
-  line-height: 1;
-}
-
-[dir="rtl"] :is(.breadcrumb-separator):empty::before {
+[dir="rtl"] .breadcrumb > ol > li[aria-hidden="true"]:empty::before {
   transform: rotate(-135deg);
 }
 
 @media (width >= 40rem) {
-  .breadcrumb-list {
+  .breadcrumb > ol {
     gap: calc(var(--spacing) * 2.5);
   }
 }

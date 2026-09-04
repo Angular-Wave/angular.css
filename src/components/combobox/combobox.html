@@ -15,8 +15,8 @@
     ng-init="frameworks=['AngularTS', 'AngularCSS', 'Tailwind CSS']; state={ query: '', selected: 'AngularTS' }"
   >
     <div ng-combobox>
-      <label for="framework" class="label">Framework</label>
-      <div class="combobox-control">
+      <label for="framework">Framework</label>
+      <header>
         <input
           id="framework"
           ng-model="state.query"
@@ -27,34 +27,33 @@
           variant="outline"
           size="icon"
           aria-label="Open options"
-          class="combobox-trigger"
+          value="toggle"
         >
           v
         </button>
-      </div>
-      <ul aria-label="Framework options" class="combobox-content">
-        <section class="combobox-group">
-          <h3 class="combobox-group-label">Libraries</h3>
-          <li
-            ng-repeat="framework in frameworks | filter:state.query"
-            data-value="{{ framework }}"
-            ng-click="state.selected=framework; state.query=framework"
-            class="combobox-item"
-          >
-            {{ framework }}
-          </li>
-        </section>
-        <p
-          ng-if="(frameworks | filter:state.query).length === 0"
-          class="combobox-empty"
-        >
+      </header>
+      <aside aria-label="Framework options">
+        <p ng-if="(frameworks | filter:state.query).length === 0">
           No frameworks found.
         </p>
-      </ul>
+        <div>
+          <section>
+            <h3>Libraries</h3>
+            <ul>
+              <li
+                ng-repeat="framework in frameworks | filter:state.query"
+                ng-click="state.selected=framework; state.query=framework"
+              >
+                {{ framework }}
+              </li>
+            </ul>
+          </section>
+        </div>
+      </aside>
       <button
         ng-click="state.query=''; state.selected=''"
         variant="ghost"
-        class="combobox-clear"
+        value="clear"
       >
         Clear selection
       </button>

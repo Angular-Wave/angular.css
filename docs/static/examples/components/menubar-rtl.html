@@ -19,97 +19,79 @@
       <header class="workflow-heading"><h2>قائمة التطبيق</h2></header>
       <div class="menubar-rtl-stage">
         <nav ng-menubar aria-label="قائمة التطبيق">
-          <section class="menubar-menu">
-            <button type="button" class="menubar-trigger">ملف</button>
-            <menu class="menubar-content">
-              <button type="button" class="menubar-item">
-                علامة تبويب جديدة <span class="menubar-shortcut">⌘T</span>
-              </button>
-              <button type="button" class="menubar-item">
-                نافذة جديدة <span class="menubar-shortcut">⌘N</span>
-              </button>
-              <button type="button" disabled class="menubar-item">
+          <section>
+            <button type="button">ملف</button>
+            <menu>
+              <button type="button">علامة تبويب جديدة <kbd>⌘T</kbd></button>
+              <button type="button">نافذة جديدة <kbd>⌘N</kbd></button>
+              <button type="button" disabled>
                 نافذة التصفح المتخفي الجديدة
               </button>
-              <hr  class="menubar-separator"/>
-              <div class="menubar-sub">
-                <button type="button" class="menubar-sub-trigger">مشاركة</button>
-                <div class="menubar-sub-content">
-                  <button type="button" class="menubar-item">
-                    رابط البريد الإلكتروني
-                  </button>
-                  <button type="button" class="menubar-item">الرسائل</button>
-                  <button type="button" class="menubar-item">الملاحظات</button>
-                </div>
-              </div>
-              <hr  class="menubar-separator"/>
-              <button type="button" class="menubar-item">
-                طباعة... <span class="menubar-shortcut">⌘P</span>
-              </button>
+              <hr />
+              <details>
+                <summary>مشاركة</summary>
+                <menu>
+                  <button type="button">رابط البريد الإلكتروني</button>
+                  <button type="button">الرسائل</button>
+                  <button type="button">الملاحظات</button>
+                </menu>
+              </details>
+              <hr />
+              <button type="button">طباعة... <kbd>⌘P</kbd></button>
             </menu>
           </section>
 
-          <section class="menubar-menu">
-            <button type="button" class="menubar-trigger">تعديل</button>
-            <menu class="menubar-content">
-              <button type="button" class="menubar-item">تراجع</button>
-              <button type="button" class="menubar-item">إعادة</button>
-              <hr  class="menubar-separator"/>
-              <button type="button" class="menubar-item">قص</button>
-              <button type="button" class="menubar-item">نسخ</button>
-              <button type="button" class="menubar-item">لصق</button>
+          <section>
+            <button type="button">تعديل</button>
+            <menu>
+              <button type="button">تراجع</button>
+              <button type="button">إعادة</button>
+              <hr />
+              <button type="button">قص</button>
+              <button type="button">نسخ</button>
+              <button type="button">لصق</button>
             </menu>
           </section>
 
-          <section class="menubar-menu">
-            <button type="button" class="menubar-trigger">عرض</button>
-            <menu class="menubar-wide-content menubar-content">
+          <section>
+            <button type="button">عرض</button>
+            <menu class="menubar-wide-content">
               <button
                 type="button"
-
-
                 aria-checked="{{ rtlMenubar.fullUrls }}"
                 ng-click="rtlMenubar.fullUrls=!rtlMenubar.fullUrls"
-               class="menubar-checkbox-item">
+              >
                 عناوين URL الكاملة
               </button>
-              <hr  class="menubar-separator"/>
-              <button type="button" inset class="menubar-item">إعادة تحميل</button>
-              <button type="button" inset disabled class="menubar-item">
-                إعادة تحميل قسري
-              </button>
+              <hr />
+              <button type="button" inset>إعادة تحميل</button>
+              <button type="button" inset disabled>إعادة تحميل قسري</button>
             </menu>
           </section>
 
-          <section class="menubar-menu">
-            <button type="button" class="menubar-trigger">الملفات الشخصية</button>
-            <menu class="menubar-content">
-              <fieldset aria-label="الملف النشط" class="menubar-radio-group">
+          <section>
+            <button type="button">الملفات الشخصية</button>
+            <menu>
+              <fieldset aria-label="الملف النشط">
                 <button
                   type="button"
-
-
                   aria-checked="{{ rtlMenubar.profile === 'andy' }}"
                   ng-click="rtlMenubar.profile='andy'"
-                 class="menubar-radio-item">
+                >
                   Andy
                 </button>
                 <button
                   type="button"
-
-
                   aria-checked="{{ rtlMenubar.profile === 'benoit' }}"
                   ng-click="rtlMenubar.profile='benoit'"
-                 class="menubar-radio-item">
+                >
                   Benoit
                 </button>
                 <button
                   type="button"
-
-
                   aria-checked="{{ rtlMenubar.profile === 'luis' }}"
                   ng-click="rtlMenubar.profile='luis'"
-                 class="menubar-radio-item">
+                >
                   Luis
                 </button>
               </fieldset>

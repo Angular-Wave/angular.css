@@ -17,44 +17,76 @@
   >
     <main class="sheet-demo visual-example">
       <section id="rtl-profile-sheet" side="left" class="sheet">
-        <button variant="outline" class="sheet-trigger button" type="button" commandfor="rtl-profile-sheet-content" command="show-modal">فتح</button>
-        <dialog class="sheet-content" id="rtl-profile-sheet-content" closedby="any" aria-labelledby="rtl-profile-sheet-title" aria-describedby="rtl-profile-sheet-description" data-side="left">
-          <header class="sheet-header">
-            <h2 class="sheet-title" id="rtl-profile-sheet-title">تعديل الملف الشخصي</h2>
-            <p class="sheet-description" id="rtl-profile-sheet-description">
+        <button
+          variant="outline"
+          class="button"
+          type="button"
+          commandfor="rtl-profile-sheet-content"
+          command="show-modal"
+        >
+          فتح
+        </button>
+        <dialog
+          id="rtl-profile-sheet-content"
+          closedby="any"
+          aria-labelledby="rtl-profile-sheet-title"
+          aria-describedby="rtl-profile-sheet-description"
+          side="left"
+        >
+          <header>
+            <h2 id="rtl-profile-sheet-title">تعديل الملف الشخصي</h2>
+            <p id="rtl-profile-sheet-description">
               قم بإجراء تغييرات على ملفك الشخصي هنا. انقر حفظ عند الانتهاء.
             </p>
           </header>
-          <form method="dialog" class="sheet-profile-form">
-            <div class="sheet-profile-fields sheet-body">
-              <div class="sheet-profile-field">
-                <label for="sheet-rtl-name" class="label">الاسم</label>
+          <form method="dialog">
+            <section>
+              <label
+                ><span>الاسم</span>
                 <input
                   id="sheet-rtl-name"
-
                   ng-model="profile.name"
-                  autofocus class="input" />
-              </div>
-              <div class="sheet-profile-field">
-                <label for="sheet-rtl-username" class="label">اسم المستخدم</label>
+                  autofocus
+                  class="input"
+                />
+              </label>
+              <label
+                ><span>اسم المستخدم</span>
                 <input
                   id="sheet-rtl-username"
-
-                  ng-model="profile.username" class="input" />
-              </div>
-            </div>
-            <footer class="sheet-footer">
+                  ng-model="profile.username"
+                  class="input"
+                />
+              </label>
+            </section>
+            <footer>
               <button
                 type="button"
-                ng-click="savedName=profile.name" class="button" commandfor="rtl-profile-sheet-content" command="close">
+                ng-click="savedName=profile.name"
+                class="button"
+                commandfor="rtl-profile-sheet-content"
+                command="close"
+              >
                 حفظ التغييرات
               </button>
-              <button type="button" variant="outline" class="button" commandfor="rtl-profile-sheet-content" command="close">
+              <button
+                type="button"
+                variant="outline"
+                class="button"
+                commandfor="rtl-profile-sheet-content"
+                command="close"
+              >
                 إغلاق
               </button>
             </footer>
           </form>
-          <button variant="ghost" size="icon-sm" class="sheet-close button" commandfor="rtl-profile-sheet-content" command="close">
+          <button
+            variant="ghost"
+            size="icon-sm"
+            class="button"
+            commandfor="rtl-profile-sheet-content"
+            command="close"
+          >
             <svg
               viewBox="0 0 24 24"
               fill="none"

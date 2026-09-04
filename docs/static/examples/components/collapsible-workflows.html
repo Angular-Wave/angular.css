@@ -21,15 +21,15 @@
       >
         <h2 id="collapsible-basic-heading">Basic</h2>
         <div class="collapsible-basic-card card">
-          <section class="card-content">
+          <section>
             <details class="collapsible collapsible-product">
-              <summary class="collapsible-trigger">
+              <summary>
                 <span>Product details</span>
                 <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="m6 9 6 6 6-6" />
                 </svg>
               </summary>
-              <div class="collapsible-content">
+              <div>
                 <p>
                   This panel can be expanded or collapsed to reveal additional
                   content.
@@ -46,14 +46,12 @@
         aria-labelledby="collapsible-settings-heading"
       >
         <h2 id="collapsible-settings-heading">Settings</h2>
-        <div data-size="sm" class="collapsible-settings-card card">
-          <header class="card-header">
-            <h2 class="card-title">Radius</h2>
-            <p class="card-description">
-              Set the corner radius of the element.
-            </p>
+        <div size="sm" class="collapsible-settings-card card">
+          <header>
+            <h2>Radius</h2>
+            <p>Set the corner radius of the element.</p>
           </header>
-          <section class="card-content">
+          <section>
             <section class="collapsible-settings">
               <div class="collapsible-settings-fields">
                 <label class="visually-hidden" for="radius-x">Radius X</label>
@@ -62,7 +60,7 @@
                 <input id="radius-y" type="number" value="0" class="input" />
                 <details class="collapsible collapsible-settings-disclosure">
                   <summary
-                    class="collapsible-trigger button"
+                    class="button"
                     aria-label="Toggle additional radius settings"
                   >
                     <svg
@@ -86,21 +84,25 @@
                       />
                     </svg>
                   </summary>
-                  <div class="collapsible-settings-more collapsible-content">
-                  <label class="visually-hidden" for="radius-bottom-x"
-                    >Bottom radius X</label>
-                  <input
-                    id="radius-bottom-x"
-
-                    type="number"
-                    value="0" class="input" />
-                  <label class="visually-hidden" for="radius-bottom-y"
-                    >Bottom radius Y</label>
-                  <input
-                    id="radius-bottom-y"
-
-                    type="number"
-                    value="0" class="input" />
+                  <div class="collapsible-settings-more">
+                    <label class="visually-hidden" for="radius-bottom-x"
+                      >Bottom radius X</label
+                    >
+                    <input
+                      id="radius-bottom-x"
+                      type="number"
+                      value="0"
+                      class="input"
+                    />
+                    <label class="visually-hidden" for="radius-bottom-y"
+                      >Bottom radius Y</label
+                    >
+                    <input
+                      id="radius-bottom-y"
+                      type="number"
+                      value="0"
+                      class="input"
+                    />
                   </div>
                 </details>
               </div>
@@ -116,32 +118,27 @@
         lang="ar"
       >
         <h2 id="collapsible-rtl-heading">من اليمين إلى اليسار</h2>
-        <details class="collapsible collapsible-order-demo">
-          <summary class="collapsible-order-header">
-            <h4>الطلب #4189</h4>
-            <span class="collapsible-icon-button" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none">
+        <details class="collapsible">
+          <summary>
+            <header>
+              <h4>الطلب #4189</h4>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="m7 15 5 5 5-5M7 9l5-5 5 5" />
               </svg>
-            </span>
-            <span class="visually-hidden">تبديل التفاصيل</span>
+              <span class="visually-hidden">تبديل التفاصيل</span>
+            </header>
+            <p><span>الحالة</span><strong>تم الشحن</strong></p>
           </summary>
-          <div class="collapsible-order-status">
-            <span>الحالة</span><strong>تم الشحن</strong>
-          </div>
-          <div
-
-            class="collapsible-order-content collapsible-content"
-          >
-            <div class="collapsible-order-panel">
+          <section>
+            <article>
               <p><strong>عنوان الشحن</strong></p>
               <p>100 Market St, San Francisco</p>
-            </div>
-            <div class="collapsible-order-panel">
+            </article>
+            <article>
               <p><strong>العناصر</strong></p>
               <p>2x سماعات الاستوديو</p>
-            </div>
-          </div>
+            </article>
+          </section>
         </details>
       </section>
     </main>

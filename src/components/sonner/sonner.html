@@ -29,20 +29,20 @@
     </main>
 
     <div ng-toaster position="bottom-right" aria-label="Notifications">
-      <li ng-if="canonical.visible" animate class="toast">
-        <section class="toast-content">
-          <h3 class="toast-title">Event has been created</h3>
-          <p class="toast-description">Sunday, December 03, 2023 at 9:00 AM</p>
+      <article ng-if="canonical.visible" animate>
+        <section>
+          <h3>Event has been created</h3>
+          <p>Sunday, December 03, 2023 at 9:00 AM</p>
         </section>
         <button
           variant="outline"
           size="sm"
           ng-click="canonical.visible = false; canonical.status = 'Undo selected'"
-          class="button toast-action"
+          class="button"
         >
           Undo
         </button>
-      </li>
+      </article>
     </div>
   </body>
 </html>

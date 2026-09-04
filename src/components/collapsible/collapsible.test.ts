@@ -12,7 +12,7 @@ test("canonical collapsible is a native details disclosure", async ({
   await page.goto(canonicalUrl);
   const root = page.locator("details.collapsible");
   const trigger = root.locator(":scope > summary");
-  const content = root.locator(":scope > .collapsible-content");
+  const content = root.locator(":scope > :last-child");
 
   await expect(page.locator("body")).toHaveAttribute(
     "data-example",
@@ -40,7 +40,7 @@ test("collapsible motion is CSS-only and respects reduced motion", async ({
   await animatedPage.goto(canonicalUrl);
   const root = animatedPage.locator("details.collapsible");
   const trigger = root.locator(":scope > summary");
-  const icon = trigger.locator(".collapsible-icon-button");
+  const icon = trigger.locator("svg").first();
   const triggerBox = await trigger.boundingBox();
   if (!triggerBox) throw new Error("Collapsible trigger is not rendered");
 
@@ -62,7 +62,7 @@ test("collapsible motion is CSS-only and respects reduced motion", async ({
   const reducedPage = await browser.newPage({ reducedMotion: "reduce" });
   await reducedPage.goto(canonicalUrl);
   const reducedRoot = reducedPage.locator("details.collapsible");
-  await expect(reducedRoot.locator(".collapsible-icon-button")).toHaveCSS(
+  await expect(reducedRoot.locator("summary svg").first()).toHaveCSS(
     "transition-duration",
     "0s",
   );
@@ -86,7 +86,7 @@ test("collapsible workflows use native details for basic, settings, and RTL", as
   await expect(product).not.toHaveAttribute("open", "");
   await product.locator("summary").press("Enter");
   await expect(product).toHaveAttribute("open", "");
-  await expect(product.locator(".collapsible-content")).toBeVisible();
+  await expect(product.locator(":scope > :last-child")).toBeVisible();
 
   await expect(settings.locator("input")).toHaveCount(4);
   await expect(settings.locator("input:visible")).toHaveCount(2);
@@ -98,7 +98,7 @@ test("collapsible workflows use native details for basic, settings, and RTL", as
   await expect(rtl).toHaveAttribute("dir", "rtl");
   await rtl.locator("summary").click();
   await expect(rtl.locator("details")).toHaveAttribute("open", "");
-  await expect(rtl.locator(".collapsible-content")).toBeVisible();
+  await expect(rtl.locator("details > :last-child")).toBeVisible();
 });
 
 test("collapsible file tree expands nested folders without hiding sibling files", async ({

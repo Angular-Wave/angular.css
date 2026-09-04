@@ -16,85 +16,42 @@
     data-example="dropdown-menu-complex dropdown-menu-demo"
     class="dropdown-example-body"
   >
-    <div
-      ng-dropdown
-
-      class="dropdown-demo visual-example dropdown-menu"
-    >
-      <button type="button" class="dropdown-menu-trigger">Options</button>
-      <menu class="dropdown-menu-content">
-        <div class="dropdown-menu-group">
-          <div class="dropdown-menu-label">Project</div>
-          <button class="dropdown-menu-item">
-            New task <span class="dropdown-menu-shortcut">Ctrl+N</span>
-          </button>
-          <button class="dropdown-menu-item">Edit task</button>
-        </div>
-        <hr class="dropdown-menu-separator" />
+    <div ng-dropdown class="dropdown-demo visual-example dropdown-menu">
+      <button type="button">Options</button>
+      <menu>
+        <section>
+          <h3>Project</h3>
+          <button>New task <kbd>Ctrl+N</kbd></button>
+          <button>Edit task</button>
+        </section>
+        <hr />
         <button
-
-
           aria-checked="{{ menuState.toolbar }}"
           ng-click="menuState.toolbar=!menuState.toolbar"
-         class="dropdown-menu-checkbox-item">
-          <span class="dropdown-menu-checkbox-item-indicator">
-            <svg
-              ng-if="menuState.toolbar"
-              viewBox="0 0 16 16"
-              aria-hidden="true"
-            >
-              <path d="m3 8 3 3 7-7"></path>
-            </svg>
-          </span>
+        >
           Show toolbar
         </button>
-        <fieldset
-
-
-          aria-label="Density"
-         class="dropdown-menu-radio-group">
+        <fieldset aria-label="Density">
           <button
-
-
             aria-checked="{{ menuState.density === 'comfortable' }}"
             ng-click="menuState.density='comfortable'"
-           class="dropdown-menu-radio-item">
-            <span class="dropdown-menu-radio-item-indicator">
-              <svg
-                ng-if="menuState.density === 'comfortable'"
-                viewBox="0 0 16 16"
-                aria-hidden="true"
-              >
-                <circle cx="8" cy="8" r="3"></circle>
-              </svg>
-            </span>
+          >
             Comfortable
           </button>
           <button
-
-
             aria-checked="{{ menuState.density === 'compact' }}"
             ng-click="menuState.density='compact'"
-           class="dropdown-menu-radio-item">
-            <span class="dropdown-menu-radio-item-indicator">
-              <svg
-                ng-if="menuState.density === 'compact'"
-                viewBox="0 0 16 16"
-                aria-hidden="true"
-              >
-                <circle cx="8" cy="8" r="3"></circle>
-              </svg>
-            </span>
+          >
             Compact
           </button>
         </fieldset>
-        <div class="dropdown-menu-sub">
-          <button class="dropdown-menu-sub-trigger">Share</button>
-          <div class="dropdown-menu-sub-content">
-            <button class="dropdown-menu-item">Copy link</button>
-            <button class="dropdown-menu-item">Email link</button>
-          </div>
-        </div>
+        <details>
+          <summary>Share</summary>
+          <menu>
+            <button>Copy link</button>
+            <button>Email link</button>
+          </menu>
+        </details>
       </menu>
     </div>
   </body>

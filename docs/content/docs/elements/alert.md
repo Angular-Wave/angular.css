@@ -6,7 +6,8 @@ description: >
 ---
 
 Use `section.alert` for static status messages. The first heading is the title,
-the following paragraph is the description, and an optional SVG may provide an icon.
+the following paragraph is the description, and an optional SVG may provide an
+icon.
 
 ```html
 <section class="alert">

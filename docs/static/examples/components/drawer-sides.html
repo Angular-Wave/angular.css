@@ -17,82 +17,175 @@
   >
     <main class="drawer-sides-demo visual-example">
       <section side="top" class="drawer">
-        <button variant="outline" class="drawer-trigger button" type="button" commandfor="drawer-native-627-content" command="show-modal">Top</button>
-        <dialog data-size="half" class="drawer-content" id="drawer-native-627-content" closedby="any" aria-labelledby="drawer-native-627-title" aria-describedby="drawer-native-627-description" data-side="top">
-          <header class="drawer-header">
-            <h2 class="drawer-title" id="drawer-native-627-title">Top drawer</h2>
-            <p class="drawer-description" id="drawer-native-627-description">Review activity from the top edge.</p>
+        <button
+          variant="outline"
+          class="button"
+          type="button"
+          commandfor="drawer-native-627-content"
+          command="show-modal"
+        >
+          Top
+        </button>
+        <dialog
+          size="half"
+          id="drawer-native-627-content"
+          closedby="any"
+          aria-labelledby="drawer-native-627-title"
+          aria-describedby="drawer-native-627-description"
+          side="top"
+        >
+          <header>
+            <h2 id="drawer-native-627-title">Top drawer</h2>
+            <p id="drawer-native-627-description">
+              Review activity from the top edge.
+            </p>
           </header>
-          <div class="drawer-side-copy drawer-body">
+          <section class="drawer-side-copy">
             <p ng-repeat="item in paragraphs">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris.
             </p>
-          </div>
-          <footer class="drawer-footer">
-            <button variant="outline" class="drawer-close button" commandfor="drawer-native-627-content" command="close">Cancel</button>
+          </section>
+          <footer>
+            <button
+              variant="outline"
+              class="button"
+              commandfor="drawer-native-627-content"
+              command="close"
+            >
+              Cancel
+            </button>
           </footer>
         </dialog>
       </section>
 
       <section side="right" class="drawer">
-        <button variant="outline" class="drawer-trigger button" type="button" commandfor="drawer-native-1891-content" command="show-modal">Right</button>
-        <dialog class="drawer-content" id="drawer-native-1891-content" closedby="any" aria-labelledby="drawer-native-1891-title" aria-describedby="drawer-native-1891-description" data-side="right">
-          <header class="drawer-header">
-            <h2 class="drawer-title" id="drawer-native-1891-title">Right drawer</h2>
-            <p class="drawer-description" id="drawer-native-1891-description">Review activity from the right edge.</p>
+        <button
+          variant="outline"
+          class="button"
+          type="button"
+          commandfor="drawer-native-1891-content"
+          command="show-modal"
+        >
+          Right
+        </button>
+        <dialog
+          id="drawer-native-1891-content"
+          closedby="any"
+          aria-labelledby="drawer-native-1891-title"
+          aria-describedby="drawer-native-1891-description"
+          side="right"
+        >
+          <header>
+            <h2 id="drawer-native-1891-title">Right drawer</h2>
+            <p id="drawer-native-1891-description">
+              Review activity from the right edge.
+            </p>
           </header>
-          <div class="drawer-side-copy drawer-body">
+          <section class="drawer-side-copy">
             <p ng-repeat="item in paragraphs">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris.
             </p>
-          </div>
-          <footer class="drawer-footer">
-            <button variant="outline" class="drawer-close button" commandfor="drawer-native-1891-content" command="close">Cancel</button>
+          </section>
+          <footer>
+            <button
+              variant="outline"
+              class="button"
+              commandfor="drawer-native-1891-content"
+              command="close"
+            >
+              Cancel
+            </button>
           </footer>
         </dialog>
       </section>
 
       <section side="bottom" class="drawer">
-        <button variant="outline" class="drawer-trigger button" type="button" commandfor="drawer-native-3155-content" command="show-modal">Bottom</button>
-        <dialog data-size="half" class="drawer-content" id="drawer-native-3155-content" closedby="any" aria-labelledby="drawer-native-3155-title" aria-describedby="drawer-native-3155-description" data-side="bottom">
-          <div class="drawer-handle"></div>
-          <header class="drawer-header">
-            <h2 class="drawer-title" id="drawer-native-3155-title">Bottom drawer</h2>
-            <p class="drawer-description" id="drawer-native-3155-description">Review activity from the bottom edge.</p>
+        <button
+          variant="outline"
+          class="button"
+          type="button"
+          commandfor="drawer-native-3155-content"
+          command="show-modal"
+        >
+          Bottom
+        </button>
+        <dialog
+          size="half"
+          id="drawer-native-3155-content"
+          closedby="any"
+          aria-labelledby="drawer-native-3155-title"
+          aria-describedby="drawer-native-3155-description"
+          side="bottom"
+        >
+          <header>
+            <h2 id="drawer-native-3155-title">Bottom drawer</h2>
+            <p id="drawer-native-3155-description">
+              Review activity from the bottom edge.
+            </p>
           </header>
-          <div class="drawer-side-copy drawer-body">
+          <section class="drawer-side-copy">
             <p ng-repeat="item in paragraphs">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris.
             </p>
-          </div>
-          <footer class="drawer-footer">
-            <button variant="outline" class="drawer-close button" commandfor="drawer-native-3155-content" command="close">Cancel</button>
+          </section>
+          <footer>
+            <button
+              variant="outline"
+              class="button"
+              commandfor="drawer-native-3155-content"
+              command="close"
+            >
+              Cancel
+            </button>
           </footer>
         </dialog>
       </section>
 
       <section side="left" class="drawer">
-        <button variant="outline" class="drawer-trigger button" type="button" commandfor="drawer-native-4485-content" command="show-modal">Left</button>
-        <dialog class="drawer-content" id="drawer-native-4485-content" closedby="any" aria-labelledby="drawer-native-4485-title" aria-describedby="drawer-native-4485-description" data-side="left">
-          <header class="drawer-header">
-            <h2 class="drawer-title" id="drawer-native-4485-title">Left drawer</h2>
-            <p class="drawer-description" id="drawer-native-4485-description">Review activity from the left edge.</p>
+        <button
+          variant="outline"
+          class="button"
+          type="button"
+          commandfor="drawer-native-4485-content"
+          command="show-modal"
+        >
+          Left
+        </button>
+        <dialog
+          id="drawer-native-4485-content"
+          closedby="any"
+          aria-labelledby="drawer-native-4485-title"
+          aria-describedby="drawer-native-4485-description"
+          side="left"
+        >
+          <header>
+            <h2 id="drawer-native-4485-title">Left drawer</h2>
+            <p id="drawer-native-4485-description">
+              Review activity from the left edge.
+            </p>
           </header>
-          <div class="drawer-side-copy drawer-body">
+          <section class="drawer-side-copy">
             <p ng-repeat="item in paragraphs">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris.
             </p>
-          </div>
-          <footer class="drawer-footer">
-            <button variant="outline" class="drawer-close button" commandfor="drawer-native-4485-content" command="close">Cancel</button>
+          </section>
+          <footer>
+            <button
+              variant="outline"
+              class="button"
+              commandfor="drawer-native-4485-content"
+              command="close"
+            >
+              Cancel
+            </button>
           </footer>
         </dialog>
       </section>

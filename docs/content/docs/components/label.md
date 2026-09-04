@@ -5,10 +5,10 @@ description: >
   Label helper that mirrors required/disabled state from its associated control.
 ---
 
-Use a native `label` with `class="label"` and connect it with `for`.
+Use a native `label` and connect it with `for`.
 
 ```html
-<label for="email" class="label">Email</label> <input id="email" required class="input" />
+<label for="email">Email</label> <input id="email" required class="input" />
 ```
 
 ## Example

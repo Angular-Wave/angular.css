@@ -17,30 +17,14 @@
   >
     <main class="native-select-rtl-workflow">
       <div class="native-select-field" dir="rtl">
-        <label for="rtl-native-status" class="label">الحالة</label>
-        <div class="native-select-wrapper">
-          <select
-
-            id="rtl-native-status"
-            dir="rtl"
-            ng-model="rtlNativeStatus" class="native-select">
-            <option value="">اختر الحالة</option>
-            <option value="todo">مهام</option>
-            <option value="in-progress">قيد التنفيذ</option>
-            <option value="done">منجز</option>
-            <option value="cancelled">ملغي</option>
-          </select>
-          <svg
-
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-           class="native-select-icon">
-            <path d="m6 9 6 6 6-6"></path>
-          </svg>
-        </div>
+        <label for="rtl-native-status">الحالة</label>
+        <select id="rtl-native-status" dir="rtl" ng-model="rtlNativeStatus">
+          <option value="">اختر الحالة</option>
+          <option value="todo">مهام</option>
+          <option value="in-progress">قيد التنفيذ</option>
+          <option value="done">منجز</option>
+          <option value="cancelled">ملغي</option>
+        </select>
         <p class="native-select-output">
           القيمة:
           <span ng-if="!rtlNativeStatus">لا شيء</span>

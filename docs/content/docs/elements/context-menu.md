@@ -10,9 +10,9 @@ separator, and shortcut parts.
 
 ```html
 <div class="context-menu">
-  <div class="context-menu-trigger">Right click</div>
-  <menu class="context-menu-content">
-    <button class="context-menu-item">Reload</button>
+  <div>Right click</div>
+  <menu>
+    <button>Reload</button>
   </menu>
 </div>
 ```

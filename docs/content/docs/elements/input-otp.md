@@ -2,19 +2,20 @@
 title: input-otp
 notoc: true
 description: >
-  One-time password input parts
+  Native one-time password input
 ---
 
-Group OTP parts with `class="input-otp-group"` and mark the active part with
-`data-active="true"`.
+Use one native input. The browser owns editing, paste, autofill, validation, and
+focus while AngularTS `ng-model` owns application state.
 
 ```html
-<div class="input-otp">
-  <div class="input-otp-group">
-    <div class="input-otp-part">1</div>
-    <div data-active="true" class="input-otp-part">2</div>
-  </div>
-</div>
+<input
+  class="input-otp"
+  inputmode="numeric"
+  autocomplete="one-time-code"
+  maxlength="6"
+  aria-label="Verification code"
+/>
 ```
 
 ## Example

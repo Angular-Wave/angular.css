@@ -181,11 +181,11 @@ const behaviorByComponent: Record<string, string> = {
   dialog:
     "A native `dialog` opened with `command=show-modal` owns top-layer rendering, modal focus, Escape, background isolation, and trigger focus restoration. Declarative `command=close` controls dismiss it. AngularTS remains responsible for form models, validation, submission, authored content, and application state.",
   drawer:
-    "A native `dialog` owns modal disclosure, focus, Escape, background isolation, and restoration. Authored `data-side` selects CSS edge placement. AngularTS remains responsible for form models, goal values, validation, submission, responsive application composition, and authored content.",
+    "A native `dialog` owns modal disclosure, focus, Escape, background isolation, and restoration. The concise authored `side` attribute selects CSS edge placement. AngularTS remains responsible for form models, goal values, validation, submission, responsive application composition, and authored content.",
   collapsible:
     "Native `details` and `summary` own disclosure, focus, and keyboard behavior. Use `open` for initial state and AngularTS only when application state must observe or control the native element. AngularCSS registers no collapsible directive.",
   "hover-card":
-    "The directive owns delayed pointer and focus disclosure, physical side placement, Escape closure, and synchronized open state. It is non-modal and does not trap focus. Applications own preview content and may control the authored `data-open` attribute.",
+    "The directive owns delayed pointer and focus disclosure, physical side placement, Escape closure, and synchronized open state. It is non-modal and does not trap focus. Applications own preview content and may control the concise authored `open` attribute.",
   input:
     "Input is a styling-only native control selected by `.input`. AngularTS and the browser own value, events, model synchronization, validation, disabled and required state, and form submission. AngularCSS registers no input directive.",
   "input-otp":
@@ -209,7 +209,7 @@ const behaviorByComponent: Record<string, string> = {
   select:
     "The native `select` owns values, option groups, keyboard interaction, disabled state, validation, and form submission. AngularTS supplies option registration, `ng-model`, validators, and form-state classes. AngularCSS registers no select directive.",
   sheet:
-    "A native `dialog` owns modal disclosure, focus, Escape, background isolation, and restoration. Authored `data-side` selects CSS edge placement. AngularTS remains responsible for form values, validation, submission, language, and authored content.",
+    "A native `dialog` owns modal disclosure, focus, Escape, background isolation, and restoration. The concise authored `side` attribute selects CSS edge placement. AngularTS remains responsible for form values, validation, submission, language, and authored content.",
   sidebar:
     "The directive reflects authored side, variant, collapsible, direction, responsive, active-item, group, and trigger state. It owns only sidebar collapse and accessibility synchronization; `collapsible=none` stays expanded, off-canvas collapse hides the landmark, and icon collapse keeps visible controls accessible. AngularTS remains responsible for controlled open state, shortcuts, filtering, routing, application actions, and structural rendering. Compose nested disclosure with the existing Collapsible primitive and menus with the existing Dropdown primitive.",
   popover:
@@ -324,8 +324,6 @@ const readAttributesByComponent: Record<string, string[]> = {
     "autoplay",
     "autoplay-delay",
     "contain-scroll",
-    "data-active",
-    "data-orientation",
     "dir",
     "drag-free",
     "draggable",
@@ -340,9 +338,6 @@ const readAttributesByComponent: Record<string, string[]> = {
     "aria-invalid",
     "aria-selected",
     "auto-highlight",
-    "data-auto-highlight",
-    "data-multiple",
-    "data-open",
     "data-value",
     "dir",
     "disabled",
@@ -357,20 +352,19 @@ const readAttributesByComponent: Record<string, string[]> = {
     "align-offset",
     "aria-checked",
     "aria-disabled",
-    "data-open",
     "dir",
     "disabled",
     "side",
     "side-offset",
   ],
-  dialog: ["data-open", "dir", "disabled"],
-  drawer: ["data-open", "dir", "direction", "disabled", "side"],
-  sheet: ["data-open", "dir", "disabled", "side"],
+  dialog: ["dir"],
+  drawer: ["dir", "side"],
+  sheet: ["dir", "side"],
   "hover-card": ["close-delay", "open-delay"],
   "native-select": ["aria-invalid", "disabled", "required"],
-  "navigation-menu": ["align", "data-open", "data-state", "dir", "disabled"],
-  pagination: ["aria-current", "aria-disabled", "data-active", "dir"],
-  popover: ["data-align", "data-side", "popover", "popovertarget"],
+  "navigation-menu": ["align", "dir", "disabled"],
+  pagination: ["aria-current", "aria-disabled", "dir"],
+  popover: ["align", "side", "popover", "popovertarget"],
   progress: ["dir", "max", "value"],
   "radio-group": [
     "aria-invalid",
@@ -395,56 +389,6 @@ const readAttributesByComponent: Record<string, string[]> = {
 };
 
 const writtenAttributesByComponent: Record<string, string[]> = {
-  dialog: [
-    "aria-controls",
-    "aria-describedby",
-    "aria-expanded",
-    "aria-haspopup",
-    "aria-hidden",
-    "aria-labelledby",
-    "aria-modal",
-    "data-direction",
-    "data-open",
-    "data-state",
-    "hidden",
-    "role",
-    "tabindex",
-    "type",
-  ],
-  drawer: [
-    "aria-controls",
-    "aria-describedby",
-    "aria-expanded",
-    "aria-haspopup",
-    "aria-hidden",
-    "aria-labelledby",
-    "aria-modal",
-    "data-direction",
-    "data-open",
-    "data-side",
-    "data-state",
-    "hidden",
-    "role",
-    "tabindex",
-    "type",
-  ],
-  sheet: [
-    "aria-controls",
-    "aria-describedby",
-    "aria-expanded",
-    "aria-haspopup",
-    "aria-hidden",
-    "aria-labelledby",
-    "aria-modal",
-    "data-direction",
-    "data-open",
-    "data-side",
-    "data-state",
-    "hidden",
-    "role",
-    "tabindex",
-    "type",
-  ],
   sidebar: [
     "aria-controls",
     "aria-current",
@@ -452,13 +396,7 @@ const writtenAttributesByComponent: Record<string, string[]> = {
     "aria-hidden",
     "aria-labelledby",
     "collapsible",
-    "data-active",
-    "data-collapsible",
-    "data-direction",
-    "data-mobile",
-    "data-open",
-    "data-side",
-    "data-state",
+    "collapsed",
     "data-variant",
     "dir",
     "role",
@@ -472,39 +410,39 @@ const slotGuidanceByComponent: Record<string, string> = {
   avatar:
     "Apply `.avatar` to a wrapper containing either an image or authored fallback content. Badges are optional. Use `.avatar-group` for several avatars and `.avatar-group-count` for a remaining count.",
   "alert-dialog":
-    "Use `.alert-dialog` as an optional composition wrapper, a native button with `command=show-modal`, and `dialog.alert-dialog-content`. Close controls use `command=close`; no overlay element or nested AngularCSS attributes are required.",
+    "Use `.alert-dialog` as a composition wrapper containing a native invoker button and `dialog`. Close controls use `command=close`; semantic headers, figures, and footers need no anatomy classes or nested AngularCSS attributes.",
   accordion:
     "Use `.accordion` around direct `details` children. Each item requires a direct `summary` followed by authored content. Apply the same `name` to sibling details for exclusive disclosure.",
   carousel:
     "The content viewport and its direct track child are required. Items must be direct track children. Navigation controls and dots are optional.",
   chart:
-    "The chart root requires an accessible name. Plot, bar, axis, grid, legend, and tooltip slots are optional composition primitives; place them inside the chart root so synchronized CSS properties and semantics apply.",
+    "Apply `.chart` to an accessible `figure`. Compose its optional title, plot, grid, grouped bars, axis, legend, and tooltip from semantic `header`, `section`, `hr`, `ul`, `li`, `footer`, `output`, and description-list elements; no anatomy classes are required.",
   combobox:
-    "A combobox root requires one input and one listbox content element. The root directive inspects semantic descendants through combobox part classes; no child directives are required. Control, trigger, clear, empty, groups, separators, and chips are optional.",
+    "A combobox root requires one input and one options surface. The root directive inspects semantic headers, sections, lists, options, fieldsets, and buttons; no child directives or anatomy classes are required.",
   command:
-    "A command root requires one input and one list. The root directive inspects semantic descendants through command part classes; no child directives are required. Empty state, labeled groups, separators, item icons, and shortcuts are optional. Compose modal palettes from Dialog.",
+    "A command root requires one input and a result container. The root directive inspects semantic headers, sections, headings, buttons, separators, and keyboard hints; no child directives or anatomy classes are required. Compose modal palettes from Dialog.",
   "context-menu":
-    "A context menu root requires one focusable trigger and one menu element. The root directive inspects semantic descendants through context-menu part classes; no child directives are required. Groups, separators, shortcuts, checked items, and submenus are optional.",
+    "A context menu root requires one focusable trigger and one `menu`. The root directive inspects semantic sections, fieldsets, buttons, separators, keyboard hints, and nested details; no child directives or anatomy classes are required.",
   dialog:
-    "Use `.dialog` as an optional composition wrapper, a native button with `command=show-modal`, and `dialog.dialog-content`. Close controls use `command=close`; no overlay element or nested AngularCSS attributes are required.",
+    "Use `.dialog` as a composition wrapper containing a native invoker button and `dialog`. Close controls use `command=close`; semantic headers, sections, forms, and footers need no anatomy classes or nested AngularCSS attributes.",
   drawer:
-    "Use `.drawer` as an optional wrapper, a native invoker button, and `dialog.drawer-content` with authored `data-side`. Close controls use `command=close`; no overlay element is required.",
+    "Use `.drawer` as a wrapper containing a native invoker button and `dialog` with authored `side`. Close controls use `command=close`; the bottom handle is generated by CSS and no anatomy classes are required.",
   sheet:
-    "Use `.sheet` as an optional wrapper, a native invoker button, and `dialog.sheet-content` with authored `data-side`. Close controls use `command=close`; no overlay element is required.",
+    "Use `.sheet` as a wrapper containing a native invoker button and `dialog` with authored `side`. Close controls use `command=close`; semantic headers, sections, forms, and footers need no anatomy classes.",
   sidebar:
-    "Place `aside[ng-sidebar]` inside `.sidebar-layout` and connect native button triggers with `aria-controls`. The root directive inspects semantic descendants through sidebar part classes; no child sidebar directives are required. Author side, variant, and collapse mode on the root. Compose nested disclosure with Collapsible and action menus with Dropdown.",
+    "Place `aside[ng-sidebar]` beside `main` and connect native button triggers with `aria-controls`. The root directive inspects semantic `header`, `nav`, `section`, list, and footer descendants; no child sidebar directives or anatomy classes are required. Author side, variant, and collapse mode on the root. Compose nested disclosure with Collapsible and action menus with Dropdown.",
   collapsible:
     "Apply `.collapsible` to a native `details` element with a direct `summary` followed by authored content. No nested AngularCSS attributes are required.",
   "hover-card":
     "A keyboard-focusable trigger and one preview content element are required. Title and description slots are optional semantic styling hooks inside the preview.",
   "input-group":
-    "Use one native input, textarea, select, combobox, or spinbutton inside `.input-group`. Addons may be placed at inline-start, inline-end, block-start, or block-end with `data-align`. Buttons, menus, tooltips, and popovers retain their own behavior.",
+    "Use one native input, textarea, select, combobox, or spinbutton inside `.input-group`. Addons may be placed at inline-start, inline-end, block-start, or block-end with `align`. Buttons, menus, tooltips, and popovers retain their own behavior.",
   menubar:
-    "Each menu requires one native button trigger and one menu content element. The root directive inspects semantic descendants through menubar part classes; no child directives are required. Groups, separators, shortcuts, checked items, and submenus are optional.",
+    "Each top-level section requires one native button trigger and one `menu`. The root directive inspects semantic sections, fieldsets, buttons, separators, keyboard hints, and nested details; no child directives or anatomy classes are required.",
   "native-select":
-    "Apply `.native-select` directly to a native `select` inside an optional wrapper. Native `option` and `optgroup` elements need no additional attributes. A wrapper may provide a custom icon.",
+    "Use a native `select` directly. Native `option`, `optgroup`, picker behavior, and the browser's indicator need no wrapper, class, or additional attributes.",
   "navigation-menu":
-    "Use a native `nav` containing one direct list. Each list item may contain either a native link or a native button trigger followed by flyout content. The root directive inspects descendants through navigation-menu part classes; no child directives are required.",
+    "Use a native `nav` containing one direct list. Each list item may contain either a native link or a native button trigger followed by a semantic section. The root directive needs no child directives or anatomy classes.",
   pagination:
     "Use a native `nav` containing a `ul` or `ol` with direct `li` children. Page, previous, and next controls remain native links. Ellipsis is optional. Compose rows-per-page controls beside Pagination with existing native form components; Pagination does not own that model.",
   popover:
@@ -516,7 +454,7 @@ const slotGuidanceByComponent: Record<string, string> = {
   resizable:
     "Alternate direct `.resizable-panel` and `.resizable-handle` children inside each panel group. The root directive inspects those children; no child directives are required. Nested groups belong inside a panel.",
   select:
-    "Apply `.select` directly to a native `select` inside an optional `.select-wrapper`. Native `option` and `optgroup` elements need no additional attributes. Use AngularTS `ng-model`, validators, and form directives directly on the select.",
+    "Use a native `select` directly. Native `option` and `optgroup` elements need no additional attributes. Use AngularTS `ng-model`, validators, and form directives directly on the select.",
   tooltip:
     "One trigger and one plain-text content element are required. Prefer a native button or link trigger. Tooltip content is descriptive and non-interactive; use Popover when the floating content needs controls or focus.",
 };
@@ -596,6 +534,11 @@ const renderAttributeTable = (
   ].join("\n");
 };
 
+const semanticRootSelectorByComponent: Partial<Record<string, string>> = {
+  "native-select": "select",
+  select: "select",
+};
+
 const referenceFor = (component: string): string => {
   const source = readFileSync(
     join("src/components", component, `${component}.ts`),
@@ -607,7 +550,7 @@ const referenceFor = (component: string): string => {
   const directive = directiveByComponent.get(component);
   const stylingOnly = componentPolicy[component]?.kind === "element";
   const rootSelector = stylingOnly
-    ? `.${component}`
+    ? (semanticRootSelectorByComponent[component] ?? `.${component}`)
     : directive
       ? toSelector(directive)
       : `ng-${component}`;
@@ -624,9 +567,6 @@ const referenceFor = (component: string): string => {
       /(?:setAttribute|removeAttribute)\(\s*["']([^"']+)["']/g,
     ),
     ...matches(source, /setAttributeIfChanged\(\s*[^,]+,\s*["']([^"']+)["']/g),
-    ...(source.includes("syncNativeControlState(")
-      ? ["aria-disabled", "aria-required", "data-disabled", "data-required"]
-      : []),
     ...(writtenAttributesByComponent[component] || []),
   ]);
   const cssVariables = unique([

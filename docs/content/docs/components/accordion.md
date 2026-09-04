@@ -12,7 +12,7 @@ Use `.accordion` around native `details` elements. Give sibling items the same
 <div class="accordion">
   <details name="sections" open>
     <summary>Section 1</summary>
-    <div class="accordion-content">Content for section 1</div>
+    <div>Content for section 1</div>
   </details>
 </div>
 ```

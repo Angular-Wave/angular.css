@@ -12,9 +12,10 @@ test("resizable element entrypoint exercises the built functional artifact", asy
   ).toHaveCount(1);
 
   const outer = page.locator("[ng-resizable-panel-group]").first();
-  const panels = outer.locator(":scope > .resizable-panel");
-  const handle = outer.locator(":scope > .resizable-handle");
-  await expect(handle).toHaveAttribute("role", "separator");
+  const panels = outer.locator(":scope > section");
+  const handle = outer.locator(":scope > hr");
+  await expect(handle).toHaveRole("separator");
+  await expect(handle).not.toHaveAttribute("role");
   await expect(handle).toHaveAttribute("aria-orientation", "vertical");
   await expect(handle).toHaveAttribute("aria-valuenow", "1");
   await handle.press("ArrowRight");

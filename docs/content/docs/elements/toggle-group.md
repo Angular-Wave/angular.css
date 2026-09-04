@@ -5,15 +5,14 @@ description: >
   Grouped pressed-state buttons
 ---
 
-Use `class="toggle-group"` with `role="group"` and
-`class="toggle-group-item"` buttons.
+Use `fieldset.toggle-group` with a native legend and labels containing radio or
+checkbox inputs.
 
 ```html
 <fieldset variant="outline" class="toggle-group">
-  <button aria-pressed="true" class="toggle-group-item toggle">
-    Left
-  </button>
-  <button class="toggle-group-item toggle">Center</button>
+  <legend class="visually-hidden">Alignment</legend>
+  <label><input type="radio" name="alignment" value="left" /> Left</label>
+  <label><input type="radio" name="alignment" value="center" /> Center</label>
 </fieldset>
 ```
 

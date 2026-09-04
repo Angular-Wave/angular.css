@@ -19,24 +19,27 @@
         <h2 id="state-title">Reactive layout</h2>
         <div class="resizable-state-actions">
           <button
-
             size="sm"
             type="button"
-            ng-click="resizableState.orientation=resizableState.orientation==='horizontal'?'vertical':'horizontal'" class="button">
+            ng-click="resizableState.orientation=resizableState.orientation==='horizontal'?'vertical':'horizontal'"
+            class="button"
+          >
             Toggle orientation
           </button>
           <button
-
             size="sm"
             type="button"
-            ng-click="resizableState.firstSize=2" class="button">
+            ng-click="resizableState.firstSize=2"
+            class="button"
+          >
             Set first size to 2
           </button>
           <button
-
             size="sm"
             type="button"
-            ng-click="resizableState.showThird=true" class="button">
+            ng-click="resizableState.showThird=true"
+            class="button"
+          >
             Add third panel
           </button>
         </div>
@@ -49,34 +52,28 @@
           class="resizable-reference-layout"
         >
           <section
-
             id="state-first-panel"
             style="--panel-size: {{ resizableState.firstSize }}"
-           class="resizable-panel">
+          >
             <div class="resizable-panel-content"><strong>One</strong></div>
           </section>
-          <div
-
+          <hr
             id="state-first-handle"
             aria-label="Resize first and second panels"
-           class="resizable-handle">
-            <span aria-hidden="true" class="resizable-handle-grip"></span>
-          </div>
-          <section style="--panel-size: 1" class="resizable-panel">
+          />
+          <section style="--panel-size: 1">
             <div class="resizable-panel-content"><strong>Two</strong></div>
           </section>
-          <div
+          <hr
             ng-if="resizableState.showThird"
-
             id="state-inserted-handle"
             aria-label="Resize second and third panels"
-           class="resizable-handle"></div>
+          />
           <section
             ng-if="resizableState.showThird"
-
             id="state-inserted-panel"
             style="--panel-size: 1"
-           class="resizable-panel">
+          >
             <div class="resizable-panel-content"><strong>Three</strong></div>
           </section>
         </div>
@@ -93,19 +90,14 @@
           class="resizable-reference-layout"
         >
           <section
-
             data-min-size="0.5"
             data-max-size="2"
             style="--panel-size: 1"
-           class="resizable-panel">
+          >
             <div class="resizable-panel-content"><strong>Top</strong></div>
           </section>
-          <div aria-label="Resize bounded panels" class="resizable-handle"></div>
-          <section
-
-            data-min-size="0.5"
-            style="--panel-size: 1"
-           class="resizable-panel">
+          <hr aria-label="Resize bounded panels" />
+          <section data-min-size="0.5" style="--panel-size: 1">
             <div class="resizable-panel-content"><strong>Bottom</strong></div>
           </section>
         </div>

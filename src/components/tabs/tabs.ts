@@ -1,11 +1,16 @@
 import type {} from "@angular-wave/angular.ts";
 
-import { nextIndex, onDestroy, queryAll } from "../../internal/dom";
+import {
+  nextIndex,
+  onDestroy,
+  queryAll,
+  setOpenState,
+} from "../../internal/dom";
 
 let tabsIdCounter = 0;
-const triggerSelector = ".tabs-trigger";
-const contentSelector = ".tabs-content";
-const listSelector = '.tabs-list, [role="tablist"]';
+const triggerSelector = ":scope > menu > button";
+const contentSelector = ":scope > :is(article, section)";
+const listSelector = ":scope > menu";
 
 const setAttribute = (
   element: HTMLElement,
@@ -67,16 +72,13 @@ export function tabsDirective(): ng.Directive {
           const selected = triggerIndex === nextActiveIndex;
           const disabled = isTriggerDisabled(trigger);
           setAttribute(trigger, "aria-selected", String(selected));
-          setAttribute(trigger, "data-active", String(selected));
           setAttribute(trigger, "tabindex", selected && !disabled ? "0" : "-1");
-          setAttribute(trigger, "data-disabled", String(disabled));
           if (selected && focus) trigger.focus();
         });
 
         contents.forEach((content, contentIndex) => {
           const selected = contentIndex === nextActiveIndex;
-          content.hidden = !selected;
-          setAttribute(content, "data-active", String(selected));
+          setOpenState(content, selected);
           setAttribute(content, "role", "tabpanel");
           setAttribute(content, "aria-hidden", String(!selected));
           setAttribute(content, "tabindex", selected ? "0" : "-1");
@@ -150,8 +152,7 @@ export function tabsDirective(): ng.Directive {
           list?.getAttribute("aria-orientation") ??
           "horizontal";
         orientation = orientation === "vertical" ? "vertical" : "horizontal";
-        setAttribute(element, "data-direction", getDirection());
-        setAttribute(element, "data-orientation", orientation);
+        setAttribute(element, "orientation", orientation);
         if (list) {
           setAttribute(list, "role", "tablist");
           setAttribute(list, "aria-orientation", orientation);
@@ -159,8 +160,7 @@ export function tabsDirective(): ng.Directive {
 
         triggers.forEach((trigger, index) => {
           const content = contents.at(index);
-          const triggerId =
-            trigger.id || `tabs-trigger-${String(tabsIdCounter++)}`;
+          const triggerId = trigger.id || `tabs-tab-${String(tabsIdCounter++)}`;
           trigger.id = triggerId;
           setAttribute(trigger, "role", "tab");
           if (content) {
@@ -178,8 +178,7 @@ export function tabsDirective(): ng.Directive {
         const selectedIndex = triggers.findIndex(
           (trigger) =>
             !isTriggerDisabled(trigger) &&
-            (trigger.getAttribute("aria-selected") === "true" ||
-              trigger.getAttribute("data-active") === "true"),
+            trigger.getAttribute("aria-selected") === "true",
         );
         const nextActiveIndex =
           selectedIndex >= 0
@@ -197,8 +196,6 @@ export function tabsDirective(): ng.Directive {
           "aria-disabled",
           "aria-orientation",
           "aria-selected",
-          "data-active",
-          "data-disabled",
           "disabled",
           "orientation",
           "dir",

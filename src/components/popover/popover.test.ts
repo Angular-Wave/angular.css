@@ -52,8 +52,8 @@ test("canonical popover uses native disclosure and light dismissal", async ({
   await page.goto(canonicalUrl);
   await expectBuiltArtifactRuntime(page);
   const root = page.locator(".popover");
-  const trigger = root.locator(".popover-trigger");
-  const content = root.locator(".popover-content");
+  const trigger = root.locator(":scope > button:first-child");
+  const content = root.locator(":scope > [popover]");
 
   await expect(root).not.toHaveAttribute("ng-popover", "");
   await expect(content).toHaveAttribute("popover", "");
@@ -75,8 +75,8 @@ test("canonical popover uses native disclosure and light dismissal", async ({
 
 test("native trigger supports keyboard activation", async ({ page }) => {
   await page.goto(canonicalUrl);
-  const trigger = page.locator(".popover-trigger");
-  const content = page.locator(".popover-content");
+  const trigger = page.locator(".popover > button:first-child");
+  const content = page.locator(".popover > [popover]");
 
   await trigger.focus();
   await trigger.press("Enter");
@@ -96,10 +96,10 @@ test("workflow alignments render start, center, and end geometry", async ({
     const trigger = page.getByRole("button", {
       name: new RegExp(`^${align}$`, "i"),
     });
-    const content = trigger.locator("..").locator(".popover-content");
+    const content = trigger.locator("..").locator(":scope > [popover]");
     await trigger.click();
     await expect(content).toBeVisible();
-    await expect(content).toHaveAttribute("data-align", align);
+    await expect(content).toHaveAttribute("align", align);
 
     const triggerBox = await trigger.boundingBox();
     const contentBox = await content.boundingBox();
@@ -131,7 +131,7 @@ test("pointer interaction outside light-dismisses an open form popover", async (
 }) => {
   await page.goto(workflowsUrl);
   const trigger = page.getByRole("button", { name: "Edit dimensions" });
-  const content = trigger.locator("..").locator(".popover-content");
+  const content = trigger.locator("..").locator(":scope > [popover]");
 
   await trigger.click();
   await content.getByRole("textbox", { name: "Height" }).focus();
@@ -145,14 +145,14 @@ test("disabled triggers stay closed and sibling auto popovers are exclusive", as
 }) => {
   await page.goto(workflowsUrl);
   const disabled = page.getByRole("button", { name: "Disabled" });
-  const disabledContent = disabled.locator("..").locator(".popover-content");
+  const disabledContent = disabled.locator("..").locator(":scope > [popover]");
   await expect(disabled).toBeDisabled();
   await expect(disabledContent).toBeHidden();
 
   const first = page.getByRole("button", { name: "First", exact: true });
   const second = page.getByRole("button", { name: "Second", exact: true });
-  const firstContent = first.locator("..").locator(".popover-content");
-  const secondContent = second.locator("..").locator(".popover-content");
+  const firstContent = first.locator("..").locator(":scope > [popover]");
+  const secondContent = second.locator("..").locator(":scope > [popover]");
   await first.click();
   await expect(firstContent).toBeVisible();
   await second.click();
@@ -171,10 +171,10 @@ test("RTL direction is inherited while every side remains physical", async ({
     ["يمين", "right"],
   ] as const) {
     const trigger = page.getByRole("button", { name });
-    const content = trigger.locator("..").locator(".popover-content");
+    const content = trigger.locator("..").locator(":scope > [popover]");
     await trigger.click();
     await expect(content).toHaveCSS("direction", "rtl");
-    await expect(content).toHaveAttribute("data-side", side);
+    await expect(content).toHaveAttribute("side", side);
     await expectPhysicalSide(trigger, content, side);
     await page.keyboard.press("Escape");
   }

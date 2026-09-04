@@ -36,18 +36,22 @@ test("canonical drawer is a native bottom modal with focus restoration", async (
   await page.goto(canonicalUrl);
   await expectBuiltArtifactRuntime(page);
   const root = page.locator("#goal-drawer");
-  const trigger = root.locator(".drawer-trigger");
+  const trigger = root.locator(":scope > button:first-child");
   const content = root.locator("dialog");
 
   await expect(content).toBeHidden();
   await trigger.click();
   await expect(content).toHaveAttribute("open", "");
-  await expect(content).toHaveAttribute("data-side", "bottom");
+  await expect(content).toHaveAttribute("side", "bottom");
   expect(await content.evaluate((dialog) => dialog.matches(":modal"))).toBe(
     true,
   );
   await expect(root.getByRole("button", { name: "Decrease" })).toBeFocused();
-  await expect(root.locator(".drawer-handle")).toBeVisible();
+  expect(
+    await content.evaluate(
+      (element) => getComputedStyle(element, "::before").display,
+    ),
+  ).toBe("block");
 
   await root.getByRole("button", { name: "Cancel" }).click();
   await expect(content).toBeHidden();
@@ -59,9 +63,9 @@ test("AngularTS owns goal state and declarative submit closes the drawer", async
 }) => {
   await page.goto(canonicalUrl);
   const root = page.locator("#goal-drawer");
-  await root.locator(".drawer-trigger").click();
+  await root.locator(":scope > button:first-child").click();
   await root.getByRole("button", { name: "Increase" }).click();
-  await expect(root.locator(".drawer-goal-value strong")).toHaveText("360");
+  await expect(root.locator("dialog menu > output > strong")).toHaveText("360");
   await root.getByRole("button", { name: "Submit" }).click();
   await expect(root.locator("dialog")).toBeHidden();
   await expect(page.locator(".drawer-output")).toContainText(
@@ -83,8 +87,8 @@ test("four authored sides anchor to their physical viewport edges", async ({
     const side = expected[index];
     const root = roots.nth(index);
     const content = root.locator("dialog");
-    await root.locator(".drawer-trigger").click();
-    await expect(content).toHaveAttribute("data-side", side);
+    await root.locator(":scope > button:first-child").click();
+    await expect(content).toHaveAttribute("side", side);
     await waitForMotion(content);
     const box = await content.boundingBox();
     if (side === "top") expect(box!.y).toBeCloseTo(0, 0);
@@ -101,9 +105,9 @@ test("right drawer body scrolls while its footer remains fixed", async ({
   await page.setViewportSize({ height: 560, width: 900 });
   await page.goto(scrollUrl);
   const root = page.locator("#scrollable-drawer");
-  await root.locator(".drawer-trigger").click();
-  const body = root.locator(".drawer-body");
-  const footer = root.locator(".drawer-footer");
+  await root.locator(":scope > button:first-child").click();
+  const body = root.locator(":scope > dialog > section");
+  const footer = root.locator("footer");
   expect(
     await body.evaluate(
       (element) => element.scrollHeight > element.clientHeight,
@@ -144,10 +148,10 @@ test("RTL drawer inherits direction and keeps AngularTS goal interaction", async
 }) => {
   await page.goto(rtlUrl);
   const root = page.locator("#rtl-goal-drawer");
-  await root.locator(".drawer-trigger").click();
+  await root.locator(":scope > button:first-child").click();
   await expect(root.locator("dialog")).toHaveCSS("direction", "rtl");
   await root.getByRole("button", { name: "زيادة" }).click();
-  await expect(root.locator(".drawer-goal-value strong")).toHaveText("360");
+  await expect(root.locator("dialog menu > output > strong")).toHaveText("360");
   await root.getByRole("button", { name: "إلغاء" }).click();
   await expect(root.locator("dialog")).toBeHidden();
 });

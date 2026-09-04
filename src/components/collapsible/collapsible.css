@@ -9,13 +9,11 @@ details.collapsible > summary::-webkit-details-marker,
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  details.collapsible > summary > svg,
-  details.collapsible > summary .collapsible-icon-button {
+  details.collapsible > summary svg {
     transition: translate 90ms ease-out;
   }
 
-  details.collapsible > summary:active > svg,
-  details.collapsible > summary:active .collapsible-icon-button {
+  details.collapsible > summary:active svg {
     translate: 0 1px;
   }
 
@@ -30,7 +28,7 @@ details.collapsible > summary::-webkit-details-marker,
         opacity 140ms ease-out;
     }
 
-    details.collapsible[open]::details-content {
+    details.collapsible:open::details-content {
       block-size: auto;
       opacity: 1;
     }
@@ -43,7 +41,7 @@ details.collapsible > summary::-webkit-details-marker,
   }
 
   @supports not selector(details::details-content) {
-    details.collapsible[open] > .collapsible-content {
+    details.collapsible:open > :last-child {
       animation: collapsible-content-enter 160ms ease-out;
     }
   }

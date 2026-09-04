@@ -5,13 +5,13 @@ description: >
   Floating rich content panels
 ---
 
-Use part classes for the trigger and content. Set `data-open="true"` when a
-controller should render the panel open.
+Use the native Popover API. Connect a button to semantic content with
+`popovertarget`, `id`, and `popover`.
 
 ```html
 <span class="popover">
-  <button class="popover-trigger">Open</button>
-  <aside data-open="true" class="popover-content">Content</aside>
+  <button popovertarget="details-popover">Open</button>
+  <aside id="details-popover" popover>Content</aside>
 </span>
 ```
 

@@ -1,50 +1,15 @@
-:is(.select-wrapper, .native-select-wrapper) {
-  position: relative;
-  width: fit-content;
-}
-
-:is(.select-wrapper, .native-select-wrapper)::after {
-  position: absolute;
-  inset-block-start: 50%;
-  inset-inline-end: calc(var(--spacing) * 3);
-  width: calc(var(--spacing) * 2);
-  height: calc(var(--spacing) * 2);
-  border-block-end: 1.5px solid currentcolor;
-  border-inline-end: 1.5px solid currentcolor;
-  color: var(--muted-foreground);
-  content: "";
-  pointer-events: none;
-  transform: translateY(-65%) rotate(45deg);
-}
-
-:is(.select-wrapper, .native-select-wrapper):has(
-    > :is(.select-icon, .native-select-icon)
-  )::after {
-  display: none;
-}
-
-:is(.select-icon, .native-select-icon) {
-  position: absolute;
-  inset-block-start: 50%;
-  inset-inline-end: calc(var(--spacing) * 2.5);
-  width: calc(var(--spacing) * 4);
-  height: calc(var(--spacing) * 4);
-  color: var(--muted-foreground);
-  pointer-events: none;
-  transform: translateY(-50%);
-}
-
-:is(select.select, select.native-select) {
+select:not([multiple], [size]) {
+  field-sizing: content;
   display: block;
-  width: 100%;
-  min-width: 0;
+  width: fit-content;
+  min-width: 12rem;
   height: calc(var(--spacing) * 8);
   border: 1px solid var(--input);
   border-radius: calc(var(--radius) - 2px);
   background: transparent;
   color: var(--foreground);
   padding-block: calc(var(--spacing) * 1);
-  padding-inline: calc(var(--spacing) * 2.5) calc(var(--spacing) * 8);
+  padding-inline: calc(var(--spacing) * 2.5);
   font: inherit;
   font-size: var(--text-sm);
   line-height: calc(var(--spacing) * 5);
@@ -53,40 +18,27 @@
   cursor: default;
 }
 
-select.select {
-  min-width: 12rem;
-}
-
-:is(.select-wrapper, .native-select-wrapper) > select {
-  appearance: none;
-}
-
-:is(select.select-sm, select.native-select-sm) {
-  height: calc(var(--spacing) * 7);
-  padding-block: calc(var(--spacing) * 0.5);
-}
-
-:is(select.select, select.native-select):disabled {
+select:not([multiple], [size]):disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-:is(select.select, select.native-select):focus-visible {
+select:not([multiple], [size]):focus-visible {
   border-color: var(--ring);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
-:is(select.select, select.native-select):is(
-  .ng-invalid.ng-dirty,
-  .ng-invalid.ng-touched,
-  [aria-invalid="true"]
-) {
+select:not([multiple], [size]):is(
+    .ng-invalid.ng-dirty,
+    .ng-invalid.ng-touched,
+    [aria-invalid="true"]
+  ) {
   border-color: var(--error);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--error) 20%, transparent);
 }
 
-:is(select.select, select.native-select) option,
-:is(select.select, select.native-select) optgroup {
+select:not([multiple], [size]) option,
+select:not([multiple], [size]) optgroup {
   background: Canvas;
   color: CanvasText;
 }

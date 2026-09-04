@@ -5,8 +5,8 @@ test("popover element example exercises the built functional artifact", async ({
 }) => {
   await page.goto("/docs/static/examples/elements/popover.html");
 
-  const trigger = page.locator(".popover-trigger");
-  const content = page.locator(".popover-content");
+  const trigger = page.locator(".popover > button:first-child");
+  const content = page.locator(".popover > [popover]");
   await expect(content).toBeHidden();
   await expect(content).toHaveAttribute("popover", "");
   const contentId = await content.getAttribute("id");

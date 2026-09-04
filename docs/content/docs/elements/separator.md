@@ -10,7 +10,7 @@ Use `hr.separator` for a horizontal separator. Use `span.separator` with
 
 ```html
 <hr class="separator" />
-<span orientation="vertical" class="separator"></span>
+<hr class="separator" aria-orientation="vertical" />
 ```
 
 ## Example

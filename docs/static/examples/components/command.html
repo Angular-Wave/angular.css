@@ -19,12 +19,12 @@
       <section
         id="command-demo"
         ng-command
-        data-variant="surface"
+        variant="surface"
         aria-label="Command menu"
       >
-        <div class="command-input-wrapper">
-          <div class="command-input-group">
-            <span aria-hidden="true" class="command-input-icon">
+        <header>
+          <label>
+            <span aria-hidden="true">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -38,25 +38,23 @@
               </svg>
             </span>
             <input
-
               aria-label="Search commands"
               placeholder="Type a command or search..."
               ng-model="commandState.query"
-             class="command-input"/>
-          </div>
-        </div>
-        <ul class="command-list">
-          <p class="command-empty">No results found.</p>
-          <section class="command-group">
-            <h2 class="command-group-heading">Suggestions</h2>
-            <li
-
+            />
+          </label>
+        </header>
+        <div>
+          <p>No results found.</p>
+          <section>
+            <h2>Suggestions</h2>
+            <button
+              type="button"
               ng-repeat="item in suggestions | filter:commandState.query"
               ng-attr-aria-disabled="{{ item.disabled }}"
               ng-click="commandState.selected=item.label"
-             class="command-item">
+            >
               <svg
-
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -64,23 +62,22 @@
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 aria-hidden="true"
-               class="command-item-icon">
+              >
                 <circle cx="12" cy="12" r="8"></circle>
                 <path d="M8 12h8"></path>
               </svg>
               <span ng-bind="item.label"></span>
-            </li>
+            </button>
           </section>
-          <div class="command-separator"></div>
-          <section class="command-group">
-            <h2 class="command-group-heading">Settings</h2>
-            <li
-
+          <hr />
+          <section>
+            <h2>Settings</h2>
+            <button
+              type="button"
               ng-repeat="item in settings | filter:commandState.query"
               ng-click="commandState.selected=item.label"
-             class="command-item">
+            >
               <svg
-
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -88,15 +85,15 @@
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 aria-hidden="true"
-               class="command-item-icon">
+              >
                 <circle cx="12" cy="8" r="4"></circle>
                 <path d="M4 21a8 8 0 0 1 16 0"></path>
               </svg>
               <span ng-bind="item.label"></span>
-              <span ng-bind="item.shortcut" class="command-shortcut"></span>
-            </li>
+              <kbd ng-bind="item.shortcut"></kbd>
+            </button>
           </section>
-        </ul>
+        </div>
       </section>
       <output class="output visually-hidden" aria-live="polite">
         Selected:

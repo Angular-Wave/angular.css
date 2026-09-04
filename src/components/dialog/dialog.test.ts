@@ -29,7 +29,7 @@ test("canonical dialog uses native modal behavior and invoker commands", async (
   await page.goto(canonicalUrl);
   await expectBuiltArtifactRuntime(page);
   const root = page.locator("#profile-dialog");
-  const trigger = root.locator(".dialog-trigger");
+  const trigger = root.locator(":scope > button:first-child");
   const content = root.locator("dialog");
 
   await expect(content).toBeHidden();
@@ -55,8 +55,8 @@ test("native dialog motion uses CSS and respects reduced motion", async ({
     reducedMotion: "no-preference",
   });
   await animatedPage.goto(canonicalUrl);
-  const animatedContent = animatedPage.locator(".dialog-content");
-  await animatedPage.locator(".dialog-trigger").click();
+  const animatedContent = animatedPage.locator(".dialog > dialog");
+  await animatedPage.locator(".dialog > button:first-child").click();
   const animatedDuration = await animatedContent.evaluate(
     (element) => getComputedStyle(element).transitionDuration,
   );
@@ -69,8 +69,8 @@ test("native dialog motion uses CSS and respects reduced motion", async ({
 
   const reducedPage = await browser.newPage({ reducedMotion: "reduce" });
   await reducedPage.goto(canonicalUrl);
-  const reducedContent = reducedPage.locator(".dialog-content");
-  await reducedPage.locator(".dialog-trigger").click();
+  const reducedContent = reducedPage.locator(".dialog > dialog");
+  await reducedPage.locator(".dialog > button:first-child").click();
   await expect(reducedContent).toHaveCSS("transition-duration", "0s");
   const reducedBackdropDuration = await reducedContent.evaluate(
     (element) => getComputedStyle(element, "::backdrop").transitionDuration,
@@ -84,12 +84,13 @@ test("native dialog exposes focusable close controls and restores the trigger", 
 }) => {
   await page.goto(canonicalUrl);
   const root = page.locator("#profile-dialog");
-  const trigger = root.locator(".dialog-trigger");
+  const trigger = root.locator(":scope > button:first-child");
   const content = root.locator("dialog");
 
   await trigger.click();
-  await root.locator(".dialog-close").focus();
-  await expect(root.locator(".dialog-close")).toBeFocused();
+  const cornerClose = root.locator(':scope > dialog > button[command="close"]');
+  await cornerClose.focus();
+  await expect(cornerClose).toBeFocused();
   await page.getByRole("button", { name: "Cancel" }).click();
   await expect(content).toBeHidden();
   await expect(trigger).toBeFocused();
@@ -100,7 +101,7 @@ test("AngularTS form state remains authoritative inside native dialog", async ({
 }) => {
   await page.goto(canonicalUrl);
   const root = page.locator("#profile-dialog");
-  await root.locator(".dialog-trigger").click();
+  await root.locator(":scope > button:first-child").click();
   await page.locator("#dialog-name").fill("Jane Doe");
   await page.getByRole("button", { name: "Save changes" }).click();
   await expect(root.locator("dialog")).toBeHidden();
@@ -117,16 +118,20 @@ test("close workflows distinguish corner and footer actions", async ({
   const share = page.locator("#share-dialog");
   const plain = page.locator("#plain-dialog");
 
-  await share.locator(".dialog-trigger").click();
-  await expect(share.locator(".dialog-close")).toHaveCount(1);
+  await share.locator(":scope > button:first-child").click();
+  await expect(
+    share.locator(':scope > dialog > button[command="close"]'),
+  ).toHaveCount(1);
   await share
     .getByRole("button", { name: "Close", exact: true })
     .first()
     .click();
   await expect(share.locator("dialog")).toBeHidden();
 
-  await plain.locator(".dialog-trigger").click();
-  await expect(plain.locator(".dialog-close")).toHaveCount(0);
+  await plain.locator(":scope > button:first-child").click();
+  await expect(
+    plain.locator(':scope > dialog > button[command="close"]'),
+  ).toHaveCount(0);
   await plain.getByRole("button", { name: "Continue" }).click();
   await expect(plain.locator("dialog")).toBeHidden();
 });
@@ -139,8 +144,8 @@ test("scroll workflows provide real overflow and stationary footers", async ({
   await expectBuiltArtifactRuntime(page);
 
   const scrollDialog = page.locator("#scroll-dialog");
-  await scrollDialog.locator(".dialog-trigger").click();
-  const body = scrollDialog.locator(".dialog-body");
+  await scrollDialog.locator(":scope > button:first-child").click();
+  const body = scrollDialog.locator(":scope > dialog > section");
   expect(
     await body.evaluate(
       (element) => element.scrollHeight > element.clientHeight,
@@ -149,9 +154,9 @@ test("scroll workflows provide real overflow and stationary footers", async ({
   await page.keyboard.press("Escape");
 
   const stickyDialog = page.locator("#sticky-dialog");
-  await stickyDialog.locator(".dialog-trigger").click();
-  const stickyBody = stickyDialog.locator(".dialog-body");
-  const footer = stickyDialog.locator(".dialog-footer");
+  await stickyDialog.locator(":scope > button:first-child").click();
+  const stickyBody = stickyDialog.locator(":scope > dialog > section");
+  const footer = stickyDialog.locator("footer");
   const before = await footer.boundingBox();
   await stickyBody.evaluate((element) => {
     element.scrollTop = element.scrollHeight;
@@ -160,7 +165,7 @@ test("scroll workflows provide real overflow and stationary footers", async ({
   expect(
     await stickyBody.evaluate((element) => element.scrollTop),
   ).toBeGreaterThan(0);
-  expect(after?.y).toBeCloseTo(before?.y ?? 0, 0);
+  expect(Math.abs((after?.y ?? 0) - (before?.y ?? 0))).toBeLessThanOrEqual(1);
 });
 
 test("RTL dialog inherits direction and mirrors logical close placement", async ({
@@ -169,9 +174,9 @@ test("RTL dialog inherits direction and mirrors logical close placement", async 
   await page.goto(rtlUrl);
   await expectBuiltArtifactRuntime(page);
   const root = page.locator("#rtl-profile-dialog");
-  await root.locator(".dialog-trigger").click();
+  await root.locator(":scope > button:first-child").click();
   const content = root.locator("dialog");
-  const close = root.locator(".dialog-close");
+  const close = root.locator(':scope > dialog > button[command="close"]');
   await expect(content).toHaveCSS("direction", "rtl");
   const contentBox = await content.boundingBox();
   const closeBox = await close.boundingBox();

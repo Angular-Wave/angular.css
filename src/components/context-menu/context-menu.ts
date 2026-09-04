@@ -6,7 +6,10 @@ import {
   queryAll,
   setOpenState,
 } from "../../internal/dom";
-import { bindSemanticSubmenus } from "../../internal/menu";
+import {
+  bindSemanticSubmenus,
+  getSemanticMenuItemRole,
+} from "../../internal/menu";
 
 let contextMenuIdCounter = 0;
 
@@ -23,29 +26,12 @@ type MenuAlign = "center" | "end" | "start";
 type AnchorPoint = { x: number; y: number };
 
 const rootSelector = ".context-menu, [ng-context-menu]";
-const triggerSelector = ".context-menu-trigger";
-const contentSelector = ".context-menu-content";
-const subContentSelector = ".context-menu-sub-content";
-const menuSurfaceSelector = `${contentSelector}, ${subContentSelector}`;
-const itemSelector = [
-  ".context-menu-item",
-  ".context-menu-item",
-  ".context-menu-checkbox-item",
-  ".context-menu-checkbox-item",
-  ".context-menu-radio-item",
-  ".context-menu-radio-item",
-  ".context-menu-sub-trigger",
-  ".context-menu-sub-trigger",
-  '[role="menuitem"]',
-  '[role="menuitemcheckbox"]',
-  '[role="menuitemradio"]',
-].join(", ");
-const checkboxSelector = ".context-menu-checkbox-item";
-const radioSelector = ".context-menu-radio-item";
-const subTriggerSelector = ".context-menu-sub-trigger";
-const groupSelector = ".context-menu-group, .context-menu-radio-group";
-const labelSelector = ".context-menu-label";
-const separatorSelector = ".context-menu-separator";
+const triggerSelector = ":scope > :first-child:not(menu)";
+const contentSelector = ":scope > menu";
+const menuSurfaceSelector = "menu";
+const itemSelector = "a, button";
+const subTriggerSelector = "details > summary";
+const groupSelector = "menu > section, menu > fieldset";
 const sides = new Set<MenuSide>([
   "bottom",
   "inline-end",
@@ -100,13 +86,13 @@ export function contextMenuDirective(): ng.Directive {
         return side;
       };
       const getAuthoredSide = (): MenuSide => {
-        const value = content.getAttribute("side") ?? content.dataset.side;
+        const value = content.getAttribute("side");
         return value && sides.has(value as MenuSide)
           ? (value as MenuSide)
           : "right";
       };
       const getAlign = (): MenuAlign => {
-        const value = content.getAttribute("align") ?? content.dataset.align;
+        const value = content.getAttribute("align");
         return value && alignments.has(value as MenuAlign)
           ? (value as MenuAlign)
           : "start";
@@ -128,7 +114,7 @@ export function contextMenuDirective(): ng.Directive {
       const menuItems = (surface: HTMLElement): HTMLElement[] =>
         queryAll<HTMLElement>(surface, itemSelector).filter((item) => {
           if (!isOwned(item)) return false;
-          return item.closest(menuSurfaceSelector) === surface;
+          return item.closest("menu") === surface;
         });
       const visibleEnabledItems = (surface: HTMLElement): HTMLElement[] =>
         menuItems(surface).filter(
@@ -147,18 +133,8 @@ export function contextMenuDirective(): ng.Directive {
         ownedAll<HTMLElement>(groupSelector).forEach((group) => {
           setAttributeIfChanged(group, "role", "group");
         });
-        ownedAll<HTMLElement>(labelSelector).forEach((label) => {
-          setAttributeIfChanged(label, "role", "presentation");
-        });
-        ownedAll<HTMLElement>(separatorSelector).forEach((separator) => {
-          setAttributeIfChanged(separator, "role", "separator");
-        });
         ownedAll<HTMLElement>(itemSelector).forEach((item) => {
-          const role = item.matches(checkboxSelector)
-            ? "menuitemcheckbox"
-            : item.matches(radioSelector)
-              ? "menuitemradio"
-              : "menuitem";
+          const role = getSemanticMenuItemRole(item);
           setAttributeIfChanged(item, "role", role);
           if (!item.hasAttribute("tabindex")) item.tabIndex = -1;
           if (
@@ -169,22 +145,16 @@ export function contextMenuDirective(): ng.Directive {
           }
           if (isDisabled(item)) {
             setAttributeIfChanged(item, "aria-disabled", "true");
-            setAttributeIfChanged(item, "data-disabled", "true");
           }
         });
       };
 
       const syncDirection = (): void => {
-        const direction = getDirection();
-        setAttributeIfChanged(element, "data-direction", direction);
-        setAttributeIfChanged(content, "data-direction", direction);
+        if (open) requestAnimationFrame(positionContent);
       };
 
       let anchorPoint: AnchorPoint | null = null;
-      let open =
-        element.getAttribute("data-open") === "true" ||
-        content.getAttribute("data-open") === "true" ||
-        content.getAttribute("data-state") === "open";
+      let open = element.hasAttribute("open");
 
       const keyboardAnchor = (): AnchorPoint => {
         const rect = trigger.getBoundingClientRect();
@@ -245,18 +215,13 @@ export function contextMenuDirective(): ng.Directive {
           "--context-menu-available-height",
           `${String(Math.max(0, Math.round(window.innerHeight - margin * 2)))}px`,
         );
-        setAttributeIfChanged(content, "data-side", authoredSide);
-        setAttributeIfChanged(content, "data-align", align);
+        setAttributeIfChanged(content, "side", authoredSide);
+        setAttributeIfChanged(content, "align", align);
       };
 
       const focusItem = (item: HTMLElement, surface: HTMLElement): void => {
         menuItems(surface).forEach((candidate) => {
           candidate.tabIndex = candidate === item ? 0 : -1;
-          setAttributeIfChanged(
-            candidate,
-            "data-highlighted",
-            String(candidate === item),
-          );
         });
         item.focus({ preventScroll: true });
       };
@@ -293,13 +258,8 @@ export function contextMenuDirective(): ng.Directive {
         if (nextOpen && isDisabled(trigger)) nextOpen = false;
         const wasOpen = open;
         open = nextOpen;
-        const state = open ? "open" : "closed";
-        setAttributeIfChanged(element, "data-open", String(open));
-        setAttributeIfChanged(element, "data-state", state);
+        element.toggleAttribute("open", open);
         setAttributeIfChanged(trigger, "aria-expanded", String(open));
-        setAttributeIfChanged(trigger, "data-state", state);
-        setAttributeIfChanged(content, "data-open", String(open));
-        setAttributeIfChanged(content, "data-state", state);
         setAttributeIfChanged(content, "aria-hidden", String(!open));
         setOpenState(content, open);
 
@@ -311,7 +271,6 @@ export function contextMenuDirective(): ng.Directive {
         } else {
           menuItems(content).forEach((item) => {
             item.tabIndex = -1;
-            setAttributeIfChanged(item, "data-highlighted", "false");
           });
           if (wasOpen && options.restoreFocus) {
             trigger.focus({ preventScroll: true });
@@ -402,13 +361,7 @@ export function contextMenuDirective(): ng.Directive {
         const item = target?.closest<HTMLElement>(itemSelector);
         const surface = item?.closest<HTMLElement>(menuSurfaceSelector);
         if (!item || !surface || !isOwned(item) || isDisabled(item)) return;
-        menuItems(surface).forEach((candidate) => {
-          setAttributeIfChanged(
-            candidate,
-            "data-highlighted",
-            String(candidate === item),
-          );
-        });
+        focusItem(item, surface);
       };
 
       const handlePointerDownOutside = (event: PointerEvent): void => {
@@ -436,51 +389,41 @@ export function contextMenuDirective(): ng.Directive {
               record.type === "attributes" &&
               (record.attributeName === "dir" ||
                 record.attributeName === "side" ||
-                record.attributeName === "align" ||
-                record.attributeName === "data-side" ||
-                record.attributeName === "data-align"),
+                record.attributeName === "align"),
           )
         ) {
           syncDirection();
-          if (open) requestAnimationFrame(positionContent);
         }
         if (
           records.some(
             (record) =>
               record.type === "attributes" &&
-              record.attributeName === "data-open" &&
-              (record.target === element || record.target === content),
+              record.attributeName === "open" &&
+              record.target === element,
           )
         ) {
           const source = records
             .filter(
               (record) =>
                 record.type === "attributes" &&
-                record.attributeName === "data-open" &&
-                (record.target === element || record.target === content),
+                record.attributeName === "open" &&
+                record.target === element,
             )
             .at(-1)?.target;
           const nextOpen =
-            source instanceof HTMLElement &&
-            source.getAttribute("data-open") === "true";
+            source instanceof HTMLElement && source.hasAttribute("open");
           if (nextOpen !== open) setOpen(nextOpen);
         }
       });
       observer.observe(element, {
         attributes: true,
-        attributeFilter: ["data-open", "dir"],
+        attributeFilter: ["dir", "open"],
         childList: true,
         subtree: true,
       });
       observer.observe(content, {
         attributes: true,
-        attributeFilter: [
-          "align",
-          "data-align",
-          "data-open",
-          "data-side",
-          "side",
-        ],
+        attributeFilter: ["align", "side"],
       });
       const directionObserver =
         directionOwner === element ? null : new MutationObserver(syncDirection);

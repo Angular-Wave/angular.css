@@ -1,9 +1,8 @@
 import type {} from "@angular-wave/angular.ts";
 
 import { onDestroy, queryAll } from "../../internal/dom";
-import { syncNativeControlState } from "../../internal/form";
 
-const thumbSelector = 'input[type="range"].slider-thumb';
+const thumbSelector = ':scope > input[type="range"]';
 const orientations = new Set(["horizontal", "vertical"]);
 
 type SliderOrientation = "horizontal" | "vertical";
@@ -26,9 +25,7 @@ const setAttributeIfChanged = (
 };
 
 const orientationFor = (element: HTMLElement): SliderOrientation => {
-  const authored =
-    element.getAttribute("orientation") ??
-    element.getAttribute("data-orientation");
+  const authored = element.getAttribute("orientation");
   return authored && orientations.has(authored)
     ? (authored as SliderOrientation)
     : "horizontal";
@@ -57,23 +54,9 @@ const syncInput = (
 ): SliderValue => {
   const state = sliderValue(element);
 
-  syncNativeControlState(element);
-  setAttributeIfChanged(element, "role", "slider");
   setAttributeIfChanged(element, "aria-orientation", orientation);
-  setAttributeIfChanged(element, "data-orientation", orientation);
-  setAttributeIfChanged(element, "aria-valuemin", String(state.min));
-  setAttributeIfChanged(element, "aria-valuemax", String(state.max));
-  setAttributeIfChanged(element, "aria-valuenow", String(state.value));
-  setAttributeIfChanged(
-    element,
-    "data-invalid",
-    String(
-      element.getAttribute("aria-invalid") === "true" ||
-        element.matches(":invalid"),
-    ),
-  );
+  setAttributeIfChanged(element, "orientation", orientation);
   element.style.setProperty("--value", `${String(state.percent)}%`);
-  setAttributeIfChanged(element, "data-value", String(state.value));
 
   return state;
 };
@@ -85,7 +68,6 @@ const bindNativeSlider = (element: HTMLInputElement): (() => void) => {
     attributes: true,
     attributeFilter: [
       "aria-invalid",
-      "data-orientation",
       "disabled",
       "max",
       "min",
@@ -118,10 +100,7 @@ const bindCompositeSlider = (element: HTMLElement): (() => void) => {
       getComputedStyle(element).direction === "rtl"
         ? "rtl"
         : "ltr";
-    const states = thumbs.map((input, index) => {
-      setAttributeIfChanged(input, "data-index", String(index));
-      return syncInput(input, orientation);
-    });
+    const states = thumbs.map((input) => syncInput(input, orientation));
     const minAttribute = element.getAttribute("min");
     const maxAttribute = element.getAttribute("max");
     const authoredMin =
@@ -150,25 +129,9 @@ const bindCompositeSlider = (element: HTMLElement): (() => void) => {
     const start = physicalPercents.length ? Math.min(...physicalPercents) : 0;
     const end = physicalPercents.length ? Math.max(...physicalPercents) : 0;
 
-    setAttributeIfChanged(element, "data-orientation", orientation);
-    setAttributeIfChanged(
-      element,
-      "data-disabled",
-      String(thumbs.length > 0 && thumbs.every((input) => input.disabled)),
-    );
-    setAttributeIfChanged(
-      element,
-      "data-values",
-      states.map(({ value }) => value).join(","),
-    );
+    setAttributeIfChanged(element, "orientation", orientation);
     element.style.setProperty("--range-start", `${String(start)}%`);
     element.style.setProperty("--range-end", `${String(end)}%`);
-  };
-
-  const handleFocus = (event: FocusEvent) => {
-    inputs().forEach((input) =>
-      input.toggleAttribute("data-active", input === event.target),
-    );
   };
 
   const observer = new MutationObserver(sync);
@@ -176,7 +139,6 @@ const bindCompositeSlider = (element: HTMLElement): (() => void) => {
     attributes: true,
     attributeFilter: [
       "aria-invalid",
-      "data-orientation",
       "dir",
       "disabled",
       "max",
@@ -190,7 +152,6 @@ const bindCompositeSlider = (element: HTMLElement): (() => void) => {
   });
   element.addEventListener("input", sync);
   element.addEventListener("change", sync);
-  element.addEventListener("focusin", handleFocus);
   sync();
   queueMicrotask(sync);
   requestAnimationFrame(sync);
@@ -199,7 +160,6 @@ const bindCompositeSlider = (element: HTMLElement): (() => void) => {
     observer.disconnect();
     element.removeEventListener("input", sync);
     element.removeEventListener("change", sync);
-    element.removeEventListener("focusin", handleFocus);
   };
 };
 

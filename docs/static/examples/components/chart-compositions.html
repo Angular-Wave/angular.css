@@ -20,74 +20,71 @@
       aria-label="Chart reference compositions"
     >
       <article class="chart-interactive-card chart-composition-wide card">
-        <header class="chart-interactive-header card-header">
+        <header class="chart-interactive-header">
           <div class="chart-interactive-copy">
-            <h2 class="card-title">Bar Chart - Interactive</h2>
-            <p class="card-description">
-              Showing total visitors for the last 3 months
-            </p>
+            <h2>Bar Chart - Interactive</h2>
+            <p>Showing total visitors for the last 3 months</p>
           </div>
           <div class="chart-series-controls" aria-label="Visitor series">
             <button
               type="button"
-
               variant="ghost"
-              data-active="{{ activeChart == 'desktop' }}"
-              ng-click="activeChart='desktop'" class="button">
+              aria-pressed="{{ activeChart == 'desktop' }}"
+              ng-click="activeChart='desktop'"
+              class="button"
+            >
               <span>Desktop</span><strong>7,324</strong>
             </button>
             <button
               type="button"
-
               variant="ghost"
-              data-active="{{ activeChart == 'mobile' }}"
-              ng-click="activeChart='mobile'" class="button">
+              aria-pressed="{{ activeChart == 'mobile' }}"
+              ng-click="activeChart='mobile'"
+              class="button"
+            >
               <span>Mobile</span><strong>7,250</strong>
             </button>
           </div>
         </header>
-        <section class="chart-interactive-content card-content">
+        <section class="chart-interactive-content">
           <figure
-
             class="chart-interactive-demo chart"
             aria-label="Interactive daily visitors"
           >
-            <div class="chart-plot">
-              <div class="chart-grid"></div>
-              <div class="chart-daily-bars chart-bars">
+            <section>
+              <hr />
+              <div class="chart-daily-bars">
                 <span
-
                   ng-repeat="point in interactiveData"
-                  data-label="{{ point.date }} {{ activeChart }}"
+                  aria-label="{{ point.date }} {{ activeChart }}"
                   data-value="{{ activeChart == 'desktop' ? point.dp : point.mp }}"
                   data-color="{{ activeChart == 'desktop' ? 'var(--chart-2)' : 'var(--chart-1)' }}"
                   ng-mouseenter="demoTip.visible=true;demoTip.date=point.date;demoTip.value=activeChart == 'desktop' ? point.d : point.m"
                   ng-mouseleave="demoTip.visible=false"
-                 class="chart-bar"></span>
+                ></span>
               </div>
-              <div
-
-                class="chart-floating-tooltip chart-tooltip"
-                ng-if="demoTip.visible"
-              >
-                <strong
-                   class="chart-tooltip-label">{{ demoTip.date }}, 2024</strong>
-                <div class="chart-tooltip-items">
-                  <div class="chart-tooltip-item">
+              <output class="chart-floating-tooltip" ng-if="demoTip.visible">
+                <strong>{{ demoTip.date }}, 2024</strong>
+                <dl>
+                  <div>
                     <span
-
                       data-color="{{ activeChart == 'desktop' ? 'var(--chart-2)' : 'var(--chart-1)' }}"
-                     class="chart-tooltip-indicator"></span><span
-                       class="chart-tooltip-name">{{ activeChart == 'desktop' ? 'Desktop' : 'Mobile'
-                      }}</span><span
-                       class="chart-tooltip-value">{{ demoTip.value }}</span>
+                    ></span>
+                    <dt>
+                      {{ activeChart == 'desktop' ? 'Desktop' : 'Mobile' }}
+                    </dt>
+                    <dd>{{ demoTip.value }}</dd>
                   </div>
-                </div>
-              </div>
-            </div>
-            <div class="chart-date-axis chart-axis">
-              <span class="chart-axis-item">Apr 1</span><span class="chart-axis-item">Apr 8</span><span class="chart-axis-item">Apr 15</span><span class="chart-axis-item">Apr 22</span><span class="chart-axis-item">Apr 30</span>
-            </div>
+                </dl>
+              </output>
+            </section>
+            <footer class="chart-date-axis">
+              <span>Apr 1</span>
+              <span>Apr 8</span>
+              <span>Apr 15</span>
+              <span>Apr 22</span>
+              <span>Apr 30</span>
+            </footer>
           </figure>
         </section>
       </article>
@@ -100,67 +97,51 @@
       >
         <h2 id="chart-rtl-heading">مخطط من اليمين إلى اليسار</h2>
         <figure
-
           class="chart-reference-demo chart"
           aria-label="زوار سطح المكتب والجوال"
         >
-          <div class="chart-plot">
-            <div class="chart-grid"></div>
-            <div class="chart-bar-groups">
-              <div
-
+          <section>
+            <hr />
+            <ul>
+              <li
                 ng-repeat="point in rtlData"
                 ng-mouseenter="rtlTip.visible=true;rtlTip.month=point.month;rtlTip.desktop=point.desktop;rtlTip.mobile=point.mobile"
                 ng-mouseleave="rtlTip.visible=false"
-               class="chart-bar-group">
+              >
                 <span
-
-                  data-label="{{ point.month }} سطح المكتب"
+                  aria-label="{{ point.month }} سطح المكتب"
                   data-value="{{ point.d }}"
                   data-color="var(--chart-2)"
-                 class="chart-bar"></span>
+                ></span>
                 <span
-
-                  data-label="{{ point.month }} الجوال"
+                  aria-label="{{ point.month }} الجوال"
                   data-value="{{ point.m }}"
                   data-color="var(--chart-1)"
-                 class="chart-bar"></span>
-              </div>
-            </div>
-            <div
-
-              class="chart-floating-tooltip chart-tooltip"
-              ng-if="rtlTip.visible"
-            >
-              <strong
-                 class="chart-tooltip-label">{{ rtlTip.month }}</strong>
-              <div class="chart-tooltip-items">
-                <div class="chart-tooltip-item">
-                  <span
-
-                    data-color="var(--chart-2)"
-                   class="chart-tooltip-indicator"></span><span class="chart-tooltip-name">سطح المكتب</span><span
-                     class="chart-tooltip-value">{{ rtlTip.desktop }}</span>
+                ></span>
+              </li>
+            </ul>
+            <output class="chart-floating-tooltip" ng-if="rtlTip.visible">
+              <strong>{{ rtlTip.month }}</strong>
+              <dl>
+                <div>
+                  <span data-color="var(--chart-2)"></span>
+                  <dt>سطح المكتب</dt>
+                  <dd>{{ rtlTip.desktop }}</dd>
                 </div>
-                <div class="chart-tooltip-item">
-                  <span
-
-                    data-color="var(--chart-1)"
-                   class="chart-tooltip-indicator"></span><span class="chart-tooltip-name">الجوال</span><span
-                     class="chart-tooltip-value">{{ rtlTip.mobile }}</span>
+                <div>
+                  <span data-color="var(--chart-1)"></span>
+                  <dt>الجوال</dt>
+                  <dd>{{ rtlTip.mobile }}</dd>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="chart-axis">
-            <span ng-repeat="point in rtlData"
-               class="chart-axis-item">{{ point.short }}</span>
-          </div>
-          <ul class="chart-legend">
-            <li
-               class="chart-legend-item"><span data-color="var(--chart-2)" class="chart-swatch"></span>سطح المكتب</li>
-            <li
-               class="chart-legend-item"><span data-color="var(--chart-1)" class="chart-swatch"></span>الجوال</li>
+              </dl>
+            </output>
+          </section>
+          <footer>
+            <span ng-repeat="point in rtlData"> {{ point.short }} </span>
+          </footer>
+          <ul>
+            <li><span data-color="var(--chart-2)"></span>سطح المكتب</li>
+            <li><span data-color="var(--chart-1)"></span>الجوال</li>
           </ul>
         </figure>
       </section>
@@ -171,68 +152,56 @@
       >
         <h2 id="chart-tooltip-gallery-heading">Tooltip anatomy</h2>
         <figure
-
           class="chart-tooltip-gallery chart"
-
           aria-label="Chart tooltip anatomy examples"
         >
-          <div class="chart-tooltip">
-            <strong class="chart-tooltip-label">Page Views</strong>
-            <div class="chart-tooltip-items">
-              <div class="chart-tooltip-item">
-                <span
-
-                  data-color="var(--chart-1)"
-                 class="chart-tooltip-indicator"></span><span class="chart-tooltip-name">Desktop</span><span class="chart-tooltip-value">186</span>
+          <output>
+            <strong>Page Views</strong>
+            <dl>
+              <div>
+                <span data-color="var(--chart-1)"></span>
+                <dt>Desktop</dt>
+                <dd>186</dd>
               </div>
-              <div class="chart-tooltip-item">
-                <span
-
-                  data-color="var(--chart-2)"
-                 class="chart-tooltip-indicator"></span><span class="chart-tooltip-name">Mobile</span><span class="chart-tooltip-value">80</span>
+              <div>
+                <span data-color="var(--chart-2)"></span>
+                <dt>Mobile</dt>
+                <dd>80</dd>
               </div>
-            </div>
-          </div>
-          <div class="chart-tooltip">
-            <div class="chart-tooltip-items">
-              <div class="chart-tooltip-item">
-                <span
-
-                  data-indicator="dashed"
-                  data-color="var(--chart-3)"
-                 class="chart-tooltip-indicator"></span><span class="chart-tooltip-name">Chrome</span><span class="chart-tooltip-value">1,286</span>
+            </dl>
+          </output>
+          <output>
+            <dl>
+              <div>
+                <span indicator="dashed" data-color="var(--chart-3)"></span>
+                <dt>Chrome</dt>
+                <dd>1,286</dd>
               </div>
-              <div class="chart-tooltip-item">
-                <span
-
-                  data-indicator="dashed"
-                  data-color="var(--chart-4)"
-                 class="chart-tooltip-indicator"></span><span class="chart-tooltip-name">Firefox</span><span class="chart-tooltip-value">1,000</span>
+              <div>
+                <span indicator="dashed" data-color="var(--chart-4)"></span>
+                <dt>Firefox</dt>
+                <dd>1,000</dd>
               </div>
-            </div>
-          </div>
-          <div class="chart-tooltip">
-            <div class="chart-tooltip-items">
-              <div class="chart-tooltip-item">
-                <span
-
-                  data-indicator="line"
-                  data-color="var(--chart-3)"
-                 class="chart-tooltip-indicator"></span><span
-                   class="chart-tooltip-name"><strong>Page Views</strong><br />Desktop</span><span class="chart-tooltip-value">12,486</span>
+            </dl>
+          </output>
+          <output>
+            <dl>
+              <div>
+                <span indicator="line" data-color="var(--chart-3)"></span>
+                <dt><strong>Page Views</strong><br />Desktop</dt>
+                <dd>12,486</dd>
               </div>
-            </div>
-          </div>
-          <div class="chart-tooltip">
-            <div class="chart-tooltip-items">
-              <div class="chart-tooltip-item">
-                <span
-
-                  data-color="var(--chart-1)"
-                 class="chart-tooltip-indicator"></span><span class="chart-tooltip-name">Chrome</span><span class="chart-tooltip-value">1,286</span>
+            </dl>
+          </output>
+          <output>
+            <dl>
+              <div>
+                <span data-color="var(--chart-1)"></span>
+                <dt>Chrome</dt>
+                <dd>1,286</dd>
               </div>
-            </div>
-          </div>
+            </dl>
+          </output>
         </figure>
       </section>
     </main>

@@ -54,27 +54,51 @@ const parseDateList = (value: string | null) =>
 export function calendarDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
-      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
       const getDirection = () =>
         element.closest<HTMLElement>("[dir]")?.getAttribute("dir") === "rtl"
           ? "rtl"
           : "ltr";
-      const syncDirection = () => {
-        const direction = getDirection();
-        if (element.getAttribute("data-direction") !== direction) {
-          element.setAttribute("data-direction", direction);
-        }
+      const getHeader = (): HTMLElement | undefined =>
+        Array.from(element.children).find(
+          (child): child is HTMLElement =>
+            child instanceof HTMLElement && child.tagName === "HEADER",
+        );
+      const getTitle = (): HTMLElement | null =>
+        getHeader()?.querySelector<HTMLElement>(
+          ":scope > :is(h1, h2, h3, h4, h5, h6)",
+        ) ?? null;
+      const getGrid = (): HTMLElement | undefined =>
+        Array.from(element.children).find(
+          (child): child is HTMLElement =>
+            child instanceof HTMLElement && child.tagName === "DIV",
+        );
+      const getMonthControls = (): readonly [
+        HTMLButtonElement | undefined,
+        HTMLButtonElement | undefined,
+      ] => {
+        const controls = Array.from(getHeader()?.children ?? []).filter(
+          (child): child is HTMLButtonElement =>
+            child instanceof HTMLButtonElement,
+        );
+        return [controls.at(0), controls.at(1)];
       };
-      let days = queryAll<HTMLElement>(element, ".calendar-day");
+      const getDayValue = (day: HTMLElement): string => {
+        if (day instanceof HTMLButtonElement && day.value) return day.value;
+        return day.getAttribute("data-value") ?? day.textContent.trim();
+      };
+      const getDays = (): HTMLElement[] => {
+        const grid = getGrid();
+        return grid
+          ? queryAll<HTMLElement>(grid, "button:is([value], [data-value])")
+          : [];
+      };
+      let days = getDays();
       const columns = Number(element.getAttribute("data-columns") ?? 7);
       const cleanupDays = new WeakMap<HTMLElement, () => void>();
       const cleanupControls = new WeakMap<HTMLElement, () => void>();
       const generatedLabels = new WeakMap<HTMLElement, string>();
       const generatedCurrent = new WeakSet<HTMLElement>();
       let renderedMonth = "";
-
-      element.setAttribute("role", "grid");
-      syncDirection();
 
       const getLocale = () =>
         (element.closest<HTMLElement>("[lang]")?.getAttribute("lang") ??
@@ -100,7 +124,7 @@ export function calendarDirective(): ng.Directive {
       const renderGeneratedMonth = () => {
         if (!element.hasAttribute("data-calendar-generated")) return;
 
-        const grid = element.querySelector<HTMLElement>(".calendar-grid");
+        const grid = getGrid();
         if (!grid) return;
 
         const selectedDate = parseDateValue(element.getAttribute("data-value"));
@@ -137,15 +161,13 @@ export function calendarDirective(): ng.Directive {
         renderedMonth = renderKey;
         setAttributeIfChanged(element, "data-month", monthValue);
 
-        const title = element.querySelector<HTMLElement>(".calendar-title");
+        const title = getTitle();
         if (title) {
           const captionLayout =
             element.getAttribute("data-caption-layout") ?? "label";
           if (captionLayout === "dropdown") {
             const monthSelect = document.createElement("select");
             const yearSelect = document.createElement("select");
-            monthSelect.className = "calendar-month-select";
-            yearSelect.className = "calendar-year-select";
             monthSelect.setAttribute("aria-label", "Month");
             yearSelect.setAttribute("aria-label", "Year");
 
@@ -245,7 +267,6 @@ export function calendarDirective(): ng.Directive {
           element.getAttribute("data-show-outside-days") !== "false";
         const buildMonthGrid = (visibleMonth: Date) => {
           const monthGrid = document.createElement("div");
-          monthGrid.className = "calendar-month-grid";
           monthGrid.setAttribute(
             "data-show-week-numbers",
             String(showWeekNumbers),
@@ -253,18 +274,17 @@ export function calendarDirective(): ng.Directive {
           const firstVisibleDate = startOfWeek(visibleMonth, { weekStartsOn });
 
           if (showWeekNumbers) {
-            const header = document.createElement("span");
-            header.className = "calendar-week-number-header";
-            header.setAttribute("aria-label", "Week number");
+            const header = document.createElement("abbr");
+            header.title = "Week number";
             header.textContent = "Wk";
             monthGrid.append(header);
           }
           for (let index = 0; index < 7; index += 1) {
             const date = addDays(firstVisibleDate, index);
-            const weekday = document.createElement("span");
+            const weekday = document.createElement("abbr");
             const weekdayLabel = weekdayFormatter.format(date);
-            weekday.className = "calendar-weekday";
             weekday.setAttribute("aria-label", weekdayLabel);
+            weekday.title = weekdayLabel;
             weekday.textContent = useNarrowWeekdays
               ? narrowWeekdayFormatter.format(date)
               : weekdayLabel.slice(0, 2);
@@ -275,20 +295,19 @@ export function calendarDirective(): ng.Directive {
             const date = addDays(firstVisibleDate, index);
             const value = formatDateValue(date);
             if (showWeekNumbers && index % 7 === 0) {
-              const weekNumber = document.createElement("span");
-              weekNumber.className = "calendar-week-number";
-              weekNumber.textContent = numberFormatter.format(
-                getWeek(date, { weekStartsOn }),
-              );
+              const week = getWeek(date, { weekStartsOn });
+              const weekNumber = document.createElement("data");
+              weekNumber.setAttribute("value", String(week));
+              weekNumber.title = `Week ${String(week)}`;
+              weekNumber.textContent = numberFormatter.format(week);
               monthGrid.append(weekNumber);
             }
 
             const outside = !isSameMonth(date, visibleMonth);
             const day = document.createElement("button");
             day.type = "button";
-            day.className = "calendar-day";
-            day.setAttribute("data-value", value);
-            day.setAttribute("data-label", dateFormatter.format(date));
+            day.setAttribute("value", value);
+            day.setAttribute("aria-label", dateFormatter.format(date));
             day.setAttribute("data-outside", String(outside));
             day.textContent = numberFormatter.format(date.getDate());
 
@@ -312,7 +331,7 @@ export function calendarDirective(): ng.Directive {
               day.setAttribute("data-range-middle", "true");
               day.setAttribute("aria-selected", "true");
             }
-            if (value === todayValue) day.setAttribute("data-today", "true");
+            if (value === todayValue) day.setAttribute("aria-current", "date");
             if (bookedDates.has(value)) day.setAttribute("data-booked", "true");
             const constrained =
               disabledDates.has(value) ||
@@ -337,9 +356,7 @@ export function calendarDirective(): ng.Directive {
             continue;
           }
           const monthSection = document.createElement("section");
-          monthSection.className = "calendar-month";
           const monthTitle = document.createElement("h3");
-          monthTitle.className = "calendar-month-title";
           monthTitle.textContent = createFormatter({
             month: "long",
             year: "numeric",
@@ -360,7 +377,7 @@ export function calendarDirective(): ng.Directive {
         activeDay?: HTMLElement,
       ) => {
         const singleValue =
-          activeDay?.getAttribute("data-value") ??
+          (activeDay ? getDayValue(activeDay) : undefined) ??
           element.getAttribute("data-value") ??
           "";
         const focusedDay =
@@ -369,7 +386,7 @@ export function calendarDirective(): ng.Directive {
           days.find((day) => day.getAttribute("tabindex") === "0");
 
         days.forEach((day) => {
-          const value = day.getAttribute("data-value") ?? "";
+          const value = getDayValue(day);
           const selected =
             selectionMode === "multiple"
               ? values.includes(value)
@@ -384,12 +401,6 @@ export function calendarDirective(): ng.Directive {
                   )
                 : value === singleValue;
           setAttributeIfChanged(day, "aria-selected", String(selected));
-          setAttributeIfChanged(day, "data-selected", String(selected));
-          setAttributeIfChanged(
-            day,
-            "data-state",
-            selected ? "selected" : "idle",
-          );
           if (selectionMode === "range") {
             setAttributeIfChanged(
               day,
@@ -413,20 +424,6 @@ export function calendarDirective(): ng.Directive {
                 ),
               ),
             );
-            setAttributeIfChanged(
-              day,
-              "data-range",
-              value === rangeStart
-                ? "start"
-                : value === rangeEnd
-                  ? "end"
-                  : rangeStart &&
-                      rangeEnd &&
-                      value > rangeStart &&
-                      value < rangeEnd
-                    ? "middle"
-                    : "none",
-            );
           }
           setAttributeIfChanged(
             day,
@@ -439,10 +436,7 @@ export function calendarDirective(): ng.Directive {
       const selectDay = (selectedDay: HTMLElement, emit = true) => {
         const selectionMode =
           element.getAttribute("data-selection-mode") ?? "single";
-        const selectedValue =
-          (selectedDay.getAttribute("data-value") ??
-            selectedDay.textContent.trim()) ||
-          "";
+        const selectedValue = getDayValue(selectedDay);
         let values: string[] = [];
         let rangeStart = element.getAttribute("data-range-start-value") ?? "";
         let rangeEnd = element.getAttribute("data-range-end-value") ?? "";
@@ -522,36 +516,16 @@ export function calendarDirective(): ng.Directive {
       };
 
       const bindDay = (day: HTMLElement) => {
-        setAttributeIfChanged(day, "role", "gridcell");
         setAttributeIfChanged(
           day,
           "tabindex",
           day.getAttribute("tabindex") ?? "-1",
         );
         const disabled = isDisabled(day);
-        setAttributeIfChanged(day, "data-disabled", String(disabled));
-        setAttributeIfChanged(day, "aria-disabled", String(disabled));
+        if (disabled) setAttributeIfChanged(day, "aria-disabled", "true");
         const outside = day.getAttribute("data-outside") === "true";
         setAttributeIfChanged(day, "data-outside", String(outside));
-        const range =
-          day.getAttribute("data-range-start") === "true"
-            ? "start"
-            : day.getAttribute("data-range-end") === "true"
-              ? "end"
-              : day.getAttribute("data-range-middle") === "true"
-                ? "middle"
-                : "none";
-        setAttributeIfChanged(day, "data-range", range);
-        setAttributeIfChanged(
-          day,
-          "data-state",
-          day.getAttribute("aria-selected") === "true" ||
-            day.getAttribute("data-selected") === "true"
-            ? "selected"
-            : "idle",
-        );
-        const label =
-          day.getAttribute("data-label") ?? day.getAttribute("data-value");
+        const label = day.getAttribute("aria-label") ?? getDayValue(day);
         const currentLabel = day.getAttribute("aria-label");
         if (
           label &&
@@ -560,7 +534,7 @@ export function calendarDirective(): ng.Directive {
           setAttributeIfChanged(day, "aria-label", label);
           generatedLabels.set(day, label);
         }
-        if (day.getAttribute("data-today") === "true") {
+        if (day.getAttribute("aria-current") === "date") {
           if (!day.hasAttribute("aria-current")) generatedCurrent.add(day);
           setAttributeIfChanged(
             day,
@@ -581,9 +555,9 @@ export function calendarDirective(): ng.Directive {
             element.hasAttribute("data-calendar-generated") &&
             day.getAttribute("data-outside") === "true"
           ) {
-            const value = day.getAttribute("data-value");
+            const value = getDayValue(day);
             const date = parseDateValue(value);
-            if (date) showMonth(date, value ?? undefined);
+            if (date) showMonth(date, value);
           }
         };
         const handleKeydown = (event: KeyboardEvent) => {
@@ -605,7 +579,7 @@ export function calendarDirective(): ng.Directive {
             (event.key === "PageUp" || event.key === "PageDown") &&
             element.hasAttribute("data-calendar-generated")
           ) {
-            const date = parseDateValue(day.getAttribute("data-value"));
+            const date = parseDateValue(getDayValue(day));
             if (date) {
               const target = addMonths(date, event.key === "PageUp" ? -1 : 1);
               showMonth(target, formatDateValue(target), true);
@@ -688,7 +662,7 @@ export function calendarDirective(): ng.Directive {
 
         if (!focusedValue) return;
         const focusedDay = days.find(
-          (day) => day.getAttribute("data-value") === focusedValue,
+          (day) => getDayValue(day) === focusedValue,
         );
         if (!focusedDay || isDisabled(focusedDay)) return;
         if (selectFocused) selectDay(focusedDay);
@@ -729,26 +703,13 @@ export function calendarDirective(): ng.Directive {
 
       function syncCalendar() {
         renderGeneratedMonth();
-        const title = element.querySelector<HTMLElement>(".calendar-title");
+        const title = getTitle();
         if (title && !element.hasAttribute("aria-label")) {
           if (!title.id)
             title.id = `calendar-title-${String(calendarIdCounter++)}`;
           setAttributeIfChanged(element, "aria-labelledby", title.id);
         }
-        queryAll<HTMLElement>(element, ".calendar-row").forEach((row) => {
-          row.setAttribute("role", "row");
-        });
-        queryAll<HTMLElement>(element, ".calendar-weekday").forEach(
-          (weekday) => {
-            weekday.setAttribute("role", "columnheader");
-          },
-        );
-        queryAll<HTMLElement>(element, ".calendar-week-number").forEach(
-          (weekNumber) => {
-            setAttributeIfChanged(weekNumber, "role", "rowheader");
-          },
-        );
-        days = queryAll<HTMLElement>(element, ".calendar-day");
+        days = getDays();
         days.forEach(bindDay);
         const selectionMode =
           element.getAttribute("data-selection-mode") ?? "single";
@@ -767,26 +728,19 @@ export function calendarDirective(): ng.Directive {
             element.getAttribute("data-range-end-value") ?? "",
           );
         }
-        queryAll<HTMLElement>(element, ".calendar-previous").forEach(
-          (control) => {
-            bindMonthControl(control, -1);
-          },
-        );
-        queryAll<HTMLElement>(element, ".calendar-next").forEach((control) => {
-          bindMonthControl(control, 1);
-        });
+        const [previous, next] = getMonthControls();
+        if (previous) bindMonthControl(previous, -1);
+        if (next) bindMonthControl(next, 1);
         queryAll<HTMLElement>(element, "[data-calendar-preset]").forEach(
           bindPresetControl,
         );
         const requestedValue = element.getAttribute("data-value");
         const selected =
-          days.find(
-            (day) => day.getAttribute("data-value") === requestedValue,
-          ) ??
+          days.find((day) => getDayValue(day) === requestedValue) ??
           days.find(
             (day) =>
               day.getAttribute("aria-selected") === "true" ||
-              day.getAttribute("data-selected") === "true",
+              day.getAttribute("aria-selected") === "true",
           );
         if (selected && selectionMode === "single") {
           selectDay(selected, false);
@@ -804,18 +758,7 @@ export function calendarDirective(): ng.Directive {
 
       syncCalendar();
 
-      const directionObserver =
-        directionOwner === element
-          ? null
-          : new MutationObserver(() => {
-              syncDirection();
-            });
-      directionObserver?.observe(directionOwner, {
-        attributes: true,
-        attributeFilter: ["dir"],
-      });
       const elementObserver = new MutationObserver(() => {
-        syncDirection();
         syncCalendar();
       });
       elementObserver.observe(element, {
@@ -823,7 +766,6 @@ export function calendarDirective(): ng.Directive {
         attributeFilter: [
           "aria-disabled",
           "aria-selected",
-          "data-disabled",
           "data-disabled-after",
           "data-disabled-before",
           "data-disabled-dates",
@@ -840,33 +782,30 @@ export function calendarDirective(): ng.Directive {
           "data-range-middle",
           "data-range-start",
           "data-range-start-value",
-          "data-selected",
           "data-selection-mode",
           "data-show-outside-days",
           "data-show-week-numbers",
           "data-start-year",
-          "data-today",
           "data-value",
           "data-values",
           "data-week-start",
           "dir",
           "disabled",
           "hidden",
+          "value",
         ],
         childList: true,
         subtree: true,
       });
 
       onDestroy(scope, () => {
-        directionObserver?.disconnect();
         elementObserver.disconnect();
         days.forEach((day) => {
           cleanupDays.get(day)?.();
         });
-        queryAll<HTMLElement>(
-          element,
-          ".calendar-previous, .calendar-next",
-        ).forEach((control) => cleanupControls.get(control)?.());
+        getMonthControls().forEach((control) => {
+          if (control) cleanupControls.get(control)?.();
+        });
         queryAll<HTMLElement>(element, "[data-calendar-preset]").forEach(
           (control) => cleanupControls.get(control)?.(),
         );

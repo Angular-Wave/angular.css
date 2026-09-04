@@ -19,26 +19,15 @@ const setAttributeIfChanged = (
 export function tooltipDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
-      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
-      const trigger = query(element, ".tooltip-trigger", HTMLElement);
-      const content = query(element, ".tooltip-content", HTMLElement);
+      const trigger = query(element, ":scope > :first-child", HTMLElement);
+      const content = query(element, ":scope > :last-child", HTMLElement);
 
-      if (!trigger || !content) return;
+      if (!trigger || !content || trigger === content) return;
 
-      const getDirection = () =>
-        element.closest<HTMLElement>("[dir]")?.getAttribute("dir") === "rtl"
-          ? "rtl"
-          : "ltr";
-      const syncDirection = () => {
-        const direction = getDirection();
-        setAttributeIfChanged(element, "data-direction", direction);
-        setAttributeIfChanged(content, "data-direction", direction);
-      };
       const syncSide = () => {
-        const authored =
-          content.getAttribute("side") ?? content.getAttribute("data-side");
+        const authored = content.getAttribute("side");
         const side = authored && sides.has(authored) ? authored : "top";
-        setAttributeIfChanged(content, "data-side", side);
+        setAttributeIfChanged(content, "side", side);
       };
       const contentId =
         content.id || `tooltip-content-${String(tooltipIdCounter++)}`;
@@ -46,9 +35,7 @@ export function tooltipDirective(): ng.Directive {
       trigger.setAttribute("aria-describedby", contentId);
       content.setAttribute("role", "tooltip");
 
-      let controlledOpen =
-        element.getAttribute("data-open") === "true" ||
-        content.getAttribute("data-open") === "true";
+      let controlledOpen = element.hasAttribute("open");
       let keepOpen = false;
       const isOpen = () => keepOpen || controlledOpen;
       let appliedOpen = isOpen();
@@ -57,13 +44,9 @@ export function tooltipDirective(): ng.Directive {
         const nextOpen = isOpen();
         const wasOpen = appliedOpen;
         appliedOpen = nextOpen;
-        const state = nextOpen ? "open" : "closed";
-        setAttributeIfChanged(element, "data-state", state);
-        setAttributeIfChanged(trigger, "data-state", state);
-        setAttributeIfChanged(content, "data-state", state);
         setAttributeIfChanged(content, "aria-hidden", String(!nextOpen));
         reflectingOpen = true;
-        setAttributeIfChanged(element, "data-open", String(nextOpen));
+        element.toggleAttribute("open", nextOpen);
         setOpenState(content, nextOpen);
         queueMicrotask(() => {
           reflectingOpen = false;
@@ -71,41 +54,32 @@ export function tooltipDirective(): ng.Directive {
         if (nextOpen === wasOpen) return;
       };
 
-      const syncFromAttribute = (source: HTMLElement) => {
+      const syncFromAttribute = () => {
         if (reflectingOpen) return;
-        const nextOpen = source.getAttribute("data-open") === "true";
+        const nextOpen = element.hasAttribute("open");
         if (nextOpen === controlledOpen) return;
         controlledOpen = nextOpen;
         setOpen();
       };
       const openObserver = new MutationObserver((records) => {
         syncSide();
-        if (records.some((record) => record.attributeName === "data-open")) {
-          syncFromAttribute(content);
-        }
+        if (records.some((record) => record.attributeName === "side"))
+          syncSide();
       });
       openObserver.observe(content, {
         attributes: true,
-        attributeFilter: ["data-open", "data-side", "side"],
-      });
-      const directionObserver =
-        directionOwner === element ? null : new MutationObserver(syncDirection);
-      directionObserver?.observe(directionOwner, {
-        attributes: true,
-        attributeFilter: ["dir"],
+        attributeFilter: ["side"],
       });
       const elementObserver = new MutationObserver((records) => {
-        syncDirection();
-        if (records.some((record) => record.attributeName === "data-open")) {
-          syncFromAttribute(element);
+        if (records.some((record) => record.attributeName === "open")) {
+          syncFromAttribute();
         }
       });
       elementObserver.observe(element, {
         attributes: true,
-        attributeFilter: ["data-open", "dir"],
+        attributeFilter: ["dir", "open"],
       });
 
-      syncDirection();
       syncSide();
       setOpen();
 
@@ -131,7 +105,6 @@ export function tooltipDirective(): ng.Directive {
 
       onDestroy(scope, () => {
         openObserver.disconnect();
-        directionObserver?.disconnect();
         elementObserver.disconnect();
         trigger.removeEventListener("mouseenter", handleOpen);
         trigger.removeEventListener("mouseleave", handleClose);

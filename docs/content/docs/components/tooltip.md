@@ -6,12 +6,13 @@ description: >
 ---
 
 Use a native trigger with short, non-interactive descriptive content. Content
-can be held visible with `data-open="true"` for controlled examples.
+can be held visible with the wrapper's concise `open` attribute for controlled
+examples.
 
 ```html
 <span ng-tooltip>
-  <button class="tooltip-trigger">Hover</button>
-  <span side="top" class="tooltip-content">Add to library</span>
+  <button>Hover</button>
+  <span side="top">Add to library</span>
 </span>
 ```
 
@@ -46,13 +47,9 @@ One trigger and one plain-text content element are required. Prefer a native but
 | --- | --- | --- |
 | `aria-describedby` | Output | ARIA relationship or state. |
 | `aria-hidden` | Output | ARIA relationship or state. |
-| `data-direction` | Output | Stable component state or styling hook. |
-| `data-open` | Input/output | Stable component state or styling hook. |
-| `data-side` | Input/output | Stable component state or styling hook. |
-| `data-state` | Output | Stable component state or styling hook. |
-| `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
+| `open` | Input | Initial or controlled open state. |
 | `role` | Output | Explicit semantic role when native HTML does not provide one. |
-| `side` | Input | Physical placement: `left`, `top`, `bottom`, or `right`. |
+| `side` | Input/output | Physical placement: `left`, `top`, `bottom`, or `right`. |
 
 `Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
 

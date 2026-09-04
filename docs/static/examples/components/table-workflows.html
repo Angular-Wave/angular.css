@@ -20,31 +20,31 @@
         data-example="table-demo table-footer"
         aria-label="Recent invoices"
       >
-        <figure class="table-container">
+        <figure>
           <table class="table">
-            <caption class="table-caption">
+            <caption>
               A list of your recent invoices.
             </caption>
-            <thead class="table-header">
-              <tr class="table-row">
-                <th class="table-head">Invoice</th>
-                <th class="table-head">Status</th>
-                <th class="table-head">Method</th>
-                <th class="text-right table-head">Amount</th>
+            <thead>
+              <tr>
+                <th scope="col">Invoice</th>
+                <th scope="col">Status</th>
+                <th scope="col">Method</th>
+                <th scope="col" class="text-right">Amount</th>
               </tr>
             </thead>
-            <tbody class="table-body">
-              <tr ng-repeat="invoice in invoices" animate class="table-row">
-                <th class="table-cell">{{ invoice.id }}</th>
-                <td class="table-cell">{{ invoice.status }}</td>
-                <td class="table-cell">{{ invoice.method }}</td>
-                <td class="text-right table-cell">{{ invoice.amount }}</td>
+            <tbody>
+              <tr ng-repeat="invoice in invoices" animate>
+                <th scope="row">{{ invoice.id }}</th>
+                <td>{{ invoice.status }}</td>
+                <td>{{ invoice.method }}</td>
+                <td class="text-right">{{ invoice.amount }}</td>
               </tr>
             </tbody>
-            <tfoot class="table-footer">
-              <tr class="table-row">
-                <td colspan="3" class="table-cell">Total</td>
-                <td class="text-right table-cell">$2,500.00</td>
+            <tfoot>
+              <tr>
+                <td colspan="3">Total</td>
+                <td class="text-right">$2,500.00</td>
               </tr>
             </tfoot>
           </table>
@@ -56,27 +56,27 @@
         data-example="table-actions"
         aria-label="Product actions"
       >
-        <figure class="table-container">
+        <figure>
           <table class="table">
-            <thead class="table-header">
-              <tr class="table-row">
-                <th class="table-head">Product</th>
-                <th class="table-head">Price</th>
-                <th class="text-right table-head">Actions</th>
+            <thead>
+              <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col" class="text-right">Actions</th>
               </tr>
             </thead>
-            <tbody class="table-body">
-              <tr ng-repeat="product in products" animate class="table-row">
-                <th class="table-cell">{{ product.name }}</th>
-                <td class="table-cell">{{ product.price }}</td>
-                <td class="text-right table-cell">
+            <tbody>
+              <tr ng-repeat="product in products" animate>
+                <th scope="row">{{ product.name }}</th>
+                <td>{{ product.price }}</td>
+                <td class="text-right">
                   <div ng-dropdown class="table-action-menu dropdown-menu">
                     <button
                       variant="ghost"
                       size="icon-xs"
                       type="button"
                       aria-label="Open menu for {{ product.name }}"
-                      class="dropdown-menu-trigger button"
+                      class="button"
                     >
                       <svg viewBox="0 0 24 24" aria-hidden="true">
                         <circle cx="5" cy="12" r="1"></circle>
@@ -84,24 +84,19 @@
                         <circle cx="19" cy="12" r="1"></circle>
                       </svg>
                     </button>
-                    <menu class="dropdown-menu-content">
-                      <button
-                        ng-click="tableState.action='Edit '+product.name"
-                        class="dropdown-menu-item"
-                      >
+                    <menu>
+                      <button ng-click="tableState.action='Edit '+product.name">
                         Edit
                       </button>
                       <button
                         ng-click="tableState.action='Duplicate '+product.name"
-                        class="dropdown-menu-item"
                       >
                         Duplicate
                       </button>
-                      <hr class="dropdown-menu-separator" />
+                      <hr />
                       <button
-                        data-variant="destructive"
+                        variant="destructive"
                         ng-click="tableState.action='Delete '+product.name"
-                        class="dropdown-menu-item"
                       >
                         Delete
                       </button>
@@ -121,43 +116,43 @@
         dir="rtl"
         lang="ar"
       >
-        <figure class="table-container">
+        <figure>
           <table class="table">
-            <caption class="table-caption">
+            <caption>
               قائمة بفواتيرك الأخيرة.
             </caption>
-            <thead class="table-header">
-              <tr class="table-row">
-                <th class="table-head">الفاتورة</th>
-                <th class="table-head">الحالة</th>
-                <th class="table-head">الطريقة</th>
-                <th class="text-start table-head">المبلغ</th>
+            <thead>
+              <tr>
+                <th scope="col">الفاتورة</th>
+                <th scope="col">الحالة</th>
+                <th scope="col">الطريقة</th>
+                <th scope="col" class="text-start">المبلغ</th>
               </tr>
             </thead>
-            <tbody class="table-body">
-              <tr class="table-row">
-                <th class="table-cell">INV001</th>
-                <td class="table-cell">مدفوع</td>
-                <td class="table-cell">بطاقة ائتمانية</td>
-                <td class="table-cell">$250.00</td>
+            <tbody>
+              <tr>
+                <th scope="row">INV001</th>
+                <td>مدفوع</td>
+                <td>بطاقة ائتمانية</td>
+                <td>$250.00</td>
               </tr>
-              <tr class="table-row">
-                <th class="table-cell">INV002</th>
-                <td class="table-cell">قيد الانتظار</td>
-                <td class="table-cell">PayPal</td>
-                <td class="table-cell">$150.00</td>
+              <tr>
+                <th scope="row">INV002</th>
+                <td>قيد الانتظار</td>
+                <td>PayPal</td>
+                <td>$150.00</td>
               </tr>
-              <tr class="table-row">
-                <th class="table-cell">INV003</th>
-                <td class="table-cell">غير مدفوع</td>
-                <td class="table-cell">تحويل بنكي</td>
-                <td class="table-cell">$350.00</td>
+              <tr>
+                <th scope="row">INV003</th>
+                <td>غير مدفوع</td>
+                <td>تحويل بنكي</td>
+                <td>$350.00</td>
               </tr>
             </tbody>
-            <tfoot class="table-footer">
-              <tr class="table-row">
-                <td colspan="3" class="table-cell">المجموع</td>
-                <td class="table-cell">$2,500.00</td>
+            <tfoot>
+              <tr>
+                <td colspan="3">المجموع</td>
+                <td>$2,500.00</td>
               </tr>
             </tfoot>
           </table>
@@ -177,55 +172,36 @@
             class="input"
           />
           <div ng-dropdown class="dropdown-menu">
-            <button
-              variant="outline"
-              type="button"
-              class="dropdown-menu-trigger button"
-            >
+            <button variant="outline" type="button" class="button">
               Columns <span aria-hidden="true">⌄</span>
             </button>
-            <menu class="data-table-column-menu dropdown-menu-content">
+            <menu class="data-table-column-menu">
               <button
                 aria-checked="{{ dataState.showStatus }}"
                 ng-click="dataState.showStatus=!dataState.showStatus"
-                class="dropdown-menu-checkbox-item"
               >
-                <span
-                  ng-if="dataState.showStatus"
-                  class="dropdown-menu-checkbox-item-indicator"
-                  >✓</span
-                >Status
+                Status
               </button>
               <button
                 aria-checked="{{ dataState.showEmail }}"
                 ng-click="dataState.showEmail=!dataState.showEmail"
-                class="dropdown-menu-checkbox-item"
               >
-                <span
-                  ng-if="dataState.showEmail"
-                  class="dropdown-menu-checkbox-item-indicator"
-                  >✓</span
-                >Email
+                Email
               </button>
               <button
                 aria-checked="{{ dataState.showAmount }}"
                 ng-click="dataState.showAmount=!dataState.showAmount"
-                class="dropdown-menu-checkbox-item"
               >
-                <span
-                  ng-if="dataState.showAmount"
-                  class="dropdown-menu-checkbox-item-indicator"
-                  >✓</span
-                >Amount
+                Amount
               </button>
             </menu>
           </div>
         </div>
-        <figure class="data-table-frame table-container">
+        <figure class="data-table-frame">
           <table class="table">
-            <thead class="table-header">
-              <tr class="table-row">
-                <th class="data-table-select table-head">
+            <thead>
+              <tr>
+                <th scope="col" class="data-table-select">
                   <input
                     type="checkbox"
                     ng-model="dataState.all"
@@ -234,8 +210,8 @@
                     class="checkbox"
                   />
                 </th>
-                <th ng-if="dataState.showStatus" class="table-head">Status</th>
-                <th ng-if="dataState.showEmail" class="table-head">
+                <th scope="col" ng-if="dataState.showStatus">Status</th>
+                <th scope="col" ng-if="dataState.showEmail">
                   <button
                     variant="ghost"
                     type="button"
@@ -245,22 +221,21 @@
                     Email <span aria-hidden="true">↕</span>
                   </button>
                 </th>
-                <th ng-if="dataState.showAmount" class="text-right table-head">
+                <th scope="col" ng-if="dataState.showAmount" class="text-right">
                   Amount
                 </th>
-                <th class="table-head">
+                <th scope="col">
                   <span class="visually-hidden">Actions</span>
                 </th>
               </tr>
             </thead>
-            <tbody class="table-body">
+            <tbody>
               <tr
                 ng-repeat="payment in payments | filter:dataState.query | orderBy:dataState.order"
                 animate
-                data-state="{{ payment.selected ? 'selected' : '' }}"
-                class="table-row"
+                aria-selected="{{ payment.selected }}"
               >
-                <td class="data-table-select table-cell">
+                <td class="data-table-select">
                   <input
                     type="checkbox"
                     ng-model="payment.selected"
@@ -269,19 +244,19 @@
                     class="checkbox"
                   />
                 </td>
-                <td ng-if="dataState.showStatus" class="capitalize table-cell">
+                <td ng-if="dataState.showStatus" class="capitalize">
                   {{ payment.status }}
                 </td>
-                <td ng-if="dataState.showEmail" class="lowercase table-cell">
+                <td ng-if="dataState.showEmail" class="lowercase">
                   {{ payment.email }}
                 </td>
                 <td
                   ng-if="dataState.showAmount"
-                  class="text-right table-cell-medium table-cell"
+                  class="text-right table-cell-medium"
                 >
                   {{ payment.amount }}
                 </td>
-                <td class="text-right table-cell">
+                <td class="text-right">
                   <button
                     variant="ghost"
                     size="icon-xs"
@@ -294,14 +269,8 @@
                   </button>
                 </td>
               </tr>
-              <tr
-                ng-if="!(payments | filter:dataState.query).length"
-                animate
-                class="table-row"
-              >
-                <td colspan="5" class="data-table-empty table-cell">
-                  No results.
-                </td>
+              <tr ng-if="!(payments | filter:dataState.query).length" animate>
+                <td colspan="5" class="data-table-empty">No results.</td>
               </tr>
             </tbody>
           </table>
@@ -346,44 +315,36 @@
             class="input"
           />
           <div ng-dropdown class="dropdown-menu">
-            <button
-              variant="outline"
-              type="button"
-              class="dropdown-menu-trigger button"
-            >
+            <button variant="outline" type="button" class="button">
               الأعمدة <span aria-hidden="true">⌄</span>
             </button>
-            <menu class="dropdown-menu-content">
+            <menu>
               <button
                 aria-checked="{{ rtlDataState.showStatus }}"
                 ng-click="rtlDataState.showStatus=!rtlDataState.showStatus"
-                class="dropdown-menu-checkbox-item"
               >
-                <span class="dropdown-menu-checkbox-item-indicator">✓</span
-                >الحالة</button
-              ><button
+                الحالة
+              </button>
+              <button
                 aria-checked="{{ rtlDataState.showEmail }}"
                 ng-click="rtlDataState.showEmail=!rtlDataState.showEmail"
-                class="dropdown-menu-checkbox-item"
               >
-                <span class="dropdown-menu-checkbox-item-indicator">✓</span
-                >البريد الإلكتروني</button
-              ><button
+                البريد الإلكتروني
+              </button>
+              <button
                 aria-checked="{{ rtlDataState.showAmount }}"
                 ng-click="rtlDataState.showAmount=!rtlDataState.showAmount"
-                class="dropdown-menu-checkbox-item"
               >
-                <span class="dropdown-menu-checkbox-item-indicator">✓</span
-                >المبلغ
+                المبلغ
               </button>
             </menu>
           </div>
         </div>
-        <figure class="data-table-frame table-container">
+        <figure class="data-table-frame">
           <table class="table">
-            <thead class="table-header">
-              <tr class="table-row">
-                <th class="data-table-select table-head">
+            <thead>
+              <tr>
+                <th scope="col" class="data-table-select">
                   <input
                     type="checkbox"
                     ng-model="rtlDataState.all"
@@ -391,10 +352,8 @@
                     class="checkbox"
                   />
                 </th>
-                <th ng-if="rtlDataState.showStatus" class="table-head">
-                  الحالة
-                </th>
-                <th ng-if="rtlDataState.showEmail" class="table-head">
+                <th scope="col" ng-if="rtlDataState.showStatus">الحالة</th>
+                <th scope="col" ng-if="rtlDataState.showEmail">
                   <button
                     variant="ghost"
                     type="button"
@@ -404,21 +363,18 @@
                     البريد الإلكتروني <span aria-hidden="true">↕</span>
                   </button>
                 </th>
-                <th ng-if="rtlDataState.showAmount" class="table-head">
-                  المبلغ
-                </th>
-                <th class="table-head">
+                <th scope="col" ng-if="rtlDataState.showAmount">المبلغ</th>
+                <th scope="col">
                   <span class="visually-hidden">الإجراءات</span>
                 </th>
               </tr>
             </thead>
-            <tbody class="table-body">
+            <tbody>
               <tr
                 ng-repeat="payment in rtlPayments | filter:rtlDataState.query | orderBy:rtlDataState.order"
                 animate
-                class="table-row"
               >
-                <td class="data-table-select table-cell">
+                <td class="data-table-select">
                   <input
                     type="checkbox"
                     ng-model="payment.selected"
@@ -426,19 +382,14 @@
                     class="checkbox"
                   />
                 </td>
-                <td ng-if="rtlDataState.showStatus" class="table-cell">
-                  {{ payment.statusAr }}
-                </td>
-                <td ng-if="rtlDataState.showEmail" class="lowercase table-cell">
+                <td ng-if="rtlDataState.showStatus">{{ payment.statusAr }}</td>
+                <td ng-if="rtlDataState.showEmail" class="lowercase">
                   {{ payment.email }}
                 </td>
-                <td
-                  ng-if="rtlDataState.showAmount"
-                  class="table-cell-medium table-cell"
-                >
+                <td ng-if="rtlDataState.showAmount" class="table-cell-medium">
                   {{ payment.amount }}
                 </td>
-                <td class="table-cell">
+                <td>
                   <button
                     variant="ghost"
                     size="icon-xs"
@@ -453,11 +404,8 @@
               <tr
                 ng-if="!(rtlPayments | filter:rtlDataState.query).length"
                 animate
-                class="table-row"
               >
-                <td colspan="5" class="data-table-empty table-cell">
-                  لا توجد نتائج.
-                </td>
+                <td colspan="5" class="data-table-empty">لا توجد نتائج.</td>
               </tr>
             </tbody>
           </table>

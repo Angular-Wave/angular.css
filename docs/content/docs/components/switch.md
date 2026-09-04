@@ -11,7 +11,7 @@ checked state, validation, and form behavior.
 ```html
 <div orientation="horizontal" class="field">
   <input id="airplane-mode" type="checkbox" class="switch" />
-  <label for="airplane-mode" class="label">Airplane mode</label>
+  <label for="airplane-mode">Airplane mode</label>
 </div>
 ```
 

@@ -11,10 +11,10 @@ classes and design tokens for application-specific colors.
 
 ```html
 <section class="alert">
-  <svg aria-hidden="true" class="alert-icon"><!-- optional icon --></svg>
-  <h2 class="alert-title">Saved!</h2>
-  <p class="alert-description">Your profile was updated.</p>
-  <div class="alert-action">
+  <svg aria-hidden="true"><!-- optional icon --></svg>
+  <h2>Saved!</h2>
+  <p>Your profile was updated.</p>
+  <div>
     <button ng-click="dismiss()" class="button">Dismiss</button>
   </div>
 </section>

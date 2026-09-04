@@ -5,17 +5,15 @@ description: >
   Native select control
 ---
 
-Use native `select` for simple option lists. Wrap the select in
-`class="native-select-wrapper"` when you want the AngularCSS chevron.
+Use a native `select` directly. The browser owns the picker, indicator, keyboard
+interaction, validation, and form value.
 
 ```html
-<div class="native-select-wrapper">
-  <select aria-label="Status" ng-model="status" class="native-select">
-    <option value="">Select status</option>
-    <option value="todo">Todo</option>
-    <option value="done">Done</option>
-  </select>
-</div>
+<select aria-label="Status" ng-model="status">
+  <option value="">Select status</option>
+  <option value="todo">Todo</option>
+  <option value="done">Done</option>
+</select>
 <span>Status: <span ng-bind="status"></span></span>
 ```
 

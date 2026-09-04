@@ -11,14 +11,13 @@ AngularTS owns actions and checkbox or radio values.
 
 ```html
 <div ng-context-menu>
-  <div class="context-menu-trigger">Right click here</div>
-  <menu aria-label="Browser actions" class="context-menu-content">
-    <button ng-click="reload()" class="context-menu-item">Reload</button>
+  <div>Right click here</div>
+  <menu aria-label="Browser actions">
+    <button ng-click="reload()">Reload</button>
     <button
-
       aria-checked="{{ showBookmarks }}"
       ng-click="showBookmarks=!showBookmarks"
-     class="context-menu-checkbox-item">
+    >
       Show Bookmarks Bar
     </button>
   </menu>
@@ -69,7 +68,7 @@ This component's root directive is `[ng-context-menu]`. Importing the package re
 
 ### Semantic structure
 
-A context menu root requires one focusable trigger and one menu element. The root directive inspects semantic descendants through context-menu part classes; no child directives are required. Groups, separators, shortcuts, checked items, and submenus are optional.
+A context menu root requires one focusable trigger and one `menu`. The root directive inspects semantic sections, fieldsets, buttons, separators, keyboard hints, and nested details; no child directives or anatomy classes are required.
 
 ## API
 
@@ -77,7 +76,7 @@ A context menu root requires one focusable trigger and one menu element. The roo
 
 | Attribute | Access | Purpose |
 | --- | --- | --- |
-| `align` | Input | Cross-axis alignment: `start`, `center`, or `end`. |
+| `align` | Input/output | Cross-axis alignment: `start`, `center`, or `end`. |
 | `align-offset` | Input | Authored option or semantic HTML attribute observed by the directive. |
 | `aria-checked` | Input/output | ARIA relationship or state. |
 | `aria-controls` | Output | ARIA relationship or state. |
@@ -85,17 +84,11 @@ A context menu root requires one focusable trigger and one menu element. The roo
 | `aria-expanded` | Output | Open or expanded state exposed to assistive technology. |
 | `aria-haspopup` | Output | ARIA relationship or state. |
 | `aria-hidden` | Output | ARIA relationship or state. |
-| `data-align` | Output | Stable component state or styling hook. |
-| `data-direction` | Output | Stable component state or styling hook. |
-| `data-disabled` | Output | Stable component state or styling hook. |
-| `data-highlighted` | Output | Stable component state or styling hook. |
-| `data-open` | Input/output | Stable component state or styling hook. |
-| `data-side` | Output | Stable component state or styling hook. |
-| `data-state` | Input/output | Stable component state or styling hook. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
 | `disabled` | Input | Disables native or component interaction. |
+| `open` | Input | Initial or controlled open state. |
 | `role` | Output | Explicit semantic role when native HTML does not provide one. |
-| `side` | Input | Physical placement: `left`, `top`, `bottom`, or `right`. |
+| `side` | Input/output | Physical placement: `left`, `top`, `bottom`, or `right`. |
 | `side-offset` | Input | Authored option or semantic HTML attribute observed by the directive. |
 | `tabindex` | Input/output | Keyboard focus order for composite descendants. |
 

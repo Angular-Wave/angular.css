@@ -5,13 +5,13 @@ description: >
   Native checkbox control
 ---
 
-Use a native checkbox input with `class="checkbox"`, preserving form behavior and
-label association.
+Use a native checkbox input with `class="checkbox"`, preserving form behavior
+and label association.
 
 ```html
 <div orientation="horizontal" class="field">
   <input id="terms" type="checkbox" ng-model="terms" class="checkbox" />
-  <label for="terms" class="label">Accept terms and conditions</label>
+  <label for="terms">Accept terms and conditions</label>
 </div>
 <span>Accepted: <span ng-bind="terms"></span></span>
 ```

@@ -21,11 +21,11 @@ test("element sidebar page runs the packaged canonical artifact", async ({
 
   const sidebar = page.locator("#app-sidebar");
   const close = page.getByRole("button", { name: "Close Sidebar" });
-  await expect(sidebar).toHaveAttribute("data-state", "expanded");
-  await expect(sidebar).toHaveAttribute("data-collapsible", "icon");
+  await expect(sidebar).not.toHaveAttribute("collapsed", "");
+  await expect(sidebar).toHaveAttribute("collapsible", "icon");
   await expect(sidebar).toHaveAttribute("aria-hidden", "false");
   await close.click();
-  await expect(sidebar).toHaveAttribute("data-state", "collapsed");
+  await expect(sidebar).toHaveAttribute("collapsed", "");
   await expect(sidebar).toHaveAttribute("aria-hidden", "false");
   await expect(
     page.getByRole("button", { name: "Open Sidebar" }),

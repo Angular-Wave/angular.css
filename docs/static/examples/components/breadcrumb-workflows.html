@@ -22,30 +22,25 @@
       >
         <h2 id="breadcrumb-separator-heading">Custom separator</h2>
         <nav aria-label="Custom separator breadcrumb" class="breadcrumb">
-          <ol class="breadcrumb-list">
-            <li class="breadcrumb-item">
-              <a href="#home" class="breadcrumb-link">Home</a>
+          <ol>
+            <li>
+              <a href="#home">Home</a>
             </li>
-            <li class="breadcrumb-separator">
+            <li aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <circle cx="12" cy="12" r="2.5" />
               </svg>
             </li>
-            <li class="breadcrumb-item">
-              <a href="#components" class="breadcrumb-link">Components</a>
+            <li>
+              <a href="#components">Components</a>
             </li>
-            <li class="breadcrumb-separator">
+            <li aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <circle cx="12" cy="12" r="2.5" />
               </svg>
             </li>
-            <li class="breadcrumb-item">
-              <span
-
-
-                aria-current="page"
-                aria-disabled="true"
-                 class="breadcrumb-page">Breadcrumb</span>
+            <li>
+              <span aria-current="page" aria-disabled="true">Breadcrumb</span>
             </li>
           </ol>
         </nav>
@@ -57,26 +52,21 @@
       >
         <h2 id="breadcrumb-ellipsis-heading">Ellipsis</h2>
         <nav aria-label="Ellipsis breadcrumb" class="breadcrumb">
-          <ol class="breadcrumb-list">
-            <li class="breadcrumb-item">
-              <a href="#home" class="breadcrumb-link">Home</a>
+          <ol>
+            <li>
+              <a href="#home">Home</a>
             </li>
-            <li class="breadcrumb-separator"></li>
-            <li class="breadcrumb-item">
-              <span class="breadcrumb-ellipsis"></span>
+            <li aria-hidden="true"></li>
+            <li>
+              <span aria-hidden="true">...</span>
             </li>
-            <li class="breadcrumb-separator"></li>
-            <li class="breadcrumb-item">
-              <a href="#components" class="breadcrumb-link">Components</a>
+            <li aria-hidden="true"></li>
+            <li>
+              <a href="#components">Components</a>
             </li>
-            <li class="breadcrumb-separator"></li>
-            <li class="breadcrumb-item">
-              <span
-
-
-                aria-current="page"
-                aria-disabled="true"
-                 class="breadcrumb-page">Breadcrumb</span>
+            <li aria-hidden="true"></li>
+            <li>
+              <span aria-current="page" aria-disabled="true">Breadcrumb</span>
             </li>
           </ol>
         </nav>
@@ -88,59 +78,44 @@
       >
         <h2 id="breadcrumb-demo-heading">Collapsed trail</h2>
         <nav aria-label="Collapsed breadcrumb" class="breadcrumb">
-          <ol class="breadcrumb-list">
-            <li class="breadcrumb-item">
-              <a href="#home" class="breadcrumb-link">Home</a>
+          <ol>
+            <li>
+              <a href="#home">Home</a>
             </li>
-            <li class="breadcrumb-separator"></li>
-            <li class="breadcrumb-item">
+            <li aria-hidden="true"></li>
+            <li>
               <span ng-dropdown class="dropdown-menu">
                 <button
                   type="button"
-
-
                   variant="ghost"
                   size="icon-sm"
                   aria-label="Toggle breadcrumb menu"
-                 class="dropdown-menu-trigger button">
-                  <span class="breadcrumb-ellipsis"></span>
+                  class="button"
+                >
+                  <span aria-hidden="true">...</span>
                 </button>
-                <menu class="dropdown-menu-content">
-                  <span class="dropdown-menu-group">
-                    <button
-
-                      ng-click="breadcrumbSelection = 'Documentation'"
-                     class="dropdown-menu-item">
+                <menu>
+                  <section>
+                    <button ng-click="breadcrumbSelection = 'Documentation'">
                       Documentation
                     </button>
-                    <button
-
-                      ng-click="breadcrumbSelection = 'Themes'"
-                     class="dropdown-menu-item">
+                    <button ng-click="breadcrumbSelection = 'Themes'">
                       Themes
                     </button>
-                    <button
-
-                      ng-click="breadcrumbSelection = 'GitHub'"
-                     class="dropdown-menu-item">
+                    <button ng-click="breadcrumbSelection = 'GitHub'">
                       GitHub
                     </button>
-                  </span>
+                  </section>
                 </menu>
               </span>
             </li>
-            <li class="breadcrumb-separator"></li>
-            <li class="breadcrumb-item">
-              <a href="#components" class="breadcrumb-link">Components</a>
+            <li aria-hidden="true"></li>
+            <li>
+              <a href="#components">Components</a>
             </li>
-            <li class="breadcrumb-separator"></li>
-            <li class="breadcrumb-item">
-              <span
-
-
-                aria-current="page"
-                aria-disabled="true"
-                 class="breadcrumb-page">Breadcrumb</span>
+            <li aria-hidden="true"></li>
+            <li>
+              <span aria-current="page" aria-disabled="true">Breadcrumb</span>
             </li>
           </ol>
         </nav>
@@ -155,25 +130,21 @@
       >
         <h2 id="breadcrumb-dropdown-heading">Dropdown</h2>
         <nav aria-label="Dropdown breadcrumb" class="breadcrumb">
-          <ol class="breadcrumb-list">
-            <li class="breadcrumb-item">
-              <a href="#home" class="breadcrumb-link">Home</a>
+          <ol>
+            <li>
+              <a href="#home">Home</a>
             </li>
-            <li class="breadcrumb-separator">
+            <li aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <circle cx="12" cy="12" r="2.5" />
               </svg>
             </li>
-            <li class="breadcrumb-item">
+            <li>
               <span ng-dropdown class="dropdown-menu">
-                <button
-                  type="button"
-
-                  class="breadcrumb-plain-trigger dropdown-menu-trigger"
-                >
+                <button type="button" class="breadcrumb-plain-trigger">
                   Components
                   <svg
-                    data-icon="inline-end"
+                    icon="inline-end"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -183,29 +154,22 @@
                     <path d="m6 9 6 6 6-6" />
                   </svg>
                 </button>
-                <menu class="dropdown-menu-content">
-                  <span class="dropdown-menu-group">
-                    <button class="dropdown-menu-item">
-                      Documentation
-                    </button>
-                    <button class="dropdown-menu-item">Themes</button>
-                    <button class="dropdown-menu-item">GitHub</button>
-                  </span>
+                <menu>
+                  <section>
+                    <button>Documentation</button>
+                    <button>Themes</button>
+                    <button>GitHub</button>
+                  </section>
                 </menu>
               </span>
             </li>
-            <li class="breadcrumb-separator">
+            <li aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <circle cx="12" cy="12" r="2.5" />
               </svg>
             </li>
-            <li class="breadcrumb-item">
-              <span
-
-
-                aria-current="page"
-                aria-disabled="true"
-                 class="breadcrumb-page">Breadcrumb</span>
+            <li>
+              <span aria-current="page" aria-disabled="true">Breadcrumb</span>
             </li>
           </ol>
         </nav>
@@ -219,25 +183,21 @@
       >
         <h2 id="breadcrumb-rtl-heading">اتجاه من اليمين إلى اليسار</h2>
         <nav aria-label="مسار التنقل" class="breadcrumb">
-          <ol class="breadcrumb-list">
-            <li class="breadcrumb-item">
-              <a href="#home" class="breadcrumb-link">الرئيسية</a>
+          <ol>
+            <li>
+              <a href="#home">الرئيسية</a>
             </li>
-            <li class="breadcrumb-separator">
+            <li aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <circle cx="12" cy="12" r="2.5" />
               </svg>
             </li>
-            <li class="breadcrumb-item">
+            <li>
               <span ng-dropdown class="dropdown-menu">
-                <button
-                  type="button"
-
-                  class="breadcrumb-plain-trigger dropdown-menu-trigger"
-                >
+                <button type="button" class="breadcrumb-plain-trigger">
                   المكونات
                   <svg
-                    data-icon="inline-end"
+                    icon="inline-end"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -247,42 +207,28 @@
                     <path d="m6 9 6 6 6-6" />
                   </svg>
                 </button>
-                <menu class="dropdown-menu-content">
-                  <span class="dropdown-menu-group">
-                    <button
-
-                      ng-click="rtlBreadcrumbSelection = 'التوثيق'"
-                     class="dropdown-menu-item">
+                <menu>
+                  <section>
+                    <button ng-click="rtlBreadcrumbSelection = 'التوثيق'">
                       التوثيق
                     </button>
-                    <button
-
-                      ng-click="rtlBreadcrumbSelection = 'السمات'"
-                     class="dropdown-menu-item">
+                    <button ng-click="rtlBreadcrumbSelection = 'السمات'">
                       السمات
                     </button>
-                    <button
-
-                      ng-click="rtlBreadcrumbSelection = 'جيت هاب'"
-                     class="dropdown-menu-item">
+                    <button ng-click="rtlBreadcrumbSelection = 'جيت هاب'">
                       جيت هاب
                     </button>
-                  </span>
+                  </section>
                 </menu>
               </span>
             </li>
-            <li class="breadcrumb-separator">
+            <li aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <circle cx="12" cy="12" r="2.5" />
               </svg>
             </li>
-            <li class="breadcrumb-item">
-              <span
-
-
-                aria-current="page"
-                aria-disabled="true"
-                 class="breadcrumb-page">مسار التنقل</span>
+            <li>
+              <span aria-current="page" aria-disabled="true">مسار التنقل</span>
             </li>
           </ol>
         </nav>

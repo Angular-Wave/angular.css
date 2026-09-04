@@ -19,12 +19,12 @@ test("element sheet page runs the packaged canonical artifact", async ({
   expect(sourceRequests).toEqual([]);
 
   const root = page.locator(".sheet");
-  const trigger = root.locator(".sheet-trigger");
-  const content = root.locator(".sheet-content");
+  const trigger = root.locator(":scope > button:first-child");
+  const content = root.locator(":scope > dialog");
   await expect(content).toBeHidden();
   await trigger.click();
   await expect(content).toBeVisible();
-  await expect(content).toHaveAttribute("data-side", "right");
+  await expect(content).toHaveAttribute("side", "right");
   await page.keyboard.press("Escape");
   await expect(content).toBeHidden();
   await expect(trigger).toBeFocused();

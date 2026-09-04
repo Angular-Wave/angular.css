@@ -22,64 +22,56 @@
     >
       <div class="input-group">
         <input
-
-
           ng-model="rtlQuery"
           placeholder="بحث..."
           aria-label="بحث"
-         class="input-group-control input" />
-        <div data-align="inline-start" class="input-group-addon">
+          class="input"
+        />
+        <div align="inline-start">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="11" cy="11" r="8"></circle>
             <path d="m21 21-4.3-4.3"></path>
           </svg>
         </div>
-        <div data-align="inline-end" class="input-group-addon">
-          ١٢ نتيجة
-        </div>
+        <div align="inline-end">١٢ نتيجة</div>
       </div>
       <div class="input-group">
         <input
-
-
           placeholder="جاري البحث..."
           aria-label="جاري البحث"
-         class="input-group-control input" />
-        <div data-align="inline-end" class="input-group-addon">
-          <span data-size="sm" aria-label="تحميل" class="spinner"></span>
+          class="input"
+        />
+        <div align="inline-end">
+          <span size="sm" aria-label="تحميل" class="spinner"></span>
         </div>
       </div>
       <div class="input-group">
         <input
-
-
           placeholder="جاري حفظ التغييرات..."
           aria-label="جاري الحفظ"
-         class="input-group-control input" />
-        <div data-align="inline-end" class="input-group-addon">
-          <span class="input-group-text">جاري الحفظ...</span><span data-size="sm" aria-label="تحميل" class="spinner"></span>
+          class="input"
+        />
+        <div align="inline-end">
+          <span>جاري الحفظ...</span
+          ><span size="sm" aria-label="تحميل" class="spinner"></span>
         </div>
       </div>
       <div class="field">
-        <label for="input-group-rtl-comment"
-           class="field-label label">منطقة النص</label>
+        <label for="input-group-rtl-comment">منطقة النص</label>
         <div class="input-group">
           <textarea
-
-
             id="input-group-rtl-comment"
             ng-model="rtlComment"
             data-change="rtlCount=rtlComment.length"
             maxlength="280"
             placeholder="اكتب تعليقًا..."
-           class="input-group-control textarea"></textarea>
-          <div data-align="block-end" class="input-group-addon">
-            <span class="input-group-text">{{ rtlCount }}/٢٨٠</span>
+            class="textarea"
+          ></textarea>
+          <div align="block-end">
+            <span>{{ rtlCount }}/٢٨٠</span>
             <button
-
-
-              data-size="sm"
-              class="input-group-push-end input-group-button button"
+              size="sm"
+              class="input-group-push-end button"
               type="button"
               ng-click="rtlStatus='تم النشر'"
             >
@@ -87,7 +79,7 @@
             </button>
           </div>
         </div>
-        <p class="field-description">تذييل موضع أسفل منطقة النص.</p>
+        <p>تذييل موضع أسفل منطقة النص.</p>
       </div>
       <output class="input-group-output">
         {{ rtlStatus }} · {{ rtlQuery || 'لا يوجد بحث' }}

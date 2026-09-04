@@ -16,31 +16,21 @@
       aria-label="Resizable layout"
       class="resizable-demo visual-example"
     >
-      <section style="--panel-size: 1" class="resizable-panel">
+      <section style="--panel-size: 1">
         <div class="resizable-panel-content"><strong>One</strong></div>
       </section>
-      <div
-
-        aria-label="Resize panel one and panels two and three"
-       class="resizable-handle">
-        <span aria-hidden="true" class="resizable-handle-grip"></span>
-      </div>
-      <section style="--panel-size: 1" class="resizable-panel">
+      <hr aria-label="Resize panel one and panels two and three" />
+      <section style="--panel-size: 1">
         <div
           ng-resizable-panel-group
           orientation="vertical"
           aria-label="Resize panels two and three"
         >
-          <section style="--panel-size: 1" class="resizable-panel">
+          <section style="--panel-size: 1">
             <div class="resizable-panel-content"><strong>Two</strong></div>
           </section>
-          <div
-
-            aria-label="Resize panel two and panel three"
-           class="resizable-handle">
-            <span aria-hidden="true" class="resizable-handle-grip"></span>
-          </div>
-          <section style="--panel-size: 3" class="resizable-panel">
+          <hr aria-label="Resize panel two and panel three" />
+          <section style="--panel-size: 3">
             <div class="resizable-panel-content"><strong>Three</strong></div>
           </section>
         </div>

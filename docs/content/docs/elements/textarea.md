@@ -9,10 +9,11 @@ Use native `textarea` elements with `class="textarea"` for multiline input.
 
 ```html
 <textarea
-
   id="message"
   placeholder="Add a message"
-  ng-model="message" class="textarea"></textarea>
+  ng-model="message"
+  class="textarea"
+></textarea>
 <span>Message: <span ng-bind="message"></span></span>
 <textarea id="invalid-message" aria-invalid="true" class="textarea"></textarea>
 ```

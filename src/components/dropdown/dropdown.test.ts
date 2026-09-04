@@ -10,28 +10,30 @@ test("canonical dropdown exposes semantic state and closes from selection or Esc
 
   const root = page.locator("[ng-dropdown]");
   const trigger = page.getByRole("button", { name: "Options" });
-  const menu = page.getByRole("menu");
+  const menu = root.locator(":scope > menu");
 
   await expect(trigger).toHaveAttribute("aria-expanded", "false");
-  await expect(menu).toHaveAttribute("data-open", "false");
+  await expect(menu).toBeHidden();
   await expect(menu).toHaveAttribute(
     "aria-labelledby",
     (await trigger.getAttribute("id")) ?? "",
   );
-  await expect(menu.getByRole("menuitem")).not.toHaveCount(0);
+  await expect(
+    menu.getByRole("menuitem", { includeHidden: true }),
+  ).not.toHaveCount(0);
 
   await trigger.click();
-  await expect(root).toHaveAttribute("data-state", "open");
+  await expect(root).toHaveAttribute("open", "");
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
-  await expect(menu).toHaveAttribute("data-open", "true");
+  await expect(menu).toBeVisible();
 
   await menu.getByRole("menuitem", { name: /New task/ }).click();
-  await expect(menu).toHaveAttribute("data-open", "false");
+  await expect(menu).toBeHidden();
   await expect(trigger).toBeFocused();
 
   await trigger.click();
   await page.keyboard.press("Escape");
-  await expect(menu).toHaveAttribute("data-open", "false");
+  await expect(menu).toBeHidden();
   await expect(trigger).toBeFocused();
 });
 
@@ -42,17 +44,15 @@ test("canonical dropdown reflects external authored open state", async ({
 
   const root = page.locator("[ng-dropdown]");
   const trigger = page.getByRole("button", { name: "Options" });
-  const menu = page.getByRole("menu");
+  const menu = root.locator(":scope > menu");
 
-  await root.evaluate((element) => element.setAttribute("data-open", "true"));
+  await root.evaluate((element) => element.setAttribute("open", ""));
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
-  await expect(trigger).toHaveAttribute("data-state", "open");
-  await expect(menu).toHaveAttribute("data-state", "open");
+  await expect(menu).toBeVisible();
 
-  await root.evaluate((element) => element.setAttribute("data-open", "false"));
+  await root.evaluate((element) => element.removeAttribute("open"));
   await expect(trigger).toHaveAttribute("aria-expanded", "false");
-  await expect(trigger).toHaveAttribute("data-state", "closed");
-  await expect(menu).toHaveAttribute("data-state", "closed");
+  await expect(menu).toBeHidden();
 });
 
 test("workflow HTML supplies dynamic items and AngularTS preference state", async ({
@@ -62,12 +62,16 @@ test("workflow HTML supplies dynamic items and AngularTS preference state", asyn
 
   const account = page.getByLabel("Account commands");
   await page.getByRole("button", { name: "Add archive item" }).click();
-  const archive = account.getByRole("menuitem", { name: "Archive" });
+  const accountMenu = account.locator(":scope > menu");
+  const archive = accountMenu.getByRole("menuitem", {
+    name: "Archive",
+    includeHidden: true,
+  });
   await expect(archive).toBeAttached();
   await expect(archive).toHaveAttribute("role", "menuitem");
   await account.getByRole("button", { name: "Open" }).click();
   await archive.click();
-  await expect(account.getByRole("menu")).toHaveAttribute("data-open", "false");
+  await expect(accountMenu).toBeHidden();
 
   const preferences = page.locator("#dropdown-preferences-title").locator("..");
   const preferencesTrigger = preferences.getByRole("button", {
@@ -101,7 +105,7 @@ test("workflow HTML preserves icon triggers and submenu keyboard behavior", asyn
   await avatarTrigger.click();
   await expect(
     page.locator(".dropdown-avatar-demo").getByRole("menu"),
-  ).toHaveAttribute("data-open", "true");
+  ).toBeVisible();
   await page.keyboard.press("Escape");
 
   const actions = page.locator("#dropdown-actions-title").locator("..");
@@ -109,11 +113,12 @@ test("workflow HTML preserves icon triggers and submenu keyboard behavior", asyn
   const subTrigger = actions.getByRole("menuitem", { name: "Invite users" });
   await subTrigger.focus();
   await subTrigger.press("ArrowRight");
-  const subContent = actions.locator(".dropdown-menu-sub-content");
-  await expect(subContent).toHaveAttribute("data-state", "open");
+  const subContent = subTrigger.locator("..").locator(":scope > menu");
+  await expect(subTrigger.locator("..")).toHaveAttribute("open", "");
+  await expect(subContent).toBeVisible();
   await expect(actions.getByRole("menuitem", { name: "Email" })).toBeFocused();
   await page.keyboard.press("ArrowLeft");
-  await expect(subContent).toHaveAttribute("data-state", "closed");
+  await expect(subContent).toBeHidden();
 });
 
 test("workflow HTML mirrors RTL direction and AngularTS disabled state", async ({
@@ -123,21 +128,17 @@ test("workflow HTML mirrors RTL direction and AngularTS disabled state", async (
 
   const root = page.getByLabel("Arabic account menu");
   const trigger = root.getByRole("button", { name: "افتح القائمة" });
-  const menu = root.getByRole("menu");
+  const menu = root.locator(":scope > menu");
   const disabled = page.getByRole("checkbox", { name: "تعطيل القائمة" });
 
-  await expect(root).toHaveAttribute("data-direction", "rtl");
-  await expect(menu).toHaveAttribute("data-direction", "rtl");
-  await expect(root).toHaveAttribute("data-disabled", "false");
-
+  await expect(root).toHaveCSS("direction", "rtl");
+  await expect(menu).toHaveCSS("direction", "rtl");
   await disabled.check();
   await expect(trigger).toBeDisabled();
-  await expect(trigger).toHaveAttribute("aria-disabled", "true");
-  await expect(root).toHaveAttribute("data-disabled", "true");
   await trigger.click({ force: true });
-  await expect(menu).toHaveAttribute("data-open", "false");
+  await expect(menu).toBeHidden();
 
   await disabled.uncheck();
   await trigger.click();
-  await expect(menu).toHaveAttribute("data-open", "true");
+  await expect(menu).toBeVisible();
 });

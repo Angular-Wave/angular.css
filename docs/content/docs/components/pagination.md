@@ -10,12 +10,12 @@ Use `nav` with `aria-label="pagination"` and mark the current page with
 
 ```html
 <nav aria-label="pagination" class="pagination">
-  <ul class="pagination-content">
-    <li class="pagination-item">
-      <a href="#" class="pagination-link">1</a>
+  <ul>
+    <li>
+      <a href="#">1</a>
     </li>
-    <li class="pagination-item">
-      <a aria-current="page" href="#" class="pagination-link">2</a>
+    <li>
+      <a aria-current="page" href="#">2</a>
     </li>
   </ul>
 </nav>
@@ -56,7 +56,6 @@ Use a native `nav` containing a `ul` or `ol` with direct `li` children. Page, pr
 | --- | --- | --- |
 | `aria-current` | Input | Current item or date state. |
 | `aria-disabled` | Input | Semantic disabled state. |
-| `data-active` | Input | Stable component state or styling hook. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
 
 Attributes remain authored HTML, native state, or AngularTS inputs. AngularCSS does not write element state.

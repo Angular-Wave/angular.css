@@ -20,29 +20,24 @@
         <header>
           <h2 id="tabs-dynamic-heading">Dynamic sections</h2>
           <button
-
             type="button"
             variant="outline"
             size="sm"
-            ng-click="advancedVisible = !advancedVisible" class="button">
+            ng-click="advancedVisible = !advancedVisible"
+            class="button"
+          >
             {{ advancedVisible ? 'Remove advanced' : 'Add advanced' }}
           </button>
         </header>
         <section ng-tabs id="dynamic-tabs">
-          <div aria-label="Dynamic project sections" class="tabs-list">
-            <button aria-selected="true" class="tabs-trigger">
-              Overview
-            </button>
-            <button class="tabs-trigger">Activity</button>
-            <button ng-if="advancedVisible" class="tabs-trigger">
-              Advanced
-            </button>
-          </div>
-          <div class="tabs-content">Project overview</div>
-          <div class="tabs-content">Recent project activity</div>
-          <div ng-if="advancedVisible" class="tabs-content">
-            Advanced project controls
-          </div>
+          <menu aria-label="Dynamic project sections">
+            <button aria-selected="true">Overview</button>
+            <button>Activity</button>
+            <button ng-if="advancedVisible">Advanced</button>
+          </menu>
+          <section>Project overview</section>
+          <section>Recent project activity</section>
+          <section ng-if="advancedVisible">Advanced project controls</section>
         </section>
       </section>
 
@@ -50,45 +45,40 @@
         <header>
           <h2 id="tabs-disabled-heading">Disabled state</h2>
           <button
-
             type="button"
             variant="outline"
             size="sm"
-            ng-click="overviewDisabled = !overviewDisabled" class="button">
+            ng-click="overviewDisabled = !overviewDisabled"
+            class="button"
+          >
             {{ overviewDisabled ? 'Enable overview' : 'Disable overview' }}
           </button>
         </header>
         <section ng-tabs id="disabled-tabs">
-          <div aria-label="Account sections" class="tabs-list">
-            <button
-
-              aria-selected="true"
-              ng-disabled="overviewDisabled"
-             class="tabs-trigger">
+          <menu aria-label="Account sections">
+            <button aria-selected="true" ng-disabled="overviewDisabled">
               Overview
             </button>
-            <button class="tabs-trigger">Settings</button>
-            <button disabled class="tabs-trigger">Unavailable</button>
-          </div>
-          <div class="tabs-content">Account overview</div>
-          <div class="tabs-content">Account settings</div>
-          <div class="tabs-content">Unavailable settings</div>
+            <button>Settings</button>
+            <button disabled>Unavailable</button>
+          </menu>
+          <section>Account overview</section>
+          <section>Account settings</section>
+          <section>Unavailable settings</section>
         </section>
       </section>
 
       <section aria-labelledby="tabs-vertical-heading">
         <header><h2 id="tabs-vertical-heading">Vertical</h2></header>
         <section ng-tabs orientation="vertical" id="vertical-tabs">
-          <div aria-label="Preference sections" class="tabs-list">
-            <button aria-selected="true" class="tabs-trigger">
-              Account
-            </button>
-            <button class="tabs-trigger">Password</button>
-            <button class="tabs-trigger">Notifications</button>
-          </div>
-          <div class="tabs-content">Account preferences</div>
-          <div class="tabs-content">Password preferences</div>
-          <div class="tabs-content">Notification preferences</div>
+          <menu aria-label="Preference sections">
+            <button aria-selected="true">Account</button>
+            <button>Password</button>
+            <button>Notifications</button>
+          </menu>
+          <section>Account preferences</section>
+          <section>Password preferences</section>
+          <section>Notification preferences</section>
         </section>
       </section>
 
@@ -96,8 +86,8 @@
         <header><h2 id="tabs-variants-heading">Variants</h2></header>
         <div class="tabs-variant-stack">
           <section ng-tabs id="icon-tabs">
-            <div aria-label="Editor view" class="tabs-list">
-              <button aria-selected="true" class="tabs-trigger">
+            <menu aria-label="Editor view">
+              <button aria-selected="true">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -110,7 +100,7 @@
                 </svg>
                 Preview
               </button>
-              <button class="tabs-trigger">
+              <button>
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -122,20 +112,14 @@
                 </svg>
                 Code
               </button>
-            </div>
+            </menu>
           </section>
           <section ng-tabs id="line-tabs">
-            <div
-
-              variant="line"
-              aria-label="Report sections"
-             class="tabs-list">
-              <button aria-selected="true" class="tabs-trigger">
-                Overview
-              </button>
-              <button class="tabs-trigger">Analytics</button>
-              <button class="tabs-trigger">Reports</button>
-            </div>
+            <menu variant="line" aria-label="Report sections">
+              <button aria-selected="true">Overview</button>
+              <button>Analytics</button>
+              <button>Reports</button>
+            </menu>
           </section>
         </div>
       </section>
@@ -143,16 +127,14 @@
       <section aria-labelledby="tabs-rtl-heading" dir="rtl" lang="ar">
         <header><h2 id="tabs-rtl-heading">الاتجاه من اليمين</h2></header>
         <section ng-tabs id="rtl-tabs">
-          <div aria-label="أقسام المشروع" class="tabs-list">
-            <button class="tabs-trigger">نظرة عامة</button>
-            <button aria-selected="true" class="tabs-trigger">
-              التحليلات
-            </button>
-            <button class="tabs-trigger">التقارير</button>
-          </div>
-          <div class="tabs-content">نظرة عامة على المشروع</div>
-          <div class="tabs-content">تحليلات المشروع</div>
-          <div class="tabs-content">تقارير المشروع</div>
+          <menu aria-label="أقسام المشروع">
+            <button>نظرة عامة</button>
+            <button aria-selected="true">التحليلات</button>
+            <button>التقارير</button>
+          </menu>
+          <section>نظرة عامة على المشروع</section>
+          <section>تحليلات المشروع</section>
+          <section>تقارير المشروع</section>
         </section>
       </section>
     </main>

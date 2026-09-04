@@ -8,11 +8,11 @@ description: >
 Use native table elements with part classes for styling hooks.
 
 ```html
-<figure class="table-container">
+<figure>
   <table class="table">
-    <thead class="table-header">
-      <tr class="table-row">
-        <th class="table-head">Invoice</th>
+    <thead>
+      <tr>
+        <th scope="col">Invoice</th>
       </tr>
     </thead>
   </table>

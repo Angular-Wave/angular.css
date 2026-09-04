@@ -5,19 +5,19 @@ description: >
   Edge anchored overlay panels
 ---
 
-Use a native `dialog` and declarative invoker. Author `data-side` on the dialog
-as `right`, `left`, `top`, or `bottom`; CSS owns only physical placement.
+Use a native `dialog` and declarative invoker. Author `side` on the dialog as
+`right`, `left`, `top`, or `bottom`; CSS owns only physical placement.
 
 ```html
 <section class="sheet">
   <button commandfor="profile-sheet" command="show-modal">Open</button>
-  <dialog id="profile-sheet" data-side="right" class="sheet-content">
-    <header class="sheet-header">
-      <h2 class="sheet-title">Edit profile</h2>
-      <p class="sheet-description">Update your account details.</p>
+  <dialog id="profile-sheet" side="right">
+    <header>
+      <h2>Edit profile</h2>
+      <p>Update your account details.</p>
     </header>
-    <div class="sheet-body">Content</div>
-    <footer class="sheet-footer">
+    <section>Content</section>
+    <footer>
       <button commandfor="profile-sheet" command="close">Close</button>
     </footer>
   </dialog>
@@ -66,7 +66,7 @@ This is a styling-only HTML element or pattern. AngularCSS registers no runtime 
 
 ### Semantic structure
 
-Use `.sheet` as an optional wrapper, a native invoker button, and `dialog.sheet-content` with authored `data-side`. Close controls use `command=close`; no overlay element is required.
+Use `.sheet` as a wrapper containing a native invoker button and `dialog` with authored `side`. Close controls use `command=close`; semantic headers, sections, forms, and footers need no anatomy classes.
 
 ## API
 
@@ -74,24 +74,8 @@ Use `.sheet` as an optional wrapper, a native invoker button, and `dialog.sheet-
 
 | Attribute | Access | Purpose |
 | --- | --- | --- |
-| `aria-controls` | Output | ARIA relationship or state. |
-| `aria-describedby` | Output | ARIA relationship or state. |
-| `aria-expanded` | Output | Open or expanded state exposed to assistive technology. |
-| `aria-haspopup` | Output | ARIA relationship or state. |
-| `aria-hidden` | Output | ARIA relationship or state. |
-| `aria-labelledby` | Output | ARIA relationship or state. |
-| `aria-modal` | Output | ARIA relationship or state. |
-| `data-direction` | Output | Stable component state or styling hook. |
-| `data-open` | Input/output | Stable component state or styling hook. |
-| `data-side` | Output | Stable component state or styling hook. |
-| `data-state` | Output | Stable component state or styling hook. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
-| `disabled` | Input | Disables native or component interaction. |
-| `hidden` | Output | Authored option or semantic HTML attribute observed by the directive. |
-| `role` | Output | Explicit semantic role when native HTML does not provide one. |
 | `side` | Input | Physical placement: `left`, `top`, `bottom`, or `right`. |
-| `tabindex` | Output | Keyboard focus order for composite descendants. |
-| `type` | Output | Component or native behavior variant. |
 
 Attributes remain authored HTML, native state, or AngularTS inputs. AngularCSS does not write element state.
 
@@ -108,7 +92,7 @@ Native DOM events continue to work normally. AngularTS event directives such as
 
 ## Behavior
 
-A native `dialog` owns modal disclosure, focus, Escape, background isolation, and restoration. Authored `data-side` selects CSS edge placement. AngularTS remains responsible for form values, validation, submission, language, and authored content.
+A native `dialog` owns modal disclosure, focus, Escape, background isolation, and restoration. The concise authored `side` attribute selects CSS edge placement. AngularTS remains responsible for form values, validation, submission, language, and authored content.
 
 AngularCSS does not replace AngularTS interpolation, bindings, structural
 directives, form controllers, validation, or application state.

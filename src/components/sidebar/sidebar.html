@@ -10,9 +10,9 @@
     <script src="/docs/static/js/angular-css.umd.js"></script>
   </head>
   <body ng-app="ui" ng-cloak style="padding: 0">
-    <div style="height: 400px" class="sidebar-layout">
+    <div style="height: 400px">
       <aside id="docs-sidebar" ng-sidebar style="--sidebar-width: 14rem">
-        <header class="sidebar-header">
+        <header>
           <button
             aria-controls="docs-sidebar"
             style="justify-content: flex-start"
@@ -21,36 +21,34 @@
             Acme Inc.
           </button>
         </header>
-        <nav class="sidebar-content">
-          <section class="sidebar-group">
-            <h3 class="sidebar-group-label">Workspace</h3>
-            <ul class="sidebar-menu">
-              <li class="sidebar-menu-item">
-                <button data-active="true" class="sidebar-menu-button">
-                  Dashboard
-                </button>
+        <nav>
+          <section>
+            <h3>Workspace</h3>
+            <ul>
+              <li>
+                <button aria-current="page">Dashboard</button>
               </li>
-              <li class="sidebar-menu-item">
-                <button class="sidebar-menu-button">Projects</button>
+              <li>
+                <button>Projects</button>
               </li>
-              <li class="sidebar-menu-item">
-                <button class="sidebar-menu-button">Reports</button>
+              <li>
+                <button>Reports</button>
               </li>
             </ul>
           </section>
         </nav>
-        <footer class="sidebar-footer">
-          <button class="sidebar-menu-button">Jane Doe</button>
+        <footer>
+          <button>Jane Doe</button>
         </footer>
       </aside>
-      <main class="sidebar-inset">
+      <main>
         <div style="padding: 24px" class="stack-sm">
           <h3>Dashboard</h3>
           <p class="muted">
             A sidebar layout with scoped menu and inset regions.
           </p>
           <section class="card">
-            <section class="card-content">24 active projects</section>
+            <section>24 active projects</section>
           </section>
         </div>
       </main>

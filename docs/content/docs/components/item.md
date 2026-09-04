@@ -9,9 +9,9 @@ Items compose media, content, title, description, and actions.
 
 ```html
 <div variant="outline" class="item">
-  <section class="item-content">
-    <h3 class="item-title">Item title</h3>
-    <p class="item-description">Supporting description.</p>
+  <section>
+    <h3>Item title</h3>
+    <p>Supporting description.</p>
   </section>
 </div>
 ```

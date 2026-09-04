@@ -5,10 +5,10 @@ description: >
   Native form label
 ---
 
-Use native `label` elements with `for` and `class="label"`.
+Use native `label` elements with `for`.
 
 ```html
-<label for="email" class="label">Email</label>
+<label for="email">Email</label>
 <input id="email" type="email" placeholder="Email" class="input" />
 ```
 

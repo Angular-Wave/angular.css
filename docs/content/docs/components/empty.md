@@ -9,10 +9,10 @@ Empty states compose media, title, description, and action content parts.
 
 ```html
 <section class="empty">
-  <header class="empty-header">
-    <div variant="icon" class="empty-media"></div>
-    <h2 class="empty-title">No projects yet</h2>
-    <p class="empty-description">Create your first project.</p>
+  <header>
+    <figure variant="icon"></figure>
+    <h2>No projects yet</h2>
+    <p>Create your first project.</p>
   </header>
 </section>
 ```

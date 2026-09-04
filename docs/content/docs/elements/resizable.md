@@ -10,9 +10,9 @@ sizes through `--panel-size`.
 
 ```html
 <div class="resizable-panel-group">
-  <section style="--panel-size: 2;" class="resizable-panel">One</section>
-  <div class="resizable-handle"></div>
-  <section class="resizable-panel">Two</section>
+  <section style="--panel-size: 2;">One</section>
+  <hr />
+  <section>Two</section>
 </div>
 ```
 

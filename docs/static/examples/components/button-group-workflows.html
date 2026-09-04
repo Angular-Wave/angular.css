@@ -66,36 +66,22 @@
                 variant="outline"
                 size="icon"
                 aria-label="More Options"
-                class="dropdown-menu-trigger button"
+                class="button"
               >
                 •••
               </button>
-              <menu class="button-group-toolbar-menu dropdown-menu-content">
-                <span class="dropdown-menu-group">
-                  <button
-                    ng-click="toolbarAction = 'Mark as Read'"
-                    class="dropdown-menu-item"
-                  >
+              <menu class="button-group-toolbar-menu">
+                <section>
+                  <button ng-click="toolbarAction = 'Mark as Read'">
                     Mark as Read
                   </button>
-                  <button
-                    ng-click="toolbarAction = 'Archive'"
-                    class="dropdown-menu-item"
-                  >
-                    Archive
-                  </button>
-                  <button
-                    ng-click="toolbarAction = 'Snooze'"
-                    class="dropdown-menu-item"
-                  >
-                    Snooze
-                  </button>
-                </span>
-                <span class="dropdown-menu-separator"></span>
+                  <button ng-click="toolbarAction = 'Archive'">Archive</button>
+                  <button ng-click="toolbarAction = 'Snooze'">Snooze</button>
+                </section>
+                <span></span>
                 <button
-                  data-variant="destructive"
+                  variant="destructive"
                   ng-click="toolbarAction = 'Trash'"
-                  class="dropdown-menu-item"
                 >
                   Trash
                 </button>
@@ -120,21 +106,19 @@
               type="button"
               variant="outline"
               aria-label="More follow actions"
-              class="dropdown-menu-trigger button"
+              class="button"
             ></button>
-            <menu class="button-group-follow-menu dropdown-menu-content">
-              <span class="dropdown-menu-group">
-                <button class="dropdown-menu-item">Mute Conversation</button>
-                <button class="dropdown-menu-item">Mark as Read</button>
-                <button class="dropdown-menu-item">Report Conversation</button>
-                <button class="dropdown-menu-item">Block User</button>
-                <button class="dropdown-menu-item">Share Conversation</button>
-                <button class="dropdown-menu-item">Copy Conversation</button>
-              </span>
-              <span class="dropdown-menu-separator"></span>
-              <button data-variant="destructive" class="dropdown-menu-item">
-                Delete Conversation
-              </button>
+            <menu class="button-group-follow-menu">
+              <section>
+                <button>Mute Conversation</button>
+                <button>Mark as Read</button>
+                <button>Report Conversation</button>
+                <button>Block User</button>
+                <button>Share Conversation</button>
+                <button>Copy Conversation</button>
+              </section>
+              <span></span>
+              <button variant="destructive">Delete Conversation</button>
             </menu>
           </span>
         </fieldset>
@@ -187,9 +171,9 @@
               <input
                 placeholder="Send a message..."
                 aria-label="Message"
-                class="input-group-control input"
+                class="input"
               />
-              <span data-align="inline-end" class="input-group-addon">⌁</span>
+              <span align="inline-end">⌁</span>
             </div>
           </div>
         </div>
@@ -218,16 +202,15 @@
                 placeholder="{{ voiceEnabled ? 'Record and send audio...' : 'Send a message...' }}"
                 ng-disabled="voiceEnabled"
                 aria-label="Voice message"
-                class="input-group-control input"
+                class="input"
               />
-              <span data-align="inline-end" class="input-group-addon">
+              <span align="inline-end">
                 <button
                   type="button"
                   size="icon-xs"
                   aria-label="Voice Mode"
                   aria-pressed="{{ voiceEnabled }}"
                   ng-click="voiceEnabled = !voiceEnabled"
-                  class="input-group-button"
                 >
                   ⌁
                 </button>
@@ -252,20 +235,22 @@
               variant="outline"
               size="icon"
               aria-label="Open Popover"
-              class="popover-trigger button"
-             popovertarget="popover-button-group-workflows-1-content">
+              class="button"
+              popovertarget="popover-button-group-workflows-1-content"
+            >
               ⌄
             </button>
             <aside
-              data-side="bottom"
+              side="bottom"
               aria-label="Copilot task"
-              class="button-group-popover-content popover-content"
-             id="popover-button-group-workflows-1-content" data-align="center" popover>
-              <header class="popover-header">
-                <h3 class="popover-title">Start a new task with Copilot</h3>
-                <p class="popover-description">
-                  Describe your task in natural language.
-                </p>
+              class="button-group-popover-content"
+              id="popover-button-group-workflows-1-content"
+              align="center"
+              popover
+            >
+              <header>
+                <h3>Start a new task with Copilot</h3>
+                <p>Describe your task in natural language.</p>
               </header>
               <label class="visually-hidden" for="copilot-task"
                 >Task Description</label
@@ -288,7 +273,7 @@
         <h2 id="button-group-select-heading">Currency select</h2>
         <div class="button-group">
           <div class="button-group">
-            <select class="select" aria-label="Currency" ng-model="currency">
+            <select aria-label="Currency" ng-model="currency">
               <option value="$">$ US Dollar</option>
               <option value="€">€ Euro</option>
               <option value="£">£ British Pound</option>
@@ -340,28 +325,19 @@
                 variant="outline"
                 size="icon"
                 aria-label="المزيد من الخيارات"
-                class="dropdown-menu-trigger button"
+                class="button"
               >
                 •••
               </button>
-              <menu class="button-group-toolbar-menu dropdown-menu-content">
-                <button
-                  ng-click="rtlAction = 'وضع علامة كمقروء'"
-                  class="dropdown-menu-item"
-                >
+              <menu class="button-group-toolbar-menu">
+                <button ng-click="rtlAction = 'وضع علامة كمقروء'">
                   وضع علامة كمقروء
                 </button>
+                <button ng-click="rtlAction = 'أرشفة'">أرشفة</button>
+                <span></span>
                 <button
-                  ng-click="rtlAction = 'أرشفة'"
-                  class="dropdown-menu-item"
-                >
-                  أرشفة
-                </button>
-                <span class="dropdown-menu-separator"></span>
-                <button
-                  data-variant="destructive"
+                  variant="destructive"
                   ng-click="rtlAction = 'سلة المهملات'"
-                  class="dropdown-menu-item"
                 >
                   سلة المهملات
                 </button>

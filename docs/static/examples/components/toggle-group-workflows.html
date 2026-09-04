@@ -26,15 +26,9 @@
           id="multiple-toggle-group"
         >
           <legend class="visually-hidden">Text formatting</legend>
-          <label class="toggle-group-item"
-            ><input type="checkbox" ng-model="bold" />Bold</label
-          >
-          <label class="toggle-group-item"
-            ><input type="checkbox" ng-model="italic" />Italic</label
-          >
-          <label class="toggle-group-item"
-            ><input type="checkbox" />Underline</label
-          >
+          <label><input type="checkbox" ng-model="bold" />Bold</label>
+          <label><input type="checkbox" ng-model="italic" />Italic</label>
+          <label><input type="checkbox" />Underline</label>
         </fieldset>
       </section>
 
@@ -48,10 +42,10 @@
           id="keyboard-toggle-group"
         >
           <legend class="visually-hidden">Text style</legend>
-          <label class="toggle-group-item"
+          <label
             ><input type="radio" name="style" value="bold" checked />Bold</label
           >
-          <label class="toggle-group-item"
+          <label
             ><input
               type="radio"
               name="style"
@@ -59,7 +53,7 @@
               disabled
             />Italic</label
           >
-          <label class="toggle-group-item"
+          <label
             ><input
               type="radio"
               name="style"
@@ -73,13 +67,9 @@
         <header><h2 id="toggle-disabled-heading">Disabled</h2></header>
         <fieldset class="toggle-group" id="disabled-toggle-group" disabled>
           <legend class="visually-hidden">Disabled formatting</legend>
-          <label class="toggle-group-item"><input type="checkbox" />Bold</label>
-          <label class="toggle-group-item"
-            ><input type="checkbox" />Italic</label
-          >
-          <label class="toggle-group-item"
-            ><input type="checkbox" />Underline</label
-          >
+          <label><input type="checkbox" />Bold</label>
+          <label><input type="checkbox" />Italic</label>
+          <label><input type="checkbox" />Underline</label>
         </fieldset>
       </section>
 
@@ -93,7 +83,7 @@
           id="font-weight-toggle-group"
         >
           <legend class="visually-hidden">Font weight</legend>
-          <label class="toggle-weight-item toggle-group-item"
+          <label class="toggle-weight-item"
             ><input
               type="radio"
               name="weight"
@@ -102,7 +92,7 @@
             /><strong style="font-weight: 300">Aa</strong
             ><span>Light</span></label
           >
-          <label class="toggle-weight-item toggle-group-item"
+          <label class="toggle-weight-item"
             ><input
               type="radio"
               name="weight"
@@ -111,7 +101,7 @@
             /><strong style="font-weight: 400">Aa</strong
             ><span>Normal</span></label
           >
-          <label class="toggle-weight-item toggle-group-item"
+          <label class="toggle-weight-item"
             ><input
               type="radio"
               name="weight"
@@ -120,7 +110,7 @@
             /><strong style="font-weight: 500">Aa</strong
             ><span>Medium</span></label
           >
-          <label class="toggle-weight-item toggle-group-item"
+          <label class="toggle-weight-item"
             ><input
               type="radio"
               name="weight"
@@ -138,12 +128,10 @@
         <div class="toggle-group-size-stack">
           <fieldset class="toggle-group" size="sm" variant="outline">
             <legend class="visually-hidden">Small position</legend>
-            <label class="toggle-group-item"
+            <label
               ><input type="radio" name="small-position" checked />Top</label
             >
-            <label class="toggle-group-item"
-              ><input type="radio" name="small-position" />Bottom</label
-            >
+            <label><input type="radio" name="small-position" />Bottom</label>
           </fieldset>
           <fieldset
             class="toggle-group"
@@ -152,12 +140,10 @@
             id="spaced-toggle-group"
           >
             <legend class="visually-hidden">Spaced position</legend>
-            <label class="toggle-group-item"
+            <label
               ><input type="radio" name="spaced-position" checked />Top</label
             >
-            <label class="toggle-group-item"
-              ><input type="radio" name="spaced-position" />Bottom</label
-            >
+            <label><input type="radio" name="spaced-position" />Bottom</label>
           </fieldset>
         </div>
       </section>
@@ -171,15 +157,9 @@
           id="vertical-toggle-group"
         >
           <legend class="visually-hidden">Vertical formatting</legend>
-          <label class="toggle-group-item"
-            ><input type="checkbox" checked />Bold</label
-          >
-          <label class="toggle-group-item"
-            ><input type="checkbox" checked />Italic</label
-          >
-          <label class="toggle-group-item"
-            ><input type="checkbox" />Underline</label
-          >
+          <label><input type="checkbox" checked />Bold</label>
+          <label><input type="checkbox" checked />Italic</label>
+          <label><input type="checkbox" />Underline</label>
         </fieldset>
       </section>
 
@@ -203,15 +183,11 @@
         </header>
         <fieldset class="toggle-group" variant="outline" id="rtl-toggle-group">
           <legend class="visually-hidden">طريقة العرض</legend>
-          <label class="toggle-group-item"
+          <label
             ><input type="radio" name="view" value="list" checked />قائمة</label
           >
-          <label class="toggle-group-item"
-            ><input type="radio" name="view" value="grid" />شبكة</label
-          >
-          <label class="toggle-group-item"
-            ><input type="radio" name="view" value="cards" />بطاقات</label
-          >
+          <label><input type="radio" name="view" value="grid" />شبكة</label>
+          <label><input type="radio" name="view" value="cards" />بطاقات</label>
         </fieldset>
       </section>
     </main>

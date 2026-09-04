@@ -9,9 +9,9 @@ Use menubar parts for menu containers, triggers, content, items, and separators.
 
 ```html
 <nav class="menubar">
-  <div class="menubar-menu">
-    <button class="menubar-trigger">File</button>
-  </div>
+  <section>
+    <button>File</button>
+  </section>
 </nav>
 ```
 

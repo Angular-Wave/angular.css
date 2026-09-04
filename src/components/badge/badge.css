@@ -50,17 +50,31 @@
   color: var(--foreground);
 }
 
-:is(.badge):has(> [data-icon="inline-start"]) {
+:is(.badge):has(> [icon="inline-start"]) {
   padding-inline-start: calc(var(--spacing) * 1.5);
 }
 
-:is(.badge):has(> [data-icon="inline-end"]) {
+:is(.badge):has(> [icon="inline-end"]) {
   padding-inline-end: calc(var(--spacing) * 1.5);
 }
 
 .badge[variant="ghost"] {
   background: transparent;
   color: var(--foreground);
+}
+
+.badge[variant="custom"] {
+  background: var(--badge-background, var(--primary));
+  color: var(--badge-foreground, var(--primary-foreground));
+}
+
+@supports (color: contrast-color(red)) {
+  .badge[variant="custom"] {
+    color: var(
+      --badge-foreground,
+      contrast-color(var(--badge-background, var(--primary)))
+    );
+  }
 }
 
 :is(.badge) > svg {

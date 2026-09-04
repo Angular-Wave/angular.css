@@ -5,8 +5,7 @@ description: >
   Menu opened from a trigger button
 ---
 
-Use `ng-dropdown` on a wrapper with a trigger `button` and a menu panel
-`role="menu"`.
+Use `ng-dropdown` on a wrapper with a trigger `button` and a native `menu`.
 
 ```html
 <div ng-dropdown>
@@ -19,11 +18,11 @@ Use `ng-dropdown` on a wrapper with a trigger `button` and a menu panel
 </div>
 ```
 
-The directive manages `aria-expanded`, `aria-controls`, `data-open`, outside
-click close, escape close, and arrow-key focus movement. It does not publish
-scope methods or own AngularTS application state. If the menu needs to be
-controlled externally, update the wrapper or panel `data-open` attribute from
-your AngularTS state.
+The directive adds the required menu roles and manages `aria-expanded`,
+`aria-controls`, outside-click close, Escape close, and arrow-key focus
+movement. It does not publish scope methods or own AngularTS application state.
+If the menu needs external control, bind the wrapper's concise `open` attribute
+from AngularTS state.
 
 ## Example
 
@@ -59,13 +58,11 @@ Use native elements for authored structure. Component classes are optional visua
 | `aria-disabled` | Input | Semantic disabled state. |
 | `aria-expanded` | Output | Open or expanded state exposed to assistive technology. |
 | `aria-haspopup` | Input/output | ARIA relationship or state. |
+| `aria-hidden` | Output | ARIA relationship or state. |
 | `aria-labelledby` | Output | ARIA relationship or state. |
-| `data-disabled` | Input | Stable component state or styling hook. |
-| `data-open` | Input/output | Stable component state or styling hook. |
-| `data-size` | Input | Stable component state or styling hook. |
-| `data-state` | Output | Stable component state or styling hook. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
 | `disabled` | Input | Disables native or component interaction. |
+| `open` | Input | Initial or controlled open state. |
 | `role` | Input/output | Explicit semantic role when native HTML does not provide one. |
 | `size` | Input | Visual size token supported by the component stylesheet. |
 | `tabindex` | Input/output | Keyboard focus order for composite descendants. |

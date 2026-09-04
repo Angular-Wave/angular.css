@@ -5,25 +5,44 @@
   color: var(--foreground);
 }
 
-.chart-header {
+.chart > header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: calc(var(--spacing) * 3);
 }
 
-.chart-title {
+.chart > header :is(h1, h2, h3, h4, h5, h6) {
   font-size: var(--text-sm);
   font-weight: var(--font-weight-semibold);
   line-height: 1.2;
 }
 
-.chart-description {
+.chart > header p {
   color: var(--muted-foreground);
   font-size: var(--text-sm);
 }
 
-.chart-plot {
+.chart > ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--spacing) * 3);
+  margin: 0;
+  padding: 0;
+  color: var(--muted-foreground);
+  font-size: var(--text-xs);
+  list-style: none;
+}
+
+.chart > ul > li {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--spacing) * 1.5);
+}
+
+.chart > section {
   position: relative;
   display: grid;
   align-items: end;
@@ -33,9 +52,10 @@
   padding: calc(var(--spacing) * 4);
 }
 
-.chart-grid {
+.chart > section > hr {
   position: absolute;
   inset: calc(var(--spacing) * 4);
+  border: 0;
   background-image: repeating-linear-gradient(
     to bottom,
     transparent 0,
@@ -45,20 +65,20 @@
   pointer-events: none;
 }
 
-.chart:is([dir="rtl"], [data-direction="rtl"]) .chart-plot {
+.chart:dir(rtl) > section {
   border-inline-start: 0;
   border-inline-end: 1px solid var(--border);
   direction: rtl;
 }
 
-.chart-bars {
+.chart > section > div {
   display: flex;
   height: 10rem;
   align-items: end;
   gap: calc(var(--spacing) * 3);
 }
 
-.chart-bar-groups {
+.chart > section > ul {
   position: relative;
   z-index: 1;
   display: grid;
@@ -68,9 +88,12 @@
   grid-auto-columns: minmax(0, 1fr);
   align-items: end;
   gap: calc(var(--spacing) * 3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.chart-bar-group {
+.chart > section > ul > li {
   display: flex;
   height: 100%;
   align-items: end;
@@ -78,16 +101,13 @@
   gap: calc(var(--spacing) * 1);
 }
 
-.chart:is([dir="rtl"], [data-direction="rtl"]) .chart-bars {
-  flex-direction: row-reverse;
-}
-
-.chart-bar {
-  display: grid;
+.chart > section > div > span,
+.chart > section > ul > li > span {
+  display: block;
   width: 100%;
   min-width: calc(var(--spacing) * 6);
   height: var(--value, attr(data-value type(<percentage>), 50%));
-  align-items: end;
+  border: 0;
   border-radius: calc(var(--radius) - 2px) calc(var(--radius) - 2px) 0 0;
   background: var(
     --chart-color,
@@ -95,23 +115,17 @@
   );
 }
 
-.chart-legend {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: calc(var(--spacing) * 3);
-  color: var(--muted-foreground);
-  font-size: var(--text-xs);
+.chart > ul > li > span:first-child {
+  width: calc(var(--spacing) * 2.5);
+  height: calc(var(--spacing) * 2.5);
+  border-radius: 999px;
+  background: var(
+    --chart-color,
+    attr(data-color type(<color>), var(--chart-1))
+  );
 }
 
-.chart-legend-item {
-  display: inline-flex;
-  align-items: center;
-  gap: calc(var(--spacing) * 1.5);
-}
-
-.chart-axis {
+.chart > footer {
   display: flex;
   justify-content: space-between;
   gap: calc(var(--spacing) * 2);
@@ -119,7 +133,7 @@
   font-size: var(--text-xs);
 }
 
-.chart-tooltip {
+.chart output {
   display: grid;
   width: fit-content;
   min-width: 8rem;
@@ -133,27 +147,24 @@
   box-shadow: 0 8px 24px color-mix(in srgb, var(--foreground) 12%, transparent);
 }
 
-.chart-tooltip[data-visible="false"] {
-  display: none;
-}
-
-.chart-tooltip-label {
+.chart output > strong {
   font-weight: var(--font-weight-medium);
 }
 
-.chart-tooltip-items {
+.chart output > dl {
   display: grid;
   gap: calc(var(--spacing) * 1.5);
+  margin: 0;
 }
 
-.chart-tooltip-item {
+.chart output > dl > div {
   display: flex;
   width: 100%;
   align-items: center;
   gap: calc(var(--spacing) * 2);
 }
 
-.chart-tooltip-indicator {
+.chart output > dl > div > span:first-child {
   width: calc(var(--spacing) * 2.5);
   height: calc(var(--spacing) * 2.5);
   flex: 0 0 auto;
@@ -166,12 +177,12 @@
   );
 }
 
-:is(.chart-tooltip-indicator)[data-indicator="line"] {
+.chart output > dl > div > span:first-child[indicator="line"] {
   width: calc(var(--spacing) * 1);
   height: 100%;
 }
 
-:is(.chart-tooltip-indicator)[data-indicator="dashed"] {
+.chart output > dl > div > span:first-child[indicator="dashed"] {
   width: 0;
   height: 100%;
   border-width: 1.5px;
@@ -179,24 +190,19 @@
   background: transparent;
 }
 
-.chart-tooltip-name {
+.chart output dt {
   min-width: 0;
   flex: 1;
   color: var(--muted-foreground);
 }
 
-.chart-tooltip-value {
+.chart output dd {
+  margin: 0;
   font-family: var(--font-mono);
   font-weight: var(--font-weight-medium);
   font-variant-numeric: tabular-nums;
 }
 
-.chart-swatch {
-  width: calc(var(--spacing) * 2.5);
-  height: calc(var(--spacing) * 2.5);
-  border-radius: 999px;
-  background: var(
-    --chart-color,
-    attr(data-color type(<color>), var(--chart-1))
-  );
+.chart:dir(rtl) > section > div {
+  flex-direction: row-reverse;
 }

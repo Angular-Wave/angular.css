@@ -11,17 +11,15 @@
   </head>
   <body ng-app="ui" ng-cloak ng-init="fruit=''">
     <main class="select-demo visual-example">
-      <label for="fruit" class="label">Fruit</label>
-      <div class="select-wrapper">
-        <select id="fruit" class="select" ng-model="fruit">
-          <option value="">Select a fruit</option>
-          <option value="apple">Apple</option>
-          <option value="banana">Banana</option>
-          <option value="blueberry">Blueberry</option>
-          <option value="grapes">Grapes</option>
-          <option value="pineapple">Pineapple</option>
-        </select>
-      </div>
+      <label for="fruit">Fruit</label>
+      <select id="fruit" ng-model="fruit">
+        <option value="">Select a fruit</option>
+        <option value="apple">Apple</option>
+        <option value="banana">Banana</option>
+        <option value="blueberry">Blueberry</option>
+        <option value="grapes">Grapes</option>
+        <option value="pineapple">Pineapple</option>
+      </select>
       <output class="output">Selected: {{ fruit || 'none' }}</output>
     </main>
   </body>

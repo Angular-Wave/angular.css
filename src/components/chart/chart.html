@@ -11,51 +11,23 @@
   </head>
   <body ng-app="ui" ng-cloak>
     <figure style="max-width: 32rem" class="chart">
-      <header class="chart-header">
+      <header>
         <div>
-          <h2 class="chart-title">Visitors</h2>
-          <figcaption class="chart-description">Preview target: 72%</figcaption>
+          <h2>Visitors</h2>
+          <p>Preview target: 72%</p>
         </div>
       </header>
-      <div class="chart-plot">
-        <div class="chart-bars">
-          <span
-            data-value="46%"
-            style="--chart-color: var(--chart-1)"
-            class="chart-bar"
-          ></span>
-          <span
-            data-value="58%"
-            style="--chart-color: var(--chart-2)"
-            class="chart-bar"
-          ></span>
-          <span
-            data-value="72%"
-            style="--chart-color: var(--chart-3)"
-            class="chart-bar"
-          ></span>
-          <span
-            data-value="88%"
-            style="--chart-color: var(--chart-4)"
-            class="chart-bar"
-          ></span>
+      <section>
+        <div>
+          <span data-value="46%" style="--chart-color: var(--chart-1)"></span>
+          <span data-value="58%" style="--chart-color: var(--chart-2)"></span>
+          <span data-value="72%" style="--chart-color: var(--chart-3)"></span>
+          <span data-value="88%" style="--chart-color: var(--chart-4)"></span>
         </div>
-      </div>
-      <ul class="chart-legend">
-        <li class="chart-legend-item">
-          <span
-            style="--chart-color: var(--chart-1)"
-            class="chart-swatch"
-          ></span
-          >Desktop
-        </li>
-        <li class="chart-legend-item">
-          <span
-            style="--chart-color: var(--chart-2)"
-            class="chart-swatch"
-          ></span
-          >Mobile
-        </li>
+      </section>
+      <ul>
+        <li><span style="--chart-color: var(--chart-1)"></span>Desktop</li>
+        <li><span style="--chart-color: var(--chart-2)"></span>Mobile</li>
       </ul>
     </figure>
   </body>

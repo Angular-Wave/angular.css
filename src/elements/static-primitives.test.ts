@@ -63,7 +63,7 @@ test("media and layout primitives expose their packaged state", async ({
   const avatars = page.locator(".avatar");
   await expect(avatars).toHaveCount(6);
   await expect(avatars.first().locator("img")).toBeVisible();
-  await expect(page.locator(".avatar-group-count")).toHaveText("+3");
+  await expect(page.locator(".avatar-group > output")).toHaveText("+3");
 
   await openElementArtifact(page, "direction");
   await expect(page.locator("#direction-default")).toHaveCSS(
@@ -80,36 +80,34 @@ test("navigation and data-display artifacts preserve generated semantics", async
   await openElementArtifact(page, "breadcrumb");
   const breadcrumb = page.locator(".breadcrumb");
   await expect(breadcrumb).toHaveAttribute("aria-label", "breadcrumb");
-  await expect(breadcrumb.locator(".breadcrumb-page")).toHaveAttribute(
+  await expect(breadcrumb.locator('[aria-current="page"]')).toHaveAttribute(
     "aria-current",
     "page",
   );
-  await expect(breadcrumb.locator(".breadcrumb-separator")).toHaveCount(2);
+  await expect(breadcrumb.locator('li[aria-hidden="true"]')).toHaveCount(2);
 
   await openElementArtifact(page, "calendar");
   const calendar = page.locator("[ng-calendar]");
-  await expect(calendar.locator(".calendar-day")).toHaveCount(42);
-  await calendar.locator('[data-value="2026-05-20"]').click();
+  await expect(calendar.locator(":scope > div button[value]")).toHaveCount(42);
+  await calendar.locator('[value="2026-05-20"]').click();
   await expect(calendar).toHaveAttribute("data-value", "2026-05-20");
 
   await openElementArtifact(page, "chart");
   const chart = page.locator(".chart");
   expect(await chart.getAttribute("role")).toBeNull();
   await expect(chart).toHaveRole("figure");
-  await expect(chart.locator(".chart-bar")).toHaveCount(12);
-  await expect(chart.locator(".chart-bar").first()).toHaveAttribute(
-    "data-value",
-    "61%",
-  );
+  const bars = chart.locator(":scope > section > ul > li > span");
+  await expect(bars).toHaveCount(12);
+  await expect(bars.first()).toHaveAttribute("data-value", "61%");
 });
 
 test("card artifact exposes its authored anatomy", async ({ page }) => {
   await openElementArtifact(page, "card");
   const card = page.locator(".card");
-  await expect(card.locator(".card-header")).toHaveCount(1);
-  await expect(card.locator(".card-content")).toHaveCount(1);
-  await expect(card.locator(".card-footer")).toHaveCount(1);
-  await expect(card.locator(".card-action")).toHaveCount(1);
+  await expect(card.locator(":scope > header")).toHaveCount(1);
+  await expect(card.locator(":scope > section")).toHaveCount(1);
+  await expect(card.locator(":scope > footer")).toHaveCount(1);
+  await expect(card.locator(":scope > header > menu")).toHaveCount(1);
   await expect(
     page.getByRole("heading", { name: "Login to your account" }),
   ).toBeVisible();

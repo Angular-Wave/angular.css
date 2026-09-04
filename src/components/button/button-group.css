@@ -69,9 +69,7 @@
   border-end-end-radius: calc(var(--radius) - 2px);
 }
 
-.button-group
-  > :is([ng-dropdown], .popover)
-  > :is(.dropdown-menu-trigger, .popover-trigger, button) {
+.button-group > :is([ng-dropdown], .popover) > button {
   border-radius: inherit;
 }
 
@@ -88,7 +86,7 @@
     .input-group
   )
   ~ :is([ng-dropdown], .popover)
-  > :is(.dropdown-menu-trigger, .popover-trigger, button) {
+  > button {
   border-inline-start-width: 0;
 }
 
@@ -119,11 +117,11 @@
   z-index: 10;
 }
 
-.button-group:is([orientation="vertical"], [data-orientation="vertical"]) {
+.button-group[orientation="vertical"] {
   flex-direction: column;
 }
 
-.button-group:is([orientation="vertical"], [data-orientation="vertical"])
+.button-group[orientation="vertical"]
   > :is(
     button,
     a,
@@ -140,7 +138,7 @@
   border-start-end-radius: calc(var(--radius) - 2px);
 }
 
-.button-group:is([orientation="vertical"], [data-orientation="vertical"])
+.button-group[orientation="vertical"]
   > :is(
     button,
     a,
@@ -168,7 +166,7 @@
   border-start-end-radius: 0;
 }
 
-.button-group:is([orientation="vertical"], [data-orientation="vertical"])
+.button-group[orientation="vertical"]
   > :is(
     button,
     a,
@@ -184,7 +182,7 @@
   border-end-end-radius: calc(var(--radius) - 2px);
 }
 
-.button-group:is([orientation="vertical"], [data-orientation="vertical"])
+.button-group[orientation="vertical"]
   > :is(
     button,
     a,
@@ -197,11 +195,11 @@
     .input-group
   )
   ~ :is([ng-dropdown], .popover)
-  > :is(.dropdown-menu-trigger, .popover-trigger, button) {
+  > button {
   border-block-start-width: 0;
 }
 
-.button-group-text {
+.button-group > :is(label, span) {
   display: flex;
   align-items: center;
   gap: calc(var(--spacing) * 2);
@@ -214,32 +212,26 @@
   box-shadow: var(--shadow-xs);
 }
 
-.button-group-text svg {
+.button-group > :is(label, span) svg {
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
   pointer-events: none;
 }
 
-.button-group-separator {
+.button-group > hr {
   position: relative;
   align-self: stretch;
   flex: none;
   background: var(--input);
 }
 
-.button-group-separator:is(
-  [orientation="vertical"],
-  [data-orientation="vertical"]
-) {
+.button-group > hr[orientation="vertical"] {
   width: 1px;
   height: auto;
   margin-block: 1px;
 }
 
-.button-group-separator:is(
-  [orientation="horizontal"],
-  [data-orientation="horizontal"]
-) {
+.button-group > hr[orientation="horizontal"] {
   width: auto;
   height: 1px;
   margin-inline: 1px;

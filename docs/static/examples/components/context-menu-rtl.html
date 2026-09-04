@@ -17,34 +17,30 @@
   >
     <main class="context-menu-rtl-demo visual-example">
       <div ng-context-menu>
-        <div class="context-menu-trigger">انقر بزر الفأرة الأيمن هنا</div>
-        <menu aria-label="إجراءات المتصفح" class="context-menu-content">
-          <div class="context-menu-group">
-            <button ng-click="lastAction='رجوع'" class="context-menu-item">
+        <div>انقر بزر الفأرة الأيمن هنا</div>
+        <menu aria-label="إجراءات المتصفح">
+          <section>
+            <button ng-click="lastAction='رجوع'">
               رجوع
-              <span class="context-menu-shortcut">Alt+Right</span>
+              <kbd>Alt+Right</kbd>
             </button>
-            <button disabled class="context-menu-item">
+            <button disabled>
               للأمام
-              <span class="context-menu-shortcut">Alt+Left</span>
+              <kbd>Alt+Left</kbd>
             </button>
-            <button ng-click="lastAction='إعادة تحميل'" class="context-menu-item">
+            <button ng-click="lastAction='إعادة تحميل'">
               إعادة تحميل
-              <span class="context-menu-shortcut">Ctrl+R</span>
+              <kbd>Ctrl+R</kbd>
             </button>
-          </div>
-          <div class="context-menu-separator"></div>
-          <div class="context-menu-sub">
-            <button class="context-menu-sub-trigger">المزيد من الأدوات</button>
-            <div class="context-menu-sub-content">
-              <button ng-click="lastAction='حفظ الصفحة'" class="context-menu-item">
-                حفظ الصفحة...
-              </button>
-              <button ng-click="lastAction='أدوات المطور'" class="context-menu-item">
-                أدوات المطور
-              </button>
-            </div>
-          </div>
+          </section>
+          <hr />
+          <details>
+            <summary>المزيد من الأدوات</summary>
+            <menu>
+              <button ng-click="lastAction='حفظ الصفحة'">حفظ الصفحة...</button>
+              <button ng-click="lastAction='أدوات المطور'">أدوات المطور</button>
+            </menu>
+          </details>
         </menu>
       </div>
       <output class="context-menu-output" aria-live="polite">

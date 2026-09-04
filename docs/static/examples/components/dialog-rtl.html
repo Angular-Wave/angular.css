@@ -17,31 +17,65 @@
   >
     <main class="dialog-demo visual-example">
       <section id="rtl-profile-dialog" class="dialog">
-        <button variant="outline" class="dialog-trigger button" type="button" commandfor="rtl-profile-dialog-content" command="show-modal">
+        <button
+          variant="outline"
+          class="button"
+          type="button"
+          commandfor="rtl-profile-dialog-content"
+          command="show-modal"
+        >
           تعديل الملف الشخصي
         </button>
-        <dialog class="dialog-content" id="rtl-profile-dialog-content" closedby="any" aria-labelledby="rtl-profile-dialog-title" aria-describedby="rtl-profile-dialog-description">
-          <header class="dialog-header">
-            <h2 class="dialog-title" id="rtl-profile-dialog-title">تعديل الملف الشخصي</h2>
-            <p class="dialog-description" id="rtl-profile-dialog-description">
+        <dialog
+          id="rtl-profile-dialog-content"
+          closedby="any"
+          aria-labelledby="rtl-profile-dialog-title"
+          aria-describedby="rtl-profile-dialog-description"
+        >
+          <header>
+            <h2 id="rtl-profile-dialog-title">تعديل الملف الشخصي</h2>
+            <p id="rtl-profile-dialog-description">
               غيّر بيانات ملفك الشخصي ثم احفظ التعديلات.
             </p>
           </header>
-          <div class="dialog-profile-form">
-            <div class="dialog-form-row">
-              <label for="rtl-name" class="label">الاسم</label>
+          <section>
+            <label for="rtl-name">
+              <span>الاسم</span>
               <input id="rtl-name" ng-model="profile.name" class="input" />
-            </div>
-            <div class="dialog-form-row">
-              <label for="rtl-username" class="label">اسم المستخدم</label>
-              <input id="rtl-username" ng-model="profile.username" class="input" />
-            </div>
-          </div>
-          <footer class="dialog-footer">
-            <button variant="outline" class="button" commandfor="rtl-profile-dialog-content" command="close">إلغاء</button>
-            <button class="button" commandfor="rtl-profile-dialog-content" command="close">حفظ التغييرات</button>
+            </label>
+            <label for="rtl-username">
+              <span>اسم المستخدم</span>
+              <input
+                id="rtl-username"
+                ng-model="profile.username"
+                class="input"
+              />
+            </label>
+          </section>
+          <footer>
+            <button
+              variant="outline"
+              class="button"
+              commandfor="rtl-profile-dialog-content"
+              command="close"
+            >
+              إلغاء
+            </button>
+            <button
+              class="button"
+              commandfor="rtl-profile-dialog-content"
+              command="close"
+            >
+              حفظ التغييرات
+            </button>
           </footer>
-          <button variant="ghost" size="icon-sm" class="dialog-close button" commandfor="rtl-profile-dialog-content" command="close">
+          <button
+            variant="ghost"
+            size="icon-sm"
+            class="button"
+            commandfor="rtl-profile-dialog-content"
+            command="close"
+          >
             <svg
               viewBox="0 0 24 24"
               fill="none"

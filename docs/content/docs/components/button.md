@@ -5,8 +5,8 @@ description: >
   Action controls with `variant` and `size` styling hooks.
 ---
 
-Use `class="button"` directly on native buttons, button inputs, or links and
-set `variant`/`size` attributes for variants and spacing.
+Use `class="button"` directly on native buttons, button inputs, or links and set
+`variant`/`size` attributes for variants and spacing.
 
 ```html
 <div class="row">

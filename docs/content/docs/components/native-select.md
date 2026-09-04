@@ -2,20 +2,20 @@
 title: native-select
 category: 'form'
 description: >
-  Native `<select>` wrapper and state syncing without custom JavaScript
-  behavior.
+  Native `<select>` styling without custom JavaScript behavior.
 ---
 
-Use `class="native-select"` directly on native select controls.
+Use native select controls directly, without a wrapper or styling class.
 
 ```html
-<div class="native-select-wrapper">
-  <select aria-label="Status" class="native-select">
-    <option value="">Select status</option>
-    <option value="todo">Todo</option>
-  </select>
-</div>
+<select aria-label="Status">
+  <option value="">Select status</option>
+  <option value="todo">Todo</option>
+</select>
 ```
+
+The browser retains its operating-system picker, indicator, form behavior,
+keyboard interaction, validation, and AngularTS model behavior.
 
 ## Example
 
@@ -34,11 +34,11 @@ This is a styling-only HTML element or pattern. AngularCSS registers no runtime 
 
 ### Root styling selector
 
-- `.native-select`
+- `select`
 
 ### Semantic structure
 
-Apply `.native-select` directly to a native `select` inside an optional wrapper. Native `option` and `optgroup` elements need no additional attributes. A wrapper may provide a custom icon.
+Use a native `select` directly. Native `option`, `optgroup`, picker behavior, and the browser's indicator need no wrapper, class, or additional attributes.
 
 ## API
 

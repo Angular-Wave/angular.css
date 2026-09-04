@@ -17,90 +17,176 @@
   >
     <main class="sheet-sides-demo visual-example">
       <section side="top" class="sheet">
-        <button variant="outline" class="sheet-trigger button" type="button" commandfor="sheet-native-624-content" command="show-modal">Top</button>
-        <dialog data-size="half" class="sheet-content" id="sheet-native-624-content" closedby="any" aria-labelledby="sheet-native-624-title" aria-describedby="sheet-native-624-description" data-side="top">
-          <header class="sheet-header">
-            <h2 class="sheet-title" id="sheet-native-624-title">Edit profile</h2>
-            <p class="sheet-description" id="sheet-native-624-description">
+        <button
+          variant="outline"
+          class="button"
+          type="button"
+          commandfor="sheet-native-624-content"
+          command="show-modal"
+        >
+          Top
+        </button>
+        <dialog
+          size="half"
+          id="sheet-native-624-content"
+          closedby="any"
+          aria-labelledby="sheet-native-624-title"
+          aria-describedby="sheet-native-624-description"
+          side="top"
+        >
+          <header>
+            <h2 id="sheet-native-624-title">Edit profile</h2>
+            <p id="sheet-native-624-description">
               Make changes to your profile here. Click save when you're done.
             </p>
           </header>
-          <div class="sheet-side-copy sheet-body">
+          <section class="sheet-side-copy">
             <p ng-repeat="item in paragraphs">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris.
             </p>
-          </div>
-          <footer class="sheet-footer">
+          </section>
+          <footer>
             <button class="button">Save changes</button>
-            <button variant="outline" class="button" commandfor="sheet-native-624-content" command="close">Cancel</button>
+            <button
+              variant="outline"
+              class="button"
+              commandfor="sheet-native-624-content"
+              command="close"
+            >
+              Cancel
+            </button>
           </footer>
         </dialog>
       </section>
       <section side="right" class="sheet">
-        <button variant="outline" class="sheet-trigger button" type="button" commandfor="sheet-native-1974-content" command="show-modal">Right</button>
-        <dialog class="sheet-content" id="sheet-native-1974-content" closedby="any" aria-labelledby="sheet-native-1974-title" aria-describedby="sheet-native-1974-description" data-side="right">
-          <header class="sheet-header">
-            <h2 class="sheet-title" id="sheet-native-1974-title">Edit profile</h2>
-            <p class="sheet-description" id="sheet-native-1974-description">
+        <button
+          variant="outline"
+          class="button"
+          type="button"
+          commandfor="sheet-native-1974-content"
+          command="show-modal"
+        >
+          Right
+        </button>
+        <dialog
+          id="sheet-native-1974-content"
+          closedby="any"
+          aria-labelledby="sheet-native-1974-title"
+          aria-describedby="sheet-native-1974-description"
+          side="right"
+        >
+          <header>
+            <h2 id="sheet-native-1974-title">Edit profile</h2>
+            <p id="sheet-native-1974-description">
               Make changes to your profile here. Click save when you're done.
             </p>
           </header>
-          <div class="sheet-side-copy sheet-body">
+          <section class="sheet-side-copy">
             <p ng-repeat="item in paragraphs">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris.
             </p>
-          </div>
-          <footer class="sheet-footer">
+          </section>
+          <footer>
             <button class="button">Save changes</button>
-            <button variant="outline" class="button" commandfor="sheet-native-1974-content" command="close">Cancel</button>
+            <button
+              variant="outline"
+              class="button"
+              commandfor="sheet-native-1974-content"
+              command="close"
+            >
+              Cancel
+            </button>
           </footer>
         </dialog>
       </section>
       <section side="bottom" class="sheet">
-        <button variant="outline" class="sheet-trigger button" type="button" commandfor="sheet-native-3320-content" command="show-modal">Bottom</button>
-        <dialog data-size="half" class="sheet-content" id="sheet-native-3320-content" closedby="any" aria-labelledby="sheet-native-3320-title" aria-describedby="sheet-native-3320-description" data-side="bottom">
-          <header class="sheet-header">
-            <h2 class="sheet-title" id="sheet-native-3320-title">Edit profile</h2>
-            <p class="sheet-description" id="sheet-native-3320-description">
+        <button
+          variant="outline"
+          class="button"
+          type="button"
+          commandfor="sheet-native-3320-content"
+          command="show-modal"
+        >
+          Bottom
+        </button>
+        <dialog
+          size="half"
+          id="sheet-native-3320-content"
+          closedby="any"
+          aria-labelledby="sheet-native-3320-title"
+          aria-describedby="sheet-native-3320-description"
+          side="bottom"
+        >
+          <header>
+            <h2 id="sheet-native-3320-title">Edit profile</h2>
+            <p id="sheet-native-3320-description">
               Make changes to your profile here. Click save when you're done.
             </p>
           </header>
-          <div class="sheet-side-copy sheet-body">
+          <section class="sheet-side-copy">
             <p ng-repeat="item in paragraphs">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris.
             </p>
-          </div>
-          <footer class="sheet-footer">
+          </section>
+          <footer>
             <button class="button">Save changes</button>
-            <button variant="outline" class="button" commandfor="sheet-native-3320-content" command="close">Cancel</button>
+            <button
+              variant="outline"
+              class="button"
+              commandfor="sheet-native-3320-content"
+              command="close"
+            >
+              Cancel
+            </button>
           </footer>
         </dialog>
       </section>
       <section side="left" class="sheet">
-        <button variant="outline" class="sheet-trigger button" type="button" commandfor="sheet-native-4686-content" command="show-modal">Left</button>
-        <dialog class="sheet-content" id="sheet-native-4686-content" closedby="any" aria-labelledby="sheet-native-4686-title" aria-describedby="sheet-native-4686-description" data-side="left">
-          <header class="sheet-header">
-            <h2 class="sheet-title" id="sheet-native-4686-title">Edit profile</h2>
-            <p class="sheet-description" id="sheet-native-4686-description">
+        <button
+          variant="outline"
+          class="button"
+          type="button"
+          commandfor="sheet-native-4686-content"
+          command="show-modal"
+        >
+          Left
+        </button>
+        <dialog
+          id="sheet-native-4686-content"
+          closedby="any"
+          aria-labelledby="sheet-native-4686-title"
+          aria-describedby="sheet-native-4686-description"
+          side="left"
+        >
+          <header>
+            <h2 id="sheet-native-4686-title">Edit profile</h2>
+            <p id="sheet-native-4686-description">
               Make changes to your profile here. Click save when you're done.
             </p>
           </header>
-          <div class="sheet-side-copy sheet-body">
+          <section class="sheet-side-copy">
             <p ng-repeat="item in paragraphs">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris.
             </p>
-          </div>
-          <footer class="sheet-footer">
+          </section>
+          <footer>
             <button class="button">Save changes</button>
-            <button variant="outline" class="button" commandfor="sheet-native-4686-content" command="close">Cancel</button>
+            <button
+              variant="outline"
+              class="button"
+              commandfor="sheet-native-4686-content"
+              command="close"
+            >
+              Cancel
+            </button>
           </footer>
         </dialog>
       </section>

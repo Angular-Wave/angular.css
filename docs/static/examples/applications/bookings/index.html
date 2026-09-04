@@ -40,9 +40,9 @@
           <button type="button" aria-label="Notifications">
             <span ng-icon="bell"></span><span class="notification-dot"></span>
           </button>
-          <span data-size="sm" class="avatar">
-            <span class="avatar-fallback">EE</span>
-            <span aria-label="Online" class="avatar-badge"></span>
+          <span size="sm" class="avatar">
+            <span>EE</span>
+            <output aria-label="Online"></output>
           </span>
         </div>
       </nav>
@@ -51,11 +51,10 @@
         id="booking-sidebar"
         class="booking-secondary"
         ng-sidebar
-        data-state="expanded"
         style="--sidebar-width: 14rem"
       >
-        <div class="sidebar-inner">
-          <header class="booking-sidebar-header sidebar-header">
+        <div>
+          <header class="booking-sidebar-header">
             <strong>Bookings</strong>
             <button
               size="icon-sm"
@@ -66,40 +65,40 @@
               <span ng-icon="plus"></span>
             </button>
           </header>
-          <hr class="sidebar-separator" />
-          <nav class="sidebar-content">
-            <section class="sidebar-group">
-              <div class="sidebar-group-content">
-                <ul class="sidebar-menu">
-                  <li class="sidebar-menu-item">
-                    <button data-active="true" class="sidebar-menu-button">
+          <hr />
+          <nav>
+            <section>
+              <div>
+                <ul>
+                  <li>
+                    <button aria-current="page">
                       <span ng-icon="bookings"></span><span>Upcoming</span>
                     </button>
-                    <span class="sidebar-menu-badge">40</span>
+                    <output>40</output>
                   </li>
-                  <li class="sidebar-menu-item">
-                    <button class="sidebar-menu-button">
+                  <li>
+                    <button>
                       <span ng-icon="clock"></span><span>Past</span>
                     </button>
-                    <span class="sidebar-menu-badge">0</span>
+                    <output>0</output>
                   </li>
-                  <li class="sidebar-menu-item">
-                    <button class="sidebar-menu-button">
+                  <li>
+                    <button>
                       <span ng-icon="customers"></span><span>Customers</span>
                     </button>
-                    <span class="sidebar-menu-badge">21</span>
+                    <output>21</output>
                   </li>
-                  <li class="sidebar-menu-item">
-                    <button class="sidebar-menu-button">
+                  <li>
+                    <button>
                       <span ng-icon="invoices"></span><span>Invoices</span>
                     </button>
-                    <span class="sidebar-menu-badge">0</span>
+                    <output>0</output>
                   </li>
                 </ul>
               </div>
             </section>
           </nav>
-          <footer class="booking-sidebar-footer sidebar-footer">
+          <footer class="booking-sidebar-footer">
             <span class="muted">Signed in as</span>
             <strong>Emma Executive</strong>
           </footer>
@@ -113,7 +112,7 @@
               class="booking-mobile-menu button"
               size="icon-sm"
               variant="outline"
-              data-sidebar-target="booking-sidebar"
+              aria-controls="booking-sidebar"
               aria-label="Toggle booking navigation"
             >
               <span ng-icon="menu"></span>
@@ -124,51 +123,49 @@
             </div>
           </div>
           <div class="booking-search input-group">
-            <span ng-icon="search" class="input-group-addon"></span>
+            <span ng-icon="search"></span>
             <input
               ng-model="bookings.query"
               data-change="bookings.updateVisible()"
               type="search"
               aria-label="Search bookings"
               placeholder="Search bookings"
-              class="input-group-control input"
+              class="input"
             />
-            <span data-align="inline-end" class="input-group-addon">
+            <span align="inline-end">
               <kbd>/</kbd>
             </span>
           </div>
         </header>
 
         <div class="booking-filterbar">
-          <section ng-tabs>
-            <div variant="line" aria-label="Booking status" class="tabs-list">
-              <button ng-click="bookings.setStatus('All')" class="tabs-trigger">
-                All
-              </button>
-              <button
-                ng-click="bookings.setStatus('Confirmed')"
-                class="tabs-trigger"
-              >
-                Confirmed
-              </button>
-              <button
-                ng-click="bookings.setStatus('Pending')"
-                class="tabs-trigger"
-              >
-                Pending
-              </button>
-              <button
-                ng-click="bookings.setStatus('Change Requested')"
-                class="tabs-trigger"
-              >
-                Change requested
-              </button>
-            </div>
-            <div class="tabs-content"></div>
-            <div hidden class="tabs-content"></div>
-            <div hidden class="tabs-content"></div>
-            <div hidden class="tabs-content"></div>
-          </section>
+          <nav variant="line" aria-label="Booking status" class="tabs">
+            <button
+              type="button"
+              aria-pressed="{{ bookings.status === 'All' }}"
+              ng-click="bookings.setStatus('All')"
+            >
+              All
+            </button>
+            <button
+              ng-click="bookings.setStatus('Confirmed')"
+              aria-pressed="{{ bookings.status === 'Confirmed' }}"
+            >
+              Confirmed
+            </button>
+            <button
+              ng-click="bookings.setStatus('Pending')"
+              aria-pressed="{{ bookings.status === 'Pending' }}"
+            >
+              Pending
+            </button>
+            <button
+              ng-click="bookings.setStatus('Change Requested')"
+              aria-pressed="{{ bookings.status === 'Change Requested' }}"
+            >
+              Change requested
+            </button>
+          </nav>
           <span class="booking-result-count">
             <strong ng-bind="bookings.visibleCount"></strong> results
           </span>
@@ -256,11 +253,11 @@
             </article>
 
             <section ng-show="bookings.empty" class="booking-empty empty">
-              <div class="empty-media">
+              <figure>
                 <span ng-icon="search"></span>
-              </div>
-              <h2 class="empty-title">No bookings found</h2>
-              <p class="empty-description">Try a different search or status.</p>
+              </figure>
+              <h2>No bookings found</h2>
+              <p>Try a different search or status.</p>
             </section>
           </div>
         </section>
@@ -273,17 +270,14 @@
         closedby="any"
         aria-labelledby="booking-dialog-title"
         aria-describedby="booking-dialog-description"
-        class="dialog-content"
       >
-        <header class="dialog-header">
+        <header>
           <span
             class="booking-dialog-reference"
             ng-bind="bookings.selected.reference"
           ></span>
-          <h2 id="booking-dialog-title" class="dialog-title">
-            Booking details
-          </h2>
-          <p id="booking-dialog-description" class="dialog-description">
+          <h2 id="booking-dialog-title">Booking details</h2>
+          <p id="booking-dialog-description">
             <span ng-bind="bookings.selected.customer"></span> traveling from
             <span ng-bind="bookings.selected.origin"></span> to
             <span ng-bind="bookings.selected.destination"></span>.
@@ -311,7 +305,7 @@
             <dd ng-bind="bookings.selected.cabin"></dd>
           </div>
         </dl>
-        <footer class="dialog-footer">
+        <footer>
           <button
             commandfor="booking-detail-dialog-content"
             command="close"

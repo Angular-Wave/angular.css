@@ -17,24 +17,45 @@
   >
     <main class="drawer-scroll-demo visual-example">
       <section id="scrollable-drawer" side="right" class="drawer">
-        <button variant="outline" class="drawer-trigger button" type="button" commandfor="scrollable-drawer-content" command="show-modal">
+        <button
+          variant="outline"
+          class="button"
+          type="button"
+          commandfor="scrollable-drawer-content"
+          command="show-modal"
+        >
           Scrollable Content
         </button>
-        <dialog class="drawer-content" id="scrollable-drawer-content" closedby="any" aria-labelledby="scrollable-drawer-title" aria-describedby="scrollable-drawer-description" data-side="right">
-          <header class="drawer-header">
-            <h2 class="drawer-title" id="scrollable-drawer-title">Move Goal</h2>
-            <p class="drawer-description" id="scrollable-drawer-description">Set your daily activity goal.</p>
+        <dialog
+          id="scrollable-drawer-content"
+          closedby="any"
+          aria-labelledby="scrollable-drawer-title"
+          aria-describedby="scrollable-drawer-description"
+          side="right"
+        >
+          <header>
+            <h2 id="scrollable-drawer-title">Move Goal</h2>
+            <p id="scrollable-drawer-description">
+              Set your daily activity goal.
+            </p>
           </header>
-          <div class="drawer-scroll-copy drawer-body">
+          <section class="drawer-scroll-copy">
             <p ng-repeat="item in paragraphs">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris.
             </p>
-          </div>
-          <footer class="drawer-footer">
+          </section>
+          <footer>
             <button class="button">Submit</button>
-            <button variant="outline" class="drawer-close button" commandfor="scrollable-drawer-content" command="close">Cancel</button>
+            <button
+              variant="outline"
+              class="button"
+              commandfor="scrollable-drawer-content"
+              command="close"
+            >
+              Cancel
+            </button>
           </footer>
         </dialog>
       </section>

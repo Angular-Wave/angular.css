@@ -5,8 +5,9 @@ test("tooltip element example exercises the built functional artifact", async ({
 }) => {
   await page.goto("/docs/static/examples/elements/tooltip.html");
 
-  const trigger = page.locator(".tooltip-trigger");
-  const content = page.locator(".tooltip-content");
+  const root = page.locator("[ng-tooltip]");
+  const trigger = root.locator(":scope > :first-child");
+  const content = root.locator(":scope > :last-child");
   await expect(content).toBeHidden();
   await trigger.focus();
   await expect(content).toBeVisible();

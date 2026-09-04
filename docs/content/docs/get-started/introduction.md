@@ -40,7 +40,7 @@ Complex components are composed from named parts rather than hidden templates:
 ```html
 <details class="collapsible">
   <summary>Account settings</summary>
-  <section class="collapsible-content">
+  <section>
     <label for="display-name">Display name</label>
     <input id="display-name" ng-model="profile.name" class="input" />
   </section>

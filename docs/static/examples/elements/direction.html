@@ -12,37 +12,24 @@
   <body ng-app="ui" ng-cloak>
     <div class="stack">
       <section id="direction-default" class="card direction">
-        <header class="card-header">
-          <h2 class="card-title">LTR</h2>
-          <p data-logical-align="start" class="card-description">
-            The chevron points forward.
-          </p>
+        <header>
+          <h2>LTR</h2>
+          <p align="start">The chevron points forward.</p>
         </header>
-        <section class="row card-content">
+        <section class="row">
           <span aria-hidden="true" class="rtl-flip">-&gt;</span>
           <span>Settings</span>
         </section>
       </section>
 
-      <section
-
-
-        id="direction-rtl"
-        dir="rtl"
-        lang="ar"
-       class="card direction">
-        <header class="card-header">
-          <h2 class="card-title">RTL</h2>
-          <p data-logical-align="start" class="card-description">
+      <section id="direction-rtl" dir="rtl" lang="ar" class="card direction">
+        <header>
+          <h2>RTL</h2>
+          <p align="start">
             تتبع المحاذاة المنطقية واتجاه الأيقونة اتجاه المستند.
           </p>
         </header>
-        <section
-
-          class="row card-content direction"
-
-          id="direction-nested"
-        >
+        <section class="row direction" id="direction-nested">
           <span aria-hidden="true" class="rtl-flip">-&gt;</span>
           <span>الإعدادات</span>
         </section>

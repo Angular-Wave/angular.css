@@ -9,12 +9,12 @@ Cards are CSS-first semantic article compositions.
 
 ```html
 <section class="card">
-  <header class="card-header">
-    <h2 class="card-title">Title</h2>
-    <p class="card-description">Description</p>
+  <header>
+    <h2>Title</h2>
+    <p>Description</p>
   </header>
-  <section class="card-content">Content</section>
-  <footer class="card-footer">Footer</footer>
+  <section>Content</section>
+  <footer>Footer</footer>
 </section>
 ```
 

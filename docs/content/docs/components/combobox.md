@@ -6,45 +6,38 @@ description: >
 ---
 
 Compose a searchable listbox with one `ng-combobox` root and semantic child
-elements identified by combobox part classes. AngularTS
-`ng-model`, filters, and event expressions remain the source of truth for query
-and selected-value state. AngularCSS supplies popup disclosure,
-active-descendant navigation, disabled handling, collision placement, and visual
-state.
+elements identified by combobox part classes. AngularTS `ng-model`, filters, and
+event expressions remain the source of truth for query and selected-value state.
+AngularCSS supplies popup disclosure, active-descendant navigation, disabled
+handling, collision placement, and visual state.
 
 ```html
 <div
   ng-combobox
   ng-on-angularcss:combobox-select="selected=$event.detail.value; query=selected"
 >
-  <div class="combobox-control">
+  <header>
     <input
-
       aria-label="Framework"
       ng-model="query"
       placeholder="Select a framework"
-     class="combobox-input"/>
-    <button
-
-      type="button"
-      aria-label="Show frameworks"
-     class="combobox-trigger"></button>
-  </div>
-  <ul aria-label="Framework options" class="combobox-content">
-    <div class="combobox-empty">No items found.</div>
-    <div class="combobox-list">
-      <ul class="combobox-collection">
+    />
+    <button type="button" aria-label="Show frameworks" value="toggle"></button>
+  </header>
+  <aside aria-label="Framework options">
+    <p>No items found.</p>
+    <div>
+      <ul>
         <li
-
           ng-repeat="framework in frameworks | filter:query"
           data-value="{{ framework }}"
           ng-attr-aria-selected="{{ selected === framework }}"
-         class="combobox-item">
+        >
           {{ framework }}
         </li>
       </ul>
     </div>
-  </ul>
+  </aside>
 </div>
 ```
 
@@ -65,9 +58,9 @@ empty chip input. AngularCSS never replaces the application's collection.
 ## Reference Workflows
 
 Clear, disabled, grouped, input-addon, invalid, and separate popup-trigger
-compositions are functional in this artifact. Use `.combobox-value` for a
-trigger's selected-value label. When a composition needs a compact button
-inside an input shell, reuse `.input-group-button`.
+compositions are functional in this artifact. Put the selected-value label
+inside the direct toggle button. When a composition needs a compact button
+inside an input shell, use a direct native button.
 
 {{< example src="examples/components/combobox-workflows.html" title="Combobox workflows" height="980" >}}
 
@@ -102,7 +95,7 @@ This component's root directive is `[ng-combobox]`. Importing the package regist
 
 ### Semantic structure
 
-A combobox root requires one input and one listbox content element. The root directive inspects semantic descendants through combobox part classes; no child directives are required. Control, trigger, clear, empty, groups, separators, and chips are optional.
+A combobox root requires one input and one options surface. The root directive inspects semantic headers, sections, lists, options, fieldsets, and buttons; no child directives or anatomy classes are required.
 
 ## API
 
@@ -117,33 +110,23 @@ A combobox root requires one input and one listbox content element. The root dir
 | `aria-expanded` | Output | Open or expanded state exposed to assistive technology. |
 | `aria-haspopup` | Output | ARIA relationship or state. |
 | `aria-hidden` | Input/output | ARIA relationship or state. |
-| `aria-invalid` | Input/output | Validation state mirrored from the control. |
+| `aria-invalid` | Input | Validation state mirrored from the control. |
 | `aria-label` | Input/output | Accessible name when visible text is insufficient. |
 | `aria-labelledby` | Output | ARIA relationship or state. |
 | `aria-multiselectable` | Output | ARIA relationship or state. |
 | `aria-orientation` | Output | ARIA relationship or state. |
 | `aria-selected` | Input/output | Selected item state. |
 | `auto-highlight` | Input | Authored option or semantic HTML attribute observed by the directive. |
-| `data-auto-highlight` | Input | Stable component state or styling hook. |
-| `data-chips` | Output | Stable component state or styling hook. |
-| `data-direction` | Output | Stable component state or styling hook. |
-| `data-disabled` | Output | Stable component state or styling hook. |
-| `data-empty` | Output | Stable component state or styling hook. |
 | `data-highlighted` | Output | Stable component state or styling hook. |
-| `data-invalid` | Output | Stable component state or styling hook. |
-| `data-multiple` | Input/output | Stable component state or styling hook. |
-| `data-open` | Input/output | Stable component state or styling hook. |
-| `data-side` | Output | Stable component state or styling hook. |
-| `data-state` | Output | Stable component state or styling hook. |
-| `data-value` | Input/output | Stable component state or styling hook. |
-| `data-visible` | Output | Stable component state or styling hook. |
+| `data-value` | Input | Stable component state or styling hook. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
 | `disabled` | Input | Disables native or component interaction. |
 | `hidden` | Input | Authored option or semantic HTML attribute observed by the directive. |
 | `multiple` | Input | Allows more than one item to remain selected or open. |
-| `open` | Input | Initial or controlled open state. |
+| `open` | Input/output | Initial or controlled open state. |
 | `required` | Input | Marks a native form value as required. |
 | `role` | Output | Explicit semantic role when native HTML does not provide one. |
+| `side` | Output | Physical placement: `left`, `top`, `bottom`, or `right`. |
 | `tabindex` | Output | Keyboard focus order for composite descendants. |
 | `type` | Input | Component or native behavior variant. |
 

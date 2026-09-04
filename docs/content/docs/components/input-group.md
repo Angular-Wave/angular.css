@@ -10,9 +10,9 @@ and buttons. AngularTS continues to own the model and actions.
 
 ```html
 <div class="input-group">
-  <input id="search" placeholder="Search" class="input-group-control" />
-  <label for="search" data-align="inline-start" class="input-group-addon">Search</label>
-  <div data-align="inline-end" class="input-group-addon">⌘K</div>
+  <input id="search" placeholder="Search" />
+  <label for="search" align="inline-start">Search</label>
+  <div align="inline-end">⌘K</div>
 </div>
 ```
 
@@ -75,7 +75,7 @@ This is a styling-only HTML element or pattern. AngularCSS registers no runtime 
 
 ### Semantic structure
 
-Use one native input, textarea, select, combobox, or spinbutton inside `.input-group`. Addons may be placed at inline-start, inline-end, block-start, or block-end with `data-align`. Buttons, menus, tooltips, and popovers retain their own behavior.
+Use one native input, textarea, select, combobox, or spinbutton inside `.input-group`. Addons may be placed at inline-start, inline-end, block-start, or block-end with `align`. Buttons, menus, tooltips, and popovers retain their own behavior.
 
 ## API
 

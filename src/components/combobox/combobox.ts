@@ -9,19 +9,22 @@ import {
 
 let comboboxIdCounter = 0;
 
-const anchorSelector = ".combobox-control, .combobox-chips";
-const chipSelector = ".combobox-chip";
-const clearSelector = ".combobox-clear";
-const contentSelector = ".combobox-content";
-const emptySelector = ".combobox-empty";
-const groupLabelSelector = ".combobox-label, .combobox-group-label";
-const groupSelector = ".combobox-group";
-const inputSelector =
-  'input.combobox-input, input.combobox-chip-input, input[role="combobox"], input.input, input.input, input.input-group-input';
-const itemSelector = ".combobox-item";
+const anchorSelector =
+  ":scope > header, :scope > fieldset, :scope > aside > header";
+const chipSelector = ":scope > fieldset > span";
+const clearSelector = ':scope button[value="clear"]';
+const contentSelector = ":scope > aside";
+const emptySelector = ":scope > aside > p";
+const groupLabelSelector = ":scope > :is(h1, h2, h3, h4, h5, h6)";
+const groupSelector = ":scope > aside > div > section";
+const inputSelector = ":scope input";
+const itemSelector = [
+  ":scope > aside > div > ul > li",
+  ":scope > aside > div > section > ul > li",
+].join(", ");
 const rootSelector = ".combobox, [ng-combobox]";
-const separatorSelector = ".combobox-separator";
-const triggerSelector = ".combobox-trigger";
+const separatorSelector = ":scope > aside > div > section > hr";
+const triggerSelector = ':scope button[value="toggle"]';
 
 const setAttributeIfChanged = (
   element: HTMLElement,
@@ -72,31 +75,18 @@ export function comboboxDirective(): ng.Directive {
         setAttributeIfChanged(content, "aria-labelledby", inputId);
       }
 
-      const ownsAriaInvalid = !input.hasAttribute("aria-invalid");
       let items: HTMLElement[] = [];
       let activeItem: HTMLElement | null = null;
       let open =
-        element.getAttribute("open") === "true" ||
-        element.getAttribute("data-open") === "true";
+        element.hasAttribute("open") &&
+        element.getAttribute("open") !== "false";
       let openAtPointerDown = false;
 
       const itemCleanups = new Map<HTMLElement, () => void>();
       const controlCleanups = new Map<HTMLElement, () => void>();
 
-      const isMultiple = () =>
-        element.hasAttribute("multiple") ||
-        element.getAttribute("data-multiple") === "true";
-      const hasAutoHighlight = () =>
-        element.hasAttribute("auto-highlight") ||
-        element.getAttribute("data-auto-highlight") === "true";
-      const getDirection = () =>
-        element.closest<HTMLElement>("[dir]")?.getAttribute("dir") === "rtl"
-          ? "rtl"
-          : "ltr";
-      const isInvalid = () =>
-        ownsAriaInvalid
-          ? !input.validity.valid
-          : input.getAttribute("aria-invalid") === "true";
+      const isMultiple = () => element.hasAttribute("multiple");
+      const hasAutoHighlight = () => element.hasAttribute("auto-highlight");
       const isVisible = (item: HTMLElement) =>
         !item.hidden &&
         item.getAttribute("aria-hidden") !== "true" &&
@@ -108,29 +98,12 @@ export function comboboxDirective(): ng.Directive {
         );
 
       const syncChrome = () => {
-        const direction = getDirection();
-        const disabled = isDisabled(input);
-        const invalid = isInvalid();
         const multiple = isMultiple();
-        setAttributeIfChanged(element, "data-direction", direction);
-        setAttributeIfChanged(content, "data-direction", direction);
-        setAttributeIfChanged(element, "data-disabled", String(disabled));
-        setAttributeIfChanged(input, "aria-disabled", String(disabled));
-        setAttributeIfChanged(element, "data-invalid", String(invalid));
-        setAttributeIfChanged(element, "data-multiple", String(multiple));
         setAttributeIfChanged(
           content,
           "aria-multiselectable",
           String(multiple),
         );
-        setAttributeIfChanged(
-          content,
-          "data-chips",
-          String(Boolean(owned(".combobox-chips", HTMLElement))),
-        );
-        if (ownsAriaInvalid) {
-          setAttributeIfChanged(input, "aria-invalid", String(invalid));
-        }
       };
 
       const positionContent = () => {
@@ -148,9 +121,9 @@ export function comboboxDirective(): ng.Directive {
         const projectedBottom = rootBox.top + top + contentHeight;
         if (projectedBottom > window.innerHeight - 4) {
           top = anchor.offsetTop - contentHeight - 6;
-          setAttributeIfChanged(content, "data-side", "top");
+          setAttributeIfChanged(content, "side", "top");
         } else {
-          setAttributeIfChanged(content, "data-side", "bottom");
+          setAttributeIfChanged(content, "side", "bottom");
         }
         content.style.setProperty(
           "--combobox-content-top",
@@ -178,14 +151,10 @@ export function comboboxDirective(): ng.Directive {
       ) => {
         if (nextOpen && isDisabled(input)) nextOpen = false;
         open = nextOpen;
-        const state = open ? "open" : "closed";
-        setAttributeIfChanged(element, "data-open", String(open));
-        setAttributeIfChanged(element, "data-state", state);
-        setAttributeIfChanged(content, "data-state", state);
+        setAttributeIfChanged(element, "open", String(open));
         setAttributeIfChanged(content, "aria-hidden", String(!open));
         setAttributeIfChanged(input, "aria-expanded", String(open));
         ownedAll<HTMLElement>(triggerSelector).forEach((trigger) => {
-          setAttributeIfChanged(trigger, "data-state", state);
           setAttributeIfChanged(trigger, "aria-expanded", String(open));
         });
         setOpenState(content, open);
@@ -245,7 +214,6 @@ export function comboboxDirective(): ng.Directive {
         const multiple = isMultiple();
         const value =
           item.getAttribute("data-value") ?? item.textContent.trim();
-        setAttributeIfChanged(element, "data-value", value);
         element.dispatchEvent(
           new CustomEvent("angularcss:combobox-select", {
             bubbles: true,
@@ -260,7 +228,7 @@ export function comboboxDirective(): ng.Directive {
         if (!item.id) item.id = `combobox-item-${String(comboboxIdCounter++)}`;
         setAttributeIfChanged(item, "role", "option");
         const semanticLabel = item.querySelector<HTMLElement>(
-          ".item-title, .combobox-item-label",
+          "h1, h2, h3, h4, h5, h6",
         );
         if (semanticLabel?.textContent.trim()) {
           setAttributeIfChanged(
@@ -270,7 +238,6 @@ export function comboboxDirective(): ng.Directive {
           );
         }
         setAttributeIfChanged(item, "tabindex", "-1");
-        setAttributeIfChanged(item, "data-disabled", String(isDisabled(item)));
         if (!item.hasAttribute("aria-selected")) {
           setAttributeIfChanged(item, "aria-selected", "false");
         }
@@ -320,7 +287,6 @@ export function comboboxDirective(): ng.Directive {
           control.getAttribute("aria-label") ?? "Clear selection",
         );
         const handleClick = () => {
-          setAttributeIfChanged(element, "data-value", "");
           element.dispatchEvent(
             new CustomEvent("angularcss:combobox-clear", { bubbles: true }),
           );
@@ -345,17 +311,14 @@ export function comboboxDirective(): ng.Directive {
         });
         ownedAll<HTMLElement>(groupSelector).forEach((group) => {
           setAttributeIfChanged(group, "role", "group");
-          const label = queryAll<HTMLElement>(group, groupLabelSelector).find(
-            (candidate) => candidate.closest(groupSelector) === group,
-          );
+          const label = group.querySelector<HTMLElement>(groupLabelSelector);
           if (!label) return;
           if (!label.id)
             label.id = `combobox-label-${String(comboboxIdCounter++)}`;
           setAttributeIfChanged(group, "aria-labelledby", label.id);
         });
         ownedAll<HTMLElement>(separatorSelector).forEach((separator) => {
-          setAttributeIfChanged(separator, "role", "separator");
-          setAttributeIfChanged(separator, "aria-orientation", "horizontal");
+          separator.removeAttribute("aria-orientation");
         });
 
         itemCleanups.forEach((cleanup, item) => {
@@ -373,12 +336,9 @@ export function comboboxDirective(): ng.Directive {
 
         const visible = visibleItems(true);
         const empty = visible.length === 0;
-        setAttributeIfChanged(element, "data-empty", String(empty));
-        setAttributeIfChanged(content, "data-empty", String(empty));
         ownedAll<HTMLElement>(emptySelector).forEach((emptySlot) => {
           setAttributeIfChanged(emptySlot, "role", "status");
-          setAttributeIfChanged(emptySlot, "data-visible", String(empty));
-          if (emptySlot.hidden === empty) emptySlot.hidden = !empty;
+          setOpenState(emptySlot, empty);
         });
 
         if (
@@ -479,14 +439,12 @@ export function comboboxDirective(): ng.Directive {
         if (
           records.some(
             (record) =>
-              record.target === element &&
-              (record.attributeName === "data-open" ||
-                record.attributeName === "open"),
+              record.target === element && record.attributeName === "open",
           )
         ) {
-          const authoredOpen = element.hasAttribute("open")
-            ? element.getAttribute("open") === "true"
-            : element.getAttribute("data-open") === "true";
+          const authoredOpen =
+            element.hasAttribute("open") &&
+            element.getAttribute("open") !== "false";
           if (authoredOpen !== open) setOpen(authoredOpen);
         }
       });
@@ -498,10 +456,6 @@ export function comboboxDirective(): ng.Directive {
           "aria-invalid",
           "aria-selected",
           "auto-highlight",
-          "data-auto-highlight",
-          "data-disabled",
-          "data-multiple",
-          "data-open",
           "dir",
           "disabled",
           "hidden",

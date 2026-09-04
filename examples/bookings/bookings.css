@@ -227,10 +227,6 @@ button.booking-mobile-menu {
   gap: 0;
 }
 
-.booking-filterbar .tabs-content {
-  display: none;
-}
-
 .booking-result-count {
   flex: none;
   color: var(--muted-foreground);
@@ -402,7 +398,7 @@ button.booking-mobile-menu {
   display: contents;
 }
 
-.booking-dialog .dialog-content {
+.booking-dialog > dialog {
   position: fixed;
 }
 
@@ -480,7 +476,7 @@ button.booking-mobile-menu {
     box-shadow: var(--shadow-lg);
   }
 
-  .booking-secondary[data-state="collapsed"] {
+  .booking-secondary[collapsed] {
     box-shadow: none;
   }
 
@@ -498,7 +494,7 @@ button.booking-mobile-menu {
     max-width: 12rem;
   }
 
-  .booking-search [data-align="inline-end"] {
+  .booking-search [align="inline-end"] {
     display: none;
   }
 

@@ -15,16 +15,13 @@
     box-shadow 150ms ease;
 }
 
-.input-group:has(
-  > :is(textarea, [data-align="block-start"], [data-align="block-end"])
-) {
+.input-group:has(> :is(textarea, [align="block-start"], [align="block-end"])) {
   height: auto;
   flex-direction: column;
   align-items: stretch;
 }
 
-.input-group:has(:disabled),
-.input-group[data-disabled="true"] {
+.input-group:has(:disabled) {
   background: color-mix(in srgb, var(--input) 50%, transparent);
   opacity: 0.5;
 }
@@ -34,12 +31,12 @@
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--error) 20%, transparent);
 }
 
-.input-group:has(> .input-group-control:focus-visible) {
+.input-group:has(> :is(input, textarea, select):focus-visible) {
   border-color: var(--ring);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
-.input-group > .input-group-control {
+.input-group > :is(input, textarea, select) {
   min-width: 0;
   flex: 1 1 auto;
   border: 0;
@@ -49,38 +46,38 @@
   outline: none;
 }
 
-.input-group > .input-group-control:not(textarea) {
+.input-group > :is(input, select) {
   height: 100%;
   align-self: stretch;
 }
 
-.input-group > .input-group-control:is(textarea) {
+.input-group > textarea {
   min-height: calc(var(--spacing) * 16);
   resize: none;
 }
 
-.input-group > :is(.input-group-control):focus-visible {
+.input-group > :is(input, textarea, select):focus-visible {
   border-color: transparent;
   box-shadow: none;
 }
 
-.input-group:has(> [data-align="inline-start"]) > .input-group-control {
+.input-group:has(> [align="inline-start"]) > :is(input, textarea, select) {
   padding-inline-start: calc(var(--spacing) * 1.5);
 }
 
-.input-group:has(> [data-align="inline-end"]) > .input-group-control {
+.input-group:has(> [align="inline-end"]) > :is(input, textarea, select) {
   padding-inline-end: calc(var(--spacing) * 1.5);
 }
 
-.input-group:has(> [data-align="block-start"]) > input.input-group-control {
+.input-group:has(> [align="block-start"]) > input {
   padding-block-end: calc(var(--spacing) * 3);
 }
 
-.input-group:has(> [data-align="block-end"]) > input.input-group-control {
+.input-group:has(> [align="block-end"]) > input {
   padding-block-start: calc(var(--spacing) * 3);
 }
 
-.input-group-addon {
+.input-group > :not(input, textarea, select) {
   display: flex;
   min-height: 0;
   flex: 0 0 auto;
@@ -97,63 +94,65 @@
   cursor: text;
 }
 
-.input-group-addon:not([data-align]),
-.input-group-addon[data-align="inline-start"] {
+.input-group > :not(input, textarea, select, [align]),
+.input-group > [align="inline-start"] {
   order: -1;
   padding-inline: calc(var(--spacing) * 2) 0;
 }
 
-.input-group-addon[data-align="inline-end"] {
+.input-group > [align="inline-end"] {
   order: 1;
   padding-inline: 0 calc(var(--spacing) * 2);
 }
 
-.input-group-addon[data-align="block-start"],
-.input-group-addon[data-align="block-end"] {
+.input-group > [align="block-start"],
+.input-group > [align="block-end"] {
   width: 100%;
   justify-content: flex-start;
   padding-inline: calc(var(--spacing) * 2.5);
 }
 
-.input-group-addon[data-align="block-start"] {
+.input-group > [align="block-start"] {
   order: -1;
   padding-block-start: calc(var(--spacing) * 2);
 }
 
-.input-group-addon[data-align="block-end"] {
+.input-group > [align="block-end"] {
   order: 1;
   padding-block-end: calc(var(--spacing) * 2);
 }
 
-:is(.input-group-addon)[data-border="true"] {
+.input-group > [border="true"] {
   border-color: var(--border);
 }
 
-:is(.input-group-addon)[data-align="block-start"][data-border="true"] {
+.input-group > [align="block-start"][border="true"] {
   border-block-end: 1px solid var(--border);
   padding-block-end: calc(var(--spacing) * 2);
 }
 
-:is(.input-group-addon)[data-align="block-end"][data-border="true"] {
+.input-group > [align="block-end"][border="true"] {
   border-block-start: 1px solid var(--border);
   padding-block-start: calc(var(--spacing) * 2);
 }
 
-.input-group-text {
+.input-group > :not(input, textarea, select) > span {
   display: inline-flex;
   align-items: center;
   gap: calc(var(--spacing) * 1.5);
 }
 
-.input-group-text > svg,
-.input-group-addon > svg {
+.input-group > :not(input, textarea, select) > :is(svg, span > svg) {
   pointer-events: none;
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
   flex-shrink: 0;
 }
 
-.input-group-button {
+:is(
+  .input-group > button,
+  .input-group > :not(input, textarea, select) > button
+) {
   min-height: calc(var(--spacing) * 6);
   height: calc(var(--spacing) * 6);
   gap: calc(var(--spacing) * 1);
@@ -164,19 +163,28 @@
   cursor: pointer;
 }
 
-.input-group-button[data-size="sm"] {
+:is(
+  .input-group > button,
+  .input-group > :not(input, textarea, select) > button
+)[size="sm"] {
   min-height: calc(var(--spacing) * 8);
   height: calc(var(--spacing) * 8);
   padding-inline: calc(var(--spacing) * 3);
   font-size: var(--text-sm);
 }
 
-.input-group-button[data-size="icon-xs"] {
+:is(
+  .input-group > button,
+  .input-group > :not(input, textarea, select) > button
+)[size="icon-xs"] {
   width: calc(var(--spacing) * 6);
   padding-inline: 0;
 }
 
-.input-group-button[data-size="icon-sm"] {
+:is(
+  .input-group > button,
+  .input-group > :not(input, textarea, select) > button
+)[size="icon-sm"] {
   width: calc(var(--spacing) * 8);
   min-height: calc(var(--spacing) * 8);
   height: calc(var(--spacing) * 8);

@@ -12,11 +12,12 @@ import {
 
 import { onDestroy, queryAll } from "../../internal/dom";
 
-const toastSelector = ".toast";
-const closeSelector = ".toast-close";
-const actionSelector = ".toast-action";
-const titleSelector = ".toast-title";
-const descriptionSelector = ".toast-description";
+const toastSelector = ":scope > article";
+const closeSelector = ':scope > article > button[value="close"]';
+const actionSelector = ':scope > article > button:not([value="close"])';
+const titleSelector =
+  ":scope > :is(header, section) > :is(h1, h2, h3, h4, h5, h6), :scope > :is(h1, h2, h3, h4, h5, h6)";
+const descriptionSelector = ":scope > :is(header, section) > p, :scope > p";
 const toasterPositions = new Set([
   "bottom-center",
   "bottom-left",
@@ -40,8 +41,6 @@ const toastIcons: Partial<Record<string, IconNode>> = {
   success: CircleCheck,
   warning: TriangleAlert,
 };
-type ToastTypeSource = "data-type" | "default" | "type" | "variant";
-
 let toastIdCounter = 0;
 
 const setAttributeIfChanged = (
@@ -56,29 +55,16 @@ const setAttributeIfChanged = (
 
 const getToasterPosition = (element: HTMLElement) => {
   const position = element.getAttribute("position");
-  if (position !== null) {
-    return toasterPositions.has(position) ? position : "bottom-right";
-  }
-
-  const dataPosition = element.getAttribute("data-position");
-  return dataPosition && toasterPositions.has(dataPosition)
-    ? dataPosition
-    : "bottom-right";
+  return position && toasterPositions.has(position) ? position : "bottom-right";
 };
 
 export function toasterDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
-      element.setAttribute("data-sonner-toaster", "");
-
       const cleanupButtons = new Map<HTMLElement, () => void>();
       const generatedRelationships = new WeakMap<
         HTMLElement,
         { describedby?: string; labelledby?: string }
-      >();
-      const mirroredTypes = new WeakMap<
-        HTMLElement,
-        { source: ToastTypeSource; value: string }
       >();
       const generatedIcons = new WeakMap<HTMLElement, string>();
 
@@ -101,9 +87,7 @@ export function toasterDirective(): ng.Directive {
 
       const syncPosition = () => {
         const position = getToasterPosition(element);
-        if (element.getAttribute("data-position") !== position) {
-          element.setAttribute("data-position", position);
-        }
+        setAttributeIfChanged(element, "position", position);
       };
 
       const bindToast = (toast: HTMLElement) => {
@@ -157,41 +141,16 @@ export function toasterDirective(): ng.Directive {
         }
         generatedRelationships.set(toast, relationships);
 
-        const type = toast.getAttribute("type");
-        const variant = toast.getAttribute("data-variant");
-        const dataType = toast.getAttribute("data-type");
-        const previousType = mirroredTypes.get(toast);
-        let nextType = "default";
-        let typeSource: ToastTypeSource = "default";
-
-        if (type && toastTypes.has(type)) {
-          nextType = type;
-          typeSource = "type";
-        } else if (variant && toastTypes.has(variant)) {
-          nextType = variant;
-          typeSource = "variant";
-        } else if (
-          dataType &&
-          toastTypes.has(dataType) &&
-          (!previousType ||
-            previousType.source === "data-type" ||
-            dataType !== previousType.value)
-        ) {
-          nextType = dataType;
-          typeSource = "data-type";
-        }
-
-        setAttributeIfChanged(toast, "data-type", nextType);
-        mirroredTypes.set(toast, { source: typeSource, value: nextType });
-        const icon = toast.querySelector<HTMLElement>(":scope > .toast-icon");
+        const authoredType = toast.getAttribute("type");
+        const nextType =
+          authoredType && toastTypes.has(authoredType)
+            ? authoredType
+            : "default";
+        setAttributeIfChanged(toast, "type", nextType);
+        const icon = toast.querySelector<HTMLElement>(":scope > figure");
         if (icon && nextType !== "default") {
           syncGeneratedIcon(icon, nextType);
         }
-
-        const open = !toast.hidden;
-        setAttributeIfChanged(toast, "aria-hidden", String(!open));
-        setAttributeIfChanged(toast, "data-state", open ? "open" : "closed");
-        setAttributeIfChanged(toast, "data-visible", String(open));
       };
 
       const bindActionButton = (button: HTMLElement) => {
@@ -211,17 +170,11 @@ export function toasterDirective(): ng.Directive {
           "aria-label",
           button.getAttribute("aria-label") ?? "Close toast",
         );
-        const icon = button.querySelector<HTMLElement>(".sonner-icon");
-        if (icon) syncGeneratedIcon(icon, "close");
+        syncGeneratedIcon(button, "close");
 
         const handleClick = () => {
-          const toast = button.closest<HTMLElement>(".toast");
-          if (toast) {
-            toast.hidden = true;
-            toast.setAttribute("aria-hidden", "true");
-            toast.setAttribute("data-state", "closed");
-            toast.setAttribute("data-visible", "false");
-          }
+          const toast = button.closest<HTMLElement>("article");
+          if (toast) toast.hidden = true;
         };
 
         button.addEventListener("click", handleClick);
@@ -251,9 +204,6 @@ export function toasterDirective(): ng.Directive {
         attributeFilter: [
           "aria-describedby",
           "aria-labelledby",
-          "data-position",
-          "data-type",
-          "data-variant",
           "hidden",
           "id",
           "position",

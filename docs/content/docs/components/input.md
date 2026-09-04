@@ -5,13 +5,22 @@ description: >
   Native form text entry with a styling-only AngularCSS hook.
 ---
 
-Use `class="input"` as the opt-in styling hook. The browser and AngularTS own the
-value, events, validation, required state, disabled state, and form behavior;
-AngularCSS does not register an Input directive or mirror those values.
+Use `class="input"` as the opt-in styling hook. The browser and AngularTS own
+the value, events, validation, required state, disabled state, and form
+behavior; AngularCSS does not register an Input directive or mirror those
+values.
 
 ```html
 <input placeholder="Jane Doe" class="input" />
 <input placeholder="Disabled" disabled class="input" />
+```
+
+Add `input-fit` when a compact control should size to its content. The control
+retains a `max-width` of `100%` and falls back to its native intrinsic width in
+browsers without `field-sizing`.
+
+```html
+<input value="Compact" class="input input-fit" />
 ```
 
 ## Example

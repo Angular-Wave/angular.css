@@ -6,14 +6,14 @@ fieldset.field-set {
   }
 }
 
-legend.field-legend {
+:is(fieldset.field-set, fieldset.radio-group) > legend {
   @apply mb-1.5 font-medium;
 
-  &[data-variant="label"] {
+  &[variant="label"] {
     @apply text-sm;
   }
 
-  &[data-variant="legend"] {
+  &[variant="legend"] {
     @apply text-base;
   }
 }
@@ -25,68 +25,72 @@ legend.field-legend {
 .field {
   @apply flex w-full flex-col gap-2;
 
-  &[orientation="horizontal"],
-  &[data-orientation="horizontal"] {
+  &[orientation="horizontal"] {
     @apply flex-row items-center;
 
-    &:has(> .field-content) {
+    &:has(> :is(section, span)) {
       @apply items-start;
     }
 
-    > .field-label {
+    > label {
       @apply flex-auto;
     }
 
-    &:has(> .field-content) > :is(input[type="checkbox"], input[type="radio"]) {
+    &:has(> :is(section, span))
+      > :is(input[type="checkbox"], input[type="radio"]) {
       margin-top: 1px;
     }
   }
 
-  &[orientation="responsive"],
-  &[data-orientation="responsive"] {
+  &[orientation="responsive"] {
     @apply flex-col gap-2 md:flex-row md:items-center md:gap-3;
   }
 
   &:has(:invalid),
   &:has([aria-invalid="true"]),
-  &[data-invalid="true"],
   &[aria-invalid="true"] {
-    .field-label {
+    label {
       @apply text-error;
     }
   }
 
-  &[data-disabled="true"] :is(.field-label, .field-title) {
+  &:has(:disabled) :is(label, strong) {
     @apply opacity-50;
   }
 }
 
-.field-content {
+.field > :is(section, span) {
   @apply flex flex-1 flex-col gap-0.5 leading-snug;
 }
 
-.field-label {
-  @apply flex w-fit items-center gap-2 text-sm leading-snug font-medium;
+.field label,
+.field-group > label:has(> .field),
+.radio-group > label:not([class]):has(> .field) {
+  @apply flex w-fit items-center gap-2 text-sm leading-none font-medium;
+}
 
-  &:has(> .field) {
-    @apply w-full flex-col items-start rounded-lg border border-border;
+.field-group > label:has(> .field),
+.radio-group > label:not([class]):has(> .field) {
+  @apply w-full flex-col items-start rounded-lg border border-border;
 
-    > .field {
-      @apply p-2.5;
-    }
-  }
-
-  &:has(> .field :is(.checkbox, .radio-group-item, .switch):checked) {
-    border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
-    background: color-mix(in srgb, var(--primary) 5%, transparent);
+  > .field {
+    @apply p-2.5;
   }
 }
 
-.field-title {
+:is(.field-group > label, .radio-group > label:not([class])):has(
+  > .field :is(.checkbox, .switch, input[type="radio"]):checked
+) {
+  border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
+  background: color-mix(in srgb, var(--primary) 5%, transparent);
+}
+
+.field strong {
   @apply flex w-fit items-center gap-2 text-sm font-medium;
 }
 
-.field-description {
+.field :is(p:not(.field-error), small),
+fieldset.field-set > p {
   @apply text-sm leading-normal font-normal text-muted-foreground;
 
   a {
@@ -96,19 +100,4 @@ legend.field-legend {
 
 .field-error {
   @apply mt-1 text-sm font-normal text-error;
-}
-
-.field-separator {
-  @apply relative flex items-center justify-center text-xs text-muted-foreground;
-
-  &::before {
-    content: "";
-
-    @apply absolute inset-x-0 top-1/2 border-t border-border;
-  }
-
-  &[data-content="true"] > *,
-  > .field-separator-content {
-    @apply relative bg-background px-2;
-  }
 }

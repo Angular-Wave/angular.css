@@ -11,29 +11,13 @@
   </head>
   <body ng-app="ui" ng-cloak ng-init="nativeSelectStatus=''">
     <main class="native-select-demo visual-example">
-      <div class="native-select-wrapper">
-        <select
-          aria-label="Status"
-          ng-model="nativeSelectStatus"
-          class="native-select"
-        >
-          <option value="">Select status</option>
-          <option value="todo">Todo</option>
-          <option value="in-progress">In Progress</option>
-          <option value="done">Done</option>
-          <option value="cancelled">Cancelled</option>
-        </select>
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          class="native-select-icon"
-        >
-          <path d="m6 9 6 6 6-6"></path>
-        </svg>
-      </div>
+      <select aria-label="Status" ng-model="nativeSelectStatus">
+        <option value="">Select status</option>
+        <option value="todo">Todo</option>
+        <option value="in-progress">In Progress</option>
+        <option value="done">Done</option>
+        <option value="cancelled">Cancelled</option>
+      </select>
     </main>
   </body>
 </html>

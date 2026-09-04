@@ -22,41 +22,37 @@
           ng-combobox
           ng-on-angularcss:combobox-select="custom.selected=$event.detail.value; custom.query=$event.detail.value"
         >
-          <div class="combobox-control">
+          <header>
             <input
               aria-label="Country with details"
               ng-model="custom.query"
               placeholder="Search countries..."
-              class="combobox-input"
             />
             <button
               type="button"
               aria-label="Show detailed countries"
-              class="combobox-trigger"
+              value="toggle"
             ></button>
-          </div>
-          <ul aria-label="Detailed country options" class="combobox-content">
-            <div class="combobox-empty">No countries found.</div>
-            <div class="combobox-list">
-              <ul class="combobox-collection">
+          </header>
+          <aside aria-label="Detailed country options">
+            <p>No countries found.</p>
+            <div>
+              <ul>
                 <li
                   ng-repeat="country in countries | filter:custom.query"
                   data-value="{{ country.label }}"
                   ng-attr-aria-selected="{{ custom.selected === country.label }}"
-                  class="combobox-item"
                 >
-                  <article data-size="xs" class="combobox-custom-item item">
-                    <section class="item-content">
-                      <h3 class="item-title">{{ country.label }}</h3>
-                      <p class="item-description">
-                        {{ country.continent }} ({{ country.code }})
-                      </p>
+                  <article size="xs" class="combobox-custom-item item">
+                    <section>
+                      <h3>{{ country.label }}</h3>
+                      <p>{{ country.continent }} ({{ country.code }})</p>
                     </section>
                   </article>
                 </li>
               </ul>
             </div>
-          </ul>
+          </aside>
         </div>
       </section>
 
@@ -69,74 +65,72 @@
           ng-on-angularcss:combobox-select="$event.detail.value === 'Next.js' ? multi.next=!multi.next : $event.detail.value === 'SvelteKit' ? multi.svelte=!multi.svelte : $event.detail.value === 'Nuxt.js' ? multi.nuxt=!multi.nuxt : $event.detail.value === 'Remix' ? multi.remix=!multi.remix : multi.astro=!multi.astro"
           ng-on-angularcss:combobox-remove-last="multi.astro ? multi.astro=false : multi.remix ? multi.remix=false : multi.nuxt ? multi.nuxt=false : multi.svelte ? multi.svelte=false : multi.next=false"
         >
-          <div class="combobox-chips">
-            <span ng-if="multi.next" animate class="combobox-chip">
+          <fieldset>
+            <span ng-if="multi.next" animate>
               Next.js
               <button
                 type="button"
                 aria-label="Remove Next.js"
                 ng-click="multi.next=false"
-                class="combobox-chip-remove"
+                value="remove"
               ></button>
             </span>
-            <span ng-if="multi.svelte" animate class="combobox-chip">
+            <span ng-if="multi.svelte" animate>
               SvelteKit
               <button
                 type="button"
                 aria-label="Remove SvelteKit"
                 ng-click="multi.svelte=false"
-                class="combobox-chip-remove"
+                value="remove"
               ></button>
             </span>
-            <span ng-if="multi.nuxt" animate class="combobox-chip">
+            <span ng-if="multi.nuxt" animate>
               Nuxt.js
               <button
                 type="button"
                 aria-label="Remove Nuxt.js"
                 ng-click="multi.nuxt=false"
-                class="combobox-chip-remove"
+                value="remove"
               ></button>
             </span>
-            <span ng-if="multi.remix" animate class="combobox-chip">
+            <span ng-if="multi.remix" animate>
               Remix
               <button
                 type="button"
                 aria-label="Remove Remix"
                 ng-click="multi.remix=false"
-                class="combobox-chip-remove"
+                value="remove"
               ></button>
             </span>
-            <span ng-if="multi.astro" animate class="combobox-chip">
+            <span ng-if="multi.astro" animate>
               Astro
               <button
                 type="button"
                 aria-label="Remove Astro"
                 ng-click="multi.astro=false"
-                class="combobox-chip-remove"
+                value="remove"
               ></button>
             </span>
             <input
               aria-label="Frameworks"
               ng-model="multi.query"
               placeholder="Add framework"
-              class="combobox-chip-input"
             />
-          </div>
-          <ul aria-label="Multiple framework options" class="combobox-content">
-            <div class="combobox-empty">No items found.</div>
-            <div class="combobox-list">
-              <ul class="combobox-collection">
+          </fieldset>
+          <aside aria-label="Multiple framework options">
+            <p>No items found.</p>
+            <div>
+              <ul>
                 <li
                   ng-repeat="framework in frameworks | filter:multi.query"
                   data-value="{{ framework }}"
                   ng-attr-aria-selected="{{ framework === 'Next.js' ? multi.next : framework === 'SvelteKit' ? multi.svelte : framework === 'Nuxt.js' ? multi.nuxt : framework === 'Remix' ? multi.remix : multi.astro }}"
-                  class="combobox-item"
                 >
                   {{ framework }}
                 </li>
               </ul>
             </div>
-          </ul>
+          </aside>
         </div>
       </section>
 
@@ -145,8 +139,8 @@
         lang="ar"
         dir="rtl"
       >
-        <fieldset class="field">
-          <label for="rtl-combobox-input" class="field-label">الفئات</label>
+        <div class="field">
+          <label for="rtl-combobox-input">الفئات</label>
           <div
             id="rtl-combobox"
             ng-combobox
@@ -155,59 +149,59 @@
             ng-on-angularcss:combobox-select="$event.detail.value === 'التكنولوجيا' ? rtl.technology=!rtl.technology : $event.detail.value === 'التصميم' ? rtl.design=!rtl.design : $event.detail.value === 'الأعمال' ? rtl.business=!rtl.business : $event.detail.value === 'التسويق' ? rtl.marketing=!rtl.marketing : $event.detail.value === 'التعليم' ? rtl.education=!rtl.education : rtl.health=!rtl.health"
             ng-on-angularcss:combobox-remove-last="rtl.health ? rtl.health=false : rtl.education ? rtl.education=false : rtl.marketing ? rtl.marketing=false : rtl.business ? rtl.business=false : rtl.design ? rtl.design=false : rtl.technology=false"
           >
-            <div class="combobox-chips">
-              <span ng-if="rtl.technology" animate class="combobox-chip">
+            <fieldset>
+              <span ng-if="rtl.technology" animate>
                 التكنولوجيا
                 <button
                   type="button"
                   aria-label="إزالة التكنولوجيا"
                   ng-click="rtl.technology=false"
-                  class="combobox-chip-remove"
+                  value="remove"
                 ></button>
               </span>
-              <span ng-if="rtl.design" animate class="combobox-chip">
+              <span ng-if="rtl.design" animate>
                 التصميم
                 <button
                   type="button"
                   aria-label="إزالة التصميم"
                   ng-click="rtl.design=false"
-                  class="combobox-chip-remove"
+                  value="remove"
                 ></button>
               </span>
-              <span ng-if="rtl.business" animate class="combobox-chip">
+              <span ng-if="rtl.business" animate>
                 الأعمال
                 <button
                   type="button"
                   aria-label="إزالة الأعمال"
                   ng-click="rtl.business=false"
-                  class="combobox-chip-remove"
+                  value="remove"
                 ></button>
               </span>
-              <span ng-if="rtl.marketing" animate class="combobox-chip">
+              <span ng-if="rtl.marketing" animate>
                 التسويق
                 <button
                   type="button"
                   aria-label="إزالة التسويق"
                   ng-click="rtl.marketing=false"
-                  class="combobox-chip-remove"
+                  value="remove"
                 ></button>
               </span>
-              <span ng-if="rtl.education" animate class="combobox-chip">
+              <span ng-if="rtl.education" animate>
                 التعليم
                 <button
                   type="button"
                   aria-label="إزالة التعليم"
                   ng-click="rtl.education=false"
-                  class="combobox-chip-remove"
+                  value="remove"
                 ></button>
               </span>
-              <span ng-if="rtl.health" animate class="combobox-chip">
+              <span ng-if="rtl.health" animate>
                 الصحة
                 <button
                   type="button"
                   aria-label="إزالة الصحة"
                   ng-click="rtl.health=false"
-                  class="combobox-chip-remove"
+                  value="remove"
                 ></button>
               </span>
               <input
@@ -215,30 +209,24 @@
                 aria-label="الفئات"
                 ng-model="rtl.query"
                 placeholder="أضف فئات"
-                class="combobox-chip-input"
               />
-            </div>
-            <ul
-              data-lang="ar"
-              aria-label="خيارات الفئات"
-              class="combobox-content"
-            >
-              <div class="combobox-empty">لم يتم العثور على فئات.</div>
-              <div class="combobox-list">
-                <ul class="combobox-collection">
+            </fieldset>
+            <aside lang="ar" aria-label="خيارات الفئات">
+              <p>لم يتم العثور على فئات.</p>
+              <div>
+                <ul>
                   <li
                     ng-repeat="category in categories | filter:rtl.query"
                     data-value="{{ category }}"
                     ng-attr-aria-selected="{{ category === 'التكنولوجيا' ? rtl.technology : category === 'التصميم' ? rtl.design : category === 'الأعمال' ? rtl.business : category === 'التسويق' ? rtl.marketing : category === 'التعليم' ? rtl.education : rtl.health }}"
-                    class="combobox-item"
                   >
                     {{ category }}
                   </li>
                 </ul>
               </div>
-            </ul>
+            </aside>
           </div>
-        </fieldset>
+        </div>
       </section>
 
       <output class="output visually-hidden" aria-live="polite">

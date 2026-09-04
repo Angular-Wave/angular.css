@@ -5,8 +5,8 @@ description: >
   Inline status and metadata labels
 ---
 
-Use `class="badge"` on an inline element. Variants are exposed
-through the `variant` attribute.
+Use `class="badge"` on an inline element. Variants are exposed through the
+`variant` attribute.
 
 ```html
 <span class="badge">Badge</span>

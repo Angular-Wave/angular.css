@@ -26,7 +26,7 @@
 
       <section data-example="input-demo" class="input-workflow">
         <div class="field">
-          <label for="input-demo-api-key" class="field-label">API Key</label>
+          <label for="input-demo-api-key">API Key</label>
           <input
             id="input-demo-api-key"
             type="password"
@@ -34,15 +34,13 @@
             placeholder="sk-..."
             class="input"
           />
-          <p class="field-description">
-            Your API key is encrypted and stored securely.
-          </p>
+          <p>Your API key is encrypted and stored securely.</p>
         </div>
       </section>
 
       <section data-example="input-disabled" class="input-workflow">
-        <div data-disabled="true" class="field">
-          <label for="input-demo-disabled" class="field-label">Email</label>
+        <div class="field">
+          <label for="input-demo-disabled">Email</label>
           <input
             id="input-demo-disabled"
             type="email"
@@ -50,30 +48,26 @@
             disabled
             class="input"
           />
-          <p class="field-description">This field is currently disabled.</p>
+          <p>This field is currently disabled.</p>
         </div>
       </section>
 
       <section data-example="input-invalid" class="input-workflow">
-        <div data-invalid="true" class="field">
-          <label for="input-invalid-workflow" class="field-label"
-            >Invalid Input</label
-          >
+        <div class="field">
+          <label for="input-invalid-workflow">Invalid Input</label>
           <input
             id="input-invalid-workflow"
             placeholder="Error"
             aria-invalid="true"
             class="input"
           />
-          <p class="field-description">
-            This field contains validation errors.
-          </p>
+          <p>This field contains validation errors.</p>
         </div>
       </section>
 
       <section data-example="input-required" class="input-workflow">
         <div class="field">
-          <label for="input-required-workflow" class="field-label"
+          <label for="input-required-workflow"
             >Required Field <span class="input-required-mark">*</span></label
           >
           <input
@@ -83,36 +77,34 @@
             required
             class="input"
           />
-          <p class="field-description">This field must be filled out.</p>
+          <p>This field must be filled out.</p>
         </div>
       </section>
 
       <section data-example="input-file" class="input-workflow">
         <div class="field">
-          <label for="input-picture" class="field-label">Picture</label>
+          <label for="input-picture">Picture</label>
           <input id="input-picture" type="file" class="input" />
-          <p class="field-description">Select a picture to upload.</p>
+          <p>Select a picture to upload.</p>
         </div>
       </section>
 
       <section data-example="input-field" class="input-workflow">
         <div class="field">
-          <label for="input-field-username" class="field-label">Username</label>
+          <label for="input-field-username">Username</label>
           <input
             id="input-field-username"
             ng-model="inputState.username"
             placeholder="Enter your username"
             class="input"
           />
-          <p class="field-description">
-            Choose a unique username for your account.
-          </p>
+          <p>Choose a unique username for your account.</p>
         </div>
       </section>
 
       <section data-example="input-badge" class="input-workflow">
         <div class="field">
-          <label for="input-webhook" class="field-label"
+          <label for="input-webhook"
             >Webhook URL
             <span variant="secondary" class="input-label-badge badge"
               >Beta</span
@@ -133,7 +125,7 @@
       >
         <div class="input-name-grid field-group">
           <div class="field">
-            <label for="input-first-name" class="field-label">First Name</label
+            <label for="input-first-name">First Name</label
             ><input
               id="input-first-name"
               ng-model="inputState.firstName"
@@ -142,7 +134,7 @@
             />
           </div>
           <div class="field">
-            <label for="input-last-name" class="field-label">Last Name</label
+            <label for="input-last-name">Last Name</label
             ><input
               id="input-last-name"
               ng-model="inputState.lastName"
@@ -177,9 +169,7 @@
 
       <section data-example="input-button-group" class="input-workflow">
         <div class="field">
-          <label for="input-button-group-workflow" class="field-label"
-            >Search</label
-          >
+          <label for="input-button-group-workflow">Search</label>
           <div class="button-group">
             <input
               id="input-button-group-workflow"
@@ -199,22 +189,16 @@
 
       <section data-example="input-input-group" class="input-workflow">
         <div class="field">
-          <label for="input-group-url" class="field-label">Website URL</label>
+          <label for="input-group-url">Website URL</label>
           <div class="input-group">
             <input
               id="input-group-url"
               ng-model="inputState.website"
               placeholder="example.com"
-              class="input-group-control input"
+              class="input"
             />
-            <div class="input-group-addon">https://</div>
-            <div
-              data-align="inline-end"
-              aria-label="Website URL information"
-              class="input-group-addon"
-            >
-              ⓘ
-            </div>
+            <div>https://</div>
+            <div align="inline-end" aria-label="Website URL information">ⓘ</div>
           </div>
         </div>
       </section>
@@ -226,7 +210,7 @@
       >
         <div class="field-group">
           <div class="field">
-            <label for="fieldgroup-name" class="field-label">Name</label
+            <label for="fieldgroup-name">Name</label
             ><input
               id="fieldgroup-name"
               ng-model="inputState.name"
@@ -235,7 +219,7 @@
             />
           </div>
           <div class="field">
-            <label for="fieldgroup-email" class="field-label">Email</label
+            <label for="fieldgroup-email">Email</label
             ><input
               id="fieldgroup-email"
               type="email"
@@ -243,7 +227,7 @@
               placeholder="name@example.com"
               class="input"
             />
-            <p class="field-description">We'll send updates to this address.</p>
+            <p>We'll send updates to this address.</p>
           </div>
           <div orientation="horizontal" class="input-form-actions field">
             <button
@@ -265,7 +249,7 @@
       >
         <div class="field-group">
           <div class="field">
-            <label for="form-name" class="field-label">Name</label
+            <label for="form-name">Name</label
             ><input
               id="form-name"
               ng-model="inputState.formName"
@@ -275,7 +259,7 @@
             />
           </div>
           <div class="field">
-            <label for="form-email" class="field-label">Email</label
+            <label for="form-email">Email</label
             ><input
               id="form-email"
               type="email"
@@ -283,13 +267,11 @@
               placeholder="john@example.com"
               class="input"
             />
-            <p class="field-description">
-              We'll never share your email with anyone.
-            </p>
+            <p>We'll never share your email with anyone.</p>
           </div>
           <div class="input-name-grid">
             <div class="field">
-              <label for="form-phone" class="field-label">Phone</label
+              <label for="form-phone">Phone</label
               ><input
                 id="form-phone"
                 type="tel"
@@ -299,22 +281,16 @@
               />
             </div>
             <div class="field">
-              <label for="form-country" class="field-label">Country</label>
-              <div class="select-wrapper">
-                <select
-                  id="form-country"
-                  class="select"
-                  ng-model="inputState.country"
-                >
-                  <option value="us">United States</option>
-                  <option value="uk">United Kingdom</option>
-                  <option value="ca">Canada</option>
-                </select>
-              </div>
+              <label for="form-country">Country</label>
+              <select id="form-country" ng-model="inputState.country">
+                <option value="us">United States</option>
+                <option value="uk">United Kingdom</option>
+                <option value="ca">Canada</option>
+              </select>
             </div>
           </div>
           <div class="field">
-            <label for="form-address" class="field-label">Address</label
+            <label for="form-address">Address</label
             ><input
               id="form-address"
               ng-model="inputState.address"
@@ -342,7 +318,7 @@
         lang="ar"
       >
         <div class="field">
-          <label for="input-rtl-api-key" class="field-label">مفتاح API</label
+          <label for="input-rtl-api-key">مفتاح API</label
           ><input
             id="input-rtl-api-key"
             type="password"
@@ -350,7 +326,7 @@
             placeholder="sk-..."
             class="input"
           />
-          <p class="field-description">مفتاح API الخاص بك مشفر ومخزن بأمان.</p>
+          <p>مفتاح API الخاص بك مشفر ومخزن بأمان.</p>
         </div>
       </section>
 

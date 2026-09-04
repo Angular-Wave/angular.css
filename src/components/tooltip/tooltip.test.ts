@@ -56,13 +56,13 @@ test("canonical tooltip uses built bundles and hover disclosure semantics", asyn
   await expectBuiltArtifactRuntime(page);
 
   const root = page.locator("[ng-tooltip]");
-  const trigger = page.locator(".tooltip-trigger");
-  const content = page.locator(".tooltip-content");
+  const trigger = root.locator(":scope > :first-child");
+  const content = root.locator(":scope > :last-child");
 
   await expect(content).toBeHidden();
   await expect(content).toHaveAttribute("role", "tooltip");
   await expect(content).toHaveAttribute("aria-hidden", "true");
-  await expect(content).toHaveAttribute("data-side", "top");
+  await expect(content).toHaveAttribute("side", "top");
   await expect(content).not.toHaveAttribute("tabindex");
   await expect(trigger).toHaveAttribute(
     "aria-describedby",
@@ -71,8 +71,7 @@ test("canonical tooltip uses built bundles and hover disclosure semantics", asyn
 
   await trigger.hover();
   await expect(content).toBeVisible();
-  await expect(root).toHaveAttribute("data-state", "open");
-  await expect(trigger).toHaveAttribute("data-state", "open");
+  await expect(root).toHaveAttribute("open", "");
   await expect(content).toHaveAttribute("aria-hidden", "false");
   await expectPhysicalSide(trigger, content, "top");
 
@@ -91,8 +90,9 @@ test("focus opens canonical tooltip and Escape closes it without moving focus", 
 }) => {
   await page.goto(canonicalUrl);
 
-  const trigger = page.locator(".tooltip-trigger");
-  const content = page.locator(".tooltip-content");
+  const root = page.locator("[ng-tooltip]");
+  const trigger = root.locator(":scope > :first-child");
+  const content = root.locator(":scope > :last-child");
   await trigger.focus();
   await expect(content).toBeVisible();
   await trigger.press("Escape");
@@ -106,20 +106,18 @@ test("externally controlled root and content open state remains authoritative", 
   await page.goto(canonicalUrl);
 
   const root = page.locator("[ng-tooltip]");
-  const trigger = page.locator(".tooltip-trigger");
-  const content = page.locator(".tooltip-content");
+  const trigger = root.locator(":scope > :first-child");
+  const content = root.locator(":scope > :last-child");
 
-  await root.evaluate((element) => element.setAttribute("data-open", "true"));
+  await root.evaluate((element) => element.setAttribute("open", ""));
   await expect(content).toBeVisible();
   await trigger.focus();
   await trigger.press("Escape");
   await expect(content).toBeVisible();
 
-  await content.evaluate((element) =>
-    element.setAttribute("data-open", "false"),
-  );
+  await root.evaluate((element) => element.removeAttribute("open"));
   await expect(content).toBeHidden();
-  await expect(root).toHaveAttribute("data-state", "closed");
+  await expect(root).not.toHaveAttribute("open");
 });
 
 test("keyboard and disabled-button wrapper references remain functional", async ({
@@ -129,7 +127,7 @@ test("keyboard and disabled-button wrapper references remain functional", async 
   await expectBuiltArtifactRuntime(page);
 
   const save = page.getByRole("button", { name: "Save changes" });
-  const saveContent = save.locator("..").locator(".tooltip-content");
+  const saveContent = save.locator("..").locator(":scope > :last-child");
   await save.focus();
   await expect(saveContent).toBeVisible();
   await expect(saveContent.locator(".kbd")).toHaveText("S");
@@ -140,7 +138,7 @@ test("keyboard and disabled-button wrapper references remain functional", async 
   const disabledWrapper = disabledButton.locator("..");
   const disabledContent = disabledWrapper
     .locator("..")
-    .locator(".tooltip-content");
+    .locator(":scope > :last-child");
   await disabledWrapper.hover();
   await expect(disabledButton).toBeDisabled();
   await expect(disabledContent).toBeVisible();
@@ -151,7 +149,7 @@ test("keyboard and disabled-button wrapper references remain functional", async 
   const unavailable = page.getByRole("button", { name: "Unavailable" });
   const unavailableContent = unavailable
     .locator("..")
-    .locator(".tooltip-content");
+    .locator(":scope > :last-child");
   await unavailable.hover({ force: true });
   await expect(unavailableContent).toBeHidden();
 });
@@ -163,10 +161,10 @@ test("workflow sides use physical rendered placement", async ({ page }) => {
     const trigger = page.getByRole("button", {
       name: new RegExp(`^${side}$`, "i"),
     });
-    const content = trigger.locator("..").locator(".tooltip-content");
+    const content = trigger.locator("..").locator(":scope > :last-child");
     await trigger.hover();
     await expect(content).toBeVisible();
-    await expect(content).toHaveAttribute("data-side", side);
+    await expect(content).toHaveAttribute("side", side);
     await expectPhysicalSide(trigger, content, side);
   }
 });
@@ -184,10 +182,10 @@ test("RTL mirrors text direction while left and right remain physical", async ({
   ] as const) {
     const trigger = page.getByRole("button", { name });
     const root = trigger.locator("..");
-    const content = root.locator(".tooltip-content");
-    await expect(root).toHaveAttribute("data-direction", "rtl");
+    const content = root.locator(":scope > :last-child");
+    await expect(root).toHaveCSS("direction", "rtl");
     await trigger.hover();
-    await expect(content).toHaveAttribute("data-direction", "rtl");
+    await expect(content).toHaveCSS("direction", "rtl");
     await expectPhysicalSide(trigger, content, side);
   }
 });

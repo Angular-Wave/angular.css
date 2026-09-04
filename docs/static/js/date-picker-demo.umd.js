@@ -3085,7 +3085,8 @@
             this.popover(id)?.hidePopover();
         }
         popover(id) {
-            return document.getElementById(id)?.querySelector("[popover]") ?? null;
+            return (document.getElementById(id)?.querySelector("[popover]") ??
+                null);
         }
     }
     window.angular

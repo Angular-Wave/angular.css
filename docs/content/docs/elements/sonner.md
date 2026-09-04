@@ -10,9 +10,9 @@ stay in application TypeScript.
 
 ```html
 <ol class="toaster">
-  <li class="toast">
-    <div class="toast-title">Saved</div>
-  </li>
+  <article>
+    <article>Saved</article>
+  </article>
 </ol>
 ```
 

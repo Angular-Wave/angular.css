@@ -151,7 +151,10 @@ class DatePickerDemoController {
   }
 
   private popover(id: string): HTMLElement | null {
-    return document.getElementById(id)?.querySelector<HTMLElement>("[popover]") ?? null;
+    return (
+      document.getElementById(id)?.querySelector<HTMLElement>("[popover]") ??
+      null
+    );
   }
 }
 

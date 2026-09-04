@@ -20,9 +20,9 @@ test("calendar element page runs the packaged canonical artifact", async ({
   ).toEqual([]);
 
   const calendar = page.locator("[ng-calendar]");
-  await expect(calendar.locator(".calendar-day")).toHaveCount(42);
+  await expect(calendar.locator(":scope > div button[value]")).toHaveCount(42);
   await expect(calendar).toHaveAttribute("data-value", "2026-05-14");
-  await calendar.locator('[data-value="2026-05-20"]').click();
+  await calendar.locator('[value="2026-05-20"]').click();
   await expect(calendar).toHaveAttribute("data-value", "2026-05-20");
   await expect(page.locator(".output")).toHaveText("Selected: 2026-05-20");
 

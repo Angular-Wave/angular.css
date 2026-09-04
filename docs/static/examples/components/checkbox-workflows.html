@@ -22,16 +22,18 @@
       >
         <h2 id="checkbox-basic-heading">Basic</h2>
         <div class="checkbox-workflow-narrow field-group">
-          <fieldset orientation="horizontal" class="field">
+          <div orientation="horizontal" class="field">
             <input
-
               id="terms-checkbox-basic"
               name="terms-checkbox-basic"
               type="checkbox"
-              ng-model="basic" class="checkbox" />
+              ng-model="basic"
+              class="checkbox"
+            />
             <label for="terms-checkbox-basic"
-               class="field-label label">Accept terms and conditions</label>
-          </fieldset>
+              >Accept terms and conditions</label
+            >
+          </div>
         </div>
       </section>
 
@@ -41,22 +43,24 @@
       >
         <h2 id="checkbox-description-heading">Description</h2>
         <div class="checkbox-workflow-description field-group">
-          <fieldset orientation="horizontal" class="field">
+          <div orientation="horizontal" class="field">
             <input
-
               id="terms-checkbox-desc"
               name="terms-checkbox-desc"
               type="checkbox"
-              ng-model="described" class="checkbox" />
-            <div class="field-content">
+              ng-model="described"
+              class="checkbox"
+            />
+            <section>
               <label for="terms-checkbox-desc"
-                 class="field-label label">Accept terms and conditions</label>
-              <p class="field-description">
+                >Accept terms and conditions</label
+              >
+              <p>
                 By clicking this checkbox, you agree to the terms and
                 conditions.
               </p>
-            </div>
-          </fieldset>
+            </section>
+          </div>
         </div>
       </section>
 
@@ -66,19 +70,16 @@
       >
         <h2 id="checkbox-disabled-heading">Disabled</h2>
         <div class="checkbox-workflow-narrow field-group">
-          <fieldset orientation="horizontal" data-disabled="true" class="field">
+          <div orientation="horizontal" class="field">
             <input
-
               id="toggle-checkbox-disabled"
               name="toggle-checkbox-disabled"
               type="checkbox"
-              disabled class="checkbox" />
-            <label
-
-
-              for="toggle-checkbox-disabled"
-               class="field-label label">Enable notifications</label>
-          </fieldset>
+              disabled
+              class="checkbox"
+            />
+            <label for="toggle-checkbox-disabled">Enable notifications</label>
+          </div>
         </div>
       </section>
 
@@ -88,16 +89,18 @@
       >
         <h2 id="checkbox-invalid-heading">Invalid</h2>
         <div class="checkbox-workflow-narrow field-group">
-          <fieldset orientation="horizontal" data-invalid="true" class="field">
+          <div orientation="horizontal" class="field">
             <input
-
               id="terms-checkbox-invalid"
               name="terms-checkbox-invalid"
               type="checkbox"
-              aria-invalid="true" class="checkbox" />
+              aria-invalid="true"
+              class="checkbox"
+            />
             <label for="terms-checkbox-invalid"
-               class="field-label label">Accept terms and conditions</label>
-          </fieldset>
+              >Accept terms and conditions</label
+            >
+          </div>
         </div>
       </section>
 
@@ -107,44 +110,44 @@
       >
         <h2 id="checkbox-group-heading">Group</h2>
         <fieldset class="field-set">
-          <legend data-variant="label" class="field-legend">
-            Show these items on the desktop:
-          </legend>
-          <p class="field-description">
-            Select the items you want to show on the desktop.
-          </p>
+          <legend variant="label">Show these items on the desktop:</legend>
+          <p>Select the items you want to show on the desktop.</p>
           <div class="checkbox-preference-group field-group">
             <div orientation="horizontal" class="field">
               <input
-
                 id="hard-disks"
                 type="checkbox"
-                ng-model="hardDisks" class="checkbox" />
-              <label for="hard-disks"
-                 class="field-label label">Hard disks</label>
+                ng-model="hardDisks"
+                class="checkbox"
+              />
+              <label for="hard-disks">Hard disks</label>
             </div>
             <div orientation="horizontal" class="field">
               <input
-
                 id="external-disks"
                 type="checkbox"
-                ng-model="externalDisks" class="checkbox" />
-              <label for="external-disks"
-                 class="field-label label">External disks</label>
-            </div>
-            <div orientation="horizontal" class="field">
-              <input id="cds-dvds" type="checkbox" ng-model="cds" class="checkbox" />
-              <label for="cds-dvds"
-                 class="field-label label">CDs, DVDs, and iPods</label>
+                ng-model="externalDisks"
+                class="checkbox"
+              />
+              <label for="external-disks">External disks</label>
             </div>
             <div orientation="horizontal" class="field">
               <input
-
+                id="cds-dvds"
+                type="checkbox"
+                ng-model="cds"
+                class="checkbox"
+              />
+              <label for="cds-dvds">CDs, DVDs, and iPods</label>
+            </div>
+            <div orientation="horizontal" class="field">
+              <input
                 id="connected-servers"
                 type="checkbox"
-                ng-model="servers" class="checkbox" />
-              <label for="connected-servers"
-                 class="field-label label">Connected servers</label>
+                ng-model="servers"
+                class="checkbox"
+              />
+              <label for="connected-servers">Connected servers</label>
             </div>
           </div>
         </fieldset>
@@ -158,49 +161,48 @@
       >
         <h2 id="checkbox-rtl-heading">من اليمين إلى اليسار</h2>
         <div class="field-group">
-          <fieldset orientation="horizontal" class="field">
+          <div orientation="horizontal" class="field">
             <input
-
               id="terms-checkbox-rtl"
               type="checkbox"
-              ng-model="rtlTerms" class="checkbox" />
-            <label for="terms-checkbox-rtl" class="label">قبول الشروط والأحكام</label>
-          </fieldset>
-          <fieldset orientation="horizontal" class="field">
+              ng-model="rtlTerms"
+              class="checkbox"
+            />
+            <label for="terms-checkbox-rtl">قبول الشروط والأحكام</label>
+          </div>
+          <div orientation="horizontal" class="field">
             <input
-
               id="terms-checkbox-2-rtl"
               type="checkbox"
-              ng-model="rtlDetails" class="checkbox" />
-            <div class="field-content">
-              <label for="terms-checkbox-2-rtl"
-                 class="field-label label">قبول الشروط والأحكام</label>
-              <p class="field-description">
-                بالنقر على هذا المربع، فإنك توافق على الشروط.
-              </p>
-            </div>
-          </fieldset>
-          <fieldset orientation="horizontal" data-disabled="true" class="field">
+              ng-model="rtlDetails"
+              class="checkbox"
+            />
+            <section>
+              <label for="terms-checkbox-2-rtl">قبول الشروط والأحكام</label>
+              <p>بالنقر على هذا المربع، فإنك توافق على الشروط.</p>
+            </section>
+          </div>
+          <div orientation="horizontal" class="field">
             <input
-
               id="toggle-checkbox-rtl"
               type="checkbox"
-              disabled class="checkbox" />
-            <label for="toggle-checkbox-rtl"
-               class="field-label label">تفعيل الإشعارات</label>
-          </fieldset>
-          <label class="field-label label">
+              disabled
+              class="checkbox"
+            />
+            <label for="toggle-checkbox-rtl">تفعيل الإشعارات</label>
+          </div>
+          <label>
             <div orientation="horizontal" class="field">
               <input
-
                 id="toggle-checkbox-2-rtl"
                 type="checkbox"
-                ng-model="rtlNotifications" class="checkbox" />
-              <div class="field-content">
-                <span class="field-title">تفعيل الإشعارات</span>
-                <span
-                   class="field-description">يمكنك تفعيل أو إلغاء تفعيل الإشعارات في أي وقت.</span>
-              </div>
+                ng-model="rtlNotifications"
+                class="checkbox"
+              />
+              <section>
+                <strong>تفعيل الإشعارات</strong>
+                <small>يمكنك تفعيل أو إلغاء تفعيل الإشعارات في أي وقت.</small>
+              </section>
             </div>
           </label>
         </div>

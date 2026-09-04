@@ -5,8 +5,7 @@ description: >
   Pressed-state button
 ---
 
-Use native `button` elements with `aria-pressed`. The CSS also accepts
-`data-state="on"`.
+Use native `button` elements with `aria-pressed` as the single state channel.
 
 ```html
 <button aria-pressed="true" class="toggle">Bold</button>

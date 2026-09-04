@@ -20,19 +20,17 @@
       class="input-otp-form-card visual-example card"
       ng-submit="submitted=true"
     >
-      <header class="card-header">
-        <h2 class="card-title">Verify your login</h2>
-        <p class="card-description">
+      <header>
+        <h2>Verify your login</h2>
+        <p>
           Enter the verification code we sent to
           <strong>m@example.com</strong>.
         </p>
       </header>
-      <section class="card-content">
+      <section>
         <div class="input-otp-form-field field">
           <div class="input-otp-form-label-row">
-            <label for="verify-otp" class="field-label label">
-              Verification code
-            </label>
+            <label for="verify-otp"> Verification code </label>
             <button
               variant="outline"
               size="xs"
@@ -56,12 +54,12 @@
             ng-model="verify"
             required
           />
-          <p class="field-description">
+          <p>
             <a href="#">I no longer have access to this email address.</a>
           </p>
         </div>
       </section>
-      <footer class="input-otp-form-footer card-footer">
+      <footer class="input-otp-form-footer">
         <div class="field">
           <button type="submit" class="input-otp-verify-button button">
             Verify

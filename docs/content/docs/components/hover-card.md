@@ -11,8 +11,8 @@ milliseconds. Set `side` on the content to `left`, `top`, `bottom`, or `right`.
 
 ```html
 <span ng-hover-card open-delay="100" close-delay="100">
-  <a href="#" class="hover-card-trigger">@angularcss</a>
-  <aside side="bottom" class="hover-card-content">Preview</aside>
+  <a href="#">@angularcss</a>
+  <aside side="bottom">Preview</aside>
 </span>
 ```
 
@@ -60,13 +60,9 @@ A keyboard-focusable trigger and one preview content element are required. Title
 | `aria-expanded` | Output | Open or expanded state exposed to assistive technology. |
 | `aria-hidden` | Output | ARIA relationship or state. |
 | `close-delay` | Input | Pointer close delay in milliseconds. |
-| `data-direction` | Output | Stable component state or styling hook. |
-| `data-open` | Input/output | Stable component state or styling hook. |
-| `data-side` | Input/output | Stable component state or styling hook. |
-| `data-state` | Output | Stable component state or styling hook. |
-| `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
+| `open` | Input | Initial or controlled open state. |
 | `open-delay` | Input | Pointer open delay in milliseconds. |
-| `side` | Input | Physical placement: `left`, `top`, `bottom`, or `right`. |
+| `side` | Input/output | Physical placement: `left`, `top`, `bottom`, or `right`. |
 
 `Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
 
@@ -83,7 +79,7 @@ Native DOM events continue to work normally. AngularTS event directives such as
 
 ## Behavior
 
-The directive owns delayed pointer and focus disclosure, physical side placement, Escape closure, and synchronized open state. It is non-modal and does not trap focus. Applications own preview content and may control the authored `data-open` attribute.
+The directive owns delayed pointer and focus disclosure, physical side placement, Escape closure, and synchronized open state. It is non-modal and does not trap focus. Applications own preview content and may control the concise authored `open` attribute.
 
 AngularCSS does not replace AngularTS interpolation, bindings, structural
 directives, form controllers, validation, or application state.

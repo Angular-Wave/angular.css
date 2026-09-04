@@ -19,12 +19,12 @@
       <section
         id="rtl-command"
         ng-command
-        data-variant="surface"
+        variant="surface"
         aria-label="قائمة الأوامر"
       >
-        <div class="command-input-wrapper">
-          <div class="command-input-group">
-            <span aria-hidden="true" class="command-input-icon">
+        <header>
+          <label>
+            <span aria-hidden="true">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -36,61 +36,58 @@
               </svg>
             </span>
             <input
-
               dir="rtl"
               aria-label="البحث في الأوامر"
               ng-model="rtlCommand.query"
               placeholder="اكتب أمرًا أو ابحث..."
-             class="command-input"/>
-          </div>
-        </div>
-        <ul class="command-list">
-          <p class="command-empty">لم يتم العثور على نتائج.</p>
-          <section class="command-group">
-            <h2 class="command-group-heading">اقتراحات</h2>
-            <li
-
+            />
+          </label>
+        </header>
+        <div>
+          <p>لم يتم العثور على نتائج.</p>
+          <section>
+            <h2>اقتراحات</h2>
+            <button
+              type="button"
               ng-repeat="item in rtlSuggestions | filter:rtlCommand.query"
               ng-attr-aria-disabled="{{ item.disabled }}"
               ng-click="rtlCommand.selected=item.label"
-             class="command-item">
+            >
               <svg
-
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 stroke-width="2"
                 aria-hidden="true"
-               class="command-item-icon">
+              >
                 <circle cx="12" cy="12" r="8"></circle>
               </svg>
               <span ng-bind="item.label"></span>
-            </li>
+            </button>
           </section>
-          <div class="command-separator"></div>
-          <section class="command-group">
-            <h2 class="command-group-heading">الإعدادات</h2>
-            <li
-
+          <hr />
+          <section>
+            <h2>الإعدادات</h2>
+            <button
+              type="button"
               ng-repeat="item in rtlSettings | filter:rtlCommand.query"
               ng-click="rtlCommand.selected=item.label"
-             class="command-item">
+            >
               <svg
-
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 stroke-width="2"
                 aria-hidden="true"
-               class="command-item-icon">
+              >
                 <circle cx="12" cy="8" r="4"></circle>
                 <path d="M4 21a8 8 0 0 1 16 0"></path>
               </svg>
               <span ng-bind="item.label"></span>
-              <span ng-bind="item.shortcut" class="command-shortcut"></span>
-            </li>
+              <kbd ng-bind="item.shortcut"></kbd>
+            </button>
           </section>
-        </ul>
+        </div>
       </section>
       <output class="output visually-hidden" aria-live="polite">
         المحدد: <span ng-bind="rtlCommand.selected || 'لا شيء'"></span>

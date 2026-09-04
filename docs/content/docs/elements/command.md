@@ -10,12 +10,12 @@ empty state.
 
 ```html
 <section class="command">
-  <div class="command-input-wrapper">
-    <input  class="command-input"/>
+  <header>
+    <input />
   </div>
-  <ul class="command-list">
-    <li class="command-item">Open file</li>
-  </ul>
+  <div>
+    <button type="button">Open file</button>
+  </div>
 </section>
 ```
 

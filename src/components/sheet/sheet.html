@@ -21,7 +21,7 @@
           commandfor="profile-sheet-content"
           command="show-modal"
           variant="outline"
-          class="sheet-trigger button"
+          class="button"
         >
           Open
         </button>
@@ -30,36 +30,35 @@
           closedby="any"
           aria-labelledby="profile-sheet-title"
           aria-describedby="profile-sheet-description"
-          data-side="right"
-          class="sheet-content"
+          side="right"
         >
-          <header class="sheet-header">
-            <h2 id="profile-sheet-title" class="sheet-title">Edit profile</h2>
-            <p id="profile-sheet-description" class="sheet-description">
+          <header>
+            <h2 id="profile-sheet-title">Edit profile</h2>
+            <p id="profile-sheet-description">
               Make changes to your profile here. Click save when you're done.
             </p>
           </header>
-          <form method="dialog" class="sheet-profile-form">
-            <div class="sheet-profile-fields sheet-body">
-              <div class="sheet-profile-field">
-                <label for="sheet-demo-name" class="label">Name</label>
+          <form method="dialog">
+            <section>
+              <label
+                ><span>Name</span>
                 <input
                   id="sheet-demo-name"
                   ng-model="profile.name"
                   autofocus
                   class="input"
                 />
-              </div>
-              <div class="sheet-profile-field">
-                <label for="sheet-demo-username" class="label">Username</label>
+              </label>
+              <label
+                ><span>Username</span>
                 <input
                   id="sheet-demo-username"
                   ng-model="profile.username"
                   class="input"
                 />
-              </div>
-            </div>
-            <footer class="sheet-footer">
+              </label>
+            </section>
+            <footer>
               <button
                 type="button"
                 commandfor="profile-sheet-content"
@@ -86,7 +85,7 @@
             command="close"
             variant="ghost"
             size="icon-sm"
-            class="sheet-close button"
+            class="button"
           >
             <svg
               viewBox="0 0 24 24"

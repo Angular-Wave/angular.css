@@ -11,11 +11,12 @@ AngularTS `ng-model`.
 ```html
 <div orientation="horizontal" class="field">
   <input
-
     id="airplane-mode"
     type="checkbox"
-    ng-model="airplaneMode" class="switch" />
-  <label for="airplane-mode" class="label">Airplane Mode</label>
+    ng-model="airplaneMode"
+    class="switch"
+  />
+  <label for="airplane-mode">Airplane Mode</label>
 </div>
 <span>Airplane mode: <span ng-bind="airplaneMode"></span></span>
 ```

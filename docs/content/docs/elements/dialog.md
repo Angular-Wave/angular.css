@@ -5,13 +5,14 @@ description: >
   Modal dialog structure
 ---
 
-This styling entrypoint uses the same native Dialog artifact as the component page.
+This styling entrypoint uses the same native Dialog artifact as the component
+page.
 
 ```html
 <section class="dialog">
   <button commandfor="profile-dialog" command="show-modal">Edit profile</button>
-  <dialog id="profile-dialog" class="dialog-content">
-    <h2 class="dialog-title">Edit profile</h2>
+  <dialog id="profile-dialog">
+    <h2>Edit profile</h2>
   </dialog>
 </section>
 ```

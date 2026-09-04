@@ -5,18 +5,18 @@ description: >
   Page location navigation
 ---
 
-Use `nav` with `aria-label="breadcrumb"` and part classes for list, item,
-link, separator, and current page elements.
+Use a `.breadcrumb` navigation landmark with a native ordered list, links,
+separators, and `aria-current="page"` for the current location.
 
 ```html
 <nav aria-label="breadcrumb" class="breadcrumb">
-  <ol class="breadcrumb-list">
-    <li class="breadcrumb-item">
-      <a href="#" class="breadcrumb-link">Home</a>
+  <ol>
+    <li>
+      <a href="#">Home</a>
     </li>
-    <li aria-hidden="true" class="breadcrumb-separator">/</li>
-    <li class="breadcrumb-item">
-      <span aria-current="page" class="breadcrumb-page">Docs</span>
+    <li aria-hidden="true">/</li>
+    <li>
+      <span aria-current="page">Docs</span>
     </li>
   </ol>
 </nav>

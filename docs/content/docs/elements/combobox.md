@@ -9,12 +9,12 @@ Compose comboboxes from a control, input, content, and option items.
 
 ```html
 <div class="combobox">
-  <div class="combobox-control">
-    <input  class="input" />
-  </div>
-  <ul class="combobox-content">
-    <li class="combobox-item">AngularCSS</li>
-  </ul>
+  <header>
+    <input class="input" />
+  </header>
+  <aside>
+    <li>AngularCSS</li>
+  </aside>
 </div>
 ```
 

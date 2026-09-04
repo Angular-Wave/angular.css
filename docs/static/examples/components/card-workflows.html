@@ -23,21 +23,21 @@
           <img
             class="card-cover-image"
             src="../../images/avatars/01.png"
-            alt="Abstract event cover" />
-          <header class="card-header">
-            <menu class="card-action">
+            alt="Abstract event cover"
+          />
+          <header>
+            <menu>
               <span variant="secondary" class="badge">Featured</span>
             </menu>
-            <h2 class="card-title">Design systems meetup</h2>
-            <p class="card-description">
+            <h2>Design systems meetup</h2>
+            <p>
               A practical talk on component APIs, accessibility, and shipping
               faster.
             </p>
           </header>
-          <footer class="card-footer">
+          <footer>
             <button
               type="button"
-
               class="card-full-button button"
               ng-click="cardAction='Viewing Design systems meetup'"
             >
@@ -56,79 +56,77 @@
       >
         <h2 id="card-rtl-heading">بطاقة من اليمين إلى اليسار</h2>
         <article class="card-rtl-card card" dir="rtl">
-          <header class="card-header">
-            <h2 class="card-title">تسجيل الدخول إلى حسابك</h2>
-            <p class="card-description">
-              أدخل بريدك الإلكتروني أدناه لتسجيل الدخول إلى حسابك
-            </p>
-            <menu class="card-action">
+          <header>
+            <h2>تسجيل الدخول إلى حسابك</h2>
+            <p>أدخل بريدك الإلكتروني أدناه لتسجيل الدخول إلى حسابك</p>
+            <menu>
               <button
-
                 variant="link"
                 type="button"
-                ng-click="rtl.status='إنشاء حساب جديد'" class="button">
+                ng-click="rtl.status='إنشاء حساب جديد'"
+                class="button"
+              >
                 إنشاء حساب
               </button>
             </menu>
           </header>
-          <section class="card-content">
+          <section>
             <form
               class="card-form"
               id="rtl-login-form"
               ng-submit="rtl.status='تم تسجيل الدخول باسم ' + rtl.email"
             >
               <div class="card-field">
-                <label for="card-email-rtl" class="label">البريد الإلكتروني</label>
+                <label for="card-email-rtl">البريد الإلكتروني</label>
                 <input
-
                   id="card-email-rtl"
                   type="email"
                   placeholder="m@example.com"
                   ng-model="rtl.email"
-                  required class="input" />
+                  required
+                  class="input"
+                />
               </div>
               <div class="card-field">
                 <div class="card-label-row">
-                  <label for="card-password-rtl" class="label">كلمة المرور</label>
+                  <label for="card-password-rtl">كلمة المرور</label>
                   <a href="#forgot-password-rtl">نسيت كلمة المرور؟</a>
                 </div>
                 <input
-
                   id="card-password-rtl"
                   type="password"
                   ng-model="rtl.password"
-                  required class="input" />
+                  required
+                  class="input"
+                />
               </div>
             </form>
           </section>
-          <footer class="card-footer-stacked card-footer">
+          <footer class="card-footer-stacked">
             <button type="submit" form="rtl-login-form" class="button">
               تسجيل الدخول
             </button>
             <button
-
               variant="outline"
               type="button"
-              ng-click="rtl.status='متابعة باستخدام Google'" class="button">
+              ng-click="rtl.status='متابعة باستخدام Google'"
+              class="button"
+            >
               تسجيل الدخول باستخدام Google
             </button>
           </footer>
         </article>
-        <output class="card-workflow-output">
-          الحالة: {{ rtl.status }}
-        </output>
+        <output class="card-workflow-output"> الحالة: {{ rtl.status }} </output>
       </section>
 
       <section class="card-workflow" aria-labelledby="card-small-heading">
         <h2 id="card-small-heading">Small card</h2>
         <article size="sm" class="card-small-card card">
-          <header class="card-header">
-            <h2 class="card-title">Scheduled reports</h2>
-            <p class="card-description">
-              Weekly snapshots. No more manual exports.
-            </p>
+          <header>
+            <h2>Scheduled reports</h2>
+            <p>Weekly snapshots. No more manual exports.</p>
           </header>
-          <section class="card-content">
+          <section>
             <ul class="card-feature-list">
               <li>
                 <svg
@@ -139,7 +137,8 @@
                   stroke-width="2"
                   aria-hidden="true"
                 >
-                  <path d="m9 18 6-6-6-6" /></svg><span>Choose a schedule (daily, or weekly).</span>
+                  <path d="m9 18 6-6-6-6" /></svg
+                ><span>Choose a schedule (daily, or weekly).</span>
               </li>
               <li>
                 <svg
@@ -150,7 +149,8 @@
                   stroke-width="2"
                   aria-hidden="true"
                 >
-                  <path d="m9 18 6-6-6-6" /></svg><span>Send to channels or specific teammates.</span>
+                  <path d="m9 18 6-6-6-6" /></svg
+                ><span>Send to channels or specific teammates.</span>
               </li>
               <li>
                 <svg
@@ -161,24 +161,27 @@
                   stroke-width="2"
                   aria-hidden="true"
                 >
-                  <path d="m9 18 6-6-6-6" /></svg><span>Include charts, tables, and key metrics.</span>
+                  <path d="m9 18 6-6-6-6" /></svg
+                ><span>Include charts, tables, and key metrics.</span>
               </li>
             </ul>
           </section>
-          <footer class="card-footer-stacked card-footer">
+          <footer class="card-footer-stacked">
             <button
-
               size="sm"
               type="button"
-              ng-click="smallCardAction='Scheduled reports setup'" class="button">
+              ng-click="smallCardAction='Scheduled reports setup'"
+              class="button"
+            >
               Set up scheduled reports
             </button>
             <button
-
               variant="outline"
               size="sm"
               type="button"
-              ng-click="smallCardAction='Showing report updates'" class="button">
+              ng-click="smallCardAction='Showing report updates'"
+              class="button"
+            >
               See what's new
             </button>
           </footer>

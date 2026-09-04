@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import selectorParser from "postcss-selector-parser";
 
 const cssFiles = ["dist/angular.css", "docs/assets/angular.css"];
+const reviewedNativeStyles = new Set(["select"]);
 const guardedElements = new Set([
   "audio",
   "body",
@@ -12,7 +13,6 @@ const guardedElements = new Set([
   "iframe",
   "img",
   "input",
-  "label",
   "menu",
   "object",
   "ol",
@@ -40,6 +40,7 @@ for (const file of cssFiles) {
     for (const selector of selectors.nodes) {
       const first = selector.nodes[0];
       if (first?.type !== "tag" || !guardedElements.has(first.value)) continue;
+      if (reviewedNativeStyles.has(first.value)) continue;
 
       const compound = selector.nodes.slice(
         0,

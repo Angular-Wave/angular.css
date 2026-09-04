@@ -207,10 +207,7 @@ class BookingsController {
     const mobile = window.matchMedia("(max-width: 760px)");
     const syncSidebar = () => {
       const sidebar = document.querySelector<HTMLElement>("#booking-sidebar");
-      sidebar?.setAttribute(
-        "data-state",
-        mobile.matches ? "collapsed" : "expanded",
-      );
+      sidebar?.toggleAttribute("collapsed", mobile.matches);
     };
     requestAnimationFrame(syncSidebar);
     mobile.addEventListener("change", syncSidebar);

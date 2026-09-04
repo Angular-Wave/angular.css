@@ -25,10 +25,6 @@ export function queryAll<T extends Element>(
 }
 
 export function setOpenState(element: HTMLElement, open: boolean): void {
-  const nextOpen = String(open);
-  if (element.getAttribute("data-open") !== nextOpen) {
-    element.setAttribute("data-open", nextOpen);
-  }
   if (element.hidden === open) {
     element.hidden = !open;
   }
@@ -37,8 +33,7 @@ export function setOpenState(element: HTMLElement, open: boolean): void {
 export function isDisabled(element: Element): boolean {
   return (
     element.hasAttribute("disabled") ||
-    element.getAttribute("aria-disabled") === "true" ||
-    element.getAttribute("data-disabled") === "true"
+    element.getAttribute("aria-disabled") === "true"
   );
 }
 

@@ -83,8 +83,7 @@ test("native range and select artifacts expose synchronized values", async ({
   await openElementArtifact(page, "slider");
   const volume = page.getByRole("slider", { name: "Volume" });
   await volume.fill("63");
-  await expect(volume).toHaveAttribute("aria-valuenow", "63");
-  await expect(volume).toHaveAttribute("data-value", "63");
+  await expect(volume).toHaveValue("63");
   await expect(volume).toHaveCSS("--value", "63%");
   await expect(page.locator('output[for="volume"]')).toHaveText("63");
   await expect(page.getByRole("slider", { name: "Muted" })).toBeDisabled();
@@ -117,5 +116,5 @@ test("button-group, toggle, and progress artifacts keep commands and state conne
     name: "Upload progress",
   });
   await expect(labeled).toHaveAttribute("value", "56");
-  await expect(page.locator(".progress-value")).toHaveText("56%");
+  await expect(page.locator(".progress-group > output")).toHaveText("56%");
 });

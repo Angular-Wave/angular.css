@@ -8,6 +8,16 @@
   --docs-code: #f0f0f3;
 }
 
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 140ms;
+  animation-timing-function: ease-out;
+}
+
 html,
 body {
   font-family:
@@ -144,6 +154,8 @@ body,
 
 .component-catalog-group {
   margin-top: 2.75rem;
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto 24rem;
 }
 
 .component-catalog-list {
@@ -296,5 +308,11 @@ body,
   .td-content table {
     display: block;
     overflow-x: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
   }
 }

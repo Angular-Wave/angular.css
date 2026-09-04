@@ -7,9 +7,8 @@ const DEFAULT_MAX_SIZE = 4;
 const DEFAULT_STEP = 0.25;
 let resizableIdCounter = 0;
 
-const GROUP_SELECTOR = ".resizable-panel-group, [ng-resizable-panel-group]";
-const PANEL_SELECTOR = ".resizable-panel";
-const HANDLE_SELECTOR = ".resizable-handle";
+const PANEL_SELECTOR = ":scope > section";
+const HANDLE_SELECTOR = ":scope > hr";
 
 type ResizableOrientation = "horizontal" | "vertical";
 
@@ -38,9 +37,7 @@ export function resizablePanelGroupDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
       const ownedDescendants = <T extends HTMLElement>(selector: string) =>
-        queryAll<T>(element, selector).filter(
-          (descendant) => descendant.closest(GROUP_SELECTOR) === element,
-        );
+        queryAll<T>(element, selector);
       let panels = ownedDescendants<HTMLElement>(PANEL_SELECTOR);
       let handles = ownedDescendants<HTMLElement>(HANDLE_SELECTOR);
       const ownedHandleOrientations = new WeakSet<HTMLElement>();
@@ -54,22 +51,13 @@ export function resizablePanelGroupDirective(): ng.Directive {
         const orientation = element.getAttribute("orientation");
         if (orientation === "vertical") return "vertical";
         if (orientation === "horizontal") return "horizontal";
-        return element.getAttribute("data-orientation") === "vertical"
-          ? "vertical"
-          : "horizontal";
+        return "horizontal";
       };
       const getDefaultHandleOrientation = (): ResizableOrientation =>
         getGroupOrientation() === "vertical" ? "horizontal" : "vertical";
       const syncOrientation = () => {
         const groupOrientation = getGroupOrientation();
-        setAttributeIfChanged(element, "data-orientation", groupOrientation);
-        setAttributeIfChanged(
-          element,
-          "data-direction",
-          element.closest<HTMLElement>("[dir]")?.getAttribute("dir") === "rtl"
-            ? "rtl"
-            : "ltr",
-        );
+        setAttributeIfChanged(element, "orientation", groupOrientation);
         handles.forEach((handle) => {
           if (
             !handle.hasAttribute("aria-orientation") ||
@@ -82,11 +70,6 @@ export function resizablePanelGroupDirective(): ng.Directive {
             );
             ownedHandleOrientations.add(handle);
           }
-          setAttributeIfChanged(
-            handle,
-            "data-orientation",
-            handle.getAttribute("aria-orientation") ?? "vertical",
-          );
         });
       };
       const syncHandle = (handle: HTMLElement, before: HTMLElement) => {
@@ -109,7 +92,6 @@ export function resizablePanelGroupDirective(): ng.Directive {
       const bindHandle = (handle: HTMLElement) => {
         if (cleanupHandles.has(handle)) return;
         handle.setAttribute("tabindex", handle.getAttribute("tabindex") ?? "0");
-        handle.setAttribute("role", "separator");
         let stopPointerResize: (() => void) | null = null;
 
         const handlePointerDown = (event: PointerEvent) => {
@@ -274,19 +256,11 @@ export function resizablePanelGroupDirective(): ng.Directive {
           if (before) {
             if (!before.id)
               before.id = `resizable-panel-${String(resizableIdCounter++)}`;
-            setAttributeIfChanged(before, "data-index", String(index));
-            setAttributeIfChanged(
-              before,
-              "data-size",
-              String(panelSize(before)),
-            );
             syncHandle(handle, before);
           }
           if (after) {
             if (!after.id)
               after.id = `resizable-panel-${String(resizableIdCounter++)}`;
-            setAttributeIfChanged(after, "data-index", String(index + 1));
-            setAttributeIfChanged(after, "data-size", String(panelSize(after)));
           }
           if (before && after) {
             setAttributeIfChanged(
@@ -304,7 +278,6 @@ export function resizablePanelGroupDirective(): ng.Directive {
           "aria-orientation",
           "data-max-size",
           "data-min-size",
-          "data-orientation",
           "orientation",
           "style",
         ],

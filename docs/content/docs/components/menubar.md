@@ -14,16 +14,16 @@ Use `ng-menubar` around a strip of menu groups. Menu triggers support:
 
 ```html
 <nav ng-menubar aria-label="Application menu">
-  <div class="menubar-menu">
-    <button class="menubar-trigger">File</button>
-    <menu class="menubar-content">
-      <button class="menubar-item">New</button>
-      <button class="menubar-item">Open</button>
+  <section>
+    <button>File</button>
+    <menu>
+      <button>New</button>
+      <button>Open</button>
     </menu>
-  </div>
-  <div class="menubar-menu">
-    <button class="menubar-trigger">Edit</button>
-  </div>
+  </section>
+  <section>
+    <button>Edit</button>
+  </section>
 </nav>
 ```
 
@@ -48,7 +48,7 @@ This component's root directive is `[ng-menubar]`. Importing the package registe
 
 ### Semantic structure
 
-Each menu requires one native button trigger and one menu content element. The root directive inspects semantic descendants through menubar part classes; no child directives are required. Groups, separators, shortcuts, checked items, and submenus are optional.
+Each top-level section requires one native button trigger and one `menu`. The root directive inspects semantic sections, fieldsets, buttons, separators, keyboard hints, and nested details; no child directives or anatomy classes are required.
 
 ## API
 
@@ -57,9 +57,8 @@ Each menu requires one native button trigger and one menu content element. The r
 | Attribute | Access | Purpose |
 | --- | --- | --- |
 | `aria-checked` | Input | ARIA relationship or state. |
-| `data-open` | Input | Stable component state or styling hook. |
-| `data-state` | Input | Stable component state or styling hook. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
+| `open` | Input | Initial or controlled open state. |
 | `tabindex` | Input | Keyboard focus order for composite descendants. |
 
 `Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.

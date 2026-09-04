@@ -5,18 +5,18 @@ description: >
   Composable input adornments and grouped controls
 ---
 
-Use `class="input-group"` with `role="group"` to compose native inputs,
-textarea controls, text affixes, icons, keyboard hints, and action buttons.
-Controls stay native and use `class="input-group-control"`.
+Use `class="input-group"` to compose native inputs, textarea controls, text
+affixes, icons, keyboard hints, and action buttons. Direct children supply the
+complete structure without part classes.
 
 ```html
 <fieldset class="input-group">
-  <input placeholder="Search..."  class="input-group-control input" />
-  <div data-align="inline-start" class="input-group-addon">
-    <span class="input-group-text">Search</span>
+  <input placeholder="Search..." class="input" />
+  <div align="inline-start">
+    <span>Search</span>
   </div>
-  <div data-align="inline-end" class="input-group-addon">
-    <button variant="ghost" class="input-group-button button">Go</button>
+  <div align="inline-end">
+    <button variant="ghost" class="button">Go</button>
   </div>
 </fieldset>
 ```

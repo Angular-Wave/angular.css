@@ -6,7 +6,7 @@ test("menubar element example exercises the built functional artifact", async ({
   await page.goto("/docs/static/examples/elements/menubar.html");
   const menubar = page.locator("[ng-menubar]");
   const file = page.getByRole("menuitem", { name: "File", exact: true });
-  const content = file.locator("..").locator(":scope > .menubar-content");
+  const content = file.locator("..").locator(":scope > menu");
   await expect(menubar).toHaveAttribute("role", "menubar");
   await expect(content).toBeHidden();
   await file.press("Enter");

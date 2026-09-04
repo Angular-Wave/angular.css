@@ -6,17 +6,17 @@ description: >
 ---
 
 Use `article.card` with optional semantic header, content, footer, and action
-regions.
+regions. Direct headers, headings, and header paragraphs need no part classes.
 
 ```html
 <article class="card">
-  <header class="card-header">
-    <h2 class="card-title">Title</h2>
-    <p class="card-description">Optional description</p>
-    <menu class="card-action">Action</menu>
+  <header>
+    <h2>Title</h2>
+    <p>Optional description</p>
+    <menu>Action</menu>
   </header>
-  <section class="card-content">Content</section>
-  <footer class="card-footer">Footer</footer>
+  <section>Content</section>
+  <footer>Footer</footer>
 </article>
 ```
 

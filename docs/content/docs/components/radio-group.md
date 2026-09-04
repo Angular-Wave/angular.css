@@ -5,19 +5,14 @@ description: >
   Native radio input grouping with role and focus behavior.
 ---
 
-Use `fieldset.radio-group` with a native `legend`, then use
-`class="radio-group-item"` on each radio input.
+Use `fieldset.radio-group` with a native `legend` and radio inputs. The group
+styles its native radio descendants directly.
 
 ```html
 <fieldset class="radio-group">
   <div class="field" orientation="horizontal">
-    <input
-
-      id="default"
-      name="density"
-      type="radio"
-      value="default"  class="radio-group-item"/>
-    <label for="default" class="label">Default</label>
+    <input id="default" name="density" type="radio" value="default" />
+    <label for="default">Default</label>
   </div>
 </fieldset>
 ```

@@ -1,6 +1,6 @@
 import type {} from "@angular-wave/angular.ts";
 
-import { isDisabled, onDestroy, query, setOpenState } from "../../internal/dom";
+import { isDisabled, onDestroy, setOpenState } from "../../internal/dom";
 
 let hoverCardIdCounter = 0;
 
@@ -20,27 +20,20 @@ const delayFor = (
 export function hoverCardDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
-      const trigger = query(element, ".hover-card-trigger", HTMLElement);
-      const content = query(element, ".hover-card-content", HTMLElement);
+      const trigger = element.querySelector<HTMLElement>(
+        ":scope > :is(a, button)",
+      );
+      const content = element.querySelector<HTMLElement>(
+        ":scope > :is(aside, article, section):last-child",
+      );
 
       if (!trigger || !content) return;
 
-      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
-      const getDirection = () =>
-        element.closest<HTMLElement>("[dir]")?.getAttribute("dir") === "rtl"
-          ? "rtl"
-          : "ltr";
-      const syncDirection = () => {
-        const direction = getDirection();
-        element.setAttribute("data-direction", direction);
-        content.setAttribute("data-direction", direction);
-      };
       const syncSide = () => {
-        const authored =
-          content.getAttribute("side") ?? content.getAttribute("data-side");
+        const authored = content.getAttribute("side");
         const side = authored && sides.has(authored) ? authored : "bottom";
-        if (content.getAttribute("data-side") !== side) {
-          content.setAttribute("data-side", side);
+        if (content.getAttribute("side") !== side) {
+          content.setAttribute("side", side);
         }
       };
 
@@ -49,51 +42,32 @@ export function hoverCardDirective(): ng.Directive {
       content.id = contentId;
       trigger.setAttribute("aria-controls", contentId);
       trigger.setAttribute("aria-expanded", "false");
-      let openState =
-        element.getAttribute("data-open") === "true" ||
-        content.getAttribute("data-open") === "true";
+      let openState = element.hasAttribute("open");
       const setOpen = (open: boolean) => {
         openState = open;
-        element.setAttribute("data-open", String(open));
-        element.setAttribute("data-state", open ? "open" : "closed");
-        trigger.setAttribute("data-state", open ? "open" : "closed");
+        element.toggleAttribute("open", open);
         trigger.setAttribute("aria-expanded", String(open));
-        content.setAttribute("data-open", String(open));
-        content.setAttribute("data-state", open ? "open" : "closed");
         content.setAttribute("aria-hidden", String(!open));
         setOpenState(content, open);
       };
-      const syncFromAttribute = (source: HTMLElement) => {
-        const nextOpen = source.getAttribute("data-open") === "true";
+      const syncFromAttribute = () => {
+        const nextOpen = element.hasAttribute("open");
         if (nextOpen === openState) return;
         setOpen(nextOpen);
       };
       const openObserver = new MutationObserver((records) => {
-        syncDirection();
         syncSide();
-        const record = records.find(
-          (entry) => entry.attributeName === "data-open",
-        );
+        const record = records.find((entry) => entry.attributeName === "open");
         if (!(record?.target instanceof HTMLElement)) return;
-        syncFromAttribute(record.target);
+        syncFromAttribute();
       });
       openObserver.observe(content, {
         attributes: true,
-        attributeFilter: ["data-open", "data-side", "side"],
+        attributeFilter: ["side"],
       });
       openObserver.observe(element, {
         attributes: true,
-        attributeFilter: ["data-open", "dir"],
-      });
-      const directionObserver =
-        directionOwner === element
-          ? null
-          : new MutationObserver(() => {
-              syncDirection();
-            });
-      directionObserver?.observe(directionOwner, {
-        attributes: true,
-        attributeFilter: ["dir"],
+        attributeFilter: ["dir", "open"],
       });
 
       const handleOpen = () => {
@@ -159,7 +133,6 @@ export function hoverCardDirective(): ng.Directive {
         trigger.focus({ preventScroll: true });
       };
 
-      syncDirection();
       syncSide();
       setOpen(openState);
 
@@ -177,7 +150,6 @@ export function hoverCardDirective(): ng.Directive {
         clearOpenTimer();
         clearCloseTimer();
         openObserver.disconnect();
-        directionObserver?.disconnect();
         trigger.removeEventListener("mouseenter", scheduleOpen);
         trigger.removeEventListener("mouseleave", scheduleClose);
         trigger.removeEventListener("focus", handleFocus);

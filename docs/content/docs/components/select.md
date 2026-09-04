@@ -5,17 +5,15 @@ description: >
   Native select styling integrated with AngularTS models and form state.
 ---
 
-Apply `.select` to a native `select`. Use an optional `.select-wrapper` for the
-packaged chevron, and bind application state with AngularTS `ng-model`.
+Use a native `select` directly and bind application state with AngularTS
+`ng-model`. No wrapper or styling class is required.
 
 ```html
-<div class="select-wrapper">
-  <select id="status" class="select" ng-model="status" required>
-    <option value="">Select a status</option>
-    <option>Todo</option>
-    <option>Done</option>
-  </select>
-</div>
+<select id="status" ng-model="status" required>
+  <option value="">Select a status</option>
+  <option>Todo</option>
+  <option>Done</option>
+</select>
 ```
 
 ## Example
@@ -35,11 +33,11 @@ This is a styling-only HTML element or pattern. AngularCSS registers no runtime 
 
 ### Root styling selector
 
-- `.select`
+- `select`
 
 ### Semantic structure
 
-Apply `.select` directly to a native `select` inside an optional `.select-wrapper`. Native `option` and `optgroup` elements need no additional attributes. Use AngularTS `ng-model`, validators, and form directives directly on the select.
+Use a native `select` directly. Native `option` and `optgroup` elements need no additional attributes. Use AngularTS `ng-model`, validators, and form directives directly on the select.
 
 ## API
 

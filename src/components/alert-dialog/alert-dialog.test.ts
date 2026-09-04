@@ -26,7 +26,7 @@ test("canonical alert dialog uses native modal semantics and focus restoration",
   await page.goto(canonicalUrl);
   await expectBuiltArtifactRuntime(page);
   const root = page.locator("#confirmation-dialog");
-  const trigger = root.locator(".alert-dialog-trigger");
+  const trigger = root.locator(":scope > button:first-child");
   const content = root.locator("dialog");
   const cancel = root.getByRole("button", { name: "Cancel" });
 
@@ -55,7 +55,7 @@ test("closedby prevents light dismissal but allows Escape", async ({
 }) => {
   await page.goto(canonicalUrl);
   const root = page.locator("#confirmation-dialog");
-  const trigger = root.locator(".alert-dialog-trigger");
+  const trigger = root.locator(":scope > button:first-child");
   const content = root.locator("dialog");
 
   await trigger.click();
@@ -87,12 +87,14 @@ test("workflow preserves sizes, media, and inherited RTL direction", async ({
 }) => {
   await page.goto(workflowsUrl);
   const small = page.locator("#accessory-media-dialog");
-  await small.locator(".alert-dialog-trigger").click();
-  await expect(small.locator("dialog")).toHaveAttribute("data-size", "sm");
-  await expect(small.locator(".alert-dialog-media")).toBeVisible();
+  await small.locator(":scope > button:first-child").click();
+  await expect(small.locator("dialog")).toHaveAttribute("size", "sm");
+  await expect(
+    small.locator(":scope > dialog > header > figure"),
+  ).toBeVisible();
   await page.keyboard.press("Escape");
 
   const rtl = page.locator("#rtl-confirmation-dialog");
-  await rtl.locator(".alert-dialog-trigger").click();
+  await rtl.locator(":scope > button:first-child").click();
   await expect(rtl.locator("dialog")).toHaveCSS("direction", "rtl");
 });

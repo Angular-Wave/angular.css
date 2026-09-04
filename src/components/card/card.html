@@ -11,29 +11,27 @@
   </head>
   <body ng-app="ui" ng-cloak>
     <article class="example-card card">
-      <header class="card-header">
-        <div>
-          <h2 class="card-title">Login to your account</h2>
-          <p class="card-description">Enter your email below to continue.</p>
-        </div>
-        <menu class="card-action">
+      <header>
+        <h2>Login to your account</h2>
+        <p>Enter your email below to continue.</p>
+        <menu>
           <button variant="link" class="button">Sign up</button>
         </menu>
       </header>
-      <section class="card-content">
+      <section>
         <div class="stack-sm">
-          <label for="card-email" class="label">Email</label>
+          <label for="card-email">Email</label>
           <input
             id="card-email"
             type="email"
             placeholder="m@example.com"
             class="input"
           />
-          <label for="card-password" class="label">Password</label>
+          <label for="card-password">Password</label>
           <input id="card-password" type="password" class="input" />
         </div>
       </section>
-      <footer class="stack-sm card-footer">
+      <footer class="stack-sm">
         <button class="button">Login</button>
         <button variant="outline" class="button">Login with provider</button>
       </footer>

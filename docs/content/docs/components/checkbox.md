@@ -2,7 +2,7 @@
 title: checkbox
 category: 'form'
 description: >
-  Native checkbox control with mirrored state attributes for styling.
+  Native checkbox control styled from native state.
 ---
 
 Use `class="checkbox"` on a native checkbox input. Native input state and
@@ -10,15 +10,21 @@ AngularTS `ng-model` remain the source of truth.
 
 ```html
 <div orientation="horizontal" class="field">
-  <input id="terms" name="terms" type="checkbox" ng-model="terms" class="checkbox" />
-  <label for="terms" class="field-label label"> Accept terms </label>
+  <input
+    id="terms"
+    name="terms"
+    type="checkbox"
+    ng-model="terms"
+    class="checkbox"
+  />
+  <label for="terms"> Accept terms </label>
 </div>
 ```
 
 Set the native `HTMLInputElement.indeterminate` property from application code
-when a mixed selection is needed. AngularCSS reflects it as
-`data-state="indeterminate"` and `aria-checked="mixed"`; it does not create a
-second checkbox model.
+when a mixed selection is needed. Native `:indeterminate` state owns both the
+visual and accessibility contract; AngularCSS does not create a second checkbox
+model.
 
 ## Example
 

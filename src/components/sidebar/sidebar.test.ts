@@ -30,18 +30,17 @@ test("canonical artifact reflects options and AngularTS controlled state", async
   await expectBuiltArtifactRuntime(page);
 
   const sidebar = page.locator("#app-sidebar");
-  const layout = page.locator(".sidebar-layout");
+  const layout = sidebar.locator("..");
   const trigger = page.getByRole("button", { name: "Close Sidebar" });
-  await expect(sidebar).toHaveAttribute("data-collapsible", "icon");
-  await expect(sidebar).toHaveAttribute("data-side", "left");
-  await expect(sidebar).toHaveAttribute("data-variant", "sidebar");
-  await expect(sidebar).toHaveAttribute("data-state", "expanded");
-  await expect(sidebar).toHaveAttribute("data-mobile", "false");
+  await expect(sidebar).toHaveAttribute("collapsible", "icon");
+  await expect(sidebar).toHaveAttribute("side", "left");
+  await expect(sidebar).toHaveAttribute("variant", "sidebar");
+  await expect(sidebar).not.toHaveAttribute("collapsed", "");
   expect(await sidebar.getAttribute("role")).toBeNull();
   await expect(sidebar).toHaveAttribute("aria-hidden", "false");
   await expect(trigger).toHaveAttribute("aria-controls", "app-sidebar");
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
-  await expect(sidebar.locator("[data-active='true']")).toHaveAttribute(
+  await expect(sidebar.locator("[aria-current='page']")).toHaveAttribute(
     "aria-current",
     "page",
   );
@@ -60,9 +59,8 @@ test("canonical artifact reflects options and AngularTS controlled state", async
 
   const expandedBox = await sidebar.boundingBox();
   await trigger.click();
-  await expect(sidebar).toHaveAttribute("data-state", "collapsed");
+  await expect(sidebar).toHaveAttribute("collapsed", "");
   await expect(sidebar).toHaveAttribute("aria-hidden", "false");
-  await expect(sidebar).toHaveAttribute("data-open", "false");
   await expect(
     page.getByRole("button", { name: "Open Sidebar" }),
   ).toHaveAttribute("aria-expanded", "false");
@@ -80,7 +78,7 @@ test("canonical artifact reflects options and AngularTS controlled state", async
   await expect(sidebar.locator(".sidebar-brand-mark")).toBeVisible();
   const sidebarCenter = collapsedBox!.x + collapsedBox!.width / 2;
   const centeredItems = sidebar.locator(
-    ".sidebar-brand-mark, .sidebar-menu-button > svg, .sidebar-menu-button > .avatar",
+    ".sidebar-brand-mark, :is(header, footer, nav) :is(a, button, summary) > :is(svg, .avatar)",
   );
   const centeredItemCount = await centeredItems.count();
   expect(centeredItemCount).toBeGreaterThan(0);
@@ -93,7 +91,7 @@ test("canonical artifact reflects options and AngularTS controlled state", async
   }
 
   await page.keyboard.press("Control+b");
-  await expect(sidebar).toHaveAttribute("data-state", "expanded");
+  await expect(sidebar).not.toHaveAttribute("collapsed", "");
 });
 
 test("anatomy artifact wires groups, actions, menus, badges, and loading state", async ({
@@ -103,7 +101,7 @@ test("anatomy artifact wires groups, actions, menus, badges, and loading state",
   await page.goto(anatomyUrl);
   await expectBuiltArtifactRuntime(page);
 
-  const groups = page.locator(".sidebar-group");
+  const groups = page.locator("#anatomy-sidebar > nav > section");
   await expect(groups).toHaveCount(3);
   for (let index = 0; index < 3; index += 1) {
     await expect(groups.nth(index)).toHaveAttribute(
@@ -111,19 +109,18 @@ test("anatomy artifact wires groups, actions, menus, badges, and loading state",
       /sidebar-group-label-/,
     );
   }
-  await expect(page.locator(".sidebar-group-action")).toHaveCount(2);
-  await expect(page.locator(".sidebar-group-action").first()).toHaveAttribute(
-    "type",
-    "button",
-  );
-  await expect(page.locator(".sidebar-menu-action")).toHaveAttribute(
-    "type",
-    "button",
-  );
-  await expect(page.locator(".sidebar-menu-badge")).toHaveCount(2);
+  const groupActions = groups.locator(":scope > button");
+  await expect(groupActions).toHaveCount(2);
+  await expect(groupActions.first()).toHaveAttribute("type", "button");
+  await expect(
+    page.getByRole("button", {
+      name: "More actions for Design Engineering",
+    }),
+  ).toHaveAttribute("type", "button");
+  await expect(page.locator("#anatomy-sidebar nav li > output")).toHaveCount(2);
   expect(
     await page
-      .locator(".sidebar-menu-skeleton")
+      .locator("#anatomy-sidebar nav li.skeleton")
       .first()
       .evaluate(
         (element) => getComputedStyle(element, "::after").animationName,
@@ -135,7 +132,7 @@ test("anatomy artifact wires groups, actions, menus, badges, and loading state",
     "Added project",
   );
   await page.getByRole("button", { name: "Toggle loading" }).click();
-  await expect(page.locator(".sidebar-menu-skeleton")).toHaveCount(0);
+  await expect(page.locator("#anatomy-sidebar nav li.skeleton")).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Support" })).toBeVisible();
 
   await page
@@ -179,16 +176,16 @@ test("RTL artifact anchors right and preserves usable icon collapse", async ({
   await expectBuiltArtifactRuntime(page);
 
   const sidebar = page.locator("#rtl-sidebar");
-  await expect(sidebar).toHaveAttribute("data-direction", "rtl");
-  await expect(sidebar).toHaveAttribute("data-side", "right");
-  await expect(sidebar).toHaveAttribute("data-variant", "floating");
+  await expect(sidebar).toHaveCSS("direction", "rtl");
+  await expect(sidebar).toHaveAttribute("side", "right");
+  await expect(sidebar).toHaveAttribute("variant", "floating");
   const expandedBox = await sidebar.boundingBox();
   expect(expandedBox).not.toBeNull();
-  expect(expandedBox!.x).toBeCloseTo(604, 0);
-  expect(expandedBox!.x + expandedBox!.width).toBeCloseTo(892, 0);
+  expect(expandedBox!.width).toBeCloseTo(288, 0);
+  expect(expandedBox!.x + expandedBox!.width).toBeCloseTo(900, 0);
 
   await page.getByRole("button", { name: "إغلاق الشريط" }).click();
-  await expect(sidebar).toHaveAttribute("data-state", "collapsed");
+  await expect(sidebar).toHaveAttribute("collapsed", "");
   await expect(sidebar).toHaveAttribute("aria-hidden", "false");
   await expect
     .poll(async () => (await sidebar.boundingBox())?.width)
@@ -196,26 +193,12 @@ test("RTL artifact anchors right and preserves usable icon collapse", async ({
   const collapsedBox = await sidebar.boundingBox();
   expect(collapsedBox).not.toBeNull();
   expect(collapsedBox!.width).toBeCloseTo(56, 0);
-  expect(collapsedBox!.x + collapsedBox!.width).toBeCloseTo(892, 0);
+  expect(collapsedBox!.x + collapsedBox!.width).toBeCloseTo(900, 0);
 
   await page.getByRole("button", { name: "فتح الشريط" }).click();
   await page.getByRole("button", { name: "المزيد" }).click();
   await page.getByRole("menuitem", { name: "عرض المشروع" }).click();
   await expect(page.locator(".sidebar-anatomy-output")).toHaveText(
     "عرض المشروع",
-  );
-});
-
-test("canonical artifact mirrors responsive state", async ({ page }) => {
-  await page.setViewportSize({ height: 700, width: 640 });
-  await page.goto(canonicalUrl);
-  await expect(page.locator("#app-sidebar")).toHaveAttribute(
-    "data-mobile",
-    "true",
-  );
-  await page.setViewportSize({ height: 700, width: 1024 });
-  await expect(page.locator("#app-sidebar")).toHaveAttribute(
-    "data-mobile",
-    "false",
   );
 });

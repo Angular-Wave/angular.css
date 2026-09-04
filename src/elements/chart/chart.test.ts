@@ -6,7 +6,7 @@ test("element entrypoint example is a complete functional chart page", async ({
   await page.goto("/docs/static/examples/elements/chart.html");
 
   const chart = page.locator(".chart");
-  const bars = chart.locator(`.chart-bar`);
+  const bars = chart.locator(":scope > section > ul > li > span");
 
   expect(await chart.getAttribute("role")).toBeNull();
   await expect(chart).toHaveRole("figure");

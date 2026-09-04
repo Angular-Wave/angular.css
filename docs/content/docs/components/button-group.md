@@ -12,7 +12,7 @@ represent one or more selectable values.
 ```html
 <fieldset class="button-group">
   <button class="button">One</button>
-  <span class="button-group-separator"></span>
+  <hr class="separator" />
   <button class="button">Two</button>
 </fieldset>
 ```

@@ -35,11 +35,11 @@ test("canonical basic and auto-highlight artifacts expose distinct listbox behav
   await expect(roots).toHaveCount(2);
 
   const basicInput = basic.getByRole("combobox");
-  const basicContent = basic.locator(".combobox-content");
+  const basicContent = basic.locator(":scope > aside");
   await expect(basicContent).toBeHidden();
   await expect(basicInput).toHaveAttribute("aria-expanded", "false");
   await expect(basicInput).toHaveAttribute("aria-autocomplete", "list");
-  await expect(basic.locator(".combobox-control")).toHaveCSS("height", "32px");
+  await expect(basic.locator(":scope > header")).toHaveCSS("height", "32px");
   await basicInput.focus();
   await expect(basicContent).toBeVisible();
   await expect(basic.locator('[data-highlighted="true"]')).toHaveCount(0);
@@ -48,7 +48,7 @@ test("canonical basic and auto-highlight artifacts expose distinct listbox behav
 
   const autoInput = automatic.getByRole("combobox");
   await autoInput.focus();
-  const first = automatic.locator(".combobox-item").first();
+  const first = automatic.getByRole("option").first();
   await expect(first).toHaveAttribute("data-highlighted", "true");
   const firstId = await first.getAttribute("id");
   await expect(autoInput).toHaveAttribute(
@@ -63,24 +63,22 @@ test("AngularTS filtering, empty state, and keyboard selection remain functional
   await page.goto(canonicalUrl);
   const root = page.locator("#basic-combobox");
   const input = root.getByRole("combobox");
-  const content = root.locator(".combobox-content");
-  const items = root.locator(".combobox-item");
+  const content = root.locator(":scope > aside");
+  const items = root.getByRole("option", { includeHidden: true });
 
   await input.fill("sv");
   await expect(items).toHaveCount(1);
   await expect(items).toHaveText(/SvelteKit/);
   await input.press("ArrowDown");
   await input.press("Enter");
-  await expect(root).toHaveAttribute("data-value", "SvelteKit");
   await expect(input).toHaveValue("SvelteKit");
   await expect(page.locator(".output")).toContainText("Basic: SvelteKit");
   await expect(content).toBeHidden();
 
   await input.fill("no-match");
   await expect(items).toHaveCount(0);
-  await expect(root).toHaveAttribute("data-empty", "true");
-  await expect(root.locator(".combobox-empty")).toBeVisible();
-  await expect(root.locator(".combobox-empty")).toHaveAttribute(
+  await expect(root.locator(":scope > aside > p")).toBeVisible();
+  await expect(root.locator(":scope > aside > p")).toHaveAttribute(
     "role",
     "status",
   );
@@ -93,8 +91,8 @@ test("state artifact covers controlled open, disabled skipping, boundaries, and 
   await expectBuiltArtifactRuntime(page);
   const root = page.locator("#state-combobox");
   const input = root.getByRole("combobox");
-  const content = root.locator(".combobox-content");
-  const items = root.locator(".combobox-item");
+  const content = root.locator(":scope > aside");
+  const items = root.getByRole("option", { includeHidden: true });
 
   await page.getByRole("button", { name: "Toggle popup" }).click();
   await expect(root).toHaveAttribute("open", "true");
@@ -121,7 +119,7 @@ test("state artifact covers controlled open, disabled skipping, boundaries, and 
     "Selected: Astro",
   );
 
-  await root.locator(".combobox-trigger").click();
+  await root.locator('button[value="toggle"]').click();
   await expect(content).toBeVisible();
   await page.getByRole("button", { name: "Toggle Astro option" }).click();
   await expect(root).toHaveAttribute("open", "false");
@@ -137,24 +135,21 @@ test("clear, disabled, and invalid references mirror native and AngularTS state"
   await expect(clear.getByRole("combobox")).toHaveValue("Next.js");
   await clear.getByRole("button", { name: "Clear selection" }).click();
   await expect(clear.getByRole("combobox")).toHaveValue("");
-  await expect(clear).toHaveAttribute("data-value", "");
   await expect(page.locator(".output")).toContainText("Clear: none");
 
   const disabled = page.locator("#disabled-combobox");
-  await expect(disabled).toHaveAttribute("data-disabled", "true");
   await expect(disabled.getByRole("combobox")).toBeDisabled();
   await disabled
     .getByRole("button", { name: "Show disabled frameworks" })
     .press("Enter");
-  await expect(disabled.locator(".combobox-content")).toBeHidden();
+  await expect(disabled.locator(":scope > aside")).toBeHidden();
 
   const invalid = page.locator("#invalid-combobox");
-  await expect(invalid).toHaveAttribute("data-invalid", "true");
   await expect(invalid.getByRole("combobox")).toHaveAttribute(
     "aria-invalid",
     "true",
   );
-  await expect(invalid.locator(".combobox-control")).toHaveCSS(
+  await expect(invalid.locator(":scope > header")).toHaveCSS(
     "border-color",
     "rgb(229, 72, 77)",
   );
@@ -168,27 +163,25 @@ test("grouped and input-addon references preserve labels, separators, filtering,
   const input = grouped.getByRole("combobox");
   await input.fill("Tokyo");
   await expect(
-    grouped.locator(".combobox-group").filter({ visible: true }),
+    grouped.locator(":scope > aside > div > section").filter({ visible: true }),
   ).toHaveCount(1);
   await expect(
-    grouped.locator(".combobox-item").filter({ visible: true }),
+    grouped.getByRole("option").filter({ visible: true }),
   ).toHaveCount(1);
-  const group = grouped.locator(".combobox-group").filter({ visible: true });
-  const labelId = await group.locator(".combobox-label").getAttribute("id");
+  const group = grouped
+    .locator(":scope > aside > div > section")
+    .filter({ visible: true });
+  const labelId = await group
+    .locator(":scope > :is(h1, h2, h3, h4, h5, h6)")
+    .getAttribute("id");
   await expect(group).toHaveAttribute("role", "group");
   await expect(group).toHaveAttribute("aria-labelledby", labelId ?? "");
-  await expect(group.locator(".combobox-separator")).toHaveAttribute(
-    "role",
-    "separator",
-  );
+  await expect(group.getByRole("separator")).toHaveCount(1);
 
   const withAddon = page.locator("#input-group-combobox");
   await expect(withAddon.locator(".combobox-globe")).toBeVisible();
   await withAddon.getByRole("combobox").focus();
-  await expect(withAddon.locator(".combobox-content")).toHaveCSS(
-    "width",
-    "240px",
-  );
+  await expect(withAddon.locator(":scope > aside")).toHaveCSS("width", "240px");
 });
 
 test("popup reference focuses its internal search and selects from a separate trigger", async ({
@@ -199,14 +192,16 @@ test("popup reference focuses its internal search and selects from a separate tr
   const trigger = root.getByRole("button", { name: "Country" });
   const input = root.getByRole("combobox");
   await trigger.click();
-  await expect(root.locator(".combobox-content")).toBeVisible();
+  await expect(root.locator(":scope > aside")).toBeVisible();
   await expect(input).toBeFocused();
   await input.fill("Japan");
   await expect(root.getByRole("option")).toHaveCount(1);
   await input.press("ArrowDown");
   await input.press("Enter");
-  await expect(root.locator(".combobox-value")).toHaveText("Japan");
-  await expect(root).toHaveAttribute("data-value", "Japan");
+  await expect(
+    root.locator(':scope > button[value="toggle"] > span'),
+  ).toHaveText("Japan");
+  await expect(input).toHaveCount(0);
 });
 
 test("multiple reference keeps application chips authoritative and supports remove-last signaling", async ({
@@ -216,9 +211,9 @@ test("multiple reference keeps application chips authoritative and supports remo
   await expectBuiltArtifactRuntime(page);
   const root = page.locator("#multiple-combobox");
   const input = root.getByRole("combobox");
-  const content = root.locator(".combobox-content");
-  const chips = root.locator(".combobox-chip");
-  await expect(root).toHaveAttribute("data-multiple", "true");
+  const content = root.locator(":scope > aside");
+  const chips = root.locator(":scope > fieldset > span");
+  await expect(root).toHaveAttribute("multiple", "");
   await expect(content).toHaveAttribute("aria-multiselectable", "true");
   await expect(chips).toHaveCount(1);
 
@@ -243,19 +238,16 @@ test("custom and RTL references retain authored option content and logical multi
   const customInput = custom.getByRole("combobox");
   await customInput.fill("Japan");
   const japan = custom.getByRole("option", { name: /Japan/ });
-  await expect(japan.locator(".item-description")).toContainText("Asia (jp)");
+  await expect(custom.getByText("Asia (jp)", { exact: true })).toBeVisible();
   await japan.click();
   await expect(page.locator(".output")).toContainText("Country: Japan");
 
   const rtl = page.locator("#rtl-combobox");
-  await expect(rtl).toHaveAttribute("data-direction", "rtl");
-  await expect(rtl.locator(".combobox-content")).toHaveAttribute(
-    "data-direction",
-    "rtl",
-  );
+  await expect(rtl).toHaveCSS("direction", "rtl");
+  await expect(rtl.locator(":scope > aside")).toHaveCSS("direction", "rtl");
   await rtl.getByRole("combobox").focus();
   await rtl.getByRole("option", { name: "التصميم", exact: true }).click();
-  await expect(rtl.locator(".combobox-chip")).toHaveCount(2);
+  await expect(rtl.locator(":scope > fieldset > span")).toHaveCount(2);
   await rtl.getByRole("button", { name: "إزالة التصميم" }).click();
-  await expect(rtl.locator(".combobox-chip")).toHaveCount(1);
+  await expect(rtl.locator(":scope > fieldset > span")).toHaveCount(1);
 });

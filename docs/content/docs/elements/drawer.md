@@ -5,14 +5,13 @@ description: >
   Bottom anchored drawer panels
 ---
 
-This styling entrypoint uses the same native Drawer artifact as the component page.
+This styling entrypoint uses the same native Drawer artifact as the component
+page.
 
 ```html
 <section class="drawer">
   <button commandfor="goal-drawer" command="show-modal">Open Drawer</button>
-  <dialog id="goal-drawer" data-side="bottom" class="drawer-content">
-    <div class="drawer-handle"></div>
-  </dialog>
+  <dialog id="goal-drawer" side="bottom"></dialog>
 </section>
 ```
 

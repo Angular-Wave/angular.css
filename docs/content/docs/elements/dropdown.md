@@ -4,8 +4,7 @@ description: >
   Menu opened from a trigger button
 ---
 
-Use `ng-dropdown` on a wrapper with a trigger `button` and a panel with
-`role="menu"`.
+Use `ng-dropdown` on a wrapper with a trigger `button` and a native `menu`.
 
 ```html
 <div ng-dropdown>
@@ -18,10 +17,10 @@ Use `ng-dropdown` on a wrapper with a trigger `button` and a panel with
 </div>
 ```
 
-The directive manages ARIA state, `data-open`, outside click close, escape
-close, and arrow-key focus movement. It does not publish scope methods or own
-AngularTS application state. For external control, update `data-open` from
-AngularTS state.
+The directive adds required roles and manages ARIA state, outside-click close,
+Escape close, and arrow-key focus movement. It does not publish scope methods or
+own AngularTS application state. For external control, bind the wrapper's
+concise `open` attribute from AngularTS state.
 
 ## Example
 

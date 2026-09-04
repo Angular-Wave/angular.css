@@ -15,7 +15,7 @@
     data-example="sidebar-group-collapsible sidebar-menu-collapsible"
     class="sidebar-example-body"
   >
-    <div class="sidebar-collapsible-shell visual-example sidebar-layout">
+    <div class="sidebar-collapsible-shell visual-example">
       <aside
         id="collapsible-sidebar"
         ng-sidebar
@@ -23,8 +23,8 @@
         class="sidebar-collapsible-panel"
         aria-label="Documentation navigation"
       >
-        <header class="sidebar-header">
-          <a href="#docs" size="lg" class="sidebar-menu-button">
+        <header>
+          <a href="#docs" size="lg">
             <span class="sidebar-brand-mark" aria-hidden="true">D</span>
             <span class="sidebar-brand-copy">
               <strong>Documentation</strong>
@@ -32,14 +32,9 @@
             </span>
           </a>
         </header>
-        <nav class="sidebar-content">
-          <details
-            open
-            class="collapsible sidebar-group sidebar-group-collapsible"
-          >
-            <summary
-              class="sidebar-group-label sidebar-collapsible-trigger"
-            >
+        <nav>
+          <details open class="collapsible">
+            <summary>
               Help
               <svg
                 viewBox="0 0 24 24"
@@ -51,57 +46,50 @@
                 <path d="m6 9 6 6 6-6"></path>
               </svg>
             </summary>
-              <div class="collapsible-content">
-                <div class="sidebar-group-content">
-                  <ul class="sidebar-menu">
-                    <li class="sidebar-menu-item">
-                      <a href="#support" class="sidebar-menu-button">
-                        <svg
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          aria-hidden="true"
-                        >
-                          <circle cx="12" cy="12" r="9"></circle>
-                          <path
-                            d="M8.5 8.5 6 6m9.5 2.5L18 6m-9.5 9.5L6 18m9.5-2.5L18 18"
-                          ></path>
-                        </svg>
-                        <span>Support</span>
-                      </a>
-                    </li>
-                    <li class="sidebar-menu-item">
-                      <a href="#feedback" class="sidebar-menu-button">
-                        <svg
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          aria-hidden="true"
-                        >
-                          <path d="m22 2-7 20-4-9-9-4zM22 2 11 13"></path>
-                        </svg>
-                        <span>Feedback</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+            <div>
+              <ul>
+                <li>
+                  <a href="#support">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      aria-hidden="true"
+                    >
+                      <circle cx="12" cy="12" r="9"></circle>
+                      <path
+                        d="M8.5 8.5 6 6m9.5 2.5L18 6m-9.5 9.5L6 18m9.5-2.5L18 18"
+                      ></path>
+                    </svg>
+                    <span>Support</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#feedback">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      aria-hidden="true"
+                    >
+                      <path d="m22 2-7 20-4-9-9-4zM22 2 11 13"></path>
+                    </svg>
+                    <span>Feedback</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </details>
-          <section class="sidebar-group">
-            <h3 class="sidebar-group-label">Guide</h3>
-            <div class="sidebar-group-content">
-              <ul class="sidebar-menu">
-                <li class="sidebar-menu-item">
-                  <details
-                    open
-                    class="collapsible sidebar-menu-collapsible"
-                  >
-                  <summary class="sidebar-menu-button">
+          <section>
+            <h3>Guide</h3>
+            <ul>
+              <li>
+                <details open class="collapsible">
+                  <summary>
                     <span>Getting Started</span>
                     <svg
-                      class="sidebar-collapsible-chevron"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -111,31 +99,25 @@
                       <path d="m9 18 6-6-6-6"></path>
                     </svg>
                   </summary>
-                  <div class="collapsible-content">
-                    <ul class="sidebar-menu-sub">
-                      <li class="sidebar-menu-sub-item">
-                        <a href="#installation" class="sidebar-menu-sub-button"
-                          >Installation</a
-                        >
+                  <div>
+                    <ul>
+                      <li>
+                        <a href="#installation">Installation</a>
                       </li>
-                      <li class="sidebar-menu-sub-item">
-                        <a
-                          data-active="true"
-                          href="#structure"
-                          class="sidebar-menu-sub-button"
+                      <li>
+                        <a aria-current="page" href="#structure"
                           >Project Structure</a
                         >
                       </li>
                     </ul>
                   </div>
-                  </details>
-                </li>
-                <li class="sidebar-menu-item">
-                  <details class="collapsible sidebar-menu-collapsible">
-                  <summary class="sidebar-menu-button">
+                </details>
+              </li>
+              <li>
+                <details class="collapsible">
+                  <summary>
                     <span>Build Your Application</span>
                     <svg
-                      class="sidebar-collapsible-chevron"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -145,33 +127,26 @@
                       <path d="m9 18 6-6-6-6"></path>
                     </svg>
                   </summary>
-                  <div class="collapsible-content">
-                    <ul class="sidebar-menu-sub">
-                      <li class="sidebar-menu-sub-item">
-                        <a href="#routing" class="sidebar-menu-sub-button"
-                          >Routing</a
-                        >
+                  <div>
+                    <ul>
+                      <li>
+                        <a href="#routing">Routing</a>
                       </li>
-                      <li class="sidebar-menu-sub-item">
-                        <a href="#data" class="sidebar-menu-sub-button"
-                          >Data Fetching</a
-                        >
+                      <li>
+                        <a href="#data">Data Fetching</a>
                       </li>
-                      <li class="sidebar-menu-sub-item">
-                        <a href="#rendering" class="sidebar-menu-sub-button"
-                          >Rendering</a
-                        >
+                      <li>
+                        <a href="#rendering">Rendering</a>
                       </li>
                     </ul>
                   </div>
-                  </details>
-                </li>
-                <li class="sidebar-menu-item">
-                  <details class="collapsible sidebar-menu-collapsible">
-                  <summary class="sidebar-menu-button">
+                </details>
+              </li>
+              <li>
+                <details class="collapsible">
+                  <summary>
                     <span>API Reference</span>
                     <svg
-                      class="sidebar-collapsible-chevron"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -181,28 +156,23 @@
                       <path d="m9 18 6-6-6-6"></path>
                     </svg>
                   </summary>
-                  <div class="collapsible-content">
-                    <ul class="sidebar-menu-sub">
-                      <li class="sidebar-menu-sub-item">
-                        <a href="#components" class="sidebar-menu-sub-button"
-                          >Components</a
-                        >
+                  <div>
+                    <ul>
+                      <li>
+                        <a href="#components">Components</a>
                       </li>
-                      <li class="sidebar-menu-sub-item">
-                        <a href="#functions" class="sidebar-menu-sub-button"
-                          >Functions</a
-                        >
+                      <li>
+                        <a href="#functions">Functions</a>
                       </li>
                     </ul>
                   </div>
-                  </details>
-                </li>
-              </ul>
-            </div>
+                </details>
+              </li>
+            </ul>
           </section>
         </nav>
       </aside>
-      <main class="sidebar-collapsible-inset sidebar-inset">
+      <main class="sidebar-collapsible-inset">
         <span class="sidebar-dashboard-kicker">Composition</span>
         <h1>Collapsible navigation</h1>
         <p>

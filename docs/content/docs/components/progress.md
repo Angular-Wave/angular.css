@@ -10,9 +10,14 @@ Use native `progress`. Compose its label and value with native `label` and
 
 ```html
 <div class="progress-group">
-  <label id="upload-progress-label" class="progress-label">Upload progress</label>
-  <output class="progress-value">56%</output>
-  <progress class="progress" value="56" max="100" aria-labelledby="upload-progress-label"></progress>
+  <label id="upload-progress-label">Upload progress</label>
+  <output>56%</output>
+  <progress
+    class="progress"
+    value="56"
+    max="100"
+    aria-labelledby="upload-progress-label"
+  ></progress>
 </div>
 ```
 

@@ -9,8 +9,8 @@ Use `class="avatar"` with optional image, fallback, badge, and group parts.
 
 ```html
 <span class="avatar">
-  <span class="avatar-fallback">JD</span>
-  <span class="avatar-badge"></span>
+  <span>JD</span>
+  <output></output>
 </span>
 ```
 

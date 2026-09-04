@@ -10,10 +10,10 @@ link, and content parts.
 
 ```html
 <nav class="navigation-menu">
-  <ul class="navigation-menu-list">
-    <li class="navigation-menu-item">
-      <button class="navigation-menu-trigger">Components</button>
-      <section class="navigation-menu-content">Links</section>
+  <ul>
+    <li>
+      <button>Components</button>
+      <section>Links</section>
     </li>
   </ul>
 </nav>

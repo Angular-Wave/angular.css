@@ -12,7 +12,7 @@
   <body ng-app="ui" ng-cloak>
     <ul style="max-width: 32rem" class="item-group">
       <li variant="outline" id="outline-item" class="item">
-        <div variant="icon" class="item-media">
+        <figure variant="icon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -26,36 +26,30 @@
               d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
             />
           </svg>
-        </div>
-        <section class="item-content">
-          <h3 class="item-title">Profile verified</h3>
-          <p class="item-description">
-            Your public display name and email have been confirmed.
-          </p>
+        </figure>
+        <section>
+          <h3>Profile verified</h3>
+          <p>Your public display name and email have been confirmed.</p>
         </section>
-        <menu class="item-actions">
+        <menu>
           <button variant="outline" size="sm" class="button">Review</button>
         </menu>
       </li>
-      <li variant="muted" data-size="sm" id="compact-item" class="item">
-        <section class="item-content">
-          <h3 class="item-title">Scheduled reports</h3>
-          <p class="item-description">
-            Weekly snapshots are ready for your team.
-          </p>
+      <li variant="muted" size="sm" id="compact-item" class="item">
+        <section>
+          <h3>Scheduled reports</h3>
+          <p>Weekly snapshots are ready for your team.</p>
         </section>
-        <menu class="item-actions">
+        <menu>
           <span variant="secondary" class="badge">New</span>
         </menu>
       </li>
       <li aria-disabled="true" id="disabled-item" class="item">
-        <section class="item-content">
-          <h3 class="item-title">Archived workspace</h3>
-          <p class="item-description">
-            This workspace is retained for audit history.
-          </p>
+        <section>
+          <h3>Archived workspace</h3>
+          <p>This workspace is retained for audit history.</p>
         </section>
-        <menu class="item-actions">
+        <menu>
           <button variant="outline" size="sm" disabled class="button">
             Restore
           </button>

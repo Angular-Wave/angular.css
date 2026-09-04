@@ -1,4 +1,4 @@
-.sidebar-layout {
+:where(body, div, section):has(> :is(.sidebar, [ng-sidebar])) {
   display: flex;
   min-height: 100%;
   background: var(--sidebar);
@@ -16,35 +16,33 @@
   color: var(--sidebar-foreground);
 }
 
-.sidebar[data-direction="rtl"],
-[ng-sidebar][data-direction="rtl"] {
+:is(.sidebar, [ng-sidebar]):dir(rtl) {
   border-inline-start: 1px solid var(--sidebar-border);
   border-inline-end: 0;
 }
 
-.sidebar[data-state="collapsed"],
-[ng-sidebar][data-state="collapsed"] {
+:is(.sidebar, [ng-sidebar])[collapsed] {
   width: 0;
   min-width: 0;
   overflow: hidden;
   border: 0;
 }
 
-.sidebar-inset {
+:is(.sidebar, [ng-sidebar]) + main,
+main:has(+ :is(.sidebar, [ng-sidebar])) {
   min-width: 0;
   flex: 1 1 auto;
   background: var(--background);
   color: var(--foreground);
 }
 
-.sidebar-header,
-.sidebar-footer {
+:is(.sidebar, [ng-sidebar]) :is(header, footer) {
   display: grid;
   gap: calc(var(--spacing) * 2);
   padding: calc(var(--spacing) * 3);
 }
 
-.sidebar-content {
+:is(.sidebar, [ng-sidebar]) nav {
   display: grid;
   align-content: start;
   gap: calc(var(--spacing) * 4);
@@ -53,12 +51,13 @@
   padding: calc(var(--spacing) * 2);
 }
 
-.sidebar-group {
+:is(.sidebar, [ng-sidebar]) nav > section {
+  position: relative;
   display: grid;
   gap: calc(var(--spacing) * 1);
 }
 
-.sidebar-group-label {
+:is(.sidebar, [ng-sidebar]) nav > section > :is(h1, h2, h3, h4, h5, h6) {
   color: var(--sidebar-foreground);
   opacity: 0.65;
   padding: calc(var(--spacing) * 2);
@@ -66,25 +65,21 @@
   font-weight: var(--font-weight-medium);
 }
 
-.sidebar-group-content {
-  min-width: 0;
+:is(.sidebar, [ng-sidebar]) > button {
+  display: inline-flex;
+  width: calc(var(--spacing) * 1);
+  align-items: center;
+  justify-content: center;
+  background: var(--sidebar-border);
 }
 
-.sidebar-group-action,
-.sidebar-menu-action {
-  display: inline-grid;
-  width: calc(var(--spacing) * 7);
-  height: calc(var(--spacing) * 7);
-  place-items: center;
-  border-radius: calc(var(--radius) - 2px);
-  color: var(--sidebar-foreground);
+:is(.sidebar, [ng-sidebar]) nav > section > button {
+  position: absolute;
+  inset-block-start: calc(var(--spacing) * 1);
+  inset-inline-end: 0;
 }
 
-.sidebar-group-action {
-  justify-self: end;
-}
-
-.sidebar-menu {
+:is(.sidebar, [ng-sidebar]) ul {
   display: grid;
   gap: calc(var(--spacing) * 1);
   margin: 0;
@@ -92,12 +87,22 @@
   list-style: none;
 }
 
-.sidebar-menu-item {
+:is(.sidebar, [ng-sidebar]) li {
   position: relative;
   min-width: 0;
 }
 
-.sidebar-menu-button {
+:is(.sidebar, [ng-sidebar]) nav li > :is(a, button, details) + button,
+:is(.sidebar, [ng-sidebar]) nav li > output {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: calc(var(--spacing) * 1.5);
+  transform: translateY(-50%);
+}
+
+:is(.sidebar, [ng-sidebar]) li > :is(a, button, details > summary),
+:is(.sidebar, [ng-sidebar]) :is(header, footer) > :is(a, button),
+:is(.sidebar, [ng-sidebar]) :is(header, footer) > [ng-dropdown] > button {
   display: flex;
   width: 100%;
   min-height: calc(var(--spacing) * 8);
@@ -111,68 +116,32 @@
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
   text-align: start;
+  text-decoration: none;
 }
 
-.sidebar-menu-button:hover,
-.sidebar-menu-button[data-active="true"] {
+:is(.sidebar, [ng-sidebar])
+  :is(header, footer, nav)
+  :is(a, button, summary):is(:hover, [aria-current="page"]) {
   background: var(--sidebar-accent);
   color: var(--sidebar-accent-foreground);
 }
 
-.sidebar-menu-action,
-.sidebar-menu-badge {
-  position: absolute;
-  inset-block-start: 50%;
-  inset-inline-end: calc(var(--spacing) * 1.5);
-  transform: translateY(-50%);
-}
-
-.sidebar-menu-badge {
+:is(.sidebar, [ng-sidebar]) nav li > output {
   color: var(--sidebar-foreground);
   font-size: var(--text-xs);
   font-variant-numeric: tabular-nums;
 }
 
-.sidebar-menu-sub {
-  display: grid;
-  gap: calc(var(--spacing) * 1);
+:is(.sidebar, [ng-sidebar]) nav li > ul,
+:is(.sidebar, [ng-sidebar]) nav li > details > ul {
   margin-inline-start: calc(var(--spacing) * 4);
   border-inline-start: 1px solid var(--sidebar-border);
   padding-inline-start: calc(var(--spacing) * 3);
-  list-style: none;
 }
 
-.sidebar-menu-sub-button {
-  display: flex;
+:is(.sidebar, [ng-sidebar]) nav li > ul a,
+:is(.sidebar, [ng-sidebar]) nav li > details > ul a {
   min-height: calc(var(--spacing) * 7);
-  align-items: center;
-  border-radius: calc(var(--radius) - 2px);
-  color: var(--sidebar-foreground);
   padding: calc(var(--spacing) * 1.5) calc(var(--spacing) * 2);
   font-size: var(--text-sm);
-}
-
-.sidebar-menu-sub-button:hover,
-.sidebar-menu-sub-button[data-active="true"] {
-  background: var(--sidebar-accent);
-  color: var(--sidebar-accent-foreground);
-}
-
-.sidebar-trigger,
-.sidebar-rail {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.sidebar-rail {
-  width: calc(var(--spacing) * 1);
-  background: var(--sidebar-border);
-}
-
-.sidebar[data-direction="rtl"] .sidebar-rail,
-[ng-sidebar][data-direction="rtl"]
-  [ng-sidebar][data-direction="rtl"]
-  .sidebar-rail {
-  order: -1;
 }

@@ -21,58 +21,43 @@
         </header>
         <div class="navigation-menu-workflow-actions">
           <button
-
             type="button"
             variant="outline"
-            ng-click="navigationWorkflow.controlled=!navigationWorkflow.controlled" class="button">
+            ng-click="navigationWorkflow.controlled=!navigationWorkflow.controlled"
+            class="button"
+          >
             Toggle controlled panel
           </button>
         </div>
         <nav ng-navigation-menu aria-label="Controlled navigation">
-          <ul class="navigation-menu-list">
-            <li class="navigation-menu-item">
-              <button type="button" class="navigation-menu-trigger">
-                Resources
-              </button>
-              <section
-                ng-if="!navigationWorkflow.controlled"
-
-               class="navigation-menu-content">
-                <ul
-                  class="navigation-menu-content-list navigation-menu-intro-list"
-                >
-                  <li><a href="#guides" class="navigation-menu-link">Guides</a></li>
+          <ul>
+            <li>
+              <button type="button">Resources</button>
+              <section ng-if="!navigationWorkflow.controlled">
+                <ul>
+                  <li><a href="#guides">Guides</a></li>
                   <li>
-                    <a href="#api" class="navigation-menu-link">API reference</a>
+                    <a href="#api">API reference</a>
                   </li>
                 </ul>
               </section>
-              <section
-                ng-if="navigationWorkflow.controlled"
-
-                data-open="true"
-               class="navigation-menu-content">
-                <ul
-                  class="navigation-menu-content-list navigation-menu-intro-list"
-                >
-                  <li><a href="#guides" class="navigation-menu-link">Guides</a></li>
+              <section ng-if="navigationWorkflow.controlled" open>
+                <ul>
+                  <li><a href="#guides">Guides</a></li>
                   <li>
-                    <a href="#api" class="navigation-menu-link">API reference</a>
+                    <a href="#api">API reference</a>
                   </li>
                 </ul>
               </section>
-              <span aria-hidden="true" class="navigation-menu-indicator"></span>
             </li>
-            <li class="navigation-menu-item">
-              <button type="button" disabled class="navigation-menu-trigger">
-                Disabled
-              </button>
-              <section class="navigation-menu-content">
-                <a href="#unavailable" class="navigation-menu-link">Unavailable</a>
+            <li>
+              <button type="button" disabled>Disabled</button>
+              <section>
+                <a href="#unavailable">Unavailable</a>
               </section>
             </li>
-            <li class="navigation-menu-item">
-              <a href="#pricing" class="navigation-menu-link">Pricing</a>
+            <li>
+              <a href="#pricing">Pricing</a>
             </li>
           </ul>
         </nav>
@@ -84,64 +69,50 @@
         </header>
         <div class="navigation-menu-workflow-actions">
           <button
-
             type="button"
             variant="outline"
-            ng-click="navigationWorkflow.showMenu=true" class="button">
+            ng-click="navigationWorkflow.showMenu=true"
+            class="button"
+          >
             Add company menu
           </button>
           <button
-
             type="button"
             variant="outline"
-            ng-click="navigationWorkflow.showLink=true" class="button">
+            ng-click="navigationWorkflow.showLink=true"
+            class="button"
+          >
             Add careers link
           </button>
         </div>
         <nav ng-navigation-menu aria-label="Dynamic navigation">
-          <ul class="navigation-menu-list">
-            <li class="navigation-menu-item">
-              <button type="button" class="navigation-menu-trigger">Product</button>
-              <section class="navigation-menu-content">
-                <ul
-                  class="navigation-menu-content-list navigation-menu-intro-list"
-                >
+          <ul>
+            <li>
+              <button type="button">Product</button>
+              <section>
+                <ul>
                   <li>
-                    <a href="#overview" class="navigation-menu-link">Overview</a>
+                    <a href="#overview">Overview</a>
                   </li>
                   <li ng-if="navigationWorkflow.showLink">
-                    <a
-
-                      id="dynamic-careers-link"
-                      href="#careers"
-                     class="navigation-menu-link">
-                      Careers
-                    </a>
+                    <a id="dynamic-careers-link" href="#careers"> Careers </a>
                   </li>
                 </ul>
               </section>
-              <span aria-hidden="true" class="navigation-menu-indicator"></span>
             </li>
-            <li
-              ng-if="navigationWorkflow.showMenu"
-
-              id="dynamic-company-menu"
-             class="navigation-menu-item">
-              <button type="button" class="navigation-menu-trigger">Company</button>
-              <section class="navigation-menu-content">
-                <ul
-                  class="navigation-menu-content-list navigation-menu-intro-list"
-                >
-                  <li><a href="#about" class="navigation-menu-link">About</a></li>
+            <li ng-if="navigationWorkflow.showMenu" id="dynamic-company-menu">
+              <button type="button">Company</button>
+              <section>
+                <ul>
+                  <li><a href="#about">About</a></li>
                   <li>
-                    <a href="#contact" class="navigation-menu-link">Contact</a>
+                    <a href="#contact">Contact</a>
                   </li>
                 </ul>
               </section>
-              <span aria-hidden="true" class="navigation-menu-indicator"></span>
             </li>
-            <li class="navigation-menu-item">
-              <a href="#support" class="navigation-menu-link">Support</a>
+            <li>
+              <a href="#support">Support</a>
             </li>
           </ul>
         </nav>

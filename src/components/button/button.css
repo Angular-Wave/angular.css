@@ -24,11 +24,11 @@ a.button {
     transform 80ms ease;
 }
 
-:is(button, input[type="button"], a).button:has(> [data-icon="inline-start"]) {
+:is(button, input[type="button"], a).button:has(> [icon="inline-start"]) {
   padding-inline-start: calc(var(--spacing) * 2);
 }
 
-:is(button, input[type="button"], a).button:has(> [data-icon="inline-end"]) {
+:is(button, input[type="button"], a).button:has(> [icon="inline-end"]) {
   padding-inline-end: calc(var(--spacing) * 2);
 }
 

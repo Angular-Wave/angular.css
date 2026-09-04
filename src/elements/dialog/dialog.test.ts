@@ -19,8 +19,8 @@ test("element dialog page uses the packaged canonical implementation", async ({
   expect(sourceRequests).toEqual([]);
 
   const root = page.locator(".dialog");
-  const trigger = root.locator(".dialog-trigger");
-  const content = root.locator(".dialog-content");
+  const trigger = root.locator(":scope > button:first-child");
+  const content = root.locator(":scope > dialog");
   await expect(content).toBeHidden();
   await trigger.click();
   await expect(content).toBeVisible();

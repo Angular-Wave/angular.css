@@ -18,14 +18,14 @@
     data-example="data-picker-with-dropdowns"
   >
     <main class="date-picker-dropdown-demo visual-example">
-      <fieldset class="date-picker-dropdown-field field">
-        <label for="date-picker-with-dropdowns" class="field-label">Date</label>
+      <div class="date-picker-dropdown-field field">
+        <label for="date-picker-with-dropdowns">Date</label>
         <span id="date-picker-dropdown-popover" class="popover">
           <button
             id="date-picker-with-dropdowns"
             type="button"
             variant="outline"
-            class="date-picker-trigger date-picker-trigger-between popover-trigger button"
+            class="date-picker-trigger date-picker-trigger-between button"
             popovertarget="popover-date-picker-with-dropdowns-1-content"
           >
             <span
@@ -43,11 +43,11 @@
             </svg>
           </button>
           <aside
-            class="calendar-popover-content date-picker-dropdown-content popover-content"
+            class="calendar-popover-content date-picker-dropdown-content"
             aria-label="Choose a date with dropdowns"
             id="popover-date-picker-with-dropdowns-1-content"
-            data-side="bottom"
-            data-align="start"
+            side="bottom"
+            align="start"
             popover
           >
             <section
@@ -60,13 +60,13 @@
               ng-attr-data-value="{{ picker.dropdownDate }}"
               ng-on-angularcss:calendar-select="picker.selectDropdown($event.detail.value)"
             >
-              <header class="calendar-header">
+              <header>
                 <button
                   type="button"
                   size="icon"
                   variant="ghost"
                   aria-label="Previous dropdown month"
-                  class="calendar-previous button"
+                  class="button"
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -78,13 +78,13 @@
                     <path d="m15 18-6-6 6-6"></path>
                   </svg>
                 </button>
-                <h3 class="calendar-title"></h3>
+                <h3></h3>
                 <button
                   type="button"
                   size="icon"
                   variant="ghost"
                   aria-label="Next dropdown month"
-                  class="calendar-next button"
+                  class="button"
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -97,7 +97,7 @@
                   </svg>
                 </button>
               </header>
-              <div class="calendar-grid"></div>
+              <div></div>
             </section>
             <footer class="date-picker-dropdown-footer">
               <button
@@ -112,7 +112,7 @@
             </footer>
           </aside>
         </span>
-      </fieldset>
+      </div>
     </main>
   </body>
 </html>

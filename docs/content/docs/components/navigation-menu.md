@@ -10,10 +10,10 @@ link, and content parts.
 
 ```html
 <nav class="navigation-menu">
-  <ul class="navigation-menu-list">
-    <li class="navigation-menu-item">
-      <button class="navigation-menu-trigger">Components</button>
-      <section class="navigation-menu-content">Links</section>
+  <ul>
+    <li>
+      <button>Components</button>
+      <section>Links</section>
     </li>
   </ul>
 </nav>
@@ -40,7 +40,7 @@ This component's root directive is `[ng-navigation-menu]`. Importing the package
 
 ### Semantic structure
 
-Use a native `nav` containing one direct list. Each list item may contain either a native link or a native button trigger followed by flyout content. The root directive inspects descendants through navigation-menu part classes; no child directives are required.
+Use a native `nav` containing one direct list. Each list item may contain either a native link or a native button trigger followed by a semantic section. The root directive needs no child directives or anatomy classes.
 
 ## API
 
@@ -50,10 +50,9 @@ Use a native `nav` containing one direct list. Each list item may contain either
 | --- | --- | --- |
 | `align` | Input | Cross-axis alignment: `start`, `center`, or `end`. |
 | `aria-hidden` | Input | ARIA relationship or state. |
-| `data-open` | Input | Stable component state or styling hook. |
-| `data-state` | Input | Stable component state or styling hook. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
 | `disabled` | Input | Disables native or component interaction. |
+| `open` | Input | Initial or controlled open state. |
 | `role` | Input | Explicit semantic role when native HTML does not provide one. |
 
 `Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.

@@ -18,28 +18,53 @@
       <section class="dialog-workflow" aria-labelledby="share-heading">
         <h2 id="share-heading">Custom close action</h2>
         <div id="share-dialog" class="dialog">
-          <button variant="outline" class="dialog-trigger button" type="button" commandfor="share-dialog-content" command="show-modal">Share</button>
-          <dialog class="dialog-content" id="share-dialog-content" closedby="any" aria-labelledby="share-dialog-title" aria-describedby="share-dialog-description">
-            <header class="dialog-header">
-              <h3 class="dialog-title" id="share-dialog-title">Share link</h3>
-              <p class="dialog-description" id="share-dialog-description">
+          <button
+            variant="outline"
+            class="button"
+            type="button"
+            commandfor="share-dialog-content"
+            command="show-modal"
+          >
+            Share
+          </button>
+          <dialog
+            id="share-dialog-content"
+            closedby="any"
+            aria-labelledby="share-dialog-title"
+            aria-describedby="share-dialog-description"
+          >
+            <header>
+              <h3 id="share-dialog-title">Share link</h3>
+              <p id="share-dialog-description">
                 Anyone who has this link will be able to view this project.
               </p>
             </header>
             <div class="dialog-copy-row">
               <input
-
                 aria-label="Share URL"
                 value="https://example.com/link/to/document"
-                readonly class="input" />
+                readonly
+                class="input"
+              />
               <button variant="secondary" class="button">Copy Link</button>
             </div>
-            <footer class="dialog-footer">
-              <button variant="outline" class="button" commandfor="share-dialog-content" command="close">
+            <footer>
+              <button
+                variant="outline"
+                class="button"
+                commandfor="share-dialog-content"
+                command="close"
+              >
                 Close
               </button>
             </footer>
-            <button variant="ghost" size="icon-sm" class="dialog-close button" commandfor="share-dialog-content" command="close">
+            <button
+              variant="ghost"
+              size="icon-sm"
+              class="button"
+              commandfor="share-dialog-content"
+              command="close"
+            >
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -59,19 +84,36 @@
       <section class="dialog-workflow" aria-labelledby="plain-heading">
         <h2 id="plain-heading">Without corner close</h2>
         <div id="plain-dialog" class="dialog">
-          <button variant="outline" class="dialog-trigger button" type="button" commandfor="plain-dialog-content" command="show-modal">
+          <button
+            variant="outline"
+            class="button"
+            type="button"
+            commandfor="plain-dialog-content"
+            command="show-modal"
+          >
             Open dialog
           </button>
-          <dialog class="dialog-content" id="plain-dialog-content" closedby="any" aria-labelledby="plain-dialog-title" aria-describedby="plain-dialog-description">
-            <header class="dialog-header">
-              <h3 class="dialog-title" id="plain-dialog-title">Terms of service</h3>
-              <p class="dialog-description" id="plain-dialog-description">
+          <dialog
+            id="plain-dialog-content"
+            closedby="any"
+            aria-labelledby="plain-dialog-title"
+            aria-describedby="plain-dialog-description"
+          >
+            <header>
+              <h3 id="plain-dialog-title">Terms of service</h3>
+              <p id="plain-dialog-description">
                 Review the current terms before continuing.
               </p>
             </header>
             <p>Your workspace data remains available to members with access.</p>
-            <footer class="dialog-footer">
-              <button class="button" commandfor="plain-dialog-content" command="close">Continue</button>
+            <footer>
+              <button
+                class="button"
+                commandfor="plain-dialog-content"
+                command="close"
+              >
+                Continue
+              </button>
             </footer>
           </dialog>
         </div>

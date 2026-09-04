@@ -11,7 +11,7 @@
   </head>
   <body ng-app="ui" ng-cloak>
     <section ng-calendar aria-label="May 2026">
-      <header class="calendar-header">
+      <header>
         <button
           size="icon"
           variant="outline"
@@ -20,7 +20,7 @@
         >
           &lt;
         </button>
-        <h3 class="calendar-title">May 2026</h3>
+        <h3>May 2026</h3>
         <button
           size="icon"
           variant="outline"
@@ -30,51 +30,21 @@
           &gt;
         </button>
       </header>
-      <div class="calendar-grid">
-        <span class="calendar-weekday">Su</span>
-        <span class="calendar-weekday">Mo</span>
-        <span class="calendar-weekday">Tu</span>
-        <span class="calendar-weekday">We</span>
-        <span class="calendar-weekday">Th</span>
-        <span class="calendar-weekday">Fr</span>
-        <span class="calendar-weekday">Sa</span>
-        <button
-          data-outside="true"
-          data-value="2026-04-26"
-          class="calendar-day"
-        >
-          26
-        </button>
-        <button
-          data-outside="true"
-          data-value="2026-04-27"
-          class="calendar-day"
-        >
-          27
-        </button>
-        <button
-          data-outside="true"
-          data-value="2026-04-28"
-          class="calendar-day"
-        >
-          28
-        </button>
-        <button
-          data-outside="true"
-          data-value="2026-04-29"
-          class="calendar-day"
-        >
-          29
-        </button>
-        <button
-          data-outside="true"
-          data-value="2026-04-30"
-          class="calendar-day"
-        >
-          30
-        </button>
-        <button data-value="2026-05-01" class="calendar-day">1</button>
-        <button data-value="2026-05-02" class="calendar-day">2</button>
+      <div>
+        <abbr>Su</abbr>
+        <abbr>Mo</abbr>
+        <abbr>Tu</abbr>
+        <abbr>We</abbr>
+        <abbr>Th</abbr>
+        <abbr>Fr</abbr>
+        <abbr>Sa</abbr>
+        <button data-outside="true" value="2026-04-26">26</button>
+        <button data-outside="true" value="2026-04-27">27</button>
+        <button data-outside="true" value="2026-04-28">28</button>
+        <button data-outside="true" value="2026-04-29">29</button>
+        <button data-outside="true" value="2026-04-30">30</button>
+        <button value="2026-05-01">1</button>
+        <button value="2026-05-02">2</button>
       </div>
     </section>
   </body>

@@ -19,9 +19,9 @@ Use AngularTS for values, commands, collections, and conditional rendering:
 <output>{{ volume }}</output>
 ```
 
-`ng-model` owns the value. The slider directive mirrors native min, max,
-orientation, invalid state, and the current value into accessibility and styling
-attributes.
+`ng-model` owns the value. The slider directive reads native min, max, value,
+disabled, and invalid state while CSS uses the native controls and a small set
+of geometry variables.
 
 ## Native HTML owns platform behavior
 
@@ -36,7 +36,7 @@ AngularCSS may manage:
 - Trigger and panel relationships.
 - Composite keyboard navigation and roving focus.
 - Modal focus trapping, Escape closure, and focus restoration.
-- Mirrored `data-*` and ARIA state.
+- Required ARIA relationships and state when native HTML cannot express them.
 - Component-specific DOM events.
 
 AngularCSS does not own:
@@ -48,10 +48,10 @@ AngularCSS does not own:
 
 ## Controlled state
 
-Some components observe authored `data-open`, `aria-selected`, or related state.
-Use AngularTS bindings to update those attributes when application code must
-control the component. The component reference marks attributes as input,
-output, or input/output.
+Some components observe concise authored attributes such as `open`, `collapsed`,
+or native/ARIA state such as `aria-selected`. Use AngularTS bindings to update
+those attributes when application code must control the component. The component
+reference marks attributes as input, output, or input/output.
 
 ## Directive names
 

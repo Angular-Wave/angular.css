@@ -12,15 +12,11 @@
   <body ng-app="ui" ng-cloak data-example="pagination-demo">
     <main class="pagination-demo visual-example">
       <nav aria-label="pagination" class="pagination">
-        <ul class="pagination-content">
-          <li class="pagination-item">
-            <a
-
-              href="#previous"
-              aria-label="Go to previous page"
-             class="pagination-previous">
+        <ul>
+          <li>
+            <a href="#previous" rel="prev" aria-label="Go to previous page">
               <svg
-                data-icon="inline-start"
+                icon="inline-start"
                 aria-hidden="true"
                 viewBox="0 0 24 24"
                 fill="none"
@@ -29,38 +25,33 @@
               >
                 <path d="m15 18-6-6 6-6"></path>
               </svg>
-              <span class="pagination-previous-text">Previous</span>
+              <span>Previous</span>
             </a>
           </li>
-          <li class="pagination-item">
-            <a href="#page-1" class="pagination-link">1</a>
+          <li>
+            <a href="#page-1">1</a>
           </li>
-          <li class="pagination-item">
-            <a href="#page-2" aria-current="page"
-               class="pagination-link">2</a>
+          <li>
+            <a href="#page-2" aria-current="page">2</a>
           </li>
-          <li class="pagination-item">
-            <a href="#page-3" class="pagination-link">3</a>
+          <li>
+            <a href="#page-3">3</a>
           </li>
-          <li class="pagination-item">
-            <span aria-hidden="true" class="pagination-ellipsis">
+          <li>
+            <span aria-hidden="true">
               <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
                 <circle cx="5" cy="12" r="1.5"></circle>
                 <circle cx="12" cy="12" r="1.5"></circle>
                 <circle cx="19" cy="12" r="1.5"></circle>
               </svg>
-              <span class="pagination-sr-only">More pages</span>
+              <span>More pages</span>
             </span>
           </li>
-          <li class="pagination-item">
-            <a
-
-              href="#next"
-              aria-label="Go to next page"
-             class="pagination-next">
-              <span class="pagination-next-text">Next</span>
+          <li>
+            <a href="#next" rel="next" aria-label="Go to next page">
+              <span>Next</span>
               <svg
-                data-icon="inline-end"
+                icon="inline-end"
                 aria-hidden="true"
                 viewBox="0 0 24 24"
                 fill="none"

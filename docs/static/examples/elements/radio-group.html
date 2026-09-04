@@ -15,40 +15,40 @@
     ng-init="density='comfortable'"
     data-example="radio-group-demo"
   >
-    <fieldset class="radio-group-demo visual-example">
+    <fieldset class="radio-group-demo visual-example radio-group">
       <legend class="visually-hidden">Density</legend>
-      <fieldset aria-label="Density" class="radio-group">
-        <div orientation="horizontal" class="field">
-          <input
 
-            id="density-default"
-            name="density"
-            type="radio"
-            value="default"
-            ng-model="density"  class="radio-group-item"/>
-          <label for="density-default" class="label">Default</label>
-        </div>
-        <div orientation="horizontal" class="field">
-          <input
+      <div orientation="horizontal" class="field">
+        <input
+          id="density-default"
+          name="density"
+          type="radio"
+          value="default"
+          ng-model="density"
+        />
+        <label for="density-default">Default</label>
+      </div>
+      <div orientation="horizontal" class="field">
+        <input
+          id="density-comfortable"
+          name="density"
+          type="radio"
+          value="comfortable"
+          ng-model="density"
+        />
+        <label for="density-comfortable">Comfortable</label>
+      </div>
+      <div orientation="horizontal" class="field">
+        <input
+          id="density-compact"
+          name="density"
+          type="radio"
+          value="compact"
+          ng-model="density"
+        />
+        <label for="density-compact">Compact</label>
+      </div>
 
-            id="density-comfortable"
-            name="density"
-            type="radio"
-            value="comfortable"
-            ng-model="density"  class="radio-group-item"/>
-          <label for="density-comfortable" class="label">Comfortable</label>
-        </div>
-        <div orientation="horizontal" class="field">
-          <input
-
-            id="density-compact"
-            name="density"
-            type="radio"
-            value="compact"
-            ng-model="density"  class="radio-group-item"/>
-          <label for="density-compact" class="label">Compact</label>
-        </div>
-      </fieldset>
       <div class="output visually-hidden" aria-live="polite">
         Selected: <span ng-bind="density"></span>
       </div>

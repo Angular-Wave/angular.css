@@ -17,10 +17,10 @@
     class="slider-example-body"
   >
     <main class="slider-demo visual-example">
-      <div class="slider-label-row">
-        <label for="volume" class="label">Volume</label>
+      <header>
+        <label for="volume">Volume</label>
         <output for="volume">{{ volume }}</output>
-      </div>
+      </header>
       <input
         ng-slider
         id="volume"
@@ -31,10 +31,10 @@
         ng-model="volume"
       />
 
-      <div class="slider-label-row">
-        <label for="volume-disabled" class="label">Muted</label>
+      <header>
+        <label for="volume-disabled">Muted</label>
         <output for="volume-disabled">50</output>
-      </div>
+      </header>
       <input
         ng-slider
         id="volume-disabled"

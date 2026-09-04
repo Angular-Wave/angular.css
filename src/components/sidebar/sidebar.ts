@@ -6,11 +6,10 @@ type SidebarScope = ng.Scope;
 let sidebarIdCounter = 0;
 
 const selectors = {
-  group: ".sidebar-group",
-  groupAction: ".sidebar-group-action",
-  groupLabel: ".sidebar-group-label",
-  menuAction: ".sidebar-menu-action",
-  menuButton: ".sidebar-menu-button",
+  group: ":scope > nav > section",
+  groupLabel: ":scope > :is(h1, h2, h3, h4, h5, h6)",
+  menuButton:
+    ":scope > nav li > :is(a, button, summary), :scope > :is(header, footer) > :is(a, button), :scope > :is(header, footer) > [ng-dropdown] > button",
 };
 
 const sidebarOptions = {
@@ -18,9 +17,6 @@ const sidebarOptions = {
   side: new Set(["left", "right"]),
   variant: new Set(["floating", "inset", "sidebar"]),
 };
-
-const getDataState = (collapsed: boolean): "collapsed" | "expanded" =>
-  collapsed ? "collapsed" : "expanded";
 
 const setAttributeIfChanged = (
   element: HTMLElement,
@@ -39,28 +35,10 @@ export function sidebarDirective(): ng.Directive {
   return {
     link(scope: SidebarScope, element: HTMLElement) {
       const triggerSelector = element.id
-        ? `[aria-controls="${element.id}"], [data-sidebar-target="${element.id}"]`
-        : ".sidebar-trigger";
+        ? `[aria-controls="${element.id}"]`
+        : ":not(*)";
       const cleanupTriggers = new Map<HTMLElement, () => void>();
-      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
-      const mobileQuery = window.matchMedia("(max-width: 767px)");
-      const ownedCurrent = new WeakSet<HTMLElement>();
-      const getDirection = () =>
-        element.closest<HTMLElement>("[dir]")?.getAttribute("dir") === "rtl"
-          ? "rtl"
-          : "ltr";
-      const syncDirection = () => {
-        setAttributeIfChanged(element, "data-direction", getDirection());
-      };
-      const syncResponsive = () => {
-        setAttributeIfChanged(
-          element,
-          "data-mobile",
-          String(mobileQuery.matches),
-        );
-      };
-      const getCollapsed = () =>
-        element.getAttribute("data-state") === getDataState(true);
+      const getCollapsed = () => element.hasAttribute("collapsed");
 
       const syncOptions = () => {
         const reflect = (
@@ -70,7 +48,7 @@ export function sidebarDirective(): ng.Directive {
           const authored = element.getAttribute(name);
           setAttributeIfChanged(
             element,
-            `data-${name}`,
+            name,
             authored && sidebarOptions[name].has(authored)
               ? authored
               : fallback,
@@ -82,22 +60,15 @@ export function sidebarDirective(): ng.Directive {
       };
 
       const setCollapsed = (collapsed: boolean) => {
-        if (element.getAttribute("data-collapsible") === "none") {
+        if (element.getAttribute("collapsible") === "none") {
           collapsed = false;
         }
         const hidden =
-          collapsed && element.getAttribute("data-collapsible") === "offcanvas";
-        const nextState = getDataState(collapsed);
-        setAttributeIfChanged(element, "data-open", String(!collapsed));
-        setAttributeIfChanged(element, "data-state", nextState);
+          collapsed && element.getAttribute("collapsible") === "offcanvas";
+        element.toggleAttribute("collapsed", collapsed);
         setAttributeIfChanged(element, "aria-hidden", String(hidden));
         cleanupTriggers.forEach((_, trigger) => {
           setAttributeIfChanged(trigger, "aria-expanded", String(!collapsed));
-          setAttributeIfChanged(
-            trigger,
-            "data-state",
-            collapsed ? "closed" : "open",
-          );
         });
         if (hidden && element.contains(document.activeElement)) {
           cleanupTriggers.keys().next().value?.focus();
@@ -106,8 +77,6 @@ export function sidebarDirective(): ng.Directive {
 
       const syncFromState = () => {
         syncOptions();
-        syncDirection();
-        syncResponsive();
         setCollapsed(getCollapsed());
       };
 
@@ -127,31 +96,10 @@ export function sidebarDirective(): ng.Directive {
             ) {
               button.type = "button";
             }
-            const dataActive = button.getAttribute("data-active");
-            const active =
-              dataActive === null
-                ? button.getAttribute("aria-current") === "page"
-                : dataActive === "true";
-            setAttributeIfChanged(button, "data-active", String(active));
-            if (active && !button.hasAttribute("aria-current")) {
-              button.setAttribute("aria-current", "page");
-              ownedCurrent.add(button);
-            } else if (!active && ownedCurrent.has(button)) {
-              button.removeAttribute("aria-current");
-              ownedCurrent.delete(button);
-            }
           },
         );
-        queryAll<HTMLElement>(
-          element,
-          `${selectors.groupAction}, ${selectors.menuAction}`,
-        ).forEach((action) => {
-          if (
-            action instanceof HTMLButtonElement &&
-            !action.hasAttribute("type")
-          ) {
-            action.type = "button";
-          }
+        queryAll<HTMLButtonElement>(element, "button").forEach((button) => {
+          if (!button.hasAttribute("type")) button.type = "button";
         });
       };
 
@@ -166,11 +114,6 @@ export function sidebarDirective(): ng.Directive {
           "aria-expanded",
           String(!getCollapsed()),
         );
-        setAttributeIfChanged(
-          trigger,
-          "data-state",
-          getCollapsed() ? "closed" : "open",
-        );
 
         if (
           trigger instanceof HTMLButtonElement &&
@@ -179,7 +122,7 @@ export function sidebarDirective(): ng.Directive {
           trigger.type = "button";
         }
 
-        if (trigger.hasAttribute("data-sidebar-controlled")) {
+        if (trigger.hasAttribute("ng-click")) {
           cleanupTriggers.set(trigger, () => undefined);
           return;
         }
@@ -215,42 +158,26 @@ export function sidebarDirective(): ng.Directive {
       const stateObserver = new MutationObserver(syncFromState);
       stateObserver.observe(element, {
         attributes: true,
-        attributeFilter: [
-          "collapsible",
-          "data-state",
-          "dir",
-          "side",
-          "variant",
-        ],
-      });
-      const directionObserver =
-        directionOwner === element ? null : new MutationObserver(syncFromState);
-      directionObserver?.observe(directionOwner, {
-        attributes: true,
-        attributeFilter: ["dir"],
+        attributeFilter: ["collapsible", "collapsed", "dir", "side", "variant"],
       });
       const triggerObserver = new MutationObserver(syncTriggers);
       triggerObserver.observe(document.body, {
         attributes: true,
-        attributeFilter: ["aria-controls", "data-sidebar-target"],
+        attributeFilter: ["aria-controls"],
         childList: true,
         subtree: true,
       });
       const structureObserver = new MutationObserver(syncStructure);
       structureObserver.observe(element, {
         attributes: true,
-        attributeFilter: ["aria-current", "data-active", "id"],
+        attributeFilter: ["id"],
         childList: true,
         subtree: true,
       });
-      mobileQuery.addEventListener("change", syncResponsive);
-
       onDestroy(scope, () => {
         stateObserver.disconnect();
-        directionObserver?.disconnect();
         triggerObserver.disconnect();
         structureObserver.disconnect();
-        mobileQuery.removeEventListener("change", syncResponsive);
         cleanupTriggers.forEach((cleanup) => {
           cleanup();
         });

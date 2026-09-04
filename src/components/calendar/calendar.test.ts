@@ -10,7 +10,7 @@ const dropdownDatePickerUrl =
   "/docs/static/examples/components/date-picker-with-dropdowns.html";
 
 const day = (page: Page, value: string) =>
-  page.locator(`.calendar-day[data-value="${value}"]`);
+  page.locator(`[ng-calendar] > div button[value="${value}"]`);
 
 const expectBuiltArtifactRuntime = async (
   page: Page,
@@ -45,9 +45,16 @@ test("canonical artifact generates a complete navigable calendar", async ({
   await expectBuiltArtifactRuntime(page);
 
   const calendar = page.locator("[ng-calendar]");
-  const days = calendar.locator(".calendar-day");
+  const days = calendar.locator(":scope > div button[value]");
   await expect(days).toHaveCount(42);
-  await expect(calendar.locator(".calendar-weekday")).toHaveCount(7);
+  await expect(calendar.locator(":scope > div abbr")).toHaveCount(7);
+  await expect(calendar).not.toHaveAttribute("role");
+  await expect(days.first()).not.toHaveAttribute("role");
+  await expect(
+    calendar.locator(
+      ".calendar-header, .calendar-title, .calendar-grid, .calendar-day, .calendar-weekday, .calendar-previous, .calendar-next",
+    ),
+  ).toHaveCount(0);
   await expect(page.getByRole("combobox", { name: "Month" })).toHaveValue("4");
   await expect(page.getByRole("combobox", { name: "Year" })).toHaveValue(
     "2026",
@@ -92,14 +99,14 @@ test("workflow artifact covers booked, caption, multiple, range, and week-number
   const calendars = page.locator("[ng-calendar]");
   await expect(calendars).toHaveCount(6);
   for (let index = 0; index < 6; index += 1) {
-    await expect(calendars.nth(index).locator(".calendar-day")).toHaveCount(
-      index === 4 ? 84 : 42,
-    );
+    await expect(
+      calendars.nth(index).locator(":scope > div button[value]"),
+    ).toHaveCount(index === 4 ? 84 : 42);
   }
 
   const booked = calendars.nth(1);
   await expect(booked.locator('[data-booked="true"]')).toHaveCount(15);
-  await expect(booked.locator('[data-value="2026-09-10"]')).toBeDisabled();
+  await expect(booked.locator('[value="2026-09-10"]')).toBeDisabled();
 
   const caption = calendars.nth(2);
   await expect(caption.getByRole("combobox", { name: "Month" })).toHaveValue(
@@ -110,7 +117,7 @@ test("workflow artifact covers booked, caption, multiple, range, and week-number
 
   const multiple = calendars.nth(3);
   await expect(multiple.locator('[aria-selected="true"]')).toHaveCount(2);
-  await multiple.locator('[data-value="2026-09-14"]').click();
+  await multiple.locator('[value="2026-09-14"]').click();
   await expect(multiple).toHaveAttribute(
     "data-values",
     '["2026-09-10","2026-09-12","2026-09-14"]',
@@ -121,7 +128,7 @@ test("workflow artifact covers booked, caption, multiple, range, and week-number
 
   const range = calendars.nth(4);
   const monthBoxes = await range
-    .locator(".calendar-month")
+    .locator(":scope > div > section")
     .evaluateAll((months) =>
       months.map((month) => {
         const box = month.getBoundingClientRect();
@@ -132,17 +139,15 @@ test("workflow artifact covers booked, caption, multiple, range, and week-number
   expect(monthBoxes[1].x).toBeGreaterThan(
     monthBoxes[0].x + monthBoxes[0].width,
   );
-  await range.locator('[data-value="2026-09-20"]').click();
-  await range.locator('[data-value="2026-09-23"]').click();
+  await range.locator('[value="2026-09-20"]').click();
+  await range.locator('[value="2026-09-23"]').click();
   await expect(range).toHaveAttribute("data-range-start-value", "2026-09-20");
   await expect(range).toHaveAttribute("data-range-end-value", "2026-09-23");
   await expect(page.locator(".calendar-workflow-output").nth(4)).toContainText(
     "2026-09-20 to 2026-09-23",
   );
 
-  await expect(calendars.nth(5).locator(".calendar-week-number")).toHaveCount(
-    6,
-  );
+  await expect(calendars.nth(5).locator(":scope > div data")).toHaveCount(6);
 });
 
 test("composition artifact preserves custom content, presets, time, RTL, and authored calendar adapters", async ({
@@ -155,10 +160,10 @@ test("composition artifact preserves custom content, presets, time, RTL, and aut
   const calendars = page.locator("[ng-calendar]");
   await expect(calendars).toHaveCount(5);
   await expect(
-    calendars.nth(0).locator('[data-value="2026-09-12"] span'),
+    calendars.nth(0).locator('[value="2026-09-12"] span'),
   ).toHaveText("$120");
-  await calendars.nth(0).locator('[data-value="2026-09-20"]').click();
-  await calendars.nth(0).locator('[data-value="2026-09-23"]').click();
+  await calendars.nth(0).locator('[value="2026-09-20"]').click();
+  await calendars.nth(0).locator('[value="2026-09-23"]').click();
   await expect(page.locator(".calendar-workflow-output").nth(0)).toContainText(
     "2026-09-20 to 2026-09-23",
   );
@@ -173,9 +178,11 @@ test("composition artifact preserves custom content, presets, time, RTL, and aut
   await expect(page.locator(".calendar-workflow-output").nth(2)).toContainText(
     "10:30",
   );
-  await expect(calendars.nth(3)).toHaveAttribute("data-direction", "rtl");
+  await expect(calendars.nth(3)).toHaveCSS("direction", "rtl");
   await expect(calendars.nth(4)).toHaveAttribute("aria-label", "خرداد ۱۴۰۴");
-  await expect(calendars.nth(4).locator(".calendar-day")).toHaveCount(42);
+  await expect(
+    calendars.nth(4).locator(":scope > div button[value]"),
+  ).toHaveCount(42);
 });
 
 test("Date Picker basic, demo, and date-of-birth compositions use real popovers and calendars", async ({
@@ -186,31 +193,31 @@ test("Date Picker basic, demo, and date-of-birth compositions use real popovers 
   await expect(page.locator("[ng-calendar]")).toHaveCount(8);
 
   const basic = page.locator("#date-picker-basic-popover");
-  const basicContent = basic.locator(".popover-content");
+  const basicContent = basic.locator(":scope > [popover]");
   await page.locator("#date-picker-basic").click();
   await expect(basicContent).toBeVisible();
-  await basic.locator('[data-value="2026-09-12"]').click();
+  await basic.locator('[value="2026-09-12"]').click();
   await expect(page.locator("#date-picker-basic")).toContainText(
     "September 12, 2026",
   );
   await expect(basicContent).toBeVisible();
 
   const demo = page.locator("#date-picker-demo-popover");
-  await demo.locator(".popover-trigger").click();
-  await demo.locator('[data-value="2026-09-13"]').click();
-  await expect(demo.locator(".popover-trigger")).toContainText(
+  await demo.locator(":scope > button:first-child").click();
+  await demo.locator('[value="2026-09-13"]').click();
+  await expect(demo.locator(":scope > button:first-child")).toContainText(
     "September 13, 2026",
   );
-  await expect(demo.locator(".popover-content")).toBeVisible();
+  await expect(demo.locator(":scope > [popover]")).toBeVisible();
 
   const dob = page.locator("#date-picker-dob-popover");
   await page.locator("#date-picker-dob").click();
   await expect(dob.getByRole("combobox", { name: "Year" })).toBeVisible();
-  await dob.locator('[data-value="2026-09-14"]').click();
+  await dob.locator('[value="2026-09-14"]').click();
   await expect(page.locator("#date-picker-dob")).toContainText(
     "September 14, 2026",
   );
-  await expect(dob.locator(".popover-content")).toBeHidden();
+  await expect(dob.locator(":scope > [popover]")).toBeHidden();
 });
 
 test("Date Picker dropdown composition keeps selection open until Done", async ({
@@ -221,12 +228,12 @@ test("Date Picker dropdown composition keeps selection open until Done", async (
   await expectBuiltArtifactRuntime(page, true);
 
   const popover = page.locator("#date-picker-dropdown-popover");
-  const content = popover.locator(".popover-content");
+  const content = popover.locator(":scope > [popover]");
   await page.locator("#date-picker-with-dropdowns").click();
   await expect(content).toBeVisible();
   await expect(popover.getByRole("combobox", { name: "Month" })).toBeVisible();
   await expect(popover.getByRole("combobox", { name: "Year" })).toBeVisible();
-  await popover.locator('[data-value="2026-09-16"]').click();
+  await popover.locator('[value="2026-09-16"]').click();
   await expect(page.locator("#date-picker-with-dropdowns")).toContainText(
     "September 16, 2026",
   );
@@ -249,14 +256,14 @@ test("Date Picker text and natural-language inputs synchronize through AngularTS
   await input.fill("October 05, 2026");
   await input.press("ArrowDown");
   const inputPopover = page.locator("#date-picker-input-popover");
-  await expect(inputPopover.locator(".popover-content")).toBeVisible();
+  await expect(inputPopover.locator(":scope > [popover]")).toBeVisible();
   await expect(inputPopover.locator("[ng-calendar]")).toHaveAttribute(
     "data-month",
     "2026-10",
   );
-  await inputPopover.locator('[data-value="2026-10-06"]').click();
+  await inputPopover.locator('[value="2026-10-06"]').click();
   await expect(input).toHaveValue("October 06, 2026");
-  await expect(inputPopover.locator(".popover-content")).toBeHidden();
+  await expect(inputPopover.locator(":scope > [popover]")).toBeHidden();
 
   const natural = page.getByRole("textbox", { name: "Schedule Date" });
   await natural.fill("October 5, 2026");
@@ -269,9 +276,9 @@ test("Date Picker text and natural-language inputs synchronize through AngularTS
     "data-month",
     "2026-10",
   );
-  await naturalPopover.locator('[data-value="2026-10-06"]').click();
+  await naturalPopover.locator('[value="2026-10-06"]').click();
   await expect(natural).toHaveValue("October 06, 2026");
-  await expect(naturalPopover.locator(".popover-content")).toBeHidden();
+  await expect(naturalPopover.locator(":scope > [popover]")).toBeHidden();
 });
 
 test("Date Picker range, RTL, and time compositions remain functional and contained", async ({
@@ -283,28 +290,30 @@ test("Date Picker range, RTL, and time compositions remain functional and contai
   const range = page.locator("#date-picker-range-popover");
   await page.locator("#date-picker-range").click();
   const rangeCalendar = range.locator("[ng-calendar]");
-  await expect(rangeCalendar.locator(".calendar-month")).toHaveCount(2);
-  await rangeCalendar.locator('[data-value="2026-09-20"]').click();
-  await rangeCalendar.locator('[data-value="2026-09-23"]').click();
+  await expect(rangeCalendar.locator(":scope > div > section")).toHaveCount(2);
+  await rangeCalendar.locator('[value="2026-09-20"]').click();
+  await rangeCalendar.locator('[value="2026-09-23"]').click();
   await expect(page.locator("#date-picker-range")).toContainText(
     "Sep 20, 2026 - Sep 23, 2026",
   );
-  await expect(range.locator(".popover-content")).toBeVisible();
+  await expect(range.locator(":scope > [popover]")).toBeVisible();
 
   await page.keyboard.press("Escape");
   const rtl = page.locator("#date-picker-rtl-popover");
-  await rtl.locator(".popover-trigger").click();
+  await rtl.locator(":scope > button:first-child").click();
   await expect(rtl.locator("[ng-calendar]")).toHaveCSS("direction", "rtl");
-  await expect(rtl.locator(".calendar-weekday").first()).toContainText("ح");
+  await expect(rtl.locator("[ng-calendar] > div abbr").first()).toContainText(
+    "ح",
+  );
 
   await page.keyboard.press("Escape");
   const time = page.locator("#date-picker-time-popover");
   await page.locator("#date-picker-time-date").click();
-  await time.locator('[data-value="2026-09-12"]').click();
+  await time.locator('[value="2026-09-12"]').click();
   await expect(page.locator("#date-picker-time-date")).toContainText(
     "Sep 12, 2026",
   );
-  await expect(time.locator(".popover-content")).toBeHidden();
+  await expect(time.locator(":scope > [popover]")).toBeHidden();
   await page.locator("#date-picker-time-value").fill("11:45:30");
   await expect(page.locator("#date-picker-time-value")).toHaveValue("11:45:30");
 
@@ -322,7 +331,7 @@ test("Date Picker layouts remain non-overlapping at the mobile breakpoint", asyn
   await page.goto(datePickersUrl);
   const range = page.locator("#date-picker-range-popover");
   await page.locator("#date-picker-range").click();
-  const months = range.locator(".calendar-month");
+  const months = range.locator("[ng-calendar] > div > section");
   await expect(months).toHaveCount(2);
   const boxes = await months.evaluateAll((elements) =>
     elements.map((element) => {

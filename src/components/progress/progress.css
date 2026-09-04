@@ -8,34 +8,14 @@
   font-size: var(--text-sm);
 }
 
-.progress-label {
+.progress-group > label {
   font-weight: var(--font-weight-medium);
 }
 
-.progress-value {
+.progress-group > output {
   margin-inline-start: auto;
   color: var(--muted-foreground);
   font-variant-numeric: tabular-nums;
-}
-
-.progress-track {
-  position: relative;
-  display: flex;
-  width: 100%;
-  height: calc(var(--spacing) * 1);
-  align-items: center;
-  overflow-x: hidden;
-  border-radius: 9999px;
-  background: var(--muted);
-}
-
-.progress-indicator {
-  display: block;
-  height: 100%;
-  width: var(--value, 0%);
-  border-radius: inherit;
-  background: var(--primary);
-  transition: width 150ms ease;
 }
 
 progress.progress {
@@ -45,12 +25,6 @@ progress.progress {
   border: 0;
   border-radius: 9999px;
   background: var(--muted);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .progress-indicator {
-    transition-duration: 0s;
-  }
 }
 
 progress.progress::-webkit-progress-bar {

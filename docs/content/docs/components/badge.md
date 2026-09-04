@@ -13,6 +13,16 @@ Use `class="badge"` on an inline element and set `variant` for appearance.
 <span variant="outline" class="badge">Outline</span>
 ```
 
+For user-selected colors, use `variant="custom"` and set `--badge-background`.
+Browsers with `contrast-color()` choose a black or white foreground; set
+`--badge-foreground` when the application requires a specific contrast result.
+
+```html
+<span variant="custom" class="badge" style="--badge-background: var(--cyan-9)">
+  Custom
+</span>
+```
+
 ## Example
 
 {{< example src="examples/components/badge.html" title="Badge example" height="170" >}}

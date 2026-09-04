@@ -18,7 +18,7 @@
     <main class="switch-workflows">
       <section class="switch-workflow-section" aria-label="Switch sizes">
         <div class="switch-size-list field-group">
-          <fieldset orientation="horizontal" class="field">
+          <div orientation="horizontal" class="field">
             <input
               id="switch-size-sm"
               type="checkbox"
@@ -26,9 +26,9 @@
               ng-model="small"
               class="switch"
             />
-            <label for="switch-size-sm" class="label">Small</label>
-          </fieldset>
-          <fieldset orientation="horizontal" class="field">
+            <label for="switch-size-sm">Small</label>
+          </div>
+          <div orientation="horizontal" class="field">
             <input
               id="switch-size-default"
               type="checkbox"
@@ -36,53 +36,47 @@
               ng-model="standard"
               class="switch"
             />
-            <label for="switch-size-default" class="label">Default</label>
-          </fieldset>
+            <label for="switch-size-default">Default</label>
+          </div>
         </div>
       </section>
 
       <section class="switch-workflow-section" aria-label="Disabled switch">
-        <fieldset orientation="horizontal" data-disabled="true" class="field">
+        <div orientation="horizontal" class="field">
           <input
             id="switch-disabled-unchecked"
             type="checkbox"
             disabled
             class="switch"
           />
-          <label for="switch-disabled-unchecked" class="label">Disabled</label>
-        </fieldset>
+          <label for="switch-disabled-unchecked">Disabled</label>
+        </div>
       </section>
 
       <section class="switch-workflow-section" aria-label="Switch description">
-        <fieldset orientation="horizontal" class="field">
-          <div class="field-content">
-            <label for="switch-focus-mode" class="label"
-              >Share across devices</label
-            >
-            <p class="field-description">
+        <div orientation="horizontal" class="field">
+          <section>
+            <label for="switch-focus-mode">Share across devices</label>
+            <p>
               Focus is shared across devices, and turns off when you leave the
               app.
             </p>
-          </div>
+          </section>
           <input
             id="switch-focus-mode"
             type="checkbox"
             ng-model="focus"
             class="switch"
           />
-        </fieldset>
+        </div>
       </section>
 
       <section class="switch-workflow-section" aria-label="Invalid switch">
-        <fieldset orientation="horizontal" data-invalid="true" class="field">
-          <div class="field-content">
-            <label for="switch-terms" class="label">
-              Accept terms and conditions
-            </label>
-            <p class="field-description">
-              You must accept the terms and conditions to continue.
-            </p>
-          </div>
+        <div orientation="horizontal" class="field">
+          <section>
+            <label for="switch-terms"> Accept terms and conditions </label>
+            <p>You must accept the terms and conditions to continue.</p>
+          </section>
           <input
             id="switch-terms"
             type="checkbox"
@@ -90,7 +84,7 @@
             ng-model="terms"
             class="switch"
           />
-        </fieldset>
+        </div>
       </section>
 
       <section
@@ -98,14 +92,14 @@
         aria-label="Switch choice cards"
       >
         <div class="switch-choice-list field-group">
-          <label for="switch-share" class="switch-choice label">
-            <fieldset orientation="horizontal" class="field">
-              <span class="field-content">
-                <span class="field-title">Share across devices</span>
-                <span class="field-description">
+          <label for="switch-share" class="switch-choice">
+            <div orientation="horizontal" class="field">
+              <span>
+                <strong>Share across devices</strong>
+                <small>
                   Focus is shared across devices, and turns off when you leave
                   the app.
-                </span>
+                </small>
               </span>
               <input
                 id="switch-share"
@@ -113,15 +107,15 @@
                 ng-model="share"
                 class="switch"
               />
-            </fieldset>
+            </div>
           </label>
-          <label for="switch-notifications" class="switch-choice label">
-            <fieldset orientation="horizontal" class="field">
-              <span class="field-content">
-                <span class="field-title">Enable notifications</span>
-                <span class="field-description">
+          <label for="switch-notifications" class="switch-choice">
+            <div orientation="horizontal" class="field">
+              <span>
+                <strong>Enable notifications</strong>
+                <small>
                   Receive notifications when focus mode is enabled or disabled.
-                </span>
+                </small>
               </span>
               <input
                 id="switch-notifications"
@@ -129,7 +123,7 @@
                 ng-model="notifications"
                 class="switch"
               />
-            </fieldset>
+            </div>
           </label>
         </div>
       </section>
@@ -140,23 +134,21 @@
         dir="rtl"
         lang="ar"
       >
-        <fieldset orientation="horizontal" class="field">
-          <div class="field-content">
-            <label for="switch-focus-mode-rtl" class="label">
-              المشاركة عبر الأجهزة
-            </label>
-            <p class="field-description">
+        <div orientation="horizontal" class="field">
+          <section>
+            <label for="switch-focus-mode-rtl"> المشاركة عبر الأجهزة </label>
+            <p>
               يتم مشاركة التركيز عبر الأجهزة، ويتم إيقاف تشغيله عند مغادرة
               التطبيق.
             </p>
-          </div>
+          </section>
           <input
             id="switch-focus-mode-rtl"
             type="checkbox"
             dir="rtl"
             class="switch"
           />
-        </fieldset>
+        </div>
       </section>
     </main>
   </body>

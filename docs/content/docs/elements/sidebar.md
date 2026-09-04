@@ -8,9 +8,9 @@ description: >
 Use sidebar layout, sidebar, group, menu, and inset parts for app shells.
 
 ```html
-<div class="sidebar-layout">
+<div>
   <aside class="sidebar"></aside>
-  <main class="sidebar-inset"></main>
+  <main></main>
 </div>
 ```
 

@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 const canonicalUrl = "/docs/static/examples/components/sonner.html";
 const workflowsUrl = "/docs/static/examples/components/sonner-workflows.html";
-const toastSelector = ":is(.toast)";
+const toastSelector = ":scope > article";
 
 test("canonical Sonner demo creates accessible toast feedback from built HTML", async ({
   page,
@@ -10,9 +10,8 @@ test("canonical Sonner demo creates accessible toast feedback from built HTML", 
   await page.goto(canonicalUrl);
 
   const toaster = page.locator("[ng-toaster]");
-  const toast = page.locator(toastSelector);
-  await expect(toaster).toHaveAttribute("data-sonner-toaster", "");
-  await expect(toaster).toHaveAttribute("data-position", "bottom-right");
+  const toast = toaster.locator(toastSelector);
+  await expect(toaster).toHaveAttribute("position", "bottom-right");
   await expect(toast).toHaveCount(0);
 
   await page.getByRole("button", { name: "Show Toast" }).click();
@@ -21,13 +20,10 @@ test("canonical Sonner demo creates accessible toast feedback from built HTML", 
   await expect(toast).toHaveAttribute("role", "status");
   await expect(toast).toHaveAttribute("aria-live", "polite");
   await expect(toast).toHaveAttribute("aria-atomic", "true");
-  await expect(toast).toHaveAttribute("aria-hidden", "false");
-  await expect(toast).toHaveAttribute("data-state", "open");
-  await expect(toast).toHaveAttribute("data-type", "default");
-  await expect(toast).toHaveAttribute("data-visible", "true");
+  await expect(toast).toHaveAttribute("type", "default");
 
-  const title = toast.locator(".toast-title");
-  const description = toast.locator(".toast-description");
+  const title = toast.getByRole("heading");
+  const description = toast.locator("p");
   await expect(toast).toHaveAttribute(
     "aria-labelledby",
     (await title.getAttribute("id")) ?? "",
@@ -82,14 +78,14 @@ test("position workflow reflects all authored placements and fallback state", as
 
   const toaster = page.getByLabel("Position notifications");
   const toast = toaster.locator(toastSelector);
-  await expect(toaster).toHaveAttribute("data-position", "bottom-right");
+  await expect(toaster).toHaveAttribute("position", "bottom-right");
 
   await page.getByRole("button", { name: "Top Left" }).click();
-  await expect(toaster).toHaveAttribute("data-position", "top-left");
+  await expect(toaster).toHaveAttribute("position", "top-left");
   await expect(toast).toHaveCount(1);
 
   await page.getByRole("button", { name: "Bottom Center" }).click();
-  await expect(toaster).toHaveAttribute("data-position", "bottom-center");
+  await expect(toaster).toHaveAttribute("position", "bottom-center");
   await expect(
     page.locator("#sonner-position-title").locator("..").locator(".output"),
   ).toContainText("bottom-center");
@@ -97,7 +93,7 @@ test("position workflow reflects all authored placements and fallback state", as
   await toaster.evaluate((element) => {
     element.setAttribute("position", "unsupported");
   });
-  await expect(toaster).toHaveAttribute("data-position", "bottom-right");
+  await expect(toaster).toHaveAttribute("position", "bottom-right");
 });
 
 test("type workflow reflects default, rich, and promise transition states", async ({
@@ -111,16 +107,15 @@ test("type workflow reflects default, rich, and promise transition states", asyn
 
   for (const type of ["Default", "Success", "Info", "Warning", "Error"]) {
     await typeButtons.getByRole("button", { name: type }).click();
-    await expect(toast).toHaveAttribute("data-type", type.toLowerCase());
-    await expect(toast).toHaveAttribute("data-state", "open");
+    await expect(toast).toHaveAttribute("type", type.toLowerCase());
   }
 
   await typeButtons.getByRole("button", { name: "Promise" }).click();
-  await expect(toast).toHaveAttribute("data-type", "loading");
+  await expect(toast).toHaveAttribute("type", "loading");
   await expect(toast).toContainText("Loading...");
-  await expect(toast.locator(".toast-icon svg")).toHaveCount(1);
+  await expect(toast.locator(":scope > figure > svg")).toHaveCount(1);
 
-  await expect(toast).toHaveAttribute("data-type", "success", {
+  await expect(toast).toHaveAttribute("type", "success", {
     timeout: 2_000,
   });
   await expect(toast).toContainText("Event has been created");

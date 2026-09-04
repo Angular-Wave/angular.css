@@ -19,31 +19,28 @@
       <section class="native-select-workflow-section">
         <header class="workflow-heading"><h2>Grouped options</h2></header>
         <div class="native-select-field">
-          <label for="native-department" class="label">Department</label>
-          <div class="native-select-wrapper">
-            <select
-              id="native-department"
-              ng-model="nativeSelectWorkflow.department"
-              class="native-select"
-            >
-              <option value="">Select department</option>
-              <optgroup label="Engineering">
-                <option value="frontend">Frontend</option>
-                <option value="backend">Backend</option>
-                <option value="devops">DevOps</option>
-              </optgroup>
-              <optgroup label="Sales">
-                <option value="sales-rep">Sales Rep</option>
-                <option value="account-manager">Account Manager</option>
-                <option value="sales-director">Sales Director</option>
-              </optgroup>
-              <optgroup label="Operations">
-                <option value="support">Customer Support</option>
-                <option value="product-manager">Product Manager</option>
-                <option value="ops-manager">Operations Manager</option>
-              </optgroup>
-            </select>
-          </div>
+          <label for="native-department">Department</label>
+          <select
+            id="native-department"
+            ng-model="nativeSelectWorkflow.department"
+          >
+            <option value="">Select department</option>
+            <optgroup label="Engineering">
+              <option value="frontend">Frontend</option>
+              <option value="backend">Backend</option>
+              <option value="devops">DevOps</option>
+            </optgroup>
+            <optgroup label="Sales">
+              <option value="sales-rep">Sales Rep</option>
+              <option value="account-manager">Account Manager</option>
+              <option value="sales-director">Sales Director</option>
+            </optgroup>
+            <optgroup label="Operations">
+              <option value="support">Customer Support</option>
+              <option value="product-manager">Product Manager</option>
+              <option value="ops-manager">Operations Manager</option>
+            </optgroup>
+          </select>
           <p class="native-select-output">
             Selected:
             <span ng-if="!nativeSelectWorkflow.department">none</span>
@@ -60,44 +57,33 @@
         <header class="workflow-heading"><h2>States</h2></header>
         <div class="native-select-state-list">
           <div class="native-select-field">
-            <label for="native-disabled" class="label">Disabled</label>
-            <div class="native-select-wrapper">
-              <select id="native-disabled" disabled class="native-select">
-                <option value="">Disabled</option>
-                <option value="apple">Apple</option>
-                <option value="banana">Banana</option>
-                <option value="blueberry">Blueberry</option>
-              </select>
-            </div>
+            <label for="native-disabled">Disabled</label>
+            <select id="native-disabled" disabled>
+              <option value="">Disabled</option>
+              <option value="apple">Apple</option>
+              <option value="banana">Banana</option>
+              <option value="blueberry">Blueberry</option>
+            </select>
           </div>
           <div class="native-select-field">
-            <label for="native-invalid" class="label">Invalid</label>
-            <div class="native-select-wrapper">
-              <select
-                id="native-invalid"
-                aria-invalid="true"
-                ng-model="nativeSelectWorkflow.fruit"
-                class="native-select"
-              >
-                <option value="">Error state</option>
-                <option value="apple">Apple</option>
-                <option value="banana">Banana</option>
-                <option value="blueberry">Blueberry</option>
-              </select>
-            </div>
+            <label for="native-invalid">Invalid</label>
+            <select
+              id="native-invalid"
+              aria-invalid="true"
+              ng-model="nativeSelectWorkflow.fruit"
+            >
+              <option value="">Error state</option>
+              <option value="apple">Apple</option>
+              <option value="banana">Banana</option>
+              <option value="blueberry">Blueberry</option>
+            </select>
           </div>
           <div class="native-select-field">
-            <label for="native-compact" class="label">Small</label>
-            <div class="native-select-wrapper">
-              <select
-                id="native-compact"
-                ng-model="nativeSelectWorkflow.compact"
-                class="native-select native-select-sm"
-              >
-                <option value="todo">Todo</option>
-                <option value="done">Done</option>
-              </select>
-            </div>
+            <label for="native-compact">Small</label>
+            <select id="native-compact" ng-model="nativeSelectWorkflow.compact">
+              <option value="todo">Todo</option>
+              <option value="done">Done</option>
+            </select>
           </div>
         </div>
       </section>
@@ -117,23 +103,14 @@
           Add archived option
         </button>
         <div class="native-select-field">
-          <label for="native-dynamic" class="label">Project status</label>
-          <div class="native-select-wrapper">
-            <select
-              id="native-dynamic"
-              ng-model="nativeSelectWorkflow.dynamic"
-              class="native-select"
-            >
-              <option value="">Select status</option>
-              <option value="active">Active</option>
-              <option
-                ng-if="nativeSelectWorkflow.showArchived"
-                value="archived"
-              >
-                Archived
-              </option>
-            </select>
-          </div>
+          <label for="native-dynamic">Project status</label>
+          <select id="native-dynamic" ng-model="nativeSelectWorkflow.dynamic">
+            <option value="">Select status</option>
+            <option value="active">Active</option>
+            <option ng-if="nativeSelectWorkflow.showArchived" value="archived">
+              Archived
+            </option>
+          </select>
           <p class="native-select-output">
             Value:
             <span ng-if="!nativeSelectWorkflow.dynamic">none</span>

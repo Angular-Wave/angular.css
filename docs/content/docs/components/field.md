@@ -9,13 +9,13 @@ Use the field wrapper and field parts to define standard form structure.
 
 ```html
 <div class="field">
-  <label for="email" class="field-label label">Email</label>
+  <label for="email">Email</label>
   <input id="email" type="email" placeholder="Email" class="input" />
-  <p class="field-description">Use your work email.</p>
+  <p>Use your work email.</p>
 </div>
 
-<div data-invalid class="field">
-  <label for="invalid-email" class="field-label label">Email</label>
+<div class="field">
+  <label for="invalid-email">Email</label>
   <input id="invalid-email" aria-invalid="true" class="input" />
   <p class="field-error">Enter a valid email.</p>
 </div>
@@ -31,8 +31,8 @@ Use the field wrapper and field parts to define standard form structure.
 
 ## Validation States
 
-Fields mirror native validity and keep descriptions synchronized when AngularTS
-structural directives insert controls.
+Fields derive presentation from native validity and `aria-invalid`; AngularTS
+structural directives may insert or remove controls and descriptions.
 
 {{< example src="examples/components/field-state-workflows.html" title="Field validation and conditional controls" height="760" >}}
 

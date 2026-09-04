@@ -18,13 +18,14 @@
     <main class="toggle-demo visual-example">
       <div class="row" aria-label="Bookmark toggle">
         <button
-
           variant="outline"
           size="sm"
           aria-label="Toggle bookmark"
           aria-pressed="{{ bookmark }}"
           ng-click="bookmark = !bookmark"
-          type="button" class="toggle">
+          type="button"
+          class="toggle"
+        >
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -40,11 +41,12 @@
 
       <div class="row" aria-label="Text toggles">
         <button
-
           aria-label="Toggle italic text"
           aria-pressed="{{ italic }}"
           ng-click="italic = !italic"
-          type="button" class="toggle">
+          type="button"
+          class="toggle"
+        >
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -60,12 +62,13 @@
 
       <div class="row" aria-label="Outline toggles">
         <button
-
           variant="outline"
           aria-label="Toggle italic"
           aria-pressed="{{ italic }}"
           ng-click="italic = !italic"
-          type="button" class="toggle">
+          type="button"
+          class="toggle"
+        >
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -78,12 +81,13 @@
           Italic
         </button>
         <button
-
           variant="outline"
           aria-label="Toggle bold"
           aria-pressed="{{ bold }}"
           ng-click="bold = !bold"
-          type="button" class="toggle">
+          type="button"
+          class="toggle"
+        >
           <svg
             viewBox="0 0 24 24"
             fill="none"

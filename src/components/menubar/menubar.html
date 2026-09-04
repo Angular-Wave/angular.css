@@ -17,72 +17,62 @@
   >
     <main class="menubar-demo visual-example">
       <nav ng-menubar aria-label="Application menu">
-        <section class="menubar-menu">
-          <button type="button" class="menubar-trigger">File</button>
-          <menu class="menubar-content">
-            <div class="menubar-group">
-              <button type="button" class="menubar-item">
-                New Tab <span class="menubar-shortcut">⌘T</span>
-              </button>
-              <button type="button" class="menubar-item">
-                New Window <span class="menubar-shortcut">⌘N</span>
-              </button>
-              <button type="button" disabled class="menubar-item">
-                New Incognito Window
-              </button>
-            </div>
-            <hr class="menubar-separator" />
-            <div class="menubar-sub">
-              <button type="button" class="menubar-sub-trigger">Share</button>
-              <div class="menubar-sub-content">
-                <button type="button" class="menubar-item">Email link</button>
-                <button type="button" class="menubar-item">Messages</button>
-              </div>
-            </div>
-            <hr class="menubar-separator" />
-            <button type="button" class="menubar-item">
-              Print... <span class="menubar-shortcut">⌘P</span>
-            </button>
+        <section>
+          <button type="button">File</button>
+          <menu>
+            <section>
+              <button type="button">New Tab <kbd>⌘T</kbd></button>
+              <button type="button">New Window <kbd>⌘N</kbd></button>
+              <button type="button" disabled>New Incognito Window</button>
+            </section>
+            <hr />
+            <details>
+              <summary>Share</summary>
+              <menu>
+                <button type="button">Email link</button>
+                <button type="button">Messages</button>
+              </menu>
+            </details>
+            <hr />
+            <button type="button">Print... <kbd>⌘P</kbd></button>
           </menu>
         </section>
 
-        <section class="menubar-menu">
-          <button type="button" class="menubar-trigger">Edit</button>
-          <menu class="menubar-content">
-            <button type="button" class="menubar-item">Undo</button>
-            <button type="button" class="menubar-item">Redo</button>
-            <hr class="menubar-separator" />
-            <button type="button" class="menubar-item">Cut</button>
-            <button type="button" class="menubar-item">Copy</button>
-            <button type="button" class="menubar-item">Paste</button>
+        <section>
+          <button type="button">Edit</button>
+          <menu>
+            <button type="button">Undo</button>
+            <button type="button">Redo</button>
+            <hr />
+            <button type="button">Cut</button>
+            <button type="button">Copy</button>
+            <button type="button">Paste</button>
           </menu>
         </section>
 
-        <section class="menubar-menu">
-          <button type="button" class="menubar-trigger">View</button>
-          <menu class="menubar-content">
+        <section>
+          <button type="button">View</button>
+          <menu>
             <button
               type="button"
               aria-checked="{{ menu.fullUrls }}"
               ng-click="menu.fullUrls=!menu.fullUrls"
-              class="menubar-checkbox-item"
             >
               Full URLs
             </button>
-            <hr class="menubar-separator" />
-            <button type="button" inset class="menubar-item">Reload</button>
+            <hr />
+            <button type="button" inset>Reload</button>
           </menu>
         </section>
 
-        <section class="menubar-menu">
-          <button type="button" class="menubar-trigger">Profiles</button>
-          <menu class="menubar-content">
-            <fieldset aria-label="Profile" class="menubar-radio-group">
+        <section>
+          <button type="button">Profiles</button>
+          <menu>
+            <fieldset aria-label="Profile">
               <button
                 type="button"
                 aria-checked="{{ menu.profile === 'andy' }}"
                 ng-click="menu.profile='andy'"
-                class="menubar-radio-item"
               >
                 Andy
               </button>
@@ -90,7 +80,6 @@
                 type="button"
                 aria-checked="{{ menu.profile === 'benoit' }}"
                 ng-click="menu.profile='benoit'"
-                class="menubar-radio-item"
               >
                 Benoit
               </button>

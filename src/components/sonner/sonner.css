@@ -10,49 +10,49 @@
   pointer-events: none;
 }
 
-.toaster[data-position="bottom-left"],
-[ng-toaster][data-position="bottom-left"] {
+.toaster[position="bottom-left"],
+[ng-toaster][position="bottom-left"] {
   inset-block-end: calc(var(--spacing) * 4);
   inset-inline: calc(var(--spacing) * 4) auto;
   transform: none;
 }
 
-.toaster[data-position="bottom-center"],
-[ng-toaster][data-position="bottom-center"] {
+.toaster[position="bottom-center"],
+[ng-toaster][position="bottom-center"] {
   inset-block-end: calc(var(--spacing) * 4);
   inset-inline: 50% auto;
   transform: translateX(-50%);
 }
 
-.toaster[data-position="bottom-right"],
-[ng-toaster][data-position="bottom-right"] {
+.toaster[position="bottom-right"],
+[ng-toaster][position="bottom-right"] {
   inset-block-end: calc(var(--spacing) * 4);
   inset-inline: auto calc(var(--spacing) * 4);
   transform: none;
 }
 
-.toaster[data-position="top-left"],
-[ng-toaster][data-position="top-left"] {
+.toaster[position="top-left"],
+[ng-toaster][position="top-left"] {
   inset-block: calc(var(--spacing) * 4) auto;
   inset-inline: calc(var(--spacing) * 4) auto;
   transform: none;
 }
 
-.toaster[data-position="top-center"],
-[ng-toaster][data-position="top-center"] {
+.toaster[position="top-center"],
+[ng-toaster][position="top-center"] {
   inset-block: calc(var(--spacing) * 4) auto;
   inset-inline: 50% auto;
   transform: translateX(-50%);
 }
 
-.toaster[data-position="top-right"],
-[ng-toaster][data-position="top-right"] {
+.toaster[position="top-right"],
+[ng-toaster][position="top-right"] {
   inset-block: calc(var(--spacing) * 4) auto;
   inset-inline: auto calc(var(--spacing) * 4);
   transform: none;
 }
 
-.toast {
+:is(.toaster, [ng-toaster]) > article {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   min-height: calc(var(--spacing) * 16);
@@ -77,31 +77,31 @@
   }
 }
 
-.toast.ng-enter {
+:is(.toaster, [ng-toaster]) > article.ng-enter {
   opacity: 0;
   translate: 0 calc(var(--spacing) * 2);
 }
 
-.toast.ng-enter-active,
-.toast.ng-leave {
+:is(.toaster, [ng-toaster]) > article.ng-enter-active,
+:is(.toaster, [ng-toaster]) > article.ng-leave {
   opacity: 1;
   translate: 0 0;
 }
 
-.toast.ng-leave-active {
+:is(.toaster, [ng-toaster]) > article.ng-leave-active {
   opacity: 0;
   translate: 0 calc(var(--spacing) * -1);
 }
 
-:is(.toast)[hidden] {
+:is(.toaster, [ng-toaster]) > article[hidden] {
   display: none;
 }
 
-:is(.toast):has(> .toast-icon) {
+:is(.toaster, [ng-toaster]) > article:has(> figure) {
   grid-template-columns: auto minmax(0, 1fr) auto;
 }
 
-.toast-icon {
+:is(.toaster, [ng-toaster]) > article > figure {
   display: grid;
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
@@ -109,46 +109,48 @@
   margin-block-start: 1px;
 }
 
-:is(.toast)[data-type="success"] .toast-icon {
+:is(.toaster, [ng-toaster]) > article[type="success"] > figure {
   color: var(--success);
 }
 
-:is(.toast)[data-type="info"] .toast-icon {
+:is(.toaster, [ng-toaster]) > article[type="info"] > figure {
   color: var(--info);
 }
 
-:is(.toast)[data-type="warning"] .toast-icon {
+:is(.toaster, [ng-toaster]) > article[type="warning"] > figure {
   color: var(--warning);
 }
 
-:is(.toast)[data-type="error"] .toast-icon {
+:is(.toaster, [ng-toaster]) > article[type="error"] > figure {
   color: var(--error);
 }
 
-:is(.toast)[data-type="loading"] .toast-icon > svg {
+:is(.toaster, [ng-toaster]) > article[type="loading"] > figure > svg {
   animation: angularcss-toast-spin 800ms linear infinite;
 }
 
-.toast-content {
+:is(.toaster, [ng-toaster]) > article > :is(header, section) {
   display: grid;
   gap: calc(var(--spacing) * 1);
 }
 
-.toast-title {
+:is(.toaster, [ng-toaster])
+  > article
+  > :is(header, section)
+  > :is(h1, h2, h3, h4, h5, h6) {
   color: var(--foreground);
   font-size: var(--text-sm);
   font-weight: var(--font-weight-semibold);
   line-height: 1.2;
 }
 
-.toast-description {
+:is(.toaster, [ng-toaster]) > article > :is(header, section) > p {
   color: var(--muted-foreground);
   font-size: var(--text-sm);
   line-height: 1.35;
 }
 
-.toast-action,
-.toast-close {
+:is(.toaster, [ng-toaster]) > article > button {
   align-self: start;
 }
 
@@ -159,8 +161,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .toast,
-  :is(.toast)[data-type="loading"] .toast-icon > svg {
+  :is(.toaster, [ng-toaster]) > article,
+  :is(.toaster, [ng-toaster]) > article[type="loading"] > figure > svg {
     animation: none;
     transition: none;
   }

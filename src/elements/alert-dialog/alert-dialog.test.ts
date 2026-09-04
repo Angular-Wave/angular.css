@@ -19,8 +19,8 @@ test("element alert-dialog page runs the packaged canonical artifact", async ({
   expect(sourceRequests).toEqual([]);
 
   const root = page.locator(".alert-dialog");
-  const trigger = root.locator(".alert-dialog-trigger");
-  const content = root.locator(".alert-dialog-content");
+  const trigger = root.locator(":scope > button:first-child");
+  const content = root.locator(":scope > dialog");
   await trigger.click();
   await expect(content).toBeVisible();
   await root.getByRole("button", { name: "Cancel" }).click();

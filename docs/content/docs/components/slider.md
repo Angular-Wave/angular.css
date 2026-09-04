@@ -7,12 +7,12 @@ description: >
 
 Use `ng-slider` with native range inputs. The directive exposes `aria-*` value
 attributes and a computed `data-value`. For range and multiple-value surfaces,
-put native range inputs with `.slider-thumb` inside a container marked with
-`ng-slider`; the parent inspects each thumb and every input keeps its own AngularTS `ng-model` and native form
-behavior.
+put native range inputs directly inside a container marked with `ng-slider`. The
+parent inspects each input, renders the shared track itself, and leaves every
+input's AngularTS `ng-model` and native form behavior intact.
 
 ```html
-<label for="volume" class="label">Volume</label>
+<label for="volume">Volume</label>
 <input ng-slider id="volume" type="range" min="0" max="100" />
 ```
 
@@ -54,25 +54,11 @@ Use native elements for authored structure. Component classes are optional visua
 
 | Attribute | Access | Purpose |
 | --- | --- | --- |
-| `aria-disabled` | Output | Semantic disabled state. |
-| `aria-invalid` | Input | Validation state mirrored from the control. |
 | `aria-orientation` | Output | ARIA relationship or state. |
-| `aria-required` | Output | ARIA relationship or state. |
-| `aria-valuemax` | Output | ARIA relationship or state. |
-| `aria-valuemin` | Output | ARIA relationship or state. |
-| `aria-valuenow` | Output | ARIA relationship or state. |
-| `data-disabled` | Output | Stable component state or styling hook. |
-| `data-index` | Output | Stable component state or styling hook. |
-| `data-invalid` | Output | Stable component state or styling hook. |
-| `data-orientation` | Input/output | Stable component state or styling hook. |
-| `data-required` | Output | Stable component state or styling hook. |
-| `data-value` | Output | Stable component state or styling hook. |
-| `data-values` | Output | Stable component state or styling hook. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
 | `max` | Input | Maximum native or component value. |
 | `min` | Input | Minimum native or component value. |
-| `orientation` | Input | Layout direction: `horizontal` or `vertical`. |
-| `role` | Output | Explicit semantic role when native HTML does not provide one. |
+| `orientation` | Input/output | Layout direction: `horizontal` or `vertical`. |
 
 `Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
 

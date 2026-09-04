@@ -6,7 +6,7 @@ test("collapsible element example exposes the synced functional HTML contract", 
   await page.goto("/docs/static/examples/elements/collapsible.html");
   const root = page.locator("details.collapsible");
   const trigger = root.locator(":scope > summary");
-  const content = page.locator(`.collapsible-content`);
+  const content = page.locator("details.collapsible > :last-child");
 
   await expect(root).not.toHaveAttribute("open", "");
   await trigger.click();

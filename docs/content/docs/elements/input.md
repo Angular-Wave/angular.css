@@ -9,9 +9,20 @@ Use native `input` elements for text-like controls. AngularCSS styles controls
 that opt in with `class="input"`.
 
 ```html
-<input id="email" type="email" placeholder="Email" ng-model="email" class="input" />
+<input
+  id="email"
+  type="email"
+  placeholder="Email"
+  ng-model="email"
+  class="input"
+/>
 <span>Value: <span ng-bind="email"></span></span>
-<input id="invalid-email" aria-invalid="true" placeholder="Email" class="input" />
+<input
+  id="invalid-email"
+  aria-invalid="true"
+  placeholder="Email"
+  class="input"
+/>
 <input id="avatar" type="file" class="input" />
 ```
 

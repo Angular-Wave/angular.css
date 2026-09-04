@@ -10,9 +10,11 @@ action and cancel target.
 
 ```html
 <section class="alert-dialog">
-  <button commandfor="delete-dialog" command="show-modal">Delete project</button>
-  <dialog id="delete-dialog" closedby="closerequest" class="alert-dialog-content">
-    <h2 class="alert-dialog-title">Delete project?</h2>
+  <button commandfor="delete-dialog" command="show-modal">
+    Delete project
+  </button>
+  <dialog id="delete-dialog" closedby="closerequest">
+    <h2>Delete project?</h2>
   </dialog>
 </section>
 ```
@@ -42,7 +44,7 @@ This is a styling-only HTML element or pattern. AngularCSS registers no runtime 
 
 ### Semantic structure
 
-Use `.alert-dialog` as an optional composition wrapper, a native button with `command=show-modal`, and `dialog.alert-dialog-content`. Close controls use `command=close`; no overlay element or nested AngularCSS attributes are required.
+Use `.alert-dialog` as a composition wrapper containing a native invoker button and `dialog`. Close controls use `command=close`; semantic headers, figures, and footers need no anatomy classes or nested AngularCSS attributes.
 
 ## API
 

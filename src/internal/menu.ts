@@ -5,14 +5,26 @@ type Direction = "ltr" | "rtl";
 const itemSelector =
   'a[href], button, [role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]';
 
+export const getSemanticMenuItemRole = (
+  item: HTMLElement,
+): "menuitem" | "menuitemcheckbox" | "menuitemradio" => {
+  const menu = item.closest("menu");
+  const fieldset = item.closest("fieldset");
+  if (fieldset?.closest("menu") === menu) {
+    return "menuitemradio";
+  }
+  if (item.hasAttribute("aria-checked")) return "menuitemcheckbox";
+  return "menuitem";
+};
+
 export function bindSemanticSubmenus(
   root: HTMLElement,
   prefix: "context-menu" | "dropdown-menu" | "menubar",
   getDirection: () => Direction,
 ): () => void {
-  const subSelector = `.${prefix}-sub, [ng-${prefix}-sub]`;
-  const triggerSelector = `.${prefix}-sub-trigger, [ng-${prefix}-sub-trigger]`;
-  const contentSelector = `.${prefix}-sub-content, [ng-${prefix}-sub-content]`;
+  const subSelector = "details";
+  const triggerSelector = ":scope > summary";
+  const contentSelector = ":scope > menu";
   const cleanups = new Map<HTMLElement, () => void>();
   let submenuId = 0;
 
@@ -26,21 +38,18 @@ export function bindSemanticSubmenus(
     const contentId =
       content.id || `${prefix}-sub-content-${String(submenuId++)}`;
     content.id = contentId;
+    trigger.setAttribute("role", "menuitem");
     trigger.setAttribute("aria-controls", contentId);
     trigger.setAttribute("aria-haspopup", "menu");
     content.setAttribute("role", "menu");
     const getItems = () =>
       queryAll<HTMLElement>(content, itemSelector).filter(
-        (item) => !isDisabled(item),
+        (item) => item.closest("menu") === content && !isDisabled(item),
       );
     const syncItems = () => {
       getItems().forEach((item) => {
         if (item.hasAttribute("role")) return;
-        const role = item.matches(`.${prefix}-checkbox-item`)
-          ? "menuitemcheckbox"
-          : item.matches(`.${prefix}-radio-item`)
-            ? "menuitemradio"
-            : "menuitem";
+        const role = getSemanticMenuItemRole(item);
         item.setAttribute("role", role);
         if (role !== "menuitem" && !item.hasAttribute("aria-checked")) {
           item.setAttribute("aria-checked", "false");
@@ -48,18 +57,12 @@ export function bindSemanticSubmenus(
       });
     };
 
-    let open =
-      submenu.getAttribute("data-open") === "true" ||
-      submenu.getAttribute("data-state") === "open";
+    let open = submenu instanceof HTMLDetailsElement && submenu.open;
 
     const setOpen = (nextOpen: boolean, focus = false) => {
       open = nextOpen;
-      const state = open ? "open" : "closed";
-      submenu.setAttribute("data-open", String(open));
-      submenu.setAttribute("data-state", state);
+      if (submenu instanceof HTMLDetailsElement) submenu.open = open;
       trigger.setAttribute("aria-expanded", String(open));
-      trigger.setAttribute("data-state", state);
-      content.setAttribute("data-state", state);
       content.setAttribute("aria-hidden", String(!open));
       setOpenState(content, open);
       syncItems();
@@ -110,9 +113,8 @@ export function bindSemanticSubmenus(
       }
     };
     const syncAuthoredState = () => {
-      const authoredOpen = submenu.getAttribute("data-open");
-      if (authoredOpen !== null && (authoredOpen === "true") !== open) {
-        setOpen(authoredOpen === "true");
+      if (submenu instanceof HTMLDetailsElement && submenu.open !== open) {
+        setOpen(submenu.open);
       }
     };
 
@@ -123,7 +125,7 @@ export function bindSemanticSubmenus(
     const stateObserver = new MutationObserver(syncAuthoredState);
     stateObserver.observe(submenu, {
       attributes: true,
-      attributeFilter: ["data-open"],
+      attributeFilter: ["open"],
     });
     syncItems();
     setOpen(open);
@@ -145,10 +147,10 @@ export function bindSemanticSubmenus(
         cleanups.delete(submenu);
       }
     });
-    if (root.getAttribute("data-state") === "closed") {
+    if (root.hidden) {
       queryAll<HTMLElement>(root, subSelector).forEach((submenu) => {
-        if (submenu.getAttribute("data-open") !== "false") {
-          submenu.setAttribute("data-open", "false");
+        if (submenu instanceof HTMLDetailsElement && submenu.open) {
+          submenu.open = false;
         }
       });
     }
@@ -157,7 +159,7 @@ export function bindSemanticSubmenus(
   const observer = new MutationObserver(sync);
   observer.observe(root, {
     attributes: true,
-    attributeFilter: ["data-state"],
+    attributeFilter: ["hidden"],
     childList: true,
     subtree: true,
   });

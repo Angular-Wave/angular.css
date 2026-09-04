@@ -10,9 +10,9 @@ can use `--value` and `--chart-color` for simple CSS-rendered examples.
 
 ```html
 <section class="chart">
-  <div class="chart-plot">
-    <span style="--value: 72%;" class="chart-bar"></span>
-  </div>
+  <section>
+    <span style="--value: 72%;"></span>
+  </section>
 </section>
 ```
 

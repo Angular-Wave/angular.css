@@ -2,15 +2,14 @@ import { expect, test } from "@playwright/test";
 
 const canonicalUrl = "/docs/static/examples/components/tabs.html";
 const workflowsUrl = "/docs/static/examples/components/tabs-workflows.html";
-const triggerSelector = ".tabs-trigger";
-const panelSelector = ".tabs-content";
+const panelSelector = ":scope > :is(article, section)";
 
 test("published tabs activate panels by click and roving keyboard navigation", async ({
   page,
 }) => {
   await page.goto(canonicalUrl);
   const tabs = page.locator("[ng-tabs]");
-  const triggers = tabs.locator(triggerSelector);
+  const triggers = tabs.getByRole("tab");
   const panels = tabs.locator(panelSelector);
   const list = tabs.getByRole("tablist");
 
@@ -45,9 +44,9 @@ test("published vertical tabs use vertical arrow navigation", async ({
 }) => {
   await page.goto(workflowsUrl);
   const tabs = page.locator("#vertical-tabs");
-  const triggers = tabs.locator(triggerSelector);
+  const triggers = tabs.getByRole("tab");
 
-  await expect(tabs).toHaveAttribute("data-orientation", "vertical");
+  await expect(tabs).toHaveAttribute("orientation", "vertical");
   await expect(tabs.getByRole("tablist")).toHaveAttribute(
     "aria-orientation",
     "vertical",
@@ -64,7 +63,7 @@ test("published workflow binds tabs inserted by AngularTS", async ({
 }) => {
   await page.goto(workflowsUrl);
   const tabs = page.locator("#dynamic-tabs");
-  const triggers = tabs.locator(triggerSelector);
+  const triggers = tabs.getByRole("tab");
   const panels = tabs.locator(panelSelector);
   await expect(triggers).toHaveCount(2);
 
@@ -85,12 +84,11 @@ test("published workflow moves selection when AngularTS disables the active tab"
 }) => {
   await page.goto(workflowsUrl);
   const tabs = page.locator("#disabled-tabs");
-  const triggers = tabs.locator(triggerSelector);
+  const triggers = tabs.getByRole("tab");
   const panels = tabs.locator(panelSelector);
 
   await page.getByRole("button", { name: "Disable overview" }).click();
   await expect(triggers.nth(0)).toBeDisabled();
-  await expect(triggers.nth(0)).toHaveAttribute("data-disabled", "true");
   await expect(triggers.nth(0)).toHaveAttribute("aria-selected", "false");
   await expect(triggers.nth(1)).toHaveAttribute("aria-selected", "true");
   await expect(panels.nth(1)).toBeVisible();
@@ -102,15 +100,15 @@ test("published tabs support RTL arrows and trigger-only visual variants", async
 }) => {
   await page.goto(workflowsUrl);
   const rtlTabs = page.locator("#rtl-tabs");
-  const rtlTriggers = rtlTabs.locator(triggerSelector);
-  await expect(rtlTabs).toHaveAttribute("data-direction", "rtl");
+  const rtlTriggers = rtlTabs.getByRole("tab");
+  await expect(rtlTabs).toHaveCSS("direction", "rtl");
   await rtlTriggers.nth(1).focus();
   await rtlTriggers.nth(1).press("ArrowRight");
   await expect(rtlTriggers.nth(0)).toBeFocused();
   await expect(rtlTriggers.nth(0)).toHaveAttribute("aria-selected", "true");
 
   const iconTabs = page.locator("#icon-tabs");
-  const iconTriggers = iconTabs.locator(triggerSelector);
+  const iconTriggers = iconTabs.getByRole("tab");
   await expect(iconTriggers).toHaveCount(2);
   await expect(iconTriggers.nth(0)).toHaveAttribute("role", "tab");
   await iconTriggers.nth(1).click();

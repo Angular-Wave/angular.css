@@ -5,13 +5,13 @@ description: >
   Rich hover preview cards
 ---
 
-Use hover card parts for a trigger and preview content. Set `data-open="true"`
+Use a focusable trigger and semantic preview content. Set `open` on the wrapper
 when rendering a controlled preview.
 
 ```html
 <span class="hover-card">
-  <a href="#" class="hover-card-trigger">@angularcss</a>
-  <aside class="hover-card-content">Preview</aside>
+  <a href="#">@angularcss</a>
+  <aside>Preview</aside>
 </span>
 ```
 

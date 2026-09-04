@@ -24,7 +24,7 @@
   background: var(--muted);
 }
 
-:is(.toggle):is(:disabled, [aria-disabled="true"], [data-disabled="true"]) {
+:is(.toggle):is(:disabled, [aria-disabled="true"]) {
   pointer-events: none;
   opacity: 0.5;
 }
@@ -33,13 +33,12 @@
   border-color: var(--input);
 }
 
-.toggle[aria-pressed="true"],
-.toggle[data-state="on"] {
+.toggle[aria-pressed="true"] {
   background: var(--accent);
   color: var(--accent-foreground);
 }
 
-.toggle:active:not(:disabled, [aria-disabled="true"], [data-disabled="true"]) {
+.toggle:active:not(:disabled, [aria-disabled="true"]) {
   transform: translateY(1px);
 }
 

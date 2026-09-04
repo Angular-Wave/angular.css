@@ -7,10 +7,9 @@ const statesUrl =
   "/docs/static/examples/components/resizable-state-workflows.html";
 
 const groupPanels = (group: Locator): Locator =>
-  group.locator(":scope > .resizable-panel");
+  group.locator(":scope > section");
 
-const groupHandles = (group: Locator): Locator =>
-  group.locator(":scope > .resizable-handle");
+const groupHandles = (group: Locator): Locator => group.locator(":scope > hr");
 
 const expectBuiltArtifactRuntime = async (page: Page): Promise<void> => {
   await expect(
@@ -43,7 +42,8 @@ test("canonical nested layout supplies exact panel, handle, and ARIA anatomy", a
   await expect(groups).toHaveCount(2);
   await expect(groupPanels(outer)).toHaveCount(2);
   await expect(groupPanels(inner)).toHaveCount(2);
-  await expect(outerHandle).toHaveAttribute("role", "separator");
+  await expect(outerHandle).toHaveRole("separator");
+  await expect(outerHandle).not.toHaveAttribute("role");
   await expect(outerHandle).toHaveAttribute("tabindex", "0");
   await expect(outerHandle).toHaveAttribute("aria-orientation", "vertical");
   await expect(innerHandle).toHaveAttribute("aria-orientation", "horizontal");
@@ -64,12 +64,25 @@ test("canonical nested layout supplies exact panel, handle, and ARIA anatomy", a
     controlledIds?.[1] ?? "",
   );
 
-  const outerGrip = outerHandle.locator(".resizable-handle-grip");
-  const innerGrip = innerHandle.locator(".resizable-handle-grip");
-  expect((await outerGrip.boundingBox())?.width).toBe(4);
-  expect((await outerGrip.boundingBox())?.height).toBe(24);
-  expect((await innerGrip.boundingBox())?.width).toBe(24);
-  expect((await innerGrip.boundingBox())?.height).toBe(4);
+  const [outerGrip, innerGrip] = await Promise.all(
+    [outerHandle, innerHandle].map((handle) =>
+      handle.evaluate((element) => {
+        const style = getComputedStyle(element, "::after");
+        return {
+          content: style.content,
+          height: style.height,
+          transform: style.transform,
+          width: style.width,
+        };
+      }),
+    ),
+  );
+  expect(outerGrip).toMatchObject({
+    content: '\"\"',
+    height: "24px",
+    width: "4px",
+  });
+  expect(innerGrip.transform).not.toBe("none");
 });
 
 test("nested groups keep keyboard resizing scoped to direct panels", async ({
@@ -124,7 +137,7 @@ test("handle and vertical references preserve sizing, bounds, and grip variants"
   const visibleHandle = groupHandles(handleLayout);
   await expect(groupPanels(handleLayout).nth(0)).toHaveCSS("--panel-size", "1");
   await expect(groupPanels(handleLayout).nth(1)).toHaveCSS("--panel-size", "3");
-  await expect(visibleHandle.locator(".resizable-handle-grip")).toHaveCount(1);
+  await expect(visibleHandle).toHaveRole("separator");
   await visibleHandle.press("ArrowRight");
   await expect(groupPanels(handleLayout).nth(0)).toHaveCSS(
     "--panel-size",
@@ -137,14 +150,12 @@ test("handle and vertical references preserve sizing, bounds, and grip variants"
 
   const vertical = page.locator("#vertical-layout");
   const horizontalHandle = groupHandles(vertical);
-  await expect(vertical).toHaveAttribute("data-orientation", "vertical");
+  await expect(vertical).toHaveAttribute("orientation", "vertical");
   await expect(horizontalHandle).toHaveAttribute(
     "aria-orientation",
     "horizontal",
   );
-  await expect(horizontalHandle.locator(".resizable-handle-grip")).toHaveCount(
-    0,
-  );
+  await expect(horizontalHandle).toHaveRole("separator");
   await horizontalHandle.press("ArrowDown");
   await expect(groupPanels(vertical).first()).toHaveCSS("--panel-size", "1.5");
   await horizontalHandle.press("Home");
@@ -159,14 +170,12 @@ test("RTL reference reverses horizontal resizing and preserves nested orientatio
   await page.goto(workflowsUrl);
   const rtl = page.locator("#rtl-layout");
   const outerHandle = groupHandles(rtl);
-  const nested = rtl.locator(
-    ":scope > .resizable-panel [ng-resizable-panel-group]",
-  );
+  const nested = rtl.locator(":scope > section [ng-resizable-panel-group]");
   const nestedHandle = groupHandles(nested);
 
   await expect(rtl).toHaveAttribute("dir", "rtl");
-  await expect(rtl).toHaveAttribute("data-direction", "rtl");
-  await expect(nested).toHaveAttribute("data-orientation", "vertical");
+  await expect(rtl).toHaveCSS("direction", "rtl");
+  await expect(nested).toHaveAttribute("orientation", "vertical");
   await expect(nestedHandle).toHaveAttribute("aria-orientation", "horizontal");
   await outerHandle.press("ArrowRight");
   await expect(groupPanels(rtl).first()).toHaveCSS("--panel-size", "0.75");
@@ -189,13 +198,14 @@ test("state artifact synchronizes external size, orientation, and inserted panel
   await expect(firstHandle).toHaveAttribute("aria-valuenow", "2");
 
   await page.getByRole("button", { name: "Toggle orientation" }).click();
-  await expect(group).toHaveAttribute("data-orientation", "vertical");
+  await expect(group).toHaveAttribute("orientation", "vertical");
   await expect(firstHandle).toHaveAttribute("aria-orientation", "horizontal");
 
   await page.getByRole("button", { name: "Add third panel" }).click();
   const insertedHandle = page.locator("#state-inserted-handle");
   await expect(groupPanels(group)).toHaveCount(3);
-  await expect(insertedHandle).toHaveAttribute("role", "separator");
+  await expect(insertedHandle).toHaveRole("separator");
+  await expect(insertedHandle).not.toHaveAttribute("role");
   await expect(insertedHandle).toHaveAttribute("aria-controls", /\S+\s+\S+/);
   await insertedHandle.press("ArrowDown");
   await expect(groupPanels(group).nth(1)).toHaveCSS("--panel-size", "1.25");

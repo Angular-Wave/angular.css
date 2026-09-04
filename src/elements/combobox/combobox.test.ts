@@ -29,14 +29,13 @@ test("element artifact runs the packaged combobox without source construction", 
   const basic = page.locator("#basic-combobox");
   const automatic = page.locator("#auto-combobox");
   await expect(roots).toHaveCount(2);
-  await expect(basic.locator(".combobox-content")).toBeHidden();
+  await expect(basic.locator(":scope > aside")).toBeHidden();
 
   const basicInput = basic.getByRole("combobox");
   await basicInput.fill("sv");
   await expect(basic.getByRole("option")).toHaveCount(1);
   await basicInput.press("ArrowDown");
   await basicInput.press("Enter");
-  await expect(basic).toHaveAttribute("data-value", "SvelteKit");
   await expect(basicInput).toHaveValue("SvelteKit");
 
   const automaticInput = automatic.getByRole("combobox");
@@ -47,6 +46,6 @@ test("element artifact runs the packaged combobox without source construction", 
   );
   await automaticInput.press("End");
   await automaticInput.press("Enter");
-  await expect(automatic).toHaveAttribute("data-value", "Astro");
+  await expect(automaticInput).toHaveValue("Astro");
   await expect(page.locator(".output")).toContainText("Automatic: Astro");
 });

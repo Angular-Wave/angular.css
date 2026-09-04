@@ -10,13 +10,13 @@ Wrap multiple avatars with `.avatar-group`.
 
 ```html
 <span class="avatar" aria-label="Jane Doe">
-  <span class="avatar-fallback">JD</span>
-  <span class="avatar-badge"></span>
+  <span>JD</span>
+  <output></output>
 </span>
 
 <span class="avatar-group">
   <span class="avatar"><img src="avatar.jpg" alt="Alex Brown" /></span>
-  <span class="avatar-group-count">+3</span>
+  <output>+3</output>
 </span>
 ```
 

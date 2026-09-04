@@ -24,12 +24,12 @@
         <div class="avatar-workflow-row" aria-label="Avatar badge icon">
           <span class="avatar">
             <img
-
-              class="avatar-grayscale avatar-image"
+              class="avatar-grayscale"
               src="../../images/avatars/02.png"
-              alt="@pranathip" />
-            <span class="avatar-fallback">PP</span>
-            <span class="avatar-badge">
+              alt="@pranathip"
+            />
+            <span>PP</span>
+            <output>
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -41,7 +41,7 @@
                 <path d="M5 12h14" />
                 <path d="M12 5v14" />
               </svg>
-            </span>
+            </output>
           </span>
         </div>
       </section>
@@ -52,35 +52,22 @@
       >
         <h2 id="avatar-count-heading">Group count icon</h2>
         <div
-
           class="avatar-grayscale avatar-group"
           aria-label="Avatar group count icon"
         >
           <span class="avatar">
-            <img
-
-              src="../../images/avatars/01.png"
-              alt="@shadcn"
-             class="avatar-image" />
-            <span class="avatar-fallback">CN</span>
+            <img src="../../images/avatars/01.png" alt="@shadcn" />
+            <span>CN</span>
           </span>
           <span class="avatar">
-            <img
-
-              src="../../images/avatars/03.png"
-              alt="@maxleiter"
-             class="avatar-image" />
-            <span class="avatar-fallback">LR</span>
+            <img src="../../images/avatars/03.png" alt="@maxleiter" />
+            <span>LR</span>
           </span>
           <span class="avatar">
-            <img
-
-              src="../../images/avatars/04.png"
-              alt="@evilrabbit"
-             class="avatar-image" />
-            <span class="avatar-fallback">ER</span>
+            <img src="../../images/avatars/04.png" alt="@evilrabbit" />
+            <span>ER</span>
           </span>
-          <span class="avatar-group-count">
+          <output>
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -92,7 +79,7 @@
               <path d="M5 12h14" />
               <path d="M12 5v14" />
             </svg>
-          </span>
+          </output>
         </div>
       </section>
 
@@ -106,28 +93,16 @@
           aria-label="Avatar sizes"
         >
           <span size="sm" class="avatar">
-            <img
-
-              src="../../images/avatars/01.png"
-              alt="@shadcn small"
-             class="avatar-image" />
-            <span class="avatar-fallback">CN</span>
+            <img src="../../images/avatars/01.png" alt="@shadcn small" />
+            <span>CN</span>
           </span>
           <span class="avatar">
-            <img
-
-              src="../../images/avatars/01.png"
-              alt="@shadcn default"
-             class="avatar-image" />
-            <span class="avatar-fallback">CN</span>
+            <img src="../../images/avatars/01.png" alt="@shadcn default" />
+            <span>CN</span>
           </span>
           <span size="lg" class="avatar">
-            <img
-
-              src="../../images/avatars/01.png"
-              alt="@shadcn large"
-             class="avatar-image" />
-            <span class="avatar-fallback">CN</span>
+            <img src="../../images/avatars/01.png" alt="@shadcn large" />
+            <span>CN</span>
           </span>
         </div>
       </section>
@@ -140,53 +115,28 @@
         <div ng-dropdown class="avatar-dropdown-demo dropdown-menu">
           <button
             type="button"
-
-
             variant="ghost"
             size="icon"
-            class="avatar-dropdown-trigger dropdown-menu-trigger button"
+            class="avatar-dropdown-trigger button"
             aria-label="Open user menu"
           >
             <span class="avatar">
-              <img
-
-                src="../../images/avatars/01.png"
-                alt="shadcn"
-               class="avatar-image" />
-              <span class="avatar-fallback">CN</span>
+              <img src="../../images/avatars/01.png" alt="shadcn" />
+              <span>CN</span>
             </span>
           </button>
-          <menu class="avatar-dropdown-menu dropdown-menu-content">
-            <div class="dropdown-menu-group">
-              <button
-
-                ng-click="avatarAction = 'Profile'"
-               class="dropdown-menu-item">
-                Profile
-              </button>
-              <button
-
-                ng-click="avatarAction = 'Billing'"
-               class="dropdown-menu-item">
-                Billing
-              </button>
-              <button
-
-                ng-click="avatarAction = 'Settings'"
-               class="dropdown-menu-item">
-                Settings
-              </button>
-            </div>
-            <div class="dropdown-menu-separator"></div>
-            <div class="dropdown-menu-group">
-              <button
-
-                data-variant="destructive"
-                ng-click="avatarAction = 'Log out'"
-               class="dropdown-menu-item">
+          <menu class="avatar-dropdown-menu">
+            <section>
+              <button ng-click="avatarAction = 'Profile'">Profile</button>
+              <button ng-click="avatarAction = 'Billing'">Billing</button>
+              <button ng-click="avatarAction = 'Settings'">Settings</button>
+            </section>
+            <hr />
+            <section>
+              <button variant="destructive" ng-click="avatarAction = 'Log out'">
                 Log out
               </button>
-            </div>
+            </section>
           </menu>
         </div>
         <output class="avatar-workflow-output">
@@ -207,47 +157,31 @@
         >
           <span class="avatar">
             <img
-
-              class="avatar-grayscale avatar-image"
+              class="avatar-grayscale"
               src="../../images/avatars/01.png"
-              alt="@shadcn" />
-            <span class="avatar-fallback">CN</span>
+              alt="@shadcn"
+            />
+            <span>CN</span>
           </span>
           <span class="avatar-rtl-badge avatar">
-            <img
-
-              src="../../images/avatars/04.png"
-              alt="@evilrabbit"
-             class="avatar-image" />
-            <span class="avatar-fallback">ER</span>
-            <span data-variant="success" class="avatar-badge"></span>
+            <img src="../../images/avatars/04.png" alt="@evilrabbit" />
+            <span>ER</span>
+            <output variant="success"></output>
           </span>
           <span class="avatar-grayscale avatar-group">
             <span class="avatar">
-              <img
-
-                src="../../images/avatars/01.png"
-                alt="@shadcn"
-               class="avatar-image" />
-              <span class="avatar-fallback">CN</span>
+              <img src="../../images/avatars/01.png" alt="@shadcn" />
+              <span>CN</span>
             </span>
             <span class="avatar">
-              <img
-
-                src="../../images/avatars/03.png"
-                alt="@maxleiter"
-               class="avatar-image" />
-              <span class="avatar-fallback">LR</span>
+              <img src="../../images/avatars/03.png" alt="@maxleiter" />
+              <span>LR</span>
             </span>
             <span class="avatar">
-              <img
-
-                src="../../images/avatars/04.png"
-                alt="@evilrabbit"
-               class="avatar-image" />
-              <span class="avatar-fallback">ER</span>
+              <img src="../../images/avatars/04.png" alt="@evilrabbit" />
+              <span>ER</span>
             </span>
-            <span class="avatar-group-count">+٣</span>
+            <output>+٣</output>
           </span>
         </div>
       </section>

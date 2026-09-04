@@ -46,3 +46,11 @@ test("Select remains styling-only", async ({ page }) => {
   });
   expect(registeredDirectives).not.toContain("ngSelect");
 });
+
+test("Select preserves the browser's native picker", async ({ page }) => {
+  await page.goto(sourceUrl);
+  const select = page.locator("select");
+
+  await expect(select).toHaveCSS("field-sizing", "content");
+  await expect(select).toHaveCSS("appearance", "auto");
+});

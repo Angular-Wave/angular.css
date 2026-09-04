@@ -10,8 +10,8 @@ test("dropdown element example exercises the built functional artifact", async (
   await expect(trigger).toHaveAttribute("aria-expanded", "false");
   await trigger.click();
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
-  await expect(menu).toHaveAttribute("data-open", "true");
+  await expect(menu).toBeVisible();
   await menu.getByRole("menuitem", { name: /Edit task/ }).click();
-  await expect(menu).toHaveAttribute("data-open", "false");
+  await expect(menu).toBeHidden();
   await expect(trigger).toBeFocused();
 });

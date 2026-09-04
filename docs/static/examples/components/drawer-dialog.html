@@ -18,33 +18,52 @@
     <main class="drawer-dialog-demo visual-example">
       <div class="drawer-dialog-desktop">
         <section id="responsive-profile-dialog" class="dialog">
-          <button variant="outline" class="dialog-trigger button" type="button" commandfor="responsive-profile-dialog-content" command="show-modal">
+          <button
+            variant="outline"
+            class="button"
+            type="button"
+            commandfor="responsive-profile-dialog-content"
+            command="show-modal"
+          >
             Edit Profile
           </button>
-          <dialog class="drawer-profile-dialog dialog-content" id="responsive-profile-dialog-content" closedby="any" aria-labelledby="responsive-profile-dialog-title" aria-describedby="responsive-profile-dialog-description">
-            <header class="dialog-header">
-              <h2 class="dialog-title" id="responsive-profile-dialog-title">Edit profile</h2>
-              <p class="dialog-description" id="responsive-profile-dialog-description">
+          <dialog
+            class="drawer-profile-dialog"
+            id="responsive-profile-dialog-content"
+            closedby="any"
+            aria-labelledby="responsive-profile-dialog-title"
+            aria-describedby="responsive-profile-dialog-description"
+          >
+            <header>
+              <h2 id="responsive-profile-dialog-title">Edit profile</h2>
+              <p id="responsive-profile-dialog-description">
                 Make changes to your profile here. Click save when you're done.
               </p>
             </header>
             <form class="drawer-profile-form">
               <div class="drawer-profile-field">
-                <label for="desktop-email" class="label">Email</label>
+                <label for="desktop-email">Email</label>
                 <input
                   id="desktop-email"
                   type="email"
-
-                  ng-model="profile.email" class="input" />
+                  ng-model="profile.email"
+                  class="input"
+                />
               </div>
               <div class="drawer-profile-field">
-                <label for="desktop-username" class="label">Username</label>
+                <label for="desktop-username">Username</label>
                 <input
                   id="desktop-username"
-
-                  ng-model="profile.username" class="input" />
+                  ng-model="profile.username"
+                  class="input"
+                />
               </div>
-              <button type="button" class="button" commandfor="responsive-profile-dialog-content" command="close">
+              <button
+                type="button"
+                class="button"
+                commandfor="responsive-profile-dialog-content"
+                command="close"
+              >
                 Save changes
               </button>
             </form>
@@ -54,42 +73,62 @@
 
       <div class="drawer-dialog-mobile">
         <section id="responsive-profile-drawer" class="drawer">
-          <button variant="outline" class="drawer-trigger button" type="button" commandfor="responsive-profile-drawer-content" command="show-modal">
+          <button
+            variant="outline"
+            class="button"
+            type="button"
+            commandfor="responsive-profile-drawer-content"
+            command="show-modal"
+          >
             Edit Profile
           </button>
-          <dialog class="drawer-content" id="responsive-profile-drawer-content" closedby="any" aria-labelledby="responsive-profile-drawer-title" aria-describedby="responsive-profile-drawer-description" data-side="bottom">
-            <div class="drawer-handle"></div>
-            <header class="drawer-header">
-              <h2 class="drawer-title" id="responsive-profile-drawer-title">Edit profile</h2>
-              <p class="drawer-description" id="responsive-profile-drawer-description">
+          <dialog
+            id="responsive-profile-drawer-content"
+            closedby="any"
+            aria-labelledby="responsive-profile-drawer-title"
+            aria-describedby="responsive-profile-drawer-description"
+            side="bottom"
+          >
+            <header>
+              <h2 id="responsive-profile-drawer-title">Edit profile</h2>
+              <p id="responsive-profile-drawer-description">
                 Make changes to your profile here. Click save when you're done.
               </p>
             </header>
             <form class="drawer-profile-form drawer-profile-mobile">
               <div class="drawer-profile-field">
-                <label for="mobile-email" class="label">Email</label>
+                <label for="mobile-email">Email</label>
                 <input
                   id="mobile-email"
                   type="email"
-
-                  ng-model="profile.email" class="input" />
+                  ng-model="profile.email"
+                  class="input"
+                />
               </div>
               <div class="drawer-profile-field">
-                <label for="mobile-username" class="label">Username</label>
+                <label for="mobile-username">Username</label>
                 <input
                   id="mobile-username"
-
-                  ng-model="profile.username" class="input" />
+                  ng-model="profile.username"
+                  class="input"
+                />
               </div>
               <button
                 type="button"
                 commandfor="responsive-profile-drawer-content"
                 command="close"
                 class="button"
-              >Save changes</button>
+              >
+                Save changes
+              </button>
             </form>
-            <footer class="drawer-footer">
-              <button variant="outline" class="drawer-close button" commandfor="responsive-profile-drawer-content" command="close">
+            <footer>
+              <button
+                variant="outline"
+                class="button"
+                commandfor="responsive-profile-drawer-content"
+                command="close"
+              >
                 Cancel
               </button>
             </footer>

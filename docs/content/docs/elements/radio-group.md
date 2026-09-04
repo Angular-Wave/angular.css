@@ -11,13 +11,13 @@ Use native radio inputs with a shared name inside a `fieldset` with a `legend`.
 <fieldset class="radio-group">
   <div orientation="horizontal" class="field">
     <input
-
       id="default"
       name="density"
       type="radio"
       value="default"
-      ng-model="density"  class="radio-group-item"/>
-    <label for="default" class="label">Default</label>
+      ng-model="density"
+    />
+    <label for="default">Default</label>
   </div>
 </fieldset>
 <span>Density: <span ng-bind="density"></span></span>

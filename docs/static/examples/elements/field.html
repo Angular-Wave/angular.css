@@ -12,32 +12,37 @@
   <body ng-app="ui" ng-cloak ng-init="name='Jane Doe'; email=''">
     <form class="stack">
       <fieldset class="field-set">
-        <legend class="field-legend">Profile</legend>
+        <legend>Profile</legend>
         <div class="field-group">
           <div class="field">
-            <label for="demo-profile-name"
-               class="field-label label">Name</label>
+            <label for="demo-profile-name">Name</label>
             <input
-
               id="demo-profile-name"
               aria-describedby="demo-profile-name-description"
               placeholder="Jane Doe"
-              ng-model="name" class="input" />
-            <p id="demo-profile-name-description" class="field-description">Use your public display name.</p>
+              ng-model="name"
+              class="input"
+            />
+            <p id="demo-profile-name-description">
+              Use your public display name.
+            </p>
           </div>
           <div class="field">
-            <label for="demo-profile-email" class="field-label label">
-              Email
-            </label>
+            <label for="demo-profile-email"> Email </label>
             <input
-
               id="demo-profile-email"
               type="email"
               placeholder="Enter an email"
               required
               aria-describedby="demo-profile-email-error"
-              ng-model="email" class="input" />
-            <p id="demo-profile-email-error" ng-show="!email" class="field-error">
+              ng-model="email"
+              class="input"
+            />
+            <p
+              id="demo-profile-email-error"
+              ng-show="!email"
+              class="field-error"
+            >
               Enter a valid email.
             </p>
           </div>

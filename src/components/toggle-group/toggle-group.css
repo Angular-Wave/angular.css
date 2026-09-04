@@ -21,7 +21,7 @@
   --toggle-group-gap: calc(var(--spacing) * 2);
 }
 
-.toggle-group-item {
+.toggle-group > label {
   position: relative;
   display: inline-flex;
   height: calc(var(--spacing) * 9);
@@ -45,94 +45,92 @@
     transform 90ms ease-out;
 }
 
-.toggle-group-item:hover {
-  background: var(--muted);
-}
-
-.toggle-group-item:has(input:checked) {
-  background: var(--accent);
-  color: var(--accent-foreground);
-}
-
-.toggle-group-item:has(input:focus-visible) {
-  z-index: 1;
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
-}
-
-.toggle-group-item:has(input:disabled) {
-  pointer-events: none;
-  opacity: 0.5;
-}
-
-.toggle-group-item > input {
+.toggle-group > label > input {
   position: absolute;
   width: 1px;
   height: 1px;
   opacity: 0;
 }
 
-.toggle-group[size="sm"] > .toggle-group-item {
+.toggle-group > label > svg {
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+}
+
+.toggle-group > label:where(:hover) {
+  background: var(--muted);
+}
+
+.toggle-group > label:where(:has(input:checked)) {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.toggle-group > label:where(:has(input:focus-visible)) {
+  z-index: 1;
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.toggle-group > label:where(:has(input:disabled)) {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.toggle-group > label:where(:active:not(:has(input:disabled))) {
+  transform: translateY(1px);
+}
+
+.toggle-group[size="sm"] > label {
   height: calc(var(--spacing) * 8);
   padding-inline: calc(var(--spacing) * 2);
 }
 
-.toggle-group[size="lg"] > .toggle-group-item {
+.toggle-group[size="lg"] > label {
   height: calc(var(--spacing) * 10);
   padding-inline: calc(var(--spacing) * 4);
-}
-
-.toggle-group-item:active:not(:has(input:disabled)) {
-  transform: translateY(1px);
 }
 
 .toggle-group[variant="outline"]:not([spacing]) {
   gap: 0;
 }
 
-.toggle-group[variant="outline"]:not([spacing]) > .toggle-group-item {
+.toggle-group[variant="outline"]:not([spacing]) > label {
   margin-inline-start: -1px;
   border-color: var(--input);
   border-radius: 0;
 }
 
-.toggle-group[variant="outline"]:not([spacing])
-  > .toggle-group-item:first-of-type {
+.toggle-group[variant="outline"]:not([spacing]) > label:first-of-type {
   margin-inline-start: 0;
   border-start-start-radius: calc(var(--radius) - 2px);
   border-end-start-radius: calc(var(--radius) - 2px);
 }
 
-.toggle-group[variant="outline"]:not([spacing])
-  > .toggle-group-item:last-of-type {
+.toggle-group[variant="outline"]:not([spacing]) > label:last-of-type {
   border-start-end-radius: calc(var(--radius) - 2px);
   border-end-end-radius: calc(var(--radius) - 2px);
 }
 
 .toggle-group[orientation="vertical"][variant="outline"]:not([spacing])
-  > .toggle-group-item {
+  > label {
   margin-block-start: -1px;
   margin-inline-start: 0;
 }
 
 .toggle-group[orientation="vertical"][variant="outline"]:not([spacing])
-  > .toggle-group-item:first-of-type {
+  > label:first-of-type {
   margin-block-start: 0;
   border-radius: calc(var(--radius) - 2px) calc(var(--radius) - 2px) 0 0;
 }
 
 .toggle-group[orientation="vertical"][variant="outline"]:not([spacing])
-  > .toggle-group-item:last-of-type {
+  > label:last-of-type {
   border-radius: 0 0 calc(var(--radius) - 2px) calc(var(--radius) - 2px);
 }
 
-.toggle-group-item > svg {
-  width: calc(var(--spacing) * 4);
-  height: calc(var(--spacing) * 4);
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .toggle-group-item {
+  .toggle-group > label {
     transition-duration: 0s;
   }
 }

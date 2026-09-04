@@ -9,7 +9,7 @@ Use the native `dir` attribute and logical CSS properties on semantic blocks.
 
 ```html
 <section dir="rtl" class="direction">
-  <p data-logical-align="start">Logical start aligns for right-to-left.</p>
+  <p align="start">Logical start aligns for right-to-left.</p>
 </section>
 ```
 

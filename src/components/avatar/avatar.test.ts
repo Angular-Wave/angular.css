@@ -9,7 +9,7 @@ test("avatar leaves image and fallback ownership in authored HTML", async ({
 
   await expect(imageAvatar.locator("img")).toBeVisible();
   await expect(imageAvatar).not.toHaveAttribute("data-state", /.+/);
-  await expect(fallbackAvatar.locator(".avatar-fallback")).toHaveText("JD");
+  await expect(fallbackAvatar.locator(":scope > span")).toHaveText("JD");
   await expect(fallbackAvatar.locator("img")).toHaveCount(0);
 });
 

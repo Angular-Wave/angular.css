@@ -1,18 +1,31 @@
 import type {} from "@angular-wave/angular.ts";
 
-import { isDisabled, onDestroy, queryAll } from "../../internal/dom";
+import {
+  isDisabled,
+  onDestroy,
+  queryAll,
+  setOpenState,
+} from "../../internal/dom";
 
 let commandIdCounter = 0;
 
-const emptySelector = ".command-empty";
-const groupHeadingSelector = ".command-group-heading";
-const groupSelector = ".command-group";
-const inputSelector = ".command-input";
-const itemSelector = ".command-item";
-const listSelector = ".command-list";
+const emptySelector = ":scope > :last-child > p";
+const groupHeadingSelector = ":scope > :is(h1, h2, h3, h4, h5, h6)";
+const groupSelector = ":scope > :last-child > section";
+const inputSelector = ":scope input";
+const itemSelectors = [
+  ":scope > :last-child > button",
+  ":scope > :last-child > li",
+  ":scope > :last-child > section > button",
+  ":scope > :last-child > section > li",
+] as const;
+const itemSelector = itemSelectors.join(", ");
+const listSelector = ":scope > :last-child";
 const rootSelector = ".command, [ng-command]";
-const separatorSelector = ".command-separator";
-const shortcutSelector = ".command-shortcut";
+const separatorSelector = ":scope > :last-child > hr";
+const shortcutSelector = itemSelectors
+  .map((selector) => `${selector} > kbd`)
+  .join(", ");
 
 const setAttributeIfChanged = (
   element: HTMLElement,
@@ -42,15 +55,10 @@ export function commandDirective(): ng.Directive {
       const input = owned(inputSelector, HTMLInputElement);
       if (!input) return;
 
-      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
       const itemCleanups = new Map<HTMLElement, () => void>();
       let items: HTMLElement[] = [];
       let activeItem: HTMLElement | null = null;
 
-      const getDirection = () =>
-        element.closest<HTMLElement>("[dir]")?.getAttribute("dir") === "rtl"
-          ? "rtl"
-          : "ltr";
       const isVisible = (item: HTMLElement) => {
         const hiddenAncestor = item.parentElement?.closest("[hidden]");
         const hiddenInsideCommand = Boolean(
@@ -79,7 +87,6 @@ export function commandDirective(): ng.Directive {
         items.forEach((candidate) => {
           const selected = candidate === activeItem;
           setAttributeIfChanged(candidate, "aria-selected", String(selected));
-          setAttributeIfChanged(candidate, "data-selected", String(selected));
         });
 
         if (activeItem) {
@@ -110,7 +117,6 @@ export function commandDirective(): ng.Directive {
         if (!item.id) item.id = `command-item-${String(commandIdCounter++)}`;
         setAttributeIfChanged(item, "role", "option");
         setAttributeIfChanged(item, "tabindex", "-1");
-        setAttributeIfChanged(item, "data-disabled", String(isDisabled(item)));
         if (isDisabled(item)) {
           setAttributeIfChanged(item, "aria-disabled", "true");
         }
@@ -151,10 +157,8 @@ export function commandDirective(): ng.Directive {
 
         ownedAll<HTMLElement>(groupSelector).forEach((group) => {
           setAttributeIfChanged(group, "role", "group");
-          const heading = queryAll<HTMLElement>(
-            group,
-            groupHeadingSelector,
-          ).find((candidate) => candidate.closest(groupSelector) === group);
+          const heading =
+            group.querySelector<HTMLElement>(groupHeadingSelector);
           if (!heading) return;
           if (!heading.id) {
             heading.id = `command-group-heading-${String(commandIdCounter++)}`;
@@ -162,8 +166,7 @@ export function commandDirective(): ng.Directive {
           setAttributeIfChanged(group, "aria-labelledby", heading.id);
         });
         ownedAll<HTMLElement>(separatorSelector).forEach((separator) => {
-          setAttributeIfChanged(separator, "role", "separator");
-          setAttributeIfChanged(separator, "aria-orientation", "horizontal");
+          separator.removeAttribute("aria-orientation");
         });
         ownedAll<HTMLElement>(shortcutSelector).forEach((shortcut) => {
           setAttributeIfChanged(shortcut, "aria-hidden", "true");
@@ -171,19 +174,15 @@ export function commandDirective(): ng.Directive {
 
         const rendered = renderedItems();
         const empty = rendered.length === 0;
-        setAttributeIfChanged(element, "data-direction", getDirection());
-        setAttributeIfChanged(element, "data-empty", String(empty));
         setAttributeIfChanged(input, "aria-expanded", String(!empty));
         ownedAll<HTMLElement>(emptySelector).forEach((emptySlot) => {
           setAttributeIfChanged(emptySlot, "role", "status");
-          setAttributeIfChanged(emptySlot, "data-visible", String(empty));
+          setOpenState(emptySlot, empty);
         });
 
         const enabled = enabledItems();
         const authoredSelected = enabled.find(
-          (item) =>
-            item.getAttribute("aria-selected") === "true" ||
-            item.getAttribute("data-selected") === "true",
+          (item) => item.getAttribute("aria-selected") === "true",
         );
         if (previousActive && enabled.includes(previousActive)) {
           selectItem(previousActive);
@@ -228,7 +227,6 @@ export function commandDirective(): ng.Directive {
         attributeFilter: [
           "aria-disabled",
           "aria-hidden",
-          "data-disabled",
           "dir",
           "disabled",
           "hidden",
@@ -236,19 +234,11 @@ export function commandDirective(): ng.Directive {
         childList: true,
         subtree: true,
       });
-      const directionObserver =
-        directionOwner === element ? null : new MutationObserver(syncStructure);
-      directionObserver?.observe(directionOwner, {
-        attributes: true,
-        attributeFilter: ["dir"],
-      });
-
       input.addEventListener("keydown", handleKeydown);
       syncStructure();
 
       onDestroy(scope, () => {
         observer.disconnect();
-        directionObserver?.disconnect();
         itemCleanups.forEach((cleanup) => {
           cleanup();
         });

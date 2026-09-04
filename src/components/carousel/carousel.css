@@ -4,45 +4,46 @@
   width: 100%;
 }
 
-.carousel-content {
+:is(.carousel, [ng-carousel]) > :has(> :is(ul, ol)) {
   overflow: hidden;
   touch-action: pan-y pinch-zoom;
 }
 
-.carousel-track {
+:is(.carousel, [ng-carousel]) > :has(> :is(ul, ol)) > :is(ul, ol) {
   display: flex;
   margin-inline-start: calc(var(--carousel-gap, calc(var(--spacing) * 4)) * -1);
   backface-visibility: hidden;
 }
 
-.carousel[data-orientation="vertical"] .carousel-track,
-[ng-carousel][data-orientation="vertical"] .carousel-track {
+:is(.carousel, [ng-carousel])[orientation="vertical"]
+  > :has(> :is(ul, ol))
+  > :is(ul, ol) {
   flex-direction: column;
   margin-block-start: calc(var(--carousel-gap, calc(var(--spacing) * 4)) * -1);
   margin-inline-start: 0;
 }
 
-.carousel[data-orientation="vertical"] .carousel-content,
-[ng-carousel][data-orientation="vertical"] .carousel-content {
+:is(.carousel, [ng-carousel])[orientation="vertical"] > :has(> :is(ul, ol)) {
   touch-action: pan-x pinch-zoom;
 }
 
-.carousel-item {
+:is(.carousel, [ng-carousel]) > :has(> :is(ul, ol)) > :is(ul, ol) > li {
   flex: 0 0 var(--carousel-item-size, 100%);
   min-width: 0;
   padding-inline-start: var(--carousel-gap, calc(var(--spacing) * 4));
   transform: translate3d(0, 0, 0);
 }
 
-.carousel[data-orientation="vertical"] .carousel-item,
-[ng-carousel][data-orientation="vertical"] .carousel-item {
+:is(.carousel, [ng-carousel])[orientation="vertical"]
+  > :has(> :is(ul, ol))
+  > :is(ul, ol)
+  > li {
   min-height: 0;
   padding-block-start: var(--carousel-gap, calc(var(--spacing) * 4));
   padding-inline-start: 0;
 }
 
-.carousel-previous,
-.carousel-next {
+:is(.carousel, [ng-carousel]) > :where(button) {
   position: absolute;
   inset-block-start: 50%;
   z-index: 10;
@@ -51,36 +52,36 @@
   touch-action: manipulation;
 }
 
-.carousel-previous {
+:is(.carousel, [ng-carousel]) > :where(button:first-of-type) {
   inset-inline-start: calc(var(--spacing) * -12);
 }
 
-.carousel-next {
+:is(.carousel, [ng-carousel]) > :where(button:nth-of-type(2)) {
   inset-inline-end: calc(var(--spacing) * -12);
 }
 
-.carousel[data-orientation="vertical"] .carousel-previous,
-[ng-carousel][data-orientation="vertical"] .carousel-previous {
+:is(.carousel, [ng-carousel])[orientation="vertical"]
+  > :where(button:first-of-type) {
   inset-block-start: calc(var(--spacing) * -12);
   inset-inline-start: 50%;
   transform: translateX(-50%) rotate(90deg);
 }
 
-.carousel[data-orientation="vertical"] .carousel-next,
-[ng-carousel][data-orientation="vertical"] .carousel-next {
+:is(.carousel, [ng-carousel])[orientation="vertical"]
+  > :where(button:nth-of-type(2)) {
   inset-block: auto calc(var(--spacing) * -12);
   inset-inline: 50% auto;
   transform: translateX(-50%) rotate(90deg);
 }
 
-.carousel-dots {
+:is(.carousel, [ng-carousel]) > nav {
   display: flex;
   justify-content: center;
   gap: calc(var(--spacing) * 2);
   margin-block-start: calc(var(--spacing) * 4);
 }
 
-.carousel-dot {
+:is(.carousel, [ng-carousel]) > nav > :where(button) {
   display: inline-flex;
   flex: 0 0 auto;
   width: calc(var(--spacing) * 2);
@@ -93,13 +94,13 @@
     opacity 120ms ease;
 }
 
-.carousel-dot[data-active="true"] {
+:is(.carousel, [ng-carousel]) > nav > button[aria-current="true"] {
   background: var(--foreground);
   opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .carousel-dot {
+  :is(.carousel, [ng-carousel]) > nav > :where(button) {
     transition-duration: 0s;
   }
 }

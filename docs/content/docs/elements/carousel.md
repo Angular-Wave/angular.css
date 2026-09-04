@@ -10,9 +10,9 @@ movement can be driven by native scrolling or application code.
 
 ```html
 <section class="carousel">
-  <div class="carousel-content">
-    <ul class="carousel-track">
-      <li class="carousel-item">Slide</li>
+  <div>
+    <ul>
+      <li>Slide</li>
     </ul>
   </div>
 </section>

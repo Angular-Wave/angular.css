@@ -1,7 +1,10 @@
 import type {} from "@angular-wave/angular.ts";
 
-import { onDestroy } from "../../internal/dom";
-import { bindSemanticSubmenus } from "../../internal/menu";
+import { onDestroy, setOpenState } from "../../internal/dom";
+import {
+  bindSemanticSubmenus,
+  getSemanticMenuItemRole,
+} from "../../internal/menu";
 
 let dropdownIdCounter = 0;
 
@@ -14,59 +17,36 @@ type DropdownOpenOptions = {
 
 type DropdownOpenState = boolean;
 
-const coerceBoolean = (value: unknown): DropdownOpenState => {
-  return value === true || value === "true" || value === 1;
-};
-
 const queryMenuItems = (panel: HTMLElement): HTMLElement[] =>
   Array.from(
     panel.querySelectorAll(
       'a, button, [role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]',
     ),
-  ).filter(
-    (item): item is HTMLElement =>
-      item instanceof HTMLElement &&
-      !item.closest("[hidden]") &&
+  ).filter((item): item is HTMLElement => {
+    if (!(item instanceof HTMLElement) || item.closest("menu") !== panel) {
+      return false;
+    }
+    const hiddenAncestor = item.closest<HTMLElement>("[hidden]");
+    return (
+      (!hiddenAncestor || hiddenAncestor === panel) &&
       !item.hasAttribute("disabled") &&
-      item.getAttribute("aria-disabled") !== "true",
-  );
+      item.getAttribute("aria-disabled") !== "true"
+    );
+  });
 
 export function dropdownDirective(): ng.Directive {
   return {
     link(scope: DropdownScope, element: HTMLElement) {
-      const button = element.querySelector("button");
-      const panel = element.querySelector<HTMLElement>(
-        'menu, [role="menu"], .dropdown-menu-content',
-      );
+      const button =
+        element.querySelector<HTMLButtonElement>(":scope > button");
+      const panel = element.querySelector<HTMLElement>(":scope > menu");
 
       if (!button || !panel) return;
 
-      const setAttribute = (
-        target: HTMLElement,
-        name: string,
-        value: string,
-      ): void => {
-        if (target.getAttribute(name) !== value) {
-          target.setAttribute(name, value);
-        }
-      };
-      const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
       const getDirection = () =>
         element.closest<HTMLElement>("[dir]")?.getAttribute("dir") === "rtl"
           ? "rtl"
           : "ltr";
-      const syncDirection = () => {
-        const direction = getDirection();
-        setAttribute(element, "data-direction", direction);
-        setAttribute(panel, "data-direction", direction);
-      };
-      const authoredRootDisabled =
-        element.getAttribute("data-disabled") === "true";
-      const syncDisabled = () => {
-        const disabled = button.disabled || authoredRootDisabled;
-        setAttribute(element, "data-disabled", String(disabled));
-        setAttribute(button, "aria-disabled", String(disabled));
-      };
       const cleanupSubmenus = bindSemanticSubmenus(
         element,
         "dropdown-menu",
@@ -83,14 +63,12 @@ export function dropdownDirective(): ng.Directive {
       panel.setAttribute("tabindex", panel.getAttribute("tabindex") ?? "-1");
       panel.setAttribute("aria-labelledby", button.id);
 
-      const isIconTrigger =
-        button.getAttribute("size")?.startsWith("icon") ??
-        button.getAttribute("data-size")?.startsWith("icon");
+      const isIconTrigger = button.getAttribute("size")?.startsWith("icon");
       if (!button.querySelector("svg") && !isIconTrigger) {
         button.insertAdjacentHTML(
           "beforeend",
           `
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor">
             <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
           </svg>
         `,
@@ -108,11 +86,7 @@ export function dropdownDirective(): ng.Directive {
       const refreshMenuItemRoles = () => {
         queryMenuItems(panel).forEach((item) => {
           if (!item.hasAttribute("role")) {
-            const role = item.matches(".dropdown-menu-checkbox-item")
-              ? "menuitemcheckbox"
-              : item.matches(".dropdown-menu-radio-item")
-                ? "menuitemradio"
-                : "menuitem";
+            const role = getSemanticMenuItemRole(item);
             item.setAttribute("role", role);
             if (role !== "menuitem" && !item.hasAttribute("aria-checked")) {
               item.setAttribute("aria-checked", "false");
@@ -121,9 +95,7 @@ export function dropdownDirective(): ng.Directive {
         });
       };
 
-      let openState = coerceBoolean(
-        element.getAttribute("data-open") ?? panel.getAttribute("data-open"),
-      );
+      let openState = element.hasAttribute("open");
 
       const syncState = (
         open: DropdownOpenState,
@@ -131,11 +103,9 @@ export function dropdownDirective(): ng.Directive {
       ) => {
         openState = open;
         button.setAttribute("aria-expanded", String(open));
-        button.setAttribute("data-state", open ? "open" : "closed");
-        element.setAttribute("data-open", String(open));
-        element.setAttribute("data-state", open ? "open" : "closed");
-        panel.setAttribute("data-open", String(open));
-        panel.setAttribute("data-state", open ? "open" : "closed");
+        element.toggleAttribute("open", open);
+        panel.setAttribute("aria-hidden", String(!open));
+        setOpenState(panel, open);
         if (!open && options.restoreFocus) {
           button.focus();
         }
@@ -145,7 +115,7 @@ export function dropdownDirective(): ng.Directive {
         open: DropdownOpenState,
         options: DropdownOpenOptions = {},
       ) => {
-        const nextOpen = coerceBoolean(open);
+        const nextOpen = open;
         if (openState === nextOpen) {
           if (!nextOpen && options.restoreFocus) button.focus();
           return;
@@ -179,8 +149,6 @@ export function dropdownDirective(): ng.Directive {
       };
 
       refreshMenuItemRoles();
-      syncDirection();
-      syncDisabled();
       syncState(openState);
 
       const observer = new MutationObserver((records) => {
@@ -199,61 +167,41 @@ export function dropdownDirective(): ng.Directive {
               record.type === "attributes" &&
               (record.attributeName === "dir" ||
                 record.attributeName === "disabled" ||
-                record.attributeName === "aria-disabled" ||
-                record.attributeName === "data-disabled"),
+                record.attributeName === "aria-disabled"),
           )
         ) {
-          syncDirection();
-          syncDisabled();
+          refreshMenuItemRoles();
         }
 
         const shouldSyncOpen = records.some(
           (record) =>
             record.type === "attributes" &&
-            record.attributeName === "data-open",
+            record.target === element &&
+            record.attributeName === "open",
         );
         if (!shouldSyncOpen) return;
 
-        const nextOpen = coerceBoolean(
-          element.getAttribute("data-open") ?? panel.getAttribute("data-open"),
-        );
+        const nextOpen = element.hasAttribute("open");
         if (nextOpen !== openState) {
           syncState(nextOpen);
         }
       });
       observer.observe(element, {
         attributes: true,
-        attributeFilter: [
-          "aria-disabled",
-          "data-disabled",
-          "data-open",
-          "dir",
-          "disabled",
-          "role",
-        ],
+        attributeFilter: ["aria-disabled", "dir", "disabled", "open", "role"],
         childList: true,
         subtree: true,
       });
       observer.observe(panel, {
         attributes: true,
-        attributeFilter: ["data-open", "dir", "role"],
+        attributeFilter: ["dir", "role"],
         childList: true,
         subtree: true,
       });
-      const directionObserver =
-        directionOwner === element
-          ? null
-          : new MutationObserver(() => {
-              syncDirection();
-            });
-      directionObserver?.observe(directionOwner, {
-        attributes: true,
-        attributeFilter: ["dir"],
-      });
 
       const handleButtonClick = () => {
-        syncDisabled();
-        if (element.getAttribute("data-disabled") === "true") return;
+        if (button.disabled || button.getAttribute("aria-disabled") === "true")
+          return;
         toggle();
       };
 
@@ -361,7 +309,6 @@ export function dropdownDirective(): ng.Directive {
 
       const destroy = () => {
         observer.disconnect();
-        directionObserver?.disconnect();
         button.removeEventListener("click", handleButtonClick);
         panel.removeEventListener("click", handlePanelClick);
         document.removeEventListener("click", handleClickOutside);

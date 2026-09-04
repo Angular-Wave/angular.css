@@ -6,38 +6,37 @@ description: >
 ---
 
 Build a searchable command menu with one `ng-command` root and semantic child
-elements identified by command part classes.
-AngularTS owns query filtering and command execution. Command follows the
-rendered result DOM and supplies listbox relationships, active-descendant
-navigation, disabled skipping, and scroll-to-active behavior.
+elements identified by command part classes. AngularTS owns query filtering and
+command execution. Command follows the rendered result DOM and supplies listbox
+relationships, active-descendant navigation, disabled skipping, and
+scroll-to-active behavior.
 
 ```html
-<section ng-command data-variant="surface" aria-label="Command menu">
-  <div class="command-input-wrapper">
-    <div class="command-input-group">
-      <span aria-hidden="true" class="command-input-icon"><!-- search icon --></span>
+<section ng-command variant="surface" aria-label="Command menu">
+  <header>
+    <label>
+      <span aria-hidden="true"><!-- search icon --></span>
       <input
-
         aria-label="Search commands"
         ng-model="query"
         placeholder="Type a command or search..."
-       class="command-input"/>
-    </div>
-  </div>
-  <ul class="command-list">
-    <p class="command-empty">No results found.</p>
-    <section class="command-group">
-      <h2 class="command-group-heading">Suggestions</h2>
-      <li
-
+      />
+    </label>
+  </header>
+  <div>
+    <p>No results found.</p>
+    <section>
+      <h2>Suggestions</h2>
+      <button
+        type="button"
         ng-repeat="command in commands | filter:query"
         ng-click="selected=command.label"
-       class="command-item">
+      >
         <span ng-bind="command.label"></span>
-        <span ng-bind="command.shortcut" class="command-shortcut"></span>
-      </li>
+        <kbd ng-bind="command.shortcut"></kbd>
+      </button>
     </section>
-  </ul>
+  </div>
 </section>
 ```
 
@@ -47,10 +46,9 @@ boundaries; Enter activates the current option through its ordinary click
 handler. Pointer movement updates the same active state.
 
 For a modal palette, place `ng-command` directly inside `.dialog-content`. Use
-native Dialog invoker and close commands instead of
-reproducing modal focus, Escape, outside-dismissal, or focus-restoration logic
-in Command. Application shortcuts such as Ctrl J remain AngularTS `ng-keydown`
-expressions.
+native Dialog invoker and close commands instead of reproducing modal focus,
+Escape, outside-dismissal, or focus-restoration logic in Command. Application
+shortcuts such as Ctrl J remain AngularTS `ng-keydown` expressions.
 
 ## Example
 
@@ -94,7 +92,7 @@ This component's root directive is `[ng-command]`. Importing the package registe
 
 ### Semantic structure
 
-A command root requires one input and one list. The root directive inspects semantic descendants through command part classes; no child directives are required. Empty state, labeled groups, separators, item icons, and shortcuts are optional. Compose modal palettes from Dialog.
+A command root requires one input and a result container. The root directive inspects semantic headers, sections, headings, buttons, separators, and keyboard hints; no child directives or anatomy classes are required. Compose modal palettes from Dialog.
 
 ## API
 
@@ -111,11 +109,6 @@ A command root requires one input and one list. The root directive inspects sema
 | `aria-labelledby` | Output | ARIA relationship or state. |
 | `aria-orientation` | Output | ARIA relationship or state. |
 | `aria-selected` | Input/output | Selected item state. |
-| `data-direction` | Output | Stable component state or styling hook. |
-| `data-disabled` | Output | Stable component state or styling hook. |
-| `data-empty` | Output | Stable component state or styling hook. |
-| `data-selected` | Input/output | Stable component state or styling hook. |
-| `data-visible` | Output | Stable component state or styling hook. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
 | `disabled` | Input | Disables native or component interaction. |
 | `hidden` | Input | Authored option or semantic HTML attribute observed by the directive. |

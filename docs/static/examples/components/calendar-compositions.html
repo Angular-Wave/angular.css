@@ -22,7 +22,7 @@
       >
         <h2 id="custom-days-heading">Custom day prices</h2>
         <article class="calendar-card card">
-          <section class="calendar-card-content card-content">
+          <section class="calendar-card-content">
             <section
               ng-calendar
               data-selection-mode="range"
@@ -31,19 +31,19 @@
               ng-on-angularcss:calendar-select="custom.start=$event.detail.range.start; custom.end=$event.detail.range.end"
               class="calendar-custom-days"
             >
-              <header class="calendar-header">
-                <h3 class="calendar-title">September 2026</h3>
+              <header>
+                <h3>September 2026</h3>
               </header>
-              <div class="calendar-grid">
-                <span class="calendar-weekday">Su</span><span class="calendar-weekday">Mo</span><span class="calendar-weekday">Tu</span><span class="calendar-weekday">We</span><span class="calendar-weekday">Th</span><span class="calendar-weekday">Fr</span><span class="calendar-weekday">Sa</span>
+              <div>
+                <abbr>Su</abbr><abbr>Mo</abbr><abbr>Tu</abbr><abbr>We</abbr
+                ><abbr>Th</abbr><abbr>Fr</abbr><abbr>Sa</abbr>
                 <button
                   type="button"
-
                   ng-repeat="day in customDays"
-                  data-value="{{ day.v }}"
+                  value="{{ day.v }}"
                   data-outside="{{ day.o }}"
                   aria-label="{{ day.v }} {{ day.p }}"
-                 class="calendar-day">
+                >
                   <strong>{{ day.d }}</strong><span>{{ day.p }}</span>
                 </button>
               </div>
@@ -58,7 +58,7 @@
       <section class="calendar-composition" aria-labelledby="preset-heading">
         <h2 id="preset-heading">Presets</h2>
         <article size="sm" class="calendar-preset-card card">
-          <section class="calendar-preset-content card-content">
+          <section class="calendar-preset-content">
             <section
               ng-calendar
               data-calendar-generated
@@ -67,15 +67,14 @@
               ng-on-angularcss:calendar-select="presetDate=$event.detail.value"
               class="calendar-flush calendar-preset-grid"
             >
-              <header class="calendar-header">
+              <header>
                 <button
                   type="button"
-
-
                   size="icon"
                   variant="ghost"
                   aria-label="Previous preset month"
-                 class="calendar-previous button">
+                  class="button"
+                >
                   <svg
                     class="icon-sm"
                     viewBox="0 0 24 24"
@@ -87,15 +86,14 @@
                     <path d="m15 18-6-6 6-6" />
                   </svg>
                 </button>
-                <h3 class="calendar-title"></h3>
+                <h3></h3>
                 <button
                   type="button"
-
-
                   size="icon"
                   variant="ghost"
                   aria-label="Next preset month"
-                 class="calendar-next button">
+                  class="button"
+                >
                   <svg
                     class="icon-sm"
                     viewBox="0 0 24 24"
@@ -108,48 +106,53 @@
                   </svg>
                 </button>
               </header>
-              <div class="calendar-grid"></div>
+              <div></div>
             </section>
           </section>
-          <footer class="calendar-preset-footer card-footer">
+          <footer class="calendar-preset-footer">
             <button
               type="button"
-
               variant="outline"
               size="sm"
-              ng-click="presetDate='2026-09-12'" class="button">
+              ng-click="presetDate='2026-09-12'"
+              class="button"
+            >
               Today
             </button>
             <button
               type="button"
-
               variant="outline"
               size="sm"
-              ng-click="presetDate='2026-09-13'" class="button">
+              ng-click="presetDate='2026-09-13'"
+              class="button"
+            >
               Tomorrow
             </button>
             <button
               type="button"
-
               variant="outline"
               size="sm"
-              ng-click="presetDate='2026-09-15'" class="button">
+              ng-click="presetDate='2026-09-15'"
+              class="button"
+            >
               In 3 days
             </button>
             <button
               type="button"
-
               variant="outline"
               size="sm"
-              ng-click="presetDate='2026-09-19'" class="button">
+              ng-click="presetDate='2026-09-19'"
+              class="button"
+            >
               In a week
             </button>
             <button
               type="button"
-
               variant="outline"
               size="sm"
-              ng-click="presetDate='2026-09-26'" class="button">
+              ng-click="presetDate='2026-09-26'"
+              class="button"
+            >
               In 2 weeks
             </button>
           </footer>
@@ -162,7 +165,7 @@
       <section class="calendar-composition" aria-labelledby="time-heading">
         <h2 id="time-heading">Date and time</h2>
         <article size="sm" class="calendar-time-card card">
-          <section class="calendar-time-content card-content">
+          <section class="calendar-time-content">
             <section
               ng-calendar
               data-calendar-generated
@@ -171,15 +174,14 @@
               ng-on-angularcss:calendar-select="time.date=$event.detail.value"
               class="calendar-flush"
             >
-              <header class="calendar-header">
+              <header>
                 <button
                   type="button"
-
-
                   size="icon"
                   variant="ghost"
                   aria-label="Previous time month"
-                 class="calendar-previous button">
+                  class="button"
+                >
                   <svg
                     class="icon-sm"
                     viewBox="0 0 24 24"
@@ -191,15 +193,14 @@
                     <path d="m15 18-6-6 6-6" />
                   </svg>
                 </button>
-                <h3 class="calendar-title"></h3>
+                <h3></h3>
                 <button
                   type="button"
-
-
                   size="icon"
                   variant="ghost"
                   aria-label="Next time month"
-                 class="calendar-next button">
+                  class="button"
+                >
                   <svg
                     class="icon-sm"
                     viewBox="0 0 24 24"
@@ -212,17 +213,20 @@
                   </svg>
                 </button>
               </header>
-              <div class="calendar-grid"></div>
+              <div></div>
             </section>
           </section>
-          <footer class="calendar-time-footer card-footer">
+          <footer class="calendar-time-footer">
             <label
-              ><span>Start</span><div class="input-group"><input
-
+              ><span>Start</span>
+              <div class="input-group">
+                <input
                   type="time"
                   ng-model="time.start"
-                  aria-label="Start time"  class="input-group-input"/><span
-                   class="input-group-addon"><svg
+                  aria-label="Start time"
+                  class="input-group-input"
+                /><span
+                  ><svg
                     class="icon-sm"
                     viewBox="0 0 24 24"
                     fill="none"
@@ -231,14 +235,19 @@
                     aria-hidden="true"
                   >
                     <circle cx="12" cy="12" r="9" />
-                    <path d="M12 7v5l3 2" /></svg></span></div></label>
+                    <path d="M12 7v5l3 2" /></svg
+                ></span></div
+            ></label>
             <label
-              ><span>End</span><div class="input-group"><input
-
+              ><span>End</span>
+              <div class="input-group">
+                <input
                   type="time"
                   ng-model="time.end"
-                  aria-label="End time"  class="input-group-input"/><span
-                   class="input-group-addon"><svg
+                  aria-label="End time"
+                  class="input-group-input"
+                /><span
+                  ><svg
                     class="icon-sm"
                     viewBox="0 0 24 24"
                     fill="none"
@@ -247,7 +256,9 @@
                     aria-hidden="true"
                   >
                     <circle cx="12" cy="12" r="9" />
-                    <path d="M12 7v5l3 2" /></svg></span></div></label>
+                    <path d="M12 7v5l3 2" /></svg
+                ></span></div
+            ></label>
           </footer>
         </article>
         <p class="calendar-workflow-output" aria-live="polite">
@@ -273,15 +284,14 @@
           ng-on-angularcss:calendar-select="rtlDate=$event.detail.value"
           class="calendar-demo calendar-rtl-grid"
         >
-          <header class="calendar-header">
+          <header>
             <button
               type="button"
-
-
               size="icon"
               variant="ghost"
               aria-label="الشهر السابق"
-             class="calendar-previous button">
+              class="button"
+            >
               <svg
                 class="icon-sm"
                 viewBox="0 0 24 24"
@@ -293,15 +303,14 @@
                 <path d="m15 18-6-6 6-6" />
               </svg>
             </button>
-            <h3 class="calendar-title"></h3>
+            <h3></h3>
             <button
               type="button"
-
-
               size="icon"
               variant="ghost"
               aria-label="الشهر التالي"
-             class="calendar-next button">
+              class="button"
+            >
               <svg
                 class="icon-sm"
                 viewBox="0 0 24 24"
@@ -314,7 +323,7 @@
               </svg>
             </button>
           </header>
-          <div class="calendar-grid"></div>
+          <div></div>
         </section>
         <p class="calendar-workflow-output" aria-live="polite">
           التاريخ: {{ rtlDate }}
@@ -335,19 +344,19 @@
           class="calendar-demo calendar-hijri-grid"
           aria-label="خرداد ۱۴۰۴"
         >
-          <header class="calendar-header">
-            <h3 class="calendar-title">خرداد ۱۴۰۴</h3>
+          <header>
+            <h3>خرداد ۱۴۰۴</h3>
           </header>
-          <div class="calendar-grid">
-            <span class="calendar-weekday">ش</span><span class="calendar-weekday">ی</span><span class="calendar-weekday">د</span><span class="calendar-weekday">س</span><span class="calendar-weekday">چ</span><span class="calendar-weekday">پ</span><span class="calendar-weekday">ج</span>
+          <div>
+            <abbr>ش</abbr><abbr>ی</abbr><abbr>د</abbr><abbr>س</abbr
+            ><abbr>چ</abbr><abbr>پ</abbr><abbr>ج</abbr>
             <button
               type="button"
-
               ng-repeat="day in hijriDays"
-              data-value="{{ day.v }}"
+              value="{{ day.v }}"
               data-outside="{{ day.o }}"
               aria-label="روز {{ day.d }}"
-             class="calendar-day">
+            >
               {{ day.d }}
             </button>
           </div>

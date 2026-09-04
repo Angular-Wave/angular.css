@@ -5,16 +5,14 @@ description: >
   Native select styling for AngularTS forms
 ---
 
-Apply `.select` directly to native `select`. AngularTS owns models, option
-registration, validation, and form state; AngularCSS only supplies styling.
+Use native `select` directly. AngularTS owns models, option registration,
+validation, and form state; AngularCSS only supplies styling.
 
 ```html
-<div class="select-wrapper">
-  <select class="select" ng-model="status">
-    <option>Active</option>
-    <option>Paused</option>
-  </select>
-</div>
+<select ng-model="status">
+  <option>Active</option>
+  <option>Paused</option>
+</select>
 ```
 
 ## Example

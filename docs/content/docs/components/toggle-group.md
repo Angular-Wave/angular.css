@@ -11,11 +11,11 @@ multiple selection.
 ```html
 <fieldset variant="outline" class="toggle-group">
   <legend class="visually-hidden">Alignment</legend>
-  <label class="toggle-group-item">
+  <label>
     <input type="radio" name="alignment" value="left" ng-model="alignment" />
     Left
   </label>
-  <label class="toggle-group-item">
+  <label>
     <input type="radio" name="alignment" value="center" ng-model="alignment" />
     Center
   </label>

@@ -7,16 +7,20 @@ description:
 ---
 
 AngularCSS ships a usable visual baseline, but its public styling contract is
-made for application overrides. Target semantic roots, named `class`
-elements, and generated state attributes from Tailwind or ordinary CSS.
+made for application overrides. Target semantic roots, named `class` elements,
+and generated state attributes from Tailwind or ordinary CSS.
 
 ## Load order
 
-Compile Tailwind first, AngularCSS second, and application overrides last:
+Load AngularCSS before application Tailwind and ordinary application overrides.
+The bundle declares this low-to-high layer order: `theme`, `base`,
+`angularcss.tokens`, `angularcss.components`, `components`, and `utilities`.
+This keeps component defaults below application component rules and utilities,
+without specificity escalation or `!important` declarations:
 
 ```css
-@import 'tailwindcss';
 @import '@angular-wave/angular.css/dist/angular.css';
+@import 'tailwindcss';
 
 @layer components {
   .card {
@@ -24,6 +28,31 @@ Compile Tailwind first, AngularCSS second, and application overrides last:
   }
 }
 ```
+
+Unlayered application rules remain above normal layered declarations. Prefer the
+public `components` layer for reusable application patterns and Tailwind
+utilities for local exceptions. Override semantic custom properties at the
+nearest shared ancestor so inherited design decisions continue through nested
+components.
+
+## Modern CSS support
+
+AngularCSS uses Baseline features directly when native HTML retains a working
+fallback. Newer presentation features remain progressive enhancements behind
+`@supports`.
+
+- `@scope` bounds part selectors in compositions that can be nested.
+- Size container queries adapt cards and dialogs to their rendered width.
+- `:open` styles native `details`, `dialog`, and `select` state.
+- Customizable native select pickers use `appearance: base-select` only when
+  supported.
+- `field-sizing: content` is available through `.input-fit` and is the default
+  textarea sizing behavior.
+- AngularTS router view transitions remain router-owned; AngularCSS only
+  supplies presentation.
+
+Do not replace native behavior or an AngularTS service solely to use a newer CSS
+feature. Unsupported enhancements must leave the semantic HTML usable.
 
 The documentation iframes follow the same order: Tailwind preflight, AngularCSS,
 then demo-specific CSS. This prevents Docsy or another host framework from
@@ -55,7 +84,7 @@ Complex components expose named parts without rendering a hidden template:
   @apply max-w-xl;
 }
 
-.dialog-footer {
+.dialog-content footer {
   @apply justify-between;
 }
 ```
@@ -67,11 +96,11 @@ Part classes remain stable selectors while the elements retain native meaning.
 Directives mirror behavior into `data-*` and ARIA attributes:
 
 ```css
-[ng-tabs] .tabs-trigger[aria-selected='true'] {
+[ng-tabs] > menu > button[aria-selected='true'] {
   @apply border-slate-900 text-slate-950;
 }
 
-.combobox-item[data-highlighted='true'] {
+[ng-combobox] li[data-highlighted='true'] {
   @apply bg-slate-100;
 }
 ```

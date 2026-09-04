@@ -10,43 +10,43 @@
     <script src="../../js/angular-css.umd.js"></script>
   </head>
   <body ng-app="ui" ng-cloak>
-    <figure class="table-container">
+    <figure>
       <table class="table">
-        <caption class="table-caption">
+        <caption>
           A list of recent invoices.
         </caption>
-        <thead class="table-header">
-          <tr class="table-row">
-            <th class="table-head">Invoice</th>
-            <th class="table-head">Status</th>
-            <th class="table-head">Method</th>
-            <th class="text-right table-head">Amount</th>
+        <thead>
+          <tr>
+            <th scope="col">Invoice</th>
+            <th scope="col">Status</th>
+            <th scope="col">Method</th>
+            <th scope="col" class="text-right">Amount</th>
           </tr>
         </thead>
-        <tbody class="table-body">
-          <tr class="table-row">
-            <td class="table-cell">INV001</td>
-            <td class="table-cell">Paid</td>
-            <td class="table-cell">Card</td>
-            <td class="text-right table-cell">$250.00</td>
+        <tbody>
+          <tr>
+            <th scope="row">INV001</th>
+            <td>Paid</td>
+            <td>Card</td>
+            <td class="text-right">$250.00</td>
           </tr>
-          <tr class="table-row">
-            <td class="table-cell">INV002</td>
-            <td class="table-cell">Pending</td>
-            <td class="table-cell">PayPal</td>
-            <td class="text-right table-cell">$150.00</td>
+          <tr>
+            <th scope="row">INV002</th>
+            <td>Pending</td>
+            <td>PayPal</td>
+            <td class="text-right">$150.00</td>
           </tr>
-          <tr class="table-row">
-            <td class="table-cell">INV003</td>
-            <td class="table-cell">Unpaid</td>
-            <td class="table-cell">Transfer</td>
-            <td class="text-right table-cell">$350.00</td>
+          <tr>
+            <th scope="row">INV003</th>
+            <td>Unpaid</td>
+            <td>Transfer</td>
+            <td class="text-right">$350.00</td>
           </tr>
         </tbody>
-        <tfoot class="table-footer">
-          <tr class="table-row">
-            <td colspan="3" class="table-cell">Total</td>
-            <td class="text-right table-cell">$750.00</td>
+        <tfoot>
+          <tr>
+            <td colspan="3">Total</td>
+            <td class="text-right">$750.00</td>
           </tr>
         </tfoot>
       </table>

@@ -13,25 +13,31 @@
     <div class="stack">
       <label for="docs-input-search">Search</label>
       <input
-
         id="docs-input-search"
         placeholder="Search"
-        ng-model="search" class="input" />
+        ng-model="search"
+        class="input"
+      />
       <div class="output">Value: {{ search ? search : "empty" }}</div>
+
+      <label for="docs-input-compact">Content-sized</label>
+      <input id="docs-input-compact" value="Compact" class="input input-fit" />
 
       <label for="docs-input-disabled">Disabled</label>
       <input
-
         id="docs-input-disabled"
         placeholder="Disabled"
-        disabled class="input" />
+        disabled
+        class="input"
+      />
 
       <label for="docs-input-invalid">Invalid</label>
       <input
-
         id="docs-input-invalid"
         placeholder="Invalid"
-        aria-invalid="true" class="input" />
+        aria-invalid="true"
+        class="input"
+      />
 
       <label for="docs-input-file">File</label>
       <input id="docs-input-file" type="file" class="input" />

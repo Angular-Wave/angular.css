@@ -5,41 +5,38 @@ description: >
   Application sidebar layout with collapsible state
 ---
 
-Use `ng-sidebar` on an `aside` inside `.sidebar-layout` and
-connect native button triggers with `aria-controls` or `data-sidebar-target`.
-Author physical side, visual variant, and collapse mode directly on the sidebar
-root.
+Use `ng-sidebar` on an `aside` inside `.sidebar-layout` and connect native
+button triggers with `aria-controls`. Author physical side, visual variant, and
+collapse mode directly on the sidebar root.
 
 ```html
-<div class="sidebar-layout">
+<div>
   <aside id="app-sidebar" ng-sidebar side="left" collapsible="icon">
-    <header class="sidebar-header">
-      <a href="/" class="sidebar-menu-button">Acme Inc.</a>
+    <header>
+      <a href="/">Acme Inc.</a>
     </header>
-    <nav class="sidebar-content">
-      <section class="sidebar-group">
-        <h3 class="sidebar-group-label">Workspace</h3>
-        <div class="sidebar-group-content">
-          <ul class="sidebar-menu">
-            <li class="sidebar-menu-item">
-              <a data-active="true" href="/dashboard" class="sidebar-menu-button">
-                Dashboard
-              </a>
+    <nav>
+      <section>
+        <h3>Workspace</h3>
+        <div>
+          <ul>
+            <li>
+              <a aria-current="page" href="/dashboard"> Dashboard </a>
             </li>
           </ul>
         </div>
       </section>
     </nav>
   </aside>
-  <main class="sidebar-inset">
+  <main>
     <button aria-controls="app-sidebar">Toggle sidebar</button>
   </main>
 </div>
 ```
 
-The directive mirrors root options, responsive state, active destinations, group
-relationships, and trigger accessibility state. AngularTS may control
-`data-state`; it continues to own filtering, shortcuts, routing, and actions.
+The directive reads root options and coordinates collapse, group relationships,
+and trigger accessibility state. AngularTS may control the boolean `collapsed`
+attribute; it continues to own filtering, shortcuts, routing, and actions.
 Compose nested disclosure with native `details.collapsible` and action menus
 with `ng-dropdown`.
 
@@ -82,10 +79,12 @@ This component's root directive is `[ng-sidebar]`. Importing the package registe
 ### Directive selectors
 
 - `ng-sidebar`
+- `ng-click`
+- `ng-dropdown`
 
 ### Semantic structure
 
-Place `aside[ng-sidebar]` inside `.sidebar-layout` and connect native button triggers with `aria-controls`. The root directive inspects semantic descendants through sidebar part classes; no child sidebar directives are required. Author side, variant, and collapse mode on the root. Compose nested disclosure with Collapsible and action menus with Dropdown.
+Place `aside[ng-sidebar]` beside `main` and connect native button triggers with `aria-controls`. The root directive inspects semantic `header`, `nav`, `section`, list, and footer descendants; no child sidebar directives or anatomy classes are required. Author side, variant, and collapse mode on the root. Compose nested disclosure with Collapsible and action menus with Dropdown.
 
 ## API
 
@@ -94,21 +93,15 @@ Place `aside[ng-sidebar]` inside `.sidebar-layout` and connect native button tri
 | Attribute | Access | Purpose |
 | --- | --- | --- |
 | `aria-controls` | Output | ARIA relationship or state. |
-| `aria-current` | Input/output | Current item or date state. |
+| `aria-current` | Output | Current item or date state. |
 | `aria-expanded` | Output | Open or expanded state exposed to assistive technology. |
 | `aria-hidden` | Output | ARIA relationship or state. |
 | `aria-labelledby` | Output | ARIA relationship or state. |
-| `collapsible` | Output | Authored option or semantic HTML attribute observed by the directive. |
-| `data-active` | Input/output | Stable component state or styling hook. |
-| `data-collapsible` | Input/output | Stable component state or styling hook. |
-| `data-direction` | Output | Stable component state or styling hook. |
-| `data-mobile` | Output | Stable component state or styling hook. |
-| `data-open` | Output | Stable component state or styling hook. |
-| `data-side` | Output | Stable component state or styling hook. |
-| `data-sidebar-controlled` | Input | Stable component state or styling hook. |
-| `data-state` | Input/output | Stable component state or styling hook. |
+| `collapsed` | Input/output | Authored option or semantic HTML attribute observed by the directive. |
+| `collapsible` | Input/output | Authored option or semantic HTML attribute observed by the directive. |
 | `data-variant` | Output | Stable component state or styling hook. |
-| `dir` | Input/output | Text and interaction direction: `ltr` or `rtl`. |
+| `dir` | Output | Text and interaction direction: `ltr` or `rtl`. |
+| `ng-click` | Input | Authored option or semantic HTML attribute observed by the directive. |
 | `role` | Input/output | Explicit semantic role when native HTML does not provide one. |
 | `side` | Output | Physical placement: `left`, `top`, `bottom`, or `right`. |
 | `type` | Input/output | Component or native behavior variant. |

@@ -13,3 +13,10 @@ input.input {
       text-foreground;
   }
 }
+
+input.input-fit {
+  field-sizing: content;
+  width: auto;
+  max-width: 100%;
+  justify-self: start;
+}

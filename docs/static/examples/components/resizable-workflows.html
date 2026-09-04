@@ -23,13 +23,11 @@
           aria-label="Sidebar and content layout"
           class="resizable-reference-layout"
         >
-          <section style="--panel-size: 1" class="resizable-panel">
+          <section style="--panel-size: 1">
             <div class="resizable-panel-content"><strong>Sidebar</strong></div>
           </section>
-          <div aria-label="Resize sidebar and content" class="resizable-handle">
-            <span aria-hidden="true" class="resizable-handle-grip"></span>
-          </div>
-          <section style="--panel-size: 3" class="resizable-panel">
+          <hr aria-label="Resize sidebar and content" />
+          <section style="--panel-size: 3">
             <div class="resizable-panel-content"><strong>Content</strong></div>
           </section>
         </div>
@@ -45,19 +43,14 @@
           class="resizable-reference-layout"
         >
           <section
-
             data-min-size="0.5"
             data-max-size="3.5"
             style="--panel-size: 1"
-           class="resizable-panel">
+          >
             <div class="resizable-panel-content"><strong>Header</strong></div>
           </section>
-          <div aria-label="Resize header and content" class="resizable-handle"></div>
-          <section
-
-            data-min-size="0.5"
-            style="--panel-size: 3"
-           class="resizable-panel">
+          <hr aria-label="Resize header and content" />
+          <section data-min-size="0.5" style="--panel-size: 3">
             <div class="resizable-panel-content"><strong>Content</strong></div>
           </section>
         </div>
@@ -76,31 +69,24 @@
           class="resizable-reference-layout"
           dir="rtl"
         >
-          <section style="--panel-size: 1" class="resizable-panel">
+          <section style="--panel-size: 1">
             <div class="resizable-panel-content"><strong>واحد</strong></div>
           </section>
-          <div aria-label="تغيير حجم اللوحات" class="resizable-handle">
-            <span aria-hidden="true" class="resizable-handle-grip"></span>
-          </div>
-          <section style="--panel-size: 1" class="resizable-panel">
+          <hr aria-label="تغيير حجم اللوحات" />
+          <section style="--panel-size: 1">
             <div
               ng-resizable-panel-group
               orientation="vertical"
               aria-label="تغيير حجم اللوحتين الثانية والثالثة"
               dir="rtl"
             >
-              <section style="--panel-size: 1" class="resizable-panel">
+              <section style="--panel-size: 1">
                 <div class="resizable-panel-content">
                   <strong>اثنان</strong>
                 </div>
               </section>
-              <div
-
-                aria-label="تغيير حجم اللوحتين الثانية والثالثة"
-               class="resizable-handle">
-                <span aria-hidden="true" class="resizable-handle-grip"></span>
-              </div>
-              <section style="--panel-size: 3" class="resizable-panel">
+              <hr aria-label="تغيير حجم اللوحتين الثانية والثالثة" />
+              <section style="--panel-size: 3">
                 <div class="resizable-panel-content">
                   <strong>ثلاثة</strong>
                 </div>

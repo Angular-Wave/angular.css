@@ -10,7 +10,7 @@ direction-aware layouts.
 
 ```html
 <section dir="rtl" class="direction">
-  <p data-logical-align="start">Start aligned text</p>
+  <p align="start">Start aligned text</p>
 </section>
 ```
 

@@ -84,11 +84,7 @@ test("input group examples match canonical geometry, state, and addon focus beha
   );
 
   const commandInput = page.locator("#ig-command-search");
-  await commandInput
-    .locator("..")
-    .locator(".input-group-addon")
-    .first()
-    .click();
+  await commandInput.locator("..").locator(":scope > label").first().click();
   await expect(commandInput).toBeFocused();
 
   await page.getByLabel("Search documentation").fill("angular");

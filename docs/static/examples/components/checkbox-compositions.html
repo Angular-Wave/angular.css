@@ -16,46 +16,42 @@
     data-example="checkbox-table"
   >
     <main class="checkbox-table-demo" aria-label="Checkbox table composition">
-      <figure class="table-container">
+      <figure>
         <table aria-label="Team members" class="table">
-          <thead class="table-header">
-            <tr class="table-row">
-              <th class="checkbox-table-select table-head">
+          <thead>
+            <tr>
+              <th scope="col" class="checkbox-table-select">
                 <input
-
                   id="select-all-checkbox"
                   name="select-all-checkbox"
                   type="checkbox"
                   ng-model="selection.allRows"
                   ng-change="rows[0].selected=selection.allRows;rows[1].selected=selection.allRows;rows[2].selected=selection.allRows;rows[3].selected=selection.allRows"
-                  aria-label="Select all rows" class="checkbox" />
+                  aria-label="Select all rows"
+                  class="checkbox"
+                />
               </th>
-              <th class="table-head">Name</th>
-              <th class="table-head">Email</th>
-              <th class="table-head">Role</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Role</th>
             </tr>
           </thead>
-          <tbody class="table-body">
-            <tr
-
-              ng-repeat="row in rows"
-              data-state="{{ row.selected ? 'selected' : '' }}"
-             class="table-row">
-              <td class="checkbox-table-select table-cell">
+          <tbody>
+            <tr ng-repeat="row in rows" aria-selected="{{ row.selected }}">
+              <td class="checkbox-table-select">
                 <input
-
                   id="row-{{ row.id }}-checkbox"
                   name="row-{{ row.id }}-checkbox"
                   type="checkbox"
                   ng-model="row.selected"
                   ng-change="selection.allRows=rows[0].selected && rows[1].selected && rows[2].selected && rows[3].selected"
-                  aria-label="Select {{ row.name }}" class="checkbox" />
+                  aria-label="Select {{ row.name }}"
+                  class="checkbox"
+                />
               </td>
-              <td class="checkbox-table-name table-cell">
-                {{ row.name }}
-              </td>
-              <td class="table-cell">{{ row.email }}</td>
-              <td class="table-cell">{{ row.role }}</td>
+              <td class="checkbox-table-name">{{ row.name }}</td>
+              <td>{{ row.email }}</td>
+              <td>{{ row.role }}</td>
             </tr>
           </tbody>
         </table>

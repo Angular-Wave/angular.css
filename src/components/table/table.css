@@ -1,80 +1,89 @@
-.table-container {
-  width: 100%;
-  overflow-x: auto;
-}
+@scope (figure:has(> table.table)) {
+  :scope {
+    container: angularcss-table / inline-size;
+    width: 100%;
+    overflow-x: auto;
+  }
 
-.table {
-  width: 100%;
-  caption-side: bottom;
-  border-collapse: collapse;
-  font-size: var(--text-sm);
-}
+  .table {
+    width: 100%;
+    caption-side: bottom;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
 
-.table-caption {
-  margin-top: calc(var(--spacing) * 4);
-  color: var(--muted-foreground);
-  font-size: var(--text-sm);
-}
+  caption {
+    margin-top: calc(var(--spacing) * 4);
+    color: var(--muted-foreground);
+    font-size: var(--text-sm);
+  }
 
-.table-row {
-  border-bottom: 1px solid var(--border);
-  transition: background-color 150ms ease;
-}
+  tr {
+    border-bottom: 1px solid var(--border);
+    transition: background-color 150ms ease;
+  }
 
-.table-row:hover {
-  background: color-mix(in srgb, var(--muted) 50%, transparent);
-}
+  tr:hover {
+    background: color-mix(in srgb, var(--muted) 50%, transparent);
+  }
 
-.table-row[data-state="selected"] {
-  background: var(--muted);
-}
+  tr[aria-selected="true"] {
+    background: var(--muted);
+  }
 
-.table-row:is(.ng-enter, .ng-move) {
-  animation: angularcss-structural-enter 140ms ease-out;
-}
+  tr:is(.ng-enter, .ng-move) {
+    animation: angularcss-structural-enter 140ms ease-out;
+  }
 
-.table-row.ng-leave-active {
-  opacity: 0;
-  transition:
-    background-color 150ms ease,
-    opacity 100ms ease;
-}
+  tr.ng-leave-active {
+    opacity: 0;
+    transition:
+      background-color 150ms ease,
+      opacity 100ms ease;
+  }
 
-.table-body > .table-row:last-child {
-  border-bottom: 0;
-}
+  tbody > tr:last-child {
+    border-bottom: 0;
+  }
 
-.table-head {
-  height: calc(var(--spacing) * 10);
-  padding-inline: calc(var(--spacing) * 2);
-  text-align: left;
-  vertical-align: middle;
-  color: var(--foreground);
-  font-weight: var(--font-weight-medium);
-  white-space: nowrap;
-}
+  th {
+    height: calc(var(--spacing) * 10);
+    padding-inline: calc(var(--spacing) * 2);
+    text-align: left;
+    vertical-align: middle;
+    color: var(--foreground);
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+  }
 
-.table-cell {
-  padding: calc(var(--spacing) * 2);
-  vertical-align: middle;
-  white-space: nowrap;
-}
+  td {
+    padding: calc(var(--spacing) * 2);
+    vertical-align: middle;
+    white-space: nowrap;
+  }
 
-.table-head:has(input[type="checkbox"]),
-.table-cell:has(input[type="checkbox"]) {
-  padding-inline-end: 0;
-}
+  :is(th, td):has(input[type="checkbox"]) {
+    padding-inline-end: 0;
+  }
 
-.table-footer {
-  border-top: 1px solid var(--border);
-  background: var(--muted);
-  font-weight: var(--font-weight-medium);
-}
+  tfoot {
+    border-top: 1px solid var(--border);
+    background: var(--muted);
+    font-weight: var(--font-weight-medium);
+  }
 
-@media (prefers-reduced-motion: reduce) {
-  .table-row,
-  .table-row.ng-leave-active {
-    animation: none;
-    transition-duration: 0s;
+  @media (prefers-reduced-motion: reduce) {
+    tr,
+    tr.ng-leave-active {
+      animation: none;
+      transition-duration: 0s;
+    }
+  }
+
+  @container angularcss-table (width < 32rem) {
+    th,
+    td {
+      padding-inline: calc(var(--spacing) * 1.5);
+    }
   }
 }

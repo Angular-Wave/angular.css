@@ -17,57 +17,57 @@
     data-example="checkbox-demo"
   >
     <div class="checkbox-demo visual-example field-group">
-      <fieldset orientation="horizontal" class="field">
+      <div orientation="horizontal" class="field">
         <input
-
           id="terms-checkbox"
           name="terms-checkbox"
           type="checkbox"
-          ng-model="terms" class="checkbox" />
-        <label for="terms-checkbox" class="label">Accept terms and conditions</label>
-      </fieldset>
+          ng-model="terms"
+          class="checkbox"
+        />
+        <label for="terms-checkbox">Accept terms and conditions</label>
+      </div>
 
-      <fieldset orientation="horizontal" class="field">
+      <div orientation="horizontal" class="field">
         <input
-
           id="terms-checkbox-2"
           name="terms-checkbox-2"
           type="checkbox"
-          ng-model="termsDetails" class="checkbox" />
-        <div class="field-content">
-          <label for="terms-checkbox-2"
-             class="field-label label">Accept terms and conditions</label>
-          <p class="field-description">
-            By clicking this checkbox, you agree to the terms.
-          </p>
-        </div>
-      </fieldset>
+          ng-model="termsDetails"
+          class="checkbox"
+        />
+        <section>
+          <label for="terms-checkbox-2">Accept terms and conditions</label>
+          <p>By clicking this checkbox, you agree to the terms.</p>
+        </section>
+      </div>
 
-      <fieldset orientation="horizontal" data-disabled="true" class="field">
+      <div orientation="horizontal" class="field">
         <input
-
           id="toggle-checkbox"
           name="toggle-checkbox"
           type="checkbox"
-          disabled class="checkbox" />
-        <label for="toggle-checkbox"
-           class="field-label label">Enable notifications</label>
-      </fieldset>
+          disabled
+          class="checkbox"
+        />
+        <label for="toggle-checkbox">Enable notifications</label>
+      </div>
 
-      <label class="field-label label">
+      <label>
         <div orientation="horizontal" class="field">
           <input
-
             id="toggle-checkbox-2"
             name="toggle-checkbox-2"
             type="checkbox"
-            ng-model="wrappedNotifications" class="checkbox" />
-          <div class="field-content">
-            <span class="field-title">Enable notifications</span>
-            <span class="field-description">
+            ng-model="wrappedNotifications"
+            class="checkbox"
+          />
+          <section>
+            <strong>Enable notifications</strong>
+            <small>
               You can enable or disable notifications at any time.
-            </span>
-          </div>
+            </small>
+          </section>
         </div>
       </label>
 

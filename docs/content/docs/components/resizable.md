@@ -6,15 +6,14 @@ description: >
   variables.
 ---
 
-Use `ng-resizable-panel-group` with alternating `resizable-panel` and
-`resizable-handle` elements. Resize handles support pointer dragging and
-keyboard control.
+Use `ng-resizable-panel-group` with alternating native `section` and `hr`
+elements. Resize separators support pointer dragging and keyboard control.
 
 ```html
 <div ng-resizable-panel-group aria-label="Resizable layout">
-  <section style="--panel-size: 1" class="resizable-panel">Preview</section>
-  <hr aria-orientation="vertical"  class="resizable-handle"/>
-  <section class="resizable-panel">Details</section>
+  <section style="--panel-size: 1">Preview</section>
+  <hr aria-label="Resize preview and details" />
+  <section>Details</section>
 </div>
 ```
 
@@ -22,8 +21,8 @@ Set `orientation="vertical"` on the group to stack panels. Handles receive
 separator roles, orientation, value bounds, current values, and `aria-controls`
 relationships. Dragging or pressing Arrow, Home, and End keys updates adjacent
 panel `--panel-size` values within `data-min-size` and `data-max-size`; RTL
-reverses horizontal changes. Add a `resizable-handle-grip` part when the handle
-should have a visible grip.
+reverses horizontal changes. CSS renders a visible grip without additional
+markup.
 
 ## Example
 
@@ -68,17 +67,12 @@ Alternate direct `.resizable-panel` and `.resizable-handle` children inside each
 | `aria-valuemax` | Output | ARIA relationship or state. |
 | `aria-valuemin` | Output | ARIA relationship or state. |
 | `aria-valuenow` | Output | ARIA relationship or state. |
-| `data-direction` | Output | Stable component state or styling hook. |
-| `data-index` | Output | Stable component state or styling hook. |
 | `data-max-size` | Input | Stable component state or styling hook. |
 | `data-min-size` | Input | Stable component state or styling hook. |
-| `data-orientation` | Input/output | Stable component state or styling hook. |
 | `data-resizing` | Output | Stable component state or styling hook. |
-| `data-size` | Output | Stable component state or styling hook. |
 | `data-step` | Input | Stable component state or styling hook. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
-| `orientation` | Input | Layout direction: `horizontal` or `vertical`. |
-| `role` | Output | Explicit semantic role when native HTML does not provide one. |
+| `orientation` | Input/output | Layout direction: `horizontal` or `vertical`. |
 | `tabindex` | Input/output | Keyboard focus order for composite descendants. |
 
 `Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.

@@ -10,9 +10,9 @@ today, and outside-month days with attributes.
 
 ```html
 <section class="calendar">
-  <header class="calendar-header">May 2026</header>
-  <div class="calendar-grid">
-    <button aria-selected="true" class="calendar-day">14</button>
+  <header>May 2026</header>
+  <div>
+    <button aria-selected="true">14</button>
   </div>
 </section>
 ```

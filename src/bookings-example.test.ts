@@ -21,7 +21,7 @@ test("bookings example supports search, status filters, and details", async ({
   await expect(page.locator(".booking-result-count")).toHaveText("1 results");
 
   await page.getByRole("searchbox").fill("");
-  await page.getByRole("tab", { name: "Pending", exact: true }).click();
+  await page.getByRole("button", { name: "Pending", exact: true }).click();
   await expect(visibleRows).toHaveCount(2);
   await visibleRows.first().locator(".booking-row-trigger").click();
 
@@ -31,7 +31,7 @@ test("bookings example supports search, status filters, and details", async ({
   await page.getByRole("button", { name: "Close" }).click();
   await expect(dialog).toBeHidden();
 
-  await page.getByRole("tab", { name: "All", exact: true }).click();
+  await page.getByRole("button", { name: "All", exact: true }).click();
   await expect(visibleRows).toHaveCount(8);
   await expect(page.locator(".booking-shell")).toHaveScreenshot(
     "bookings-desktop.png",
@@ -55,7 +55,7 @@ test("bookings example has a compact layout and mobile navigation", async ({
     name: "Toggle booking navigation",
   });
 
-  await expect(sidebar).toHaveAttribute("data-state", "collapsed");
+  await expect(sidebar).toHaveAttribute("collapsed", "");
   await expect(menu).toBeVisible();
   expect(
     await page.evaluate(() => document.documentElement.scrollWidth),
@@ -65,7 +65,7 @@ test("bookings example has a compact layout and mobile navigation", async ({
   });
 
   await menu.click();
-  await expect(sidebar).toHaveAttribute("data-state", "expanded");
+  await expect(sidebar).not.toHaveAttribute("collapsed", "");
   await expect(page.getByText("Emma Executive", { exact: true })).toBeVisible();
   expect(errors).toEqual([]);
 });

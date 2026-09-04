@@ -36,21 +36,21 @@
             class="sonner-inline-toaster"
             aria-label="Description notifications"
           >
-            <li ng-if="sonner.descriptionVisible" animate class="toast">
-              <section class="toast-content">
-                <h3 class="toast-title">Event has been created</h3>
-                <p class="toast-description">Monday, January 3rd at 6:00pm</p>
+            <article ng-if="sonner.descriptionVisible" animate>
+              <section>
+                <h3>Event has been created</h3>
+                <p>Monday, January 3rd at 6:00pm</p>
               </section>
               <button
                 variant="ghost"
                 size="icon-sm"
                 aria-label="Dismiss description toast"
                 ng-click="sonner.dismissDescription()"
-                class="toast-close button"
+                class="button"
               >
-                <span class="sonner-icon"></span>
+                <span></span>
               </button>
-            </li>
+            </article>
           </div>
         </div>
         <output class="output">{{ sonner.descriptionStatus }}</output>
@@ -118,20 +118,20 @@
             position="{{ sonner.position }}"
             aria-label="Position notifications"
           >
-            <li ng-if="sonner.positionVisible" animate class="toast">
-              <section class="toast-content">
-                <h3 class="toast-title">Event has been created</h3>
+            <article ng-if="sonner.positionVisible" animate>
+              <section>
+                <h3>Event has been created</h3>
               </section>
               <button
                 variant="ghost"
                 size="icon-sm"
                 aria-label="Dismiss position toast"
                 ng-click="sonner.dismissPosition()"
-                class="toast-close button"
+                class="button"
               >
-                <span class="sonner-icon"></span>
+                <span></span>
               </button>
-            </li>
+            </article>
           </div>
         </div>
         <output class="output">Position: {{ sonner.position }}</output>
@@ -198,45 +198,29 @@
             class="sonner-inline-toaster"
             aria-label="Type notifications"
           >
-            <li
+            <article
               type="{{ sonner.type }}"
               ng-if="sonner.typeVisible"
               animate
-              class="toast"
             >
-              <span
-                ng-if="sonner.type === 'success'"
-                class="toast-icon sonner-icon"
-              ></span>
-              <span
-                ng-if="sonner.type === 'info'"
-                class="toast-icon sonner-icon"
-              ></span>
-              <span
-                ng-if="sonner.type === 'warning'"
-                class="toast-icon sonner-icon"
-              ></span>
-              <span
-                ng-if="sonner.type === 'error'"
-                class="toast-icon sonner-icon"
-              ></span>
-              <span
-                ng-if="sonner.type === 'loading'"
-                class="toast-icon sonner-icon"
-              ></span>
-              <section class="toast-content">
-                <h3 class="toast-title">{{ sonner.typeMessage }}</h3>
+              <figure ng-if="sonner.type === 'success'"></figure>
+              <figure ng-if="sonner.type === 'info'"></figure>
+              <figure ng-if="sonner.type === 'warning'"></figure>
+              <figure ng-if="sonner.type === 'error'"></figure>
+              <figure ng-if="sonner.type === 'loading'"></figure>
+              <section>
+                <h3>{{ sonner.typeMessage }}</h3>
               </section>
               <button
                 variant="ghost"
                 size="icon-sm"
                 aria-label="Dismiss type toast"
                 ng-click="sonner.dismissType()"
-                class="toast-close button"
+                class="button"
               >
-                <span class="sonner-icon"></span>
+                <span></span>
               </button>
-            </li>
+            </article>
           </div>
         </div>
         <output class="output">Type: {{ sonner.type }}</output>

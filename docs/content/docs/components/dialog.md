@@ -11,10 +11,10 @@ modal focus and disclosure; AngularTS owns form values and application actions.
 ```html
 <section class="dialog">
   <button commandfor="profile-dialog" command="show-modal">Edit profile</button>
-  <dialog id="profile-dialog" class="dialog-content">
-    <header class="dialog-header">
-      <h2 class="dialog-title">Edit profile</h2>
-      <p class="dialog-description">Update your public profile.</p>
+  <dialog id="profile-dialog">
+    <header>
+      <h2>Edit profile</h2>
+      <p>Update your public profile.</p>
     </header>
     <button commandfor="profile-dialog" command="close">Save changes</button>
   </dialog>
@@ -36,8 +36,8 @@ omitted without changing modal behavior.
 
 ## Scrolling
 
-Use `.dialog-body` for independently scrollable content. Keep the footer
-outside that body when its actions must remain visible.
+Use `.dialog-body` for independently scrollable content. Keep the footer outside
+that body when its actions must remain visible.
 
 {{< example src="examples/components/dialog-scroll-workflows.html" title="Scrollable dialogs" height="480" >}}
 
@@ -62,7 +62,7 @@ This is a styling-only HTML element or pattern. AngularCSS registers no runtime 
 
 ### Semantic structure
 
-Use `.dialog` as an optional composition wrapper, a native button with `command=show-modal`, and `dialog.dialog-content`. Close controls use `command=close`; no overlay element or nested AngularCSS attributes are required.
+Use `.dialog` as a composition wrapper containing a native invoker button and `dialog`. Close controls use `command=close`; semantic headers, sections, forms, and footers need no anatomy classes or nested AngularCSS attributes.
 
 ## API
 
@@ -70,22 +70,7 @@ Use `.dialog` as an optional composition wrapper, a native button with `command=
 
 | Attribute | Access | Purpose |
 | --- | --- | --- |
-| `aria-controls` | Output | ARIA relationship or state. |
-| `aria-describedby` | Output | ARIA relationship or state. |
-| `aria-expanded` | Output | Open or expanded state exposed to assistive technology. |
-| `aria-haspopup` | Output | ARIA relationship or state. |
-| `aria-hidden` | Output | ARIA relationship or state. |
-| `aria-labelledby` | Output | ARIA relationship or state. |
-| `aria-modal` | Output | ARIA relationship or state. |
-| `data-direction` | Output | Stable component state or styling hook. |
-| `data-open` | Input/output | Stable component state or styling hook. |
-| `data-state` | Output | Stable component state or styling hook. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
-| `disabled` | Input | Disables native or component interaction. |
-| `hidden` | Output | Authored option or semantic HTML attribute observed by the directive. |
-| `role` | Output | Explicit semantic role when native HTML does not provide one. |
-| `tabindex` | Output | Keyboard focus order for composite descendants. |
-| `type` | Output | Component or native behavior variant. |
 
 Attributes remain authored HTML, native state, or AngularTS inputs. AngularCSS does not write element state.
 

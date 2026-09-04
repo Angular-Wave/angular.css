@@ -2,7 +2,19 @@
   @apply grid w-full gap-2;
 }
 
-input[type="radio"].radio-group-item {
+fieldset.field-set.radio-group {
+  gap: calc(var(--spacing) * 2);
+}
+
+fieldset.field-set.radio-group > legend {
+  margin-bottom: calc(var(--spacing) * 2.75);
+}
+
+fieldset.field-set.radio-group > p {
+  margin-bottom: calc(var(--spacing) * 1);
+}
+
+.radio-group input[type="radio"] {
   appearance: none;
 
   @apply relative size-4 shrink-0 rounded-full border border-input
@@ -30,7 +42,7 @@ input[type="radio"].radio-group-item {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  input[type="radio"].radio-group-item::after {
+  .radio-group input[type="radio"]::after {
     transition-duration: 0s;
   }
 }

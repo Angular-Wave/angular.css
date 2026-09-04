@@ -16,13 +16,12 @@
     data-example="sidebar-rtl"
     class="sidebar-example-body"
   >
-    <div class="sidebar-rtl-shell visual-example sidebar-layout">
-      <main class="sidebar-rtl-inset sidebar-inset">
+    <div class="sidebar-rtl-shell visual-example">
+      <main class="sidebar-rtl-inset">
         <header class="sidebar-demo-toolbar">
           <button
             variant="ghost"
             size="sm"
-            data-sidebar-controlled
             aria-controls="rtl-sidebar"
             ng-click="sidebarOpen=!sidebarOpen"
             class="button"
@@ -59,135 +58,104 @@
         side="right"
         variant="floating"
         collapsible="icon"
-        ng-attr-data-state="{{ sidebarOpen ? 'expanded' : 'collapsed' }}"
+        ng-attr-collapsed="{{ sidebarOpen ? undefined : '' }}"
         class="sidebar-rtl-panel"
         aria-label="التنقل في مساحة العمل"
       >
-        <header class="sidebar-header">
-          <a href="#workspace" size="lg" class="sidebar-menu-button">
+        <header>
+          <a href="#workspace" size="lg">
             <span class="sidebar-brand-mark" aria-hidden="true">أ</span>
             <span class="sidebar-brand-copy"
               ><strong>شركة أكمي</strong><small>المؤسسة</small></span
             >
           </a>
         </header>
-        <nav class="sidebar-content">
-          <section class="sidebar-group">
-            <h3 class="sidebar-group-label">المنصة</h3>
-            <div class="sidebar-group-content">
-              <ul class="sidebar-menu">
-                <li class="sidebar-menu-item">
-                  <a
-                    data-active="true"
-                    href="#playground"
-                    class="sidebar-menu-button"
+        <nav>
+          <section>
+            <h3>المنصة</h3>
+            <ul>
+              <li>
+                <a aria-current="page" href="#playground">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
                   >
+                    <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                    <path d="m8 9 2 2-2 2M13 15h3"></path>
+                  </svg>
+                  <span>ملعب</span>
+                </a>
+                <ul>
+                  <li>
+                    <a href="#history">السجل</a>
+                  </li>
+                  <li>
+                    <a href="#starred">المميز</a>
+                  </li>
+                  <li>
+                    <a href="#settings">الإعدادات</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#models"
+                  ><span class="sidebar-menu-dot" aria-hidden="true"></span
+                  ><span>النماذج</span></a
+                >
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h3>المشاريع</h3>
+            <ul>
+              <li>
+                <a href="#design"
+                  ><span class="sidebar-menu-dot" aria-hidden="true"></span
+                  ><span>هندسة التصميم</span></a
+                >
+                <div ng-dropdown>
+                  <button aria-label="المزيد">
                     <svg
                       viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
+                      fill="currentColor"
                       aria-hidden="true"
                     >
-                      <rect x="4" y="4" width="16" height="16" rx="2"></rect>
-                      <path d="m8 9 2 2-2 2M13 15h3"></path>
+                      <circle cx="5" cy="12" r="1.5"></circle>
+                      <circle cx="12" cy="12" r="1.5"></circle>
+                      <circle cx="19" cy="12" r="1.5"></circle>
                     </svg>
-                    <span>ملعب</span>
-                  </a>
-                  <ul class="sidebar-menu-sub">
-                    <li class="sidebar-menu-sub-item">
-                      <a href="#history" class="sidebar-menu-sub-button"
-                        >السجل</a
-                      >
-                    </li>
-                    <li class="sidebar-menu-sub-item">
-                      <a href="#starred" class="sidebar-menu-sub-button"
-                        >المميز</a
-                      >
-                    </li>
-                    <li class="sidebar-menu-sub-item">
-                      <a href="#settings" class="sidebar-menu-sub-button"
-                        >الإعدادات</a
-                      >
-                    </li>
-                  </ul>
-                </li>
-                <li class="sidebar-menu-item">
-                  <a href="#models" class="sidebar-menu-button"
-                    ><span class="sidebar-menu-dot" aria-hidden="true"></span
-                    ><span>النماذج</span></a
-                  >
-                </li>
-              </ul>
-            </div>
-          </section>
-          <section class="sidebar-group">
-            <h3 class="sidebar-group-label">المشاريع</h3>
-            <div class="sidebar-group-content">
-              <ul class="sidebar-menu">
-                <li class="sidebar-menu-item">
-                  <a href="#design" class="sidebar-menu-button"
-                    ><span class="sidebar-menu-dot" aria-hidden="true"></span
-                    ><span>هندسة التصميم</span></a
-                  >
-                  <div ng-dropdown>
-                    <button
-                      aria-label="المزيد"
-                      class="dropdown-menu-trigger sidebar-menu-action"
-                    >
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        aria-hidden="true"
-                      >
-                        <circle cx="5" cy="12" r="1.5"></circle>
-                        <circle cx="12" cy="12" r="1.5"></circle>
-                        <circle cx="19" cy="12" r="1.5"></circle>
-                      </svg>
+                  </button>
+                  <menu side="left" align="start">
+                    <button ng-click="sidebarAction='عرض المشروع'">
+                      عرض المشروع
                     </button>
-                    <menu
-                      side="left"
-                      align="start"
-                      class="dropdown-menu-content"
-                    >
-                      <button
-                        ng-click="sidebarAction='عرض المشروع'"
-                        class="dropdown-menu-item"
-                      >
-                        عرض المشروع
-                      </button>
-                      <button
-                        ng-click="sidebarAction='مشاركة المشروع'"
-                        class="dropdown-menu-item"
-                      >
-                        مشاركة المشروع
-                      </button>
-                    </menu>
-                  </div>
-                </li>
-                <li class="sidebar-menu-item">
-                  <a href="#sales" class="sidebar-menu-button"
-                    ><span class="sidebar-menu-dot" aria-hidden="true"></span
-                    ><span>المبيعات والتسويق</span></a
-                  >
-                </li>
-                <li class="sidebar-menu-item">
-                  <a href="#travel" class="sidebar-menu-button"
-                    ><span class="sidebar-menu-dot" aria-hidden="true"></span
-                    ><span>السفر</span></a
-                  >
-                </li>
-              </ul>
-            </div>
+                    <button ng-click="sidebarAction='مشاركة المشروع'">
+                      مشاركة المشروع
+                    </button>
+                  </menu>
+                </div>
+              </li>
+              <li>
+                <a href="#sales"
+                  ><span class="sidebar-menu-dot" aria-hidden="true"></span
+                  ><span>المبيعات والتسويق</span></a
+                >
+              </li>
+              <li>
+                <a href="#travel"
+                  ><span class="sidebar-menu-dot" aria-hidden="true"></span
+                  ><span>السفر</span></a
+                >
+              </li>
+            </ul>
           </section>
         </nav>
-        <footer class="sidebar-footer">
-          <button
-            size="lg"
-            ng-click="sidebarAction='الحساب'"
-            class="sidebar-menu-button"
-          >
-            <span class="avatar"><span class="avatar-fallback">ش</span></span>
+        <footer>
+          <button size="lg" ng-click="sidebarAction='الحساب'">
+            <span class="avatar"><span>ش</span></span>
             <span class="sidebar-brand-copy"
               ><strong>شاد سي إن</strong><small>m@example.com</small></span
             >

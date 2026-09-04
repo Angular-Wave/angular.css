@@ -5,13 +5,13 @@ description: >
   Contextual hover and focus labels
 ---
 
-Use a tooltip wrapper, trigger, and content. Content can be held visible with
-`data-open="true"` for controlled examples.
+Use a tooltip wrapper, trigger, and plain-text content. Content can be held
+visible with the wrapper's concise `open` attribute for controlled examples.
 
 ```html
 <span class="tooltip">
-  <button class="tooltip-trigger">Hover</button>
-  <span class="tooltip-content">Add to library</span>
+  <button>Hover</button>
+  <span>Add to library</span>
 </span>
 ```
 

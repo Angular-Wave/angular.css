@@ -67,7 +67,7 @@
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
-.accordion details[open] > summary::after {
+.accordion details:open > summary::after {
   transform: translateY(4px) rotate(225deg) scale(0.55);
 }
 
@@ -76,7 +76,7 @@
   opacity: 0.5;
 }
 
-.accordion :is(.accordion-content, .accordion-panel) {
+.accordion > details > :not(summary) {
   display: flex;
   overflow: hidden;
   flex-direction: column;
@@ -99,7 +99,7 @@
         opacity 140ms ease-out;
     }
 
-    .accordion > details[open]::details-content {
+    .accordion > details:open::details-content {
       block-size: auto;
       opacity: 1;
     }

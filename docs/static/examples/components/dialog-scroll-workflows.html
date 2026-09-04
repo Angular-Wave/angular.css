@@ -18,15 +18,29 @@
       <section class="dialog-workflow" aria-labelledby="scroll-heading">
         <h2 id="scroll-heading">Scrollable content</h2>
         <div id="scroll-dialog" class="dialog">
-          <button variant="outline" class="dialog-trigger button" type="button" commandfor="scroll-dialog-content" command="show-modal">
+          <button
+            variant="outline"
+            class="button"
+            type="button"
+            commandfor="scroll-dialog-content"
+            command="show-modal"
+          >
             Read profile
           </button>
-          <dialog data-size="wide" class="dialog-content" id="scroll-dialog-content" closedby="any" aria-labelledby="scroll-dialog-title" aria-describedby="scroll-dialog-description">
-            <header class="dialog-header">
-              <h3 class="dialog-title" id="scroll-dialog-title">About Pedro Duarte</h3>
-              <p class="dialog-description" id="scroll-dialog-description">A short professional biography.</p>
+          <dialog
+            size="wide"
+            id="scroll-dialog-content"
+            closedby="any"
+            aria-labelledby="scroll-dialog-title"
+            aria-describedby="scroll-dialog-description"
+          >
+            <header>
+              <h3 id="scroll-dialog-title">About Pedro Duarte</h3>
+              <p id="scroll-dialog-description">
+                A short professional biography.
+              </p>
             </header>
-            <div class="dialog-prose dialog-body">
+            <section class="dialog-prose">
               <p>
                 Pedro is a designer and developer focused on accessible design
                 systems and thoughtful product interfaces.
@@ -51,8 +65,14 @@
                 This final paragraph ensures the body has genuine overflow and
                 remains independently scrollable inside the viewport.
               </p>
-            </div>
-            <button variant="ghost" size="icon-sm" class="dialog-close button" commandfor="scroll-dialog-content" command="close">
+            </section>
+            <button
+              variant="ghost"
+              size="icon-sm"
+              class="button"
+              commandfor="scroll-dialog-content"
+              command="close"
+            >
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -72,17 +92,29 @@
       <section class="dialog-workflow" aria-labelledby="sticky-heading">
         <h2 id="sticky-heading">Sticky footer</h2>
         <div id="sticky-dialog" class="dialog">
-          <button variant="outline" class="dialog-trigger button" type="button" commandfor="sticky-dialog-content" command="show-modal">
+          <button
+            variant="outline"
+            class="button"
+            type="button"
+            commandfor="sticky-dialog-content"
+            command="show-modal"
+          >
             Review notes
           </button>
-          <dialog data-size="wide" class="dialog-content" id="sticky-dialog-content" closedby="any" aria-labelledby="sticky-dialog-title" aria-describedby="sticky-dialog-description">
-            <header class="dialog-header">
-              <h3 class="dialog-title" id="sticky-dialog-title">Release notes</h3>
-              <p class="dialog-description" id="sticky-dialog-description">
+          <dialog
+            size="wide"
+            id="sticky-dialog-content"
+            closedby="any"
+            aria-labelledby="sticky-dialog-title"
+            aria-describedby="sticky-dialog-description"
+          >
+            <header>
+              <h3 id="sticky-dialog-title">Release notes</h3>
+              <p id="sticky-dialog-description">
                 Review the changes included in this release.
               </p>
             </header>
-            <div class="dialog-prose dialog-body">
+            <section class="dialog-prose">
               <p>
                 Focus is now contained inside modal dialogs while they are open.
               </p>
@@ -106,12 +138,23 @@
                 Logical positioning keeps the corner close control aligned in
                 both left-to-right and right-to-left layouts.
               </p>
-            </div>
-            <footer class="dialog-footer">
-              <button variant="outline" class="button" commandfor="sticky-dialog-content" command="close">
+            </section>
+            <footer>
+              <button
+                variant="outline"
+                class="button"
+                commandfor="sticky-dialog-content"
+                command="close"
+              >
                 Cancel
               </button>
-              <button class="button" commandfor="sticky-dialog-content" command="close">Confirm</button>
+              <button
+                class="button"
+                commandfor="sticky-dialog-content"
+                command="close"
+              >
+                Confirm
+              </button>
             </footer>
           </dialog>
         </div>

@@ -6,18 +6,18 @@ description: >
 ---
 
 Use `ng-toaster` on the container and `ng-toast` on each toast item. Application
-code owns toast creation and queueing. Set `type` or `data-variant` to
-`success`, `info`, `warning`, `error`, or `loading`; the directive mirrors the
-result to `data-type` for styling.
+code owns toast creation and queueing. Set `type` or `variant` to `success`,
+`info`, `warning`, `error`, or `loading`; the directive mirrors the result to
+`data-type` for styling.
 
 ```html
 <div ng-toaster>
-  <li type="success" class="toast">
-    <section class="toast-content">
-      <h3 class="toast-title">Saved</h3>
-      <p class="toast-description">Update published.</p>
-    </section>
-  </li>
+  <article type="success">
+    <article>
+      <article>Saved</article>
+      <article>Update published.</article>
+    </article>
+  </article>
 </div>
 ```
 
@@ -64,19 +64,12 @@ Use native elements for authored structure. Component classes are optional visua
 | --- | --- | --- |
 | `aria-atomic` | Input/output | ARIA relationship or state. |
 | `aria-describedby` | Input/output | ARIA relationship or state. |
-| `aria-hidden` | Output | ARIA relationship or state. |
 | `aria-label` | Input/output | Accessible name when visible text is insufficient. |
 | `aria-labelledby` | Input/output | ARIA relationship or state. |
 | `aria-live` | Input/output | ARIA relationship or state. |
-| `data-position` | Input/output | Stable component state or styling hook. |
-| `data-sonner-toaster` | Output | Stable component state or styling hook. |
-| `data-state` | Output | Stable component state or styling hook. |
-| `data-type` | Input/output | Stable component state or styling hook. |
-| `data-variant` | Input | Stable component state or styling hook. |
-| `data-visible` | Output | Stable component state or styling hook. |
-| `position` | Input | Placement token used by the component surface. |
+| `position` | Input/output | Placement token used by the component surface. |
 | `role` | Output | Explicit semantic role when native HTML does not provide one. |
-| `type` | Input | Component or native behavior variant. |
+| `type` | Input/output | Component or native behavior variant. |
 
 `Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
 

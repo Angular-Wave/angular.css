@@ -12,20 +12,19 @@ For simple authored HTML plots, `data-value` and `data-color` synchronize to
 
 ```html
 <figure aria-label="Monthly visitors" class="chart">
-  <div class="chart-plot">
-    <div class="chart-grid"></div>
-    <div class="chart-bar-groups">
-      <div class="chart-bar-group">
+  <section>
+    <hr />
+    <ul>
+      <li>
         <span
-
-          data-label="January desktop"
+          aria-label="January desktop"
           data-value="72%"
           data-color="var(--chart-1)"
-         class="chart-bar"></span>
-      </div>
-    </div>
-  </div>
-  <div class="chart-axis"><span class="chart-axis-item">Jan</span></div>
+        ></span>
+      </li>
+    </ul>
+  </section>
+  <footer><span>Jan</span></footer>
 </figure>
 ```
 
@@ -64,7 +63,7 @@ This is a styling-only HTML element or pattern. AngularCSS registers no runtime 
 
 ### Semantic structure
 
-The chart root requires an accessible name. Plot, bar, axis, grid, legend, and tooltip slots are optional composition primitives; place them inside the chart root so synchronized CSS properties and semantics apply.
+Apply `.chart` to an accessible `figure`. Compose its optional title, plot, grid, grouped bars, axis, legend, and tooltip from semantic `header`, `section`, `hr`, `ul`, `li`, `footer`, `output`, and description-list elements; no anatomy classes are required.
 
 ## API
 

@@ -1,65 +1,69 @@
-.dialog-content {
-  inset-block-start: 50%;
-  inset-inline-start: 50%;
-  display: grid;
-  width: min(calc(100% - calc(var(--spacing) * 8)), 24rem);
-  max-height: calc(100dvh - calc(var(--spacing) * 8));
-  gap: calc(var(--spacing) * 4);
-  border: 1px solid var(--border);
-  border-radius: calc(var(--radius) + 2px);
-  padding: calc(var(--spacing) * 4);
-  box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--foreground) 10%, transparent),
-    var(--shadow-lg);
-  transform: translate(-50%, -50%);
-}
+@scope (.dialog > dialog) to (.dialog > dialog) {
+  :scope {
+    container: angularcss-dialog / inline-size;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    display: grid;
+    width: min(calc(100% - calc(var(--spacing) * 8)), 24rem);
+    max-height: calc(100dvh - calc(var(--spacing) * 8));
+    gap: calc(var(--spacing) * 4);
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) + 2px);
+    padding: calc(var(--spacing) * 4);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--foreground) 10%, transparent),
+      var(--shadow-lg);
+    transform: translate(-50%, -50%);
+  }
 
-.dialog-content:dir(rtl) {
-  transform: translate(50%, -50%);
-}
+  :scope:dir(rtl) {
+    transform: translate(50%, -50%);
+  }
 
-.dialog-content[data-size="wide"] {
-  width: min(calc(100% - calc(var(--spacing) * 8)), 32rem);
-}
+  :scope[size="wide"] {
+    width: min(calc(100% - calc(var(--spacing) * 8)), 32rem);
+  }
 
-.dialog-header {
-  display: grid;
-  gap: calc(var(--spacing) * 2);
-  text-align: start;
-}
+  header {
+    display: grid;
+    gap: calc(var(--spacing) * 2);
+    text-align: start;
+  }
 
-.dialog-footer {
-  display: flex;
-  margin-inline: calc(var(--spacing) * -4);
-  margin-block-end: calc(var(--spacing) * -4);
-  padding: calc(var(--spacing) * 4);
-  flex-direction: column-reverse;
-  gap: calc(var(--spacing) * 2);
-  border-block-start: 1px solid var(--border);
-  border-end-start-radius: calc(var(--radius) + 2px);
-  border-end-end-radius: calc(var(--radius) + 2px);
-  background: color-mix(in srgb, var(--muted) 50%, transparent);
-}
+  footer {
+    display: flex;
+    margin-inline: calc(var(--spacing) * -4);
+    margin-block-end: calc(var(--spacing) * -4);
+    padding: calc(var(--spacing) * 4);
+    flex-direction: column-reverse;
+    gap: calc(var(--spacing) * 2);
+    border-block-start: 1px solid var(--border);
+    border-end-start-radius: calc(var(--radius) + 2px);
+    border-end-end-radius: calc(var(--radius) + 2px);
+    background: color-mix(in srgb, var(--muted) 50%, transparent);
+  }
 
-.dialog-close {
-  position: absolute;
-  inset-block-start: calc(var(--spacing) * 2);
-  inset-inline-end: calc(var(--spacing) * 2);
-}
+  :scope > button[command="close"] {
+    position: absolute;
+    inset-block-start: calc(var(--spacing) * 2);
+    inset-inline-end: calc(var(--spacing) * 2);
+  }
 
-.dialog-close > svg {
-  width: calc(var(--spacing) * 4);
-  height: calc(var(--spacing) * 4);
-}
+  :scope > button[command="close"] > svg {
+    width: calc(var(--spacing) * 4);
+    height: calc(var(--spacing) * 4);
+  }
 
-.dialog-body {
-  max-height: 50dvh;
-  margin-inline: calc(var(--spacing) * -4);
-}
+  :scope > section,
+  :scope > form > section {
+    max-height: 50dvh;
+    margin-inline: calc(var(--spacing) * -4);
+  }
 
-@media (width >= 640px) {
-  .dialog-footer {
-    flex-direction: row;
-    justify-content: flex-end;
+  @container angularcss-dialog (width >= 20rem) {
+    footer {
+      flex-direction: row;
+      justify-content: flex-end;
+    }
   }
 }

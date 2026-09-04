@@ -22,7 +22,7 @@ const expectBuiltArtifactRuntime = async (page: Page): Promise<void> => {
 };
 
 const directContent = (trigger: Locator): Locator =>
-  trigger.locator("..").locator(":scope > .navigation-menu-content");
+  trigger.locator("..").locator(":scope > section");
 
 test("canonical navigation preserves native landmark, list, button, and link semantics", async ({
   page,
@@ -31,10 +31,10 @@ test("canonical navigation preserves native landmark, list, button, and link sem
   await expectBuiltArtifactRuntime(page);
 
   const nav = page.getByRole("navigation", { name: "Primary navigation" });
-  const triggers = nav.locator(".navigation-menu-trigger");
-  const contents = nav.locator(".navigation-menu-content");
-  await expect(nav).toHaveAttribute("data-state", "closed");
-  await expect(nav.locator(":scope > .navigation-menu-list")).toHaveCount(1);
+  const triggers = nav.locator(":scope > ul > li > button");
+  const contents = nav.locator(":scope > ul > li > section");
+  await expect(nav).not.toHaveAttribute("open");
+  await expect(nav.locator(":scope > ul")).toHaveCount(1);
   await expect(triggers).toHaveCount(3);
   await expect(nav.getByRole("link", { name: "Docs" })).toHaveAttribute(
     "href",
@@ -59,12 +59,11 @@ test("pointer and click disclosure share state and Escape restores trigger focus
   await page.goto(canonicalUrl);
   const trigger = page.getByRole("button", { name: "Getting started" });
   const content = directContent(trigger);
-  const indicator = trigger.locator("..").locator(".navigation-menu-indicator");
 
   await trigger.hover();
   await expect(content).toBeVisible();
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
-  await expect(indicator).toBeVisible();
+  await expect(content).toHaveAttribute("open", "");
 
   await page.mouse.move(850, 320);
   await expect(content).toBeHidden();
@@ -154,7 +153,7 @@ test("workflow exposes controlled state and disabled triggers through built Angu
   await expect(content).toBeHidden();
   await page.getByRole("button", { name: "Toggle controlled panel" }).click();
   await expect(content).toBeVisible();
-  await expect(content).toHaveAttribute("data-open", "true");
+  await expect(content).toHaveAttribute("open", "");
   await expect(resources).toHaveAttribute("aria-expanded", "true");
   await page.getByRole("button", { name: "Toggle controlled panel" }).click();
   await expect(content).toBeHidden();
@@ -208,7 +207,7 @@ test("RTL reverses physical movement and keeps inline-end flyouts in view", asyn
   const start = nav.getByRole("button", { name: "البدء" });
   const components = nav.getByRole("button", { name: "المكونات" });
   const withIcon = nav.getByRole("button", { name: "مع أيقونة" });
-  await expect(nav).toHaveAttribute("data-direction", "rtl");
+  await expect(nav).toHaveCSS("direction", "rtl");
   await expect(nav.getByRole("link", { name: "الوثائق" })).toBeVisible();
 
   await components.focus();

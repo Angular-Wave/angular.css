@@ -16,9 +16,9 @@ navigation.
   align="start"
   style="--carousel-item-size: 50%; --carousel-gap: 0.5rem"
 >
-  <div class="carousel-content">
-    <ul class="carousel-track">
-      <li class="carousel-item">Slide</li>
+  <div>
+    <ul>
+      <li>Slide</li>
     </ul>
   </div>
 </section>
@@ -88,19 +88,11 @@ The content viewport and its direct track child are required. Items must be dire
 | `autoplay` | Input | Enables the locally bundled Embla autoplay plugin. |
 | `autoplay-delay` | Input | Autoplay delay in milliseconds. |
 | `contain-scroll` | Input | Embla scroll containment mode. |
-| `data-active` | Input/output | Stable component state or styling hook. |
-| `data-can-scroll-next` | Output | Stable component state or styling hook. |
-| `data-can-scroll-previous` | Output | Stable component state or styling hook. |
-| `data-count` | Output | Stable component state or styling hook. |
-| `data-direction` | Output | Stable component state or styling hook. |
-| `data-index` | Input/output | Stable component state or styling hook. |
-| `data-item-count` | Output | Stable component state or styling hook. |
-| `data-orientation` | Input/output | Stable component state or styling hook. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
 | `drag-free` | Input | Allows free dragging between snap points. |
 | `draggable` | Input | Set to `false` to disable pointer dragging. |
 | `loop` | Input | Allows navigation to wrap from the final item to the first. |
-| `orientation` | Input | Layout direction: `horizontal` or `vertical`. |
+| `orientation` | Input/output | Layout direction: `horizontal` or `vertical`. |
 | `role` | Input/output | Explicit semantic role when native HTML does not provide one. |
 | `skip-snaps` | Input | Allows momentum to skip snap points. |
 | `slides-to-scroll` | Input | Number of slides advanced as one snap group. |

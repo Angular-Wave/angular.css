@@ -11,15 +11,15 @@
   </head>
   <body ng-app="ui" ng-cloak>
     <section ng-carousel aria-label="Featured reports" style="max-width: 28rem">
-      <div class="carousel-content">
-        <ul class="carousel-track">
-          <li class="carousel-item">
+      <div>
+        <ul>
+          <li>
             <section class="card">
-              <header class="card-header">
-                <h2 class="card-title">Revenue</h2>
-                <p class="card-description">Quarterly performance summary.</p>
+              <header>
+                <h2>Revenue</h2>
+                <p>Quarterly performance summary.</p>
               </header>
-              <section class="card-content">
+              <section>
                 <div
                   class="media-surface"
                   style="height: 9rem; border-radius: var(--radius)"
@@ -29,13 +29,13 @@
               </section>
             </section>
           </li>
-          <li class="carousel-item">
+          <li>
             <section class="card">
-              <header class="card-header">
-                <h2 class="card-title">Retention</h2>
-                <p class="card-description">Monthly cohort movement.</p>
+              <header>
+                <h2>Retention</h2>
+                <p>Monthly cohort movement.</p>
               </header>
-              <section class="card-content">
+              <section>
                 <div
                   class="media-surface"
                   style="height: 9rem; border-radius: var(--radius)"
@@ -51,25 +51,16 @@
         size="icon"
         variant="outline"
         aria-label="Previous"
-        class="button carousel-previous"
+        class="button"
       >
         &lt;
       </button>
-      <button
-        size="icon"
-        variant="outline"
-        aria-label="Next"
-        class="button carousel-next"
-      >
+      <button size="icon" variant="outline" aria-label="Next" class="button">
         &gt;
       </button>
-      <nav aria-hidden="true" class="carousel-dots">
-        <button
-          data-active="true"
-          aria-label="Show revenue"
-          class="carousel-dot"
-        ></button>
-        <button aria-label="Show retention" class="carousel-dot"></button>
+      <nav aria-hidden="true">
+        <button aria-label="Show revenue"></button>
+        <button aria-label="Show retention"></button>
       </nav>
     </section>
   </body>

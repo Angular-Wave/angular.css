@@ -9,9 +9,9 @@ Use `class="skeleton"` on a block element and control its size with normal CSS.
 
 ```html
 <div
-
   style="height: 2.5rem; width: 2.5rem; border-radius: 9999px;"
- class="skeleton"></div>
+  class="skeleton"
+></div>
 ```
 
 ## Example

@@ -5,12 +5,7 @@
   display: contents;
 }
 
-:is(
-  .alert-dialog-content,
-  .dialog-content,
-  .drawer-content,
-  .sheet-content
-)::backdrop {
+:is(.alert-dialog, .dialog, .drawer, .sheet) > dialog::backdrop {
   background: color-mix(in srgb, black 10%, transparent);
   backdrop-filter: blur(4px);
   opacity: 0;
@@ -20,12 +15,7 @@
     opacity 140ms ease;
 }
 
-:is(
-    .alert-dialog-content,
-    .dialog-content,
-    .drawer-content,
-    .sheet-content
-  )[open]::backdrop {
+:is(.alert-dialog, .dialog, .drawer, .sheet) > dialog:open::backdrop {
   opacity: 1;
 
   @starting-style {
@@ -33,7 +23,7 @@
   }
 }
 
-:is(.alert-dialog-content, .dialog-content, .drawer-content, .sheet-content) {
+:is(.alert-dialog, .dialog, .drawer, .sheet) > dialog {
   --modal-enter-x: 0;
   --modal-enter-y: calc(var(--spacing) * 1);
 
@@ -46,24 +36,7 @@
     translate 180ms ease-out;
 }
 
-:is(
-  .alert-dialog-content,
-  .dialog-content,
-  .drawer-content,
-  .sheet-content
-)[open] {
-  opacity: 1;
-  translate: 0 0;
-
-  @starting-style {
-    opacity: 0;
-    translate: var(--modal-enter-x) var(--modal-enter-y);
-  }
-}
-
-.dialog-content,
-.drawer-content,
-.sheet-content {
+:is(.dialog, .drawer, .sheet) > dialog {
   position: fixed;
   z-index: 51;
   overflow: hidden;
@@ -74,32 +47,34 @@
   line-height: 1.4;
 }
 
-:is(
-  .alert-dialog-content,
-  .dialog-content,
-  .drawer-content,
-  .sheet-content
-):not([open]) {
-  display: none;
-}
-
-.drawer-content,
-.sheet-content {
+:is(.drawer, .sheet) > dialog {
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-lg);
 }
 
-.drawer-header,
-.sheet-header {
+:is(.alert-dialog, .dialog, .drawer, .sheet) > dialog:not(:open) {
+  display: none;
+}
+
+:is(.alert-dialog, .dialog, .drawer, .sheet) > dialog:open {
+  opacity: 1;
+  translate: 0 0;
+
+  @starting-style {
+    opacity: 0;
+    translate: var(--modal-enter-x) var(--modal-enter-y);
+  }
+}
+
+:is(.drawer, .sheet) > dialog header {
   display: flex;
   padding: calc(var(--spacing) * 4);
   flex-direction: column;
   gap: calc(var(--spacing) * 0.5);
 }
 
-.drawer-footer,
-.sheet-footer {
+:is(.drawer, .sheet) > dialog footer {
   display: flex;
   margin-block-start: auto;
   padding: calc(var(--spacing) * 4);
@@ -107,9 +82,7 @@
   gap: calc(var(--spacing) * 2);
 }
 
-.dialog-title,
-.drawer-title,
-.sheet-title {
+:is(.dialog, .drawer, .sheet) > dialog header > :is(h1, h2, h3) {
   margin: 0;
   color: var(--foreground);
   font-size: var(--text-base);
@@ -117,36 +90,29 @@
   line-height: 1.2;
 }
 
-.dialog-description,
-.drawer-description,
-.sheet-description {
+:is(.dialog, .drawer, .sheet) > dialog header > p {
   margin: 0;
   color: var(--muted-foreground);
   font-size: var(--text-sm);
   line-height: 1.4;
 }
 
-.dialog-body,
-.drawer-body,
-.sheet-body {
+:is(.dialog, .drawer, .sheet) > dialog > section,
+:is(.dialog, .drawer, .sheet) > dialog > form > section {
   min-height: 0;
   overflow-y: auto;
   padding-inline: calc(var(--spacing) * 4);
   scrollbar-width: none;
 }
 
-:is(.dialog-body, .drawer-body, .sheet-body)::-webkit-scrollbar {
+:is(.dialog, .drawer, .sheet) > dialog > section::-webkit-scrollbar,
+:is(.dialog, .drawer, .sheet) > dialog > form > section::-webkit-scrollbar {
   display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :is(.alert-dialog-content, .dialog-content, .drawer-content, .sheet-content),
-  :is(
-    .alert-dialog-content,
-    .dialog-content,
-    .drawer-content,
-    .sheet-content
-  )::backdrop {
+  :is(.alert-dialog, .dialog, .drawer, .sheet) > dialog,
+  :is(.alert-dialog, .dialog, .drawer, .sheet) > dialog::backdrop {
     transition: none;
   }
 }

@@ -9,41 +9,37 @@
   </head>
 
   <body ng-app="ui" ng-cloak>
-    <fieldset class="p-10">
+    <fieldset class="p-10 radio-group">
       <legend class="mb-3">Density</legend>
-      <fieldset class="radio-group">
-        <div orientation="horizontal" class="field">
-          <input
-            class="radio-group-item"
-            id="density-default"
-            name="density"
-            type="radio"
-            value="default"
-          />
-          <label for="density-default" class="label">Default</label>
-        </div>
-        <div orientation="horizontal" class="field">
-          <input
-            class="radio-group-item"
-            id="density-comfortable"
-            name="density"
-            type="radio"
-            value="comfortable"
-            checked
-          />
-          <label for="density-comfortable" class="label">Comfortable</label>
-        </div>
-        <div orientation="horizontal" class="field">
-          <input
-            class="radio-group-item"
-            id="density-compact"
-            name="density"
-            type="radio"
-            value="compact"
-          />
-          <label for="density-compact" class="label">Compact</label>
-        </div>
-      </fieldset>
+
+      <div orientation="horizontal" class="field">
+        <input
+          id="density-default"
+          name="density"
+          type="radio"
+          value="default"
+        />
+        <label for="density-default">Default</label>
+      </div>
+      <div orientation="horizontal" class="field">
+        <input
+          id="density-comfortable"
+          name="density"
+          type="radio"
+          value="comfortable"
+          checked
+        />
+        <label for="density-comfortable">Comfortable</label>
+      </div>
+      <div orientation="horizontal" class="field">
+        <input
+          id="density-compact"
+          name="density"
+          type="radio"
+          value="compact"
+        />
+        <label for="density-compact">Compact</label>
+      </div>
     </fieldset>
   </body>
 </html>

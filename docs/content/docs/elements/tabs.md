@@ -5,18 +5,17 @@ description: >
   Tabbed content sections
 ---
 
-Use ARIA tab roles and part classes. Set active triggers with
-`aria-selected="true"` or `data-active="true"`.
+Add `ng-tabs` to a section, place native buttons in its list, and follow the
+list with direct semantic `section` or `article` panels. The directive owns the
+tab roles, relationships, selection state, and keyboard navigation.
 
 ```html
-<div class="tabs">
-  <menu class="tabs-list">
-    <button aria-selected="true" class="tabs-trigger">
-      Overview
-    </button>
+<section ng-tabs>
+  <menu>
+    <button aria-selected="true">Overview</button>
   </menu>
-  <div class="tabs-content">Content</div>
-</div>
+  <section>Content</section>
+</section>
 ```
 
 ## Example

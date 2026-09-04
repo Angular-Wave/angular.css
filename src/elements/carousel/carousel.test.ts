@@ -6,20 +6,19 @@ test("element entrypoint example is a functional carousel page", async ({
   await page.goto("/docs/static/examples/elements/carousel.html");
 
   const carousel = page.locator("[ng-carousel]");
-  const items = carousel.locator(`.carousel-item`);
-  await expect(carousel).toHaveAttribute("data-count", "5");
-  await expect(items.first()).toHaveAttribute("data-active", "true");
+  const items = carousel.locator(":scope > * > :is(ul, ol) > li");
+  await expect(items).toHaveCount(5);
+  await expect(items.first()).toHaveAttribute("aria-hidden", "false");
 
-  await carousel.locator(".carousel-next").click();
-  await expect(carousel).toHaveAttribute("data-index", "1");
-  await expect(items.nth(1)).toHaveAttribute("data-active", "true");
+  await carousel.locator(":scope > button").nth(1).click();
+  await expect(items.nth(1)).toHaveAttribute("aria-hidden", "false");
 });
 
 test("element carousel example supports drag interaction", async ({ page }) => {
   await page.goto("/docs/static/examples/elements/carousel.html");
 
   const carousel = page.locator("[ng-carousel]");
-  const viewport = carousel.locator(`.carousel-content`);
+  const viewport = carousel.locator(":scope > div:first-of-type");
   const box = await viewport.boundingBox();
   if (!box) throw new Error("Carousel viewport is not rendered");
 
@@ -29,5 +28,7 @@ test("element carousel example supports drag interaction", async ({ page }) => {
     steps: 8,
   });
   await page.mouse.up();
-  await expect(carousel).toHaveAttribute("data-index", "1");
+  await expect(
+    carousel.locator(":scope > * > :is(ul, ol) > li").nth(1),
+  ).toHaveAttribute("aria-hidden", "false");
 });

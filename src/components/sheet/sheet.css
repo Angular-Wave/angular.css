@@ -1,11 +1,11 @@
-.sheet-content {
+.sheet > dialog {
   min-width: 0;
   max-height: 100dvh;
   gap: calc(var(--spacing) * 4);
   margin: 0;
 }
 
-.sheet-content[data-side="right"] {
+.sheet > dialog[side="right"] {
   --modal-enter-x: 100%;
   --modal-enter-y: 0;
 
@@ -17,7 +17,7 @@
   border-left: 1px solid var(--border);
 }
 
-.sheet-content[data-side="left"] {
+.sheet > dialog[side="left"] {
   --modal-enter-x: -100%;
   --modal-enter-y: 0;
 
@@ -29,7 +29,7 @@
   border-right: 1px solid var(--border);
 }
 
-.sheet-content[data-side="top"] {
+.sheet > dialog[side="top"] {
   --modal-enter-y: -100%;
 
   inset-block: 0 auto;
@@ -38,7 +38,7 @@
   border-block-end: 1px solid var(--border);
 }
 
-.sheet-content[data-side="bottom"] {
+.sheet > dialog[side="bottom"] {
   --modal-enter-y: 100%;
 
   inset-block: auto 0;
@@ -47,11 +47,11 @@
   border-block-start: 1px solid var(--border);
 }
 
-.sheet-content[data-size="half"] {
+.sheet > dialog[size="half"] {
   max-height: 50dvh;
 }
 
-.sheet-close {
+.sheet > dialog > button[command="close"] {
   position: absolute;
   inset-block-start: calc(var(--spacing) * 3);
   inset-inline-end: calc(var(--spacing) * 3);

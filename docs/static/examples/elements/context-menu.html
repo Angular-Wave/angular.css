@@ -17,64 +17,49 @@
   >
     <main class="context-menu-demo visual-example">
       <div id="context-menu-demo" ng-context-menu>
-        <div class="context-menu-trigger">Right click here</div>
-        <menu aria-label="Browser actions" class="context-menu-content">
-          <div class="context-menu-group">
-            <button ng-click="lastAction='Back'" class="context-menu-item">
+        <div>Right click here</div>
+        <menu aria-label="Browser actions">
+          <section>
+            <button ng-click="lastAction='Back'">
               Back
-              <span class="context-menu-shortcut">Alt+Left</span>
+              <kbd>Alt+Left</kbd>
             </button>
-            <button disabled class="context-menu-item">
+            <button disabled>
               Forward
-              <span class="context-menu-shortcut">Alt+Right</span>
+              <kbd>Alt+Right</kbd>
             </button>
-            <button ng-click="lastAction='Reload'" class="context-menu-item">
+            <button ng-click="lastAction='Reload'">
               Reload
-              <span class="context-menu-shortcut">Ctrl+R</span>
+              <kbd>Ctrl+R</kbd>
             </button>
-          </div>
-          <div class="context-menu-separator"></div>
-          <div class="context-menu-group">
-            <button ng-click="lastAction='Save'" class="context-menu-item">
+          </section>
+          <hr />
+          <section>
+            <button ng-click="lastAction='Save'">
               Save
-              <span class="context-menu-shortcut">Ctrl+S</span>
+              <kbd>Ctrl+S</kbd>
             </button>
-          </div>
-          <div class="context-menu-sub">
-            <button class="context-menu-sub-trigger">More Tools</button>
-            <div class="context-menu-sub-content">
-              <div class="context-menu-group">
-                <button ng-click="lastAction='Save Page'" class="context-menu-item">
-                  Save Page...
-                </button>
-                <button
-
-                  ng-click="lastAction='Create Shortcut'"
-                 class="context-menu-item">
+          </section>
+          <details>
+            <summary>More Tools</summary>
+            <menu>
+              <section>
+                <button ng-click="lastAction='Save Page'">Save Page...</button>
+                <button ng-click="lastAction='Create Shortcut'">
                   Create Shortcut...
                 </button>
-                <button
-
-                  ng-click="lastAction='Name Window'"
-                 class="context-menu-item">
+                <button ng-click="lastAction='Name Window'">
                   Name Window...
                 </button>
-              </div>
-              <div class="context-menu-separator"></div>
-              <button
-
-                ng-click="lastAction='Developer Tools'"
-               class="context-menu-item">
+              </section>
+              <hr />
+              <button ng-click="lastAction='Developer Tools'">
                 Developer Tools
               </button>
-            </div>
-          </div>
-          <div class="context-menu-separator"></div>
-          <button
-
-            data-variant="destructive"
-            ng-click="lastAction='Delete'"
-           class="context-menu-item">
+            </menu>
+          </details>
+          <hr />
+          <button variant="destructive" ng-click="lastAction='Delete'">
             Delete
           </button>
         </menu>

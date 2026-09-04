@@ -16,267 +16,210 @@
     data-example="radio-fields"
   >
     <main class="radio-fields-demo visual-example field-group">
-      <fieldset class="field-set">
-        <legend
-          data-variant="label"
-          id="subscription-title"
-          class="field-legend"
-        >
+      <fieldset class="field-set radio-group">
+        <legend variant="label" id="subscription-title">
           Subscription Plan
         </legend>
-        <fieldset aria-labelledby="subscription-title" class="radio-group">
-          <fieldset orientation="horizontal" class="field">
-            <input
-              id="radio-free"
-              name="subscription-plan"
-              type="radio"
-              value="free"
-              ng-model="radioFields.subscription"
-              class="radio-group-item"
-            />
-            <label for="radio-free" class="radio-plain-label field-label">
-              Free Plan
-            </label>
-          </fieldset>
-          <fieldset orientation="horizontal" class="field">
-            <input
-              id="radio-pro"
-              name="subscription-plan"
-              type="radio"
-              value="pro"
-              ng-model="radioFields.subscription"
-              class="radio-group-item"
-            />
-            <label for="radio-pro" class="radio-plain-label field-label">
-              Pro Plan
-            </label>
-          </fieldset>
-          <fieldset orientation="horizontal" class="field">
-            <input
-              id="radio-enterprise"
-              name="subscription-plan"
-              type="radio"
-              value="enterprise"
-              ng-model="radioFields.subscription"
-              class="radio-group-item"
-            />
-            <label for="radio-enterprise" class="radio-plain-label field-label">
-              Enterprise
-            </label>
-          </fieldset>
-        </fieldset>
+
+        <div orientation="horizontal" class="field">
+          <input
+            id="radio-free"
+            name="subscription-plan"
+            type="radio"
+            value="free"
+            ng-model="radioFields.subscription"
+          />
+          <label for="radio-free" class="radio-plain-label"> Free Plan </label>
+        </div>
+        <div orientation="horizontal" class="field">
+          <input
+            id="radio-pro"
+            name="subscription-plan"
+            type="radio"
+            value="pro"
+            ng-model="radioFields.subscription"
+          />
+          <label for="radio-pro" class="radio-plain-label"> Pro Plan </label>
+        </div>
+        <div orientation="horizontal" class="field">
+          <input
+            id="radio-enterprise"
+            name="subscription-plan"
+            type="radio"
+            value="enterprise"
+            ng-model="radioFields.subscription"
+          />
+          <label for="radio-enterprise" class="radio-plain-label">
+            Enterprise
+          </label>
+        </div>
       </fieldset>
 
-      <fieldset class="field-set">
-        <legend data-variant="label" id="battery-title" class="field-legend">
-          Battery Level
-        </legend>
-        <p id="battery-description" class="field-description">
-          Choose your preferred battery level.
-        </p>
-        <fieldset
-          aria-labelledby="battery-title"
-          aria-describedby="battery-description"
-          class="radio-group"
-        >
-          <fieldset orientation="horizontal" class="field">
-            <input
-              id="battery-high"
-              name="battery-level"
-              type="radio"
-              value="high"
-              ng-model="radioFields.battery"
-              class="radio-group-item"
-            />
-            <label for="battery-high" class="field-label">High</label>
-          </fieldset>
-          <fieldset orientation="horizontal" class="field">
-            <input
-              id="battery-medium"
-              name="battery-level"
-              type="radio"
-              value="medium"
-              ng-model="radioFields.battery"
-              class="radio-group-item"
-            />
-            <label for="battery-medium" class="field-label">Medium</label>
-          </fieldset>
-          <fieldset orientation="horizontal" class="field">
-            <input
-              id="battery-low"
-              name="battery-level"
-              type="radio"
-              value="low"
-              ng-model="radioFields.battery"
-              class="radio-group-item"
-            />
-            <label for="battery-low" class="field-label">Low</label>
-          </fieldset>
-        </fieldset>
+      <fieldset
+        class="field-set radio-group"
+        aria-describedby="battery-description"
+      >
+        <legend variant="label" id="battery-title">Battery Level</legend>
+        <p id="battery-description">Choose your preferred battery level.</p>
+
+        <div orientation="horizontal" class="field">
+          <input
+            id="battery-high"
+            name="battery-level"
+            type="radio"
+            value="high"
+            ng-model="radioFields.battery"
+          />
+          <label for="battery-high">High</label>
+        </div>
+        <div orientation="horizontal" class="field">
+          <input
+            id="battery-medium"
+            name="battery-level"
+            type="radio"
+            value="medium"
+            ng-model="radioFields.battery"
+          />
+          <label for="battery-medium">Medium</label>
+        </div>
+        <div orientation="horizontal" class="field">
+          <input
+            id="battery-low"
+            name="battery-level"
+            type="radio"
+            value="low"
+            ng-model="radioFields.battery"
+          />
+          <label for="battery-low">Low</label>
+        </div>
       </fieldset>
 
       <fieldset
         class="radio-fields-content-list radio-group"
         aria-label="Device security"
       >
-        <fieldset orientation="horizontal" class="field">
+        <div orientation="horizontal" class="field">
           <input
             id="radio-content-1"
             name="device-security"
             type="radio"
             value="touch"
             ng-model="radioFields.security"
-            class="radio-group-item"
           />
-          <div class="field-content">
-            <label for="radio-content-1" class="field-label"
-              >Enable Touch ID</label
-            >
-            <p class="field-description">
-              Enable Touch ID to quickly unlock your device.
-            </p>
-          </div>
-        </fieldset>
-        <fieldset orientation="horizontal" class="field">
+          <section>
+            <label for="radio-content-1">Enable Touch ID</label>
+            <p>Enable Touch ID to quickly unlock your device.</p>
+          </section>
+        </div>
+        <div orientation="horizontal" class="field">
           <input
             id="radio-content-2"
             name="device-security"
             type="radio"
             value="biometric"
             ng-model="radioFields.security"
-            class="radio-group-item"
           />
-          <div class="field-content">
-            <label for="radio-content-2" class="field-label">
+          <section>
+            <label for="radio-content-2">
               Enable Touch ID and Face ID to make it even faster to unlock your
               device. This is a long label to test the layout.
             </label>
-            <p class="field-description">
-              Enable Touch ID to quickly unlock your device.
-            </p>
-          </div>
-        </fieldset>
+            <p>Enable Touch ID to quickly unlock your device.</p>
+          </section>
+        </div>
       </fieldset>
 
       <fieldset
         class="radio-fields-title-list radio-group"
         aria-label="Device unlock"
       >
-        <label for="radio-title-1" class="field-label">
-          <fieldset orientation="horizontal" class="field">
+        <label for="radio-title-1">
+          <div orientation="horizontal" class="field">
             <input
               id="radio-title-1"
               name="device-unlock"
               type="radio"
               value="touch"
               ng-model="radioFields.unlock"
-              class="radio-group-item"
             />
-            <span class="field-content">
-              <span class="field-title">Enable Touch ID</span>
-              <span class="field-description">
-                Enable Touch ID to quickly unlock your device.
-              </span>
+            <span>
+              <strong>Enable Touch ID</strong>
+              <small> Enable Touch ID to quickly unlock your device. </small>
             </span>
-          </fieldset>
+          </div>
         </label>
-        <label for="radio-title-2" class="field-label">
-          <fieldset orientation="horizontal" class="field">
+        <label for="radio-title-2">
+          <div orientation="horizontal" class="field">
             <input
               id="radio-title-2"
               name="device-unlock"
               type="radio"
               value="biometric"
               ng-model="radioFields.unlock"
-              class="radio-group-item"
             />
-            <span class="field-content">
-              <span class="field-title">
+            <span>
+              <strong>
                 Enable Touch ID and Face ID to make it even faster to unlock
                 your device. This is a long label to test the layout.
-              </span>
-              <span class="field-description">
-                Enable Touch ID to quickly unlock your device.
-              </span>
+              </strong>
+              <small> Enable Touch ID to quickly unlock your device. </small>
             </span>
-          </fieldset>
+          </div>
         </label>
       </fieldset>
 
-      <fieldset class="field-set">
-        <legend data-variant="label" id="invalid-title" class="field-legend">
-          Invalid Radio Group
-        </legend>
-        <fieldset aria-labelledby="invalid-title" class="radio-group">
-          <fieldset orientation="horizontal" data-invalid="true" class="field">
-            <input
-              id="radio-invalid-1"
-              name="invalid-choice"
-              type="radio"
-              value="invalid1"
-              aria-invalid="true"
-              ng-model="radioFields.invalid"
-              class="radio-group-item"
-            />
-            <label for="radio-invalid-1" class="field-label">
-              Invalid Option 1
-            </label>
-          </fieldset>
-          <fieldset orientation="horizontal" data-invalid="true" class="field">
-            <input
-              id="radio-invalid-2"
-              name="invalid-choice"
-              type="radio"
-              value="invalid2"
-              aria-invalid="true"
-              ng-model="radioFields.invalid"
-              class="radio-group-item"
-            />
-            <label for="radio-invalid-2" class="field-label">
-              Invalid Option 2
-            </label>
-          </fieldset>
-        </fieldset>
+      <fieldset class="field-set radio-group">
+        <legend variant="label" id="invalid-title">Invalid Radio Group</legend>
+
+        <div orientation="horizontal" class="field">
+          <input
+            id="radio-invalid-1"
+            name="invalid-choice"
+            type="radio"
+            value="invalid1"
+            aria-invalid="true"
+            ng-model="radioFields.invalid"
+          />
+          <label for="radio-invalid-1"> Invalid Option 1 </label>
+        </div>
+        <div orientation="horizontal" class="field">
+          <input
+            id="radio-invalid-2"
+            name="invalid-choice"
+            type="radio"
+            value="invalid2"
+            aria-invalid="true"
+            ng-model="radioFields.invalid"
+          />
+          <label for="radio-invalid-2"> Invalid Option 2 </label>
+        </div>
       </fieldset>
 
-      <fieldset class="field-set">
-        <legend data-variant="label" id="disabled-title" class="field-legend">
+      <fieldset class="field-set radio-group" disabled>
+        <legend variant="label" id="disabled-title">
           Disabled Radio Group
         </legend>
-        <fieldset
-          aria-labelledby="disabled-title"
-          aria-disabled="true"
-          class="radio-group"
-        >
-          <fieldset orientation="horizontal" data-disabled="true" class="field">
-            <input
-              id="radio-disabled-1"
-              name="disabled-choice"
-              type="radio"
-              value="disabled1"
-              disabled
-              ng-model="radioFields.disabled"
-              class="radio-group-item"
-            />
-            <label for="radio-disabled-1" class="field-label">
-              Disabled Option 1
-            </label>
-          </fieldset>
-          <fieldset orientation="horizontal" data-disabled="true" class="field">
-            <input
-              id="radio-disabled-2"
-              name="disabled-choice"
-              type="radio"
-              value="disabled2"
-              disabled
-              ng-model="radioFields.disabled"
-              class="radio-group-item"
-            />
-            <label for="radio-disabled-2" class="field-label">
-              Disabled Option 2
-            </label>
-          </fieldset>
-        </fieldset>
+
+        <div orientation="horizontal" class="field">
+          <input
+            id="radio-disabled-1"
+            name="disabled-choice"
+            type="radio"
+            value="disabled1"
+            ng-model="radioFields.disabled"
+          />
+          <label for="radio-disabled-1"> Disabled Option 1 </label>
+        </div>
+        <div orientation="horizontal" class="field">
+          <input
+            id="radio-disabled-2"
+            name="disabled-choice"
+            type="radio"
+            value="disabled2"
+            ng-model="radioFields.disabled"
+          />
+          <label for="radio-disabled-2"> Disabled Option 2 </label>
+        </div>
       </fieldset>
     </main>
   </body>

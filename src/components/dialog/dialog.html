@@ -21,7 +21,7 @@
           commandfor="profile-dialog-content"
           command="show-modal"
           variant="outline"
-          class="dialog-trigger button"
+          class="button"
         >
           Edit profile
         </button>
@@ -30,28 +30,27 @@
           closedby="any"
           aria-labelledby="profile-dialog-title"
           aria-describedby="profile-dialog-description"
-          class="dialog-content"
         >
-          <header class="dialog-header">
-            <h2 id="profile-dialog-title" class="dialog-title">Edit profile</h2>
-            <p id="profile-dialog-description" class="dialog-description">
+          <header>
+            <h2 id="profile-dialog-title">Edit profile</h2>
+            <p id="profile-dialog-description">
               Make changes to your profile here. Click save when you're done.
             </p>
           </header>
-          <form method="dialog" class="dialog-profile-form">
-            <div class="dialog-form-row">
-              <label for="dialog-name" class="label">Name</label>
+          <form method="dialog">
+            <label for="dialog-name">
+              <span>Name</span>
               <input id="dialog-name" ng-model="profile.name" class="input" />
-            </div>
-            <div class="dialog-form-row">
-              <label for="dialog-username" class="label">Username</label>
+            </label>
+            <label for="dialog-username">
+              <span>Username</span>
               <input
                 id="dialog-username"
                 ng-model="profile.username"
                 class="input"
               />
-            </div>
-            <footer class="dialog-footer">
+            </label>
+            <footer>
               <button
                 type="button"
                 commandfor="profile-dialog-content"
@@ -78,7 +77,7 @@
             command="close"
             variant="ghost"
             size="icon-sm"
-            class="dialog-close button"
+            class="button"
           >
             <svg
               viewBox="0 0 24 24"

@@ -6,12 +6,12 @@
   animation: angularcss-spinner-spin 1s linear infinite;
 }
 
-:is(.spinner):is([size="sm"], [data-size="sm"]) {
+:is(.spinner)[size="sm"] {
   width: calc(var(--spacing) * 3);
   height: calc(var(--spacing) * 3);
 }
 
-:is(.spinner):is([size="lg"], [data-size="lg"]) {
+:is(.spinner)[size="lg"] {
   width: calc(var(--spacing) * 5);
   height: calc(var(--spacing) * 5);
 }

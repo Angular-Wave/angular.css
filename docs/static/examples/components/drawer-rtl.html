@@ -12,22 +12,36 @@
   <body ng-app="ui" ng-cloak ng-init="goal=350" data-example="drawer-rtl">
     <main class="drawer-demo visual-example">
       <section id="rtl-goal-drawer" class="drawer">
-        <button variant="outline" class="drawer-trigger button" type="button" commandfor="rtl-goal-drawer-content" command="show-modal">فتح الدرج</button>
-        <dialog class="drawer-content" id="rtl-goal-drawer-content" closedby="any" aria-labelledby="rtl-goal-drawer-title" aria-describedby="rtl-goal-drawer-description" data-side="bottom">
-          <div class="drawer-handle"></div>
-          <div class="drawer-goal-panel">
-            <header class="drawer-header">
-              <h2 class="drawer-title" id="rtl-goal-drawer-title">نقل الهدف</h2>
-              <p class="drawer-description" id="rtl-goal-drawer-description">حدد هدف نشاطك اليومي.</p>
+        <button
+          variant="outline"
+          class="button"
+          type="button"
+          commandfor="rtl-goal-drawer-content"
+          command="show-modal"
+        >
+          فتح الدرج
+        </button>
+        <dialog
+          id="rtl-goal-drawer-content"
+          closedby="any"
+          aria-labelledby="rtl-goal-drawer-title"
+          aria-describedby="rtl-goal-drawer-description"
+          side="bottom"
+        >
+          <article>
+            <header>
+              <h2 id="rtl-goal-drawer-title">نقل الهدف</h2>
+              <p id="rtl-goal-drawer-description">حدد هدف نشاطك اليومي.</p>
             </header>
-            <div class="drawer-goal-body">
-              <div class="drawer-goal-control">
+            <section>
+              <menu>
                 <button
-
                   variant="outline"
                   size="icon-sm"
                   aria-label="تقليل"
-                  ng-click="goal=goal-10" class="button">
+                  ng-click="goal=goal-10"
+                  class="button"
+                >
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -38,16 +52,17 @@
                     <path d="M5 12h14"></path>
                   </svg>
                 </button>
-                <div class="drawer-goal-value">
+                <output>
                   <strong ng-bind="goal"></strong>
                   <span>سعرات حرارية/يوم</span>
-                </div>
+                </output>
                 <button
-
                   variant="outline"
                   size="icon-sm"
                   aria-label="زيادة"
-                  ng-click="goal=goal+10" class="button">
+                  ng-click="goal=goal+10"
+                  class="button"
+                >
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -59,25 +74,35 @@
                     <path d="M5 12h14"></path>
                   </svg>
                 </button>
-              </div>
-              <div
-                class="drawer-goal-chart drawer-goal-chart-rtl"
-                aria-hidden="true"
-              >
-                <span data-height="80"></span><span data-height="60"></span>
-                <span data-height="40"></span><span data-height="60"></span>
-                <span data-height="40"></span><span data-height="56"></span>
-                <span data-height="38"></span><span data-height="48"></span>
-                <span data-height="60"></span><span data-height="40"></span>
-                <span data-height="56"></span><span data-height="38"></span>
-                <span data-height="70"></span>
-              </div>
-            </div>
-            <footer class="drawer-footer">
+              </menu>
+              <figure aria-hidden="true">
+                <span style="--height: 80%"></span
+                ><span style="--height: 60%"></span>
+                <span style="--height: 40%"></span
+                ><span style="--height: 60%"></span>
+                <span style="--height: 40%"></span
+                ><span style="--height: 56%"></span>
+                <span style="--height: 38%"></span
+                ><span style="--height: 48%"></span>
+                <span style="--height: 60%"></span
+                ><span style="--height: 40%"></span>
+                <span style="--height: 56%"></span
+                ><span style="--height: 38%"></span>
+                <span style="--height: 70%"></span>
+              </figure>
+            </section>
+            <footer>
               <button class="button">إرسال</button>
-              <button variant="outline" class="drawer-close button" commandfor="rtl-goal-drawer-content" command="close">إلغاء</button>
+              <button
+                variant="outline"
+                class="button"
+                commandfor="rtl-goal-drawer-content"
+                command="close"
+              >
+                إلغاء
+              </button>
             </footer>
-          </div>
+          </article>
         </dialog>
       </section>
     </main>

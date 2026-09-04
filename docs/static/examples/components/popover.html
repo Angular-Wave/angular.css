@@ -20,41 +20,40 @@
         <button
           type="button"
           variant="outline"
-          class="popover-trigger button"
+          class="button"
           popovertarget="popover-popover-1-content"
         >
           Open popover
         </button>
         <aside
-          class="popover-demo-content popover-content"
           aria-label="Dimensions"
           id="popover-popover-1-content"
-          data-side="bottom"
-          data-align="center"
+          side="bottom"
+          align="center"
           popover
         >
-          <header class="popover-header">
-            <h2 class="popover-title">Dimensions</h2>
-            <p class="popover-description">Set the dimensions for the layer.</p>
+          <header>
+            <h2>Dimensions</h2>
+            <p>Set the dimensions for the layer.</p>
           </header>
-          <div class="popover-dimension-fields">
-            <div class="popover-dimension-field">
-              <label for="popover-width" class="label">Width</label>
+          <form>
+            <label
+              ><span>Width</span>
               <input id="popover-width" value="100%" autofocus class="input" />
-            </div>
-            <div class="popover-dimension-field">
-              <label for="popover-max-width" class="label">Max. width</label>
+            </label>
+            <label
+              ><span>Max. width</span>
               <input id="popover-max-width" value="300px" class="input" />
-            </div>
-            <div class="popover-dimension-field">
-              <label for="popover-height" class="label">Height</label>
+            </label>
+            <label
+              ><span>Height</span>
               <input id="popover-height" value="25px" class="input" />
-            </div>
-            <div class="popover-dimension-field">
-              <label for="popover-max-height" class="label">Max. height</label>
+            </label>
+            <label
+              ><span>Max. height</span>
               <input id="popover-max-height" value="none" class="input" />
-            </div>
-          </div>
+            </label>
+          </form>
         </aside>
       </span>
     </main>

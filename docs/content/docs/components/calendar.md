@@ -19,12 +19,12 @@ application state remains responsible for the selected value.
   data-value="{{ selectedDate }}"
   ng-on-angularcss:calendar-select="selectedDate = $event.detail.value"
 >
-  <header class="calendar-header">
-    <button type="button" class="calendar-previous">Previous</button>
-    <h2 class="calendar-title"></h2>
-    <button type="button" class="calendar-next">Next</button>
+  <header>
+    <button type="button">Previous</button>
+    <h2></h2>
+    <button type="button">Next</button>
   </header>
-  <div class="calendar-grid"></div>
+  <div></div>
 </section>
 ```
 
@@ -42,8 +42,8 @@ Date pickers are compositions rather than a second model implementation: use a
 native date or text `input` with `ng-model`, a `field` and `label`, a `popover`,
 and this calendar grid. Use native `input[type="time"]` for time values and
 ordinary buttons for presets. Booked dates use `disabled` plus
-`data-booked="true"`; custom day content can be nested inside a calendar-day
-button; week numbers use `class="calendar-week-number"`.
+`data-booked="true"`; custom day content can be nested inside a date button, and
+generated week numbers use native `data` elements.
 
 The generated calendar is a Gregorian local-date UI backed by `date-fns`.
 Non-Gregorian engines, natural-language parsing, and IANA time-zone conversion
@@ -130,38 +130,30 @@ Use native elements for authored structure. Component classes are optional visua
 | `data-calendar-preset` | Input | Stable component state or styling hook. |
 | `data-caption-layout` | Input | Stable component state or styling hook. |
 | `data-columns` | Input | Stable component state or styling hook. |
-| `data-direction` | Input/output | Stable component state or styling hook. |
-| `data-disabled` | Output | Stable component state or styling hook. |
 | `data-disabled-after` | Input | Stable component state or styling hook. |
 | `data-disabled-before` | Input | Stable component state or styling hook. |
 | `data-disabled-dates` | Input | Stable component state or styling hook. |
 | `data-end-year` | Input | Stable component state or styling hook. |
-| `data-label` | Input/output | Stable component state or styling hook. |
 | `data-min-nights` | Input | Stable component state or styling hook. |
 | `data-month` | Input/output | Stable component state or styling hook. |
 | `data-months` | Output | Stable component state or styling hook. |
 | `data-number-of-months` | Input | Stable component state or styling hook. |
 | `data-outside` | Input/output | Stable component state or styling hook. |
-| `data-range` | Output | Stable component state or styling hook. |
-| `data-range-end` | Input/output | Stable component state or styling hook. |
+| `data-range-end` | Output | Stable component state or styling hook. |
 | `data-range-end-value` | Input/output | Stable component state or styling hook. |
 | `data-range-invalid` | Output | Stable component state or styling hook. |
-| `data-range-middle` | Input/output | Stable component state or styling hook. |
-| `data-range-start` | Input/output | Stable component state or styling hook. |
+| `data-range-middle` | Output | Stable component state or styling hook. |
+| `data-range-start` | Output | Stable component state or styling hook. |
 | `data-range-start-value` | Input/output | Stable component state or styling hook. |
-| `data-selected` | Input/output | Stable component state or styling hook. |
 | `data-selection-mode` | Input | Stable component state or styling hook. |
 | `data-show-outside-days` | Input | Stable component state or styling hook. |
 | `data-show-week-numbers` | Input/output | Stable component state or styling hook. |
 | `data-start-year` | Input | Stable component state or styling hook. |
-| `data-state` | Output | Stable component state or styling hook. |
-| `data-today` | Input/output | Stable component state or styling hook. |
 | `data-value` | Input/output | Stable component state or styling hook. |
 | `data-values` | Input/output | Stable component state or styling hook. |
 | `data-week-start` | Input | Stable component state or styling hook. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
 | `lang` | Input | Authored option or semantic HTML attribute observed by the directive. |
-| `role` | Output | Explicit semantic role when native HTML does not provide one. |
 | `selected` | Output | Authored option or semantic HTML attribute observed by the directive. |
 | `tabindex` | Input/output | Keyboard focus order for composite descendants. |
 | `value` | Output | Native value or authored component value. |

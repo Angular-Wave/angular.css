@@ -12,14 +12,12 @@
   <body ng-app="ui" ng-cloak ng-init="status=''">
     <main class="stack-sm visual-example">
       <label for="status">Status</label>
-      <div class="select-wrapper">
-        <select id="status" class="select" ng-model="status" required>
-          <option value="">Select a status</option>
-          <option>Todo</option>
-          <option>In progress</option>
-          <option>Done</option>
-        </select>
-      </div>
+      <select id="status" ng-model="status" required>
+        <option value="">Select a status</option>
+        <option>Todo</option>
+        <option>In progress</option>
+        <option>Done</option>
+      </select>
       <output class="output">Current: {{ status || 'none' }}</output>
     </main>
   </body>

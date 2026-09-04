@@ -11,46 +11,36 @@
   </head>
   <body ng-app="ui" ng-cloak>
     <section ng-tabs style="max-width: 28rem">
-      <menu aria-label="Project sections" class="tabs-list">
-        <button aria-selected="true" class="tabs-trigger">Overview</button>
-        <button class="tabs-trigger">Analytics</button>
-        <button class="tabs-trigger">Reports</button>
+      <menu aria-label="Project sections">
+        <button aria-selected="true">Overview</button>
+        <button>Analytics</button>
+        <button>Reports</button>
       </menu>
-      <section class="tabs-content">
-        <section class="card">
-          <header class="card-header">
-            <h2 class="card-title">Overview</h2>
-            <p class="card-description">
-              View key metrics and recent activity.
-            </p>
-          </header>
-          <section class="muted card-content">
-            You have 12 active projects and 3 pending tasks.
-          </section>
+      <article class="card">
+        <header>
+          <h2>Overview</h2>
+          <p>View key metrics and recent activity.</p>
+        </header>
+        <section class="muted">
+          You have 12 active projects and 3 pending tasks.
         </section>
-      </section>
-      <section class="tabs-content">
-        <section class="card">
-          <header class="card-header">
-            <h2 class="card-title">Analytics</h2>
-            <p class="card-description">Review conversion and usage trends.</p>
-          </header>
-          <section class="muted card-content">
-            Conversion is up 8% over the previous period.
-          </section>
+      </article>
+      <article class="card">
+        <header>
+          <h2>Analytics</h2>
+          <p>Review conversion and usage trends.</p>
+        </header>
+        <section class="muted">
+          Conversion is up 8% over the previous period.
         </section>
-      </section>
-      <section class="tabs-content">
-        <section class="card">
-          <header class="card-header">
-            <h2 class="card-title">Reports</h2>
-            <p class="card-description">Export weekly workspace summaries.</p>
-          </header>
-          <section class="muted card-content">
-            Three reports are ready to download.
-          </section>
-        </section>
-      </section>
+      </article>
+      <article class="card">
+        <header>
+          <h2>Reports</h2>
+          <p>Export weekly workspace summaries.</p>
+        </header>
+        <section class="muted">Three reports are ready to download.</section>
+      </article>
     </section>
   </body>
 </html>

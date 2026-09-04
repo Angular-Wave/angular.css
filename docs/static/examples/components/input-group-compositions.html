@@ -68,16 +68,16 @@
             value="https://x.com/shadcn"
             aria-label="Share URL"
             readonly
-            class="input-group-control input"
+            class="input"
           />
-          <div data-align="inline-end" class="input-group-addon">
+          <div align="inline-end">
             <button
-              data-size="icon-xs"
+              size="icon-xs"
               variant="ghost"
               type="button"
               aria-label="Copy URL"
               ng-click="copied=true; compositionStatus='Copied URL'"
-              class="input-group-button button"
+              class="button"
             >
               <svg aria-hidden="true">
                 <use ng-if="!copied" href="#igc-copy"></use>
@@ -89,39 +89,40 @@
         <div class="input-group-pill input-group">
           <span class="popover">
             <button
-              data-size="icon-xs"
+              size="icon-xs"
               variant="secondary"
               type="button"
               aria-label="Connection information"
-              class="input-group-button popover-trigger button"
+              class="button"
               popovertarget="popover-input-group-compositions-1-content"
             >
               <svg aria-hidden="true"><use href="#igc-info"></use></svg>
             </button>
             <aside
-              class="input-group-popover-content popover-content"
+              class="input-group-popover-content"
               aria-label="Connection status"
               id="popover-input-group-compositions-1-content"
-              data-side="bottom"
-              data-align="start"
+              side="bottom"
+              align="start"
               popover
             >
               <strong>Your connection is not secure.</strong>
               <p>You should not enter sensitive information on this site.</p>
             </aside>
           </span>
-          <div class="input-group-addon">https://</div>
-          <input aria-label="Secure URL" class="input-group-control input" />
-          <div data-align="inline-end" class="input-group-addon">
+          <div>https://</div>
+          <input aria-label="Secure URL" class="input" />
+          <div align="inline-end">
             <button
-              data-size="icon-xs"
+              size="icon-xs"
               variant="ghost"
               type="button"
               aria-label="Favorite URL"
+              aria-pressed="{{ favorite }}"
               ng-click="favorite=!favorite; compositionStatus=favorite ? 'Added favorite' : 'Removed favorite'"
-              class="input-group-button button"
+              class="button"
             >
-              <svg aria-hidden="true" ng-attr-data-active="{{ favorite }}">
+              <svg aria-hidden="true">
                 <use href="#igc-star"></use>
               </svg>
             </button>
@@ -131,14 +132,14 @@
           <input
             placeholder="Type to search..."
             aria-label="Search query"
-            class="input-group-control input"
+            class="input"
           />
-          <div data-align="inline-end" class="input-group-addon">
+          <div align="inline-end">
             <button
               variant="secondary"
               type="button"
               ng-click="compositionStatus='Search submitted'"
-              class="input-group-button button"
+              class="button"
             >
               Search
             </button>
@@ -154,62 +155,53 @@
       >
         <h2 id="igc-variants-title">Button variants</h2>
         <div class="input-group">
-          <input
-            aria-label="Default action"
-            class="input-group-control input"
-          />
-          <div class="input-group-addon">
+          <input aria-label="Default action" class="input" />
+          <div>
             <button
               type="button"
               ng-click="compositionStatus='Default action'"
-              class="input-group-button button"
+              class="button"
             >
               Default
             </button>
           </div>
         </div>
         <div class="input-group">
-          <input
-            aria-label="Outline action"
-            class="input-group-control input"
-          />
-          <div class="input-group-addon">
+          <input aria-label="Outline action" class="input" />
+          <div>
             <button
               variant="outline"
               type="button"
               ng-click="compositionStatus='Outline action'"
-              class="input-group-button button"
+              class="button"
             >
               Outline
             </button>
           </div>
         </div>
         <div class="input-group">
-          <input
-            aria-label="Secondary action"
-            class="input-group-control input"
-          />
-          <div data-align="inline-end" class="input-group-addon">
+          <input aria-label="Secondary action" class="input" />
+          <div align="inline-end">
             <button
               variant="secondary"
               type="button"
               ng-click="compositionStatus='Secondary action'"
-              class="input-group-button button"
+              class="button"
             >
               Button
             </button>
           </div>
         </div>
         <div class="input-group">
-          <input aria-label="Delete action" class="input-group-control input" />
-          <div data-align="inline-end" class="input-group-addon">
+          <input aria-label="Delete action" class="input" />
+          <div align="inline-end">
             <button
-              data-size="icon-xs"
+              size="icon-xs"
               variant="secondary"
               type="button"
               aria-label="Delete"
               ng-click="compositionStatus='Deleted'"
-              class="input-group-button button"
+              class="button"
             >
               <svg aria-hidden="true"><use href="#igc-trash"></use></svg>
             </button>
@@ -227,36 +219,27 @@
           <input
             placeholder="Enter file name"
             aria-label="File name"
-            class="input-group-control input"
+            class="input"
           />
-          <div data-align="inline-end" class="input-group-addon">
+          <div align="inline-end">
             <span ng-dropdown class="input-group-overlay-control">
               <button
-                data-size="icon-xs"
+                size="icon-xs"
                 variant="ghost"
                 type="button"
                 aria-label="File options"
-                class="input-group-button button"
+                class="button"
               >
                 <svg aria-hidden="true"><use href="#igc-more"></use></svg>
               </button>
-              <menu class="input-group-menu-content dropdown-menu-content">
-                <button
-                  ng-click="compositionStatus='Settings'"
-                  class="dropdown-menu-item"
-                >
+              <menu class="input-group-menu-content">
+                <button ng-click="compositionStatus='Settings'">
                   Settings
                 </button>
-                <button
-                  ng-click="compositionStatus='Copied path'"
-                  class="dropdown-menu-item"
-                >
+                <button ng-click="compositionStatus='Copied path'">
                   Copy path
                 </button>
-                <button
-                  ng-click="compositionStatus='Opened location'"
-                  class="dropdown-menu-item"
-                >
+                <button ng-click="compositionStatus='Opened location'">
                   Open location
                 </button>
               </menu>
@@ -267,35 +250,22 @@
           <input
             placeholder="Enter search query"
             aria-label="Search query with scope"
-            class="input-group-control input"
+            class="input"
           />
-          <div data-align="inline-end" class="input-group-addon">
+          <div align="inline-end">
             <span ng-dropdown class="input-group-overlay-control">
-              <button
-                variant="ghost"
-                type="button"
-                class="input-group-button button"
-              >
+              <button variant="ghost" type="button" class="button">
                 Search in
                 <svg aria-hidden="true"><use href="#igc-chevron"></use></svg>
               </button>
-              <menu class="input-group-menu-content dropdown-menu-content">
-                <button
-                  ng-click="compositionStatus='Documentation'"
-                  class="dropdown-menu-item"
-                >
+              <menu class="input-group-menu-content">
+                <button ng-click="compositionStatus='Documentation'">
                   Documentation
                 </button>
-                <button
-                  ng-click="compositionStatus='Blog posts'"
-                  class="dropdown-menu-item"
-                >
+                <button ng-click="compositionStatus='Blog posts'">
                   Blog posts
                 </button>
-                <button
-                  ng-click="compositionStatus='Changelog'"
-                  class="dropdown-menu-item"
-                >
+                <button ng-click="compositionStatus='Changelog'">
                   Changelog
                 </button>
               </menu>
@@ -315,22 +285,20 @@
             type="password"
             placeholder="Enter password"
             aria-label="Password requirements"
-            class="input-group-control input"
+            class="input"
           />
-          <div data-align="inline-end" class="input-group-addon">
+          <div align="inline-end">
             <span ng-tooltip>
               <button
-                data-size="icon-xs"
+                size="icon-xs"
                 variant="ghost"
                 type="button"
                 aria-label="Password information"
-                class="input-group-button tooltip-trigger button"
+                class="button"
               >
                 <svg aria-hidden="true"><use href="#igc-info"></use></svg>
               </button>
-              <span side="top" class="tooltip-content"
-                >Password must be at least 8 characters.</span
-              >
+              <span side="top">Password must be at least 8 characters.</span>
             </span>
           </div>
         </div>
@@ -338,22 +306,20 @@
           <input
             placeholder="Your email address"
             aria-label="Notification email"
-            class="input-group-control input"
+            class="input"
           />
-          <div data-align="inline-end" class="input-group-addon">
+          <div align="inline-end">
             <span ng-tooltip>
               <button
-                data-size="icon-xs"
+                size="icon-xs"
                 variant="ghost"
                 type="button"
                 aria-label="Email help"
-                class="input-group-button tooltip-trigger button"
+                class="button"
               >
                 <svg aria-hidden="true"><use href="#igc-help"></use></svg>
               </button>
-              <span side="top" class="tooltip-content"
-                >We'll use this to send notifications.</span
-              >
+              <span side="top">We'll use this to send notifications.</span>
             </span>
           </div>
         </div>
@@ -361,22 +327,20 @@
           <input
             placeholder="Enter API key"
             aria-label="API key"
-            class="input-group-control input"
+            class="input"
           />
-          <div data-align="inline-end" class="input-group-addon">
+          <div align="inline-end">
             <span ng-tooltip>
               <button
-                data-size="icon-xs"
+                size="icon-xs"
                 variant="ghost"
                 type="button"
                 aria-label="API key help"
-                class="input-group-button tooltip-trigger button"
+                class="button"
               >
                 <svg aria-hidden="true"><use href="#igc-help"></use></svg>
               </button>
-              <span side="left" class="tooltip-content"
-                >Click for help with API keys.</span
-              >
+              <span side="left">Click for help with API keys.</span>
             </span>
           </div>
         </div>
@@ -390,111 +354,87 @@
         <h2 id="igc-mixed-title">Mixed interactive controls</h2>
         <div class="input-group-pair-grid">
           <div class="field">
-            <label for="igc-tooltip-input" class="field-label label"
-              >Tooltip</label
-            >
+            <label for="igc-tooltip-input">Tooltip</label>
             <div class="input-group">
-              <input id="igc-tooltip-input" class="input-group-control input" />
-              <div data-align="inline-end" class="input-group-addon">
+              <input id="igc-tooltip-input" class="input" />
+              <div align="inline-end">
                 <span ng-tooltip
                   ><button
-                    data-size="icon-xs"
+                    size="icon-xs"
                     variant="ghost"
                     type="button"
                     aria-label="Input information"
-                    class="input-group-button tooltip-trigger button"
+                    class="button"
                   >
                     <svg aria-hidden="true">
                       <use href="#igc-info"></use>
                     </svg></button
-                  ><span side="top" class="tooltip-content"
-                    >This is content in a tooltip.</span
-                  ></span
+                  ><span side="top">This is content in a tooltip.</span></span
                 >
               </div>
             </div>
-            <p class="field-description">
-              This is a description of the input group.
-            </p>
+            <p>This is a description of the input group.</p>
           </div>
           <div class="field">
-            <label for="igc-country-input" class="field-label label"
-              >Dropdown</label
-            >
+            <label for="igc-country-input">Dropdown</label>
             <div class="input-group">
-              <input
-                id="igc-country-input"
-                type="tel"
-                class="input-group-control input"
-              />
-              <div class="input-group-addon">
+              <input id="igc-country-input" type="tel" class="input" />
+              <div>
                 <span ng-dropdown class="input-group-overlay-control">
-                  <button
-                    variant="ghost"
-                    type="button"
-                    class="input-group-button button"
-                  >
+                  <button variant="ghost" type="button" class="button">
                     {{ country }}
                     <svg aria-hidden="true">
                       <use href="#igc-chevron"></use>
                     </svg>
                   </button>
                   <menu
-                    class="input-group-menu-content input-group-menu-narrow dropdown-menu-content"
+                    class="input-group-menu-content input-group-menu-narrow"
                   >
-                    <button ng-click="country='+1'" class="dropdown-menu-item">
-                      +1
-                    </button>
-                    <button ng-click="country='+44'" class="dropdown-menu-item">
-                      +44
-                    </button>
-                    <button ng-click="country='+46'" class="dropdown-menu-item">
-                      +46
-                    </button>
+                    <button ng-click="country='+1'">+1</button>
+                    <button ng-click="country='+44'">+44</button>
+                    <button ng-click="country='+46'">+46</button>
                   </menu>
                 </span>
               </div>
             </div>
-            <p class="field-description">Select a calling code.</p>
+            <p>Select a calling code.</p>
           </div>
           <div class="field">
-            <label for="igc-popover-input" class="field-label label"
-              >Popover</label
-            >
+            <label for="igc-popover-input">Popover</label>
             <div class="input-group">
               <span class="popover">
                 <button
-                  data-size="icon-xs"
+                  size="icon-xs"
                   variant="secondary"
                   type="button"
                   aria-label="Security details"
-                  class="input-group-button popover-trigger button"
+                  class="button"
                   popovertarget="popover-input-group-compositions-2-content"
                 >
                   <svg aria-hidden="true"><use href="#igc-info"></use></svg>
                 </button>
                 <aside
-                  class="input-group-popover-content popover-content"
+                  class="input-group-popover-content"
                   aria-label="Security details"
                   id="popover-input-group-compositions-2-content"
-                  data-side="bottom"
-                  data-align="start"
+                  side="bottom"
+                  align="start"
                   popover
                 >
                   <strong>Your connection is not secure.</strong>
                   <p>Do not enter sensitive information on this site.</p>
                 </aside>
               </span>
-              <div class="input-group-addon">https://</div>
-              <input id="igc-popover-input" class="input-group-control input" />
-              <div data-align="inline-end" class="input-group-addon">
+              <div>https://</div>
+              <input id="igc-popover-input" class="input" />
+              <div align="inline-end">
                 <button
-                  data-size="icon-xs"
+                  size="icon-xs"
                   variant="ghost"
                   type="button"
                   aria-label="Add favorite"
                   ng-click="compositionStatus='Added to favorites'"
-                  class="input-group-button button"
+                  class="button"
                 >
                   <svg aria-hidden="true"><use href="#igc-star"></use></svg>
                 </button>
@@ -502,18 +442,16 @@
             </div>
           </div>
           <div class="field">
-            <label for="igc-group-url" class="field-label label"
-              >Button group</label
-            >
+            <label for="igc-group-url">Button group</label>
             <div class="button-group">
-              <span class="button-group-text">https://</span>
+              <span>https://</span>
               <div class="input-group">
-                <input id="igc-group-url" class="input-group-control input" />
-                <div data-align="inline-end" class="input-group-addon">
+                <input id="igc-group-url" class="input" />
+                <div align="inline-end">
                   <svg aria-hidden="true"><use href="#igc-info"></use></svg>
                 </div>
               </div>
-              <span class="button-group-text">.com</span>
+              <span>.com</span>
             </div>
           </div>
         </div>

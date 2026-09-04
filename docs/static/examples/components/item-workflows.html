@@ -14,96 +14,83 @@
       <section data-example="item-demo" class="item-workflow">
         <ul class="item-group">
           <li variant="outline" class="item">
-            <section class="item-content">
-              <h3 class="item-title">Basic Item</h3>
-              <p class="item-description">
-                A simple item with title and description.
-              </p>
+            <section>
+              <h3>Basic Item</h3>
+              <p>A simple item with title and description.</p>
             </section>
-            <menu class="item-actions">
+            <menu>
               <button
-
                 variant="outline"
                 size="sm"
                 type="button"
-                ng-click="itemState.message='Basic action'" class="button">
+                ng-click="itemState.message='Basic action'"
+                class="button"
+              >
                 Action
               </button>
             </menu>
           </li>
-          <li
-
-            variant="outline"
-            data-size="sm"
-            href="#verified" class="item"><div class="item-media">
+          <li variant="outline" size="sm" href="#verified" class="item">
+            <figure>
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M9 12.75 11.25 15 15 9.75"></path>
                 <circle cx="12" cy="12" r="9"></circle>
               </svg>
-            </div>
-            <section class="item-content">
-              <h3 class="item-title">Your profile has been verified.</h3>
+            </figure>
+            <section>
+              <h3>Your profile has been verified.</h3>
             </section>
-            <menu aria-hidden="true" class="item-actions">›</menu></li>
+            <menu aria-hidden="true">›</menu>
+          </li>
         </ul>
       </section>
 
       <section data-example="item-avatar" class="item-workflow">
         <ul class="item-group">
           <li variant="outline" class="item">
-            <div class="item-media">
+            <figure>
               <span class="item-avatar-large avatar"
-                ><img
-
-                  src="../../images/avatars/01.png"
-                  alt="Evil Rabbit"
-               class="avatar-image" /></span>
-            </div>
-            <section class="item-content">
-              <h3 class="item-title">Evil Rabbit</h3>
-              <p class="item-description">Last seen 5 months ago</p>
+                ><img src="../../images/avatars/01.png" alt="Evil Rabbit"
+              /></span>
+            </figure>
+            <section>
+              <h3>Evil Rabbit</h3>
+              <p>Last seen 5 months ago</p>
             </section>
-            <menu class="item-actions">
+            <menu>
               <button
-
                 variant="outline"
                 size="icon-sm"
                 type="button"
-                aria-label="Invite Evil Rabbit" class="button">
+                aria-label="Invite Evil Rabbit"
+                class="button"
+              >
                 +
               </button>
             </menu>
           </li>
           <li variant="outline" class="item">
-            <div class="item-avatar-stack item-media">
-              <span
-                 class="avatar"><img
-
-                  src="../../images/avatars/02.png"
-                  alt="shadcn"  class="avatar-image" /></span><span
-                 class="avatar"><img
-
-                  src="../../images/avatars/03.png"
-                  alt="maxleiter"  class="avatar-image" /></span><span
-                 class="avatar"><img
-
-                  src="../../images/avatars/01.png"
-                  alt="evilrabbit"
-               class="avatar-image" /></span>
-            </div>
-            <section class="item-content">
-              <h3 class="item-title">No Team Members</h3>
-              <p class="item-description">
-                Invite your team to collaborate on this project.
-              </p>
+            <figure class="item-avatar-stack">
+              <span class="avatar"
+                ><img src="../../images/avatars/02.png" alt="shadcn" /></span
+              ><span class="avatar"
+                ><img src="../../images/avatars/03.png" alt="maxleiter" /></span
+              ><span class="avatar"
+                ><img src="../../images/avatars/01.png" alt="evilrabbit"
+              /></span>
+            </figure>
+            <section>
+              <h3>No Team Members</h3>
+              <p>Invite your team to collaborate on this project.</p>
             </section>
-            <menu class="item-actions">
+            <menu>
               <button
-
                 variant="outline"
                 size="sm"
                 type="button"
-                ng-click="itemState.message='Invite opened'" class="button">
+                ng-click="itemState.message='Invite opened'"
+                class="button"
+              >
                 Invite
               </button>
             </menu>
@@ -113,20 +100,18 @@
 
       <section data-example="item-icon" class="item-workflow">
         <article variant="outline" class="item">
-          <div variant="icon" class="item-media">
+          <figure variant="icon">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path
                 d="M12 9v4m0 4h.01M10.3 3.7 2.5 17.2A2 2 0 0 0 4.2 20h15.6a2 2 0 0 0 1.7-2.8L13.7 3.7a2 2 0 0 0-3.4 0Z"
               ></path>
             </svg>
-          </div>
-          <section class="item-content">
-            <h3 class="item-title">Security Alert</h3>
-            <p class="item-description">
-              New login detected from unknown device.
-            </p>
+          </figure>
+          <section>
+            <h3>Security Alert</h3>
+            <p>New login detected from unknown device.</p>
           </section>
-          <menu class="item-actions">
+          <menu>
             <button variant="outline" size="sm" type="button" class="button">
               Review
             </button>
@@ -136,42 +121,48 @@
 
       <section data-example="item-image" class="item-workflow">
         <ul class="item-group">
-          <li variant="outline" href="#midnight" class="item"><div variant="image" class="item-media">
+          <li variant="outline" href="#midnight" class="item">
+            <figure variant="image">
               <img
                 src="../../images/avatars/01.png"
-                alt="Midnight City Lights" />
-            </div>
-            <section class="item-content">
-              <h3 class="item-title">
-                Midnight City Lights - Electric Nights
-              </h3>
-              <p class="item-description">Neon Dreams</p>
+                alt="Midnight City Lights"
+              />
+            </figure>
+            <section>
+              <h3>Midnight City Lights - Electric Nights</h3>
+              <p>Neon Dreams</p>
             </section>
-            <section class="item-content">
-              <p class="item-description">3:45</p>
-            </section></li><li variant="outline" href="#coffee" class="item"><div variant="image" class="item-media">
+            <section>
+              <p>3:45</p>
+            </section>
+          </li>
+          <li variant="outline" href="#coffee" class="item">
+            <figure variant="image">
               <img
                 src="../../images/avatars/02.png"
-                alt="Coffee Shop Conversations" />
-            </div>
-            <section class="item-content">
-              <h3 class="item-title">
-                Coffee Shop Conversations - Urban Stories
-              </h3>
-              <p class="item-description">The Morning Brew</p>
+                alt="Coffee Shop Conversations"
+              />
+            </figure>
+            <section>
+              <h3>Coffee Shop Conversations - Urban Stories</h3>
+              <p>The Morning Brew</p>
             </section>
-            <section class="item-content">
-              <p class="item-description">4:05</p>
-            </section></li><li variant="outline" href="#digital" class="item"><div variant="image" class="item-media">
+            <section>
+              <p>4:05</p>
+            </section>
+          </li>
+          <li variant="outline" href="#digital" class="item">
+            <figure variant="image">
               <img src="../../images/avatars/03.png" alt="Digital Rain" />
-            </div>
-            <section class="item-content">
-              <h3 class="item-title">Digital Rain - Binary Beats</h3>
-              <p class="item-description">Cyber Symphony</p>
+            </figure>
+            <section>
+              <h3>Digital Rain - Binary Beats</h3>
+              <p>Cyber Symphony</p>
             </section>
-            <section class="item-content">
-              <p class="item-description">3:30</p>
-            </section></li>
+            <section>
+              <p>3:30</p>
+            </section>
+          </li>
         </ul>
       </section>
 
@@ -180,70 +171,49 @@
         class="item-workflow item-dropdown-workflow"
       >
         <div ng-dropdown class="dropdown-menu">
-          <button
-
-            variant="outline"
-            type="button"
-
-           class="dropdown-menu-trigger button">
+          <button variant="outline" type="button" class="button">
             Select <span aria-hidden="true">⌄</span>
           </button>
-          <menu class="dropdown-menu-content">
-            <div class="dropdown-menu-group">
-              <button
-
-                ng-click="itemState.message='Selected shadcn'"
-               class="dropdown-menu-item">
-                <article data-size="xs" class="item">
-                  <div class="item-media">
-                    <span
-                       class="avatar"><img
-
-                        src="../../images/avatars/02.png"
-                        alt=""
-                     class="avatar-image" /></span>
-                  </div>
-                  <section class="item-content">
-                    <h3 class="item-title">shadcn</h3>
-                    <p class="item-description">shadcn@vercel.com</p>
+          <menu>
+            <section>
+              <button ng-click="itemState.message='Selected shadcn'">
+                <article size="xs" class="item">
+                  <figure>
+                    <span class="avatar"
+                      ><img src="../../images/avatars/02.png" alt=""
+                    /></span>
+                  </figure>
+                  <section>
+                    <h3>shadcn</h3>
+                    <p>shadcn@vercel.com</p>
                   </section>
-                </article></button><button
-
-                ng-click="itemState.message='Selected maxleiter'"
-               class="dropdown-menu-item">
-                <article data-size="xs" class="item">
-                  <div class="item-media">
-                    <span
-                       class="avatar"><img
-
-                        src="../../images/avatars/03.png"
-                        alt=""
-                     class="avatar-image" /></span>
-                  </div>
-                  <section class="item-content">
-                    <h3 class="item-title">maxleiter</h3>
-                    <p class="item-description">maxleiter@vercel.com</p>
+                </article></button
+              ><button ng-click="itemState.message='Selected maxleiter'">
+                <article size="xs" class="item">
+                  <figure>
+                    <span class="avatar"
+                      ><img src="../../images/avatars/03.png" alt=""
+                    /></span>
+                  </figure>
+                  <section>
+                    <h3>maxleiter</h3>
+                    <p>maxleiter@vercel.com</p>
                   </section>
-                </article></button><button
-
-                ng-click="itemState.message='Selected evilrabbit'"
-               class="dropdown-menu-item">
-                <article data-size="xs" class="item">
-                  <div class="item-media">
-                    <span
-                       class="avatar"><img
-
-                        src="../../images/avatars/01.png"
-                        alt=""
-                     class="avatar-image" /></span>
-                  </div>
-                  <section class="item-content">
-                    <h3 class="item-title">evilrabbit</h3>
-                    <p class="item-description">evilrabbit@vercel.com</p>
+                </article></button
+              ><button ng-click="itemState.message='Selected evilrabbit'">
+                <article size="xs" class="item">
+                  <figure>
+                    <span class="avatar"
+                      ><img src="../../images/avatars/01.png" alt=""
+                    /></span>
+                  </figure>
+                  <section>
+                    <h3>evilrabbit</h3>
+                    <p>evilrabbit@vercel.com</p>
                   </section>
                 </article>
               </button>
-            </div>
+            </section>
           </menu>
         </div>
       </section>
@@ -251,73 +221,67 @@
       <section data-example="item-group" class="item-workflow">
         <ul class="item-group">
           <li variant="outline" class="item">
-            <div class="item-media">
-              <span
-                 class="avatar"><img
-
-                  src="../../images/avatars/02.png"
-                  alt="shadcn"
-               class="avatar-image" /></span>
-            </div>
-            <section class="item-content">
-              <h3 class="item-title">shadcn</h3>
-              <p class="item-description">shadcn@vercel.com</p>
+            <figure>
+              <span class="avatar"
+                ><img src="../../images/avatars/02.png" alt="shadcn"
+              /></span>
+            </figure>
+            <section>
+              <h3>shadcn</h3>
+              <p>shadcn@vercel.com</p>
             </section>
-            <menu class="item-actions">
+            <menu>
               <button
-
                 variant="ghost"
                 size="icon-sm"
                 type="button"
-                aria-label="Invite shadcn" class="button">
+                aria-label="Invite shadcn"
+                class="button"
+              >
                 +
               </button>
             </menu>
           </li>
           <li variant="outline" class="item">
-            <div class="item-media">
-              <span
-                 class="avatar"><img
-
-                  src="../../images/avatars/03.png"
-                  alt="maxleiter"
-               class="avatar-image" /></span>
-            </div>
-            <section class="item-content">
-              <h3 class="item-title">maxleiter</h3>
-              <p class="item-description">maxleiter@vercel.com</p>
+            <figure>
+              <span class="avatar"
+                ><img src="../../images/avatars/03.png" alt="maxleiter"
+              /></span>
+            </figure>
+            <section>
+              <h3>maxleiter</h3>
+              <p>maxleiter@vercel.com</p>
             </section>
-            <menu class="item-actions">
+            <menu>
               <button
-
                 variant="ghost"
                 size="icon-sm"
                 type="button"
-                aria-label="Invite maxleiter" class="button">
+                aria-label="Invite maxleiter"
+                class="button"
+              >
                 +
               </button>
             </menu>
           </li>
           <li variant="outline" class="item">
-            <div class="item-media">
-              <span
-                 class="avatar"><img
-
-                  src="../../images/avatars/01.png"
-                  alt="evilrabbit"
-               class="avatar-image" /></span>
-            </div>
-            <section class="item-content">
-              <h3 class="item-title">evilrabbit</h3>
-              <p class="item-description">evilrabbit@vercel.com</p>
+            <figure>
+              <span class="avatar"
+                ><img src="../../images/avatars/01.png" alt="evilrabbit"
+              /></span>
+            </figure>
+            <section>
+              <h3>evilrabbit</h3>
+              <p>evilrabbit@vercel.com</p>
             </section>
-            <menu class="item-actions">
+            <menu>
               <button
-
                 variant="ghost"
                 size="icon-sm"
                 type="button"
-                aria-label="Invite evilrabbit" class="button">
+                aria-label="Invite evilrabbit"
+                class="button"
+              >
                 +
               </button>
             </menu>
@@ -334,33 +298,27 @@
             <header class="item-header">
               <img src="../../images/avatars/01.png" alt="v0-1.5-sm" />
             </header>
-            <section class="item-content">
-              <h3 class="item-title">v0-1.5-sm</h3>
-              <p class="item-description">
-                Everyday tasks and UI generation.
-              </p>
+            <section>
+              <h3>v0-1.5-sm</h3>
+              <p>Everyday tasks and UI generation.</p>
             </section>
           </li>
           <li variant="outline" class="item">
             <header class="item-header">
               <img src="../../images/avatars/02.png" alt="v0-1.5-lg" />
             </header>
-            <section class="item-content">
-              <h3 class="item-title">v0-1.5-lg</h3>
-              <p class="item-description">
-                Advanced thinking or reasoning.
-              </p>
+            <section>
+              <h3>v0-1.5-lg</h3>
+              <p>Advanced thinking or reasoning.</p>
             </section>
           </li>
           <li variant="outline" class="item">
             <header class="item-header">
               <img src="../../images/avatars/03.png" alt="v0-2.0-mini" />
             </header>
-            <section class="item-content">
-              <h3 class="item-title">v0-2.0-mini</h3>
-              <p class="item-description">
-                Open Source model for everyone.
-              </p>
+            <section>
+              <h3>v0-2.0-mini</h3>
+              <p>Open Source model for everyone.</p>
             </section>
           </li>
         </ul>
@@ -368,49 +326,44 @@
 
       <section data-example="item-link" class="item-workflow">
         <ul class="item-group">
-          <li href="#documentation" class="item"><section class="item-content">
-              <h3 class="item-title">Visit our documentation</h3>
-              <p class="item-description">
-                Learn how to get started with our components.
-              </p>
+          <li href="#documentation" class="item">
+            <section>
+              <h3>Visit our documentation</h3>
+              <p>Learn how to get started with our components.</p>
             </section>
-            <menu aria-hidden="true" class="item-actions">›</menu></li><li variant="outline" href="#external" class="item"><section class="item-content">
-              <h3 class="item-title">External resource</h3>
-              <p class="item-description">
-                Opens in a new tab with security attributes.
-              </p>
+            <menu aria-hidden="true">›</menu>
+          </li>
+          <li variant="outline" href="#external" class="item">
+            <section>
+              <h3>External resource</h3>
+              <p>Opens in a new tab with security attributes.</p>
             </section>
-            <menu aria-hidden="true" class="item-actions">↗</menu></li>
+            <menu aria-hidden="true">↗</menu>
+          </li>
         </ul>
       </section>
 
       <section data-example="item-size" class="item-workflow">
         <ul class="item-group">
           <li variant="outline" class="item">
-            <div variant="icon" class="item-media">□</div>
-            <section class="item-content">
-              <h3 class="item-title">Default Size</h3>
-              <p class="item-description">
-                The standard size for most use cases.
-              </p>
+            <figure variant="icon">□</figure>
+            <section>
+              <h3>Default Size</h3>
+              <p>The standard size for most use cases.</p>
             </section>
           </li>
-          <li variant="outline" data-size="sm" class="item">
-            <div variant="icon" class="item-media">□</div>
-            <section class="item-content">
-              <h3 class="item-title">Small Size</h3>
-              <p class="item-description">
-                A compact size for dense layouts.
-              </p>
+          <li variant="outline" size="sm" class="item">
+            <figure variant="icon">□</figure>
+            <section>
+              <h3>Small Size</h3>
+              <p>A compact size for dense layouts.</p>
             </section>
           </li>
-          <li variant="outline" data-size="xs" class="item">
-            <div variant="icon" class="item-media">□</div>
-            <section class="item-content">
-              <h3 class="item-title">Extra Small Size</h3>
-              <p class="item-description">
-                The most compact size available.
-              </p>
+          <li variant="outline" size="xs" class="item">
+            <figure variant="icon">□</figure>
+            <section>
+              <h3>Extra Small Size</h3>
+              <p>The most compact size available.</p>
             </section>
           </li>
         </ul>
@@ -419,30 +372,24 @@
       <section data-example="item-variant" class="item-workflow">
         <ul class="item-group">
           <li class="item">
-            <div variant="icon" class="item-media">□</div>
-            <section class="item-content">
-              <h3 class="item-title">Default Variant</h3>
-              <p class="item-description">
-                Transparent background with no border.
-              </p>
+            <figure variant="icon">□</figure>
+            <section>
+              <h3>Default Variant</h3>
+              <p>Transparent background with no border.</p>
             </section>
           </li>
           <li variant="outline" class="item">
-            <div variant="icon" class="item-media">□</div>
-            <section class="item-content">
-              <h3 class="item-title">Outline Variant</h3>
-              <p class="item-description">
-                Outlined style with a visible border.
-              </p>
+            <figure variant="icon">□</figure>
+            <section>
+              <h3>Outline Variant</h3>
+              <p>Outlined style with a visible border.</p>
             </section>
           </li>
           <li variant="muted" class="item">
-            <div variant="icon" class="item-media">□</div>
-            <section class="item-content">
-              <h3 class="item-title">Muted Variant</h3>
-              <p class="item-description">
-                Muted background for secondary content.
-              </p>
+            <figure variant="icon">□</figure>
+            <section>
+              <h3>Muted Variant</h3>
+              <p>Muted background for secondary content.</p>
             </section>
           </li>
         </ul>
@@ -450,16 +397,12 @@
 
       <section data-example="muted-item-group" class="item-workflow">
         <ul class="item-group">
-          <li
-
-            variant="muted"
-
-            ng-repeat="number in [1,2,3]" class="item">
-            <section class="item-content">
-              <h3 class="item-title">Item {{ number }}</h3>
-              <p class="item-description">Item in muted group.</p>
+          <li variant="muted" ng-repeat="number in [1,2,3]" class="item">
+            <section>
+              <h3>Item {{ number }}</h3>
+              <p>Item in muted group.</p>
             </section>
-            <menu class="item-actions">
+            <menu>
               <button variant="outline" size="sm" type="button" class="button">
                 Action
               </button>
@@ -470,15 +413,11 @@
 
       <section data-example="outline-item-group" class="item-workflow">
         <ul class="item-group">
-          <li
-
-            variant="outline"
-
-            ng-repeat="number in [1,2,3]" class="item">
-            <div variant="icon" class="item-media">□</div>
-            <section class="item-content">
-              <h3 class="item-title">Item {{ number }}</h3>
-              <p class="item-description">Item with icon.</p>
+          <li variant="outline" ng-repeat="number in [1,2,3]" class="item">
+            <figure variant="icon">□</figure>
+            <section>
+              <h3>Item {{ number }}</h3>
+              <p>Item with icon.</p>
             </section>
           </li>
         </ul>
@@ -490,24 +429,22 @@
       >
         <ul class="item-group">
           <li
-
-            data-size="xs"
-
+            size="xs"
             class="file-upload-item item"
             ng-repeat="file in [{name:'document.pdf',progress:45,time:'2m 30s'},{name:'presentation.pptx',progress:78,time:'45s'},{name:'spreadsheet.xlsx',progress:12,time:'5m 12s'},{name:'image.jpg',progress:100,time:'Complete'}]"
           >
-            <div variant="icon" class="item-media">
+            <figure variant="icon">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path
                   d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"
                 ></path>
                 <path d="M14 2v6h6"></path>
               </svg>
-            </div>
-            <section class="item-content">
-              <h3 class="item-title">{{ file.name }}</h3>
+            </figure>
+            <section>
+              <h3>{{ file.name }}</h3>
             </section>
-            <section class="file-upload-progress item-content">
+            <section class="file-upload-progress">
               <progress
                 value="{{ file.progress }}"
                 max="100"
@@ -515,9 +452,7 @@
                 class="progress"
               ></progress>
             </section>
-            <menu class="file-upload-time item-actions">
-              {{ file.time }}
-            </menu>
+            <menu class="file-upload-time">{{ file.time }}</menu>
           </li>
         </ul>
       </section>
@@ -530,27 +465,23 @@
       >
         <ul class="item-group">
           <li variant="outline" class="item">
-            <section class="item-content">
-              <h3 class="item-title">عنصر أساسي</h3>
-              <p class="item-description">
-                عنصر بسيط يحتوي على عنوان ووصف.
-              </p>
+            <section>
+              <h3>عنصر أساسي</h3>
+              <p>عنصر بسيط يحتوي على عنوان ووصف.</p>
             </section>
-            <menu class="item-actions">
+            <menu>
               <button variant="outline" size="sm" type="button" class="button">
                 إجراء
               </button>
             </menu>
           </li>
-          <li
-
-            variant="outline"
-            data-size="sm"
-            href="#verified-rtl" class="item"><div class="item-media">✓</div>
-            <section class="item-content">
-              <h3 class="item-title">تم التحقق من ملفك الشخصي.</h3>
+          <li variant="outline" size="sm" href="#verified-rtl" class="item">
+            <figure>✓</figure>
+            <section>
+              <h3>تم التحقق من ملفك الشخصي.</h3>
             </section>
-            <menu aria-hidden="true" class="item-actions">‹</menu></li>
+            <menu aria-hidden="true">‹</menu>
+          </li>
         </ul>
       </section>
 

@@ -11,7 +11,7 @@ Connect a native button to semantic popover content with `popovertarget` and
 ```html
 <span class="popover">
   <button popovertarget="dimensions">Open</button>
-  <aside id="dimensions" popover class="popover-content">Content</aside>
+  <aside id="dimensions" popover>Content</aside>
 </span>
 ```
 
@@ -44,10 +44,10 @@ Connect a native button's `popovertarget` to one element with the matching `id` 
 
 | Attribute | Access | Purpose |
 | --- | --- | --- |
-| `data-align` | Input | Stable component state or styling hook. |
-| `data-side` | Input | Stable component state or styling hook. |
+| `align` | Input | Cross-axis alignment: `start`, `center`, or `end`. |
 | `popover` | Input | Authored option or semantic HTML attribute observed by the directive. |
 | `popovertarget` | Input | Authored option or semantic HTML attribute observed by the directive. |
+| `side` | Input | Physical placement: `left`, `top`, `bottom`, or `right`. |
 
 Attributes remain authored HTML, native state, or AngularTS inputs. AngularCSS does not write element state.
 

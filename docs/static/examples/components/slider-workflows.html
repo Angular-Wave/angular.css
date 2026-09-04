@@ -20,32 +20,29 @@
         class="slider-workflow-section"
         aria-labelledby="slider-controlled-title"
       >
-        <div class="slider-label-row">
+        <header>
           <h2 id="slider-controlled-title">Temperature</h2>
           <output>
             {{ slider.controlledStart }}, {{ slider.controlledEnd }}
           </output>
-        </div>
+        </header>
         <div ng-slider min="0" max="1" aria-label="Temperature range">
-          <div class="slider-track"><div class="slider-range"></div></div>
           <input
-
             type="range"
             min="0"
             max="1"
             step="0.1"
             ng-model="slider.controlledStart"
             aria-label="Minimum temperature"
-           class="slider-thumb"/>
+          />
           <input
-
             type="range"
             min="0"
             max="1"
             step="0.1"
             ng-model="slider.controlledEnd"
             aria-label="Maximum temperature"
-           class="slider-thumb"/>
+          />
         </div>
       </section>
 
@@ -53,30 +50,27 @@
         class="slider-workflow-section"
         aria-labelledby="slider-range-title"
       >
-        <div class="slider-label-row">
+        <header>
           <h2 id="slider-range-title">Range</h2>
           <output>{{ slider.rangeStart }}–{{ slider.rangeEnd }}</output>
-        </div>
+        </header>
         <div ng-slider min="0" max="100" aria-label="Price range">
-          <div class="slider-track"><div class="slider-range"></div></div>
           <input
-
             type="range"
             min="0"
             max="100"
             step="5"
             ng-model="slider.rangeStart"
             aria-label="Minimum price"
-           class="slider-thumb"/>
+          />
           <input
-
             type="range"
             min="0"
             max="100"
             step="5"
             ng-model="slider.rangeEnd"
             aria-label="Maximum price"
-           class="slider-thumb"/>
+          />
         </div>
       </section>
 
@@ -84,42 +78,38 @@
         class="slider-workflow-section"
         aria-labelledby="slider-multiple-title"
       >
-        <div class="slider-label-row">
+        <header>
           <h2 id="slider-multiple-title">Multiple values</h2>
           <output>
             {{ slider.multipleOne }}, {{ slider.multipleTwo }}, {{
             slider.multipleThree }}
           </output>
-        </div>
+        </header>
         <div ng-slider min="0" max="100" aria-label="Multiple slider values">
-          <div class="slider-track"><div class="slider-range"></div></div>
           <input
-
             type="range"
             min="0"
             max="100"
             step="10"
             ng-model="slider.multipleOne"
             aria-label="First value"
-           class="slider-thumb"/>
+          />
           <input
-
             type="range"
             min="0"
             max="100"
             step="10"
             ng-model="slider.multipleTwo"
             aria-label="Second value"
-           class="slider-thumb"/>
+          />
           <input
-
             type="range"
             min="0"
             max="100"
             step="10"
             ng-model="slider.multipleThree"
             aria-label="Third value"
-           class="slider-thumb"/>
+          />
         </div>
       </section>
 
@@ -129,10 +119,10 @@
         lang="ar"
         aria-labelledby="slider-rtl-title"
       >
-        <div class="slider-label-row">
+        <header>
           <h2 id="slider-rtl-title">مستوى الصوت</h2>
           <output>{{ slider.rtl }}</output>
-        </div>
+        </header>
         <input
           ng-slider
           type="range"
@@ -148,10 +138,10 @@
         class="slider-workflow-section slider-workflow-wide"
         aria-labelledby="slider-vertical-title"
       >
-        <div class="slider-label-row">
+        <header>
           <h2 id="slider-vertical-title">Vertical</h2>
           <output> {{ slider.verticalOne }}, {{ slider.verticalTwo }} </output>
-        </div>
+        </header>
         <div class="slider-vertical-row">
           <input
             ng-slider

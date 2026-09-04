@@ -1,9 +1,9 @@
-.drawer-content {
+.drawer > dialog {
   height: auto;
   margin: 0;
 }
 
-.drawer-content[data-side="bottom"] {
+.drawer > dialog[side="bottom"] {
   --modal-enter-y: 100%;
 
   inset-inline: 0;
@@ -14,7 +14,7 @@
   border-start-end-radius: calc(var(--radius) + 2px);
 }
 
-.drawer-content[data-side="top"] {
+.drawer > dialog[side="top"] {
   --modal-enter-y: -100%;
 
   inset-inline: 0;
@@ -25,7 +25,7 @@
   border-end-end-radius: calc(var(--radius) + 2px);
 }
 
-.drawer-content[data-side="left"] {
+.drawer > dialog[side="left"] {
   --modal-enter-x: -100%;
   --modal-enter-y: 0;
 
@@ -39,7 +39,7 @@
   border-end-end-radius: calc(var(--radius) + 2px);
 }
 
-.drawer-content[data-side="right"] {
+.drawer > dialog[side="right"] {
   --modal-enter-x: 100%;
   --modal-enter-y: 0;
 
@@ -53,11 +53,11 @@
   border-end-start-radius: calc(var(--radius) + 2px);
 }
 
-.drawer-content[data-size="half"] {
+.drawer > dialog[size="half"] {
   max-height: 50dvh;
 }
 
-.drawer-handle {
+.drawer > dialog::before {
   display: none;
   width: 6.25rem;
   height: calc(var(--spacing) * 1);
@@ -66,24 +66,25 @@
   align-self: center;
   border-radius: 999px;
   background: var(--muted);
+  content: "";
 }
 
-.drawer-content[data-side="bottom"] > .drawer-handle {
+.drawer > dialog[side="bottom"]::before {
   display: block;
 }
 
-.drawer-header {
+.drawer > dialog header {
   text-align: start;
 }
 
-.drawer-content[data-side="bottom"] > .drawer-header,
-.drawer-content[data-side="top"] > .drawer-header {
+.drawer > dialog[side="bottom"] header,
+.drawer > dialog[side="top"] header {
   text-align: center;
 }
 
 @media (width >= 768px) {
-  .drawer-content[data-side="bottom"] > .drawer-header,
-  .drawer-content[data-side="top"] > .drawer-header {
+  .drawer > dialog[side="bottom"] header,
+  .drawer > dialog[side="top"] header {
     text-align: start;
   }
 }

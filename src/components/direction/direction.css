@@ -11,11 +11,11 @@
   direction: rtl;
 }
 
-[data-logical-align="start"] {
+[align="start"] {
   text-align: start;
 }
 
-[data-logical-align="end"] {
+[align="end"] {
   text-align: end;
 }
 

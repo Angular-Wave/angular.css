@@ -12,8 +12,8 @@ test("element example runs packaged Context Menu behavior", async ({
   ).toHaveCount(1);
 
   const root = page.locator("#context-menu-demo");
-  const trigger = root.locator(".context-menu-trigger");
-  const content = root.locator(".context-menu-content");
+  const trigger = root.locator(":scope > :first-child");
+  const content = root.locator(":scope > menu");
   await trigger.click({ button: "right" });
   await expect(content).toBeVisible();
   await expect(

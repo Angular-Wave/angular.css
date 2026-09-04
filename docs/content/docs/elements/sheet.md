@@ -10,8 +10,8 @@ The styling entrypoint exposes the same native Sheet structure and CSS.
 ```html
 <section class="sheet">
   <button commandfor="settings-sheet" command="show-modal">Open</button>
-  <dialog id="settings-sheet" data-side="right" class="sheet-content">
-    <h2 class="sheet-title">Settings</h2>
+  <dialog id="settings-sheet" side="right">
+    <h2>Settings</h2>
     <button commandfor="settings-sheet" command="close">Close</button>
   </dialog>
 </section>

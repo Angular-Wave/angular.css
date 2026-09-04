@@ -19,16 +19,23 @@
       <div class="alert-dialog-trigger-grid" aria-label="Alert dialog examples">
         <section id="share-project-dialog" class="alert-dialog">
           <button
-
             type="button"
             variant="outline"
-
-           class="alert-dialog-trigger button" commandfor="share-project-dialog-content" command="show-modal">
+            class="button"
+            commandfor="share-project-dialog-content"
+            command="show-modal"
+          >
             Share Project
           </button>
-          <dialog data-size="default" class="alert-dialog-content" id="share-project-dialog-content" closedby="closerequest" aria-labelledby="share-project-dialog-title" aria-describedby="share-project-dialog-description">
-            <header class="alert-dialog-header">
-              <div aria-hidden="true" class="alert-dialog-media">
+          <dialog
+            size="default"
+            id="share-project-dialog-content"
+            closedby="closerequest"
+            aria-labelledby="share-project-dialog-title"
+            aria-describedby="share-project-dialog-description"
+          >
+            <header>
+              <figure aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none">
                   <circle
                     cx="12"
@@ -44,22 +51,28 @@
                     stroke-linecap="round"
                   />
                 </svg>
-              </div>
-              <h2 class="alert-dialog-title" id="share-project-dialog-title">Share this project?</h2>
-              <p class="alert-dialog-description" id="share-project-dialog-description">
+              </figure>
+              <h2 id="share-project-dialog-title">Share this project?</h2>
+              <p id="share-project-dialog-description">
                 Anyone with the link will be able to view and edit this project.
               </p>
             </header>
-            <footer class="alert-dialog-footer">
+            <footer>
               <button
-
                 type="button"
                 variant="outline"
-
-               class="alert-dialog-cancel button" commandfor="share-project-dialog-content" command="close">
+                class="button"
+                commandfor="share-project-dialog-content"
+                command="close"
+              >
                 Cancel
               </button>
-              <button type="button" class="alert-dialog-action button" commandfor="share-project-dialog-content" command="close">
+              <button
+                type="button"
+                class="button"
+                commandfor="share-project-dialog-content"
+                command="close"
+              >
                 Share
               </button>
             </footer>
@@ -68,33 +81,44 @@
 
         <section id="accessory-dialog" class="alert-dialog">
           <button
-
             type="button"
             variant="outline"
-
-           class="alert-dialog-trigger button" commandfor="accessory-dialog-content" command="show-modal">
+            class="button"
+            commandfor="accessory-dialog-content"
+            command="show-modal"
+          >
             Show Small Dialog
           </button>
-          <dialog data-size="sm" class="alert-dialog-content" id="accessory-dialog-content" closedby="closerequest" aria-labelledby="accessory-dialog-title" aria-describedby="accessory-dialog-description">
-            <header class="alert-dialog-header">
-              <h2 class="alert-dialog-title" id="accessory-dialog-title">
-                Allow accessory to connect?
-              </h2>
-              <p class="alert-dialog-description" id="accessory-dialog-description">
+          <dialog
+            size="sm"
+            id="accessory-dialog-content"
+            closedby="closerequest"
+            aria-labelledby="accessory-dialog-title"
+            aria-describedby="accessory-dialog-description"
+          >
+            <header>
+              <h2 id="accessory-dialog-title">Allow accessory to connect?</h2>
+              <p id="accessory-dialog-description">
                 Do you want to allow the USB accessory to connect to this
                 device?
               </p>
             </header>
-            <footer class="alert-dialog-footer">
+            <footer>
               <button
-
                 type="button"
                 variant="outline"
-
-               class="alert-dialog-cancel button" commandfor="accessory-dialog-content" command="close">
+                class="button"
+                commandfor="accessory-dialog-content"
+                command="close"
+              >
                 Don't allow
               </button>
-              <button type="button" class="alert-dialog-action button" commandfor="accessory-dialog-content" command="close">
+              <button
+                type="button"
+                class="button"
+                commandfor="accessory-dialog-content"
+                command="close"
+              >
                 Allow
               </button>
             </footer>
@@ -103,16 +127,23 @@
 
         <section id="accessory-media-dialog" class="alert-dialog">
           <button
-
             type="button"
             variant="outline"
-
-           class="alert-dialog-trigger button" commandfor="accessory-media-dialog-content" command="show-modal">
+            class="button"
+            commandfor="accessory-media-dialog-content"
+            command="show-modal"
+          >
             Show Small Dialog With Media
           </button>
-          <dialog data-size="sm" class="alert-dialog-content" id="accessory-media-dialog-content" closedby="closerequest" aria-labelledby="accessory-media-dialog-title" aria-describedby="accessory-media-dialog-description">
-            <header class="alert-dialog-header">
-              <div aria-hidden="true" class="alert-dialog-media">
+          <dialog
+            size="sm"
+            id="accessory-media-dialog-content"
+            closedby="closerequest"
+            aria-labelledby="accessory-media-dialog-title"
+            aria-describedby="accessory-media-dialog-description"
+          >
+            <header>
+              <figure aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none">
                   <path
                     d="m7 7 10 10-5 5V2l5 5L7 17"
@@ -122,25 +153,31 @@
                     stroke-linejoin="round"
                   />
                 </svg>
-              </div>
-              <h2 class="alert-dialog-title" id="accessory-media-dialog-title">
+              </figure>
+              <h2 id="accessory-media-dialog-title">
                 Allow accessory to connect?
               </h2>
-              <p class="alert-dialog-description" id="accessory-media-dialog-description">
+              <p id="accessory-media-dialog-description">
                 Do you want to allow the USB accessory to connect to this
                 device?
               </p>
             </header>
-            <footer class="alert-dialog-footer">
+            <footer>
               <button
-
                 type="button"
                 variant="outline"
-
-               class="alert-dialog-cancel button" commandfor="accessory-media-dialog-content" command="close">
+                class="button"
+                commandfor="accessory-media-dialog-content"
+                command="close"
+              >
                 Don't allow
               </button>
-              <button type="button" class="alert-dialog-action button" commandfor="accessory-media-dialog-content" command="close">
+              <button
+                type="button"
+                class="button"
+                commandfor="accessory-media-dialog-content"
+                command="close"
+              >
                 Allow
               </button>
             </footer>
@@ -149,20 +186,23 @@
 
         <section id="delete-chat-dialog" class="alert-dialog">
           <button
-
             type="button"
             variant="destructive"
-
-           class="alert-dialog-trigger button" commandfor="delete-chat-dialog-content" command="show-modal">
+            class="button"
+            commandfor="delete-chat-dialog-content"
+            command="show-modal"
+          >
             Delete Chat
           </button>
-          <dialog data-size="sm" class="alert-dialog-content" id="delete-chat-dialog-content" closedby="closerequest" aria-labelledby="delete-chat-dialog-title" aria-describedby="delete-chat-dialog-description">
-            <header class="alert-dialog-header">
-              <div
-
-                class="alert-dialog-media-destructive alert-dialog-media"
-                aria-hidden="true"
-              >
+          <dialog
+            size="sm"
+            id="delete-chat-dialog-content"
+            closedby="closerequest"
+            aria-labelledby="delete-chat-dialog-title"
+            aria-describedby="delete-chat-dialog-description"
+          >
+            <header>
+              <figure class="alert-dialog-media-destructive" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none">
                   <path
                     d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v5M14 11v5"
@@ -172,29 +212,31 @@
                     stroke-linejoin="round"
                   />
                 </svg>
-              </div>
-              <h2 class="alert-dialog-title" id="delete-chat-dialog-title">Delete chat?</h2>
-              <p class="alert-dialog-description" id="delete-chat-dialog-description">
+              </figure>
+              <h2 id="delete-chat-dialog-title">Delete chat?</h2>
+              <p id="delete-chat-dialog-description">
                 This will permanently delete this chat conversation. View
                 <a href="#settings">Settings</a> to delete saved memories.
               </p>
             </header>
-            <footer class="alert-dialog-footer">
+            <footer>
               <button
-
                 type="button"
                 variant="outline"
-
-               class="alert-dialog-cancel button" commandfor="delete-chat-dialog-content" command="close">
+                class="button"
+                commandfor="delete-chat-dialog-content"
+                command="close"
+              >
                 Cancel
               </button>
               <button
-
                 type="button"
                 variant="destructive"
-
                 ng-click="chatDeleted=true"
-               class="alert-dialog-action button" commandfor="delete-chat-dialog-content" command="close">
+                class="button"
+                commandfor="delete-chat-dialog-content"
+                command="close"
+              >
                 Delete
               </button>
             </footer>
@@ -204,31 +246,44 @@
         <div class="alert-dialog-rtl-triggers" dir="rtl" lang="ar">
           <section id="rtl-confirmation-dialog" class="alert-dialog">
             <button
-
               type="button"
               variant="outline"
-
-             class="alert-dialog-trigger button" commandfor="rtl-confirmation-dialog-content" command="show-modal">
+              class="button"
+              commandfor="rtl-confirmation-dialog-content"
+              command="show-modal"
+            >
               إظهار الحوار
             </button>
-            <dialog data-size="default" class="alert-dialog-content" id="rtl-confirmation-dialog-content" closedby="closerequest" aria-labelledby="rtl-confirmation-dialog-title" aria-describedby="rtl-confirmation-dialog-description">
-              <header class="alert-dialog-header">
-                <h2 class="alert-dialog-title" id="rtl-confirmation-dialog-title">هل أنت متأكد تمامًا؟</h2>
-                <p class="alert-dialog-description" id="rtl-confirmation-dialog-description">
+            <dialog
+              size="default"
+              id="rtl-confirmation-dialog-content"
+              closedby="closerequest"
+              aria-labelledby="rtl-confirmation-dialog-title"
+              aria-describedby="rtl-confirmation-dialog-description"
+            >
+              <header>
+                <h2 id="rtl-confirmation-dialog-title">هل أنت متأكد تمامًا؟</h2>
+                <p id="rtl-confirmation-dialog-description">
                   لا يمكن التراجع عن هذا الإجراء. سيؤدي هذا إلى حذف حسابك
                   نهائيًا من خوادمنا.
                 </p>
               </header>
-              <footer class="alert-dialog-footer">
+              <footer>
                 <button
-
                   type="button"
                   variant="outline"
-
-                 class="alert-dialog-cancel button" commandfor="rtl-confirmation-dialog-content" command="close">
+                  class="button"
+                  commandfor="rtl-confirmation-dialog-content"
+                  command="close"
+                >
                   إلغاء
                 </button>
-                <button type="button" class="alert-dialog-action button" commandfor="rtl-confirmation-dialog-content" command="close">
+                <button
+                  type="button"
+                  class="button"
+                  commandfor="rtl-confirmation-dialog-content"
+                  command="close"
+                >
                   متابعة
                 </button>
               </footer>
@@ -237,16 +292,23 @@
 
           <section id="rtl-accessory-dialog" class="alert-dialog">
             <button
-
               type="button"
               variant="outline"
-
-             class="alert-dialog-trigger button" commandfor="rtl-accessory-dialog-content" command="show-modal">
+              class="button"
+              commandfor="rtl-accessory-dialog-content"
+              command="show-modal"
+            >
               إظهار الحوار (صغير)
             </button>
-            <dialog data-size="sm" class="alert-dialog-content" id="rtl-accessory-dialog-content" closedby="closerequest" aria-labelledby="rtl-accessory-dialog-title" aria-describedby="rtl-accessory-dialog-description">
-              <header class="alert-dialog-header">
-                <div aria-hidden="true" class="alert-dialog-media">
+            <dialog
+              size="sm"
+              id="rtl-accessory-dialog-content"
+              closedby="closerequest"
+              aria-labelledby="rtl-accessory-dialog-title"
+              aria-describedby="rtl-accessory-dialog-description"
+            >
+              <header>
+                <figure aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none">
                     <path
                       d="m7 7 10 10-5 5V2l5 5L7 17"
@@ -256,22 +318,28 @@
                       stroke-linejoin="round"
                     />
                   </svg>
-                </div>
-                <h2 class="alert-dialog-title" id="rtl-accessory-dialog-title">السماح للملحق بالاتصال؟</h2>
-                <p class="alert-dialog-description" id="rtl-accessory-dialog-description">
+                </figure>
+                <h2 id="rtl-accessory-dialog-title">السماح للملحق بالاتصال؟</h2>
+                <p id="rtl-accessory-dialog-description">
                   هل تريد السماح لملحق USB بالاتصال بهذا الجهاز؟
                 </p>
               </header>
-              <footer class="alert-dialog-footer">
+              <footer>
                 <button
-
                   type="button"
                   variant="outline"
-
-                 class="alert-dialog-cancel button" commandfor="rtl-accessory-dialog-content" command="close">
+                  class="button"
+                  commandfor="rtl-accessory-dialog-content"
+                  command="close"
+                >
                   عدم السماح
                 </button>
-                <button type="button" class="alert-dialog-action button" commandfor="rtl-accessory-dialog-content" command="close">
+                <button
+                  type="button"
+                  class="button"
+                  commandfor="rtl-accessory-dialog-content"
+                  command="close"
+                >
                   السماح
                 </button>
               </footer>

@@ -7,15 +7,14 @@
 }
 
 .tabs[orientation="vertical"],
-[ng-tabs][orientation="vertical"],
-.tabs[data-orientation="vertical"],
-[ng-tabs][data-orientation="vertical"] {
+[ng-tabs][orientation="vertical"] {
   flex-direction: row;
   align-items: flex-start;
 }
 
-.tabs-list {
+:is(.tabs > menu, [ng-tabs] > menu, nav.tabs, menu.tabs) {
   display: inline-flex;
+  flex-direction: row;
   width: fit-content;
   align-items: center;
   justify-content: center;
@@ -25,17 +24,17 @@
   padding: calc(var(--spacing) * 1);
 }
 
-:is(.tabs, [ng-tabs])[data-orientation="vertical"] > .tabs-list {
+:is(.tabs, [ng-tabs])[orientation="vertical"] > menu {
   flex-direction: column;
 }
 
-.tabs-list[variant="line"] {
+:is(.tabs > menu, [ng-tabs] > menu, nav.tabs, menu.tabs)[variant="line"] {
   gap: calc(var(--spacing) * 1);
   background: transparent;
   padding: 0;
 }
 
-.tabs-trigger {
+:is(.tabs > menu, [ng-tabs] > menu, nav.tabs, menu.tabs) > button {
   position: relative;
   display: inline-flex;
   min-height: calc(var(--spacing) * 8);
@@ -52,44 +51,38 @@
   cursor: pointer;
   transition:
     background-color 120ms ease,
-    color 120ms ease,
-    transform 90ms ease-out;
+    color 120ms ease;
 }
 
-.tabs-trigger:focus-visible {
+:is(.tabs > menu, [ng-tabs] > menu, nav.tabs, menu.tabs)
+  > button:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
 
-.tabs-trigger:is(:disabled, [aria-disabled="true"], [data-disabled="true"]) {
+:is(.tabs > menu, [ng-tabs] > menu, nav.tabs, menu.tabs)
+  > button:is(:disabled, [aria-disabled="true"]) {
   pointer-events: none;
   opacity: 0.5;
 }
 
-.tabs-trigger:hover {
+:is(.tabs > menu, [ng-tabs] > menu, nav.tabs, menu.tabs) > button:hover {
   color: var(--foreground);
 }
 
-.tabs-trigger:active:not(:disabled, [aria-disabled="true"]) {
-  transform: translateY(1px);
-}
-
-.tabs-trigger[aria-selected="true"],
-.tabs-trigger[data-active="true"] {
+:is(.tabs > menu, [ng-tabs] > menu, nav.tabs, menu.tabs)
+  > button:is([aria-selected="true"], [aria-pressed="true"]) {
   background: var(--background);
   color: var(--foreground);
 }
 
-.tabs-list[variant="line"]
-  :is(.tabs-trigger[aria-selected="true"], .tabs-trigger[data-active="true"]) {
+:is(.tabs > menu, [ng-tabs] > menu, nav.tabs, menu.tabs)[variant="line"]
+  > button:is([aria-selected="true"], [aria-pressed="true"]) {
   background: transparent;
 }
 
-.tabs-list[variant="line"]
-  :is(
-    .tabs-trigger[aria-selected="true"],
-    .tabs-trigger[data-active="true"]
-  )::after {
+:is(.tabs > menu, [ng-tabs] > menu, nav.tabs, menu.tabs)[variant="line"]
+  > button:is([aria-selected="true"], [aria-pressed="true"])::after {
   content: "";
   position: absolute;
   inset-inline: calc(var(--spacing) * 2);
@@ -98,32 +91,32 @@
   background: var(--foreground);
 }
 
-.tabs-content {
+:is(.tabs, [ng-tabs]) > :is(article, section) {
   flex: 1 1 auto;
   outline: none;
 }
 
-.tabs-content[data-active="true"] {
-  animation: angularcss-tabs-content-enter 100ms ease-out;
+:is(.tabs, [ng-tabs]) > :is(article, section):not([hidden]) {
+  animation: angularcss-tabs-panel-enter 100ms ease-out;
 }
 
-.tabs-trigger > svg {
+:is(.tabs > menu, [ng-tabs] > menu, nav.tabs, menu.tabs) > button > svg {
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
 }
 
-@keyframes angularcss-tabs-content-enter {
+@keyframes angularcss-tabs-panel-enter {
   from {
     opacity: 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tabs-trigger {
+  :is(.tabs > menu, [ng-tabs] > menu, nav.tabs, menu.tabs) > button {
     transition-duration: 0s;
   }
 
-  .tabs-content[data-active="true"] {
+  :is(.tabs, [ng-tabs]) > :is(article, section):not([hidden]) {
     animation: none;
   }
 }

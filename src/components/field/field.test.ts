@@ -103,7 +103,7 @@ test("field workflows compose controls, responsive layout, and RTL", async ({
   await expect(page.getByLabel("Yearly ($99.99/year)")).toBeChecked();
   await page.getByLabel("Minimum budget").fill("300");
   await expect(
-    page.locator("[data-example='field-slider'] .field-description"),
+    page.locator("[data-example='field-slider'] .field > p"),
   ).toContainText("$300 - $800");
 
   const select = page.locator("[data-example='field-select']");

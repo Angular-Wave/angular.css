@@ -44,15 +44,14 @@ test("empty, item, keyboard, and separator artifacts expose semantic structure",
   await expect(page.locator(".kbd").nth(2)).toHaveAccessibleName("Slash");
 
   await openElementArtifact(page, "separator");
-  await expect(page.locator(".separator").first()).toHaveAttribute(
+  await expect(page.locator(".separator").first()).not.toHaveAttribute(
     "aria-orientation",
-    "horizontal",
   );
-  await expect(page.locator('.separator[orientation="vertical"]')).toHaveCount(
-    4,
-  );
+  await expect(
+    page.locator('.separator[aria-orientation="vertical"]'),
+  ).toHaveCount(4);
   const verticalSeparator = page
-    .locator('.separator[orientation="vertical"]')
+    .locator('.separator[aria-orientation="vertical"]')
     .first();
   expect(await verticalSeparator.getAttribute("role")).toBeNull();
   await expect(verticalSeparator).toHaveRole("separator");
@@ -96,7 +95,7 @@ test("input-group artifact associates its visible addon with the control", async
   await openElementArtifact(page, "input-group");
   const group = page.locator(".input-group");
   const input = page.getByLabel("Search");
-  await group.locator(".input-group-addon").click();
+  await group.locator(":scope > label").click();
   await expect(input).toBeFocused();
 });
 

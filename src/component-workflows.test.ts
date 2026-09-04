@@ -159,7 +159,7 @@ test("accordion state workflows preserve basic, disabled, and multiple behavior"
     "/docs/static/examples/components/accordion-state-workflows.html",
   );
 
-  const basicItem = page.locator(".accordion-item").first();
+  const basicItem = page.locator(".accordion > details").first();
   const basicTrigger = basicItem.locator("summary");
   await expect(basicItem).toHaveAttribute("open", "");
   await basicTrigger.click();
@@ -271,7 +271,7 @@ test("dropdown workflows preserve dynamic, model, submenu, icon, disabled, and R
   await expect(preferences.getByRole("menu")).toBeVisible();
 
   const rtlRoot = page.getByLabel("Arabic account menu");
-  await expect(rtlRoot).toHaveAttribute("data-direction", "rtl");
+  await expect(rtlRoot).toHaveCSS("direction", "rtl");
   await page.mouse.move(890, 890);
   await expect(page.locator(".dropdown-workflow-grid")).toHaveScreenshot(
     "dropdown-workflows-desktop.png",
@@ -285,7 +285,7 @@ test("dropdown workflows preserve dynamic, model, submenu, icon, disabled, and R
   const subTrigger = actions.getByRole("menuitem", { name: "Invite users" });
   await subTrigger.focus();
   await subTrigger.press("ArrowRight");
-  await expect(actions.locator(".dropdown-menu-sub-content")).toBeVisible();
+  await expect(subTrigger.locator("..").locator(":scope > menu")).toBeVisible();
   await page.mouse.move(380, 1370);
   await expect(page.locator(".dropdown-workflow-grid")).toHaveScreenshot(
     "dropdown-workflows-mobile.png",
@@ -303,7 +303,7 @@ test("hover card workflows preserve physical sides, mobile framing, and RTL", as
     page
       .getByRole("button", { name: "Left", exact: true })
       .locator("..")
-      .locator(".hover-card-content"),
+      .locator(":scope > aside"),
   ).toBeVisible();
   await expect(page.locator(".hover-card-workflow")).toHaveScreenshot(
     "hover-card-sides-desktop.png",
@@ -317,7 +317,7 @@ test("hover card workflows preserve physical sides, mobile framing, and RTL", as
     page
       .getByRole("button", { name: "Bottom", exact: true })
       .locator("..")
-      .locator(".hover-card-content"),
+      .locator(":scope > aside"),
   ).toBeVisible();
   await expect(page.locator(".hover-card-workflow")).toHaveScreenshot(
     "hover-card-sides-mobile.png",
@@ -330,7 +330,7 @@ test("hover card workflows preserve physical sides, mobile framing, and RTL", as
   const rtlContent = page
     .getByRole("button", { name: "أعلى", exact: true })
     .locator("..")
-    .locator(".hover-card-content");
+    .locator(":scope > aside");
   await expect(rtlContent).toBeVisible();
   await expect(rtlContent).toHaveCSS("direction", "rtl");
   await expect(page.locator(".hover-card-workflow")).toHaveScreenshot(
@@ -372,7 +372,7 @@ test("popover examples preserve Nova surfaces, alignment, mobile framing, and RT
   const rtlContent = page
     .getByRole("button", { name: "أعلى", exact: true })
     .locator("..")
-    .locator(".popover-content");
+    .locator(":scope > [popover]");
   await expect(rtlContent).toHaveCSS("direction", "rtl");
   await expect(page.locator(".popover-rtl-workflow")).toHaveScreenshot(
     "popover-rtl-desktop.png",
@@ -759,7 +759,7 @@ test("context menu examples preserve pointer, state, side, mobile, and RTL visua
   await page.setViewportSize({ height: 560, width: 900 });
   await page.goto("/docs/static/examples/components/context-menu.html");
   await page
-    .locator(".context-menu-trigger")
+    .locator("[ng-context-menu] > :first-child")
     .click({ button: "right", position: { x: 160, y: 40 } });
   await expect(page.locator(".context-menu-demo")).toHaveScreenshot(
     "context-menu-demo-desktop.png",
@@ -773,7 +773,7 @@ test("context menu examples preserve pointer, state, side, mobile, and RTL visua
   await page
     .getByRole("heading", { name: "Icons and destructive action" })
     .locator("..")
-    .locator(".context-menu-trigger")
+    .locator("[ng-context-menu] > :first-child")
     .click({ button: "right" });
   await expect(page.locator(".context-menu-workflow-grid")).toHaveScreenshot(
     "context-menu-workflows-desktop.png",
@@ -782,7 +782,10 @@ test("context menu examples preserve pointer, state, side, mobile, and RTL visua
 
   await page.setViewportSize({ height: 760, width: 900 });
   await page.goto("/docs/static/examples/components/context-menu-sides.html");
-  await page.locator(".context-menu-trigger").nth(2).click({ button: "right" });
+  await page
+    .locator("[ng-context-menu] > :first-child")
+    .nth(2)
+    .click({ button: "right" });
   await expect(page.locator(".context-menu-sides")).toHaveScreenshot(
     "context-menu-sides-desktop.png",
     { animations: "disabled" },
@@ -790,7 +793,9 @@ test("context menu examples preserve pointer, state, side, mobile, and RTL visua
 
   await page.setViewportSize({ height: 500, width: 390 });
   await page.goto("/docs/static/examples/components/context-menu.html");
-  await page.locator(".context-menu-trigger").click({ button: "right" });
+  await page
+    .locator("[ng-context-menu] > :first-child")
+    .click({ button: "right" });
   await expect(page.locator(".context-menu-demo")).toHaveScreenshot(
     "context-menu-demo-mobile.png",
     { animations: "disabled" },
@@ -799,7 +804,7 @@ test("context menu examples preserve pointer, state, side, mobile, and RTL visua
   await page.setViewportSize({ height: 560, width: 900 });
   await page.goto("/docs/static/examples/components/context-menu-rtl.html");
   await page
-    .locator(".context-menu-trigger")
+    .locator("[ng-context-menu] > :first-child")
     .first()
     .click({ button: "right" });
   await expect(page.locator(".context-menu-rtl-demo")).toHaveScreenshot(
@@ -848,9 +853,11 @@ test("dialog examples preserve modal, close, scroll, mobile, and RTL visuals", a
     "/docs/static/examples/components/dialog-scroll-workflows.html",
   );
   await page.getByRole("button", { name: "Review notes" }).click();
-  await page.locator("#sticky-dialog .dialog-body").evaluate((element) => {
-    element.scrollTop = element.scrollHeight / 2;
-  });
+  await page
+    .locator("#sticky-dialog > dialog > section")
+    .evaluate((element) => {
+      element.scrollTop = element.scrollHeight / 2;
+    });
   await expect(page).toHaveScreenshot("dialog-sticky-footer-desktop.png", {
     animations: "disabled",
   });
@@ -882,9 +889,11 @@ test("drawer examples preserve goal, side, scroll, responsive, and RTL visuals",
   await page.setViewportSize({ height: 560, width: 900 });
   await page.goto("/docs/static/examples/components/drawer-scrollable.html");
   await page.getByRole("button", { name: "Scrollable Content" }).click();
-  await page.locator(".drawer-body").evaluate((element) => {
-    element.scrollTop = element.scrollHeight / 2;
-  });
+  await page
+    .locator("#scrollable-drawer > dialog > section")
+    .evaluate((element) => {
+      element.scrollTop = element.scrollHeight / 2;
+    });
   await expect(page).toHaveScreenshot("drawer-scrollable-desktop.png", {
     animations: "disabled",
   });
@@ -946,7 +955,7 @@ test("sheet examples preserve profile, close, side, mobile, and RTL visuals", as
   await page
     .locator(".sheet")
     .nth(1)
-    .locator(".sheet-body")
+    .locator(":scope > dialog > section")
     .evaluate((element) => {
       element.scrollTop = element.scrollHeight / 2;
     });
@@ -1047,7 +1056,7 @@ test("alert workflows preserve action, color, destructive, and RTL compositions"
 
   const rtlAlert = page.locator(".alert-rtl-demo .alert").first();
   const rtlBox = await rtlAlert.boundingBox();
-  const rtlIconBox = await rtlAlert.locator(".alert-icon").boundingBox();
+  const rtlIconBox = await rtlAlert.locator(":scope > svg").boundingBox();
   expect(rtlBox).not.toBeNull();
   expect(rtlIconBox).not.toBeNull();
   expect(rtlIconBox!.x).toBeGreaterThan(rtlBox!.x + rtlBox!.width / 2);
@@ -1072,11 +1081,12 @@ test("alert dialog workflows preserve size, media, destructive, focus, and RTL b
     "/docs/static/examples/components/alert-dialog-workflows.html",
   );
 
-  const content = (id: string) => page.locator(`#${id} .alert-dialog-content`);
-  const media = (id: string) => page.locator(`#${id} .alert-dialog-media`);
+  const content = (id: string) => page.locator(`#${id} > dialog`);
+  const media = (id: string) =>
+    page.locator(`#${id} > dialog > header > figure`);
 
-  await expect(page.locator(".alert-dialog-content")).toHaveCount(6);
-  await expect(page.locator(".alert-dialog-content:visible")).toHaveCount(0);
+  await expect(page.locator(".alert-dialog > dialog")).toHaveCount(6);
+  await expect(page.locator(".alert-dialog > dialog:visible")).toHaveCount(0);
 
   const shareTrigger = page.getByRole("button", { name: "Share Project" });
   await shareTrigger.click();
@@ -1102,7 +1112,7 @@ test("alert dialog workflows preserve size, media, destructive, focus, and RTL b
   const smallBox = await smallContent.boundingBox();
   expect(smallBox).not.toBeNull();
   expect(smallBox!.width).toBeCloseTo(320, 0);
-  const smallButtons = smallContent.locator(".alert-dialog-footer > button");
+  const smallButtons = smallContent.locator(":scope > footer > button");
   const smallButtonWidths = await smallButtons.evaluateAll((buttons) =>
     buttons.map((button) => button.getBoundingClientRect().width),
   );
@@ -1154,7 +1164,7 @@ test("alert dialog workflows preserve size, media, destructive, focus, and RTL b
   await expect(rtlContent).toHaveCSS("direction", "rtl");
   const rtlContentBox = await rtlContent.boundingBox();
   const rtlTitleBox = await rtlContent
-    .locator(".alert-dialog-title")
+    .locator(":scope > header > :is(h1, h2, h3)")
     .boundingBox();
   expect(rtlContentBox).not.toBeNull();
   expect(rtlTitleBox).not.toBeNull();
@@ -1252,7 +1262,9 @@ test("avatar workflows preserve badges, group counts, sizes, dropdown compositio
     { height: 40, size: "lg", width: 40 },
   ]);
 
-  const badge = page.getByLabel("Avatar badge icon").locator(".avatar-badge");
+  const badge = page
+    .getByLabel("Avatar badge icon")
+    .locator(".avatar > output");
   const badgeBox = await badge.boundingBox();
   const badgeIconBox = await badge.locator("svg").boundingBox();
   expect(badgeBox).toMatchObject({ height: 10, width: 10 });
@@ -1260,7 +1272,7 @@ test("avatar workflows preserve badges, group counts, sizes, dropdown compositio
 
   const groupCount = page
     .getByLabel("Avatar group count icon")
-    .locator(".avatar-group-count");
+    .locator(":scope > output");
   expect(await groupCount.boundingBox()).toMatchObject({
     height: 32,
     width: 32,
@@ -1271,7 +1283,7 @@ test("avatar workflows preserve badges, group counts, sizes, dropdown compositio
   });
 
   const rtlAvatar = page.locator(".avatar-rtl-badge");
-  const rtlBadge = rtlAvatar.locator(".avatar-badge");
+  const rtlBadge = rtlAvatar.locator(":scope > output");
   const [rtlAvatarBox, rtlBadgeBox] = await Promise.all([
     rtlAvatar.boundingBox(),
     rtlBadge.boundingBox(),
@@ -1298,7 +1310,7 @@ test("avatar workflows preserve badges, group counts, sizes, dropdown compositio
   await trigger.click();
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
   const menu = page.locator(".avatar-dropdown-menu");
-  await expect(menu).toHaveAttribute("data-open", "true");
+  await expect(menu).toBeVisible();
   await expect(menu).toHaveCSS("width", "128px");
   await expect(page.locator(".avatar-dropdown-stage")).toHaveScreenshot(
     "avatar-dropdown-desktop.png",
@@ -1321,7 +1333,7 @@ test("breadcrumb workflows preserve separators, ellipsis, dropdown composition, 
 
   const breadcrumbs = page.locator(".breadcrumb");
   await expect(breadcrumbs).toHaveCount(5);
-  const pages = page.locator(".breadcrumb-page");
+  const pages = page.locator('.breadcrumb [aria-current="page"]');
   await expect(pages).toHaveCount(5);
   for (const currentPage of await pages.all()) {
     await expect(currentPage).toHaveAttribute("aria-current", "page");
@@ -1329,7 +1341,9 @@ test("breadcrumb workflows preserve separators, ellipsis, dropdown composition, 
     expect(await currentPage.getAttribute("role")).toBeNull();
   }
 
-  const cssSeparators = page.locator(".breadcrumb-separator:empty");
+  const cssSeparators = page.locator(
+    '.breadcrumb > ol > li[aria-hidden="true"]:empty',
+  );
   await expect(cssSeparators).toHaveCount(6);
   expect(
     await cssSeparators.evaluateAll((separators) =>
@@ -1339,7 +1353,9 @@ test("breadcrumb workflows preserve separators, ellipsis, dropdown composition, 
       }),
     ),
   ).toEqual(Array(6).fill({ height: 14, width: 14 }));
-  await expect(page.locator(".breadcrumb-ellipsis")).toHaveCount(2);
+  await expect(
+    page.locator('.breadcrumb :is(button, li) > span[aria-hidden="true"]'),
+  ).toHaveCount(2);
 
   const collapsedTrigger = page.getByRole("button", {
     name: "Toggle breadcrumb menu",
@@ -1357,10 +1373,7 @@ test("breadcrumb workflows preserve separators, ellipsis, dropdown composition, 
     name: "Components",
   });
   await dropdownTrigger.click();
-  await expect(dropdownSection.getByRole("menu")).toHaveAttribute(
-    "data-open",
-    "true",
-  );
+  await expect(dropdownSection.getByRole("menu")).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(dropdownTrigger).toBeFocused();
 
@@ -1391,6 +1404,7 @@ test("breadcrumb workflows preserve separators, ellipsis, dropdown composition, 
 test("button group workflows preserve command, form, overlay, nested, and RTL composition", async ({
   page,
 }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await page.setViewportSize({ height: 1200, width: 900 });
   await page.goto(
     "/docs/static/examples/components/button-group-workflows.html",
@@ -1410,7 +1424,7 @@ test("button group workflows preserve command, form, overlay, nested, and RTL co
   const more = toolbar.getByRole("button", { name: "More Options" });
   await more.click();
   const toolbarMenu = toolbar.getByRole("menu");
-  await expect(toolbarMenu).toHaveAttribute("data-open", "true");
+  await expect(toolbarMenu).toBeVisible();
   await toolbarMenu.getByRole("menuitem", { name: "Trash" }).click();
   await expect(page.locator(".button-group-output").first()).toHaveText(
     "Action: Trash",
@@ -1468,7 +1482,7 @@ test("button group workflows preserve command, form, overlay, nested, and RTL co
   const rtlMore = rtlGroup.getByRole("button", { name: "المزيد من الخيارات" });
   await rtlMore.click();
   const rtlMenu = rtlGroup.getByRole("menu");
-  await expect(rtlMenu).toHaveAttribute("data-direction", "rtl");
+  await expect(rtlMenu).toHaveCSS("direction", "rtl");
   await rtlMenu.getByRole("menuitem", { name: "سلة المهملات" }).click();
   await expect(page.getByText("الإجراء: سلة المهملات")).toBeVisible();
 
@@ -1497,9 +1511,7 @@ test("calendar workflows preserve reference scale, connected state, and disabled
   await expect(range.locator(`[data-range-start="true"]`)).toHaveCount(1);
   await expect(range.locator(`[data-range-middle="true"]`)).toHaveCount(4);
   await expect(range.locator(`[data-range-end="true"]`)).toHaveCount(1);
-  await expect(calendars.nth(5).locator(`.calendar-week-number`)).toHaveCount(
-    6,
-  );
+  await expect(calendars.nth(5).locator(`:scope > div data`)).toHaveCount(6);
   await expect(page.locator(".calendar-workflow-grid")).toHaveScreenshot(
     "calendar-workflows-desktop.png",
     { animations: "disabled" },
@@ -1518,10 +1530,12 @@ test("calendar compositions preserve custom cells, application adapters, and nat
   await expect(calendars).toHaveCount(5);
   expect((await calendars.nth(0).boundingBox())!.width).toBeCloseTo(352, 0);
   await expect(
-    calendars.nth(0).locator(`[data-value="2026-09-12"] span`),
+    calendars.nth(0).locator(`[value="2026-09-12"] span`),
   ).toHaveText("$120");
-  await expect(calendars.nth(3)).toHaveAttribute("data-direction", "rtl");
-  await expect(calendars.nth(4).locator(`.calendar-day`)).toHaveCount(42);
+  await expect(calendars.nth(3)).toHaveCSS("direction", "rtl");
+  await expect(
+    calendars.nth(4).locator(`:scope > div button[value]`),
+  ).toHaveCount(42);
   await page.getByLabel("Start time").fill("10:30");
   await expect(page.locator(".calendar-workflow-output").nth(2)).toContainText(
     "10:30",
@@ -1565,7 +1579,7 @@ test("date picker compositions preserve closed, parsing, range, mobile, and RTL 
   });
 
   await page.keyboard.press("Escape");
-  await page.locator("#date-picker-rtl-popover .popover-trigger").click();
+  await page.locator("#date-picker-rtl-popover > button:first-child").click();
   await expect(page).toHaveScreenshot("date-picker-rtl-open-desktop.png", {
     animations: "disabled",
   });
@@ -1606,8 +1620,10 @@ test("card workflows preserve local image media, logical RTL layout, and form co
 
   const rtlCard = cards.nth(1);
   await expect(rtlCard).toHaveAttribute("dir", "rtl");
-  const titleBox = await rtlCard.locator(`.card-title`).boundingBox();
-  const actionBox = await rtlCard.locator(`.card-action`).boundingBox();
+  const titleBox = await rtlCard.locator(`:scope > header h2`).boundingBox();
+  const actionBox = await rtlCard
+    .locator(`:scope > header > menu`)
+    .boundingBox();
   expect(titleBox).not.toBeNull();
   expect(actionBox).not.toBeNull();
   expect(actionBox!.x).toBeLessThan(titleBox!.x);
@@ -1649,25 +1665,34 @@ test("carousel workflows preserve API state, multi-item snaps, vertical geometry
     "data-example",
     "carousel-api carousel-multiple carousel-orientation carousel-plugin",
   );
-  await expect(carousels.nth(0)).toHaveAttribute("data-count", "5");
-  await expect(carousels.nth(1)).toHaveAttribute("data-count", "3");
-  await expect(carousels.nth(2)).toHaveAttribute(
-    "data-orientation",
-    "vertical",
-  );
-  await expect(carousels.nth(2)).toHaveAttribute("data-count", "4");
+  await expect(
+    carousels.nth(0).locator(":scope > * > :is(ul, ol) > li"),
+  ).toHaveCount(5);
+  await expect(
+    carousels.nth(1).locator(":scope > * > :is(ul, ol) > li"),
+  ).toHaveCount(5);
+  await expect(carousels.nth(2)).toHaveAttribute("orientation", "vertical");
+  await expect(
+    carousels.nth(2).locator(":scope > * > :is(ul, ol) > li"),
+  ).toHaveCount(5);
 
-  await carousels.nth(0).locator(".carousel-next").click();
+  await carousels.nth(0).locator(":scope > button").nth(1).click();
   await expect(page.locator(".carousel-status").first()).toHaveText(
     "Slide 2 of 5",
   );
   await carousels.nth(2).press("ArrowDown");
-  await expect(carousels.nth(2)).toHaveAttribute("data-index", "1");
+  await expect(
+    carousels.nth(2).locator(":scope > * > :is(ul, ol) > li").nth(1),
+  ).toHaveAttribute("aria-hidden", "false");
 
-  await carousels.nth(0).locator(".carousel-previous").click();
-  await expect(carousels.nth(0)).toHaveAttribute("data-index", "0");
+  await carousels.nth(0).locator(":scope > button").first().click();
+  await expect(
+    carousels.nth(0).locator(":scope > * > :is(ul, ol) > li").first(),
+  ).toHaveAttribute("aria-hidden", "false");
   await carousels.nth(2).press("ArrowUp");
-  await expect(carousels.nth(2)).toHaveAttribute("data-index", "0");
+  await expect(
+    carousels.nth(2).locator(":scope > * > :is(ul, ol) > li").first(),
+  ).toHaveAttribute("aria-hidden", "false");
 
   await carousels.nth(3).hover();
   await page.evaluate(() => {
@@ -1695,14 +1720,18 @@ test("carousel compositions preserve RTL controls, responsive basis, and authore
     "data-example",
     "carousel-rtl carousel-size carousel-spacing",
   );
-  await expect(carousels.first()).toHaveAttribute("data-direction", "rtl");
-  await carousels.first().locator(".carousel-next").click();
-  await expect(carousels.first()).toHaveAttribute("data-index", "1");
+  await expect(carousels.first()).toHaveCSS("direction", "rtl");
+  await carousels.first().locator(":scope > button").nth(1).click();
   await expect(
-    carousels.first().locator(`.carousel-item`).nth(1),
+    carousels.first().locator(":scope > * > :is(ul, ol) > li").nth(1),
+  ).toHaveAttribute("aria-hidden", "false");
+  await expect(
+    carousels.first().locator(":scope > * > :is(ul, ol) > li").nth(1),
   ).toContainText("٢");
-  await carousels.first().locator(".carousel-previous").click();
-  await expect(carousels.first()).toHaveAttribute("data-index", "0");
+  await carousels.first().locator(":scope > button").first().click();
+  await expect(
+    carousels.first().locator(":scope > * > :is(ul, ol) > li").first(),
+  ).toHaveAttribute("aria-hidden", "false");
 
   const spacedCards = carousels.nth(2).locator(".card");
   const first = await spacedCards.first().boundingBox();
@@ -1728,19 +1757,19 @@ test("chart workflows preserve grid, axis, legend, and AngularTS tooltip state",
     "data-example",
     "chart-example-grid chart-example-axis chart-example-tooltip chart-example-legend",
   );
-  await expect(page.locator(`.chart-bar-group`)).toHaveCount(24);
-  await expect(page.locator(`.chart-grid`)).toHaveCount(4);
-  await expect(page.locator(`.chart-axis`)).toHaveCount(3);
-  await expect(page.locator(`.chart-legend`)).toHaveCount(1);
+  await expect(page.locator(".chart > section > ul > li")).toHaveCount(24);
+  await expect(page.locator(".chart > section > hr")).toHaveCount(4);
+  await expect(page.locator(".chart > footer")).toHaveCount(3);
+  await expect(page.locator(".chart > ul")).toHaveCount(1);
 
   const tooltipWorkflow = page.locator(
     "[aria-labelledby='chart-tooltip-heading']",
   );
-  await tooltipWorkflow.locator(`.chart-bar-group`).first().hover();
-  const tooltip = tooltipWorkflow.locator(`.chart-tooltip`);
+  await tooltipWorkflow.locator(".chart > section > ul > li").first().hover();
+  const tooltip = tooltipWorkflow.locator(".chart output");
   await expect(tooltip).toHaveRole("status");
   await expect(tooltip).toContainText("January");
-  await expect(tooltip).toContainText("Desktop186");
+  await expect(tooltip).toContainText(/Desktop\s+186/);
   await page.mouse.move(1190, 840);
   await expect(tooltip).toHaveCount(0);
 
@@ -1761,28 +1790,28 @@ test("chart compositions preserve active series, RTL, and tooltip variants", asy
     "chart-demo chart-rtl chart-tooltip",
   );
   const controls = page.locator(".chart-series-controls > button");
-  const bars = page.locator(`.chart-daily-bars .chart-bar`);
+  const bars = page.locator(".chart-daily-bars > span");
   await expect(bars).toHaveCount(30);
   await controls.nth(1).click();
-  await expect(controls.nth(1)).toHaveAttribute("data-active", "true");
+  await expect(controls.nth(1)).toHaveAttribute("aria-pressed", "true");
   await expect(bars.first()).toHaveAttribute("data-value", "36%");
   await bars.first().hover();
-  await expect(
-    page.locator(`.chart-interactive-demo .chart-tooltip`),
-  ).toContainText("Mobile150");
+  await expect(page.locator(".chart-interactive-demo output")).toContainText(
+    /Mobile\s+150/,
+  );
 
   const rtl = page.locator(`.chart-composition[dir="rtl"] .chart`);
   await expect(page.locator('.chart-composition[dir="rtl"]')).toHaveAttribute(
     "dir",
     "rtl",
   );
-  await expect(rtl.locator(`.chart-bar-group`)).toHaveCount(6);
+  await expect(rtl.locator(":scope > section > ul > li")).toHaveCount(6);
   const gallery = page.locator(".chart-tooltip-gallery");
   expect(await gallery.getAttribute("role")).toBeNull();
   await expect(gallery).toHaveRole("figure");
-  await expect(gallery.locator(`.chart-tooltip`)).toHaveCount(4);
-  await expect(gallery.locator(`[data-indicator="dashed"]`)).toHaveCount(2);
-  await expect(gallery.locator(`[data-indicator="line"]`)).toHaveCount(1);
+  await expect(gallery.locator(":scope > output")).toHaveCount(4);
+  await expect(gallery.locator(`[indicator="dashed"]`)).toHaveCount(2);
+  await expect(gallery.locator(`[indicator="line"]`)).toHaveCount(1);
 
   await controls.nth(0).click();
   await page.mouse.move(1190, 1040);
@@ -1847,13 +1876,13 @@ test("checkbox table keeps selection and selected-row state synchronized", async
   const rows = table.locator("tbody tr");
   const selectAll = page.getByRole("checkbox", { name: "Select all rows" });
   await expect(rows).toHaveCount(4);
-  await expect(rows.nth(0)).toHaveAttribute("data-state", "selected");
+  await expect(rows.nth(0)).toHaveAttribute("aria-selected", "true");
 
   await selectAll.check();
   await expect(rows.locator(".checkbox:checked")).toHaveCount(4);
   await page.getByLabel("Select Marcus Rodriguez").uncheck();
   await expect(selectAll).not.toBeChecked();
-  await expect(rows.nth(1)).toHaveAttribute("data-state", "");
+  await expect(rows.nth(1)).toHaveAttribute("aria-selected", "false");
 
   await selectAll.check();
   await selectAll.uncheck();
@@ -1879,7 +1908,7 @@ test("collapsible workflows preserve native disclosure, settings, and RTL behavi
   const product = page.locator(".collapsible-product");
   await product.locator("summary").click();
   await expect(product).toHaveAttribute("open", "");
-  await expect(product.locator(`.collapsible-content`)).toBeVisible();
+  await expect(product.locator(":scope > :last-child")).toBeVisible();
 
   const settings = page.locator(".collapsible-settings");
   await expect(settings.locator("input:visible")).toHaveCount(2);
@@ -1890,7 +1919,7 @@ test("collapsible workflows preserve native disclosure, settings, and RTL behavi
 
   const rtl = page.locator(".collapsible-workflow-wide");
   await rtl.locator("summary").click();
-  await expect(rtl.locator(`.collapsible-content`)).toBeVisible();
+  await expect(rtl.locator("details > :last-child")).toBeVisible();
   await expect(page.locator(".collapsible-workflow-grid")).toHaveScreenshot(
     "collapsible-workflows-desktop.png",
     { animations: "disabled" },
@@ -1962,7 +1991,7 @@ test("radio group workflows preserve model state, choice cards, fieldsets, valid
   );
 
   const groups = page.locator(".radio-group");
-  const checked = page.locator(".radio-group-item:checked");
+  const checked = page.locator('.radio-group input[type="radio"]:checked');
   const disabled = page.locator("#disabled-1");
   const invalid = page.locator('[name="notification"][aria-invalid="true"]');
   const rtl = page.locator('[aria-label="RTL density options"]');
@@ -1982,7 +2011,7 @@ test("radio group workflows preserve model state, choice cards, fieldsets, valid
   await page.locator("#pro-plan").check();
   await expect(page.locator("#pro-plan")).toBeChecked();
   await expect(
-    page.locator(".radio-choice:has(.radio-group-item:checked)"),
+    page.locator('.radio-choice:has(input[type="radio"]:checked)'),
   ).toHaveCount(1);
   await page.mouse.move(880, 740);
   await expect(page.locator(".radio-group-workflows")).toHaveScreenshot(
@@ -2019,12 +2048,12 @@ test("Sonner workflows preserve description, position, type, and promise behavio
   await page.getByRole("button", { name: "Show Toast", exact: true }).click();
   const descriptionToast = page
     .getByLabel("Description notifications")
-    .locator(":is(.toast)");
+    .locator(":scope > article");
   await expect(descriptionToast).toContainText("Monday, January 3rd");
 
   await page.getByRole("button", { name: "Top Right" }).click();
   await expect(page.getByLabel("Position notifications")).toHaveAttribute(
-    "data-position",
+    "position",
     "top-right",
   );
 
@@ -2033,8 +2062,8 @@ test("Sonner workflows preserve description, position, type, and promise behavio
     .getByRole("button", { name: "Warning" })
     .click();
   await expect(
-    page.getByLabel("Type notifications").locator(":is(.toast)"),
-  ).toHaveAttribute("data-type", "warning");
+    page.getByLabel("Type notifications").locator(":scope > article"),
+  ).toHaveAttribute("type", "warning");
 
   await page.mouse.move(890, 1030);
   await expect(page.locator(".sonner-workflow-grid")).toHaveScreenshot(
@@ -2069,17 +2098,15 @@ test("Slider workflows preserve controlled, range, multiple, RTL, and vertical s
   await page.getByRole("slider", { name: "مستوى الصوت" }).fill("65");
   await page.getByRole("slider", { name: "Second vertical value" }).fill("35");
 
-  await expect(page.getByLabel("Temperature range")).toHaveAttribute(
-    "data-values",
-    "0.4,0.7",
-  );
-  await expect(page.getByLabel("Multiple slider values")).toHaveAttribute(
-    "data-values",
-    "10,40,70",
+  await expect(
+    page.getByRole("slider", { name: "Minimum temperature" }),
+  ).toHaveValue("0.4");
+  await expect(page.getByRole("slider", { name: "Second value" })).toHaveValue(
+    "40",
   );
   await expect(
     page.getByRole("slider", { name: "Second vertical value" }),
-  ).toHaveAttribute("data-orientation", "vertical");
+  ).toHaveAttribute("orientation", "vertical");
 
   await page.mouse.move(890, 670);
   await expect(page.locator(".slider-workflow-grid")).toHaveScreenshot(

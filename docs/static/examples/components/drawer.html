@@ -21,7 +21,7 @@
           commandfor="goal-drawer-content"
           command="show-modal"
           variant="outline"
-          class="drawer-trigger button"
+          class="button"
         >
           Open Drawer
         </button>
@@ -30,24 +30,23 @@
           closedby="any"
           aria-labelledby="goal-drawer-title"
           aria-describedby="goal-drawer-description"
-          data-side="bottom"
-          class="drawer-content"
+          side="bottom"
         >
-          <div class="drawer-handle"></div>
-          <div class="drawer-goal-panel">
-            <header class="drawer-header">
-              <h2 id="goal-drawer-title" class="drawer-title">Move Goal</h2>
-              <p id="goal-drawer-description" class="drawer-description">Set your daily activity goal.</p>
+          <article>
+            <header>
+              <h2 id="goal-drawer-title">Move Goal</h2>
+              <p id="goal-drawer-description">Set your daily activity goal.</p>
             </header>
-            <div class="drawer-goal-body">
-              <div class="drawer-goal-control">
+            <section>
+              <menu>
                 <button
-
                   variant="outline"
                   size="icon-sm"
                   aria-label="Decrease"
                   ng-disabled="goal <= 200"
-                  ng-click="goal=goal-10" class="button">
+                  ng-click="goal=goal-10"
+                  class="button"
+                >
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -58,12 +57,11 @@
                     <path d="M5 12h14"></path>
                   </svg>
                 </button>
-                <div class="drawer-goal-value">
+                <output>
                   <strong ng-bind="goal"></strong>
                   <span>Calories/day</span>
-                </div>
+                </output>
                 <button
-
                   variant="outline"
                   size="icon-sm"
                   aria-label="Increase"
@@ -82,34 +80,42 @@
                     <path d="M5 12h14"></path>
                   </svg>
                 </button>
-              </div>
-              <div class="drawer-goal-chart" aria-hidden="true">
-                <span data-height="80"></span><span data-height="60"></span>
-                <span data-height="40"></span><span data-height="60"></span>
-                <span data-height="40"></span><span data-height="56"></span>
-                <span data-height="38"></span><span data-height="48"></span>
-                <span data-height="60"></span><span data-height="40"></span>
-                <span data-height="56"></span><span data-height="38"></span>
-                <span data-height="70"></span>
-              </div>
-            </div>
-            <footer class="drawer-footer">
+              </menu>
+              <figure aria-hidden="true">
+                <span style="--height: 80%"></span
+                ><span style="--height: 60%"></span>
+                <span style="--height: 40%"></span
+                ><span style="--height: 60%"></span>
+                <span style="--height: 40%"></span
+                ><span style="--height: 56%"></span>
+                <span style="--height: 38%"></span
+                ><span style="--height: 48%"></span>
+                <span style="--height: 60%"></span
+                ><span style="--height: 40%"></span>
+                <span style="--height: 56%"></span
+                ><span style="--height: 38%"></span>
+                <span style="--height: 70%"></span>
+              </figure>
+            </section>
+            <footer>
               <button
                 commandfor="goal-drawer-content"
                 command="close"
                 ng-click="submittedGoal=goal"
                 class="button"
-              >Submit</button>
+              >
+                Submit
+              </button>
               <button
                 commandfor="goal-drawer-content"
                 command="close"
                 variant="outline"
-                class="drawer-close button"
+                class="button"
               >
                 Cancel
               </button>
             </footer>
-          </div>
+          </article>
         </dialog>
       </section>
       <output class="drawer-output" aria-live="polite">

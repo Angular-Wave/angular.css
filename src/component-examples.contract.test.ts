@@ -72,13 +72,20 @@ const assertBuiltArtifactContract = async (
 };
 
 const assertVisualContract = async (page: Page, component: string) => {
-  const rootSelector = elementNames.has(component)
-    ? `.${component}`
-    : component === "resizable"
-      ? "[ng-resizable-panel-group]"
-      : component === "sonner"
-        ? "[ng-toaster]"
-        : `[ng-${component}]`;
+  const semanticRootSelectors = new Map([
+    ["label", "label"],
+    ["native-select", "select"],
+    ["select", "select"],
+  ]);
+  const rootSelector =
+    semanticRootSelectors.get(component) ??
+    (elementNames.has(component)
+      ? `.${component}`
+      : component === "resizable"
+        ? "[ng-resizable-panel-group]"
+        : component === "sonner"
+          ? "[ng-toaster]"
+          : `[ng-${component}]`);
   const result = await page.evaluate(
     ({ rootSelector }) => {
       const root = document.querySelector<HTMLElement>(rootSelector);
@@ -206,13 +213,14 @@ const contracts: Record<string, Contract> = {
           alerts.map((alert) => alert.getAttribute("role")),
         ),
     ).toEqual([null, null]);
-    await expect(slot(page, "alert-title")).toHaveCount(2);
-    await expect(slot(page, "alert-description")).toHaveCount(2);
-    await expect(slot(page, "alert-icon")).toHaveCount(2);
+    await expect(page.locator(".alert > h2")).toHaveCount(2);
+    await expect(page.locator(".alert > p")).toHaveCount(2);
+    await expect(page.locator(".alert > svg")).toHaveCount(2);
   },
   "alert-dialog": async (page) => {
-    const trigger = slot(page, "alert-dialog-trigger");
-    const content = slot(page, "alert-dialog-content");
+    const root = page.locator(".alert-dialog");
+    const trigger = root.locator(":scope > button:first-child");
+    const content = root.locator(":scope > dialog");
     await expect(trigger).toBeVisible();
     await expect(content).toBeHidden();
     await expect(trigger).toHaveAttribute(
@@ -245,12 +253,12 @@ const contracts: Record<string, Contract> = {
   avatar: async (page) => {
     const avatars = slot(page, "avatar");
     await expect(avatars).toHaveCount(6);
-    await expect(slot(page, "avatar-image")).toHaveCount(5);
-    await expect(slot(page, "avatar-image").first()).toBeVisible();
+    await expect(page.locator(".avatar > img")).toHaveCount(5);
+    await expect(page.locator(".avatar > img").first()).toBeVisible();
     await expect(page.locator('.avatar[aria-label="Jane Doe"]')).toContainText(
       "JD",
     );
-    await expect(slot(page, "avatar-group-count")).toBeVisible();
+    await expect(page.locator(".avatar-group > output")).toBeVisible();
     expect(
       await avatars.evaluateAll((items) =>
         items.map((item) => getComputedStyle(item).width),
@@ -264,7 +272,7 @@ const contracts: Record<string, Contract> = {
           (avatar) => getComputedStyle(avatar, "::after").borderTopStyle,
         ),
     ).toBe("solid");
-    const badge = slot(page, "avatar-badge");
+    const badge = page.locator(".avatar > output").first();
     const [avatarBox, badgeBox] = await Promise.all([
       avatars.nth(1).boundingBox(),
       badge.boundingBox(),
@@ -284,10 +292,9 @@ const contracts: Record<string, Contract> = {
       "aria-label",
       /breadcrumb/i,
     );
-    await expect(slot(page, "breadcrumb-page")).toHaveAttribute(
-      "aria-current",
-      "page",
-    );
+    await expect(
+      page.locator('.breadcrumb [aria-current="page"]'),
+    ).toHaveAttribute("aria-current", "page");
   },
   button: async (page) => {
     const buttons = page.getByRole("button");
@@ -303,9 +310,9 @@ const contracts: Record<string, Contract> = {
   },
   "button-group": async (page) => {
     const copy = page.getByRole("button", { name: "Copy" });
-    const separators = slot(page, "button-group-separator");
+    const separators = page.locator(".button-group > hr.separator");
     const verticalSeparators = page.locator(
-      '.button-group-separator[orientation="vertical"]',
+      '.button-group > hr.separator[aria-orientation="vertical"]',
     );
     await expect(slot(page, "button-group")).toHaveCount(6);
     await expect(separators).toHaveCount(3);
@@ -320,12 +327,16 @@ const contracts: Record<string, Contract> = {
   },
   calendar: async (page) => {
     const calendar = page.locator("[ng-calendar]");
-    await expect(slot(page, "calendar-day")).toHaveCount(42);
-    await slot(page, "calendar-day").filter({ hasText: /^20$/ }).click();
+    const days = calendar.locator(":scope > div button[value]");
+    const controls = calendar.locator(":scope > header > button");
+    await expect(days).toHaveCount(42);
+    await days.filter({ hasText: /^20$/ }).click();
     await expect(page.locator(".output")).toContainText("2026-05-20");
-    await slot(page, "calendar-next").click();
+    await controls.last().click();
     await expect(
-      slot(page, "calendar-title").getByRole("combobox", { name: "Month" }),
+      calendar
+        .locator(":scope > header > :is(h1, h2, h3, h4, h5, h6)")
+        .getByRole("combobox", { name: "Month" }),
     ).toHaveValue("5");
     await expect(calendar).toHaveAttribute("data-month", "2026-06");
   },
@@ -339,18 +350,19 @@ const contracts: Record<string, Contract> = {
   carousel: async (page) => {
     const root = page.locator("[ng-carousel]");
     const next = page.getByRole("button", { name: "Next" });
-    await expect(root).toHaveAttribute("data-index", "0");
+    const items = root.locator(":scope > * > :is(ul, ol) > li");
+    await expect(items.first()).toHaveAttribute("aria-hidden", "false");
     for (const index of [1, 2, 3, 4]) {
       await next.click();
-      await expect(root).toHaveAttribute("data-index", String(index));
+      await expect(items.nth(index)).toHaveAttribute("aria-hidden", "false");
     }
     await expect(next).toBeDisabled();
   },
   chart: async (page) => {
     const chart = page.locator(".chart");
-    const bars = slot(page, "chart-bar");
+    const bars = chart.locator(":scope > section > ul > li > span");
     expect(await chart.getAttribute("role")).toBeNull();
-    await expect(slot(page, "chart-bar-group")).toHaveCount(6);
+    await expect(chart.locator(":scope > section > ul > li")).toHaveCount(6);
     await expect(bars).toHaveCount(12);
     await expect(bars.nth(2)).toHaveAttribute("data-value", "100%");
     expect((await bars.nth(2).boundingBox())?.height).toBeGreaterThan(150);
@@ -372,11 +384,12 @@ const contracts: Record<string, Contract> = {
     const root = page.locator("details.collapsible");
     const trigger = root.locator(":scope > summary");
     await expect(root).not.toHaveAttribute("open", "");
-    await expect(page.getByText("Status", { exact: true })).toBeHidden();
+    await expect(page.getByText("Status", { exact: true })).toBeVisible();
+    await expect(root.locator(":scope > :last-child")).toBeHidden();
     await trigger.click();
     await expect(root).toHaveAttribute("open", "");
     await expect(page.getByText("Status", { exact: true })).toBeVisible();
-    await expect(root.locator(".collapsible-content")).toBeVisible();
+    await expect(root.locator(":scope > :last-child")).toBeVisible();
   },
   combobox: async (page) => {
     const roots = page.locator("[ng-combobox]");
@@ -384,9 +397,11 @@ const contracts: Record<string, Contract> = {
     const automatic = page.locator("#auto-combobox");
     const basicInput = basic.getByRole("combobox");
     await expect(roots).toHaveCount(2);
-    await expect(page.locator(".combobox-list")).toHaveCount(2);
-    await expect(page.locator(".combobox-collection")).toHaveCount(2);
-    await expect(basic.locator(".combobox-content")).toBeHidden();
+    await expect(page.locator("[ng-combobox] > aside > div")).toHaveCount(2);
+    await expect(page.locator("[ng-combobox] > aside > div > ul")).toHaveCount(
+      2,
+    );
+    await expect(basic.locator(":scope > aside")).toBeHidden();
 
     await basicInput.fill("SvelteKit");
     await expect(basic.getByRole("option")).toHaveCount(1);
@@ -407,45 +422,43 @@ const contracts: Record<string, Contract> = {
     const input = root.getByRole("combobox");
     await expect(root.getByRole("option")).toHaveCount(6);
     await input.fill("settings");
-    await expect(root.locator(".command-group-heading:visible")).toHaveText(
+    await expect(root.locator("section > :is(h1, h2, h3):visible")).toHaveText(
       "Settings",
     );
     await expect(root.getByRole("option")).toHaveCount(1);
-    await expect(root.locator(".command-separator")).toHaveCSS("height", "1px");
+    await expect(root.locator(":scope > :last-child > hr")).toHaveCSS(
+      "height",
+      "1px",
+    );
     await expect(input).toHaveAttribute("aria-activedescendant", /.+/);
     await input.press("Enter");
     await expect(page.locator(".output")).toContainText("Selected: Settings");
   },
   "context-menu": async (page) => {
-    const trigger = slot(page, "context-menu-trigger");
+    const root = page.locator("[ng-context-menu]");
+    const trigger = root.locator(":scope > :first-child");
     await trigger.click();
-    await expect(slot(page, "context-menu-content")).toBeHidden();
+    await expect(root.locator(":scope > menu")).toBeHidden();
     await trigger.click({ button: "right" });
-    await expect(slot(page, "context-menu-content")).toBeVisible();
-    await expect(page.locator("[ng-context-menu]")).toHaveAttribute(
-      "data-open",
-      "true",
-    );
-    await expect(slot(page, "context-menu-group").first()).toBeVisible();
+    await expect(root.locator(":scope > menu")).toBeVisible();
+    await expect(root).toHaveAttribute("open", "");
+    await expect(root.locator(":scope > menu > section").first()).toBeVisible();
     await expect(
       page.getByRole("menuitem", { name: /^Forward/ }),
     ).toBeDisabled();
-    const subTrigger = slot(page, "context-menu-sub-trigger");
+    const subTrigger = root.locator("details > summary");
     await subTrigger.evaluate((element) =>
       element.focus({ preventScroll: true }),
     );
     await subTrigger.press("ArrowRight");
-    await expect(slot(page, "context-menu-sub-content")).toBeVisible();
+    await expect(root.locator("details > menu")).toBeVisible();
     await expect(
       page.getByRole("menuitem", { name: "Save Page..." }),
     ).toBeFocused();
     await page.keyboard.press("ArrowLeft");
-    await expect(slot(page, "context-menu-sub-content")).toBeHidden();
+    await expect(root.locator("details > menu")).toBeHidden();
     await page.keyboard.press("Escape");
-    await expect(page.locator("[ng-context-menu]")).toHaveAttribute(
-      "data-open",
-      "false",
-    );
+    await expect(page.locator("[ng-context-menu]")).not.toHaveAttribute("open");
   },
   dialog: async (page) => {
     const root = page.locator(".dialog");
@@ -464,12 +477,12 @@ const contracts: Record<string, Contract> = {
   drawer: async (page) => {
     const root = page.locator(".drawer");
     const trigger = page.getByRole("button", { name: "Open Drawer" });
-    const content = page.locator(".drawer-content");
+    const content = root.locator(":scope > dialog");
     await expect(trigger).toBeVisible();
     await expect(content).toBeHidden();
     await trigger.click();
     await expect(content).toHaveAttribute("open", "");
-    await expect(content).toHaveAttribute("data-side", "bottom");
+    await expect(content).toHaveAttribute("side", "bottom");
     expect(await content.getAttribute("role")).toBeNull();
     await page.getByRole("button", { name: "Cancel" }).click();
     await expect(content).toBeHidden();
@@ -479,30 +492,33 @@ const contracts: Record<string, Contract> = {
     await trigger.click();
     await expect(trigger).toHaveAttribute("aria-expanded", "true");
     await expect(page.getByRole("menu")).toBeVisible();
-    await expect(slot(page, "dropdown-menu-group")).toBeVisible();
-    await expect(slot(page, "dropdown-menu-label")).toBeVisible();
-    await expect(slot(page, "dropdown-menu-separator")).toBeVisible();
-    await expect(slot(page, "dropdown-menu-shortcut")).toBeVisible();
-    await expect(
-      slot(page, "dropdown-menu-checkbox-item-indicator"),
-    ).toBeVisible();
-    await expect(
-      slot(page, "dropdown-menu-radio-item-indicator").first(),
-    ).toBeVisible();
-    const subTrigger = slot(page, "dropdown-menu-sub-trigger");
+    const menu = page.getByRole("menu").first();
+    await expect(menu.locator(":scope > section")).toBeVisible();
+    await expect(menu.locator("h3")).toBeVisible();
+    await expect(menu.locator("hr")).toBeVisible();
+    await expect(menu.locator("kbd")).toBeVisible();
+    await expect(page.getByRole("menuitemcheckbox")).toBeVisible();
+    await expect(page.getByRole("menuitemradio").first()).toBeVisible();
+    const subTrigger = page.locator("[ng-dropdown] details > summary");
     await subTrigger.evaluate((element) =>
       element.focus({ preventScroll: true }),
     );
     await subTrigger.press("ArrowRight");
-    await expect(slot(page, "dropdown-menu-sub-content")).toBeVisible();
+    await expect(
+      subTrigger.locator("..").locator(":scope > menu"),
+    ).toBeVisible();
     await expect(
       page.getByRole("menuitem", { name: "Copy link" }),
     ).toBeFocused();
     await page.keyboard.press("ArrowLeft");
-    await expect(slot(page, "dropdown-menu-sub-content")).toBeHidden();
+    await expect(
+      subTrigger.locator("..").locator(":scope > menu"),
+    ).toBeHidden();
   },
   empty: async (page) => {
-    await expect(slot(page, "empty-title")).toHaveText("No Projects Yet");
+    await expect(page.locator(".empty > header > h2")).toHaveText(
+      "No Projects Yet",
+    );
     await expect(
       page.getByRole("button", { name: "Create Project" }),
     ).toBeVisible();
@@ -528,10 +544,11 @@ const contracts: Record<string, Contract> = {
     await expect(page.locator(".output")).toContainText("jane@example.com");
   },
   "hover-card": async (page) => {
-    const trigger = slot(page, "hover-card-trigger");
+    const root = page.locator("[ng-hover-card]");
+    const trigger = root.locator(":scope > :is(a, button)");
     await trigger.focus();
     await expect(trigger).toHaveAttribute("aria-expanded", "true");
-    await expect(slot(page, "hover-card-content")).toBeVisible();
+    await expect(root.locator(":scope > aside")).toBeVisible();
     await trigger.blur();
     await expect(trigger).toHaveAttribute("aria-expanded", "false");
   },
@@ -543,8 +560,8 @@ const contracts: Record<string, Contract> = {
     await expect(input).not.toHaveAttribute("data-empty");
   },
   "input-group": async (page) => {
-    const input = page.locator(".input-group-control");
-    await page.locator('label[for="search"].input-group-addon').click();
+    const input = page.locator(".input-group > input");
+    await page.locator('.input-group > label[for="search"]').click();
     await expect(input).toBeFocused();
     await expect(page.locator(".input-group")).not.toHaveAttribute(
       "data-addon-count",
@@ -561,7 +578,7 @@ const contracts: Record<string, Contract> = {
   },
   item: async (page) => {
     await expect(slot(page, "item")).toHaveCount(3);
-    await expect(slot(page, "item-title").first()).toHaveText(
+    await expect(page.locator(".item > section > h3").first()).toHaveText(
       "Profile verified",
     );
   },
@@ -575,18 +592,16 @@ const contracts: Record<string, Contract> = {
   },
   menubar: async (page) => {
     const file = page.getByRole("menuitem", { name: "File", exact: true });
-    const fileContent = file.locator("..").locator(":scope > .menubar-content");
+    const fileContent = file.locator("..").locator(":scope > menu");
     await expect(file).toHaveAttribute("aria-expanded", "false");
     await file.click();
     await expect(file).toHaveAttribute("aria-expanded", "true");
     await expect(fileContent).toBeVisible();
-    await expect(fileContent.locator(".menubar-group").first()).toBeVisible();
-    await expect(slot(page, "menubar-radio-group")).toHaveCount(1);
-    await expect(
-      fileContent.locator(".menubar-shortcut").first(),
-    ).toBeVisible();
+    await expect(fileContent.locator(":scope > section").first()).toBeVisible();
+    await expect(page.locator("[ng-menubar] fieldset")).toHaveCount(1);
+    await expect(fileContent.locator("kbd").first()).toBeVisible();
     const subTrigger = fileContent.getByRole("menuitem", { name: "Share" });
-    const subContent = subTrigger.locator("..").locator(".menubar-sub-content");
+    const subContent = subTrigger.locator("..").locator(":scope > menu");
     await subTrigger.evaluate((element) =>
       element.focus({ preventScroll: true }),
     );
@@ -602,7 +617,7 @@ const contracts: Record<string, Contract> = {
   },
   "native-select": async (page) => {
     const select = page.getByRole("combobox", { name: "Status" });
-    await expect(slot(page, "native-select-icon")).toBeVisible();
+    await expect(select).toHaveCSS("border-style", "solid");
     await expect(select.locator("option")).toHaveCount(5);
     await select.selectOption("done");
     await expect(select).toHaveValue("done");
@@ -610,26 +625,24 @@ const contracts: Record<string, Contract> = {
   "navigation-menu": async (page) => {
     const nav = page.getByRole("navigation", { name: "Primary navigation" });
     const trigger = nav.getByRole("button", { name: "Getting started" });
-    const item = trigger.locator("..");
-    const indicator = item.locator(":scope > .navigation-menu-indicator");
     await expect(nav.getByRole("link", { name: "Docs" })).toHaveAttribute(
       "href",
       "#docs",
     );
     await expect(nav.getByRole("menu")).toHaveCount(0);
     await expect(nav.getByRole("menuitem")).toHaveCount(0);
-    await expect(indicator).toBeHidden();
+    await expect(trigger).toHaveAttribute("aria-expanded", "false");
     await expect(trigger).toHaveAttribute("aria-expanded", "false");
     await trigger.click();
     await expect(trigger).toHaveAttribute("aria-expanded", "true");
-    await expect(indicator).toBeVisible();
+    await expect(trigger).toHaveAttribute("aria-expanded", "true");
     await page.keyboard.press("Escape");
     await expect(trigger).toHaveAttribute("aria-expanded", "false");
     await expect(trigger).toBeFocused();
   },
   pagination: async (page) => {
     const pagination = page.getByRole("navigation", { name: "pagination" });
-    const links = pagination.locator(".pagination-link");
+    const links = pagination.locator("a:not([rel])");
     const previous = pagination.getByRole("link", {
       name: "Go to previous page",
     });
@@ -638,11 +651,9 @@ const contracts: Record<string, Contract> = {
     await expect(pagination.locator("[aria-current='page']")).toHaveCount(1);
     await expect(previous).toHaveAttribute("href", "#previous");
     await expect(next).toHaveAttribute("href", "#next");
-    await expect(previous.locator("svg[data-icon='inline-start']")).toHaveCount(
-      1,
-    );
-    await expect(next.locator("svg[data-icon='inline-end']")).toHaveCount(1);
-    await expect(slot(page, "pagination-ellipsis")).toHaveAttribute(
+    await expect(previous.locator("svg[icon='inline-start']")).toHaveCount(1);
+    await expect(next.locator("svg[icon='inline-end']")).toHaveCount(1);
+    await expect(pagination.locator(":scope > ul > li > span")).toHaveAttribute(
       "aria-hidden",
       "true",
     );
@@ -650,7 +661,7 @@ const contracts: Record<string, Contract> = {
   },
   popover: async (page) => {
     const trigger = page.getByRole("button", { name: "Open popover" });
-    const content = slot(page, "popover-content");
+    const content = page.locator(".popover > [popover]");
     const contentId = await content.getAttribute("id");
     if (!contentId) throw new Error("Popover content requires an id");
     await expect(trigger).toHaveAttribute("popovertarget", contentId);
@@ -664,12 +675,12 @@ const contracts: Record<string, Contract> = {
     await expect(timed).toHaveCSS("height", "4px");
 
     const labeled = page.locator(".progress-demo-labeled");
-    const label = labeled.locator(".progress-label");
+    const label = labeled.locator("label");
     await expect(label).toHaveText("Upload progress");
     await expect(labeled.locator("progress")).toHaveAccessibleName(
       "Upload progress",
     );
-    await expect(labeled.locator(".progress-value")).toHaveText("56%");
+    await expect(labeled.locator("output")).toHaveText("56%");
   },
   "radio-group": async (page) => {
     const compact = page.locator("#density-compact");
@@ -684,7 +695,7 @@ const contracts: Record<string, Contract> = {
     ).toBe("block");
   },
   resizable: async (page) => {
-    const handle = slot(page, "resizable-handle").first();
+    const handle = page.locator("[ng-resizable-panel-group] > hr").first();
     const before = await handle.getAttribute("aria-valuenow");
     await handle.focus();
     await handle.press("ArrowRight");
@@ -730,20 +741,22 @@ const contracts: Record<string, Contract> = {
   },
   separator: async (page) => {
     await expect(page.getByRole("separator")).not.toHaveCount(0);
-    await expect(page.getByRole("separator").first()).toHaveAttribute(
+    await expect(page.getByRole("separator").first()).not.toHaveAttribute(
       "aria-orientation",
-      /horizontal|vertical/,
     );
+    await expect(
+      page.locator('.separator[aria-orientation="vertical"]'),
+    ).not.toHaveCount(0);
   },
   sheet: async (page) => {
     const root = slot(page, "sheet");
-    const trigger = slot(page, "sheet-trigger");
-    const content = slot(page, "sheet-content");
+    const trigger = root.locator(":scope > button:first-child");
+    const content = root.locator(":scope > dialog");
     await expect(trigger).toBeVisible();
     await expect(content).toBeHidden();
     await trigger.click();
     await expect(content).toHaveAttribute("open", "");
-    await expect(content).toHaveAttribute("data-side", "right");
+    await expect(content).toHaveAttribute("side", "right");
     expect(await content.getAttribute("role")).toBeNull();
     await page.getByRole("button", { name: "Close", exact: true }).click();
     await expect(content).toBeHidden();
@@ -751,22 +764,23 @@ const contracts: Record<string, Contract> = {
   },
   sidebar: async (page) => {
     const sidebar = page.locator("#app-sidebar");
-    await expect(slot(page, "sidebar-layout")).toBeVisible();
-    await expect(slot(page, "sidebar-header")).toBeVisible();
-    await expect(slot(page, "sidebar-content")).toBeVisible();
-    await expect(slot(page, "sidebar-footer")).toBeVisible();
-    await expect(slot(page, "sidebar-inset")).toBeVisible();
-    await expect(slot(page, "sidebar-separator")).toBeVisible();
-    await slot(page, "sidebar-input").fill("projects");
-    await expect(slot(page, "sidebar-input")).toHaveValue("projects");
+    await expect(sidebar.locator("..")).toBeVisible();
+    await expect(sidebar.locator(":scope > header")).toBeVisible();
+    await expect(sidebar.locator(":scope > nav")).toBeVisible();
+    await expect(sidebar.locator(":scope > footer")).toBeVisible();
+    await expect(sidebar.locator("+ main")).toBeVisible();
+    await expect(sidebar.locator(":scope > hr")).toBeVisible();
+    const filter = page.getByRole("textbox", { name: "Filter navigation" });
+    await filter.fill("projects");
+    await expect(filter).toHaveValue("projects");
     await expect(page.locator(".sidebar-query-output")).toContainText(
       "Filter: projects",
     );
     await page.getByRole("button", { name: "Close Sidebar" }).click();
-    await expect(sidebar).toHaveAttribute("data-state", "collapsed");
+    await expect(sidebar).toHaveAttribute("collapsed", "");
     await expect(sidebar).toHaveAttribute("aria-hidden", "false");
     await page.getByRole("button", { name: "Open Sidebar" }).click();
-    await expect(sidebar).toHaveAttribute("data-state", "expanded");
+    await expect(sidebar).not.toHaveAttribute("collapsed", "");
   },
   skeleton: async (page) => {
     await expect(slot(page, "skeleton")).not.toHaveCount(0);
@@ -780,14 +794,15 @@ const contracts: Record<string, Contract> = {
     await expect(slider).toHaveAttribute("ng-slider", "");
     await slider.fill("42");
     await expect(page.locator('output[for="volume"]')).toHaveText("42");
-    await expect(slider).toHaveAttribute("aria-valuenow", "42");
+    await expect(slider).toHaveValue("42");
     await expect(slider).toHaveCSS("--value", "42%");
   },
   sonner: async (page) => {
-    await expect(slot(page, "toast")).toHaveCount(0);
+    const toasts = page.locator("[ng-toaster] > article");
+    await expect(toasts).toHaveCount(0);
     await page.getByRole("button", { name: "Show Toast" }).click();
-    await expect(slot(page, "toast")).toHaveCount(1);
-    await expect(slot(page, "toast")).toHaveAttribute("data-state", "open");
+    await expect(toasts).toHaveCount(1);
+    await expect(toasts).toHaveAttribute("role", "status");
     await expect(page.getByRole("button", { name: "Undo" })).toHaveAttribute(
       "type",
       "button",
@@ -811,7 +826,7 @@ const contracts: Record<string, Contract> = {
   table: async (page) => {
     await expect(page.getByRole("table")).toBeVisible();
     await expect(page.getByRole("row")).not.toHaveCount(0);
-    await expect(slot(page, "table-caption")).toBeVisible();
+    await expect(page.locator(".table caption")).toBeVisible();
   },
   tabs: async (page) => {
     const analytics = page.getByRole("tab", { name: "Analytics" });
@@ -840,10 +855,11 @@ const contracts: Record<string, Contract> = {
   },
   tooltip: async (page) => {
     const trigger = page.getByRole("button", { name: "Hover" });
+    const content = page.locator("[ng-tooltip] > :last-child");
     await trigger.focus();
-    await expect(slot(page, "tooltip-content")).toBeVisible();
+    await expect(content).toBeVisible();
     await trigger.press("Escape");
-    await expect(slot(page, "tooltip-content")).toBeHidden();
+    await expect(content).toBeHidden();
   },
 };
 

@@ -17,14 +17,14 @@
     <main class="spinner-workflows">
       <div class="workflow-row" aria-label="Spinner sizes">
         <svg
-
           id="processing-spinner"
-
           aria-live="assertive"
           aria-label="Processing data"
           style="width: 12px; height: 12px"
           viewBox="0 0 24 24"
-          fill="none" class="spinner">
+          fill="none"
+          class="spinner"
+        >
           <path
             d="M21 12a9 9 0 1 1-6.22-8.56"
             stroke="currentColor"
@@ -41,11 +41,12 @@
           />
         </svg>
         <svg
-
           aria-hidden="true"
           style="width: 24px; height: 24px"
           viewBox="0 0 24 24"
-          fill="none" class="spinner">
+          fill="none"
+          class="spinner"
+        >
           <path
             d="M21 12a9 9 0 1 1-6.22-8.56"
             stroke="currentColor"
@@ -54,11 +55,12 @@
           />
         </svg>
         <svg
-
           aria-hidden="true"
           style="width: 32px; height: 32px"
           viewBox="0 0 24 24"
-          fill="none" class="spinner">
+          fill="none"
+          class="spinner"
+        >
           <path
             d="M21 12a9 9 0 1 1-6.22-8.56"
             stroke="currentColor"
@@ -69,91 +71,104 @@
       </div>
 
       <div class="workflow-row" aria-label="Spinner badges">
-        <span class="badge"><svg
-
-            data-icon="inline-start"
+        <span class="badge"
+          ><svg
+            icon="inline-start"
             viewBox="0 0 24 24"
-            fill="none" class="spinner">
+            fill="none"
+            class="spinner"
+          >
             <path
               d="M21 12a9 9 0 1 1-6.22-8.56"
               stroke="currentColor"
               stroke-width="2"
               stroke-linecap="round"
-            /></svg>Syncing</span>
-        <span variant="secondary" class="badge"><svg
-
-            data-icon="inline-start"
+            /></svg
+          >Syncing</span
+        >
+        <span variant="secondary" class="badge"
+          ><svg
+            icon="inline-start"
             viewBox="0 0 24 24"
-            fill="none" class="spinner">
+            fill="none"
+            class="spinner"
+          >
             <path
               d="M21 12a9 9 0 1 1-6.22-8.56"
               stroke="currentColor"
               stroke-width="2"
               stroke-linecap="round"
-            /></svg>Updating</span>
-        <span variant="outline" class="badge"><svg
-
-            data-icon="inline-start"
+            /></svg
+          >Updating</span
+        >
+        <span variant="outline" class="badge"
+          ><svg
+            icon="inline-start"
             viewBox="0 0 24 24"
-            fill="none" class="spinner">
+            fill="none"
+            class="spinner"
+          >
             <path
               d="M21 12a9 9 0 1 1-6.22-8.56"
               stroke="currentColor"
               stroke-width="2"
               stroke-linecap="round"
-            /></svg>Processing</span>
+            /></svg
+          >Processing</span
+        >
       </div>
 
       <div class="workflow-buttons-column" aria-label="Spinner buttons">
         <button disabled size="sm" class="button">
           <svg
-
-            data-icon="inline-start"
+            icon="inline-start"
             viewBox="0 0 24 24"
-            fill="none" class="spinner">
+            fill="none"
+            class="spinner"
+          >
             <path
               d="M21 12a9 9 0 1 1-6.22-8.56"
               stroke="currentColor"
               stroke-width="2"
               stroke-linecap="round"
-            /></svg>Loading...
+            /></svg
+          >Loading...
         </button>
         <button variant="outline" disabled size="sm" class="button">
           <svg
-
-            data-icon="inline-start"
+            icon="inline-start"
             viewBox="0 0 24 24"
-            fill="none" class="spinner">
+            fill="none"
+            class="spinner"
+          >
             <path
               d="M21 12a9 9 0 1 1-6.22-8.56"
               stroke="currentColor"
               stroke-width="2"
               stroke-linecap="round"
-            /></svg>Please wait
+            /></svg
+          >Please wait
         </button>
         <button variant="secondary" disabled size="sm" class="button">
           <svg
-
-            data-icon="inline-start"
+            icon="inline-start"
             viewBox="0 0 24 24"
-            fill="none" class="spinner">
+            fill="none"
+            class="spinner"
+          >
             <path
               d="M21 12a9 9 0 1 1-6.22-8.56"
               stroke="currentColor"
               stroke-width="2"
               stroke-linecap="round"
-            /></svg>Processing
+            /></svg
+          >Processing
         </button>
       </div>
 
-      <section
-
-        class="spinner-empty-demo empty"
-
-        aria-live="polite"
-      >
-        <header class="empty-header">
-          <div variant="icon" class="empty-media">
+      <section class="spinner-empty-demo empty" aria-live="polite">
+        <header>
+          <figure variant="icon">
             <svg viewBox="0 0 24 24" fill="none" class="spinner">
               <path
                 d="M21 12a9 9 0 1 1-6.22-8.56"
@@ -162,25 +177,21 @@
                 stroke-linecap="round"
               />
             </svg>
-          </div>
-          <h2 class="empty-title">Processing your request</h2>
-          <p class="empty-description">
+          </figure>
+          <h2>Processing your request</h2>
+          <p>
             Please wait while we process your request. Do not refresh the page.
           </p>
         </header>
-        <section class="empty-content">
+        <section>
           <button variant="outline" size="sm" class="button">Cancel</button>
         </section>
       </section>
 
       <div class="workflow-input-groups" aria-label="Spinner input groups">
         <div class="input-group">
-          <input
-
-
-            placeholder="Searching..."
-           class="input-group-control input" />
-          <div data-align="inline-end" class="input-group-addon">
+          <input placeholder="Searching..." class="input" />
+          <div align="inline-end">
             <svg viewBox="0 0 24 24" fill="none" class="spinner">
               <path
                 d="M21 12a9 9 0 1 1-6.22-8.56"
@@ -192,13 +203,10 @@
           </div>
         </div>
         <div class="input-group">
-          <input
-
-
-            placeholder="Saving changes..."
-           class="input-group-control input" />
-          <div data-align="inline-end" class="input-group-addon">
-            <span class="input-group-text">Saving...</span><svg viewBox="0 0 24 24" fill="none" class="spinner">
+          <input placeholder="Saving changes..." class="input" />
+          <div align="inline-end">
+            <span>Saving...</span
+            ><svg viewBox="0 0 24 24" fill="none" class="spinner">
               <path
                 d="M21 12a9 9 0 1 1-6.22-8.56"
                 stroke="currentColor"
@@ -211,7 +219,7 @@
       </div>
 
       <article variant="muted" class="spinner-rtl-demo item" dir="rtl">
-        <div class="item-media">
+        <figure>
           <svg viewBox="0 0 24 24" fill="none" class="spinner">
             <path
               d="M21 12a9 9 0 1 1-6.22-8.56"
@@ -220,11 +228,11 @@
               stroke-linecap="round"
             />
           </svg>
-        </div>
-        <section class="item-content">
-          <h3 class="item-title">جاري معالجة الدفع...</h3>
+        </figure>
+        <section>
+          <h3>جاري معالجة الدفع...</h3>
         </section>
-        <section class="spinner-amount item-content">
+        <section class="spinner-amount">
           <span>١٠٠.٠٠ دولار</span>
         </section>
       </article>

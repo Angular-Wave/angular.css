@@ -28,8 +28,8 @@ test("canonical artifact opens only as a context menu and skips disabled items",
   await page.goto(canonicalUrl);
   await expectBuiltArtifactRuntime(page);
   const root = page.locator("#context-menu-demo");
-  const trigger = root.locator(".context-menu-trigger");
-  const content = root.locator(".context-menu-content");
+  const trigger = root.locator(":scope > :first-child");
+  const content = root.locator(":scope > menu");
 
   await expect(trigger).toHaveAttribute("aria-haspopup", "menu");
   await expect(content).toHaveAttribute("role", "menu");
@@ -40,7 +40,7 @@ test("canonical artifact opens only as a context menu and skips disabled items",
 
   await trigger.click({ button: "right", position: { x: 160, y: 40 } });
   await expect(content).toBeVisible();
-  await expect(root).toHaveAttribute("data-state", "open");
+  await expect(root).toHaveAttribute("open", "");
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
   await expect(content.getByRole("menuitem", { name: /^Back/ })).toBeFocused();
 
@@ -60,10 +60,10 @@ test("keyboard opening, submenu direction, escape, and external state compose", 
 }) => {
   await page.goto(canonicalUrl);
   const root = page.locator("#context-menu-demo");
-  const trigger = root.locator(".context-menu-trigger");
-  const content = root.locator(".context-menu-content");
-  const subTrigger = root.locator(".context-menu-sub-trigger");
-  const subContent = root.locator(".context-menu-sub-content");
+  const trigger = root.locator(":scope > :first-child");
+  const content = root.locator(":scope > menu");
+  const subTrigger = root.locator("details > summary");
+  const subContent = root.locator("details > menu");
 
   await trigger.focus();
   await trigger.press("Shift+F10");
@@ -81,9 +81,9 @@ test("keyboard opening, submenu direction, escape, and external state compose", 
   await expect(content).toBeHidden();
   await expect(trigger).toBeFocused();
 
-  await root.evaluate((element) => element.setAttribute("data-open", "true"));
+  await root.evaluate((element) => element.setAttribute("open", ""));
   await expect(content).toBeVisible();
-  await root.evaluate((element) => element.setAttribute("data-open", "false"));
+  await root.evaluate((element) => element.removeAttribute("open"));
   await expect(content).toBeHidden();
 });
 
@@ -99,24 +99,28 @@ test("workflow artifact preserves groups, shortcuts, icons, and destructive styl
     .getByRole("heading", { name: "Groups and shortcuts" })
     .locator("..");
 
-  await icons.locator(".context-menu-trigger").click({ button: "right" });
+  await icons.locator("[ng-context-menu] > :first-child").click({
+    button: "right",
+  });
   const deleteItem = icons.getByRole("menuitem", { name: "Delete" });
   await expect(deleteItem.locator("svg")).toHaveCount(1);
-  await expect(deleteItem).toHaveAttribute("data-variant", "destructive");
+  await expect(deleteItem).toHaveAttribute("variant", "destructive");
   await deleteItem.click();
   await expect(icons.locator("output")).toContainText("Action: Delete");
 
-  await groups.locator(".context-menu-trigger").click({ button: "right" });
-  await expect(groups.locator(".context-menu-group")).toHaveCount(2);
-  await expect(groups.locator(".context-menu-group").first()).toHaveAttribute(
-    "role",
-    "group",
-  );
-  await expect(groups.locator(".context-menu-label")).toHaveText([
-    "File",
-    "Edit",
-  ]);
-  await expect(groups.locator(".context-menu-shortcut")).toHaveCount(5);
+  await groups.locator("[ng-context-menu] > :first-child").click({
+    button: "right",
+  });
+  await expect(
+    groups.locator("[ng-context-menu] > menu > section"),
+  ).toHaveCount(2);
+  await expect(
+    groups.locator("[ng-context-menu] > menu > section").first(),
+  ).toHaveAttribute("role", "group");
+  await expect(
+    groups.locator("[ng-context-menu] > menu > section > h3"),
+  ).toHaveText(["File", "Edit"]);
+  await expect(groups.locator("kbd")).toHaveCount(5);
   await expect(groups.getByRole("menuitem", { name: /Redo/ })).toBeDisabled();
 });
 
@@ -131,7 +135,9 @@ test("AngularTS owns checkbox and radio values while the menu reflects semantics
     .getByRole("heading", { name: "Radio groups" })
     .locator("..");
 
-  await checkbox.locator(".context-menu-trigger").click({ button: "right" });
+  await checkbox.locator("[ng-context-menu] > :first-child").click({
+    button: "right",
+  });
   const bookmarks = checkbox.getByRole("menuitemcheckbox", {
     name: "Show Bookmarks Bar",
   });
@@ -139,12 +145,16 @@ test("AngularTS owns checkbox and radio values while the menu reflects semantics
   await bookmarks.click();
   await expect(checkbox.locator("output")).toContainText("Bookmarks: Off");
 
-  await radio.locator(".context-menu-trigger").click({ button: "right" });
+  await radio.locator("[ng-context-menu] > :first-child").click({
+    button: "right",
+  });
   const colm = radio.getByRole("menuitemradio", { name: "Colm Tuite" });
   await expect(colm).toHaveAttribute("aria-checked", "false");
   await colm.click();
   await expect(radio.locator("output")).toContainText("Person: colm");
-  await radio.locator(".context-menu-trigger").click({ button: "right" });
+  await radio.locator("[ng-context-menu] > :first-child").click({
+    button: "right",
+  });
   await expect(
     radio.getByRole("menuitemradio", { name: "Colm Tuite" }),
   ).toHaveAttribute("aria-checked", "true");
@@ -168,10 +178,10 @@ test("all six authored sides position a visible menu within the viewport", async
 
   for (let index = 0; index < expectedSides.length; index += 1) {
     const root = roots.nth(index);
-    const content = root.locator(".context-menu-content");
-    await root.locator(".context-menu-trigger").click({ button: "right" });
+    const content = root.locator(":scope > menu");
+    await root.locator(":scope > :first-child").click({ button: "right" });
     await expect(content).toBeVisible();
-    await expect(content).toHaveAttribute("data-side", expectedSides[index]);
+    await expect(content).toHaveAttribute("side", expectedSides[index]);
     const box = await content.boundingBox();
     expect(box).not.toBeNull();
     expect(box!.x).toBeGreaterThanOrEqual(0);
@@ -187,16 +197,16 @@ test("RTL artifact mirrors logical content and submenu keyboard direction", asyn
 }) => {
   await page.goto(rtlUrl);
   const root = page.locator("[ng-context-menu]");
-  const trigger = root.locator(".context-menu-trigger");
-  const content = root.locator(".context-menu-content");
-  const subTrigger = root.locator(".context-menu-sub-trigger");
-  const subContent = root.locator(".context-menu-sub-content");
+  const trigger = root.locator(":scope > :first-child");
+  const content = root.locator(":scope > menu");
+  const subTrigger = root.locator("details > summary");
+  const subContent = root.locator("details > menu");
 
-  await expect(root).toHaveAttribute("data-direction", "rtl");
+  await expect(root).toHaveCSS("direction", "rtl");
   await trigger.click({ button: "right" });
-  await expect(content).toHaveAttribute("data-direction", "rtl");
+  await expect(content).toHaveCSS("direction", "rtl");
   const firstItem = content.getByRole("menuitem", { name: /رجوع/ });
-  const shortcut = firstItem.locator(".context-menu-shortcut");
+  const shortcut = firstItem.locator("kbd");
   const itemBox = await firstItem.boundingBox();
   const shortcutBox = await shortcut.boundingBox();
   expect(itemBox).not.toBeNull();

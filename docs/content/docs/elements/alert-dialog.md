@@ -11,8 +11,8 @@ action and cancel target.
 ```html
 <section class="alert-dialog">
   <button commandfor="delete-dialog" command="show-modal">Delete</button>
-  <dialog id="delete-dialog" closedby="closerequest" class="alert-dialog-content">
-    <h2 class="alert-dialog-title">Delete project?</h2>
+  <dialog id="delete-dialog" closedby="closerequest">
+    <h2>Delete project?</h2>
   </dialog>
 </section>
 ```
