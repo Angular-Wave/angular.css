@@ -87,7 +87,9 @@ jobs:
         run: node scripts/release.mjs notes "$RELEASE_VERSION" > "$RUNNER_TEMP/release-notes.md"
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          npm --prefix docs ci
 
       - name: Install Hugo
         env:
