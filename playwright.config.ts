@@ -14,6 +14,12 @@ const baseUrl = `http://127.0.0.1:${port}`;
 export default defineConfig({
   testDir: "./src",
   testMatch: "**/*.test.ts",
+  expect: {
+    toHaveScreenshot: {
+      // Allow minor font and edge anti-aliasing variance across Linux runners.
+      maxDiffPixelRatio: 0.005,
+    },
+  },
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
