@@ -1,21 +1,39 @@
-{{ $sectionPath := .Get "section" -}}
-{{ $section := .Page -}}
-{{ with $sectionPath -}}
-  {{ $section = $.Site.GetPage . -}}
-{{ end -}}
-{{ $pages := $section.Pages.ByTitle -}}
-{{ range $group := $pages.GroupByParam "category" -}}
-  <section class="component-catalog-group">
-    <h2>{{ $group.Key | title }}</h2>
-    <ul class="component-catalog-list">
-      {{ range $group.Pages.ByTitle -}}
-        <li>
-          <a href="{{ .RelPermalink }}">
-            <span>{{ .Title }}</span>
-            <small>{{ .Description | plainify }}</small>
-          </a>
-        </li>
-      {{ end -}}
-    </ul>
-  </section>
+{{ if eq (.Get "catalog") "all" -}}
+  {{ range $path := slice "/docs/foundations" "/docs/elements" "/docs/patterns" "/docs/components" "/docs/recipes" -}}
+    {{ $section := $.Site.GetPage $path -}}
+    <section class="component-catalog-group">
+      <h2>{{ $section.Title }}</h2>
+      <ul class="component-catalog-list">
+        {{ range $section.Pages.ByTitle -}}
+          <li>
+            <a href="{{ .RelPermalink }}">
+              <span>{{ .Title }}</span>
+              <small>{{ .Description | plainify }}</small>
+            </a>
+          </li>
+        {{ end -}}
+      </ul>
+    </section>
+  {{ end -}}
+{{ else -}}
+  {{ $sectionPath := .Get "section" -}}
+  {{ $section := .Page -}}
+  {{ with $sectionPath -}}
+    {{ $section = $.Site.GetPage . -}}
+  {{ end -}}
+  {{ range $group := $section.Pages.ByTitle.GroupByParam "category" -}}
+    <section class="component-catalog-group">
+      <h2>{{ $group.Key | title }}</h2>
+      <ul class="component-catalog-list">
+        {{ range $group.Pages.ByTitle -}}
+          <li>
+            <a href="{{ .RelPermalink }}">
+              <span>{{ .Title }}</span>
+              <small>{{ .Description | plainify }}</small>
+            </a>
+          </li>
+        {{ end -}}
+      </ul>
+    </section>
+  {{ end -}}
 {{ end -}}

@@ -1,0 +1,34 @@
+@scope ([ng-toolbar]) to ([ng-toolbar]) {
+  :scope {
+    display: flex;
+    width: fit-content;
+    max-width: 100%;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: calc(var(--spacing) * 1);
+    margin: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--background);
+    padding: calc(var(--spacing) * 1);
+    color: var(--foreground);
+  }
+
+  :scope[orientation="vertical"] {
+    width: fit-content;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  :scope > hr {
+    width: 1px;
+    height: calc(var(--spacing) * 6);
+    margin: 0 calc(var(--spacing) * 1);
+  }
+
+  :scope[orientation="vertical"] > hr {
+    width: auto;
+    height: 1px;
+    margin: calc(var(--spacing) * 1) 0;
+  }
+}

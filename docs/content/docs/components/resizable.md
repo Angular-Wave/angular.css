@@ -39,11 +39,10 @@ markup.
 <!-- angularcss-reference:start -->
 ## Installation
 
-Install AngularCSS once, load its stylesheet, and include the `ui` module in
-your AngularTS application. See [Installation]({{< relref
+Install AngularCSS, load its stylesheet, and include the `angular.css` module in your AngularTS application. See [Installation]({{< relref
 "/docs/get-started/installation" >}}) for the complete setup.
 
-This component's root directive is `[ng-resizable-panel-group]`. Importing the package registers it with the AngularCSS `ui` module; there is no per-component JavaScript registration step.
+This component's root directive is `[ng-resizable-panel-group]`. Importing the package registers it with the AngularCSS `angular.css` module; there is no per-component JavaScript registration step.
 
 ## Anatomy
 
@@ -67,19 +66,21 @@ Alternate direct `.resizable-panel` and `.resizable-handle` children inside each
 | `aria-valuemax` | Output | ARIA relationship or state. |
 | `aria-valuemin` | Output | ARIA relationship or state. |
 | `aria-valuenow` | Output | ARIA relationship or state. |
-| `data-max-size` | Input | Stable component state or styling hook. |
-| `data-min-size` | Input | Stable component state or styling hook. |
+| `data-max-size` | Input | Largest panel flex size allowed during resizing. |
+| `data-min-size` | Input | Smallest panel flex size allowed during resizing. |
 | `data-resizing` | Output | Stable component state or styling hook. |
-| `data-step` | Input | Stable component state or styling hook. |
+| `data-step` | Input | Panel flex-size increment used by keyboard resizing. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
-| `orientation` | Input/output | Layout direction: `horizontal` or `vertical`. |
+| `orientation` | Input/output | Resize axis: `horizontal` or `vertical`. |
 | `tabindex` | Input/output | Keyboard focus order for composite descendants. |
 
 `Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
 
 ### CSS custom properties
 
-- `--panel-size`
+| Variable | Purpose |
+| --- | --- |
+| `--panel-size` | Component styling variable. |
 
 ### DOM events
 

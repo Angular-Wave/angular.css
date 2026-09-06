@@ -13,7 +13,7 @@ const examples = [
   "carousel",
   "chart",
   "checkbox",
-  "collapsible",
+  "disclosure",
   "empty",
   "input-otp",
   "radio-group",
@@ -207,7 +207,7 @@ const assertGeometry = async (
     const box = await page.locator("#airplane-mode").boundingBox();
     expect(box).not.toBeNull();
     expect(box!.width).toBeCloseTo(32, 0);
-    expect(box!.height).toBeCloseTo(18.4, 0);
+    expect(box!.height).toBeCloseTo(20, 0);
     return;
   }
 
@@ -310,11 +310,9 @@ const assertGeometry = async (
     return;
   }
 
-  if (component === "collapsible") {
+  if (component === "disclosure") {
     const viewportWidth = await page.evaluate(() => innerWidth);
-    const root = page.locator(
-      "details.collapsible:has(> summary > header + p)",
-    );
+    const root = page.locator("details.disclosure:has(> summary > header + p)");
     const trigger = root.locator(":scope > summary");
     const icon = trigger.locator(":scope > header > svg");
     const rootBox = await root.boundingBox();
@@ -324,9 +322,7 @@ const assertGeometry = async (
     expect(rootBox!.width).toBeCloseTo(Math.min(350, viewportWidth - 48), 0);
     expect(iconBox).toMatchObject({ height: 32, width: 32 });
     await expect(page.getByText("Status", { exact: true })).toBeVisible();
-    await expect(
-      page.locator("details.collapsible > :last-child"),
-    ).toBeHidden();
+    await expect(page.locator("details.disclosure > :last-child")).toBeHidden();
     await expect(trigger).toHaveCSS("box-shadow", "none");
     return;
   }

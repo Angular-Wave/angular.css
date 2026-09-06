@@ -1,55 +1,13 @@
 import { expect, test, type Page } from "@playwright/test";
-import { existsSync, readdirSync, statSync } from "node:fs";
-import { join } from "node:path";
+
+import { catalogNames, catalogPolicy } from "../scripts/component-policy";
 
 type Contract = (page: Page) => Promise<void>;
 
-const componentNames = readdirSync("src/components")
-  .filter((entry) => statSync(join("src/components", entry)).isDirectory())
-  .filter((entry) => existsSync(join("src/components", entry, `${entry}.ts`)))
-  .sort();
-const elementNames = new Set([
-  "accordion",
-  "alert",
-  "alert-dialog",
-  "aspect-ratio",
-  "avatar",
-  "badge",
-  "breadcrumb",
-  "button",
-  "button-group",
-  "card",
-  "chart",
-  "checkbox",
-  "collapsible",
-  "dialog",
-  "direction",
-  "drawer",
-  "empty",
-  "field",
-  "input",
-  "input-group",
-  "input-otp",
-  "item",
-  "kbd",
-  "label",
-  "native-select",
-  "pagination",
-  "popover",
-  "progress",
-  "radio-group",
-  "scroll-area",
-  "select",
-  "separator",
-  "sheet",
-  "skeleton",
-  "spinner",
-  "switch",
-  "table",
-  "textarea",
-  "toggle",
-  "toggle-group",
-]);
+const componentNames = catalogNames;
+const elementNames = new Set<string>(
+  catalogNames.filter((name) => !catalogPolicy[name].runtime),
+);
 
 const slot = (page: Page, name: string) =>
   page.locator(`.${name}, [ng-${name}]`);
@@ -74,7 +32,7 @@ const assertBuiltArtifactContract = async (
 const assertVisualContract = async (page: Page, component: string) => {
   const semanticRootSelectors = new Map([
     ["label", "label"],
-    ["native-select", "select"],
+    ["range", 'input[type="range"]'],
     ["select", "select"],
   ]);
   const rootSelector =
@@ -83,8 +41,8 @@ const assertVisualContract = async (page: Page, component: string) => {
       ? `.${component}`
       : component === "resizable"
         ? "[ng-resizable-panel-group]"
-        : component === "sonner"
-          ? "[ng-toaster]"
+        : component === "toast"
+          ? "[ng-toast]"
           : `[ng-${component}]`);
   const result = await page.evaluate(
     ({ rootSelector }) => {
@@ -380,8 +338,8 @@ const contracts: Record<string, Contract> = {
       ),
     ).toBe("block");
   },
-  collapsible: async (page) => {
-    const root = page.locator("details.collapsible");
+  disclosure: async (page) => {
+    const root = page.locator("details.disclosure");
     const trigger = root.locator(":scope > summary");
     await expect(root).not.toHaveAttribute("open", "");
     await expect(page.getByText("Status", { exact: true })).toBeVisible();
@@ -487,7 +445,7 @@ const contracts: Record<string, Contract> = {
     await page.getByRole("button", { name: "Cancel" }).click();
     await expect(content).toBeHidden();
   },
-  dropdown: async (page) => {
+  "dropdown-menu": async (page) => {
     const trigger = page.getByRole("button", { name: "Options" });
     await trigger.click();
     await expect(trigger).toHaveAttribute("aria-expanded", "true");
@@ -499,7 +457,7 @@ const contracts: Record<string, Contract> = {
     await expect(menu.locator("kbd")).toBeVisible();
     await expect(page.getByRole("menuitemcheckbox")).toBeVisible();
     await expect(page.getByRole("menuitemradio").first()).toBeVisible();
-    const subTrigger = page.locator("[ng-dropdown] details > summary");
+    const subTrigger = page.locator("[ng-dropdown-menu] details > summary");
     await subTrigger.evaluate((element) =>
       element.focus({ preventScroll: true }),
     );
@@ -615,13 +573,6 @@ const contracts: Record<string, Contract> = {
     await page.keyboard.press("Escape");
     await expect(file).toHaveAttribute("aria-expanded", "false");
   },
-  "native-select": async (page) => {
-    const select = page.getByRole("combobox", { name: "Status" });
-    await expect(select).toHaveCSS("border-style", "solid");
-    await expect(select.locator("option")).toHaveCount(5);
-    await select.selectOption("done");
-    await expect(select).toHaveValue("done");
-  },
   "navigation-menu": async (page) => {
     const nav = page.getByRole("navigation", { name: "Primary navigation" });
     const trigger = nav.getByRole("button", { name: "Getting started" });
@@ -732,12 +683,12 @@ const contracts: Record<string, Contract> = {
     ).toBeGreaterThan(0);
   },
   select: async (page) => {
-    const select = page.getByRole("combobox", { name: "Fruit" });
+    const select = page.getByRole("combobox", { name: "Status" });
     await expect(select).toHaveValue("");
-    await expect(select.locator("option")).toHaveCount(6);
-    await select.selectOption("banana");
-    await expect(page.locator(".output")).toContainText("Selected: banana");
-    await expect(select).toHaveValue("banana");
+    await expect(select.locator("option")).toHaveCount(4);
+    await select.selectOption({ label: "Done" });
+    await expect(page.locator(".output")).toContainText("Current: Done");
+    await expect(select).toHaveValue("Done");
   },
   separator: async (page) => {
     await expect(page.getByRole("separator")).not.toHaveCount(0);
@@ -789,16 +740,22 @@ const contracts: Record<string, Contract> = {
       /angularcss-skeleton-pulse/,
     );
   },
-  slider: async (page) => {
+  range: async (page) => {
     const slider = page.locator("#volume");
-    await expect(slider).toHaveAttribute("ng-slider", "");
+    await expect(slider).not.toHaveAttribute("ng-range-slider");
     await slider.fill("42");
     await expect(page.locator('output[for="volume"]')).toHaveText("42");
     await expect(slider).toHaveValue("42");
-    await expect(slider).toHaveCSS("--value", "42%");
   },
-  sonner: async (page) => {
-    const toasts = page.locator("[ng-toaster] > article");
+  "range-slider": async (page) => {
+    const root = page.getByLabel("Price range");
+    await expect(root).toHaveCSS("--range-start", "25%");
+    await page.getByLabel("Minimum price").fill("40");
+    await expect(root).toHaveCSS("--range-start", "40%");
+    await expect(page.locator("output")).toHaveText("40-75");
+  },
+  toast: async (page) => {
+    const toasts = page.locator("[ng-toast] > article");
     await expect(toasts).toHaveCount(0);
     await page.getByRole("button", { name: "Show Toast" }).click();
     await expect(toasts).toHaveCount(1);
@@ -853,6 +810,108 @@ const contracts: Record<string, Contract> = {
     await expect(left).toBeChecked();
     await expect(page.locator(".output")).toContainText("Alignment: left");
   },
+  "application-shell": async (page) => {
+    const shell = page.locator(".application-shell");
+    const sidebar = page.locator("[ng-sidebar]");
+    await expect(shell).toHaveCSS("display", "grid");
+    await expect(
+      page.getByRole("complementary", { name: "Primary navigation" }),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Toggle navigation" }).click();
+    await expect(sidebar).toHaveAttribute("collapsed", "");
+  },
+  "data-table": async (page) => {
+    const rows = page.locator("tbody tr").filter({ visible: true });
+    const search = page.getByRole("searchbox", { name: "Search orders" });
+    await expect(rows).toHaveCount(3);
+    await search.fill("Grace");
+    await expect(rows).toHaveCount(1);
+    await expect(rows).toContainText("Grace Hopper");
+    await search.fill("Missing");
+    await expect(rows).toHaveCount(0);
+    await expect(page.locator(".data-table > figure > p")).toBeVisible();
+    await expect(page.locator(".data-table > footer > output")).toHaveText(
+      "0 orders",
+    );
+  },
+  "date-picker": async (page) => {
+    const trigger = page.locator("#delivery-date");
+    await trigger.click();
+    await expect(page.locator("#delivery-date-calendar")).toBeVisible();
+    await page
+      .locator('[ng-calendar] > div button[value="2026-09-12"]')
+      .click();
+    await expect(trigger).toContainText("2026-09-12");
+  },
+  "description-list": async (page) => {
+    const list = page.locator("dl.description-list");
+    await expect(list.locator("dt")).toHaveCount(4);
+    await expect(list.locator("dd")).toHaveCount(4);
+  },
+  "file-upload": async (page) => {
+    const input = page.locator('input[type="file"]');
+    await input.setInputFiles({
+      buffer: Buffer.from("contract"),
+      mimeType: "application/pdf",
+      name: "contract.pdf",
+    });
+    expect(
+      await input.evaluate(
+        (control: HTMLInputElement) => control.files?.length,
+      ),
+    ).toBe(1);
+    await expect(page.locator("progress")).toHaveAttribute("value", "72");
+  },
+  "filter-bar": async (page) => {
+    const search = page.getByRole("searchbox", { name: "Search" });
+    await search.fill("Ada");
+    await page.getByRole("button", { name: "Reset" }).click();
+    await expect(search).toHaveValue("");
+  },
+  "form-layout": async (page) => {
+    await page.getByRole("button", { name: "Create customer" }).click();
+    await expect(page.locator(".validation-summary")).toBeVisible();
+    await page.getByLabel("Customer name").fill("Analytical Engines Ltd");
+    await page.getByRole("button", { name: "Create customer" }).click();
+    await expect(page.getByText("Customer is ready to save.")).toBeVisible();
+  },
+  "master-detail": async (page) => {
+    const handle = page.getByRole("separator", {
+      name: "Resize customer list",
+    });
+    await expect(handle).toHaveAttribute("tabindex", "0");
+    await expect(handle).toHaveAttribute("aria-valuenow", "0.75");
+    await expect(
+      page.getByRole("navigation", { name: "Customers" }),
+    ).toBeVisible();
+  },
+  stepper: async (page) => {
+    await expect(page.locator(".stepper li")).toHaveCount(4);
+    await expect(page.locator('[aria-current="step"]')).toHaveText("Contacts");
+  },
+  toolbar: async (page) => {
+    const toolbar = page.getByRole("toolbar", { name: "Document actions" });
+    const undo = toolbar.getByRole("button", { name: "Undo" });
+    const copy = toolbar.getByRole("button", { name: "Copy" });
+    await undo.focus();
+    await undo.press("ArrowRight");
+    await expect(copy).toBeFocused();
+  },
+  tree: async (page) => {
+    const tree = page.getByRole("tree", { name: "Organization" });
+    const operations = tree.locator('[data-value="operations"]');
+    await expect(tree.locator('[role="treeitem"]')).toHaveCount(7);
+    await operations.focus();
+    await operations.press("ArrowDown");
+    await expect(tree.locator('[data-value="fulfillment"]')).toBeFocused();
+  },
+  "validation-summary": async (page) => {
+    const summary = page.locator(".validation-summary");
+    await expect(summary).toHaveAttribute("aria-live", "assertive");
+    await expect(summary.locator("a")).toHaveCount(2);
+    await summary.getByRole("link", { name: "Enter a customer name." }).click();
+    await expect(page).toHaveURL(/#customer-name$/);
+  },
   tooltip: async (page) => {
     const trigger = page.getByRole("button", { name: "Hover" });
     const content = page.locator("[ng-tooltip] > :last-child");
@@ -882,6 +941,14 @@ for (const component of componentNames) {
     await assertBuiltArtifactContract(page, sourceRequests);
     await contracts[component](page);
     await assertVisualContract(page, component);
+    for (const width of [390, 320]) {
+      await page.setViewportSize({ height: 4000, width });
+      await page.goto(`/docs/static/examples/components/${component}.html`);
+      if (component === "toast") {
+        await page.getByRole("button", { name: "Show Toast" }).click();
+      }
+      await assertVisualContract(page, component);
+    }
     expect(errors).toEqual([]);
   });
 }

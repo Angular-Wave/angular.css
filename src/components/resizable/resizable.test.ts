@@ -1,6 +1,6 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
 
-const canonicalUrl = "/docs/static/examples/components/resizable.html";
+const canonicalUrl = "/src/components/resizable/resizable.html";
 const workflowsUrl =
   "/docs/static/examples/components/resizable-workflows.html";
 const statesUrl =
@@ -13,10 +13,10 @@ const groupHandles = (group: Locator): Locator => group.locator(":scope > hr");
 
 const expectBuiltArtifactRuntime = async (page: Page): Promise<void> => {
   await expect(
-    page.locator('script[src="../../js/angular-ts.umd.js"]'),
+    page.locator('script[src$="/js/angular-ts.umd.js"]'),
   ).toHaveCount(1);
   await expect(
-    page.locator('script[src="../../js/angular-css.umd.js"]'),
+    page.locator('script[src$="/js/angular-css.umd.js"]'),
   ).toHaveCount(1);
 
   const sourceRequests = await page.evaluate(() =>

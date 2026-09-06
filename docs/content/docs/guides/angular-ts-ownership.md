@@ -15,13 +15,13 @@ Use AngularTS for values, commands, collections, and conditional rendering:
 
 ```html
 <label for="volume">Volume</label>
-<input id="volume" ng-slider type="range" min="0" max="100" ng-model="volume" />
+<input id="volume" type="range" min="0" max="100" ng-model="volume" />
 <output>{{ volume }}</output>
 ```
 
-`ng-model` owns the value. The slider directive reads native min, max, value,
-disabled, and invalid state while CSS uses the native controls and a small set
-of geometry variables.
+`ng-model` owns the value while the browser owns the range control. No
+AngularCSS directive is needed. Use `ng-range-slider` on a parent only when two
+or more native range inputs must share one visual track.
 
 ## Native HTML owns platform behavior
 
@@ -29,13 +29,17 @@ Prefer native controls for text, checkboxes, radios, ranges, selects, progress,
 tables, and labels. Their form submission, browser validation, autofill, mobile
 input, and accessibility behavior should remain intact.
 
+Native `dialog` owns modal focus, Escape closure, background isolation, and
+focus restoration. Native `details` and the Popover API own their disclosure
+behavior. AngularCSS supplies styles for these elements.
+
 ## AngularCSS owns component mechanics
 
 AngularCSS may manage:
 
 - Trigger and panel relationships.
 - Composite keyboard navigation and roving focus.
-- Modal focus trapping, Escape closure, and focus restoration.
+- Focus movement and restoration for composite widgets that need them.
 - Required ARIA relationships and state when native HTML cannot express them.
 - Component-specific DOM events.
 

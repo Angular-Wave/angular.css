@@ -1,6 +1,7 @@
 import type {} from "@angular-wave/angular.ts";
 
 import {
+  setAttributeIfChanged,
   isDisabled,
   nextIndex,
   onDestroy,
@@ -10,11 +11,11 @@ import {
 } from "../../internal/dom";
 
 type NavigationMenuEntry = {
-  item: HTMLElement;
-  trigger: HTMLElement;
-  content: HTMLElement;
-  open: boolean;
-  disconnect: () => void;
+  _item: HTMLElement;
+  _trigger: HTMLElement;
+  _content: HTMLElement;
+  _open: boolean;
+  _disconnect: () => void;
 };
 
 const itemSelector = ":scope > ul > li";
@@ -24,16 +25,6 @@ const linkSelector = "a[href]";
 const listSelector = ":scope > ul";
 
 let navigationMenuId = 0;
-
-const setAttribute = (
-  element: HTMLElement,
-  name: string,
-  value: string,
-): void => {
-  if (element.getAttribute(name) !== value) {
-    element.setAttribute(name, value);
-  }
-};
 
 const directChild = (
   element: HTMLElement,
@@ -63,7 +54,7 @@ export function navigationMenuDirective(): ng.Directive {
         (key === "ArrowRight") === (getDirection() === "ltr") ? 1 : -1;
 
       const syncRootState = () => {
-        const open = entries.some((entry) => entry.open);
+        const open = entries.some((entry) => entry._open);
         element.toggleAttribute("open", open);
       };
 
@@ -97,16 +88,16 @@ export function navigationMenuDirective(): ng.Directive {
         const entry = entries.at(index);
         if (!entry) return;
 
-        entry.open = open;
-        setAttribute(entry.trigger, "aria-expanded", String(open));
-        entry.content.toggleAttribute("open", open);
-        setAttribute(entry.content, "aria-hidden", String(!open));
-        setOpenState(entry.content, open);
+        entry._open = open;
+        setAttributeIfChanged(entry._trigger, "aria-expanded", String(open));
+        entry._content.toggleAttribute("open", open);
+        setAttributeIfChanged(entry._content, "aria-hidden", String(!open));
+        setOpenState(entry._content, open);
         syncRootState();
 
-        if (open) positionContent(entry.content);
+        if (open) positionContent(entry._content);
         if (open && focus) {
-          getContentItems(entry.content)[0]?.focus({ preventScroll: true });
+          getContentItems(entry._content)[0]?.focus({ preventScroll: true });
         }
       };
 
@@ -117,7 +108,7 @@ export function navigationMenuDirective(): ng.Directive {
       };
 
       const openMenu = (index: number, focus = false) => {
-        if (index < 0 || isDisabled(entries[index]?.trigger)) return;
+        if (index < 0 || isDisabled(entries[index]?._trigger)) return;
         closeAll();
         setMenuState(index, true, focus);
       };
@@ -128,12 +119,12 @@ export function navigationMenuDirective(): ng.Directive {
       const getEntryForControl = (
         control: HTMLElement,
       ): NavigationMenuEntry | undefined =>
-        entries.find((entry) => entry.trigger === control);
+        entries.find((entry) => entry._trigger === control);
 
       const getEntryForContent = (
         content: HTMLElement,
       ): NavigationMenuEntry | undefined =>
-        entries.find((entry) => entry.content === content);
+        entries.find((entry) => entry._content === content);
 
       const getEnabledControlIndex = (index: number, direction: 1 | -1) => {
         if (!topLevelControls.length) return -1;
@@ -184,16 +175,16 @@ export function navigationMenuDirective(): ng.Directive {
         const contentId = content.id || `${triggerId}-content`;
         trigger.id = triggerId;
         content.id = contentId;
-        setAttribute(trigger, "aria-haspopup", "true");
-        setAttribute(trigger, "aria-controls", contentId);
-        setAttribute(content, "aria-labelledby", triggerId);
+        setAttributeIfChanged(trigger, "aria-haspopup", "true");
+        setAttributeIfChanged(trigger, "aria-controls", contentId);
+        setAttributeIfChanged(content, "aria-labelledby", triggerId);
 
         const entry: NavigationMenuEntry = {
-          item,
-          trigger,
-          content,
-          open: content.hasAttribute("open"),
-          disconnect: () => void 0,
+          _item: item,
+          _trigger: trigger,
+          _content: content,
+          _open: content.hasAttribute("open"),
+          _disconnect: () => void 0,
         };
         entries.push(entry);
         triggers.push(trigger);
@@ -201,7 +192,7 @@ export function navigationMenuDirective(): ng.Directive {
 
         const syncFromAttribute = () => {
           const nextOpen = content.hasAttribute("open");
-          if (nextOpen === entry.open) return;
+          if (nextOpen === entry._open) return;
           if (nextOpen) {
             openMenu(getEntryIndex(entry));
           } else {
@@ -225,7 +216,7 @@ export function navigationMenuDirective(): ng.Directive {
           cancelClose();
           closeTimer = window.setTimeout(() => {
             if (
-              entry.open &&
+              entry._open &&
               !item.matches(":hover") &&
               !item.contains(document.activeElement)
             ) {
@@ -235,9 +226,9 @@ export function navigationMenuDirective(): ng.Directive {
         };
         const handleTriggerClick = () => {
           if (isDisabled(trigger)) return;
-          if (entry.open && !openedByPointer) {
+          if (entry._open && !openedByPointer) {
             closeAll();
-          } else if (entry.open) {
+          } else if (entry._open) {
             openedByPointer = false;
           } else {
             openMenu(getEntryIndex(entry));
@@ -253,7 +244,7 @@ export function navigationMenuDirective(): ng.Directive {
         };
         const handlePointerEnter = () => {
           cancelClose();
-          if (!isDisabled(trigger) && !entry.open) {
+          if (!isDisabled(trigger) && !entry._open) {
             openedByPointer = true;
             openMenu(getEntryIndex(entry));
           }
@@ -267,7 +258,7 @@ export function navigationMenuDirective(): ng.Directive {
         item.addEventListener("pointerenter", handlePointerEnter);
         item.addEventListener("pointerleave", handlePointerLeave);
 
-        entry.disconnect = () => {
+        entry._disconnect = () => {
           cancelClose();
           observer.disconnect();
           trigger.removeEventListener("click", handleTriggerClick);
@@ -277,7 +268,7 @@ export function navigationMenuDirective(): ng.Directive {
         };
 
         if (initialized) {
-          if (entry.open) {
+          if (entry._open) {
             openMenu(getEntryIndex(entry));
           } else {
             setMenuState(getEntryIndex(entry), false);
@@ -302,10 +293,10 @@ export function navigationMenuDirective(): ng.Directive {
       const syncStructure = () => {
         boundEntries.forEach((entry, item) => {
           const replaced =
-            directChild(item, triggerSelector) !== entry.trigger ||
-            directChild(item, contentSelector) !== entry.content;
+            directChild(item, triggerSelector) !== entry._trigger ||
+            directChild(item, contentSelector) !== entry._content;
           if (!item.isConnected || !element.contains(item) || replaced) {
-            entry.disconnect();
+            entry._disconnect();
             boundEntries.delete(item);
             const index = entries.indexOf(entry);
             if (index >= 0) entries.splice(index, 1);
@@ -314,13 +305,13 @@ export function navigationMenuDirective(): ng.Directive {
 
         queryAll<HTMLElement>(element, itemSelector).forEach(bindItem);
         entries.sort((left, right) => {
-          const position = left.item.compareDocumentPosition(right.item);
+          const position = left._item.compareDocumentPosition(right._item);
           return position & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
         });
         triggers.splice(
           0,
           triggers.length,
-          ...entries.map(({ trigger }) => trigger),
+          ...entries.map(({ _trigger }) => _trigger),
         );
         syncTopLevelControls();
         syncRootState();
@@ -334,16 +325,16 @@ export function navigationMenuDirective(): ng.Directive {
         if (!active || !element.contains(active)) return;
 
         const activeContent =
-          entries.find((entry) => entry.content.contains(active))?.content ??
+          entries.find((entry) => entry._content.contains(active))?._content ??
           null;
         if (event.key === "Escape") {
-          if (!entries.some((entry) => entry.open)) return;
+          if (!entries.some((entry) => entry._open)) return;
           event.preventDefault();
           const entry = activeContent
             ? getEntryForContent(activeContent)
-            : entries.find((candidate) => candidate.open);
+            : entries.find((candidate) => candidate._open);
           closeAll();
-          entry?.trigger.focus({ preventScroll: true });
+          entry?._trigger.focus({ preventScroll: true });
           return;
         }
 
@@ -375,7 +366,7 @@ export function navigationMenuDirective(): ng.Directive {
           if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
             const entry = getEntryForContent(activeContent);
             if (!entry) return;
-            const controlIndex = topLevelControls.indexOf(entry.trigger);
+            const controlIndex = topLevelControls.indexOf(entry._trigger);
             const targetIndex = getEnabledControlIndex(
               controlIndex,
               getHorizontalDirection(event.key),
@@ -409,7 +400,7 @@ export function navigationMenuDirective(): ng.Directive {
         if (targetIndex < 0) return;
         activateTopLevelControl(
           topLevelControls[targetIndex],
-          entries.some((entry) => entry.open),
+          entries.some((entry) => entry._open),
         );
       };
 
@@ -435,14 +426,14 @@ export function navigationMenuDirective(): ng.Directive {
 
       const handleResize = () => {
         entries
-          .filter((entry) => entry.open)
+          .filter((entry) => entry._open)
           .forEach((entry) => {
-            positionContent(entry.content);
+            positionContent(entry._content);
           });
       };
 
       if (element.tagName !== "NAV" && !element.hasAttribute("role")) {
-        setAttribute(element, "role", "navigation");
+        setAttributeIfChanged(element, "role", "navigation");
       }
       element.addEventListener("keydown", handleKeydown);
       element.addEventListener("click", handleClick);
@@ -460,7 +451,7 @@ export function navigationMenuDirective(): ng.Directive {
       syncStructure();
       let foundInitialOpen = false;
       entries.forEach((entry, index) => {
-        const keepOpen = entry.open && !foundInitialOpen;
+        const keepOpen = entry._open && !foundInitialOpen;
         if (keepOpen) foundInitialOpen = true;
         setMenuState(index, keepOpen);
       });
@@ -474,7 +465,7 @@ export function navigationMenuDirective(): ng.Directive {
         document.removeEventListener("focusin", handleDocumentFocus);
         window.removeEventListener("resize", handleResize);
         entries.forEach((entry) => {
-          entry.disconnect();
+          entry._disconnect();
         });
       });
     },

@@ -11,6 +11,8 @@ registers all canonical directives when AngularTS is available.
 
 ```ts
 import {
+  type AngularCssCustomEvent,
+  type AngularCssEventDetailMap,
   angular,
   angularCssDirectives,
   angularCssModuleName,
@@ -20,7 +22,7 @@ import {
 
 ## `angularCssModuleName`
 
-- **Type:** `"ui"`
+- **Type:** `"angular.css"`
 
 The AngularTS module name registered by AngularCSS. Add it as an application
 module dependency:
@@ -44,7 +46,7 @@ using this optional reference.
 
 The canonical directive registry. Each tuple contains the AngularTS directive
 name and its factory. The list is public for integration diagnostics and custom
-bootstrap tooling; applications normally consume it through the `ui` module.
+bootstrap tooling; applications normally consume it through the `angular.css` module.
 
 ## `registerAngularCss()`
 
@@ -54,12 +56,27 @@ function registerAngularCss(
 ): ng.NgModule | undefined;
 ```
 
-Registers all canonical directives on the `ui` AngularTS module. It returns the
-module when an AngularTS runtime is available and `undefined` otherwise. The
-package calls this function automatically on import.
+Registers all canonical directives on the `angular.css` AngularTS module. It
+returns the module when an AngularTS runtime is available and `undefined`
+otherwise. Registration is idempotent for each runtime and reuses an existing
+module instead of replacing it. The package calls this function automatically
+on import.
 
 Call it explicitly only when AngularTS is loaded after AngularCSS or when an
 integration supplies a runtime instance manually.
+
+## Typed DOM events
+
+The root export includes `AngularCssEventName`, `AngularCssEventDetailMap`,
+`AngularCssCustomEvent`, and the detail interface for every component event.
+It also augments `HTMLElementEventMap`, so TypeScript infers event details from
+ordinary DOM listeners:
+
+```ts
+calendar.addEventListener('angularcss:calendar-select', (event) => {
+  console.log(event.detail.value, event.detail.selectionMode);
+});
+```
 
 ## Distribution files
 

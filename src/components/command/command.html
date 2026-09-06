@@ -3,24 +3,102 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
-    <link rel="stylesheet" href="../../css/angular.css" />
-    <link rel="stylesheet" href="../example.css" />
-    <script src="../../js/angular-ts.umd.js"></script>
-    <script src="../../js/angular-css.umd.js"></script>
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
   </head>
-  <body ng-app="ui" ng-cloak>
-    <section ng-command>
-      <header>
-        <label>
-          <input placeholder="Search command..." />
-        </label>
-      </header>
-      <div>
-        <button type="button">Deploy project</button>
-        <button type="button">Invite member</button>
-        <button type="button">Open settings</button>
-      </div>
-    </section>
+  <body
+    ng-app="angular.css"
+    ng-cloak
+    ng-init="commandState={query:'',selected:''}; suggestions=[{label:'Calendar',icon:'calendar',disabled:false},{label:'Search Emoji',icon:'smile',disabled:false},{label:'Calculator',icon:'calculator',disabled:true}]; settings=[{label:'Profile',shortcut:'⌘P',icon:'user'},{label:'Billing',shortcut:'⌘B',icon:'credit-card'},{label:'Settings',shortcut:'⌘S',icon:'settings'}]"
+    data-example="command-demo"
+  >
+    <main class="command-demo visual-example">
+      <section
+        id="command-demo"
+        ng-command
+        variant="surface"
+        aria-label="Command menu"
+      >
+        <header>
+          <label>
+            <span aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+              </svg>
+            </span>
+            <input
+              aria-label="Search commands"
+              placeholder="Type a command or search..."
+              ng-model="commandState.query"
+            />
+          </label>
+        </header>
+        <div>
+          <p>No results found.</p>
+          <section>
+            <h2>Suggestions</h2>
+            <button
+              type="button"
+              ng-repeat="item in suggestions | filter:commandState.query"
+              ng-attr-aria-disabled="{{ item.disabled }}"
+              ng-click="commandState.selected=item.label"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="8"></circle>
+                <path d="M8 12h8"></path>
+              </svg>
+              <span ng-bind="item.label"></span>
+            </button>
+          </section>
+          <hr />
+          <section>
+            <h2>Settings</h2>
+            <button
+              type="button"
+              ng-repeat="item in settings | filter:commandState.query"
+              ng-click="commandState.selected=item.label"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="8" r="4"></circle>
+                <path d="M4 21a8 8 0 0 1 16 0"></path>
+              </svg>
+              <span ng-bind="item.label"></span>
+              <kbd ng-bind="item.shortcut"></kbd>
+            </button>
+          </section>
+        </div>
+      </section>
+      <output class="output visually-hidden" aria-live="polite">
+        Selected:
+        <span ng-bind="commandState.selected || 'None'"></span>
+      </output>
+    </main>
   </body>
 </html>

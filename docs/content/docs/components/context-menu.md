@@ -54,11 +54,10 @@ remain constrained to the viewport.
 <!-- angularcss-reference:start -->
 ## Installation
 
-Install AngularCSS once, load its stylesheet, and include the `ui` module in
-your AngularTS application. See [Installation]({{< relref
+Install AngularCSS, load its stylesheet, and include the `angular.css` module in your AngularTS application. See [Installation]({{< relref
 "/docs/get-started/installation" >}}) for the complete setup.
 
-This component's root directive is `[ng-context-menu]`. Importing the package registers it with the AngularCSS `ui` module; there is no per-component JavaScript registration step.
+This component's root directive is `[ng-context-menu]`. Importing the package registers it with the AngularCSS `angular.css` module; there is no per-component JavaScript registration step.
 
 ## Anatomy
 
@@ -77,7 +76,7 @@ A context menu root requires one focusable trigger and one `menu`. The root dire
 | Attribute | Access | Purpose |
 | --- | --- | --- |
 | `align` | Input/output | Cross-axis alignment: `start`, `center`, or `end`. |
-| `align-offset` | Input | Authored option or semantic HTML attribute observed by the directive. |
+| `align-offset` | Input | Additional alignment offset in CSS pixels. |
 | `aria-checked` | Input/output | ARIA relationship or state. |
 | `aria-controls` | Output | ARIA relationship or state. |
 | `aria-disabled` | Input/output | Semantic disabled state. |
@@ -89,16 +88,18 @@ A context menu root requires one focusable trigger and one `menu`. The root dire
 | `open` | Input | Initial or controlled open state. |
 | `role` | Output | Explicit semantic role when native HTML does not provide one. |
 | `side` | Input/output | Physical placement: `left`, `top`, `bottom`, or `right`. |
-| `side-offset` | Input | Authored option or semantic HTML attribute observed by the directive. |
+| `side-offset` | Input | Distance from the invocation point in CSS pixels. |
 | `tabindex` | Input/output | Keyboard focus order for composite descendants. |
 
 `Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
 
 ### CSS custom properties
 
-- `--context-menu-available-height`
-- `--context-menu-left`
-- `--context-menu-top`
+| Variable | Purpose |
+| --- | --- |
+| `--context-menu-available-height` | Component styling variable. |
+| `--context-menu-left` | Component styling variable. |
+| `--context-menu-top` | Component styling variable. |
 
 ### DOM events
 

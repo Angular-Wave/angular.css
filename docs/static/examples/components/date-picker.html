@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="angular.css"
+    ng-cloak
+    ng-init="selectedDate='2026-09-05'"
+    data-example="date-picker-demo"
+  >
+    <div class="date-picker visual-example">
+      <label for="delivery-date">Delivery date</label>
+      <span class="popover">
+        <button
+          id="delivery-date"
+          type="button"
+          class="button"
+          variant="outline"
+          popovertarget="delivery-date-calendar"
+        >
+          <span>{{ selectedDate ? selectedDate : 'Choose a date' }}</span
+          ><span aria-hidden="true">▾</span>
+        </button>
+        <aside
+          id="delivery-date-calendar"
+          popover
+          side="bottom"
+          align="start"
+          aria-label="Choose delivery date"
+        >
+          <section
+            ng-calendar
+            data-calendar-generated
+            data-month="2026-09"
+            data-value="{{ selectedDate }}"
+            ng-on-angularcss:calendar-select="selectedDate=$event.detail.value"
+          >
+            <header>
+              <button
+                class="button"
+                type="button"
+                size="icon"
+                variant="ghost"
+                aria-label="Previous month"
+              >
+                ‹
+              </button>
+              <h2></h2>
+              <button
+                class="button"
+                type="button"
+                size="icon"
+                variant="ghost"
+                aria-label="Next month"
+              >
+                ›
+              </button>
+            </header>
+            <div></div>
+          </section>
+        </aside>
+      </span>
+      <p>The application owns parsing, validation, and the submitted value.</p>
+    </div>
+  </body>
+</html>

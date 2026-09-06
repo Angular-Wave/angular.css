@@ -1,6 +1,6 @@
 import { expect, test, type Locator } from "@playwright/test";
 
-const canonicalUrl = "/docs/static/examples/components/hover-card.html";
+const canonicalUrl = "/src/components/hover-card/hover-card.html";
 const workflowsUrl =
   "/docs/static/examples/components/hover-card-workflows.html";
 const rtlUrl = "/docs/static/examples/components/hover-card-rtl.html";

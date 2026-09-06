@@ -96,11 +96,10 @@ command are implemented in the locally bundled TypeScript adapter.
 <!-- angularcss-reference:start -->
 ## Installation
 
-Install AngularCSS once, load its stylesheet, and include the `ui` module in
-your AngularTS application. See [Installation]({{< relref
+Install AngularCSS, load its stylesheet, and include the `angular.css` module in your AngularTS application. See [Installation]({{< relref
 "/docs/get-started/installation" >}}) for the complete setup.
 
-This component's root directive is `[ng-calendar]`. Importing the package registers it with the AngularCSS `ui` module; there is no per-component JavaScript registration step.
+This component's root directive is `[ng-calendar]`. Importing the package registers it with the AngularCSS `angular.css` module; there is no per-component JavaScript registration step.
 
 ## Anatomy
 
@@ -125,19 +124,19 @@ Use native elements for authored structure. Component classes are optional visua
 | `aria-live` | Output | ARIA relationship or state. |
 | `aria-selected` | Input/output | Selected item state. |
 | `data-booked` | Output | Stable component state or styling hook. |
-| `data-booked-dates` | Input | Stable component state or styling hook. |
+| `data-booked-dates` | Input | Comma-separated ISO dates styled as booked. |
 | `data-calendar-generated` | Input | Stable component state or styling hook. |
-| `data-calendar-preset` | Input | Stable component state or styling hook. |
-| `data-caption-layout` | Input | Stable component state or styling hook. |
+| `data-calendar-preset` | Input | Generated calendar preset: `single`, `multiple`, or `range`. |
+| `data-caption-layout` | Input | Caption controls: `label` or `dropdown`. |
 | `data-columns` | Input | Stable component state or styling hook. |
-| `data-disabled-after` | Input | Stable component state or styling hook. |
-| `data-disabled-before` | Input | Stable component state or styling hook. |
-| `data-disabled-dates` | Input | Stable component state or styling hook. |
-| `data-end-year` | Input | Stable component state or styling hook. |
-| `data-min-nights` | Input | Stable component state or styling hook. |
-| `data-month` | Input/output | Stable component state or styling hook. |
+| `data-disabled-after` | Input | Last selectable date as an ISO date. |
+| `data-disabled-before` | Input | First selectable date as an ISO date. |
+| `data-disabled-dates` | Input | Comma-separated ISO dates that cannot be selected. |
+| `data-end-year` | Input | Final year offered by a dropdown caption. |
+| `data-min-nights` | Input | Minimum number of nights accepted by range selection. |
+| `data-month` | Input/output | Displayed month in `YYYY-MM` form. |
 | `data-months` | Output | Stable component state or styling hook. |
-| `data-number-of-months` | Input | Stable component state or styling hook. |
+| `data-number-of-months` | Input | Number of consecutive months to render. |
 | `data-outside` | Input/output | Stable component state or styling hook. |
 | `data-range-end` | Output | Stable component state or styling hook. |
 | `data-range-end-value` | Input/output | Stable component state or styling hook. |
@@ -145,13 +144,13 @@ Use native elements for authored structure. Component classes are optional visua
 | `data-range-middle` | Output | Stable component state or styling hook. |
 | `data-range-start` | Output | Stable component state or styling hook. |
 | `data-range-start-value` | Input/output | Stable component state or styling hook. |
-| `data-selection-mode` | Input | Stable component state or styling hook. |
-| `data-show-outside-days` | Input | Stable component state or styling hook. |
-| `data-show-week-numbers` | Input/output | Stable component state or styling hook. |
-| `data-start-year` | Input | Stable component state or styling hook. |
-| `data-value` | Input/output | Stable component state or styling hook. |
-| `data-values` | Input/output | Stable component state or styling hook. |
-| `data-week-start` | Input | Stable component state or styling hook. |
+| `data-selection-mode` | Input | Selection behavior: `single`, `multiple`, or `range`. |
+| `data-show-outside-days` | Input | Shows dates from adjacent months when `true`. |
+| `data-show-week-numbers` | Input/output | Shows ISO-style week numbers when `true`. |
+| `data-start-year` | Input | First year offered by a dropdown caption. |
+| `data-value` | Input/output | Selected ISO date for single selection. |
+| `data-values` | Input/output | Comma-separated selected ISO dates for multiple selection. |
+| `data-week-start` | Input | First weekday as an integer from `0` (Sunday) to `6` (Saturday). |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
 | `lang` | Input | Authored option or semantic HTML attribute observed by the directive. |
 | `selected` | Output | Authored option or semantic HTML attribute observed by the directive. |
@@ -162,7 +161,9 @@ Use native elements for authored structure. Component classes are optional visua
 
 ### CSS custom properties
 
-This directive does not write component-specific CSS custom properties.
+| Variable | Purpose |
+| --- | --- |
+| `--calendar-cell-size` | Width and height of calendar controls and day cells. |
 
 ### DOM events
 

@@ -121,10 +121,7 @@
   inset-inline-start: 0;
   display: block;
   width: var(--combobox-options-width, var(--combobox-anchor-width, 100%));
-  min-width: var(
-    --combobox-options-width,
-    calc(var(--combobox-anchor-width, 100%) + 28px)
-  );
+  min-width: var(--combobox-options-width, var(--combobox-anchor-width, 100%));
   max-width: calc(100vw - 8px);
   max-height: min(18rem, calc(100vh - 8px));
   overflow: hidden;
@@ -202,7 +199,7 @@
   background: transparent;
   color: var(--foreground);
   padding-block: calc(var(--spacing) * 1);
-  padding-inline: calc(var(--spacing) * 8) calc(var(--spacing) * 1.5);
+  padding-inline: calc(var(--spacing) * 1.5) calc(var(--spacing) * 8);
   font: inherit;
   font-size: var(--text-sm);
   line-height: 1.25rem;
@@ -325,10 +322,10 @@
 :is(.combobox, [ng-combobox]) > fieldset > span > button[value="remove"] {
   position: relative;
   display: inline-grid;
-  width: calc(var(--spacing) * 5);
-  height: calc(var(--spacing) * 5);
+  width: calc(var(--spacing) * 6);
+  height: calc(var(--spacing) * 6);
   place-items: center;
-  margin-inline-end: calc(var(--spacing) * -1.5);
+  margin-inline-end: calc(var(--spacing) * -2);
   border: 0;
   border-radius: calc(var(--radius) - 6px);
   background: transparent;

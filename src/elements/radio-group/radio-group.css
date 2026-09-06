@@ -1,1 +1,48 @@
-@import "../../components/radio-group/radio-group.css";
+.radio-group {
+  @apply grid w-full gap-2;
+}
+
+fieldset.field-set.radio-group {
+  gap: calc(var(--spacing) * 2);
+}
+
+fieldset.field-set.radio-group > legend {
+  margin-bottom: calc(var(--spacing) * 2.75);
+}
+
+fieldset.field-set.radio-group > p {
+  margin-bottom: calc(var(--spacing) * 1);
+}
+
+.radio-group input[type="radio"] {
+  appearance: none;
+
+  @apply relative size-4 shrink-0 rounded-full border border-input
+    bg-transparent transition-colors outline-none
+    disabled:cursor-not-allowed disabled:opacity-50
+    focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]
+    aria-invalid:border-error aria-invalid:ring-error/20
+    dark:bg-input/30 dark:aria-invalid:ring-error/40;
+
+  &::after {
+    content: "";
+
+    @apply absolute left-1/2 top-1/2 size-2 -translate-x-1/2
+      -translate-y-1/2 rounded-full bg-primary-foreground opacity-0
+      transition-opacity;
+  }
+
+  &:checked {
+    @apply border-primary bg-primary;
+
+    &::after {
+      @apply opacity-100;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .radio-group input[type="radio"]::after {
+    transition-duration: 0s;
+  }
+}

@@ -1,6 +1,7 @@
 import type {} from "@angular-wave/angular.ts";
 
 import {
+  setAttributeIfChanged,
   nextIndex,
   onDestroy,
   queryAll,
@@ -11,16 +12,6 @@ let tabsIdCounter = 0;
 const triggerSelector = ":scope > menu > button";
 const contentSelector = ":scope > :is(article, section)";
 const listSelector = ":scope > menu";
-
-const setAttribute = (
-  element: HTMLElement,
-  name: string,
-  value: string,
-): void => {
-  if (element.getAttribute(name) !== value) {
-    element.setAttribute(name, value);
-  }
-};
 
 export function tabsDirective(): ng.Directive {
   return {
@@ -71,17 +62,21 @@ export function tabsDirective(): ng.Directive {
         triggers.forEach((trigger, triggerIndex) => {
           const selected = triggerIndex === nextActiveIndex;
           const disabled = isTriggerDisabled(trigger);
-          setAttribute(trigger, "aria-selected", String(selected));
-          setAttribute(trigger, "tabindex", selected && !disabled ? "0" : "-1");
+          setAttributeIfChanged(trigger, "aria-selected", String(selected));
+          setAttributeIfChanged(
+            trigger,
+            "tabindex",
+            selected && !disabled ? "0" : "-1",
+          );
           if (selected && focus) trigger.focus();
         });
 
         contents.forEach((content, contentIndex) => {
           const selected = contentIndex === nextActiveIndex;
           setOpenState(content, selected);
-          setAttribute(content, "role", "tabpanel");
-          setAttribute(content, "aria-hidden", String(!selected));
-          setAttribute(content, "tabindex", selected ? "0" : "-1");
+          setAttributeIfChanged(content, "role", "tabpanel");
+          setAttributeIfChanged(content, "aria-hidden", String(!selected));
+          setAttributeIfChanged(content, "tabindex", selected ? "0" : "-1");
         });
       };
 
@@ -152,23 +147,23 @@ export function tabsDirective(): ng.Directive {
           list?.getAttribute("aria-orientation") ??
           "horizontal";
         orientation = orientation === "vertical" ? "vertical" : "horizontal";
-        setAttribute(element, "orientation", orientation);
+        setAttributeIfChanged(element, "orientation", orientation);
         if (list) {
-          setAttribute(list, "role", "tablist");
-          setAttribute(list, "aria-orientation", orientation);
+          setAttributeIfChanged(list, "role", "tablist");
+          setAttributeIfChanged(list, "aria-orientation", orientation);
         }
 
         triggers.forEach((trigger, index) => {
           const content = contents.at(index);
           const triggerId = trigger.id || `tabs-tab-${String(tabsIdCounter++)}`;
           trigger.id = triggerId;
-          setAttribute(trigger, "role", "tab");
+          setAttributeIfChanged(trigger, "role", "tab");
           if (content) {
             const contentId = content.id || `${triggerId}-content`;
             content.id = contentId;
-            setAttribute(trigger, "aria-controls", contentId);
-            setAttribute(content, "role", "tabpanel");
-            setAttribute(content, "aria-labelledby", triggerId);
+            setAttributeIfChanged(trigger, "aria-controls", contentId);
+            setAttributeIfChanged(content, "role", "tabpanel");
+            setAttributeIfChanged(content, "aria-labelledby", triggerId);
           }
           bindTrigger(trigger);
         });

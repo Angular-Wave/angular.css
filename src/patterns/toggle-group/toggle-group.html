@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="angular.css" ng-cloak ng-init="alignment='center'">
+    <div class="stack-sm">
+      <fieldset class="toggle-group visual-example" variant="outline">
+        <legend class="visually-hidden">Text alignment</legend>
+        <label>
+          <input
+            type="radio"
+            name="alignment"
+            value="left"
+            ng-model="alignment"
+          />
+          Left
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="alignment"
+            value="center"
+            ng-model="alignment"
+          />
+          Center
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="alignment"
+            value="right"
+            ng-model="alignment"
+          />
+          Right
+        </label>
+      </fieldset>
+      <div class="output">Alignment: <span ng-bind="alignment"></span></div>
+    </div>
+  </body>
+</html>

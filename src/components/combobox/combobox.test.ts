@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 
-const canonicalUrl = "/docs/static/examples/components/combobox.html";
+const canonicalUrl = "/src/components/combobox/combobox.html";
 const workflowsUrl = "/docs/static/examples/components/combobox-workflows.html";
 const compositionsUrl =
   "/docs/static/examples/components/combobox-compositions.html";
@@ -9,10 +9,10 @@ const statesUrl =
 
 const expectBuiltArtifactRuntime = async (page: Page): Promise<void> => {
   await expect(
-    page.locator('script[src="../../js/angular-ts.umd.js"]'),
+    page.locator('script[src$="/js/angular-ts.umd.js"]'),
   ).toHaveCount(1);
   await expect(
-    page.locator('script[src="../../js/angular-css.umd.js"]'),
+    page.locator('script[src$="/js/angular-css.umd.js"]'),
   ).toHaveCount(1);
   expect(
     await page.evaluate(() =>
@@ -42,6 +42,18 @@ test("canonical basic and auto-highlight artifacts expose distinct listbox behav
   await expect(basic.locator(":scope > header")).toHaveCSS("height", "32px");
   await basicInput.focus();
   await expect(basicContent).toBeVisible();
+  await expect
+    .poll(async () => {
+      const anchor = await basic.locator(":scope > header").boundingBox();
+      const popup = await basicContent.boundingBox();
+      return anchor && popup
+        ? {
+            left: Math.round(popup.x - anchor.x),
+            width: Math.round(popup.width - anchor.width),
+          }
+        : null;
+    })
+    .toEqual({ left: 0, width: 0 });
   await expect(basic.locator('[data-highlighted="true"]')).toHaveCount(0);
   await basicInput.press("Escape");
   await expect(basicContent).toBeHidden();
@@ -216,6 +228,10 @@ test("multiple reference keeps application chips authoritative and supports remo
   await expect(root).toHaveAttribute("multiple", "");
   await expect(content).toHaveAttribute("aria-multiselectable", "true");
   await expect(chips).toHaveCount(1);
+  await expect(root.getByRole("button", { name: "Remove Next.js" })).toHaveCSS(
+    "width",
+    "24px",
+  );
 
   await input.focus();
   await input.press("ArrowDown");

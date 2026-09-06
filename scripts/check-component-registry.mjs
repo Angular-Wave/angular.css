@@ -1,119 +1,68 @@
-import { readdirSync, readFileSync, statSync } from "node:fs";
-import { basename, join } from "node:path";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { join } from "node:path";
 
-import { componentPolicy } from "./component-policy.ts";
+import {
+  catalogCategories,
+  catalogNames,
+  catalogPolicy,
+} from "./component-policy.ts";
 
 const indexSource = readFileSync("src/index.ts", "utf8");
-
-const listCanonicalComponentFiles = () =>
-  readdirSync("src/components")
-    .flatMap((entry) => {
-      const directory = join("src/components", entry);
-      if (!statSync(directory).isDirectory()) return [];
-
-      const file = join(directory, `${entry}.ts`);
-      try {
-        return statSync(file).isFile() ? [file] : [];
-      } catch {
-        return [];
-      }
-    })
-    .sort();
-
 const imports = new Map(
-  [
-    ...indexSource.matchAll(
-      /import \{ ([A-Za-z0-9_$]+) \} from "\.\/components\/([^"]+)";/g,
-    ),
-  ].map(([, symbol, path]) => [path, symbol]),
-);
-
-const registrations = new Map(
-  [...indexSource.matchAll(/\["([^"]+)",\s*([A-Za-z0-9_$]+)\]/g)].map(
-    ([, directive, symbol]) => [symbol, directive],
+  [...indexSource.matchAll(/import \{ ([A-Za-z0-9_$]+) \} from "\.\/([^\"]+)";/g)].map(
+    ([, symbol, path]) => [path, symbol],
   ),
 );
-
+const registrations = new Set(
+  [...indexSource.matchAll(/\["[^"]+",\s*([A-Za-z0-9_$]+)\]/g)].map(
+    ([, symbol]) => symbol,
+  ),
+);
 const failures = [];
-const componentFiles = listCanonicalComponentFiles();
-const componentNames = componentFiles
-  .map((file) => basename(file, ".ts"))
-  .sort();
-const policyNames = Object.keys(componentPolicy).sort();
 
-if (JSON.stringify(componentNames) !== JSON.stringify(policyNames)) {
-  failures.push(
-    "scripts/component-policy.ts: policy entries must exactly match canonical component directories",
+for (const category of catalogCategories) {
+  const directory = join("src", category);
+  const expected = catalogNames.filter(
+    (name) => catalogPolicy[name].category === category,
   );
-}
+  const actual = existsSync(directory)
+    ? readdirSync(directory)
+        .filter((name) => statSync(join(directory, name)).isDirectory())
+        .sort()
+    : [];
 
-for (const file of componentFiles) {
-  const componentName = basename(file, ".ts");
-  const importPath = `${componentName}/${componentName}`;
-  const source = readFileSync(file, "utf8");
-  const exportedDirective = source.match(
-    /export function ([A-Za-z0-9_$]+Directive)\(/,
-  )?.[1];
-  const importedDirective = imports.get(importPath);
-
-  const policy = componentPolicy[componentName];
-  if (!policy) {
-    failures.push(`${file}: missing HTML-first policy classification`);
-    continue;
-  }
-
-  if (policy.kind === "element") {
-    if (
-      source.trim() !==
-      "/** Styling-only HTML entry; native HTML, CSS, and AngularTS own behavior. */\nexport {};"
-    ) {
-      failures.push(
-        `${file}: style-only element TypeScript must remain an empty compatibility entrypoint`,
-      );
-    }
-    if (exportedDirective) {
-      failures.push(
-        `${file}: style-only element must not export ${exportedDirective}`,
-      );
-    }
-    if (
-      importedDirective ||
-      (exportedDirective && registrations.has(exportedDirective))
-    ) {
-      failures.push(
-        `${file}: style-only element must not be imported or registered`,
-      );
-    }
-    continue;
-  }
-
-  if (!exportedDirective) {
+  if (JSON.stringify(actual) !== JSON.stringify(expected)) {
     failures.push(
-      `${file}: behavioral component must export a directive factory`,
-    );
-    continue;
-  }
-
-  if (importedDirective !== exportedDirective) {
-    failures.push(
-      `${file}: src/index.ts must import ${exportedDirective} from ./components/${importPath}`,
-    );
-    continue;
-  }
-
-  if (!registrations.has(exportedDirective)) {
-    failures.push(
-      `${file}: ${exportedDirective} is not registered in src/index.ts`,
+      `${directory}: expected ${expected.join(", ")}; found ${actual.join(", ")}`,
     );
   }
 }
 
-for (const [importPath] of imports) {
-  const [directory, fileName] = importPath.split("/");
-  if (directory !== fileName) {
-    failures.push(
-      `src/index.ts: component imports must use canonical paths, found ./components/${importPath}`,
-    );
+for (const name of catalogNames) {
+  const policy = catalogPolicy[name];
+  const sourcePath = join("src", policy.category, name, `${name}.ts`);
+
+  if (!policy.runtime) {
+    if (existsSync(sourcePath)) {
+      failures.push(`${sourcePath}: styling entries must not ship TypeScript`);
+    }
+    continue;
+  }
+
+  if (!existsSync(sourcePath)) {
+    failures.push(`${sourcePath}: runtime component is missing TypeScript`);
+    continue;
+  }
+
+  const source = readFileSync(sourcePath, "utf8");
+  const directive = source.match(/export function ([A-Za-z0-9_$]+Directive)\(/)?.[1];
+  const importPath = `${policy.category}/${name}/${name}`;
+  if (!directive) {
+    failures.push(`${sourcePath}: runtime component must export a directive factory`);
+  } else if (imports.get(importPath) !== directive) {
+    failures.push(`src/index.ts: must import ${directive} from ./${importPath}`);
+  } else if (!registrations.has(directive)) {
+    failures.push(`src/index.ts: must register ${directive}`);
   }
 }
 
@@ -122,4 +71,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log("Component registry check passed.");
+console.log(`Catalog registry check passed for ${catalogNames.length} entries.`);

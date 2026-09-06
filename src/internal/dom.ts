@@ -24,6 +24,46 @@ export function queryAll<T extends Element>(
   return Array.from(root.querySelectorAll<T>(selector));
 }
 
+export function queryOwned<T extends Element>(
+  root: Element,
+  rootSelector: string,
+  selector: string,
+  constructor: ElementConstructor<T>,
+): T | null {
+  const result = queryAll<Element>(root, selector).find((candidate) =>
+    isOwnedBy(root, rootSelector, candidate),
+  );
+  return result instanceof constructor ? result : null;
+}
+
+export function queryOwnedAll<T extends Element>(
+  root: Element,
+  rootSelector: string,
+  selector: string,
+): T[] {
+  return queryAll<T>(root, selector).filter((candidate) =>
+    isOwnedBy(root, rootSelector, candidate),
+  );
+}
+
+export function isOwnedBy(
+  root: Element,
+  rootSelector: string,
+  candidate: Element,
+): boolean {
+  return candidate.closest(rootSelector) === root;
+}
+
+export function setAttributeIfChanged(
+  element: Element,
+  name: string,
+  value: string,
+): void {
+  if (element.getAttribute(name) !== value) {
+    element.setAttribute(name, value);
+  }
+}
+
 export function setOpenState(element: HTMLElement, open: boolean): void {
   if (element.hidden === open) {
     element.hidden = !open;
@@ -45,6 +85,26 @@ export function nextIndex(
   if (length <= 0) return -1;
   if (currentIndex < 0) return direction === 1 ? 0 : length - 1;
   return (currentIndex + direction + length) % length;
+}
+
+export function fitViewportRect(
+  left: number,
+  top: number,
+  width: number,
+  height: number,
+  margin = 4,
+): { _left: number; _top: number; _availableHeight: number } {
+  return {
+    _left: Math.min(
+      Math.max(left, margin),
+      Math.max(margin, window.innerWidth - width - margin),
+    ),
+    _top: Math.min(
+      Math.max(top, margin),
+      Math.max(margin, window.innerHeight - height - margin),
+    ),
+    _availableHeight: Math.max(0, window.innerHeight - margin * 2),
+  };
 }
 
 export function onDestroy(

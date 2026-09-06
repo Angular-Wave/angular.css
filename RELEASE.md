@@ -1,86 +1,78 @@
-# AngularTS Release instructions
+# Release procedure
 
-## Compare the list of commits between stable and unstable
+AngularCSS publishes one npm package and a matching GitHub release from a
+version tag. The release workflow builds and publishes the exact tarball that
+passed the release checks.
 
-There is a script - compare-master-to-stable.js - that helps with this.
-We just want to make sure that good commits (low risk fixes + docs fixes) got cherry-picked into stable branch and nothing interesting got merged only into stable branch.
+## First npm release
 
-## Pick a release name (for this version)
+The npm package does not exist until version `0.0.1` is published. Add an npm
+automation or granular access token with permission to create and publish
+`@angular-wave/angular.css` as the `NPM_TOKEN` GitHub Actions secret.
 
-A super-heroic power (adverb-verb phrase).
+After the first release:
 
-## Generate release notes
+1. Configure npm trusted publishing for repository
+   `angular-wave/angular.css` and workflow `.github/workflows/release.yml`.
+2. Remove the `NPM_TOKEN` secret.
 
-Example Commit: https://github.com/angular/angular.js/commit/7ab5098c14ee4f195dbfe2681e402fe2dfeacd78
+Future releases then authenticate through GitHub Actions OIDC. Both paths
+publish npm provenance.
 
-1. Run
+## Prepare a release
 
-```bash
-node_modules/.bin/changez -o changes.md -v <new version> <base branch>
-```
+Record user-visible changes under `Unreleased` in `CHANGELOG.md`, update the
+version in `package.json`, `package-lock.json`, and `docs/hugo.yaml`, then add a
+dated changelog section for that version.
 
-2. Review the generated file and manually fix typos, group and reorder stuff if needed.
-3. Move the content into CHANGELOG.md add release code-names to headers.
-4. Push the changes to your private github repo and review.
-5. cherry-pick the release notes commit to the appropriate branches.
-
-## Pick a commit to release (for this version)
-
-Usually this will be the commit containing the release notes, but it may also be in the past.
-
-## Run "release" script
+Run the complete local gate:
 
 ```bash
-scripts/release/release.sh --git-push-dryrun=false --commit-sha=8822a4f --version-number=1.7.6 --version-name=gravity-manipulation
+npm ci
+npm run release:build
+npm run check
+npm test
+npm run test:docs
 ```
 
-1. The SHA is of the commit to release (could be in the past).
+Inspect the exact package contents:
 
-2. The version number and code-name that should be released, not the next version number (e.g. to release 1.2.12 you enter 1.2.12 as release version and the code-name that was picked for 1.2.12, cauliflower-eradication).
+```bash
+mkdir -p release
+npm pack --ignore-scripts --dry-run --json > release/npm-pack.json
+node scripts/release.mjs verify-pack release/npm-pack.json
+```
 
-3. You will need to have write access to all the AngularTS github dist repositories and publish rights for the AngularTS packages on npm.
+Commit and push the prepared release. Do not bypass the repository checks.
 
-## Update GitHub milestones
+## Publish
 
-1. Create the next milestone if it doesn't exist yet-giving ita due date.
-2. Move all open issues and PRs for the current milestone to the next milestone<br>
-   You can do this by filtering the current milestone, selecting via checklist, and moving to the next milestone within the GH issues page.
+Create and push a tag that exactly matches `v<package.version>`:
 
-3. Close the current milestone click the milestones tab and close from there.
-4. Create a new holding milestone for the release after next-but don't give it a due date otherwise that will mess up the dashboard.
+```bash
+git tag -a v0.0.1 -m "AngularCSS 0.0.1"
+git push origin v0.0.1
+```
 
-## Push build artifacts to CDN
+The tag starts `.github/workflows/release.yml`. The workflow:
 
-Google CDNs are fed with data from google3 every day at 11:15am PT it takes only few minutes for the import to propagate).
-If we want to make our files available, we need submit our CLs before this time on the day of the release.
+1. Runs the complete reusable CI workflow against the tagged commit.
+2. Validates the tag, package metadata, changelog, and registry state.
+3. Rebuilds declarations, JavaScript, CSS, and documentation artifacts.
+4. Verifies the exact npm package contents.
+5. Creates a draft GitHub release with curated changelog notes.
+6. Publishes the tarball to npm with provenance.
+7. Publishes the GitHub release only after npm succeeds.
 
-## Don't update the package.json (branchVersion) until the CDN has updated
+The release is complete when the Release workflow is green and both npm and
+GitHub expose version `0.0.1`.
 
-This is the version used to compute what version to link to in the CDN. If you update this too early then the CDN lookup fails and you end up with 'null, for the version, which breaks the docs.
+## Recover a partial release
 
-## Verify angularjs.org download modal has latest version (updates via CI job)
+Rerun a failed job first when the failure is transient. If npm publication
+succeeded but the GitHub release did not, manually dispatch the Release
+workflow with the existing tag. The recovery path verifies the immutable npm
+version, skips republishing it, and finishes the GitHub release.
 
-The versions in the modal are updated (based on the versions available on CDN) as part of the CI deploy stage.
-(You may need to explicitly trigger the CI job. e.g. re-running the last `deploy` job.)
-
-## Announce the release (via official Google accounts)
-
-Double check that angularjs.org is up to date with the new release version before sharing.
-
-1. Collect a list of contributors
-
-use: `git log --format='%aN' v1.2.12..v1.2.13 | sort -u`
-
-2. Write a blog post (for minor releases, not patch releases) and publish it with the "release" tag
-3. Post on twitter as yourself (tweet from your heart; there is no template for this), retweet as @AngularTS
-
-## Party!
-
-## Major Release Tasks
-
-1. Update angularjs.org to use the latest branch.
-2. Write up a migration document.
-3. Create a new git branch for the version that has been released (e.g. 1.8.x).
-4. Check that the build and release scripts still work.
-5. Update the dist-tag of the old branch, see https://github.com/angular/angular.js/pull/12722.
-6. Write a blog post.
+Never move a published tag or overwrite an npm version. Prepare a new patch
+version for corrections.

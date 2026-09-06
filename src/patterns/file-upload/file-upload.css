@@ -1,0 +1,104 @@
+@scope (.file-upload) to (.file-upload) {
+  :scope {
+    display: grid;
+    gap: calc(var(--spacing) * 3);
+    color: var(--foreground);
+    font-size: var(--text-sm);
+  }
+
+  :scope > header {
+    display: grid;
+    gap: calc(var(--spacing) * 1);
+  }
+
+  :scope > header > :is(h1, h2, h3) {
+    font-size: 1rem;
+    font-weight: var(--font-weight-medium);
+  }
+
+  :scope > header > p {
+    color: var(--muted-foreground);
+  }
+
+  :scope > label {
+    display: grid;
+    min-width: 0;
+    min-height: 7rem;
+    place-items: center;
+    gap: calc(var(--spacing) * 2);
+    border: 1px dashed var(--input);
+    border-radius: var(--radius);
+    background: color-mix(in srgb, var(--muted) 35%, transparent);
+    padding: calc(var(--spacing) * 4);
+    text-align: center;
+    cursor: pointer;
+    transition:
+      border-color 150ms ease,
+      background-color 150ms ease;
+  }
+
+  :scope > label:is(:hover, :focus-within),
+  :scope[dragging] > label {
+    border-color: var(--ring);
+    background: var(--accent);
+  }
+
+  :scope > label > span {
+    color: var(--muted-foreground);
+  }
+
+  input[type="file"] {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    color: var(--muted-foreground);
+    font: inherit;
+  }
+
+  input[type="file"]::file-selector-button {
+    min-height: calc(var(--spacing) * 8);
+    margin-inline-end: calc(var(--spacing) * 2);
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) - 2px);
+    background: var(--background);
+    color: var(--foreground);
+    padding-inline: calc(var(--spacing) * 3);
+    font: inherit;
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+  }
+
+  :scope > ul {
+    display: grid;
+    gap: calc(var(--spacing) * 2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  :scope > ul > li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: calc(var(--spacing) * 1) calc(var(--spacing) * 3);
+    align-items: center;
+    padding: calc(var(--spacing) * 2.5);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--background);
+  }
+
+  :scope > ul > li > progress {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  :scope > output {
+    color: var(--muted-foreground);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .file-upload > label {
+    transition-duration: 0s;
+  }
+}

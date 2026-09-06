@@ -10,7 +10,7 @@
     <script src="../../js/angular-css.umd.js"></script>
   </head>
   <body
-    ng-app="ui"
+    ng-app="angular.css"
     ng-cloak
     ng-init="toolbarAction = 'None'; searchTerm = ''; voiceEnabled = false; currency = '$'; rtlAction = 'لا شيء'"
     data-example="button-group-demo button-group-dropdown button-group-input button-group-input-group button-group-nested button-group-popover button-group-rtl button-group-select"
@@ -60,7 +60,7 @@
             >
               Snooze
             </button>
-            <span ng-dropdown class="dropdown-menu">
+            <span ng-dropdown-menu class="dropdown-menu">
               <button
                 type="button"
                 variant="outline"
@@ -101,7 +101,7 @@
         <h2 id="button-group-dropdown-heading">Split dropdown</h2>
         <fieldset aria-label="Follow actions" class="button-group">
           <button type="button" variant="outline" class="button">Follow</button>
-          <span ng-dropdown class="dropdown-menu">
+          <span ng-dropdown-menu class="dropdown-menu">
             <button
               type="button"
               variant="outline"
@@ -319,7 +319,7 @@
             <button type="button" variant="outline" class="button">
               تأجيل
             </button>
-            <span ng-dropdown class="dropdown-menu">
+            <span ng-dropdown-menu class="dropdown-menu">
               <button
                 type="button"
                 variant="outline"

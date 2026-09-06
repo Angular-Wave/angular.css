@@ -1,16 +1,22 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>AngularCSS</title>
-    <link rel="stylesheet" href="/docs/assets/angular.css" />
-    <script src="https://cdn.jsdelivr.net/npm/@angular-wave/angular.ts/dist/angular-ts.umd.min.js"></script>
-    <script type="module" src="../../index.ts"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
   </head>
-
-  <body ng-app="ui" ng-cloak>
-    <fieldset class="p-10 radio-group">
-      <legend class="mb-3">Density</legend>
+  <body
+    ng-app="angular.css"
+    ng-cloak
+    ng-init="density='comfortable'"
+    data-example="radio-group-demo"
+  >
+    <fieldset class="radio-group-demo visual-example radio-group">
+      <legend class="visually-hidden">Density</legend>
 
       <div orientation="horizontal" class="field">
         <input
@@ -18,6 +24,7 @@
           name="density"
           type="radio"
           value="default"
+          ng-model="density"
         />
         <label for="density-default">Default</label>
       </div>
@@ -27,7 +34,7 @@
           name="density"
           type="radio"
           value="comfortable"
-          checked
+          ng-model="density"
         />
         <label for="density-comfortable">Comfortable</label>
       </div>
@@ -37,8 +44,13 @@
           name="density"
           type="radio"
           value="compact"
+          ng-model="density"
         />
         <label for="density-compact">Compact</label>
+      </div>
+
+      <div class="output visually-hidden" aria-live="polite">
+        Selected: <span ng-bind="density"></span>
       </div>
     </fieldset>
   </body>

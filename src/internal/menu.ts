@@ -1,4 +1,10 @@
-import { isDisabled, query, queryAll, setOpenState } from "./dom";
+import {
+  fitViewportRect,
+  isDisabled,
+  query,
+  queryAll,
+  setOpenState,
+} from "./dom";
 
 type Direction = "ltr" | "rtl";
 
@@ -59,6 +65,46 @@ export function bindSemanticSubmenus(
 
     let open = submenu instanceof HTMLDetailsElement && submenu.open;
 
+    const positionContent = () => {
+      if (!open) return;
+      const triggerRect = trigger.getBoundingClientRect();
+      const contentRect = content.getBoundingClientRect();
+      const containingBlock =
+        content.offsetParent instanceof HTMLElement
+          ? content.offsetParent
+          : document.documentElement;
+      const containingRect = containingBlock.getBoundingClientRect();
+      const margin = 4;
+      const offset = 4;
+      const opensLeft = getDirection() === "rtl";
+      let left = opensLeft
+        ? triggerRect.left - contentRect.width - offset
+        : triggerRect.right + offset;
+      const oppositeLeft = opensLeft
+        ? triggerRect.right + offset
+        : triggerRect.left - contentRect.width - offset;
+      const preferredFits =
+        left >= margin &&
+        left + contentRect.width <= window.innerWidth - margin;
+      const oppositeFits =
+        oppositeLeft >= margin &&
+        oppositeLeft + contentRect.width <= window.innerWidth - margin;
+      if (!preferredFits && oppositeFits) left = oppositeLeft;
+
+      const fitted = fitViewportRect(
+        left,
+        triggerRect.top - offset,
+        contentRect.width,
+        contentRect.height,
+        margin,
+      );
+      content.style.inset = "auto";
+      content.style.left = `${String(Math.round(fitted._left - containingRect.left + containingBlock.scrollLeft))}px`;
+      content.style.top = `${String(Math.round(fitted._top - containingRect.top + containingBlock.scrollTop))}px`;
+      content.style.maxHeight = `${String(Math.round(fitted._availableHeight))}px`;
+      content.style.overflowY = "auto";
+    };
+
     const setOpen = (nextOpen: boolean, focus = false) => {
       open = nextOpen;
       if (submenu instanceof HTMLDetailsElement) submenu.open = open;
@@ -66,6 +112,10 @@ export function bindSemanticSubmenus(
       content.setAttribute("aria-hidden", String(!open));
       setOpenState(content, open);
       syncItems();
+      if (open) {
+        positionContent();
+        requestAnimationFrame(positionContent);
+      }
 
       if (!focus) return;
       if (!open) {
@@ -122,11 +172,15 @@ export function bindSemanticSubmenus(
     submenu.addEventListener("pointerenter", handlePointerEnter);
     submenu.addEventListener("pointerleave", handlePointerLeave);
     submenu.addEventListener("keydown", handleKeydown, true);
+    window.addEventListener("resize", positionContent);
+    window.addEventListener("scroll", positionContent, true);
     const stateObserver = new MutationObserver(syncAuthoredState);
+    const sizeObserver = new ResizeObserver(positionContent);
     stateObserver.observe(submenu, {
       attributes: true,
       attributeFilter: ["open"],
     });
+    sizeObserver.observe(content);
     syncItems();
     setOpen(open);
 
@@ -135,7 +189,10 @@ export function bindSemanticSubmenus(
       submenu.removeEventListener("pointerenter", handlePointerEnter);
       submenu.removeEventListener("pointerleave", handlePointerLeave);
       submenu.removeEventListener("keydown", handleKeydown, true);
+      window.removeEventListener("resize", positionContent);
+      window.removeEventListener("scroll", positionContent, true);
       stateObserver.disconnect();
+      sizeObserver.disconnect();
     });
   };
 

@@ -3,63 +3,88 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
-    <link rel="stylesheet" href="../../css/angular.css" />
-    <link rel="stylesheet" href="../example.css" />
-    <script src="../../js/angular-ts.umd.js"></script>
-    <script src="../../js/angular-css.umd.js"></script>
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
   </head>
   <body
-    ng-app="ui"
+    ng-app="angular.css"
     ng-cloak
-    ng-init="frameworks=['AngularTS', 'AngularCSS', 'Tailwind CSS']; state={ query: '', selected: 'AngularTS' }"
+    ng-init="frameworks=['Next.js','SvelteKit','Nuxt.js','Remix','Astro']; basic={query:'',selected:''}; automatic={query:'',selected:''}"
+    data-example="combobox-auto-highlight combobox-basic combobox-demo"
   >
-    <div ng-combobox>
-      <label for="framework">Framework</label>
-      <header>
-        <input
-          id="framework"
-          ng-model="state.query"
-          placeholder="Search frameworks..."
-          class="input"
-        />
-        <button
-          variant="outline"
-          size="icon"
-          aria-label="Open options"
-          value="toggle"
-        >
-          v
-        </button>
-      </header>
-      <aside aria-label="Framework options">
-        <p ng-if="(frameworks | filter:state.query).length === 0">
-          No frameworks found.
-        </p>
-        <div>
-          <section>
-            <h3>Libraries</h3>
+    <main class="combobox-demo visual-example">
+      <div
+        id="basic-combobox"
+        ng-combobox
+        ng-on-angularcss:combobox-select="basic.selected=$event.detail.value; basic.query=$event.detail.value"
+      >
+        <header>
+          <input
+            aria-label="Framework"
+            ng-model="basic.query"
+            placeholder="Select a framework"
+          />
+          <button
+            type="button"
+            aria-label="Show frameworks"
+            value="toggle"
+          ></button>
+        </header>
+        <aside aria-label="Framework options">
+          <p>No items found.</p>
+          <div>
             <ul>
               <li
-                ng-repeat="framework in frameworks | filter:state.query"
-                ng-click="state.selected=framework; state.query=framework"
+                ng-repeat="framework in frameworks | filter:basic.query"
+                ng-attr-aria-selected="{{ basic.selected === framework }}"
               >
                 {{ framework }}
               </li>
             </ul>
-          </section>
-        </div>
-      </aside>
-      <button
-        ng-click="state.query=''; state.selected=''"
-        variant="ghost"
-        value="clear"
+          </div>
+        </aside>
+      </div>
+
+      <div
+        id="auto-combobox"
+        ng-combobox
+        auto-highlight
+        ng-on-angularcss:combobox-select="automatic.selected=$event.detail.value; automatic.query=$event.detail.value"
       >
-        Clear selection
-      </button>
-      <p class="muted">
-        Selected: {{ state.selected ? state.selected : 'None' }}
-      </p>
-    </div>
+        <header>
+          <input
+            aria-label="Auto-highlight framework"
+            ng-model="automatic.query"
+            placeholder="Select a framework"
+          />
+          <button
+            type="button"
+            aria-label="Show auto-highlight frameworks"
+            value="toggle"
+          ></button>
+        </header>
+        <aside aria-label="Auto-highlight framework options">
+          <p>No items found.</p>
+          <div>
+            <ul>
+              <li
+                ng-repeat="framework in frameworks | filter:automatic.query"
+                ng-attr-aria-selected="{{ automatic.selected === framework }}"
+              >
+                {{ framework }}
+              </li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+      <output class="output visually-hidden" aria-live="polite">
+        Basic: <span ng-bind="basic.selected || 'none'"></span>. Automatic:
+        <span ng-bind="automatic.selected || 'none'"></span>.
+      </output>
+    </main>
   </body>
 </html>

@@ -1,0 +1,54 @@
+.sheet > dialog {
+  min-width: 0;
+  max-height: 100dvh;
+  gap: calc(var(--spacing) * 4);
+  margin: 0;
+}
+
+.sheet > dialog[side="right"] {
+  --modal-enter-x: 100%;
+  --modal-enter-y: 0;
+
+  inset-block: 0;
+  right: 0;
+  left: auto;
+  border-left: 1px solid var(--border);
+}
+
+.sheet > dialog[side="left"] {
+  --modal-enter-x: -100%;
+  --modal-enter-y: 0;
+
+  inset-block: 0;
+  right: auto;
+  left: 0;
+  border-right: 1px solid var(--border);
+}
+
+.sheet > dialog[side="top"] {
+  --modal-enter-y: -100%;
+
+  inset-block: 0 auto;
+  inset-inline: 0;
+  height: auto;
+  border-block-end: 1px solid var(--border);
+}
+
+.sheet > dialog[side="bottom"] {
+  --modal-enter-y: 100%;
+
+  inset-block: auto 0;
+  inset-inline: 0;
+  height: auto;
+  border-block-start: 1px solid var(--border);
+}
+
+.sheet > dialog[size="half"] {
+  max-height: 50dvh;
+}
+
+.sheet > dialog > button[command="close"] {
+  position: absolute;
+  inset-block-start: calc(var(--spacing) * 3);
+  inset-inline-end: calc(var(--spacing) * 3);
+}

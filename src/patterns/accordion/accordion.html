@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="angular.css" ng-cloak data-example="accordion-demo">
+    <div
+      class="accordion accordion-demo visual-example"
+      aria-label="Shipping questions"
+    >
+      <details name="shipping-questions" open>
+        <summary>What are your shipping options?</summary>
+        <div>
+          We offer standard (5-7 days), express (2-3 days), and overnight
+          shipping. Free shipping on international orders.
+        </div>
+      </details>
+      <details name="shipping-questions">
+        <summary>What is your return policy?</summary>
+        <div>
+          Returns are accepted within 30 days. Items must be unused and in their
+          original packaging.
+        </div>
+      </details>
+      <details name="shipping-questions">
+        <summary>How can I contact customer support?</summary>
+        <div>Reach us by email, live chat, or phone during business hours.</div>
+      </details>
+    </div>
+  </body>
+</html>

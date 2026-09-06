@@ -10,7 +10,7 @@
     <script src="../../js/angular-css.umd.js"></script>
   </head>
   <body
-    ng-app="ui"
+    ng-app="angular.css"
     ng-cloak
     ng-init="fieldState={username:'',password:'',feedback:'',department:'',hardDisks:true,externalDisks:false,cds:false,servers:false,sync:true,twoFactor:false,plan:'monthly',environment:'kubernetes',minimum:200,maximum:800,street:'',city:'',zip:'',push:true,pushTasks:false,emailTasks:false,profileName:'',message:'Ready',sameAsShipping:true,month:'',year:''}"
   >
@@ -189,7 +189,7 @@
             fieldState.maximum }}).
           </p>
           <div
-            ng-slider
+            ng-range-slider
             min="0"
             max="1000"
             aria-label="Price Range"

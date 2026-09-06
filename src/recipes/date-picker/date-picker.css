@@ -1,0 +1,35 @@
+@scope (.date-picker) to (.date-picker) {
+  :scope {
+    display: grid;
+    width: min(100%, 20rem);
+    gap: calc(var(--spacing) * 1.5);
+    color: var(--foreground);
+    font-size: var(--text-sm);
+  }
+
+  :scope > label {
+    font-weight: var(--font-weight-medium);
+  }
+
+  :scope > .popover,
+  :scope > .popover > button {
+    width: 100%;
+  }
+
+  :scope > .popover > [popover] {
+    width: min(calc(100vw - var(--spacing) * 12), 20rem);
+  }
+
+  :scope > .popover > button {
+    justify-content: space-between;
+  }
+
+  :scope > p {
+    color: var(--muted-foreground);
+    font-size: var(--text-xs);
+  }
+
+  :scope[aria-invalid="true"] > .popover > button {
+    border-color: var(--error);
+  }
+}

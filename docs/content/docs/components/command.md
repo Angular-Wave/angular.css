@@ -45,9 +45,10 @@ Arrow keys wrap through enabled rendered options; Home and End move to the
 boundaries; Enter activates the current option through its ordinary click
 handler. Pointer movement updates the same active state.
 
-For a modal palette, place `ng-command` directly inside `.dialog-content`. Use
-native Dialog invoker and close commands instead of reproducing modal focus,
-Escape, outside-dismissal, or focus-restoration logic in Command. Application
+For a modal palette, place the `ng-command` root inside a native `dialog` within
+a `.dialog` wrapper. Use native invoker and close commands to open and close it.
+The browser handles modal focus, Escape, configured light dismissal, and focus
+restoration. Application
 shortcuts such as Ctrl J remain AngularTS `ng-keydown` expressions.
 
 ## Example
@@ -78,11 +79,10 @@ an Arabic command surface.
 <!-- angularcss-reference:start -->
 ## Installation
 
-Install AngularCSS once, load its stylesheet, and include the `ui` module in
-your AngularTS application. See [Installation]({{< relref
+Install AngularCSS, load its stylesheet, and include the `angular.css` module in your AngularTS application. See [Installation]({{< relref
 "/docs/get-started/installation" >}}) for the complete setup.
 
-This component's root directive is `[ng-command]`. Importing the package registers it with the AngularCSS `ui` module; there is no per-component JavaScript registration step.
+This component's root directive is `[ng-command]`. Importing the package registers it with the AngularCSS `angular.css` module; there is no per-component JavaScript registration step.
 
 ## Anatomy
 

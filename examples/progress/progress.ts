@@ -17,5 +17,5 @@ class ProgressDemoController {
 }
 
 window.angular
-  .module("progressDemo", ["ui"])
+  .module("progressDemo", ["angular.css"])
   .controller("ProgressDemoController", ProgressDemoController);

@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-const canonicalUrl = "/docs/static/examples/components/tabs.html";
+const canonicalUrl = "/src/components/tabs/tabs.html";
 const workflowsUrl = "/docs/static/examples/components/tabs-workflows.html";
 const panelSelector = ":scope > :is(article, section)";
 

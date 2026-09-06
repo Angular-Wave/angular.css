@@ -1,6 +1,11 @@
 import type {} from "@angular-wave/angular.ts";
 
 import {
+  isOwnedBy,
+  queryOwned,
+  queryOwnedAll,
+  setAttributeIfChanged,
+  fitViewportRect,
   isDisabled,
   onDestroy,
   queryAll,
@@ -23,7 +28,7 @@ type MenuSide =
   | "top";
 type PhysicalSide = "bottom" | "left" | "right" | "top";
 type MenuAlign = "center" | "end" | "start";
-type AnchorPoint = { x: number; y: number };
+type AnchorPoint = { _x: number; _y: number };
 
 const rootSelector = ".context-menu, [ng-context-menu]";
 const triggerSelector = ":scope > :first-child:not(menu)";
@@ -42,33 +47,21 @@ const sides = new Set<MenuSide>([
 ]);
 const alignments = new Set<MenuAlign>(["center", "end", "start"]);
 
-const setAttributeIfChanged = (
-  element: HTMLElement,
-  name: string,
-  value: string,
-): void => {
-  if (element.getAttribute(name) !== value) element.setAttribute(name, value);
-};
-
 export function contextMenuDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
-      const isOwned = (candidate: Element): boolean =>
-        candidate.closest(rootSelector) === element;
-      const owned = <T extends HTMLElement>(
-        selector: string,
-        constructor: abstract new (...args: never[]) => T,
-      ): T | null => {
-        const candidate = queryAll<HTMLElement>(element, selector).find(
-          isOwned,
-        );
-        return candidate instanceof constructor ? candidate : null;
-      };
-      const ownedAll = <T extends HTMLElement>(selector: string): T[] =>
-        queryAll<T>(element, selector).filter(isOwned);
-
-      const trigger = owned(triggerSelector, HTMLElement);
-      const content = owned(contentSelector, HTMLElement);
+      const trigger = queryOwned(
+        element,
+        rootSelector,
+        triggerSelector,
+        HTMLElement,
+      );
+      const content = queryOwned(
+        element,
+        rootSelector,
+        contentSelector,
+        HTMLElement,
+      );
       if (!trigger || !content) return;
 
       const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
@@ -113,7 +106,7 @@ export function contextMenuDirective(): ng.Directive {
 
       const menuItems = (surface: HTMLElement): HTMLElement[] =>
         queryAll<HTMLElement>(surface, itemSelector).filter((item) => {
-          if (!isOwned(item)) return false;
+          if (!isOwnedBy(element, rootSelector, item)) return false;
           return item.closest("menu") === surface;
         });
       const visibleEnabledItems = (surface: HTMLElement): HTMLElement[] =>
@@ -126,27 +119,37 @@ export function contextMenuDirective(): ng.Directive {
         );
 
       const syncSemantics = (): void => {
-        ownedAll<HTMLElement>(menuSurfaceSelector).forEach((surface) => {
+        queryOwnedAll<HTMLElement>(
+          element,
+          rootSelector,
+          menuSurfaceSelector,
+        ).forEach((surface) => {
           setAttributeIfChanged(surface, "role", "menu");
           if (!surface.hasAttribute("tabindex")) surface.tabIndex = -1;
         });
-        ownedAll<HTMLElement>(groupSelector).forEach((group) => {
+        queryOwnedAll<HTMLElement>(
+          element,
+          rootSelector,
+          groupSelector,
+        ).forEach((group) => {
           setAttributeIfChanged(group, "role", "group");
         });
-        ownedAll<HTMLElement>(itemSelector).forEach((item) => {
-          const role = getSemanticMenuItemRole(item);
-          setAttributeIfChanged(item, "role", role);
-          if (!item.hasAttribute("tabindex")) item.tabIndex = -1;
-          if (
-            (role === "menuitemcheckbox" || role === "menuitemradio") &&
-            !item.hasAttribute("aria-checked")
-          ) {
-            setAttributeIfChanged(item, "aria-checked", "false");
-          }
-          if (isDisabled(item)) {
-            setAttributeIfChanged(item, "aria-disabled", "true");
-          }
-        });
+        queryOwnedAll<HTMLElement>(element, rootSelector, itemSelector).forEach(
+          (item) => {
+            const role = getSemanticMenuItemRole(item);
+            setAttributeIfChanged(item, "role", role);
+            if (!item.hasAttribute("tabindex")) item.tabIndex = -1;
+            if (
+              (role === "menuitemcheckbox" || role === "menuitemradio") &&
+              !item.hasAttribute("aria-checked")
+            ) {
+              setAttributeIfChanged(item, "aria-checked", "false");
+            }
+            if (isDisabled(item)) {
+              setAttributeIfChanged(item, "aria-disabled", "true");
+            }
+          },
+        );
       };
 
       const syncDirection = (): void => {
@@ -159,8 +162,8 @@ export function contextMenuDirective(): ng.Directive {
       const keyboardAnchor = (): AnchorPoint => {
         const rect = trigger.getBoundingClientRect();
         return {
-          x: getDirection() === "rtl" ? rect.right : rect.left,
-          y: rect.bottom,
+          _x: getDirection() === "rtl" ? rect.right : rect.left,
+          _y: rect.bottom,
         };
       };
 
@@ -176,8 +179,8 @@ export function contextMenuDirective(): ng.Directive {
         const alignOffset =
           Number(content.getAttribute("align-offset") ?? 0) || 0;
         const margin = 4;
-        let left = point.x;
-        let top = point.y;
+        let left = point._x;
+        let top = point._y;
 
         if (side === "left") left -= menuRect.width + offset;
         if (side === "right") left += offset;
@@ -194,26 +197,25 @@ export function contextMenuDirective(): ng.Directive {
           left += getDirection() === "rtl" ? -alignOffset : alignOffset;
         }
 
-        left = Math.min(
-          Math.max(left, margin),
-          Math.max(margin, window.innerWidth - menuRect.width - margin),
-        );
-        top = Math.min(
-          Math.max(top, margin),
-          Math.max(margin, window.innerHeight - menuRect.height - margin),
+        const fitted = fitViewportRect(
+          left,
+          top,
+          menuRect.width,
+          menuRect.height,
+          margin,
         );
 
         content.style.setProperty(
           "--context-menu-left",
-          `${String(Math.round(left - rootRect.left + element.scrollLeft))}px`,
+          `${String(Math.round(fitted._left - rootRect.left + element.scrollLeft))}px`,
         );
         content.style.setProperty(
           "--context-menu-top",
-          `${String(Math.round(top - rootRect.top + element.scrollTop))}px`,
+          `${String(Math.round(fitted._top - rootRect.top + element.scrollTop))}px`,
         );
         content.style.setProperty(
           "--context-menu-available-height",
-          `${String(Math.max(0, Math.round(window.innerHeight - margin * 2)))}px`,
+          `${String(Math.round(fitted._availableHeight))}px`,
         );
         setAttributeIfChanged(content, "side", authoredSide);
         setAttributeIfChanged(content, "align", align);
@@ -253,7 +255,7 @@ export function contextMenuDirective(): ng.Directive {
 
       const setOpen = (
         nextOpen: boolean,
-        options: { focusFirst?: boolean; restoreFocus?: boolean } = {},
+        options: { _focusFirst?: boolean; _restoreFocus?: boolean } = {},
       ): void => {
         if (nextOpen && isDisabled(trigger)) nextOpen = false;
         const wasOpen = open;
@@ -266,13 +268,13 @@ export function contextMenuDirective(): ng.Directive {
         if (open) {
           requestAnimationFrame(() => {
             positionContent();
-            if (options.focusFirst) focusBoundary(content, "first");
+            if (options._focusFirst) focusBoundary(content, "first");
           });
         } else {
           menuItems(content).forEach((item) => {
             item.tabIndex = -1;
           });
-          if (wasOpen && options.restoreFocus) {
+          if (wasOpen && options._restoreFocus) {
             trigger.focus({ preventScroll: true });
           }
         }
@@ -281,16 +283,16 @@ export function contextMenuDirective(): ng.Directive {
       const openAt = (point: AnchorPoint, focusFirst = true): void => {
         anchorPoint = point;
         syncSemantics();
-        setOpen(true, { focusFirst });
+        setOpen(true, { _focusFirst: focusFirst });
       };
       const close = (restoreFocus = false): void => {
-        setOpen(false, { restoreFocus });
+        setOpen(false, { _restoreFocus: restoreFocus });
       };
 
       const handleContextMenu = (event: MouseEvent): void => {
         if (isDisabled(trigger)) return;
         event.preventDefault();
-        openAt({ x: event.clientX, y: event.clientY });
+        openAt({ _x: event.clientX, _y: event.clientY });
       };
 
       const handleKeydown = (event: KeyboardEvent): void => {
@@ -320,7 +322,7 @@ export function contextMenuDirective(): ng.Directive {
         }
 
         const surface = target?.closest<HTMLElement>(menuSurfaceSelector);
-        if (!surface || !isOwned(surface)) return;
+        if (!surface || !isOwnedBy(element, rootSelector, surface)) return;
         if (event.key === "ArrowDown") {
           event.preventDefault();
           moveFocus(surface, 1);
@@ -345,7 +347,12 @@ export function contextMenuDirective(): ng.Directive {
       const handleItemClick = (event: MouseEvent): void => {
         const target = event.target instanceof Element ? event.target : null;
         const item = target?.closest<HTMLElement>(itemSelector);
-        if (!item || !isOwned(item) || isDisabled(item)) return;
+        if (
+          !item ||
+          !isOwnedBy(element, rootSelector, item) ||
+          isDisabled(item)
+        )
+          return;
         if (item.matches(subTriggerSelector)) return;
         element.dispatchEvent(
           new CustomEvent("angularcss:context-menu-select", {
@@ -360,7 +367,13 @@ export function contextMenuDirective(): ng.Directive {
         const target = event.target instanceof Element ? event.target : null;
         const item = target?.closest<HTMLElement>(itemSelector);
         const surface = item?.closest<HTMLElement>(menuSurfaceSelector);
-        if (!item || !surface || !isOwned(item) || isDisabled(item)) return;
+        if (
+          !item ||
+          !surface ||
+          !isOwnedBy(element, rootSelector, item) ||
+          isDisabled(item)
+        )
+          return;
         focusItem(item, surface);
       };
 

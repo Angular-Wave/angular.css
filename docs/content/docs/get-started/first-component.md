@@ -36,7 +36,7 @@ import { angular } from '@angular-wave/angular.ts';
 import '@angular-wave/angular.css';
 import '@angular-wave/angular.css/dist/angular.css';
 
-angular.module('app', ['ui']);
+angular.module('app', ['angular.css']);
 ```
 
 No controller is required for this example. `ng-model` creates the profile name
@@ -66,4 +66,4 @@ Omit `name` when several panels may remain open:
 
 [Style components with Tailwind]({{< relref
 "/docs/get-started/styling-tailwind" >}}), then browse the [complete accordion
-reference]({{< relref "/docs/components/accordion" >}}).
+reference]({{< relref "/docs/patterns/accordion" >}}).

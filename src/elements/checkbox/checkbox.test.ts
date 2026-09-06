@@ -1,16 +1,8 @@
-import { expect, test } from "@playwright/test";
+import { testStyleOnlyElement } from "../../testing/style-only-element";
 
-test("element entrypoint example is a functional checkbox page", async ({
-  page,
-}) => {
-  await page.goto("/docs/static/examples/elements/checkbox.html");
-
-  const checkboxes = page.locator(".checkbox");
-  const terms = page.locator("#terms-checkbox");
-  await expect(checkboxes).toHaveCount(4);
-  await expect(terms).not.toBeChecked();
-
-  await terms.check();
-  await expect(terms).toBeChecked();
-  await expect(page.getByRole("status")).toContainText("Terms accepted");
+testStyleOnlyElement({
+  category: "elements",
+  directive: "ngCheckbox",
+  name: "checkbox",
+  selector: 'input[type="checkbox"].checkbox',
 });

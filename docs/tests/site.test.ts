@@ -1,19 +1,21 @@
 import { expect, test, type Frame, type Page } from '@playwright/test';
-import { existsSync, readdirSync, statSync } from 'node:fs';
-import { join } from 'node:path';
+import {
+  catalogNames,
+  catalogPolicy,
+  type CatalogEntryName,
+} from '../../scripts/component-policy.ts';
 
-const componentNames = readdirSync('src/components')
-  .filter((entry) => statSync(join('src/components', entry)).isDirectory())
-  .filter((entry) => existsSync(join('src/components', entry, `${entry}.ts`)))
-  .sort();
-
-const openExample = async (page: Page, component: string): Promise<Frame> => {
-  await page.goto(`docs/components/${component}/`);
+const openExample = async (
+  page: Page,
+  component: CatalogEntryName,
+): Promise<Frame> => {
+  await page.goto(`docs/${catalogPolicy[component].category}/${component}/`);
   const iframe = page.locator(
     `.angularcss-example-frame[src$="/examples/components/${component}.html"]`,
   );
   await expect(iframe).toHaveCount(1);
   await expect(iframe).not.toHaveAttribute('sandbox');
+  await iframe.scrollIntoViewIfNeeded();
 
   const frameUrl = new RegExp(`/examples/components/${component}\\.html$`);
   await expect
@@ -25,34 +27,38 @@ const openExample = async (page: Page, component: string): Promise<Frame> => {
   return frame!;
 };
 
-test('homepage links every component', async ({ page }) => {
+test('homepage links every catalog entry in its canonical category', async ({
+  page,
+}) => {
   await page.goto('./');
 
   const componentLinks = page.locator('.component-catalog-list a');
-  await expect(componentLinks).toHaveCount(componentNames.length);
+  await expect(componentLinks).toHaveCount(catalogNames.length);
 
   const linkedComponents = await componentLinks.evaluateAll((links) =>
     links
       .map(
         (link) =>
-          link
-            .getAttribute('href')
-            ?.match(/\/docs\/components\/([^/]+)\/$/)?.[1],
+          link.getAttribute('href')?.match(/\/docs\/([^/]+\/[^/]+)\/$/)?.[1],
       )
       .filter((component): component is string => Boolean(component))
       .sort(),
   );
 
-  expect(linkedComponents).toEqual(componentNames);
+  expect(linkedComponents).toEqual(
+    catalogNames
+      .map((name) => `${catalogPolicy[name].category}/${name}`)
+      .sort(),
+  );
 });
 
-test('every component page loads a bootstrapped local example', async ({
+test('every catalog page loads a bootstrapped local example', async ({
   page,
 }) => {
   test.setTimeout(120_000);
   const failures: string[] = [];
 
-  for (const component of componentNames) {
+  for (const component of catalogNames) {
     const errors: string[] = [];
     page.removeAllListeners('pageerror');
     page.on('pageerror', (error) => errors.push(error.message));
@@ -64,7 +70,7 @@ test('every component page loads a bootstrapped local example', async ({
       ),
       angular: Boolean(window.angular),
       bodyText: document.body.innerText.trim(),
-      module: Boolean(window.angular?.module?.('ui')),
+      module: Boolean(window.angular?.module?.('angular.css')),
       remoteAssets: Array.from(
         document.querySelectorAll('script[src], link[href]'),
         (element) =>
@@ -74,7 +80,7 @@ test('every component page loads a bootstrapped local example', async ({
 
     if (!state.angular) failures.push(`${component}: AngularTS did not load`);
     if (!state.module)
-      failures.push(`${component}: ui module did not register`);
+      failures.push(`${component}: angular.css module did not register`);
     if (!state.bodyText && !state.accessibleName) {
       failures.push(
         `${component}: example rendered no text or accessible name`,
@@ -97,20 +103,20 @@ test('published iframe interactions update component and AngularTS state', async
   page,
 }) => {
   let frame = await openExample(page, 'accordion');
-  const accordionTrigger = frame.getByRole('button', {
-    name: 'What are your shipping options?',
-  });
-  await expect(accordionTrigger).toHaveAttribute('aria-expanded', 'true');
+  const accordionItem = frame.locator('details').first();
+  const accordionTrigger = accordionItem.locator('summary');
+  await expect(accordionItem).toHaveAttribute('open', '');
   await accordionTrigger.click();
-  await expect(accordionTrigger).toHaveAttribute('aria-expanded', 'false');
+  await expect(accordionItem).not.toHaveAttribute('open');
   await accordionTrigger.click();
-  await expect(accordionTrigger).toHaveAttribute('aria-expanded', 'true');
+  await expect(accordionItem).toHaveAttribute('open', '');
 
-  frame = await openExample(page, 'dropdown');
+  frame = await openExample(page, 'dropdown-menu');
   const dropdownTrigger = frame.getByRole('button', { name: 'Options' });
   await dropdownTrigger.click();
   await expect(dropdownTrigger).toHaveAttribute('aria-expanded', 'true');
-  await expect(frame.getByRole('menu')).toHaveAttribute('data-open', 'true');
+  await expect(frame.locator('[ng-dropdown-menu]')).toHaveAttribute('open', '');
+  await expect(frame.locator('[ng-dropdown-menu] > menu')).toBeVisible();
 
   frame = await openExample(page, 'tabs');
   const analyticsTab = frame.getByRole('tab', { name: 'Analytics' });
@@ -127,9 +133,14 @@ test('published iframe interactions update component and AngularTS state', async
     'Value: functional',
   );
 
-  frame = await openExample(page, 'slider');
+  frame = await openExample(page, 'range');
   await frame.locator('#volume').fill('42');
   await expect(frame.locator('output[for="volume"]')).toHaveText('42');
+
+  frame = await openExample(page, 'range-slider');
+  await frame.getByRole('slider', { name: 'Minimum price' }).fill('30');
+  await frame.getByRole('slider', { name: 'Maximum price' }).fill('80');
+  await expect(frame.locator('output')).toHaveText('30-80');
 
   frame = await openExample(page, 'switch');
   await frame.locator('#airplane-mode').check();
@@ -138,19 +149,17 @@ test('published iframe interactions update component and AngularTS state', async
   );
 
   frame = await openExample(page, 'select');
-  await frame.getByRole('combobox').selectOption('pineapple');
-  await expect(frame.locator('.output').first()).toContainText(
-    'Selected: pineapple',
-  );
+  await frame.getByRole('combobox').selectOption('Done');
+  await expect(frame.locator('.output').first()).toContainText('Current: Done');
 
   frame = await openExample(page, 'calendar');
-  await expect(frame.locator('.calendar-day')).toHaveCount(42);
-  await frame.locator(".calendar-day[data-value='2026-05-20']").click();
+  await expect(frame.locator('[ng-calendar] > div button[value]')).toHaveCount(
+    42,
+  );
+  await frame.locator("[ng-calendar] button[value='2026-05-20']").click();
   await expect(frame.locator('.output')).toContainText('Selected: 2026-05-20');
-  await frame.locator('.calendar-next').click();
-  await expect(
-    frame.locator('.calendar-title').getByRole('combobox', { name: 'Month' }),
-  ).toHaveValue('5');
+  await frame.getByRole('button', { name: 'Next month' }).click();
+  await expect(frame.getByRole('combobox', { name: 'Month' })).toHaveValue('5');
   const calendarViewport = await frame.evaluate(() => ({
     contentHeight: document.body.scrollHeight,
     viewportHeight: document.documentElement.clientHeight,

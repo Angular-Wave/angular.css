@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="angular.css" ng-cloak data-example="pagination-demo">
+    <main class="pagination-demo visual-example">
+      <nav aria-label="pagination" class="pagination">
+        <ul>
+          <li>
+            <a href="#previous" rel="prev" aria-label="Go to previous page">
+              <svg
+                icon="inline-start"
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="m15 18-6-6 6-6"></path>
+              </svg>
+              <span>Previous</span>
+            </a>
+          </li>
+          <li>
+            <a href="#page-1">1</a>
+          </li>
+          <li>
+            <a href="#page-2" aria-current="page">2</a>
+          </li>
+          <li>
+            <a href="#page-3">3</a>
+          </li>
+          <li>
+            <span aria-hidden="true">
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="5" cy="12" r="1.5"></circle>
+                <circle cx="12" cy="12" r="1.5"></circle>
+                <circle cx="19" cy="12" r="1.5"></circle>
+              </svg>
+              <span>More pages</span>
+            </span>
+          </li>
+          <li>
+            <a href="#next" rel="next" aria-label="Go to next page">
+              <span>Next</span>
+              <svg
+                icon="inline-end"
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="m9 18 6-6-6-6"></path>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </main>
+  </body>
+</html>

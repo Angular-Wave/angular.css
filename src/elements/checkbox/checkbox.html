@@ -1,29 +1,81 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>AngularCSS</title>
-    <link rel="stylesheet" href="/docs/assets/angular.css" />
-    <script src="https://cdn.jsdelivr.net/npm/@angular-wave/angular.ts/dist/angular-ts.umd.min.js"></script>
-    <script type="module" src="../../index.ts"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
   </head>
-
-  <body ng-app="ui" ng-cloak>
-    <div class="grid w-full max-w-xl items-start gap-4 p-10">
+  <body
+    ng-app="angular.css"
+    ng-cloak
+    class="checkbox-example-body"
+    ng-init="terms=false;termsDetails=true;wrappedNotifications=false"
+    data-example="checkbox-demo"
+  >
+    <div class="checkbox-demo visual-example field-group">
       <div orientation="horizontal" class="field">
-        <input id="terms" type="checkbox" class="checkbox" />
-        <label for="terms">Accept terms</label>
+        <input
+          id="terms-checkbox"
+          name="terms-checkbox"
+          type="checkbox"
+          ng-model="terms"
+          class="checkbox"
+        />
+        <label for="terms-checkbox">Accept terms and conditions</label>
       </div>
 
       <div orientation="horizontal" class="field">
         <input
-          id="terms-invalid"
+          id="terms-checkbox-2"
+          name="terms-checkbox-2"
           type="checkbox"
-          aria-invalid="true"
+          ng-model="termsDetails"
           class="checkbox"
         />
-        <label for="terms-invalid">Required</label>
+        <section>
+          <label for="terms-checkbox-2">Accept terms and conditions</label>
+          <p>By clicking this checkbox, you agree to the terms.</p>
+        </section>
       </div>
+
+      <div orientation="horizontal" class="field">
+        <input
+          id="toggle-checkbox"
+          name="toggle-checkbox"
+          type="checkbox"
+          disabled
+          class="checkbox"
+        />
+        <label for="toggle-checkbox">Enable notifications</label>
+      </div>
+
+      <label>
+        <div orientation="horizontal" class="field">
+          <input
+            id="toggle-checkbox-2"
+            name="toggle-checkbox-2"
+            type="checkbox"
+            ng-model="wrappedNotifications"
+            class="checkbox"
+          />
+          <section>
+            <strong>Enable notifications</strong>
+            <small>
+              You can enable or disable notifications at any time.
+            </small>
+          </section>
+        </div>
+      </label>
+
+      <output class="visually-hidden" aria-live="polite">
+        Terms {{ terms ? 'accepted' : 'not accepted' }}. Detailed terms {{
+        termsDetails ? 'accepted' : 'not accepted' }}. Notifications {{
+        wrappedNotifications ? 'enabled' : 'disabled' }}.
+      </output>
     </div>
   </body>
 </html>

@@ -1,0 +1,131 @@
+[ng-range-slider] {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: calc(var(--spacing) * 5);
+  align-items: center;
+  touch-action: none;
+  user-select: none;
+}
+
+[ng-range-slider]:has(> input:disabled):not(:has(> input:not(:disabled))) {
+  opacity: 0.5;
+}
+
+[ng-range-slider]::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 50%;
+  height: calc(var(--spacing) * 1);
+  overflow: hidden;
+  border-radius: 9999px;
+  background: var(--muted);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+[ng-range-slider]::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: var(--range-start, 0%);
+  width: calc(var(--range-end, 0%) - var(--range-start, 0%));
+  height: calc(var(--spacing) * 1);
+  border-radius: 9999px;
+  background: var(--primary);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+[ng-range-slider] > input[type="range"] {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: calc(var(--spacing) * 5);
+  appearance: none;
+  border: 0;
+  background: transparent;
+  pointer-events: none;
+}
+
+[ng-range-slider] > input[type="range"]:focus {
+  z-index: 2;
+  outline: none;
+}
+
+[ng-range-slider] > input[type="range"]::-webkit-slider-runnable-track {
+  height: calc(var(--spacing) * 1);
+  background: transparent;
+}
+
+[ng-range-slider] > input[type="range"]::-moz-range-track {
+  height: calc(var(--spacing) * 1);
+  background: transparent;
+}
+
+[ng-range-slider] > input[type="range"]::-webkit-slider-thumb {
+  width: calc(var(--spacing) * 3);
+  height: calc(var(--spacing) * 3);
+  margin-block-start: calc(var(--spacing) * -1);
+  appearance: none;
+  border: 1px solid var(--ring);
+  border-radius: 9999px;
+  background: white;
+  pointer-events: auto;
+  transition: box-shadow 120ms ease;
+}
+
+[ng-range-slider] > input[type="range"]::-moz-range-thumb {
+  width: calc(var(--spacing) * 3);
+  height: calc(var(--spacing) * 3);
+  border: 1px solid var(--ring);
+  border-radius: 9999px;
+  background: white;
+  pointer-events: auto;
+  transition: box-shadow 120ms ease;
+}
+
+[ng-range-slider] > input[type="range"]:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+}
+
+[ng-range-slider] > input[type="range"]:focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+}
+
+[ng-range-slider] > input[type="range"]:disabled {
+  pointer-events: none;
+}
+
+[ng-range-slider][orientation="vertical"] {
+  width: calc(var(--spacing) * 5);
+  height: calc(var(--spacing) * 40);
+  flex-direction: column;
+}
+
+[ng-range-slider][orientation="vertical"]::before {
+  inset-block: 0;
+  inset-inline-start: 50%;
+  top: auto;
+  width: calc(var(--spacing) * 1);
+  height: auto;
+  transform: translateX(-50%);
+}
+
+[ng-range-slider][orientation="vertical"]::after {
+  inset-inline: 0;
+  top: auto;
+  bottom: var(--range-start, 0%);
+  width: auto;
+  height: calc(var(--range-end, 0%) - var(--range-start, 0%));
+  transform: none;
+}
+
+[ng-range-slider][orientation="vertical"] > input[type="range"] {
+  width: calc(var(--spacing) * 5);
+  height: calc(var(--spacing) * 40);
+  direction: rtl;
+  writing-mode: vertical-lr;
+}

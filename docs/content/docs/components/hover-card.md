@@ -34,11 +34,10 @@ content alignment follow the nearest authored `dir` attribute.
 <!-- angularcss-reference:start -->
 ## Installation
 
-Install AngularCSS once, load its stylesheet, and include the `ui` module in
-your AngularTS application. See [Installation]({{< relref
+Install AngularCSS, load its stylesheet, and include the `angular.css` module in your AngularTS application. See [Installation]({{< relref
 "/docs/get-started/installation" >}}) for the complete setup.
 
-This component's root directive is `[ng-hover-card]`. Importing the package registers it with the AngularCSS `ui` module; there is no per-component JavaScript registration step.
+This component's root directive is `[ng-hover-card]`. Importing the package registers it with the AngularCSS `angular.css` module; there is no per-component JavaScript registration step.
 
 ## Anatomy
 

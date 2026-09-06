@@ -9,13 +9,49 @@
     <script src="../../js/angular-ts.umd.js"></script>
     <script src="../../js/angular-css.umd.js"></script>
   </head>
-  <body ng-app="ui" ng-cloak>
-    <div ng-dropdown>
+  <body
+    ng-app="angular.css"
+    ng-cloak
+    ng-init="menuState={toolbar:true,density:'comfortable'}"
+    data-example="dropdown-menu-complex dropdown-menu-demo"
+    class="dropdown-example-body"
+  >
+    <div ng-dropdown-menu class="dropdown-demo visual-example dropdown-menu">
       <button type="button">Options</button>
       <menu>
-        <a href="#new">New Task</a>
-        <a href="#edit">Edit Task</a>
-        <a href="#delete">Delete Task</a>
+        <section>
+          <h3>Project</h3>
+          <button>New task <kbd>Ctrl+N</kbd></button>
+          <button>Edit task</button>
+        </section>
+        <hr />
+        <button
+          aria-checked="{{ menuState.toolbar }}"
+          ng-click="menuState.toolbar=!menuState.toolbar"
+        >
+          Show toolbar
+        </button>
+        <fieldset aria-label="Density">
+          <button
+            aria-checked="{{ menuState.density === 'comfortable' }}"
+            ng-click="menuState.density='comfortable'"
+          >
+            Comfortable
+          </button>
+          <button
+            aria-checked="{{ menuState.density === 'compact' }}"
+            ng-click="menuState.density='compact'"
+          >
+            Compact
+          </button>
+        </fieldset>
+        <details>
+          <summary>Share</summary>
+          <menu>
+            <button>Copy link</button>
+            <button>Email link</button>
+          </menu>
+        </details>
       </menu>
     </div>
   </body>

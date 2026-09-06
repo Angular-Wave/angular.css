@@ -20,66 +20,80 @@
 @import "@radix-ui/colors/red-dark.css" layer(angularcss.tokens);
 @import "./styles/motion.css" layer(angularcss.components);
 @import "./styles/modal.css" layer(angularcss.components);
-@import "./components/accordion/accordion.css" layer(angularcss.components);
-@import "./components/dropdown/dropdown.css" layer(angularcss.components);
-@import "./components/alert/alert.css" layer(angularcss.components);
-@import "./components/input/input.css" layer(angularcss.components);
-@import "./components/checkbox/checkbox.css" layer(angularcss.components);
-@import "./components/field/field.css" layer(angularcss.components);
-@import "./components/label/label.css" layer(angularcss.components);
-@import "./components/radio-group/radio-group.css" layer(angularcss.components);
-@import "./components/textarea/textarea.css" layer(angularcss.components);
-@import "./components/input-group/input-group.css" layer(angularcss.components);
-@import "./components/input-otp/input-otp.css" layer(angularcss.components);
-@import "./components/select/select.css" layer(angularcss.components);
-@import "./components/slider/slider.css" layer(angularcss.components);
-@import "./components/switch/switch.css" layer(angularcss.components);
-@import "./components/button/button.css" layer(angularcss.components);
-@import "./components/button-group/button-group.css"
+@import "./patterns/accordion/accordion.css" layer(angularcss.components);
+@import "./components/dropdown-menu/dropdown-menu.css"
   layer(angularcss.components);
-@import "./components/alert-dialog/alert-dialog.css"
+@import "./patterns/alert/alert.css" layer(angularcss.components);
+@import "./elements/input/input.css" layer(angularcss.components);
+@import "./elements/checkbox/checkbox.css" layer(angularcss.components);
+@import "./patterns/field/field.css" layer(angularcss.components);
+@import "./elements/label/label.css" layer(angularcss.components);
+@import "./elements/radio-group/radio-group.css" layer(angularcss.components);
+@import "./elements/range/range.css" layer(angularcss.components);
+@import "./elements/textarea/textarea.css" layer(angularcss.components);
+@import "./patterns/input-group/input-group.css" layer(angularcss.components);
+@import "./patterns/input-otp/input-otp.css" layer(angularcss.components);
+@import "./elements/select/select.css" layer(angularcss.components);
+@import "./components/range-slider/range-slider.css"
   layer(angularcss.components);
-@import "./components/aspect-ratio/aspect-ratio.css"
-  layer(angularcss.components);
-@import "./components/avatar/avatar.css" layer(angularcss.components);
-@import "./components/badge/badge.css" layer(angularcss.components);
-@import "./components/breadcrumb/breadcrumb.css" layer(angularcss.components);
+@import "./elements/switch/switch.css" layer(angularcss.components);
+@import "./elements/button/button.css" layer(angularcss.components);
+@import "./patterns/button-group/button-group.css" layer(angularcss.components);
+@import "./recipes/alert-dialog/alert-dialog.css" layer(angularcss.components);
+@import "./patterns/aspect-ratio/aspect-ratio.css" layer(angularcss.components);
+@import "./patterns/avatar/avatar.css" layer(angularcss.components);
+@import "./patterns/badge/badge.css" layer(angularcss.components);
+@import "./patterns/breadcrumb/breadcrumb.css" layer(angularcss.components);
 @import "./components/calendar/calendar.css" layer(angularcss.components);
-@import "./components/card/card.css" layer(angularcss.components);
+@import "./patterns/card/card.css" layer(angularcss.components);
 @import "./components/carousel/carousel.css" layer(angularcss.components);
-@import "./components/chart/chart.css" layer(angularcss.components);
-@import "./components/collapsible/collapsible.css" layer(angularcss.components);
+@import "./patterns/chart/chart.css" layer(angularcss.components);
+@import "./patterns/description-list/description-list.css"
+  layer(angularcss.components);
+@import "./patterns/disclosure/disclosure.css" layer(angularcss.components);
 @import "./components/combobox/combobox.css" layer(angularcss.components);
 @import "./components/command/command.css" layer(angularcss.components);
 @import "./components/context-menu/context-menu.css"
   layer(angularcss.components);
-@import "./components/dialog/dialog.css" layer(angularcss.components);
-@import "./components/direction/direction.css" layer(angularcss.components);
-@import "./components/drawer/drawer.css" layer(angularcss.components);
-@import "./components/empty/empty.css" layer(angularcss.components);
+@import "./elements/dialog/dialog.css" layer(angularcss.components);
+@import "./foundations/direction/direction.css" layer(angularcss.components);
+@import "./recipes/drawer/drawer.css" layer(angularcss.components);
+@import "./patterns/empty/empty.css" layer(angularcss.components);
+@import "./patterns/file-upload/file-upload.css" layer(angularcss.components);
+@import "./patterns/filter-bar/filter-bar.css" layer(angularcss.components);
 @import "./components/hover-card/hover-card.css" layer(angularcss.components);
-@import "./components/item/item.css" layer(angularcss.components);
-@import "./components/kbd/kbd.css" layer(angularcss.components);
+@import "./patterns/item/item.css" layer(angularcss.components);
+@import "./elements/kbd/kbd.css" layer(angularcss.components);
 @import "./components/menubar/menubar.css" layer(angularcss.components);
 @import "./components/navigation-menu/navigation-menu.css"
   layer(angularcss.components);
-@import "./components/pagination/pagination.css" layer(angularcss.components);
-@import "./components/popover/popover.css" layer(angularcss.components);
-@import "./components/progress/progress.css" layer(angularcss.components);
+@import "./patterns/pagination/pagination.css" layer(angularcss.components);
+@import "./patterns/popover/popover.css" layer(angularcss.components);
+@import "./elements/progress/progress.css" layer(angularcss.components);
 @import "./components/resizable/resizable.css" layer(angularcss.components);
-@import "./components/scroll-area/scroll-area.css" layer(angularcss.components);
-@import "./components/separator/separator.css" layer(angularcss.components);
-@import "./components/sheet/sheet.css" layer(angularcss.components);
+@import "./elements/scroll-area/scroll-area.css" layer(angularcss.components);
+@import "./elements/separator/separator.css" layer(angularcss.components);
+@import "./recipes/sheet/sheet.css" layer(angularcss.components);
 @import "./components/sidebar/sidebar.css" layer(angularcss.components);
-@import "./components/skeleton/skeleton.css" layer(angularcss.components);
-@import "./components/sonner/sonner.css" layer(angularcss.components);
-@import "./components/spinner/spinner.css" layer(angularcss.components);
-@import "./components/table/table.css" layer(angularcss.components);
+@import "./patterns/skeleton/skeleton.css" layer(angularcss.components);
+@import "./components/toast/toast.css" layer(angularcss.components);
+@import "./patterns/spinner/spinner.css" layer(angularcss.components);
+@import "./patterns/stepper/stepper.css" layer(angularcss.components);
+@import "./elements/table/table.css" layer(angularcss.components);
 @import "./components/tabs/tabs.css" layer(angularcss.components);
 @import "./components/tooltip/tooltip.css" layer(angularcss.components);
-@import "./components/toggle/toggle.css" layer(angularcss.components);
-@import "./components/toggle-group/toggle-group.css"
+@import "./components/toolbar/toolbar.css" layer(angularcss.components);
+@import "./components/tree/tree.css" layer(angularcss.components);
+@import "./patterns/toggle/toggle.css" layer(angularcss.components);
+@import "./patterns/toggle-group/toggle-group.css" layer(angularcss.components);
+@import "./patterns/validation-summary/validation-summary.css"
   layer(angularcss.components);
+@import "./recipes/application-shell/application-shell.css"
+  layer(angularcss.components);
+@import "./recipes/data-table/data-table.css" layer(angularcss.components);
+@import "./recipes/date-picker/date-picker.css" layer(angularcss.components);
+@import "./recipes/form-layout/form-layout.css" layer(angularcss.components);
+@import "./recipes/master-detail/master-detail.css" layer(angularcss.components);
 
 @custom-variant dark (&:is(.dark *));
 

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="angular.css"
+    ng-cloak
+    ng-init="slider = { controlledStart: 0.3, controlledEnd: 0.7, rangeStart: 25, rangeEnd: 50, multipleOne: 10, multipleTwo: 20, multipleThree: 70, rtl: 75, verticalOne: 50, verticalTwo: 25 }"
+    data-example="slider-controlled slider-range slider-multiple slider-rtl slider-vertical"
+  >
+    <main class="slider-workflow-grid">
+      <section
+        class="slider-workflow-section"
+        aria-labelledby="slider-controlled-title"
+      >
+        <header>
+          <h2 id="slider-controlled-title">Temperature</h2>
+          <output>
+            {{ slider.controlledStart }}, {{ slider.controlledEnd }}
+          </output>
+        </header>
+        <div ng-range-slider min="0" max="1" aria-label="Temperature range">
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.1"
+            ng-model="slider.controlledStart"
+            aria-label="Minimum temperature"
+          />
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.1"
+            ng-model="slider.controlledEnd"
+            aria-label="Maximum temperature"
+          />
+        </div>
+      </section>
+
+      <section
+        class="slider-workflow-section"
+        aria-labelledby="slider-range-title"
+      >
+        <header>
+          <h2 id="slider-range-title">Range</h2>
+          <output>{{ slider.rangeStart }}–{{ slider.rangeEnd }}</output>
+        </header>
+        <div ng-range-slider min="0" max="100" aria-label="Price range">
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="5"
+            ng-model="slider.rangeStart"
+            aria-label="Minimum price"
+          />
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="5"
+            ng-model="slider.rangeEnd"
+            aria-label="Maximum price"
+          />
+        </div>
+      </section>
+
+      <section
+        class="slider-workflow-section"
+        aria-labelledby="slider-multiple-title"
+      >
+        <header>
+          <h2 id="slider-multiple-title">Multiple values</h2>
+          <output>
+            {{ slider.multipleOne }}, {{ slider.multipleTwo }}, {{
+            slider.multipleThree }}
+          </output>
+        </header>
+        <div ng-range-slider min="0" max="100" aria-label="Multiple slider values">
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="10"
+            ng-model="slider.multipleOne"
+            aria-label="First value"
+          />
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="10"
+            ng-model="slider.multipleTwo"
+            aria-label="Second value"
+          />
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="10"
+            ng-model="slider.multipleThree"
+            aria-label="Third value"
+          />
+        </div>
+      </section>
+
+      <section
+        class="slider-workflow-section"
+        dir="rtl"
+        lang="ar"
+        aria-labelledby="slider-rtl-title"
+      >
+        <header>
+          <h2 id="slider-rtl-title">مستوى الصوت</h2>
+          <output>{{ slider.rtl }}</output>
+        </header>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          step="1"
+          ng-model="slider.rtl"
+          aria-label="مستوى الصوت"
+        />
+      </section>
+
+      <section
+        class="slider-workflow-section slider-workflow-wide"
+        aria-labelledby="slider-vertical-title"
+      >
+        <header>
+          <h2 id="slider-vertical-title">Vertical</h2>
+          <output> {{ slider.verticalOne }}, {{ slider.verticalTwo }} </output>
+        </header>
+        <div class="slider-vertical-row">
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            orientation="vertical"
+            ng-model="slider.verticalOne"
+            aria-label="First vertical value"
+          />
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            orientation="vertical"
+            ng-model="slider.verticalTwo"
+            aria-label="Second vertical value"
+          />
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

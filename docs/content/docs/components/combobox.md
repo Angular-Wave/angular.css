@@ -81,11 +81,10 @@ and End navigation, dynamic options, and outside dismissal.
 <!-- angularcss-reference:start -->
 ## Installation
 
-Install AngularCSS once, load its stylesheet, and include the `ui` module in
-your AngularTS application. See [Installation]({{< relref
+Install AngularCSS, load its stylesheet, and include the `angular.css` module in your AngularTS application. See [Installation]({{< relref
 "/docs/get-started/installation" >}}) for the complete setup.
 
-This component's root directive is `[ng-combobox]`. Importing the package registers it with the AngularCSS `ui` module; there is no per-component JavaScript registration step.
+This component's root directive is `[ng-combobox]`. Importing the package registers it with the AngularCSS `angular.css` module; there is no per-component JavaScript registration step.
 
 ## Anatomy
 
@@ -110,20 +109,20 @@ A combobox root requires one input and one options surface. The root directive i
 | `aria-expanded` | Output | Open or expanded state exposed to assistive technology. |
 | `aria-haspopup` | Output | ARIA relationship or state. |
 | `aria-hidden` | Input/output | ARIA relationship or state. |
-| `aria-invalid` | Input | Validation state mirrored from the control. |
+| `aria-invalid` | Input | Validation state exposed to assistive technology and CSS. |
 | `aria-label` | Input/output | Accessible name when visible text is insufficient. |
 | `aria-labelledby` | Output | ARIA relationship or state. |
 | `aria-multiselectable` | Output | ARIA relationship or state. |
 | `aria-orientation` | Output | ARIA relationship or state. |
 | `aria-selected` | Input/output | Selected item state. |
-| `auto-highlight` | Input | Authored option or semantic HTML attribute observed by the directive. |
+| `auto-highlight` | Input | Highlights the first enabled result when the popup opens or filters change. |
 | `data-highlighted` | Output | Stable component state or styling hook. |
 | `data-value` | Input | Stable component state or styling hook. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
 | `disabled` | Input | Disables native or component interaction. |
 | `hidden` | Input | Authored option or semantic HTML attribute observed by the directive. |
-| `multiple` | Input | Allows more than one item to remain selected or open. |
-| `open` | Input/output | Initial or controlled open state. |
+| `multiple` | Input | Keeps the popup open and reports selections for an application-owned collection. |
+| `open` | Input/output | Initial or externally synchronized disclosure state. |
 | `required` | Input | Marks a native form value as required. |
 | `role` | Output | Explicit semantic role when native HTML does not provide one. |
 | `side` | Output | Physical placement: `left`, `top`, `bottom`, or `right`. |
@@ -134,8 +133,10 @@ A combobox root requires one input and one options surface. The root directive i
 
 ### CSS custom properties
 
-- `--combobox-anchor-width`
-- `--combobox-content-top`
+| Variable | Purpose |
+| --- | --- |
+| `--combobox-anchor-width` | Component styling variable. |
+| `--combobox-content-top` | Component styling variable. |
 
 ### DOM events
 

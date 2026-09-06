@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 
-const canonicalUrl = "/docs/static/examples/components/sidebar.html";
+const canonicalUrl = "/src/components/sidebar/sidebar.html";
 const anatomyUrl = "/docs/static/examples/components/sidebar-anatomy.html";
 const collapsibleUrl =
   "/docs/static/examples/components/sidebar-collapsible.html";
@@ -111,6 +111,8 @@ test("anatomy artifact wires groups, actions, menus, badges, and loading state",
   }
   const groupActions = groups.locator(":scope > button");
   await expect(groupActions).toHaveCount(2);
+  await expect(groupActions.first()).toHaveCSS("width", "24px");
+  await expect(groupActions.first()).toHaveCSS("height", "24px");
   await expect(groupActions.first()).toHaveAttribute("type", "button");
   await expect(
     page.getByRole("button", {
@@ -157,6 +159,20 @@ test("collapsible artifact composes existing disclosure behavior", async ({
   const build = summary("Build Your Application");
   await expect(help.locator("..")).toHaveAttribute("open", "");
   await expect(page.getByRole("link", { name: "Support" })).toBeVisible();
+  await expect(gettingStarted).toHaveCSS("display", "flex");
+  await expect
+    .poll(async () => {
+      const feedback = await page
+        .getByRole("link", { name: "Feedback" })
+        .boundingBox();
+      const guide = await page
+        .getByRole("heading", { name: "Guide" })
+        .boundingBox();
+      return Boolean(
+        feedback && guide && feedback.y + feedback.height <= guide.y,
+      );
+    })
+    .toBe(true);
   await help.click();
   await expect(help.locator("..")).not.toHaveAttribute("open", "");
   await expect(page.getByRole("link", { name: "Support" })).toBeHidden();
@@ -201,4 +217,22 @@ test("RTL artifact anchors right and preserves usable icon collapse", async ({
   await expect(page.locator(".sidebar-anatomy-output")).toHaveText(
     "عرض المشروع",
   );
+});
+
+test("responsive off-canvas sidebars initialize from the viewport", async ({
+  page,
+}) => {
+  await page.setViewportSize({ height: 700, width: 390 });
+  await page.goto("/src/recipes/application-shell/application-shell.html");
+  const sidebar = page.getByRole("complementary", {
+    name: "Primary navigation",
+    includeHidden: true,
+  });
+  await expect(sidebar).toHaveAttribute("responsive", "");
+  await expect(sidebar).toHaveAttribute("collapsed", "");
+  await expect(sidebar).toHaveAttribute("aria-hidden", "true");
+
+  await page.setViewportSize({ height: 700, width: 900 });
+  await expect(sidebar).not.toHaveAttribute("collapsed", "");
+  await expect(sidebar).toHaveAttribute("aria-hidden", "false");
 });

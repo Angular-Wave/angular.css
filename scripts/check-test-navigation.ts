@@ -1,6 +1,8 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 
+import { catalogNames } from "./component-policy.ts";
+
 const listTestFiles = (directory: string): string[] =>
   readdirSync(directory).flatMap((entry) => {
     const path = join(directory, entry);
@@ -14,15 +16,11 @@ const testFiles = ["src", "docs/tests"]
 const failures: string[] = [];
 const checkedArtifactPages = new Set<string>();
 const checkedSourcePages = new Set<string>();
-const canonicalComponents = readdirSync("src/components")
-  .filter((entry) => statSync(join("src/components", entry)).isDirectory())
-  .filter((entry) => existsSync(join("src/components", entry, `${entry}.ts`)));
+const canonicalComponents = catalogNames;
 
 const checkArtifactPage = (testFile: string, target: string): void => {
   if (
-    !/^\/docs\/static\/examples\/(?:components|elements)\/[^?#]+\.html$/.test(
-      target,
-    )
+    !/^\/docs\/static\/examples\/components\/[^?#]+\.html$/.test(target)
   ) {
     return;
   }
@@ -58,7 +56,12 @@ const checkArtifactPage = (testFile: string, target: string): void => {
 };
 
 const checkSourcePage = (testFile: string, target: string): void => {
-  if (!/^\/src\/(?:components|elements)\/[^?#]+\.html$/.test(target)) return;
+  if (
+    !/^\/src\/(?:foundations|elements|patterns|components|recipes)\/[^?#]+\.html$/.test(
+      target,
+    )
+  )
+    return;
 
   const pagePath = target.slice(1);
   if (!existsSync(pagePath)) {
@@ -88,7 +91,9 @@ const checkSourcePage = (testFile: string, target: string): void => {
     /<script\b[^>]*\bsrc=["'][^"']*(?:\/src\/|\.tsx?(?:[?#][^"']*)?)["']/i.test(
       html,
     ) ||
-    /\bimport\s*\(\s*["'`][^"'`]*\/src\/(?:components|elements)\//.test(html)
+    /\bimport\s*\(\s*["'`][^"'`]*\/src\/(?:foundations|elements|patterns|components|recipes)\//.test(
+      html,
+    )
   ) {
     failures.push(
       `${testFile}: tested source page ${target} references TypeScript component source`,
@@ -100,13 +105,13 @@ for (const file of testFiles) {
   const source = readFileSync(file, "utf8");
 
   for (const match of source.matchAll(
-    /["'`](\/src\/(?:components|elements)\/[^"'`?#]+\.html)["'`]/g,
+    /["'`](\/src\/(?:foundations|elements|patterns|components|recipes)\/[^"'`?#]+\.html)["'`]/g,
   )) {
     checkSourcePage(file, match[1]);
   }
 
   for (const match of source.matchAll(
-    /["'`](\/docs\/static\/examples\/(?:components|elements)\/[^"'`?#]+\.html)["'`]/g,
+    /["'`](\/docs\/static\/examples\/components\/[^"'`?#]+\.html)["'`]/g,
   )) {
     checkArtifactPage(file, match[1]);
   }

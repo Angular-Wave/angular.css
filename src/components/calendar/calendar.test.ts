@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 
-const canonicalUrl = "/docs/static/examples/components/calendar.html";
+const canonicalUrl = "/src/components/calendar/calendar.html";
 const workflowsUrl = "/docs/static/examples/components/calendar-workflows.html";
 const compositionsUrl =
   "/docs/static/examples/components/calendar-compositions.html";

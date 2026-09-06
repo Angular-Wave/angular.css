@@ -1,31 +1,8 @@
-import { expect, test } from "@playwright/test";
+import { testStyleOnlyElement } from "../../testing/style-only-element";
 
-test("radio-group element example exercises the built functional artifact", async ({
-  page,
-}) => {
-  await page.goto("/docs/static/examples/elements/radio-group.html");
-  await expect(
-    page.locator('script[src="../../js/angular-ts.umd.js"]'),
-  ).toHaveCount(1);
-  await expect(
-    page.locator('script[src="../../js/angular-css.umd.js"]'),
-  ).toHaveCount(1);
-  const group = page.locator(".radio-group");
-  const radios = group.locator("input[type=radio]");
-
-  expect(await group.getAttribute("role")).toBeNull();
-  await expect(group).toHaveRole("group");
-  await expect(radios.nth(1)).toBeChecked();
-
-  await radios.nth(2).check();
-  await expect(radios.nth(1)).not.toBeChecked();
-  await expect(radios.nth(2)).toBeChecked();
-
-  const sourceRequests = await page.evaluate(() =>
-    performance
-      .getEntriesByType("resource")
-      .map((entry) => entry.name)
-      .filter((url) => /\/src\/(?:components|elements)\/.*\.ts$/.test(url)),
-  );
-  expect(sourceRequests).toEqual([]);
+testStyleOnlyElement({
+  category: "elements",
+  directive: "ngRadioGroup",
+  name: "radio-group",
+  selector: ".radio-group",
 });

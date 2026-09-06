@@ -1,14 +1,13 @@
 ---
 title: Components
-weight: 30
+weight: 50
 description:
-  Complete AngularCSS component catalog with live demos, HTML contracts, APIs,
-  accessibility, and customization.
+  Focused AngularCSS runtime components for coordinated interaction.
 ---
 
-Every canonical component includes a locally bundled, non-scrollable iframe demo
-and its complete TypeScript-derived contract. Open **View source** below a demo
-to inspect the exact HTML and AngularTS expressions running in the iframe.
+Components are the small runtime layer used only when native HTML cannot
+coordinate the interaction. Every component includes a locally bundled,
+non-scrollable iframe demo and its complete TypeScript-derived contract.
 
 Each reference page answers:
 

@@ -9,7 +9,7 @@
     <script src="../../js/angular-ts.umd.js"></script>
     <script src="../../js/angular-css.umd.js"></script>
   </head>
-  <body ng-app="ui" ng-cloak ng-init="itemState={message:'Ready'}">
+  <body ng-app="angular.css" ng-cloak ng-init="itemState={message:'Ready'}">
     <main class="item-workflow-grid" aria-label="Item workflows">
       <section data-example="item-demo" class="item-workflow">
         <ul class="item-group">
@@ -72,7 +72,9 @@
           <li variant="outline" class="item">
             <figure class="item-avatar-stack">
               <span class="avatar"
-                ><img src="../../images/avatars/02.png" alt="shadcn" /></span
+                ><img
+                  src="../../images/avatars/02.png"
+                  alt="Jordan Lee" /></span
               ><span class="avatar"
                 ><img src="../../images/avatars/03.png" alt="maxleiter" /></span
               ><span class="avatar"
@@ -170,13 +172,13 @@
         data-example="item-dropdown"
         class="item-workflow item-dropdown-workflow"
       >
-        <div ng-dropdown class="dropdown-menu">
+        <div ng-dropdown-menu class="dropdown-menu">
           <button variant="outline" type="button" class="button">
             Select <span aria-hidden="true">⌄</span>
           </button>
           <menu>
             <section>
-              <button ng-click="itemState.message='Selected shadcn'">
+              <button ng-click="itemState.message='Selected Jordan Lee'">
                 <article size="xs" class="item">
                   <figure>
                     <span class="avatar"
@@ -184,8 +186,8 @@
                     /></span>
                   </figure>
                   <section>
-                    <h3>shadcn</h3>
-                    <p>shadcn@vercel.com</p>
+                    <h3>Jordan Lee</h3>
+                    <p>jordan@example.com</p>
                   </section>
                 </article></button
               ><button ng-click="itemState.message='Selected maxleiter'">
@@ -223,19 +225,19 @@
           <li variant="outline" class="item">
             <figure>
               <span class="avatar"
-                ><img src="../../images/avatars/02.png" alt="shadcn"
+                ><img src="../../images/avatars/02.png" alt="Jordan Lee"
               /></span>
             </figure>
             <section>
-              <h3>shadcn</h3>
-              <p>shadcn@vercel.com</p>
+              <h3>Jordan Lee</h3>
+              <p>jordan@example.com</p>
             </section>
             <menu>
               <button
                 variant="ghost"
                 size="icon-sm"
                 type="button"
-                aria-label="Invite shadcn"
+                aria-label="Invite Jordan Lee"
                 class="button"
               >
                 +

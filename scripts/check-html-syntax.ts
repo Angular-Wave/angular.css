@@ -3,7 +3,13 @@ import { extname, join, relative } from "node:path";
 
 import { format } from "prettier";
 
-const roots = ["src/components", "docs/static/examples", "examples"];
+import { catalogCategories } from "./component-policy.ts";
+
+const roots = [
+  ...catalogCategories.map((category) => join("src", category)),
+  "docs/static/examples",
+  "examples",
+];
 const filesIn = (directory: string): string[] =>
   readdirSync(directory).flatMap((entry) => {
     const path = join(directory, entry);

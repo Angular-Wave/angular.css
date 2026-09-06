@@ -1,152 +1,28 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>AngularTS</title>
-    <link rel="shortcut icon" type="image/png" href="images/favicon.ico" />
-    <link rel="stylesheet" href="/docs/assets/angular.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@angular-wave/angular.ts/css/angular.css"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/@angular-wave/angular.ts/dist/angular-ts.umd.min.js"></script>
-    <script type="module" src="../../index.ts"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
   </head>
-
-  <body ng-app="ui" ng-cloak>
-    <div class="grid w-full max-w-xl items-start gap-4">
-      <button class="button">Button</button>
-
-      <div class="flex items-start gap-2">
-        <button variant="outline" class="button">Button</button
-        ><button variant="outline" size="icon" class="button">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
+  <body ng-app="angular.css" ng-cloak data-example="button-demo">
+    <div class="row visual-example">
+      <button variant="outline" class="button">Button</button>
+      <button variant="outline" size="icon" aria-label="Submit" class="button">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path
+            d="m5 12 7-7 7 7M12 19V5"
             stroke="currentColor"
-            class="size-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"
-            />
-          </svg>
-        </button>
-      </div>
-
-      <div class="flex items-start gap-2">
-        <button variant="secondary" class="button">Button</button>
-      </div>
-
-      <div class="flex items-start gap-2">
-        <button size="sm" variant="outline" class="button">Small</button>
-        <button variant="outline" size="icon-sm" class="button">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="size-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"
-            />
-          </svg>
-        </button>
-      </div>
-
-      <div class="flex items-start gap-2">
-        <button variant="outline" class="button">Default</button>
-        <button variant="outline" size="icon" class="button">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="size-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"
-            />
-          </svg>
-        </button>
-      </div>
-
-      <div class="flex items-start gap-2">
-        <button size="lg" variant="outline" class="button">Large</button>
-        <button variant="outline" size="icon-lg" class="button">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="size-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"
-            />
-          </svg>
-        </button>
-      </div>
-
-      <div class="flex items-start gap-2">
-        <button variant="ghost" class="button">Button</button>
-      </div>
-
-      <div class="flex items-start gap-2">
-        <button variant="info" class="button">Info</button>
-      </div>
-
-      <div class="flex items-start gap-2">
-        <button variant="success" class="button">Success</button>
-      </div>
-
-      <div class="flex items-start gap-2">
-        <button variant="error" class="button">Error</button>
-      </div>
-
-      <div class="flex items-start gap-2">
-        <button variant="warning" class="button">Warning</button>
-      </div>
-
-      <div class="flex items-start gap-2">
-        <button variant="link" class="button">Link</button>
-      </div>
-
-      <div class="flex items-start gap-2">
-        <button variant="outline" class="button">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="size-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"
-            /></svg
-          >Upload
-        </button>
-      </div>
-
-      <div class="flex items-start gap-2">
-        <button variant="outline" disabled class="button">Submit</button>
-      </div>
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
     </div>
   </body>
 </html>

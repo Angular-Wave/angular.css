@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-const canonicalUrl = "/docs/static/examples/components/carousel.html";
+const canonicalUrl = "/src/components/carousel/carousel.html";
 const workflowsUrl = "/docs/static/examples/components/carousel-workflows.html";
 const compositionsUrl =
   "/docs/static/examples/components/carousel-compositions.html";

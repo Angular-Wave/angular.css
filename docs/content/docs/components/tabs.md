@@ -29,11 +29,10 @@ tab roles, relationships, selection state, and keyboard navigation.
 <!-- angularcss-reference:start -->
 ## Installation
 
-Install AngularCSS once, load its stylesheet, and include the `ui` module in
-your AngularTS application. See [Installation]({{< relref
+Install AngularCSS, load its stylesheet, and include the `angular.css` module in your AngularTS application. See [Installation]({{< relref
 "/docs/get-started/installation" >}}) for the complete setup.
 
-This component's root directive is `[ng-tabs]`. Importing the package registers it with the AngularCSS `ui` module; there is no per-component JavaScript registration step.
+This component's root directive is `[ng-tabs]`. Importing the package registers it with the AngularCSS `angular.css` module; there is no per-component JavaScript registration step.
 
 ## Anatomy
 
@@ -51,12 +50,17 @@ Use native elements for authored structure. Component classes are optional visua
 
 | Attribute | Access | Purpose |
 | --- | --- | --- |
+| `aria-controls` | Output | ARIA relationship or state. |
 | `aria-disabled` | Input | Semantic disabled state. |
-| `aria-orientation` | Input | ARIA relationship or state. |
-| `aria-selected` | Input | Selected item state. |
+| `aria-hidden` | Output | ARIA relationship or state. |
+| `aria-labelledby` | Output | ARIA relationship or state. |
+| `aria-orientation` | Input/output | ARIA relationship or state. |
+| `aria-selected` | Input/output | Selected item state. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
 | `disabled` | Input | Disables native or component interaction. |
-| `orientation` | Input | Layout direction: `horizontal` or `vertical`. |
+| `orientation` | Input/output | Layout direction: `horizontal` or `vertical`. |
+| `role` | Output | Explicit semantic role when native HTML does not provide one. |
+| `tabindex` | Output | Keyboard focus order for composite descendants. |
 
 `Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
 

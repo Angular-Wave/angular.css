@@ -1,6 +1,6 @@
 import type {} from "@angular-wave/angular.ts";
 
-import { onDestroy, queryAll } from "../../internal/dom";
+import { onDestroy, queryAll, setAttributeIfChanged } from "../../internal/dom";
 
 const DEFAULT_MIN_SIZE = 0.25;
 const DEFAULT_MAX_SIZE = 4;
@@ -21,16 +21,6 @@ const numberAttribute = (
   if (rawValue === null || rawValue === "") return fallback;
   const value = Number(rawValue);
   return Number.isFinite(value) ? value : fallback;
-};
-
-const setAttributeIfChanged = (
-  element: HTMLElement,
-  name: string,
-  value: string,
-) => {
-  if (element.getAttribute(name) !== value) {
-    element.setAttribute(name, value);
-  }
 };
 
 export function resizablePanelGroupDirective(): ng.Directive {

@@ -1,7 +1,9 @@
 import { existsSync, readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 
-import { componentNames } from "./component-policy.ts";
+import { catalogNames, catalogPolicy } from "./component-policy.ts";
+
+const componentNames = catalogNames.filter((name) => catalogPolicy[name].runtime);
 
 const listFiles = (directory) => {
   if (!existsSync(directory)) return [];
@@ -42,7 +44,13 @@ for (const componentType of actualComponentTypes) {
   }
 }
 
-for (const forbiddenDirectory of [join("@types", "src"), join("@types", "elements")]) {
+for (const forbiddenDirectory of [
+  join("@types", "src"),
+  join("@types", "foundations"),
+  join("@types", "elements"),
+  join("@types", "patterns"),
+  join("@types", "recipes"),
+]) {
   if (existsSync(forbiddenDirectory)) {
     failures.push(
       `${forbiddenDirectory} must not be emitted; declarations should follow src canonical exports`,

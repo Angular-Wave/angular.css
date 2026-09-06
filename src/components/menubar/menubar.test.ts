@@ -1,15 +1,15 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
 
-const canonicalUrl = "/docs/static/examples/components/menubar.html";
+const canonicalUrl = "/src/components/menubar/menubar.html";
 const workflowsUrl = "/docs/static/examples/components/menubar-workflows.html";
 const rtlUrl = "/docs/static/examples/components/menubar-rtl.html";
 
 const expectBuiltArtifactRuntime = async (page: Page): Promise<void> => {
   await expect(
-    page.locator('script[src="../../js/angular-ts.umd.js"]'),
+    page.locator('script[src$="/js/angular-ts.umd.js"]'),
   ).toHaveCount(1);
   await expect(
-    page.locator('script[src="../../js/angular-css.umd.js"]'),
+    page.locator('script[src$="/js/angular-css.umd.js"]'),
   ).toHaveCount(1);
   const sourceRequests = await page.evaluate(() =>
     performance
@@ -35,6 +35,12 @@ test("canonical menubar uses built bundles and a roving trigger tab stop", async
   await expect(menubar).toHaveAttribute("role", "menubar");
   await expect(menubar).not.toHaveAttribute("open");
   await expect(triggers).toHaveCount(4);
+  await expect(menubar).toHaveCSS("height", "36px");
+  expect(
+    await triggers.evaluateAll((items) =>
+      items.map((item) => item.getBoundingClientRect().height),
+    ),
+  ).toEqual([28, 28, 28, 28]);
   await expect(triggers.nth(0)).toHaveAttribute("tabindex", "0");
   for (let index = 1; index < 4; index += 1) {
     await expect(triggers.nth(index)).toHaveAttribute("tabindex", "-1");

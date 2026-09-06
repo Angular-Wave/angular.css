@@ -1,20 +1,16 @@
 import type {} from "@angular-wave/angular.ts";
 
-import { isDisabled, onDestroy, query, setOpenState } from "../../internal/dom";
+import {
+  isDisabled,
+  onDestroy,
+  query,
+  setOpenState,
+  setAttributeIfChanged,
+} from "../../internal/dom";
 
 let tooltipIdCounter = 0;
 
 const sides = new Set(["bottom", "left", "right", "top"]);
-
-const setAttributeIfChanged = (
-  element: HTMLElement,
-  name: string,
-  value: string,
-) => {
-  if (element.getAttribute(name) !== value) {
-    element.setAttribute(name, value);
-  }
-};
 
 export function tooltipDirective(): ng.Directive {
   return {

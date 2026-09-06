@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="angular.css"
+    ng-cloak
+    ng-init="query=''; order='customer'; rows=[{id:'ORD-1048',customer:'Ada Lovelace',status:'Open',total:'€1,240'},{id:'ORD-1047',customer:'Grace Hopper',status:'Review',total:'€860'},{id:'ORD-1046',customer:'Edsger Dijkstra',status:'Complete',total:'€420'}]"
+    data-example="data-table-demo"
+  >
+    <section class="data-table visual-example" aria-labelledby="orders-title">
+      <header>
+        <div>
+          <h2 id="orders-title">Orders</h2>
+          <p>Recent customer orders</p>
+        </div>
+        <form class="filter-bar" aria-label="Filter orders">
+          <fieldset>
+            <legend class="visually-hidden">Filters</legend>
+            <label>
+              <span class="visually-hidden">Search orders</span>
+              <input
+                class="input"
+                type="search"
+                ng-model="query"
+                placeholder="Search orders"
+              />
+            </label>
+          </fieldset>
+        </form>
+      </header>
+      <figure>
+        <table class="table">
+          <caption>
+            Orders currently available to your account.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">
+                <button
+                  class="button"
+                  variant="ghost"
+                  ng-click="order=order==='id' ? '-id' : 'id'"
+                >
+                  Order
+                </button>
+              </th>
+              <th scope="col">
+                <button
+                  class="button"
+                  variant="ghost"
+                  ng-click="order=order==='customer' ? '-customer' : 'customer'"
+                >
+                  Customer
+                </button>
+              </th>
+              <th scope="col">Status</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="row in rows | filter:query | orderBy:order">
+              <th scope="row">{{ row.id }}</th>
+              <td>{{ row.customer }}</td>
+              <td><span class="badge">{{ row.status }}</span></td>
+              <td>{{ row.total }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>No matching orders.</p>
+      </figure>
+      <footer>
+        <output
+          ><span>0</span
+          ><span ng-repeat="row in rows | filter:query" ng-show="$last"
+            >{{ $index + 1 }}</span
+          >
+          orders</output
+        >
+        <nav class="pagination" aria-label="Order pages">
+          <ul>
+            <li><a href="#page-1" aria-current="page">1</a></li>
+          </ul>
+        </nav>
+      </footer>
+    </section>
+  </body>
+</html>

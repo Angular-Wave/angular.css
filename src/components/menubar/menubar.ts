@@ -1,6 +1,7 @@
 import type {} from "@angular-wave/angular.ts";
 
 import {
+  setAttributeIfChanged,
   isDisabled,
   nextIndex,
   onDestroy,
@@ -16,11 +17,10 @@ import {
 let menubarIdCounter = 0;
 
 type MenubarEntry = {
-  menu: HTMLElement;
-  trigger: HTMLElement;
-  content: HTMLElement;
-  open: boolean;
-  disconnect: () => void;
+  _menu: HTMLElement;
+  _trigger: HTMLElement;
+  _content: HTMLElement;
+  _open: boolean;
 };
 
 const menuSelector = ":scope > section";
@@ -28,16 +28,6 @@ const triggerSelector = ":scope > button";
 const contentSelector = ":scope > menu";
 const itemSelector =
   'a, button, [role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]';
-
-const setAttribute = (
-  element: HTMLElement,
-  name: string,
-  value: string,
-): void => {
-  if (element.getAttribute(name) !== value) {
-    element.setAttribute(name, value);
-  }
-};
 
 export function menubarDirective(): ng.Directive {
   return {
@@ -55,7 +45,7 @@ export function menubarDirective(): ng.Directive {
         (key === "ArrowRight") === (getDirection() === "ltr") ? 1 : -1;
 
       const syncRootState = () => {
-        const open = entries.some((entry) => entry.open);
+        const open = entries.some((entry) => entry._open);
         element.toggleAttribute("open", open);
       };
       const cleanupSubmenus = bindSemanticSubmenus(
@@ -80,9 +70,9 @@ export function menubarDirective(): ng.Directive {
           (content) => {
             getAllContentItems(content).forEach((item) => {
               const role = getSemanticMenuItemRole(item);
-              setAttribute(item, "role", role);
+              setAttributeIfChanged(item, "role", role);
               if (role !== "menuitem" && !item.hasAttribute("aria-checked")) {
-                setAttribute(item, "aria-checked", "false");
+                setAttributeIfChanged(item, "aria-checked", "false");
               }
             });
           },
@@ -91,7 +81,7 @@ export function menubarDirective(): ng.Directive {
 
       const setActiveTrigger = (index: number, focus = false) => {
         triggers.forEach((trigger, triggerIndex) => {
-          setAttribute(
+          setAttributeIfChanged(
             trigger,
             "tabindex",
             triggerIndex === index ? "0" : "-1",
@@ -115,39 +105,39 @@ export function menubarDirective(): ng.Directive {
         const entry = entries.at(index);
         if (!entry) return;
 
-        const wasOpen = entry.open;
-        entry.open = open;
+        const wasOpen = entry._open;
+        entry._open = open;
         if (open) setActiveTrigger(index);
-        setAttribute(entry.trigger, "aria-expanded", String(open));
-        entry.content.toggleAttribute("open", open);
-        setAttribute(entry.content, "aria-hidden", String(!open));
-        setOpenState(entry.content, open);
+        setAttributeIfChanged(entry._trigger, "aria-expanded", String(open));
+        entry._content.toggleAttribute("open", open);
+        setAttributeIfChanged(entry._content, "aria-hidden", String(!open));
+        setOpenState(entry._content, open);
         syncRootState();
 
         if (wasOpen === open) {
           if (open && focus) {
-            const focusTarget = getContentItems(entry.content).at(0);
+            const focusTarget = getContentItems(entry._content).at(0);
             if (focusTarget) {
               focusTarget.focus();
             } else {
-              entry.trigger.focus();
+              entry._trigger.focus();
             }
           }
           return;
         }
 
         if (open && focus) {
-          const focusTarget = getContentItems(entry.content).at(0);
+          const focusTarget = getContentItems(entry._content).at(0);
           if (focusTarget) {
             focusTarget.focus();
           } else {
-            entry.trigger.focus();
+            entry._trigger.focus();
           }
           return;
         }
 
         if (!open && focus) {
-          entry.trigger.focus();
+          entry._trigger.focus();
         }
       };
 
@@ -193,30 +183,29 @@ export function menubarDirective(): ng.Directive {
         const contentId = content.id || `${triggerId}-content`;
         trigger.id = triggerId;
         content.id = contentId;
-        setAttribute(trigger, "role", "menuitem");
-        setAttribute(trigger, "aria-haspopup", "menu");
-        setAttribute(trigger, "aria-controls", contentId);
-        setAttribute(content, "role", "menu");
-        setAttribute(content, "aria-labelledby", triggerId);
-        setAttribute(content, "aria-hidden", "true");
+        setAttributeIfChanged(trigger, "role", "menuitem");
+        setAttributeIfChanged(trigger, "aria-haspopup", "menu");
+        setAttributeIfChanged(trigger, "aria-controls", contentId);
+        setAttributeIfChanged(content, "role", "menu");
+        setAttributeIfChanged(content, "aria-labelledby", triggerId);
+        setAttributeIfChanged(content, "aria-hidden", "true");
         if (!content.hasAttribute("tabindex")) {
-          setAttribute(content, "tabindex", "-1");
+          setAttributeIfChanged(content, "tabindex", "-1");
         }
         getContentItems(content).forEach((item) => {
           const role = getSemanticMenuItemRole(item);
-          setAttribute(item, "role", role);
+          setAttributeIfChanged(item, "role", role);
         });
 
         const entry: MenubarEntry = {
-          menu,
-          trigger,
-          content,
-          open: content.hasAttribute("open"),
-          disconnect: () => void 0,
+          _menu: menu,
+          _trigger: trigger,
+          _content: content,
+          _open: content.hasAttribute("open"),
         };
         entries.push(entry);
         triggers.push(trigger);
-        setAttribute(trigger, "tabindex", "-1");
+        setAttributeIfChanged(trigger, "tabindex", "-1");
         const getEntryIndex = () => entries.indexOf(entry);
 
         const syncFromAttribute = () => {
@@ -234,13 +223,13 @@ export function menubarDirective(): ng.Directive {
           openObserver.disconnect();
         });
 
-        setMenuState(getEntryIndex(), entry.open, false);
+        setMenuState(getEntryIndex(), entry._open, false);
 
         const handleTriggerClick = () => {
           if (isDisabled(trigger)) return;
           const currentIndex = getEntryIndex();
           setActiveTrigger(currentIndex);
-          if (entry.open) {
+          if (entry._open) {
             closeAll();
           } else {
             openMenu(currentIndex, true);
@@ -274,7 +263,7 @@ export function menubarDirective(): ng.Directive {
           event.stopPropagation();
           if (event.key === "Home" || event.key === "End") {
             const targetIndex = getBoundaryTriggerIndex(event.key === "End");
-            if (entries.some((nextEntry) => nextEntry.open)) {
+            if (entries.some((nextEntry) => nextEntry._open)) {
               openMenu(targetIndex, true);
             } else {
               setActiveTrigger(targetIndex, true);
@@ -284,7 +273,7 @@ export function menubarDirective(): ng.Directive {
               getEntryIndex(),
               getHorizontalDirection(event.key),
             );
-            if (entries.some((nextEntry) => nextEntry.open)) {
+            if (entries.some((nextEntry) => nextEntry._open)) {
               openMenu(targetIndex, true);
             } else {
               setActiveTrigger(targetIndex, true);
@@ -309,13 +298,13 @@ export function menubarDirective(): ng.Directive {
       const syncStructure = () => {
         queryAll<HTMLElement>(element, menuSelector).forEach(bindMenu);
         entries.sort((left, right) => {
-          const position = left.menu.compareDocumentPosition(right.menu);
+          const position = left._menu.compareDocumentPosition(right._menu);
           return position & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
         });
         triggers.splice(
           0,
           triggers.length,
-          ...entries.map(({ trigger }) => trigger),
+          ...entries.map(({ _trigger }) => _trigger),
         );
         syncContentItems();
         syncActiveTrigger();
@@ -346,10 +335,10 @@ export function menubarDirective(): ng.Directive {
           if (activeContent) {
             const currentMenu = activeContent.parentElement;
             const currentIndex = currentMenu
-              ? entries.findIndex((entry) => entry.menu === currentMenu)
+              ? entries.findIndex((entry) => entry._menu === currentMenu)
               : -1;
             if (currentIndex >= 0) {
-              entries[currentIndex].trigger.focus();
+              entries[currentIndex]._trigger.focus();
             }
           }
           closeAll();
@@ -391,7 +380,7 @@ export function menubarDirective(): ng.Directive {
             event.preventDefault();
             const currentMenu = activeContent.parentElement;
             const currentIndex = currentMenu
-              ? entries.findIndex((entry) => entry.menu === currentMenu)
+              ? entries.findIndex((entry) => entry._menu === currentMenu)
               : -1;
             const nextMenuIndex = getEnabledTriggerIndex(
               currentIndex,
@@ -420,7 +409,7 @@ export function menubarDirective(): ng.Directive {
         }
       };
 
-      setAttribute(element, "role", "menubar");
+      setAttributeIfChanged(element, "role", "menubar");
 
       const handleDocumentClick = (event: MouseEvent) => {
         if (event.target instanceof Node && !element.contains(event.target)) {
@@ -450,7 +439,7 @@ export function menubarDirective(): ng.Directive {
       syncStructure();
       let foundInitialOpen = false;
       entries.forEach((entry, index) => {
-        const keepOpen = entry.open && !foundInitialOpen;
+        const keepOpen = entry._open && !foundInitialOpen;
         if (keepOpen) foundInitialOpen = true;
         setMenuState(index, keepOpen);
       });

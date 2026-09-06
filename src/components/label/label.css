@@ -1,9 +1,0 @@
-label {
-  @apply flex items-center gap-2 text-sm font-medium leading-none select-none;
-}
-
-label:is(:has(:disabled), :has(+ :disabled)) {
-  pointer-events: none;
-  cursor: not-allowed;
-  opacity: 0.5;
-}

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="angular.css" ng-cloak data-example="resizable-demo">
+    <div
+      ng-resizable-panel-group
+      orientation="horizontal"
+      aria-label="Resizable layout"
+      class="resizable-demo visual-example"
+    >
+      <section style="--panel-size: 1">
+        <div class="resizable-panel-content"><strong>One</strong></div>
+      </section>
+      <hr aria-label="Resize panel one and panels two and three" />
+      <section style="--panel-size: 1">
+        <div
+          ng-resizable-panel-group
+          orientation="vertical"
+          aria-label="Resize panels two and three"
+        >
+          <section style="--panel-size: 1">
+            <div class="resizable-panel-content"><strong>Two</strong></div>
+          </section>
+          <hr aria-label="Resize panel two and panel three" />
+          <section style="--panel-size: 3">
+            <div class="resizable-panel-content"><strong>Three</strong></div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="angular.css" ng-cloak data-example="tree-demo">
+    <div class="visual-example">
+      <ul
+        ng-tree
+        aria-label="Organization"
+        ng-on-angularcss:tree-select="selectedNode=$event.detail.value"
+      >
+        <li data-value="operations" aria-expanded="true">
+          <span>Operations <small>12</small></span>
+          <ul>
+            <li data-value="fulfillment">
+              <span>Fulfillment <small>7</small></span>
+            </li>
+            <li data-value="support">
+              <span>Support <small>5</small></span>
+            </li>
+          </ul>
+        </li>
+        <li data-value="finance" aria-expanded="false">
+          <span>Finance <small>8</small></span>
+          <ul>
+            <li data-value="accounts"><span>Accounts</span></li>
+            <li data-value="payroll"><span>Payroll</span></li>
+          </ul>
+        </li>
+        <li data-value="legal" aria-disabled="true">
+          <span>Legal <small>Restricted</small></span>
+        </li>
+      </ul>
+      <output aria-live="polite">Selected: {{ selectedNode || 'none' }}</output>
+    </div>
+  </body>
+</html>

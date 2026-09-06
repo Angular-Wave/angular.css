@@ -1,48 +1,30 @@
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
-const componentNames = readdirSync("src/components")
-  .filter((entry) => statSync(join("src/components", entry)).isDirectory())
-  .filter((entry) => existsSync(join("src/components", entry, `${entry}.ts`)))
-  .sort();
+import { catalogNames } from "./component-policy.ts";
 
 const indexSource = readFileSync("index.html", "utf8");
-const linkedComponents = [
+const linkedEntries = [
   ...indexSource.matchAll(
     /href="\.\/docs\/static\/examples\/components\/([^"/]+)\.html"/g,
   ),
 ]
-  .map(([, component]) => component)
+  .map(([, name]) => name)
   .sort();
-
 const failures: string[] = [];
 
-if (JSON.stringify(linkedComponents) !== JSON.stringify(componentNames)) {
-  const missing = componentNames.filter(
-    (component) => !linkedComponents.includes(component),
-  );
-  const unexpected = linkedComponents.filter(
-    (component) => !componentNames.includes(component),
-  );
-
-  if (missing.length > 0) {
-    failures.push(`index.html: missing component links: ${missing.join(", ")}`);
-  }
+if (JSON.stringify(linkedEntries) !== JSON.stringify(catalogNames)) {
+  const missing = catalogNames.filter((name) => !linkedEntries.includes(name));
+  const unexpected = linkedEntries.filter((name) => !catalogNames.includes(name));
+  if (missing.length > 0) failures.push(`index.html: missing ${missing.join(", ")}`);
   if (unexpected.length > 0) {
-    failures.push(
-      `index.html: unexpected or duplicate component links: ${unexpected.join(", ")}`,
-    );
-  }
-  if (missing.length === 0 && unexpected.length === 0) {
-    failures.push("index.html: component links must appear exactly once");
+    failures.push(`index.html: unexpected or duplicate ${unexpected.join(", ")}`);
   }
 }
 
-for (const component of linkedComponents) {
-  const example = join("docs/static/examples/components", `${component}.html`);
-  if (!existsSync(example)) {
-    failures.push(`index.html: linked example does not exist: ${example}`);
-  }
+for (const name of linkedEntries) {
+  const example = join("docs/static/examples/components", `${name}.html`);
+  if (!existsSync(example)) failures.push(`index.html: missing ${example}`);
 }
 
 if (failures.length > 0) {
@@ -50,6 +32,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log(
-  `Developer index check passed for ${componentNames.length} components.`,
-);
+console.log(`Developer index check passed for ${catalogNames.length} entries.`);

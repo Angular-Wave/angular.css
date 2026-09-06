@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="angular.css"
+    ng-cloak
+    class="popover-example-body"
+    data-example="popover-demo"
+  >
+    <main class="popover-demo visual-example">
+      <span aria-label="Dimensions popover" class="popover">
+        <button
+          type="button"
+          variant="outline"
+          class="button"
+          popovertarget="popover-popover-1-content"
+        >
+          Open popover
+        </button>
+        <aside
+          aria-label="Dimensions"
+          id="popover-popover-1-content"
+          side="bottom"
+          align="center"
+          popover
+        >
+          <header>
+            <h2>Dimensions</h2>
+            <p>Set the dimensions for the layer.</p>
+          </header>
+          <form>
+            <label
+              ><span>Width</span>
+              <input id="popover-width" value="100%" autofocus class="input" />
+            </label>
+            <label
+              ><span>Max. width</span>
+              <input id="popover-max-width" value="300px" class="input" />
+            </label>
+            <label
+              ><span>Height</span>
+              <input id="popover-height" value="25px" class="input" />
+            </label>
+            <label
+              ><span>Max. height</span>
+              <input id="popover-max-height" value="none" class="input" />
+            </label>
+          </form>
+        </aside>
+      </span>
+    </main>
+  </body>
+</html>

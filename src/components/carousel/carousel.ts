@@ -6,7 +6,13 @@ import EmblaCarousel, {
 } from "embla-carousel";
 import Autoplay from "embla-carousel-autoplay";
 
-import { onDestroy, queryAll } from "../../internal/dom";
+import {
+  isOwnedBy,
+  onDestroy,
+  queryAll,
+  queryOwnedAll,
+  setAttributeIfChanged,
+} from "../../internal/dom";
 
 const ROOT_SELECTOR = ".carousel, [ng-carousel]";
 
@@ -18,16 +24,6 @@ export interface CarouselChangeDetail {
   itemCount: number;
   itemIndex: number;
 }
-
-const setAttributeIfChanged = (
-  element: HTMLElement,
-  name: string,
-  value: string,
-) => {
-  if (element.getAttribute(name) !== value) {
-    element.setAttribute(name, value);
-  }
-};
 
 const hasEnabledAttribute = (element: HTMLElement, name: string): boolean => {
   const value = element.getAttribute(name);
@@ -64,15 +60,15 @@ export function carouselDirective(): ng.Directive {
 
       if (!viewport || track?.parentElement !== viewport) return;
 
-      const belongsToThisCarousel = (candidate: Element): boolean =>
-        candidate.closest(ROOT_SELECTOR) === element;
       const getItems = (): HTMLElement[] =>
-        queryAll<HTMLElement>(track, ":scope > li").filter(
-          belongsToThisCarousel,
+        queryAll<HTMLElement>(track, ":scope > li").filter((item) =>
+          isOwnedBy(element, ROOT_SELECTOR, item),
         );
       const getDots = (): HTMLElement[] =>
-        queryAll<HTMLElement>(element, ":scope > nav > button").filter(
-          belongsToThisCarousel,
+        queryOwnedAll<HTMLElement>(
+          element,
+          ROOT_SELECTOR,
+          ":scope > nav > button",
         );
       const getControls = (): readonly [
         HTMLButtonElement | undefined,
@@ -254,7 +250,7 @@ export function carouselDirective(): ng.Directive {
         const target = event.target;
         if (!(target instanceof Element)) return;
         const control = target.closest<HTMLButtonElement>("button");
-        if (!control || !belongsToThisCarousel(control)) return;
+        if (!control || !isOwnedBy(element, ROOT_SELECTOR, control)) return;
         const [previous, next] = getControls();
 
         if (control === previous) {

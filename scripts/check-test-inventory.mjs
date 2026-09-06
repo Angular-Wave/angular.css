@@ -1,28 +1,19 @@
-import { existsSync, readdirSync, statSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { join } from "node:path";
 
-const componentNames = readdirSync("src/components")
-  .filter((entry) => statSync(join("src/components", entry)).isDirectory())
-  .filter((entry) => existsSync(join("src/components", entry, `${entry}.ts`)))
-  .sort();
+import { catalogNames, catalogPolicy } from "./component-policy.ts";
 
-const failures = [];
-
-for (const componentName of componentNames) {
-  const testFile = join(
-    "src/components",
-    componentName,
-    `${componentName}.test.ts`,
-  );
-
-  if (!existsSync(testFile)) {
-    failures.push(`${componentName}: missing component test ${testFile}`);
-  }
-}
+const failures = catalogNames
+  .map((name) => {
+    const { category } = catalogPolicy[name];
+    const path = join("src", category, name, `${name}.test.ts`);
+    return existsSync(path) ? null : `${name}: missing ${path}`;
+  })
+  .filter(Boolean);
 
 if (failures.length > 0) {
   console.error(failures.join("\n"));
   process.exit(1);
 }
 
-console.log("Test inventory check passed.");
+console.log(`Test inventory check passed for ${catalogNames.length} entries.`);

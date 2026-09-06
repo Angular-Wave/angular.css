@@ -1,6 +1,8 @@
 import { expect, test } from "@playwright/test";
-import { existsSync, readdirSync, statSync } from "node:fs";
+import { readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
+
+import { catalogNames } from "../scripts/component-policy";
 
 function listHtmlFiles(directory: string): string[] {
   return readdirSync(directory)
@@ -13,10 +15,7 @@ function listHtmlFiles(directory: string): string[] {
 }
 
 const componentExampleFiles = listHtmlFiles("docs/static/examples/components");
-const componentNames = readdirSync("src/components")
-  .filter((entry) => statSync(join("src/components", entry)).isDirectory())
-  .filter((entry) => existsSync(join("src/components", entry, `${entry}.ts`)))
-  .sort();
+const componentNames = catalogNames;
 
 test("developer index links every canonical component to functional HTML", async ({
   page,
@@ -321,11 +320,11 @@ test("published checkbox pages cover every reference workflow with functional HT
   ).not.toBeChecked();
 });
 
-test("published collapsible pages cover every reference workflow with functional HTML", async ({
+test("published disclosure pages cover every reference workflow with functional HTML", async ({
   page,
 }) => {
-  await page.goto("/docs/static/examples/components/collapsible.html");
-  const root = page.locator("details.collapsible");
+  await page.goto("/docs/static/examples/components/disclosure.html");
+  const root = page.locator("details.disclosure");
   const trigger = root.locator(":scope > summary");
   await trigger.click();
   await expect(root).toHaveAttribute("open", "");
@@ -333,19 +332,17 @@ test("published collapsible pages cover every reference workflow with functional
     page.getByText("Shipping address", { exact: true }),
   ).toBeVisible();
 
-  await page.goto(
-    "/docs/static/examples/components/collapsible-workflows.html",
-  );
-  await page.locator(".collapsible-product summary").click();
+  await page.goto("/docs/static/examples/components/disclosure-workflows.html");
+  await page.locator(".disclosure-product summary").click();
   await expect(page.getByText("Learn More", { exact: true })).toBeVisible();
-  const settings = page.locator(".collapsible-settings");
+  const settings = page.locator(".disclosure-settings");
   await settings.locator("details > summary").click();
   await expect(settings.locator("input:visible")).toHaveCount(4);
 
   await page.goto(
-    "/docs/static/examples/components/collapsible-compositions.html",
+    "/docs/static/examples/components/disclosure-compositions.html",
   );
-  const tree = page.locator(".collapsible-file-tree");
+  const tree = page.locator(".disclosure-file-tree");
   await tree.locator("details").first().locator(":scope > summary").click();
   await expect(tree.getByText("login-form.tsx", { exact: true })).toBeVisible();
 });
@@ -376,6 +373,9 @@ test("published date-picker workflows retain AngularTS model ownership", async (
   await expect(rangeTrigger).toContainText("Sep 10, 2026 - Sep 12, 2026");
 
   const subscription = page.locator("#date-picker-input");
+  await expect(
+    page.getByRole("button", { name: "Select subscription date" }),
+  ).toHaveCSS("width", "24px");
   await subscription.fill("July 04, 2026");
   await subscription.blur();
   await expect(subscription).toHaveValue("July 04, 2026");
@@ -477,7 +477,9 @@ test("docs iframe examples render without stale AngularTS bindings", async ({
     }
 
     if (!result.usesAngular) {
-      failures.push(`${examplePath}: iframe example must use ng-app="ui"`);
+      failures.push(
+        `${examplePath}: iframe example must use ng-app="angular.css"`,
+      );
     }
 
     const remoteScripts = result.scriptSources.filter(
@@ -549,7 +551,7 @@ test("form examples preserve AngularTS ng-model ownership", async ({
   await expect(search).toHaveValue("semantic");
   await expect(search).toHaveClass(/ng-not-empty/);
 
-  await page.goto("/docs/static/examples/components/slider.html");
+  await page.goto("/docs/static/examples/components/range.html");
   const volume = page.locator("#volume");
   await volume.fill("42");
   await expect(page.locator('output[for="volume"]')).toHaveText("42");
@@ -580,11 +582,6 @@ test("form examples preserve AngularTS ng-model ownership", async ({
     "Message: Accessible components",
   );
   await expect(message).toHaveValue("Accessible components");
-
-  await page.goto("/docs/static/examples/components/native-select.html");
-  const status = page.getByLabel("Status");
-  await status.selectOption("done");
-  await expect(status).toHaveValue("done");
 
   await page.goto("/docs/static/examples/components/radio-group.html");
   const compact = page.locator("#density-compact");
@@ -617,8 +614,8 @@ test("form examples preserve AngularTS ng-model ownership", async ({
   );
 
   await page.goto("/docs/static/examples/components/select.html");
-  await page.getByRole("combobox").selectOption("pineapple");
+  await page.getByRole("combobox").selectOption({ label: "In progress" });
   await expect(page.locator(".output").first()).toContainText(
-    "Selected: pineapple",
+    "Current: In progress",
   );
 });

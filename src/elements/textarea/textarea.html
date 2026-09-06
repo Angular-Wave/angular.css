@@ -1,22 +1,83 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>AngularCSS</title>
-    <link rel="stylesheet" href="/docs/assets/angular.css" />
-    <script src="https://cdn.jsdelivr.net/npm/@angular-wave/angular.ts/dist/angular-ts.umd.min.js"></script>
-    <script type="module" src="../../index.ts"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
   </head>
+  <body
+    ng-app="angular.css"
+    ng-cloak
+    ng-init="message='Ship semantic components';rtlMessage='';textareaAction='Ready'"
+    data-example="textarea-button textarea-demo textarea-disabled textarea-field textarea-invalid textarea-rtl"
+  >
+    <main class="textarea-workflows visual-example">
+      <div class="field">
+        <label for="docs-textarea-message">Message</label>
+        <textarea
+          id="docs-textarea-message"
+          placeholder="Add a message"
+          ng-model="message"
+          class="textarea"
+        ></textarea>
+        <p>Add context for your request.</p>
+      </div>
 
-  <body ng-app="ui" ng-cloak>
-    <div class="grid w-full max-w-xl items-start gap-4 p-10">
-      <textarea placeholder="Add a message" class="textarea"></textarea>
-      <textarea placeholder="Disabled" disabled class="textarea"></textarea>
-      <textarea
-        placeholder="Invalid"
-        aria-invalid="true"
-        class="textarea"
-      ></textarea>
-    </div>
+      <div class="field">
+        <label for="docs-textarea-disabled">Disabled</label>
+        <textarea
+          id="docs-textarea-disabled"
+          placeholder="Disabled"
+          disabled
+          class="textarea"
+        ></textarea>
+      </div>
+
+      <div class="field">
+        <label for="docs-textarea-invalid">Invalid</label>
+        <textarea
+          id="docs-textarea-invalid"
+          placeholder="Invalid"
+          aria-invalid="true"
+          class="textarea"
+        ></textarea>
+        <p class="field-error">A message is required.</p>
+      </div>
+
+      <div class="textarea-button-demo field">
+        <label for="docs-textarea-reply">Reply</label>
+        <textarea
+          id="docs-textarea-reply"
+          placeholder="Type your message here."
+          class="textarea"
+        ></textarea>
+        <button
+          type="button"
+          ng-click="textareaAction='Message sent'"
+          class="button"
+        >
+          Send message
+        </button>
+      </div>
+
+      <div dir="rtl" lang="ar" class="field">
+        <label for="docs-textarea-rtl">رسالتك</label>
+        <textarea
+          id="docs-textarea-rtl"
+          ng-model="rtlMessage"
+          placeholder="اكتب رسالتك هنا."
+          class="textarea"
+        ></textarea>
+        <p>سيتم إرسال رد إلى بريدك الإلكتروني.</p>
+      </div>
+
+      <output class="output textarea-output">
+        Message: {{ message ? message : "empty" }} · {{ textareaAction }}
+      </output>
+    </main>
   </body>
 </html>

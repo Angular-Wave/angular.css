@@ -12,11 +12,11 @@ TypeScript components are reserved for interactions that native HTML, CSS, and
 AngularTS do not already provide.
 
 ```html
-<button variant="outline">Save changes</button>
+<button class="button" variant="outline">Save changes</button>
 ```
 
 No directive runs for this button. The browser owns activation and disabled
-state, AngularTS owns application commands, and CSS targets the native element
+state, AngularTS owns application commands, and CSS targets the `.button` class
 and authored variant directly.
 
 ## Three layers
@@ -33,27 +33,27 @@ This boundary prevents a component from creating a second form model, template
 engine, validation system, or styling-state mirror over AngularTS and the
 browser.
 
-## Behavioral components
+## HTML-first composition
 
 Complex components are composed from named parts rather than hidden templates:
 
 ```html
-<details class="collapsible">
+<details class="disclosure">
   <summary>Account settings</summary>
   <section>
     <label for="display-name">Display name</label>
-    <input id="display-name" ng-model="profile.name" class="input" />
+    <input id="display-name" class="input" ng-model="profile.name" />
   </section>
 </details>
 ```
 
 You control the elements, content, AngularTS expressions, and Tailwind classes.
-The component page lists every supported directive, part, state, and event.
+Each catalog page documents the authored HTML and any runtime behavior it needs.
 
 ## What is included
 
-- 55 documented catalog entries split between styling-only HTML elements and
-  focused behavioral components.
+- 55 documented entries split into foundations, elements, patterns, focused
+  behavioral components, and recipes.
 - TypeScript declarations generated from the canonical source.
 - A compiled CSS entrypoint with Radix color tokens and Tailwind-compatible
   selectors.
@@ -63,4 +63,4 @@ The component page lists every supported directive, part, state, and event.
 ## Next step
 
 [Install AngularCSS]({{< relref "/docs/get-started/installation" >}}) and
-connect the `ui` module to an AngularTS application.
+connect the `angular.css` module to an AngularTS application.

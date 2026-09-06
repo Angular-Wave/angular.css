@@ -53,6 +53,11 @@
   box-shadow: var(--shadow-lg);
 }
 
+:is(.drawer, .sheet) > dialog:is([side="left"], [side="right"]) {
+  width: 75%;
+  max-width: 24rem;
+}
+
 :is(.alert-dialog, .dialog, .drawer, .sheet) > dialog:not(:open) {
   display: none;
 }
@@ -114,5 +119,12 @@
   :is(.alert-dialog, .dialog, .drawer, .sheet) > dialog,
   :is(.alert-dialog, .dialog, .drawer, .sheet) > dialog::backdrop {
     transition: none;
+  }
+}
+
+@media (width <= 30rem) {
+  :is(.drawer, .sheet) > dialog:is([side="left"], [side="right"]) {
+    width: 100%;
+    max-width: none;
   }
 }

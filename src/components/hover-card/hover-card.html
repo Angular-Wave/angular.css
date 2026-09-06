@@ -9,13 +9,21 @@
     <script src="/docs/static/js/angular-ts.umd.js"></script>
     <script src="/docs/static/js/angular-css.umd.js"></script>
   </head>
-  <body ng-app="ui" ng-cloak>
-    <span ng-hover-card>
-      <button>Account</button>
-      <aside>
-        <h3>Profile</h3>
-        <p>Profile preview</p>
-      </aside>
-    </span>
+  <body
+    ng-app="angular.css"
+    ng-cloak
+    class="hover-card-example-body"
+    data-example="hover-card-demo"
+  >
+    <main class="hover-card-demo visual-example">
+      <span ng-hover-card open-delay="10" close-delay="100">
+        <button type="button" variant="link" class="button">Hover Here</button>
+        <aside>
+          <h3>@nextjs</h3>
+          <p>The React Framework - created and maintained by @vercel.</p>
+          <footer>Joined December 2021</footer>
+        </aside>
+      </span>
+    </main>
   </body>
 </html>

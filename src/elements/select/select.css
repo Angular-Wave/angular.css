@@ -1,1 +1,44 @@
-@import "../../components/select/select.css";
+select:not([multiple], [size]) {
+  field-sizing: content;
+  display: block;
+  width: fit-content;
+  min-width: 12rem;
+  height: calc(var(--spacing) * 8);
+  border: 1px solid var(--input);
+  border-radius: calc(var(--radius) - 2px);
+  background: transparent;
+  color: var(--foreground);
+  padding-block: calc(var(--spacing) * 1);
+  padding-inline: calc(var(--spacing) * 2.5);
+  font: inherit;
+  font-size: var(--text-sm);
+  line-height: calc(var(--spacing) * 5);
+  outline: none;
+  box-shadow: none;
+  cursor: default;
+}
+
+select:not([multiple], [size]):disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+select:not([multiple], [size]):focus-visible {
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+}
+
+select:not([multiple], [size]):is(
+    .ng-invalid.ng-dirty,
+    .ng-invalid.ng-touched,
+    [aria-invalid="true"]
+  ) {
+  border-color: var(--error);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--error) 20%, transparent);
+}
+
+select:not([multiple], [size]) option,
+select:not([multiple], [size]) optgroup {
+  background: Canvas;
+  color: CanvasText;
+}

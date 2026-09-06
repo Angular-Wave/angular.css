@@ -258,7 +258,9 @@ test("dropdown workflows preserve dynamic, model, submenu, icon, disabled, and R
   page,
 }) => {
   await page.setViewportSize({ height: 900, width: 900 });
-  await page.goto("/docs/static/examples/components/dropdown-workflows.html");
+  await page.goto(
+    "/docs/static/examples/components/dropdown-menu-workflows.html",
+  );
 
   await page.getByRole("button", { name: "Add archive item" }).click();
   await expect(page.locator("#dropdown-archive-item")).toHaveAttribute(
@@ -463,45 +465,6 @@ test("menubar examples preserve compact surfaces, state items, submenus, mobile 
   await page.getByRole("menuitem", { name: "ملف", exact: true }).click();
   await expect(page.locator(".menubar-rtl-workflow")).toHaveScreenshot(
     "menubar-rtl-desktop.png",
-    { animations: "disabled" },
-  );
-});
-
-test("native select examples preserve Nova sizing, native states, mobile framing, and RTL", async ({
-  page,
-}) => {
-  await page.setViewportSize({ height: 360, width: 900 });
-  await page.goto("/docs/static/examples/components/native-select.html");
-  await expect(page.locator(".native-select-demo")).toHaveScreenshot(
-    "native-select-demo-desktop.png",
-    { animations: "disabled" },
-  );
-
-  await page.setViewportSize({ height: 720, width: 900 });
-  await page.goto(
-    "/docs/static/examples/components/native-select-workflows.html",
-  );
-  await page
-    .getByRole("combobox", { name: "Department" })
-    .selectOption("backend");
-  await expect(page.locator(".native-select-workflows")).toHaveScreenshot(
-    "native-select-workflows-desktop.png",
-    { animations: "disabled" },
-  );
-
-  await page.setViewportSize({ height: 920, width: 390 });
-  await page.reload();
-  await page.getByRole("button", { name: "Add archived option" }).click();
-  await expect(page.locator(".native-select-workflows")).toHaveScreenshot(
-    "native-select-workflows-mobile.png",
-    { animations: "disabled" },
-  );
-
-  await page.setViewportSize({ height: 420, width: 900 });
-  await page.goto("/docs/static/examples/components/native-select-rtl.html");
-  await page.getByRole("combobox", { name: "الحالة" }).selectOption("done");
-  await expect(page.locator(".native-select-rtl-workflow")).toHaveScreenshot(
-    "native-select-rtl-desktop.png",
     { animations: "disabled" },
   );
 });
@@ -1893,48 +1856,46 @@ test("checkbox table keeps selection and selected-row state synchronized", async
   );
 });
 
-test("collapsible workflows preserve native disclosure, settings, and RTL behavior", async ({
+test("disclosure workflows preserve native disclosure, settings, and RTL behavior", async ({
   page,
 }) => {
   await page.setViewportSize({ height: 760, width: 1000 });
-  await page.goto(
-    "/docs/static/examples/components/collapsible-workflows.html",
-  );
+  await page.goto("/docs/static/examples/components/disclosure-workflows.html");
 
   await expect(page.locator("body")).toHaveAttribute(
     "data-example",
-    "collapsible-basic collapsible-rtl collapsible-settings",
+    "disclosure-basic disclosure-rtl disclosure-settings",
   );
-  const product = page.locator(".collapsible-product");
+  const product = page.locator(".disclosure-product");
   await product.locator("summary").click();
   await expect(product).toHaveAttribute("open", "");
   await expect(product.locator(":scope > :last-child")).toBeVisible();
 
-  const settings = page.locator(".collapsible-settings");
+  const settings = page.locator(".disclosure-settings");
   await expect(settings.locator("input:visible")).toHaveCount(2);
   await page
     .locator('summary[aria-label="Toggle additional radius settings"]')
     .click();
   await expect(settings.locator("input:visible")).toHaveCount(4);
 
-  const rtl = page.locator(".collapsible-workflow-wide");
+  const rtl = page.locator(".disclosure-workflow-wide");
   await rtl.locator("summary").click();
   await expect(rtl.locator("details > :last-child")).toBeVisible();
-  await expect(page.locator(".collapsible-workflow-grid")).toHaveScreenshot(
-    "collapsible-workflows-desktop.png",
+  await expect(page.locator(".disclosure-workflow-grid")).toHaveScreenshot(
+    "disclosure-workflows-desktop.png",
     { animations: "disabled" },
   );
 });
 
-test("collapsible file tree expands nested reference folders", async ({
+test("disclosure file tree expands nested reference folders", async ({
   page,
 }) => {
   await page.setViewportSize({ height: 760, width: 800 });
   await page.goto(
-    "/docs/static/examples/components/collapsible-compositions.html",
+    "/docs/static/examples/components/disclosure-compositions.html",
   );
 
-  const tree = page.locator(".collapsible-file-tree");
+  const tree = page.locator(".disclosure-file-tree");
   const components = tree.locator("details").first();
   await components.locator(":scope > summary").click();
   await components
@@ -1944,8 +1905,8 @@ test("collapsible file tree expands nested reference folders", async ({
     .click();
   await expect(tree.getByText("button.tsx", { exact: true })).toBeVisible();
   await expect(tree.getByText("app.tsx", { exact: true })).toBeVisible();
-  await expect(page.locator(".collapsible-file-card")).toHaveScreenshot(
-    "collapsible-file-tree-desktop.png",
+  await expect(page.locator(".disclosure-file-card")).toHaveScreenshot(
+    "disclosure-file-tree-desktop.png",
     { animations: "disabled" },
   );
 });
@@ -1974,6 +1935,16 @@ test("switch workflows preserve native sizes, validation, choice cards, and RTL"
   await expect(invalid).toHaveAttribute("aria-invalid", "true");
   await expect(selectedChoice).toHaveCount(1);
   await expect(rtl).toHaveAttribute("dir", "rtl");
+  const rtlControl = page.locator("#switch-focus-mode-rtl");
+  await rtlControl.check();
+  await expect
+    .poll(() =>
+      rtlControl.evaluate(
+        (element) => getComputedStyle(element, "::after").transform,
+      ),
+    )
+    .toContain("-14");
+  await rtlControl.uncheck();
 
   await page.mouse.move(880, 740);
   await expect(page.locator(".switch-workflows")).toHaveScreenshot(
@@ -2039,11 +2010,11 @@ test("radio fields preserve Nova fieldset, content, title-card, invalid, disable
   );
 });
 
-test("Sonner workflows preserve description, position, type, and promise behavior", async ({
+test("Toast workflows preserve description, position, type, and promise behavior", async ({
   page,
 }) => {
   await page.setViewportSize({ height: 1040, width: 900 });
-  await page.goto("/docs/static/examples/components/sonner-workflows.html");
+  await page.goto("/docs/static/examples/components/toast-workflows.html");
 
   await page.getByRole("button", { name: "Show Toast", exact: true }).click();
   const descriptionToast = page
@@ -2066,8 +2037,8 @@ test("Sonner workflows preserve description, position, type, and promise behavio
   ).toHaveAttribute("type", "warning");
 
   await page.mouse.move(890, 1030);
-  await expect(page.locator(".sonner-workflow-grid")).toHaveScreenshot(
-    "sonner-workflows-desktop.png",
+  await expect(page.locator(".toast-workflow-grid")).toHaveScreenshot(
+    "toast-workflows-desktop.png",
     { animations: "disabled" },
   );
 
@@ -2080,17 +2051,19 @@ test("Sonner workflows preserve description, position, type, and promise behavio
     .getByRole("button", { name: "Error" })
     .click();
   await page.mouse.move(380, 1190);
-  await expect(page.locator(".sonner-workflow-grid")).toHaveScreenshot(
-    "sonner-workflows-mobile.png",
+  await expect(page.locator(".toast-workflow-grid")).toHaveScreenshot(
+    "toast-workflows-mobile.png",
     { animations: "disabled" },
   );
 });
 
-test("Slider workflows preserve controlled, range, multiple, RTL, and vertical states", async ({
+test("Range Slider workflows preserve controlled, range, multiple, RTL, and vertical states", async ({
   page,
 }) => {
   await page.setViewportSize({ height: 680, width: 900 });
-  await page.goto("/docs/static/examples/components/slider-workflows.html");
+  await page.goto(
+    "/docs/static/examples/components/range-slider-workflows.html",
+  );
 
   await page.getByRole("slider", { name: "Minimum temperature" }).fill("0.4");
   await page.getByRole("slider", { name: "Maximum price" }).fill("75");
@@ -2110,7 +2083,7 @@ test("Slider workflows preserve controlled, range, multiple, RTL, and vertical s
 
   await page.mouse.move(890, 670);
   await expect(page.locator(".slider-workflow-grid")).toHaveScreenshot(
-    "slider-workflows-desktop.png",
+    "range-slider-workflows-desktop.png",
     { animations: "disabled" },
   );
 
@@ -2119,7 +2092,7 @@ test("Slider workflows preserve controlled, range, multiple, RTL, and vertical s
   await page.getByRole("slider", { name: "Minimum price" }).fill("35");
   await page.mouse.move(380, 710);
   await expect(page.locator(".slider-workflow-grid")).toHaveScreenshot(
-    "slider-workflows-mobile.png",
+    "range-slider-workflows-mobile.png",
     { animations: "disabled" },
   );
 });
@@ -2288,13 +2261,13 @@ test("workflow iframes fit compact viewports without scrolling or clipping", asy
         420,
       ],
       [
-        "collapsible-workflows",
-        "/docs/static/examples/components/collapsible-workflows.html",
+        "disclosure-workflows",
+        "/docs/static/examples/components/disclosure-workflows.html",
         1000,
       ],
       [
-        "collapsible-compositions",
-        "/docs/static/examples/components/collapsible-compositions.html",
+        "disclosure-compositions",
+        "/docs/static/examples/components/disclosure-compositions.html",
         1000,
       ],
       [
@@ -2433,18 +2406,18 @@ test("workflow iframes fit compact viewports without scrolling or clipping", asy
         1260,
       ],
       [
-        "sonner-workflows",
-        "/docs/static/examples/components/sonner-workflows.html",
+        "toast-workflows",
+        "/docs/static/examples/components/toast-workflows.html",
         1200,
       ],
       [
-        "slider-workflows",
-        "/docs/static/examples/components/slider-workflows.html",
+        "range-slider-workflows",
+        "/docs/static/examples/components/range-slider-workflows.html",
         720,
       ],
       [
-        "dropdown-workflows",
-        "/docs/static/examples/components/dropdown-workflows.html",
+        "dropdown-menu-workflows",
+        "/docs/static/examples/components/dropdown-menu-workflows.html",
         1380,
       ],
       [
@@ -2479,16 +2452,6 @@ test("workflow iframes fit compact viewports without scrolling or clipping", asy
         2400,
       ],
       ["menubar-rtl", "/docs/static/examples/components/menubar-rtl.html", 720],
-      [
-        "native-select-workflows",
-        "/docs/static/examples/components/native-select-workflows.html",
-        920,
-      ],
-      [
-        "native-select-rtl",
-        "/docs/static/examples/components/native-select-rtl.html",
-        420,
-      ],
       [
         "navigation-menu-workflows",
         "/docs/static/examples/components/navigation-menu-workflows.html",

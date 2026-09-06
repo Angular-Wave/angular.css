@@ -57,11 +57,10 @@ and authored CSS composition.
 <!-- angularcss-reference:start -->
 ## Installation
 
-Install AngularCSS once, load its stylesheet, and include the `ui` module in
-your AngularTS application. See [Installation]({{< relref
+Install AngularCSS, load its stylesheet, and include the `angular.css` module in your AngularTS application. See [Installation]({{< relref
 "/docs/get-started/installation" >}}) for the complete setup.
 
-This component's root directive is `[ng-carousel]`. Importing the package registers it with the AngularCSS `ui` module; there is no per-component JavaScript registration step.
+This component's root directive is `[ng-carousel]`. Importing the package registers it with the AngularCSS `angular.css` module; there is no per-component JavaScript registration step.
 
 ## Anatomy
 
@@ -102,8 +101,10 @@ The content viewport and its direct track child are required. Items must be dire
 
 ### CSS custom properties
 
-- `--carousel-gap`
-- `--carousel-item-size`
+| Variable | Purpose |
+| --- | --- |
+| `--carousel-gap` | Gap between slides; defaults to four spacing units. |
+| `--carousel-item-size` | Slide basis; defaults to `100%`. |
 
 ### DOM events
 

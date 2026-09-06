@@ -1,0 +1,42 @@
+@scope (.validation-summary) to (.validation-summary) {
+  :scope {
+    display: grid;
+    gap: calc(var(--spacing) * 2);
+    border: 1px solid color-mix(in srgb, var(--error) 35%, var(--border));
+    border-radius: var(--radius);
+    background: color-mix(in srgb, var(--error) 8%, var(--background));
+    color: var(--foreground);
+    padding: calc(var(--spacing) * 4);
+    font-size: var(--text-sm);
+  }
+
+  :scope > header {
+    display: grid;
+    gap: calc(var(--spacing) * 1);
+  }
+
+  :scope > header > :is(h1, h2, h3) {
+    color: var(--error-foreground);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+  }
+
+  :scope > header > p {
+    color: var(--muted-foreground);
+  }
+
+  :scope > ul {
+    display: grid;
+    gap: calc(var(--spacing) * 1);
+    margin: 0;
+    padding-inline-start: calc(var(--spacing) * 5);
+  }
+
+  :scope a {
+    display: inline-flex;
+    min-height: calc(var(--spacing) * 6);
+    align-items: center;
+    color: var(--error-foreground);
+    text-underline-offset: 0.2em;
+  }
+}

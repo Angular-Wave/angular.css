@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="angular.css"
+    ng-cloak
+    class="disclosure-example-body"
+    data-example="disclosure-demo"
+  >
+    <details class="disclosure visual-example">
+      <summary>
+        <header>
+          <h2>Order #4189</h2>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="m7 15 5 5 5-5M7 9l5-5 5 5" />
+          </svg>
+          <span class="visually-hidden">Toggle details</span>
+        </header>
+        <p><span>Status</span><strong>Shipped</strong></p>
+      </summary>
+      <section>
+        <article>
+          <p><strong>Shipping address</strong></p>
+          <p>100 Market St, San Francisco</p>
+        </article>
+        <article>
+          <p><strong>Items</strong></p>
+          <p>2x Studio Headphones</p>
+        </article>
+      </section>
+    </details>
+  </body>
+</html>

@@ -7,20 +7,15 @@ import { isSameMonth } from "date-fns/isSameMonth";
 import { startOfMonth } from "date-fns/startOfMonth";
 import { startOfWeek } from "date-fns/startOfWeek";
 
-import { isDisabled, onDestroy, queryAll } from "../../internal/dom";
+import {
+  isDisabled,
+  onDestroy,
+  queryAll,
+  setAttributeIfChanged,
+} from "../../internal/dom";
 
 let calendarIdCounter = 0;
 type WeekStartsOn = 0 | 1 | 2 | 3 | 4 | 5 | 6;
-
-const setAttributeIfChanged = (
-  element: HTMLElement,
-  name: string,
-  value: string,
-) => {
-  if (element.getAttribute(name) !== value) {
-    element.setAttribute(name, value);
-  }
-};
 
 const padDatePart = (value: number) => String(value).padStart(2, "0");
 

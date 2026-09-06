@@ -10,7 +10,7 @@
     <script src="../../js/angular-css.umd.js"></script>
   </head>
   <body
-    ng-app="ui"
+    ng-app="angular.css"
     ng-cloak
     ng-init="sidebarAction='None'; projectsLoading=true"
     data-example="sidebar-footer sidebar-group sidebar-group-action sidebar-header sidebar-menu sidebar-menu-action sidebar-menu-badge sidebar-menu-sub sidebar-rsc"
@@ -24,7 +24,7 @@
         class="sidebar-anatomy-panel"
       >
         <header>
-          <div ng-dropdown>
+          <div ng-dropdown-menu>
             <button size="lg">
               <span class="sidebar-brand-mark" aria-hidden="true">A</span>
               <span class="sidebar-brand-copy">
@@ -65,7 +65,7 @@
                   <span class="sidebar-menu-dot" aria-hidden="true"></span>
                   <span>Design Engineering</span>
                 </a>
-                <div ng-dropdown>
+                <div ng-dropdown-menu>
                   <button aria-label="More actions for Design Engineering">
                     <svg
                       viewBox="0 0 24 24"
@@ -167,7 +167,7 @@
           </section>
         </nav>
         <footer>
-          <div ng-dropdown>
+          <div ng-dropdown-menu>
             <button size="lg">
               <span class="avatar"><span>UN</span></span>
               <span class="sidebar-brand-copy"

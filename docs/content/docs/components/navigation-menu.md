@@ -26,11 +26,10 @@ link, and content parts.
 <!-- angularcss-reference:start -->
 ## Installation
 
-Install AngularCSS once, load its stylesheet, and include the `ui` module in
-your AngularTS application. See [Installation]({{< relref
+Install AngularCSS, load its stylesheet, and include the `angular.css` module in your AngularTS application. See [Installation]({{< relref
 "/docs/get-started/installation" >}}) for the complete setup.
 
-This component's root directive is `[ng-navigation-menu]`. Importing the package registers it with the AngularCSS `ui` module; there is no per-component JavaScript registration step.
+This component's root directive is `[ng-navigation-menu]`. Importing the package registers it with the AngularCSS `angular.css` module; there is no per-component JavaScript registration step.
 
 ## Anatomy
 
@@ -49,17 +48,23 @@ Use a native `nav` containing one direct list. Each list item may contain either
 | Attribute | Access | Purpose |
 | --- | --- | --- |
 | `align` | Input | Cross-axis alignment: `start`, `center`, or `end`. |
-| `aria-hidden` | Input | ARIA relationship or state. |
+| `aria-controls` | Output | ARIA relationship or state. |
+| `aria-expanded` | Output | Open or expanded state exposed to assistive technology. |
+| `aria-haspopup` | Output | ARIA relationship or state. |
+| `aria-hidden` | Input/output | ARIA relationship or state. |
+| `aria-labelledby` | Output | ARIA relationship or state. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
 | `disabled` | Input | Disables native or component interaction. |
 | `open` | Input | Initial or controlled open state. |
-| `role` | Input | Explicit semantic role when native HTML does not provide one. |
+| `role` | Input/output | Explicit semantic role when native HTML does not provide one. |
 
 `Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
 
 ### CSS custom properties
 
-- `--navigation-menu-content-offset`
+| Variable | Purpose |
+| --- | --- |
+| `--navigation-menu-content-offset` | Component styling variable. |
 
 ### DOM events
 

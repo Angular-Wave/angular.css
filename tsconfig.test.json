@@ -10,5 +10,5 @@
     "noUnusedLocals": false,
     "types": ["jasmine", "node"]
   },
-  "include": ["src/**/*.spec.ts", "src/**/*.test.ts"]
+  "include": ["src/**/*.spec.ts", "src/**/*.test.ts", "docs/tests/**/*.ts"]
 }

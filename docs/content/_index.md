@@ -12,15 +12,15 @@ title: AngularCSS
   <nav aria-label="Start with AngularCSS">
     <a href="{{< relref "/docs/get-started/installation" >}}">Install</a>
     <a href="{{< relref "/docs/get-started/first-component" >}}">Build a component</a>
-    <a href="{{< relref "/docs/components" >}}">Browse all components</a>
+    <a href="{{< relref "/docs" >}}">Browse the catalog</a>
     <a href="{{< relref "/docs/guides/accessibility" >}}">Accessibility</a>
   </nav>
 </section>
 
 <section class="angularcss-home-catalog">
   <header>
-    <h2>Elements and components</h2>
-    <p>Browse every styled HTML element, behavioral component, and live example.</p>
+    <h2>Catalog</h2>
+    <p>Browse every foundation, element, pattern, component, and recipe.</p>
   </header>
-  {{< component-catalog section="/docs/components" >}}
+  {{< component-catalog catalog="all" >}}
 </section>

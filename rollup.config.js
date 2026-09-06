@@ -23,7 +23,11 @@ const basePlugins = [
     sourceMap: false,
     tsconfig: "./tsconfig.rollup.json",
   }),
-  versionInjector(),
+  versionInjector({
+    injectInComments: {
+      tag: "Version: {version}",
+    },
+  }),
 ];
 
 const baseInput = "src/index.ts";
@@ -49,7 +53,21 @@ export default [
         name: "angularCss",
         file: pkg.browser.replace(/\.js$/, ".min.js"),
         format: "umd",
-        plugins: [terser()],
+        plugins: [
+          terser({
+            compress: {
+              passes: 3,
+              keep_fnames: false,
+            },
+            mangle: {
+              toplevel: true,
+              properties: {
+                regex: /^_/,
+                keep_quoted: false,
+              },
+            },
+          }),
+        ],
       },
       {
         name: "angularCss",
@@ -72,7 +90,11 @@ export default [
     ],
     plugins: [
       typescript({ tsconfig: "./tsconfig.rollup.json" }),
-      versionInjector(),
+      versionInjector({
+        injectInComments: {
+          tag: "Version: {version}",
+        },
+      }),
     ],
   },
 
@@ -86,11 +108,11 @@ export default [
     plugins: applicationPlugins,
   },
   {
-    input: "examples/sonner/sonner.ts",
+    input: "examples/toast/toast.ts",
     output: {
-      file: "docs/static/js/sonner-demo.umd.js",
+      file: "docs/static/js/toast-demo.umd.js",
       format: "iife",
-      name: "sonnerDemo",
+      name: "toastDemo",
     },
     plugins: applicationPlugins,
   },

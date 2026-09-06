@@ -1,12 +1,4 @@
 #!/bin/sh
 set -e
 
-npm run format:check
-npm run lint
-npm run typecheck
-npm run lint:css
-npm run check:angular-ts-version
-npm run check:typescript-source
-npm run check:angular-overlap
-npm run check:authored-selector-simplicity
-npm run check:component-registry
+npm run check

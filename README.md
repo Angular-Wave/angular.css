@@ -12,9 +12,30 @@ AngularCSS adds TypeScript only for interactions those layers cannot provide.
 ```
 
 The button and input are styling-only entries. They do not register AngularCSS
-directives or mirror native state into `data-*` attributes. Composite widgets
-such as dialogs, comboboxes, and calendars retain focused TypeScript behavior
-for focus management, keyboard navigation, and coordinated disclosure.
+directives or mirror native state into `data-*` attributes. Native dialogs and
+details disclosures also keep their browser behavior. Composite widgets such as
+comboboxes, calendars, and tabs retain focused TypeScript behavior for keyboard
+navigation, focus management, and coordinated interaction.
+
+## Installation
+
+```shell
+npm install @angular-wave/angular.ts @angular-wave/angular.css
+```
+
+Import the stylesheet and register the AngularCSS module with the application:
+
+```js
+import "@angular-wave/angular.css/angular.css";
+import { angularCssModuleName } from "@angular-wave/angular.css";
+import { angular } from "@angular-wave/angular.ts";
+
+angular.module("app", [angularCssModuleName]);
+```
+
+The UMD bundle registers `angular.css` automatically when AngularTS is already
+available on `globalThis.angular`. ESM consumers can call `registerAngularCss()`
+explicitly when they use a separate AngularTS runtime.
 
 ## Development
 

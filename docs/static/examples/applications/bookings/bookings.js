@@ -512,7 +512,7 @@
       }
   }
   window.angular
-      .module("bookingsDemo", ["ui"])
+      .module("bookingsDemo", ["angular.css"])
       .directive("ngIcon", () => ({
       link(_scope, element) {
           const name = element.getAttribute("ng-icon") || "";

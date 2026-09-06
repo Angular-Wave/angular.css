@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
+  </head>
+  <body ng-app="angular.css" ng-cloak data-example="master-detail-demo">
+    <main
+      class="master-detail visual-example"
+      ng-resizable-panel-group
+      aria-label="Customer workspace"
+    >
+      <section style="--panel-size: 0.75">
+        <nav aria-label="Customers">
+          <header><h2>Customers</h2></header>
+          <ul>
+            <li>
+              <a href="#ada" aria-current="page"
+                ><strong>Ada Lovelace</strong
+                ><small>Enterprise · Active</small></a
+              >
+            </li>
+            <li>
+              <a href="#grace"
+                ><strong>Grace Hopper</strong
+                ><small>Business · Review</small></a
+              >
+            </li>
+            <li>
+              <a href="#edsger"
+                ><strong>Edsger Dijkstra</strong
+                ><small>Enterprise · Active</small></a
+              >
+            </li>
+          </ul>
+        </nav>
+      </section>
+      <hr aria-label="Resize customer list" />
+      <section style="--panel-size: 2">
+        <article id="ada">
+          <header>
+            <h1>Ada Lovelace</h1>
+            <p>Enterprise customer since 2024</p>
+          </header>
+          <section>
+            <dl class="description-list">
+              <div>
+                <dt>Email</dt>
+                <dd>ada@example.com</dd>
+              </div>
+              <div>
+                <dt>Region</dt>
+                <dd>Europe</dd>
+              </div>
+              <div>
+                <dt>Status</dt>
+                <dd>Active</dd>
+              </div>
+            </dl>
+          </section>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

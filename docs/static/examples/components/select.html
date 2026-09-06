@@ -9,18 +9,16 @@
     <script src="../../js/angular-ts.umd.js"></script>
     <script src="../../js/angular-css.umd.js"></script>
   </head>
-  <body ng-app="ui" ng-cloak ng-init="fruit=''">
-    <main class="select-demo visual-example">
-      <label for="fruit">Fruit</label>
-      <select id="fruit" ng-model="fruit">
-        <option value="">Select a fruit</option>
-        <option value="apple">Apple</option>
-        <option value="banana">Banana</option>
-        <option value="blueberry">Blueberry</option>
-        <option value="grapes">Grapes</option>
-        <option value="pineapple">Pineapple</option>
+  <body ng-app="angular.css" ng-cloak ng-init="status=''">
+    <main class="stack-sm visual-example">
+      <label for="status">Status</label>
+      <select id="status" ng-model="status" required>
+        <option value="">Select a status</option>
+        <option>Todo</option>
+        <option>In progress</option>
+        <option>Done</option>
       </select>
-      <output class="output">Selected: {{ fruit || 'none' }}</output>
+      <output class="output">Current: {{ status || 'none' }}</output>
     </main>
   </body>
 </html>

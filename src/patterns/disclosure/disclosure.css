@@ -1,0 +1,55 @@
+details.disclosure > summary,
+.disclosure details > summary {
+  list-style: none;
+}
+
+details.disclosure > summary::-webkit-details-marker,
+.disclosure details > summary::-webkit-details-marker {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  details.disclosure > summary svg {
+    transition: translate 90ms ease-out;
+  }
+
+  details.disclosure > summary:active svg {
+    translate: 0 1px;
+  }
+
+  @supports selector(details::details-content) {
+    details.disclosure::details-content {
+      block-size: 0;
+      overflow: clip;
+      opacity: 0;
+      transition:
+        block-size 180ms ease-out,
+        content-visibility 180ms allow-discrete,
+        opacity 140ms ease-out;
+    }
+
+    details.disclosure:open::details-content {
+      block-size: auto;
+      opacity: 1;
+    }
+
+    @supports (interpolate-size: allow-keywords) {
+      details.disclosure {
+        interpolate-size: allow-keywords;
+      }
+    }
+  }
+
+  @supports not selector(details::details-content) {
+    details.disclosure:open > :last-child {
+      animation: disclosure-content-enter 160ms ease-out;
+    }
+  }
+}
+
+@keyframes disclosure-content-enter {
+  from {
+    opacity: 0;
+    translate: 0 -4px;
+  }
+}

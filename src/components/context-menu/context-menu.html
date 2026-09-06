@@ -3,19 +3,70 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
-    <link rel="stylesheet" href="../../css/angular.css" />
-    <link rel="stylesheet" href="../example.css" />
-    <script src="../../js/angular-ts.umd.js"></script>
-    <script src="../../js/angular-css.umd.js"></script>
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
   </head>
-  <body ng-app="ui" ng-cloak>
-    <div ng-context-menu>
-      <button>Target</button>
-      <menu>
-        <button>Rename</button>
-        <button>Delete</button>
-      </menu>
-    </div>
+  <body
+    ng-app="angular.css"
+    ng-cloak
+    ng-init="lastAction='None'"
+    data-example="context-menu-basic context-menu-demo context-menu-submenu"
+  >
+    <main class="context-menu-demo visual-example">
+      <div id="context-menu-demo" ng-context-menu>
+        <div>Right click here</div>
+        <menu aria-label="Browser actions">
+          <section>
+            <button ng-click="lastAction='Back'">
+              Back
+              <kbd>Alt+Left</kbd>
+            </button>
+            <button disabled>
+              Forward
+              <kbd>Alt+Right</kbd>
+            </button>
+            <button ng-click="lastAction='Reload'">
+              Reload
+              <kbd>Ctrl+R</kbd>
+            </button>
+          </section>
+          <hr />
+          <section>
+            <button ng-click="lastAction='Save'">
+              Save
+              <kbd>Ctrl+S</kbd>
+            </button>
+          </section>
+          <details>
+            <summary>More Tools</summary>
+            <menu>
+              <section>
+                <button ng-click="lastAction='Save Page'">Save Page...</button>
+                <button ng-click="lastAction='Create Shortcut'">
+                  Create Shortcut...
+                </button>
+                <button ng-click="lastAction='Name Window'">
+                  Name Window...
+                </button>
+              </section>
+              <hr />
+              <button ng-click="lastAction='Developer Tools'">
+                Developer Tools
+              </button>
+            </menu>
+          </details>
+          <hr />
+          <button variant="destructive" ng-click="lastAction='Delete'">
+            Delete
+          </button>
+        </menu>
+      </div>
+      <output class="context-menu-output" aria-live="polite">
+        Last action: <span ng-bind="lastAction"></span>
+      </output>
+    </main>
   </body>
 </html>

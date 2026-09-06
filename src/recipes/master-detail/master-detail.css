@@ -1,0 +1,94 @@
+@scope (.master-detail) to (.master-detail) {
+  :scope {
+    container: angularcss-master-detail / inline-size;
+    min-height: 28rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--background);
+  }
+
+  :scope > section {
+    min-width: 0;
+    overflow: auto;
+  }
+
+  :scope nav > header,
+  :scope article > header,
+  :scope article > section {
+    padding: calc(var(--spacing) * 4);
+  }
+
+  :scope nav > header,
+  :scope article > header {
+    display: grid;
+    gap: calc(var(--spacing) * 1);
+    border-block-end: 1px solid var(--border);
+  }
+
+  :scope nav :is(h1, h2, h3) {
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  :scope article :is(h1, h2, h3) {
+    font-size: 1rem;
+    font-weight: var(--font-weight-medium);
+  }
+
+  :scope nav ul {
+    display: grid;
+    margin: 0;
+    padding: calc(var(--spacing) * 2);
+    list-style: none;
+  }
+
+  :scope nav a {
+    display: grid;
+    gap: calc(var(--spacing) * 1);
+    border-radius: calc(var(--radius) - 2px);
+    color: inherit;
+    padding: calc(var(--spacing) * 3);
+    font-size: var(--text-sm);
+    text-decoration: none;
+  }
+
+  :scope nav a:is(:hover, [aria-current="page"]) {
+    background: var(--accent);
+    color: var(--accent-foreground);
+  }
+
+  :scope nav a > small,
+  :scope article > header > p {
+    color: var(--muted-foreground);
+  }
+
+  @media (width < 40rem) {
+    :scope {
+      display: grid;
+      min-height: 0;
+      flex-direction: column;
+    }
+
+    :scope > hr {
+      display: none;
+    }
+
+    :scope > section {
+      width: 100%;
+      min-height: 0;
+      flex: none;
+    }
+
+    :scope > section + section {
+      border-block-start: 1px solid var(--border);
+    }
+
+    :scope > section:first-child {
+      max-height: min(18rem, 40svh);
+    }
+
+    :scope > section:last-child {
+      min-height: 18rem;
+    }
+  }
+}

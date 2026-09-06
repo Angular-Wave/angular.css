@@ -140,11 +140,11 @@ main:has(+ :is(.sidebar, [ng-sidebar])) {
 
 :is(.sidebar, [ng-sidebar]) nav > section > button {
   position: absolute;
-  inset-block-start: calc(var(--spacing) * 3.5);
-  inset-inline-end: calc(var(--spacing) * 3);
+  inset-block-start: calc(var(--spacing) * 3);
+  inset-inline-end: calc(var(--spacing) * 2.5);
   display: inline-grid;
-  width: calc(var(--spacing) * 5);
-  height: calc(var(--spacing) * 5);
+  width: calc(var(--spacing) * 6);
+  height: calc(var(--spacing) * 6);
   place-items: center;
   border: 0;
   border-radius: calc(var(--radius) - 2px);
@@ -166,7 +166,7 @@ main:has(+ :is(.sidebar, [ng-sidebar])) {
   min-width: 0;
 }
 
-:is(.sidebar, [ng-sidebar]) nav li > [ng-dropdown] {
+:is(.sidebar, [ng-sidebar]) nav li > [ng-dropdown-menu] {
   position: static;
   display: contents;
 }
@@ -174,10 +174,10 @@ main:has(+ :is(.sidebar, [ng-sidebar])) {
 :is(.sidebar, [ng-sidebar]) nav li > :is(a, button, details) + button {
   position: absolute;
   inset-block-start: 50%;
-  inset-inline-end: calc(var(--spacing) * 1);
-  width: calc(var(--spacing) * 5);
-  height: calc(var(--spacing) * 5);
-  min-height: calc(var(--spacing) * 5);
+  inset-inline-end: calc(var(--spacing) * 0.5);
+  width: calc(var(--spacing) * 6);
+  height: calc(var(--spacing) * 6);
+  min-height: calc(var(--spacing) * 6);
   justify-content: center;
   border: 0;
   background: transparent;
@@ -186,8 +186,9 @@ main:has(+ :is(.sidebar, [ng-sidebar])) {
 }
 
 :is(.sidebar, [ng-sidebar]) :is(header, footer) > :is(a, button),
-:is(.sidebar, [ng-sidebar]) :is(header, footer) > [ng-dropdown] > button,
-:is(.sidebar, [ng-sidebar]) nav li > :is(a, button, details > summary) {
+:is(.sidebar, [ng-sidebar]) :is(header, footer) > [ng-dropdown-menu] > button,
+:is(.sidebar, [ng-sidebar]) nav li > :is(a, button),
+:is(.sidebar, [ng-sidebar]) nav li > details > summary {
   display: flex;
   width: 100%;
   height: calc(var(--spacing) * 8);
@@ -225,13 +226,13 @@ main:has(+ :is(.sidebar, [ng-sidebar])) {
   height: calc(var(--spacing) * 12);
 }
 
-:is(.sidebar, [ng-sidebar]) nav li > [ng-dropdown] > button {
+:is(.sidebar, [ng-sidebar]) nav li > [ng-dropdown-menu] > button {
   position: absolute;
   inset-block-start: 50%;
-  inset-inline-end: calc(var(--spacing) * 1);
-  width: calc(var(--spacing) * 5);
-  height: calc(var(--spacing) * 5);
-  min-height: calc(var(--spacing) * 5);
+  inset-inline-end: calc(var(--spacing) * 0.5);
+  width: calc(var(--spacing) * 6);
+  height: calc(var(--spacing) * 6);
+  min-height: calc(var(--spacing) * 6);
   justify-content: center;
   border: 0;
   background: transparent;
@@ -239,7 +240,7 @@ main:has(+ :is(.sidebar, [ng-sidebar])) {
   transform: translateY(-50%);
 }
 
-:is(.sidebar, [ng-sidebar]) nav li > [ng-dropdown] > button::after {
+:is(.sidebar, [ng-sidebar]) nav li > [ng-dropdown-menu] > button::after {
   display: none;
 }
 
@@ -361,12 +362,17 @@ main:has(+ :is(.sidebar, [ng-sidebar])) {
   > :is(a, button),
 :is(.sidebar, [ng-sidebar])[collapsed][collapsible="icon"]
   :is(header, footer)
-  > [ng-dropdown]
+  > [ng-dropdown-menu]
   > button,
 :is(.sidebar, [ng-sidebar])[collapsed][collapsible="icon"]
   nav
   li
-  > :is(a, button, details > summary) {
+  > :is(a, button),
+:is(.sidebar, [ng-sidebar])[collapsed][collapsible="icon"]
+  nav
+  li
+  > details
+  > summary {
   justify-content: center;
   gap: 0;
   padding-inline: 0;

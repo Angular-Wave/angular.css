@@ -1,7 +1,7 @@
 import { readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { extname, join, relative } from "node:path";
 
-import { componentPolicy } from "./component-policy.ts";
+import { catalogNames, catalogPolicy } from "./component-policy.ts";
 
 const roots = [
   "src",
@@ -35,16 +35,16 @@ const redundantPresentationDataAttributes = new Set([
   "variant",
   "visible",
 ]);
-const componentNames = new Set(readdirSync("src/components"));
+const componentNames = new Set<string>(catalogNames);
 const elementNames = new Set(
-  Object.entries(componentPolicy)
-    .filter(([, policy]) => policy.kind === "element")
+  Object.entries(catalogPolicy)
+    .filter(([, policy]) => !policy.runtime)
     .map(([name]) => name),
 );
 const componentPrefixes = [...componentNames].sort(
   (left, right) => right.length - left.length,
 );
-const rootAliases = new Set(["resizable-panel-group", "toaster"]);
+const rootAliases = new Set(["resizable-panel-group"]);
 const redundantPartClasses = new Set([
   "accordion-content",
   "accordion-item",
@@ -123,9 +123,6 @@ const redundantPartClasses = new Set([
   "chart-tooltip-label",
   "chart-tooltip-name",
   "chart-tooltip-value",
-  "collapsible-content",
-  "collapsible-icon-button",
-  "collapsible-trigger",
   "combobox-chip",
   "combobox-chip-input",
   "combobox-chip-remove",
@@ -250,10 +247,6 @@ const redundantPartClasses = new Set([
   "menubar-sub-content",
   "menubar-sub-trigger",
   "menubar-trigger",
-  "native-select-icon",
-  "native-select",
-  "native-select-sm",
-  "native-select-wrapper",
   "select",
   "select-sm",
   "select-icon",
@@ -341,7 +334,7 @@ const redundantPartClasses = new Set([
   "slider-thumb",
   "slider-track",
   "slider-label-row",
-  "sonner-icon",
+  "toast-icon",
   "tabs-content",
   "tabs-list",
   "tabs-trigger",
@@ -356,12 +349,6 @@ const redundantPartClasses = new Set([
   "toggle-group-item",
   "tooltip-content",
   "tooltip-trigger",
-  "collapsible-order-content",
-  "collapsible-order-header",
-  "collapsible-order-panel",
-  "collapsible-order-status",
-  "collapsible-order-summary",
-  "collapsible-order-title",
 ]);
 const redundantPartClassAllowlist = new Map<string, Set<string>>();
 const write = process.argv.includes("--write");

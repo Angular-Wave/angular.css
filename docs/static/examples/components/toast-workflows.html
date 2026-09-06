@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="../../css/angular.css" />
+    <link rel="stylesheet" href="../example.css" />
+    <script src="../../js/angular-ts.umd.js"></script>
+    <script src="../../js/angular-css.umd.js"></script>
+    <script src="../../js/toast-demo.umd.js"></script>
+  </head>
+  <body
+    ng-app="toastDemo"
+    ng-controller="ToastDemoController as toast"
+    ng-cloak
+    data-example="toast-description toast-position toast-types"
+  >
+    <main class="toast-workflow-grid">
+      <section
+        class="toast-workflow-section"
+        aria-labelledby="toast-description-title"
+      >
+        <h2 id="toast-description-title">With description</h2>
+        <button
+          type="button"
+          variant="outline"
+          ng-click="toast.showDescription()"
+          class="button"
+        >
+          Show Toast
+        </button>
+        <div class="toast-inline-preview">
+          <div
+            ng-toast
+            class="toast-inline-toaster"
+            aria-label="Description notifications"
+          >
+            <article ng-if="toast.descriptionVisible" animate>
+              <section>
+                <h3>Event has been created</h3>
+                <p>Monday, January 3rd at 6:00pm</p>
+              </section>
+              <button
+                variant="ghost"
+                size="icon-sm"
+                aria-label="Dismiss description toast"
+                ng-click="toast.dismissDescription()"
+                class="button"
+              >
+                <span></span>
+              </button>
+            </article>
+          </div>
+        </div>
+        <output class="output">{{ toast.descriptionStatus }}</output>
+      </section>
+
+      <section
+        class="toast-workflow-section toast-workflow-wide"
+        aria-labelledby="toast-position-title"
+      >
+        <h2 id="toast-position-title">Position</h2>
+        <div class="toast-button-grid" aria-label="Toast positions">
+          <button
+            type="button"
+            variant="outline"
+            ng-click="toast.showPosition('top-left')"
+            class="button"
+          >
+            Top Left
+          </button>
+          <button
+            type="button"
+            variant="outline"
+            ng-click="toast.showPosition('top-center')"
+            class="button"
+          >
+            Top Center
+          </button>
+          <button
+            type="button"
+            variant="outline"
+            ng-click="toast.showPosition('top-right')"
+            class="button"
+          >
+            Top Right
+          </button>
+          <button
+            type="button"
+            variant="outline"
+            ng-click="toast.showPosition('bottom-left')"
+            class="button"
+          >
+            Bottom Left
+          </button>
+          <button
+            type="button"
+            variant="outline"
+            ng-click="toast.showPosition('bottom-center')"
+            class="button"
+          >
+            Bottom Center
+          </button>
+          <button
+            type="button"
+            variant="outline"
+            ng-click="toast.showPosition('bottom-right')"
+            class="button"
+          >
+            Bottom Right
+          </button>
+        </div>
+        <div class="toast-position-preview">
+          <div
+            ng-toast
+            class="toast-position-toaster"
+            position="{{ toast.position }}"
+            aria-label="Position notifications"
+          >
+            <article ng-if="toast.positionVisible" animate>
+              <section>
+                <h3>Event has been created</h3>
+              </section>
+              <button
+                variant="ghost"
+                size="icon-sm"
+                aria-label="Dismiss position toast"
+                ng-click="toast.dismissPosition()"
+                class="button"
+              >
+                <span></span>
+              </button>
+            </article>
+          </div>
+        </div>
+        <output class="output">Position: {{ toast.position }}</output>
+      </section>
+
+      <section
+        class="toast-workflow-section toast-workflow-wide"
+        aria-labelledby="toast-types-title"
+      >
+        <h2 id="toast-types-title">Types</h2>
+        <div class="toast-button-grid" aria-label="Toast types">
+          <button
+            type="button"
+            variant="outline"
+            ng-click="toast.showType('default')"
+            class="button"
+          >
+            Default
+          </button>
+          <button
+            type="button"
+            variant="outline"
+            ng-click="toast.showType('success')"
+            class="button"
+          >
+            Success
+          </button>
+          <button
+            type="button"
+            variant="outline"
+            ng-click="toast.showType('info')"
+            class="button"
+          >
+            Info
+          </button>
+          <button
+            type="button"
+            variant="outline"
+            ng-click="toast.showType('warning')"
+            class="button"
+          >
+            Warning
+          </button>
+          <button
+            type="button"
+            variant="outline"
+            ng-click="toast.showType('error')"
+            class="button"
+          >
+            Error
+          </button>
+          <button
+            type="button"
+            variant="outline"
+            ng-click="toast.showPromise()"
+            class="button"
+          >
+            Promise
+          </button>
+        </div>
+        <div class="toast-inline-preview toast-types-preview">
+          <div
+            ng-toast
+            class="toast-inline-toaster"
+            aria-label="Type notifications"
+          >
+            <article
+              type="{{ toast.type }}"
+              ng-if="toast.typeVisible"
+              animate
+            >
+              <figure ng-if="toast.type === 'success'"></figure>
+              <figure ng-if="toast.type === 'info'"></figure>
+              <figure ng-if="toast.type === 'warning'"></figure>
+              <figure ng-if="toast.type === 'error'"></figure>
+              <figure ng-if="toast.type === 'loading'"></figure>
+              <section>
+                <h3>{{ toast.typeMessage }}</h3>
+              </section>
+              <button
+                variant="ghost"
+                size="icon-sm"
+                aria-label="Dismiss type toast"
+                ng-click="toast.dismissType()"
+                class="button"
+              >
+                <span></span>
+              </button>
+            </article>
+          </div>
+        </div>
+        <output class="output">Type: {{ toast.type }}</output>
+      </section>
+    </main>
+  </body>
+</html>

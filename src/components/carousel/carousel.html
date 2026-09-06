@@ -3,65 +3,106 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
-    <link rel="stylesheet" href="../../css/angular.css" />
-    <link rel="stylesheet" href="../example.css" />
-    <script src="../../js/angular-ts.umd.js"></script>
-    <script src="../../js/angular-css.umd.js"></script>
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
   </head>
-  <body ng-app="ui" ng-cloak>
-    <section ng-carousel aria-label="Featured reports" style="max-width: 28rem">
-      <div>
-        <ul>
-          <li>
-            <section class="card">
-              <header>
-                <h2>Revenue</h2>
-                <p>Quarterly performance summary.</p>
-              </header>
-              <section>
-                <div
-                  class="media-surface"
-                  style="height: 9rem; border-radius: var(--radius)"
-                >
-                  +18%
-                </div>
-              </section>
-            </section>
-          </li>
-          <li>
-            <section class="card">
-              <header>
-                <h2>Retention</h2>
-                <p>Monthly cohort movement.</p>
-              </header>
-              <section>
-                <div
-                  class="media-surface"
-                  style="height: 9rem; border-radius: var(--radius)"
-                >
-                  94%
-                </div>
-              </section>
-            </section>
-          </li>
-        </ul>
-      </div>
-      <button
-        size="icon"
-        variant="outline"
-        aria-label="Previous"
-        class="button"
-      >
-        &lt;
-      </button>
-      <button size="icon" variant="outline" aria-label="Next" class="button">
-        &gt;
-      </button>
-      <nav aria-hidden="true">
-        <button aria-label="Show revenue"></button>
-        <button aria-label="Show retention"></button>
-      </nav>
-    </section>
+  <body
+    ng-app="angular.css"
+    ng-cloak
+    class="carousel-example-body"
+    data-example="carousel-demo"
+  >
+    <main class="carousel-canonical-stage visual-example">
+      <section ng-carousel class="carousel-demo" aria-label="Numbered slides">
+        <div>
+          <ul>
+            <li>
+              <div class="carousel-item-padding">
+                <article class="card">
+                  <section class="carousel-square">
+                    <span>1</span>
+                  </section>
+                </article>
+              </div>
+            </li>
+            <li>
+              <div class="carousel-item-padding">
+                <article class="card">
+                  <section class="carousel-square">
+                    <span>2</span>
+                  </section>
+                </article>
+              </div>
+            </li>
+            <li>
+              <div class="carousel-item-padding">
+                <article class="card">
+                  <section class="carousel-square">
+                    <span>3</span>
+                  </section>
+                </article>
+              </div>
+            </li>
+            <li>
+              <div class="carousel-item-padding">
+                <article class="card">
+                  <section class="carousel-square">
+                    <span>4</span>
+                  </section>
+                </article>
+              </div>
+            </li>
+            <li>
+              <div class="carousel-item-padding">
+                <article class="card">
+                  <section class="carousel-square">
+                    <span>5</span>
+                  </section>
+                </article>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <button
+          size="icon-sm"
+          variant="outline"
+          type="button"
+          aria-label="Previous slide"
+          class="button"
+        >
+          <svg
+            class="icon-sm lucide lucide-chevron-left"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <path d="m15 18-6-6 6-6" />
+          </svg>
+        </button>
+        <button
+          size="icon-sm"
+          variant="outline"
+          type="button"
+          aria-label="Next slide"
+          class="button"
+        >
+          <svg
+            class="icon-sm lucide lucide-chevron-right"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <path d="m9 18 6-6-6-6" />
+          </svg>
+        </button>
+      </section>
+    </main>
   </body>
 </html>

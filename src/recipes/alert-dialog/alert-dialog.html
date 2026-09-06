@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
+  </head>
+  <body
+    ng-app="angular.css"
+    ng-cloak
+    data-example="alert-dialog-basic alert-dialog-demo"
+  >
+    <section
+      id="confirmation-dialog"
+      class="alert-dialog-demo visual-example alert-dialog"
+    >
+      <button
+        type="button"
+        commandfor="confirmation-dialog-content"
+        command="show-modal"
+        variant="outline"
+        class="button"
+      >
+        Show Dialog
+      </button>
+      <dialog
+        id="confirmation-dialog-content"
+        closedby="closerequest"
+        aria-labelledby="confirmation-dialog-title"
+        aria-describedby="confirmation-dialog-description"
+        size="default"
+      >
+        <header>
+          <h2 id="confirmation-dialog-title">Are you absolutely sure?</h2>
+          <p id="confirmation-dialog-description">
+            This action cannot be undone. This will permanently delete your
+            account from our servers.
+          </p>
+        </header>
+        <footer>
+          <button
+            type="button"
+            commandfor="confirmation-dialog-content"
+            command="close"
+            variant="outline"
+            class="button"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            commandfor="confirmation-dialog-content"
+            command="close"
+            class="button"
+          >
+            Continue
+          </button>
+        </footer>
+      </dialog>
+    </section>
+  </body>
+</html>

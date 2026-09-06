@@ -2,7 +2,7 @@
 [ng-menubar] {
   display: flex;
   width: fit-content;
-  height: calc(var(--spacing) * 8);
+  height: calc(var(--spacing) * 9);
   align-items: center;
   gap: calc(var(--spacing) * 0.5);
   border: 1px solid var(--border);
@@ -18,7 +18,7 @@
 
 :is(.menubar, [ng-menubar]) > section > button {
   display: inline-flex;
-  min-height: calc(var(--spacing) * 6);
+  min-height: calc(var(--spacing) * 7);
   align-items: center;
   border: 0;
   border-radius: calc(var(--radius) - 2px);

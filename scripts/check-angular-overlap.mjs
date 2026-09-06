@@ -1,6 +1,8 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
+import { catalogCategories } from "./component-policy.ts";
+
 const indexSource = readFileSync("src/index.ts", "utf8");
 const angularTypesSource = readFileSync(
   "node_modules/@angular-wave/angular.ts/@types/ng.d.ts",
@@ -38,10 +40,6 @@ const listTypeScriptFiles = (directory) =>
     })
     .filter((path) => path.endsWith(".ts") && !path.endsWith(".test.ts"));
 
-const allowedValueOwnerFiles = new Set([
-  "src/components/input-otp/input-otp.ts",
-]);
-
 const overlapFailures = [];
 
 if (collisions.length > 0) {
@@ -51,12 +49,10 @@ if (collisions.length > 0) {
   );
 }
 
-for (const file of [
-  ...listTypeScriptFiles("src/components"),
-  ...listTypeScriptFiles("src/elements"),
-]) {
+for (const file of catalogCategories.flatMap((category) =>
+  listTypeScriptFiles(join("src", category)),
+)) {
   const source = readFileSync(file, "utf8");
-  const isAllowedValueOwner = allowedValueOwnerFiles.has(file);
 
   const checks = [
     {
@@ -87,12 +83,11 @@ for (const file of [
     }
   }
 
-  if (!isAllowedValueOwner && /\.value\s*=/.test(source)) {
+  if (/\.value\s*=/.test(source)) {
     overlapFailures.push(`${file}: must not own native value state`);
   }
 
   if (
-    !isAllowedValueOwner &&
     /dispatchEvent\(new Event\(["'](?:input|change)["']/.test(source)
   ) {
     overlapFailures.push(

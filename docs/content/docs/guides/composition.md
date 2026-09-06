@@ -47,9 +47,9 @@ Place command content inside a dialog. Dialog owns modal focus and closure;
 command owns active result navigation; AngularTS owns filtering and command
 execution.
 
-## Collapsible sidebar group
+## Disclosure sidebar group
 
-Place native `details.collapsible` inside a sidebar group. Sidebar owns its
+Place native `details.disclosure` inside a sidebar group. Sidebar owns its
 global expanded state and responsive hooks; the browser owns nested disclosure.
 
 ## Composition rules

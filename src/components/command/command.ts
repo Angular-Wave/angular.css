@@ -1,9 +1,12 @@
 import type {} from "@angular-wave/angular.ts";
 
 import {
+  isOwnedBy,
+  queryOwned,
+  queryOwnedAll,
+  setAttributeIfChanged,
   isDisabled,
   onDestroy,
-  queryAll,
   setOpenState,
 } from "../../internal/dom";
 
@@ -27,32 +30,15 @@ const shortcutSelector = itemSelectors
   .map((selector) => `${selector} > kbd`)
   .join(", ");
 
-const setAttributeIfChanged = (
-  element: HTMLElement,
-  name: string,
-  value: string,
-) => {
-  if (element.getAttribute(name) !== value) element.setAttribute(name, value);
-};
-
 export function commandDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
-      const isOwned = (candidate: Element) =>
-        candidate.closest(rootSelector) === element;
-      const owned = <T extends HTMLElement>(
-        selector: string,
-        constructor: abstract new (...args: never[]) => T,
-      ): T | null => {
-        const candidate = queryAll<HTMLElement>(element, selector).find(
-          isOwned,
-        );
-        return candidate instanceof constructor ? candidate : null;
-      };
-      const ownedAll = <T extends HTMLElement>(selector: string): T[] =>
-        queryAll<T>(element, selector).filter(isOwned);
-
-      const input = owned(inputSelector, HTMLInputElement);
+      const input = queryOwned(
+        element,
+        rootSelector,
+        inputSelector,
+        HTMLInputElement,
+      );
       if (!input) return;
 
       const itemCleanups = new Map<HTMLElement, () => void>();
@@ -138,24 +124,33 @@ export function commandDirective(): ng.Directive {
 
       const syncStructure = () => {
         const previousActive = activeItem;
-        items = ownedAll<HTMLElement>(itemSelector);
+        items = queryOwnedAll<HTMLElement>(element, rootSelector, itemSelector);
         items.forEach(bindItem);
 
         itemCleanups.forEach((cleanup, item) => {
-          if (!item.isConnected || !isOwned(item)) {
+          if (!item.isConnected || !isOwnedBy(element, rootSelector, item)) {
             cleanup();
             itemCleanups.delete(item);
           }
         });
 
-        const list = owned(listSelector, HTMLElement);
+        const list = queryOwned(
+          element,
+          rootSelector,
+          listSelector,
+          HTMLElement,
+        );
         if (list) {
           if (!list.id) list.id = `command-list-${String(commandIdCounter++)}`;
           setAttributeIfChanged(list, "role", "listbox");
           setAttributeIfChanged(input, "aria-controls", list.id);
         }
 
-        ownedAll<HTMLElement>(groupSelector).forEach((group) => {
+        queryOwnedAll<HTMLElement>(
+          element,
+          rootSelector,
+          groupSelector,
+        ).forEach((group) => {
           setAttributeIfChanged(group, "role", "group");
           const heading =
             group.querySelector<HTMLElement>(groupHeadingSelector);
@@ -165,17 +160,29 @@ export function commandDirective(): ng.Directive {
           }
           setAttributeIfChanged(group, "aria-labelledby", heading.id);
         });
-        ownedAll<HTMLElement>(separatorSelector).forEach((separator) => {
+        queryOwnedAll<HTMLElement>(
+          element,
+          rootSelector,
+          separatorSelector,
+        ).forEach((separator) => {
           separator.removeAttribute("aria-orientation");
         });
-        ownedAll<HTMLElement>(shortcutSelector).forEach((shortcut) => {
+        queryOwnedAll<HTMLElement>(
+          element,
+          rootSelector,
+          shortcutSelector,
+        ).forEach((shortcut) => {
           setAttributeIfChanged(shortcut, "aria-hidden", "true");
         });
 
         const rendered = renderedItems();
         const empty = rendered.length === 0;
         setAttributeIfChanged(input, "aria-expanded", String(!empty));
-        ownedAll<HTMLElement>(emptySelector).forEach((emptySlot) => {
+        queryOwnedAll<HTMLElement>(
+          element,
+          rootSelector,
+          emptySelector,
+        ).forEach((emptySlot) => {
           setAttributeIfChanged(emptySlot, "role", "status");
           setOpenState(emptySlot, empty);
         });

@@ -1,24 +1,39 @@
-import { readdirSync, readFileSync, statSync } from "node:fs";
-import { basename, join } from "node:path";
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 
-const listTypeScriptFiles = (directory) =>
-  readdirSync(directory)
-    .flatMap((entry) => {
-      const path = join(directory, entry);
-      return statSync(path).isDirectory() ? listTypeScriptFiles(path) : path;
-    })
-    .filter((path) => path.endsWith(".ts") && !path.endsWith(".test.ts"));
+import { catalogNames, catalogPolicy } from "./component-policy.ts";
 
 const failures = [];
 
-for (const file of listTypeScriptFiles("src/components")) {
-  const componentName = basename(file, ".ts");
-  const directoryName = basename(file.split("/").slice(0, -1).join("/"));
-  if (componentName !== directoryName) continue;
+for (const name of catalogNames) {
+  const { category, runtime } = catalogPolicy[name];
+  const directory = join("src", category, name);
 
-  const source = readFileSync(file, "utf8").trim();
-  if (/^export \{ [A-Za-z0-9_$]+ \} from "\.\.\/[^"]+";$/.test(source)) {
-    failures.push(`${file}: canonical component files must own implementation`);
+  for (const extension of ["css", "html", "test.ts"]) {
+    const path = join(directory, `${name}.${extension}`);
+    if (!existsSync(path)) failures.push(`${name}: missing ${path}`);
+  }
+
+  const testPath = join(directory, `${name}.test.ts`);
+  const sourceUrl = `/${directory}/${name}.html`;
+  if (existsSync(testPath)) {
+    const testSource = readFileSync(testPath, "utf8");
+    const usesSharedSourceTest =
+      testSource.includes("testStyleOnlyElement") &&
+      testSource.includes(`category: "${category}"`) &&
+      testSource.includes(`name: "${name}"`);
+    if (!testSource.includes(sourceUrl) && !usesSharedSourceTest) {
+      failures.push(`${testPath}: must exercise canonical source page ${sourceUrl}`);
+    }
+  }
+
+  const sourcePath = join(directory, `${name}.ts`);
+  if (existsSync(sourcePath) !== runtime) {
+    failures.push(
+      runtime
+        ? `${name}: missing runtime entrypoint ${sourcePath}`
+        : `${name}: styling-only entry must not have ${sourcePath}`,
+    );
   }
 }
 
@@ -27,4 +42,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log("Component entrypoint check passed.");
+console.log("Catalog entrypoint check passed.");

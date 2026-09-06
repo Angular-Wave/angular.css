@@ -1,19 +1,46 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>AngularCSS</title>
-    <link rel="stylesheet" href="/docs/assets/angular.css" />
-    <script src="https://cdn.jsdelivr.net/npm/@angular-wave/angular.ts/dist/angular-ts.umd.min.js"></script>
-    <script type="module" src="../../index.ts"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
   </head>
+  <body ng-app="angular.css" ng-cloak ng-init="search=''; status=''">
+    <div class="stack">
+      <label for="docs-input-search">Search</label>
+      <input
+        id="docs-input-search"
+        placeholder="Search"
+        ng-model="search"
+        class="input"
+      />
+      <div class="output">Value: {{ search ? search : "empty" }}</div>
 
-  <body ng-app="ui" ng-cloak>
-    <div class="grid w-full max-w-xl items-start gap-4 p-10">
-      <input placeholder="Email" class="input" />
-      <input placeholder="Disabled" disabled class="input" />
-      <input placeholder="Invalid" aria-invalid="true" class="input" />
-      <input type="file" class="input" />
+      <label for="docs-input-compact">Content-sized</label>
+      <input id="docs-input-compact" value="Compact" class="input input-fit" />
+
+      <label for="docs-input-disabled">Disabled</label>
+      <input
+        id="docs-input-disabled"
+        placeholder="Disabled"
+        disabled
+        class="input"
+      />
+
+      <label for="docs-input-invalid">Invalid</label>
+      <input
+        id="docs-input-invalid"
+        placeholder="Invalid"
+        aria-invalid="true"
+        class="input"
+      />
+
+      <label for="docs-input-file">File</label>
+      <input id="docs-input-file" type="file" class="input" />
     </div>
   </body>
 </html>

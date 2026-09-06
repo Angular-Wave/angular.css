@@ -8,6 +8,8 @@ import {
 import { dirname, join, relative, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 
+import { catalogNames } from "./component-policy.ts";
+
 const outputDirectory = join("/tmp", `angularcss-docs-check-${process.pid}`);
 const basePath = "/angular.css/";
 
@@ -90,16 +92,18 @@ try {
   const homeComponentLinks = [
     ...home.matchAll(/class="component-catalog-list"[\s\S]*?<\/ul>/g),
   ].flatMap((section) => [
-    ...section[0].matchAll(/href="[^"]*\/docs\/components\/[^"/]+\/"/g),
+    ...section[0].matchAll(
+      /href="[^"]*\/docs\/(?:foundations|elements|patterns|components|recipes)\/[^"/]+\/"/g,
+    ),
   ]);
-  if (homeComponentLinks.length !== 55) {
+  if (homeComponentLinks.length !== catalogNames.length) {
     failures.push(
-      `homepage must link all 55 components; found ${homeComponentLinks.length}`,
+      `homepage must link all ${catalogNames.length} catalog entries; found ${homeComponentLinks.length}`,
     );
   }
 
   const accordionReference = readFileSync(
-    join(outputDirectory, "docs/components/accordion/index.html"),
+    join(outputDirectory, "docs/patterns/accordion/index.html"),
     "utf8",
   );
   for (const expected of [

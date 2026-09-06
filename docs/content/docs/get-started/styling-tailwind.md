@@ -7,8 +7,8 @@ description:
 ---
 
 AngularCSS ships a usable visual baseline, but its public styling contract is
-made for application overrides. Target semantic roots, named `class` elements,
-and generated state attributes from Tailwind or ordinary CSS.
+made for application overrides. Target semantic roots, component classes,
+native state, and documented component state from Tailwind or ordinary CSS.
 
 ## Load order
 
@@ -77,23 +77,25 @@ The component reference lists the exact root selector for every entry.
 
 ## Semantic parts
 
-Complex components expose named parts without rendering a hidden template:
+Use the documented HTML relationships to style parts of a composition:
 
 ```css
-.dialog-content {
+.dialog > dialog {
   @apply max-w-xl;
 }
 
-.dialog-content footer {
+.dialog > dialog > footer {
   @apply justify-between;
 }
 ```
 
-Part classes remain stable selectors while the elements retain native meaning.
+The wrapper identifies the composition; native elements identify its parts.
 
 ## State attributes
 
-Directives mirror behavior into `data-*` and ARIA attributes:
+Styling-only entries use native state such as `:checked` and `:open`.
+Behavioral components expose their documented state through authored attributes,
+`data-*`, and ARIA attributes:
 
 ```css
 [ng-tabs] > menu > button[aria-selected='true'] {

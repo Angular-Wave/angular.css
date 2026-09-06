@@ -2,8 +2,17 @@ type ElementConstructor<T extends Element> = abstract new (...args: never[]) => 
 export declare function query(root: ParentNode, selector: string): Element | null;
 export declare function query<T extends Element>(root: ParentNode, selector: string, constructor: ElementConstructor<T>): T | null;
 export declare function queryAll<T extends Element>(root: ParentNode, selector: string): T[];
+export declare function queryOwned<T extends Element>(root: Element, rootSelector: string, selector: string, constructor: ElementConstructor<T>): T | null;
+export declare function queryOwnedAll<T extends Element>(root: Element, rootSelector: string, selector: string): T[];
+export declare function isOwnedBy(root: Element, rootSelector: string, candidate: Element): boolean;
+export declare function setAttributeIfChanged(element: Element, name: string, value: string): void;
 export declare function setOpenState(element: HTMLElement, open: boolean): void;
 export declare function isDisabled(element: Element): boolean;
 export declare function nextIndex(currentIndex: number, length: number, direction: 1 | -1): number;
+export declare function fitViewportRect(left: number, top: number, width: number, height: number, margin?: number): {
+    _left: number;
+    _top: number;
+    _availableHeight: number;
+};
 export declare function onDestroy(scope: ng.Scope | null | undefined, cleanup: () => void): void;
 export {};

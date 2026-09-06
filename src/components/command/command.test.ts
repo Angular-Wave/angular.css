@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 
-const canonicalUrl = "/docs/static/examples/components/command.html";
+const canonicalUrl = "/src/components/command/command.html";
 const dialogsUrl =
   "/docs/static/examples/components/command-dialog-workflows.html";
 const scrollableUrl =
@@ -9,10 +9,10 @@ const rtlUrl = "/docs/static/examples/components/command-rtl.html";
 
 const expectBuiltArtifactRuntime = async (page: Page): Promise<void> => {
   await expect(
-    page.locator('script[src="../../js/angular-ts.umd.js"]'),
+    page.locator('script[src$="/js/angular-ts.umd.js"]'),
   ).toHaveCount(1);
   await expect(
-    page.locator('script[src="../../js/angular-css.umd.js"]'),
+    page.locator('script[src$="/js/angular-css.umd.js"]'),
   ).toHaveCount(1);
   expect(
     await page.evaluate(() =>

@@ -146,6 +146,7 @@ body {
   min-height: 42rem;
   padding: 2rem;
   align-content: space-between;
+  grid-template-columns: minmax(0, 1fr);
   gap: 2rem;
 }
 
@@ -200,9 +201,10 @@ body {
 .sidebar-collapsible-panel > nav > details > summary {
   display: flex;
   width: 100%;
-  height: 100%;
+  height: calc(var(--spacing) * 8);
   align-items: center;
   gap: calc(var(--spacing) * 2);
+  padding: calc(var(--spacing) * 2);
   color: inherit;
   font-size: var(--text-sm);
   text-align: start;
@@ -235,7 +237,33 @@ body {
 }
 
 @media (width <= 560px) {
+  .sidebar-demo-panel,
+  .sidebar-anatomy-panel,
+  .sidebar-collapsible-panel,
+  .sidebar-rtl-panel {
+    --sidebar-width: 13rem;
+  }
+
+  .sidebar-demo-toolbar .button {
+    width: calc(var(--spacing) * 8);
+    padding: 0;
+  }
+
+  .sidebar-demo-toolbar .button > span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
   .sidebar-dashboard {
+    padding: 1.25rem;
+  }
+
+  .sidebar-anatomy-inset,
+  .sidebar-collapsible-inset {
     padding: 1.25rem;
   }
 
@@ -251,13 +279,6 @@ body {
   overflow: hidden;
   white-space: nowrap;
   clip-path: inset(50%);
-}
-
-.native-select-demo {
-  display: flex;
-  min-height: 12rem;
-  align-items: center;
-  justify-content: center;
 }
 
 .navigation-menu-example-body {
@@ -362,72 +383,7 @@ body {
   grid-column: 1 / -1;
 }
 
-.native-select-workflows {
-  display: grid;
-  width: min(100%, 46rem);
-  min-height: 36rem;
-  margin-inline: auto;
-  padding: 2.5rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 3.5rem 4rem;
-}
-
-.native-select-workflow-section,
-.native-select-field,
-.native-select-state-list {
-  display: grid;
-  align-content: start;
-}
-
-.native-select-workflow-section {
-  gap: 1.25rem;
-}
-
-.native-select-field {
-  width: min(100%, 18rem);
-  gap: 0.5rem;
-}
-
-.native-select-field > select {
-  width: 100%;
-}
-
-.native-select-state-list {
-  gap: 1rem;
-}
-
-.native-select-output {
-  color: var(--muted-foreground);
-  font-size: var(--text-xs);
-}
-
-.native-select-dynamic-section {
-  grid-column: 1 / -1;
-}
-
-.native-select-dynamic-section > .button {
-  width: fit-content;
-}
-
-.native-select-rtl-workflow {
-  display: grid;
-  min-height: 18rem;
-  place-items: center;
-  padding: 2rem;
-}
-
 @media (width <= 640px) {
-  .native-select-workflows {
-    min-height: 50rem;
-    padding: 1.5rem 1rem;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 3rem;
-  }
-
-  .native-select-dynamic-section {
-    grid-column: auto;
-  }
-
   .navigation-menu-example-body {
     min-height: 33rem;
   }
@@ -842,6 +798,15 @@ body {
     gap: 8px;
   }
 
+  .separator-menu-demo > div {
+    min-width: 0;
+    flex: 1 1 0;
+  }
+
+  .separator-menu-demo span {
+    white-space: normal;
+  }
+
   .kbd-workflows {
     padding-inline: 2rem;
   }
@@ -864,6 +829,10 @@ body {
   text-rendering: optimizelegibility;
   color: var(--foreground);
   background: var(--background);
+}
+
+body:has(> .application-shell) {
+  padding: 0;
 }
 
 .dialog-demo {
@@ -1483,8 +1452,8 @@ body .visually-hidden {
   min-height: 14rem;
 }
 
-[ng-dropdown] > button.breadcrumb-plain-trigger {
-  min-height: auto;
+[ng-dropdown-menu] > button.breadcrumb-plain-trigger {
+  min-height: calc(var(--spacing) * 6);
   gap: calc(var(--spacing) * 1);
   border: 0;
   background: transparent;
@@ -1531,6 +1500,14 @@ body .visually-hidden {
   gap: 8px;
 }
 
+.button-group-workflow-section > .button-group {
+  max-width: 100%;
+}
+
+.button-group-workflow-section > .button-group:has(> .button-group) {
+  flex-wrap: wrap;
+}
+
 .button-group-workflow-section > h2 {
   margin: 0;
   color: var(--foreground);
@@ -1557,6 +1534,28 @@ body .visually-hidden {
 
 .button-group-select-stage {
   min-height: 14rem;
+}
+
+.button-group-select-stage > .button-group {
+  width: 100%;
+  max-width: 100%;
+}
+
+.button-group-select-stage > .button-group > .button-group:first-child {
+  min-width: 0;
+  flex: 1;
+}
+
+.button-group-select-stage select {
+  width: auto;
+  min-width: 0;
+  max-width: 45%;
+}
+
+.button-group-select-stage input {
+  width: auto;
+  min-width: 0;
+  flex: 1;
 }
 
 .button-group-output {
@@ -2609,7 +2608,10 @@ body .visually-hidden {
 
 .skeleton-lines {
   display: grid;
+  min-width: 0;
   max-width: calc(100% - 64px);
+  overflow: hidden;
+  flex: 1;
   gap: 8px;
 }
 
@@ -3121,9 +3123,12 @@ kbd {
   appearance: none;
 }
 
-.date-picker-workflow .input-group > .popover,
-.date-picker-workflow .input-group > .popover > button:first-child {
+.date-picker-workflow .input-group .popover {
   width: auto;
+}
+
+.date-picker-workflow .input-group .popover > button:first-child {
+  width: calc(var(--spacing) * 6);
 }
 
 .calendar-popover-content {
@@ -3197,6 +3202,7 @@ kbd {
 .carousel-canonical-stage {
   display: flex;
   width: min(100%, 26rem);
+  min-width: 0;
   justify-content: center;
 }
 
@@ -3254,7 +3260,9 @@ kbd {
 
 .carousel-workflow {
   display: grid;
+  width: 100%;
   min-width: 0;
+  grid-template-columns: minmax(0, 1fr);
   justify-items: center;
   gap: 12px;
 }
@@ -3447,6 +3455,7 @@ kbd {
 
 .pagination-rows-field select {
   width: 5rem;
+  min-width: 5rem;
   flex-shrink: 0;
 }
 
@@ -3595,8 +3604,8 @@ kbd {
   }
 }
 
-.collapsible-example-body,
-.collapsible-composition-body {
+.disclosure-example-body,
+.disclosure-composition-body {
   display: grid;
   min-height: 100vh;
   place-items: center;
@@ -3716,14 +3725,14 @@ kbd {
   }
 }
 
-details.collapsible:has(> summary > header + p) {
+details.disclosure:has(> summary > header + p) {
   display: flex;
   width: min(100%, 21.875rem);
   flex-direction: column;
   gap: 8px;
 }
 
-details.collapsible:has(> summary > header + p) > summary {
+details.disclosure:has(> summary > header + p) > summary {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -3731,12 +3740,12 @@ details.collapsible:has(> summary > header + p) > summary {
   cursor: pointer;
 }
 
-details.collapsible:has(> summary > header + p) > summary:focus-visible {
+details.disclosure:has(> summary > header + p) > summary:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
 
-details.collapsible:has(> summary > header + p) > summary > header {
+details.disclosure:has(> summary > header + p) > summary > header {
   display: flex;
   width: 100%;
   min-height: 32px;
@@ -3746,7 +3755,7 @@ details.collapsible:has(> summary > header + p) > summary > header {
   padding-inline: 16px;
 }
 
-details.collapsible:has(> summary > header + p)
+details.disclosure:has(> summary > header + p)
   > summary
   > header
   > :is(h1, h2, h3, h4, h5, h6) {
@@ -3755,7 +3764,7 @@ details.collapsible:has(> summary > header + p)
   line-height: 1.25rem;
 }
 
-details.collapsible:has(> summary > header + p) > summary > header > svg {
+details.disclosure:has(> summary > header + p) > summary > header > svg {
   display: inline-flex;
   width: 32px;
   height: 32px;
@@ -3770,56 +3779,56 @@ details.collapsible:has(> summary > header + p) > summary > header > svg {
   cursor: inherit;
 }
 
-details.collapsible:has(> summary > header + p) > summary:hover > header > svg {
+details.disclosure:has(> summary > header + p) > summary:hover > header > svg {
   background: var(--muted);
 }
 
-details.collapsible:has(> summary > header + p) > summary > header > svg path,
-.collapsible-product path,
-.collapsible-settings path,
-.collapsible-file-tree path {
+details.disclosure:has(> summary > header + p) > summary > header > svg path,
+.disclosure-product path,
+.disclosure-settings path,
+.disclosure-file-tree path {
   stroke: currentcolor;
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-details.collapsible:has(> summary > header + p) > summary > p,
-details.collapsible:has(> summary > header + p) > section > article {
+details.disclosure:has(> summary > header + p) > summary > p,
+details.disclosure:has(> summary > header + p) > section > article {
   border: 1px solid var(--border);
   border-radius: calc(var(--radius) - 2px);
   padding: 8px 16px;
   font-size: var(--text-sm);
 }
 
-details.collapsible:has(> summary > header + p) > summary > p {
+details.disclosure:has(> summary > header + p) > summary > p {
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: space-between;
 }
 
-details.collapsible:has(> summary > header + p) > summary > p > span,
-details.collapsible:has(> summary > header + p)
+details.disclosure:has(> summary > header + p) > summary > p > span,
+details.disclosure:has(> summary > header + p)
   > section
   > article
   > p:last-child {
   color: var(--muted-foreground);
 }
 
-details.collapsible:has(> summary > header + p) > summary > p > strong,
-details.collapsible:has(> summary > header + p) > section > article strong {
+details.disclosure:has(> summary > header + p) > summary > p > strong,
+details.disclosure:has(> summary > header + p) > section > article strong {
   color: var(--foreground);
   font-weight: var(--font-weight-medium);
 }
 
-details.collapsible:has(> summary > header + p) > section {
+details.disclosure:has(> summary > header + p) > section {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.collapsible-workflow-grid {
+.disclosure-workflow-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: start;
@@ -3828,14 +3837,14 @@ details.collapsible:has(> summary > header + p) > section {
   margin-inline: auto;
 }
 
-.collapsible-workflow {
+.disclosure-workflow {
   display: grid;
   min-width: 0;
   justify-items: center;
   gap: 10px;
 }
 
-.collapsible-workflow > h2 {
+.disclosure-workflow > h2 {
   width: 100%;
   margin: 0;
   font-size: var(--text-sm);
@@ -3843,23 +3852,23 @@ details.collapsible:has(> summary > header + p) > section {
   line-height: 1.25rem;
 }
 
-.collapsible-workflow-wide {
+.disclosure-workflow-wide {
   grid-column: 1 / -1;
 }
 
-.collapsible-basic-card {
+.disclosure-basic-card {
   width: min(100%, 24rem);
 }
 
-.collapsible-product {
+.disclosure-product {
   border-radius: calc(var(--radius) - 2px);
 }
 
-.collapsible-product[open] {
+.disclosure-product[open] {
   background: var(--muted);
 }
 
-.collapsible-product > summary {
+.disclosure-product > summary {
   display: flex;
   width: 100%;
   height: 36px;
@@ -3871,22 +3880,22 @@ details.collapsible:has(> summary > header + p) > section {
   cursor: pointer;
 }
 
-.collapsible-product > summary:hover {
+.disclosure-product > summary:hover {
   background: var(--muted);
 }
 
-.collapsible-product > summary svg {
+.disclosure-product > summary svg {
   width: 16px;
   height: 16px;
   margin-inline-start: auto;
   transition: transform 120ms ease;
 }
 
-.collapsible-product[open] > summary svg {
+.disclosure-product[open] > summary svg {
   transform: rotate(180deg);
 }
 
-.collapsible-product > :last-child {
+.disclosure-product > :last-child {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -3895,17 +3904,17 @@ details.collapsible:has(> summary > header + p) > section {
   font-size: var(--text-sm);
 }
 
-.collapsible-settings-card {
+.disclosure-settings-card {
   width: min(100%, 20rem);
 }
 
-.collapsible-settings {
+.disclosure-settings {
   display: flex;
   align-items: flex-start;
   gap: 8px;
 }
 
-.collapsible-settings-fields {
+.disclosure-settings-fields {
   display: grid;
   min-width: 0;
   flex: 1;
@@ -3913,20 +3922,20 @@ details.collapsible:has(> summary > header + p) > section {
   gap: 8px;
 }
 
-.collapsible-settings-more {
+.disclosure-settings-more {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
 }
 
-.collapsible-settings-disclosure {
+.disclosure-settings-disclosure {
   display: grid;
   grid-column: 1 / -1;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
 }
 
-.collapsible-settings-disclosure > summary {
+.disclosure-settings-disclosure > summary {
   width: 36px;
   height: 36px;
   grid-column: 1 / -1;
@@ -3935,51 +3944,51 @@ details.collapsible:has(> summary > header + p) > section {
   list-style: none;
 }
 
-.collapsible-settings-disclosure > :last-child {
+.disclosure-settings-disclosure > :last-child {
   grid-column: 1 / -1;
 }
 
-.collapsible-minimize,
-.collapsible-settings-disclosure[open] .collapsible-maximize {
+.disclosure-minimize,
+.disclosure-settings-disclosure[open] .disclosure-maximize {
   display: none;
 }
 
-.collapsible-settings-disclosure[open] .collapsible-minimize {
+.disclosure-settings-disclosure[open] .disclosure-minimize {
   display: block;
 }
 
-.collapsible-file-card {
+.disclosure-file-card {
   width: min(100%, 16rem);
   gap: 8px;
 }
 
-.collapsible-file-card :is(.tabs, [ng-tabs]) {
+.disclosure-file-card :is(.tabs, [ng-tabs]) {
   gap: 0;
 }
 
-.collapsible-file-card [ng-tabs] > menu {
+.disclosure-file-card [ng-tabs] > menu {
   width: 100%;
 }
 
-.collapsible-file-card [ng-tabs] > menu > button {
+.disclosure-file-card [ng-tabs] > menu > button {
   flex: 1;
 }
 
-.collapsible-file-tree,
-.collapsible-file-tree details > :last-child {
+.disclosure-file-tree,
+.disclosure-file-tree details > :last-child {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.collapsible-file-tree details > :last-child {
+.disclosure-file-tree details > :last-child {
   margin-block-start: 4px;
   margin-inline-start: 20px;
 }
 
-.collapsible-file-tree summary,
-.collapsible-file-tree > button,
-.collapsible-file-tree details > :last-child > button {
+.disclosure-file-tree summary,
+.disclosure-file-tree > button,
+.disclosure-file-tree details > :last-child > button {
   display: flex;
   width: 100%;
   height: 32px;
@@ -3999,35 +4008,35 @@ details.collapsible:has(> summary > header + p) > section {
   cursor: pointer;
 }
 
-.collapsible-file-tree summary:hover,
-.collapsible-file-tree button:hover {
+.disclosure-file-tree summary:hover,
+.disclosure-file-tree button:hover {
   background: var(--muted);
   text-decoration: none;
 }
 
-.collapsible-file-tree summary svg,
-.collapsible-file-tree button svg {
+.disclosure-file-tree summary svg,
+.disclosure-file-tree button svg {
   width: 16px;
   height: 16px;
   flex: 0 0 16px;
 }
 
-.collapsible-file-tree details[open] > summary > .tree-chevron {
+.disclosure-file-tree details[open] > summary > .tree-chevron {
   transform: rotate(90deg);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .collapsible-product > summary svg {
+  .disclosure-product > summary svg {
     transition: none;
   }
 }
 
 @media (width <= 700px) {
-  .collapsible-workflow-grid {
+  .disclosure-workflow-grid {
     grid-template-columns: 1fr;
   }
 
-  .collapsible-workflow-wide {
+  .disclosure-workflow-wide {
     grid-column: auto;
   }
 }
@@ -4352,12 +4361,12 @@ details.collapsible:has(> summary > header + p) > section {
   width: min(100%, 24rem);
 }
 
-.data-table-toolbar > [ng-dropdown] {
+.data-table-toolbar > [ng-dropdown-menu] {
   margin-inline-start: auto;
 }
 
 .data-table-column-menu,
-.data-table-toolbar [ng-dropdown] > menu {
+.data-table-toolbar [ng-dropdown-menu] > menu {
   inset-inline: auto 0;
   min-width: 10rem;
 }
@@ -4574,11 +4583,11 @@ details.collapsible:has(> summary > header + p) > section {
   min-height: 14rem;
 }
 
-.item-dropdown-workflow [ng-dropdown] > menu {
+.item-dropdown-workflow [ng-dropdown-menu] > menu {
   width: 13rem;
 }
 
-.item-dropdown-workflow [ng-dropdown] menu :is(a, button, summary) {
+.item-dropdown-workflow [ng-dropdown-menu] menu :is(a, button, summary) {
   padding: 0;
 }
 
@@ -4746,19 +4755,19 @@ details.collapsible:has(> summary > header + p) > section {
   }
 }
 
-.sonner-example-body {
+.toast-example-body {
   display: grid;
   min-height: 100vh;
   place-items: center;
 }
 
-.sonner-demo {
+.toast-demo {
   display: grid;
   justify-items: center;
   gap: 12px;
 }
 
-.sonner-workflow-grid {
+.toast-workflow-grid {
   display: grid;
   width: min(100%, 48rem);
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -4767,7 +4776,7 @@ details.collapsible:has(> summary > header + p) > section {
   margin-inline: auto;
 }
 
-.sonner-workflow-section {
+.toast-workflow-section {
   display: grid;
   min-width: 0;
   align-content: start;
@@ -4775,26 +4784,26 @@ details.collapsible:has(> summary > header + p) > section {
   gap: 12px;
 }
 
-.sonner-workflow-section > h2 {
+.toast-workflow-section > h2 {
   margin: 0;
   font-size: var(--text-sm);
   font-weight: var(--font-weight-semibold);
   line-height: 1.25rem;
 }
 
-.sonner-workflow-wide {
+.toast-workflow-wide {
   grid-column: 1 / -1;
   width: 100%;
 }
 
-.sonner-button-grid {
+.toast-button-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-.sonner-inline-preview,
-.sonner-position-preview {
+.toast-inline-preview,
+.toast-position-preview {
   position: relative;
   width: 100%;
   overflow: hidden;
@@ -4803,69 +4812,69 @@ details.collapsible:has(> summary > header + p) > section {
   background: color-mix(in srgb, var(--muted) 35%, transparent);
 }
 
-.sonner-inline-preview {
+.toast-inline-preview {
   display: grid;
   min-height: 112px;
   align-items: center;
   padding: 16px;
 }
 
-.sonner-position-preview {
+.toast-position-preview {
   min-height: 288px;
 }
 
-.sonner-inline-toaster,
-.sonner-position-toaster {
+.toast-inline-toaster,
+.toast-position-toaster {
   width: min(calc(100% - 32px), 22rem);
 }
 
-.sonner-inline-toaster {
+.toast-inline-toaster {
   position: static;
   transform: none;
 }
 
-.sonner-position-toaster {
+.toast-position-toaster {
   position: absolute;
   z-index: 1;
 }
 
-.sonner-position-toaster[data-position^='top-'] {
+.toast-position-toaster[data-position^='top-'] {
   inset-block: 16px auto;
 }
 
-.sonner-position-toaster[data-position^='bottom-'] {
+.toast-position-toaster[data-position^='bottom-'] {
   inset-block: auto 16px;
 }
 
-.sonner-position-toaster[data-position$='-left'] {
+.toast-position-toaster[data-position$='-left'] {
   inset-inline: 16px auto;
   transform: none;
 }
 
-.sonner-position-toaster[data-position$='-right'] {
+.toast-position-toaster[data-position$='-right'] {
   inset-inline: auto 16px;
   transform: none;
 }
 
-.sonner-position-toaster[data-position$='-center'] {
+.toast-position-toaster[data-position$='-center'] {
   inset-inline: 50% auto;
   transform: translateX(-50%);
 }
 
-.sonner-types-preview {
+.toast-types-preview {
   min-height: 112px;
 }
 
 @media (width <= 640px) {
-  .sonner-workflow-grid {
+  .toast-workflow-grid {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .sonner-workflow-wide {
+  .toast-workflow-wide {
     grid-column: auto;
   }
 
-  .sonner-position-preview {
+  .toast-position-preview {
     min-height: 320px;
   }
 }
@@ -5413,7 +5422,7 @@ details.collapsible:has(> summary > header + p) > section {
 .context-menu-output {
   position: absolute;
   inset-block-end: 0;
-  inset-inline-start: 50%;
+  left: 50%;
   width: min(100%, 20rem);
   transform: translateX(-50%);
 }

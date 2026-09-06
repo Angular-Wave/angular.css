@@ -9,9 +9,36 @@
   "browser": "dist/angular-css.umd.js",
   "types": "@types/index.d.ts",
   "style": "dist/angular.css",
+  "exports": {
+    ".": {
+      "types": "./@types/index.d.ts",
+      "import": "./dist/angular-css.esm.js",
+      "default": "./dist/angular-css.esm.js"
+    },
+    "./angular.css": "./dist/angular.css",
+    "./dist/angular.css": "./dist/angular.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "@types",
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/Angular-Wave/angular.css.git"
+  },
+  "homepage": "https://angular-wave.github.io/angular.css/",
+  "bugs": {
+    "url": "https://github.com/angular-wave/angular.css/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "keywords": [
     "AngularJS",
@@ -26,13 +53,14 @@
     "dev": "vite",
     "express": "node --watch ./utils/express.js",
     "build": "npm run build:js && npm run build:types && npm run css-prod",
-    "build:js": "npm run build:js-artifacts && npm run sync:application-examples",
+    "build:js": "npm run build:js-artifacts && npm run sync:catalog-examples && npm run sync:application-examples",
     "build:js-artifacts": "rollup -c && mkdir -p docs/static/js && cp dist/angular-css.umd.js docs/static/js/angular-css.umd.js && cp node_modules/@angular-wave/angular.ts/dist/angular-ts.umd.js docs/static/js/angular-ts.umd.js",
     "build:test-artifacts": "npm run build:js-artifacts && npm run css-prod",
     "build:types": "node scripts/build-types.mjs",
-    "check": "npm run format:check && npm run lint && npm run typecheck && npm run lint:css && npm run check:angular-ts-version && npm run check:typescript-source && npm run check:html-syntax && npm run check:css-isolation && npm run check:css-cascade && npm run check:angular-overlap && npm run check:authored-selector-simplicity && npm run check:component-entrypoints && npm run check:component-registry && npm run check:developer-index && npm run check:element-entrypoints && npm run check:element-examples && npm run check:application-examples && npm run check:docs-inventory && npm run check:docs-content && npm run check:docs-site && npm run check:types-output && npm run check:test-inventory && npm run check:test-navigation && npm run check:built-artifact-tests && npm run check:test-ports",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run lint:css && npm run check:angular-ts-version && npm run check:typescript-source && npm run check:underscore-property-keys && npm run check:html-syntax && npm run check:css-isolation && npm run check:css-cascade && npm run check:angular-overlap && npm run check:authored-selector-simplicity && npm run check:component-entrypoints && npm run check:component-registry && npm run check:developer-index && npm run check:catalog-examples && npm run check:application-examples && npm run check:docs-inventory && npm run check:docs-content && npm run check:docs-site && npm run check:types-output && npm run check:test-inventory && npm run check:test-navigation && npm run check:built-artifact-tests && npm run check:test-ports && npm run check:release",
     "check:angular-ts-version": "node scripts/check-angular-ts-version.mjs",
     "check:typescript-source": "node scripts/check-typescript-source.mjs",
+    "check:underscore-property-keys": "node scripts/check-underscore-property-keys.mjs",
     "check:html-syntax": "node scripts/check-html-syntax.ts",
     "check:css-isolation": "node scripts/check-css-isolation.mjs",
     "check:css-cascade": "node scripts/check-css-cascade.ts",
@@ -41,8 +69,7 @@
     "check:component-entrypoints": "node scripts/check-component-entrypoints.mjs",
     "check:component-registry": "node scripts/check-component-registry.mjs",
     "check:developer-index": "node scripts/check-developer-index.ts",
-    "check:element-entrypoints": "node scripts/check-element-entrypoints.mjs",
-    "check:element-examples": "node scripts/sync-element-examples.ts --check",
+    "check:catalog-examples": "node scripts/sync-catalog-examples.ts --check",
     "check:application-examples": "node scripts/sync-application-examples.ts --check",
     "check:docs-inventory": "node scripts/check-docs-inventory.mjs",
     "check:docs-content": "node scripts/generate-component-docs.ts --check",
@@ -52,6 +79,8 @@
     "check:test-navigation": "node scripts/check-test-navigation.ts",
     "check:built-artifact-tests": "node scripts/check-built-artifact-tests.ts",
     "check:test-ports": "node scripts/check-test-ports.mjs",
+    "check:release": "node --test scripts/release-utils.test.mjs && node scripts/release.mjs validate",
+    "check:package-consumer": "node scripts/check-package-consumer.mjs",
     "format": "prettier ./src --write --cache --log-level=silent",
     "format:check": "prettier ./src --check --cache --log-level=silent",
     "lint": "eslint ./src --max-warnings=0",
@@ -63,7 +92,7 @@
     "test:docs": "npm run test:docs:examples && npm run test:docs:site",
     "test:docs:examples": "playwright test src/docs-examples.test.ts",
     "test:docs:site": "playwright test --config playwright.hugo.config.ts",
-    "test:components": "playwright test src/components src/elements",
+    "test:components": "playwright test src/foundations src/elements src/patterns src/components src/recipes",
     "css-dev": "npx @tailwindcss/cli -i ./src/index.css -o ./docs/assets/angular.css --watch",
     "css-preflight": "npx @tailwindcss/cli -i ./src/preflight.css -o ./docs/static/css/tailwind-preflight.css --minify",
     "css-prod": "npx @tailwindcss/cli -i ./src/index.css -o ./dist/angular.css --minify && cp ./dist/angular.css ./docs/assets/angular.css && mkdir -p ./docs/static/css && cp ./dist/angular.css ./docs/static/css/angular.css && npm run css-preflight",
@@ -72,8 +101,10 @@
     "generate-docs:components": "node scripts/generate-component-docs.ts",
     "fix:authored-selector-simplicity": "node scripts/check-authored-selector-simplicity.ts --write",
     "migrate:test-artifact-baseline": "node scripts/check-built-artifact-tests.ts --write",
-    "sync:element-examples": "node scripts/sync-element-examples.ts",
     "sync:application-examples": "node scripts/sync-application-examples.ts",
+    "sync:catalog-examples": "node scripts/sync-catalog-examples.ts",
+    "release:build": "rm -rf dist @types && npm run build",
+    "prepack": "npm run release:build",
     "prepare": "husky"
   },
   "dependencies": {
@@ -81,7 +112,8 @@
     "chrono-node": "^2.10.1",
     "date-fns": "^4.4.0",
     "embla-carousel": "8.5.2",
-    "embla-carousel-autoplay": "8.5.2"
+    "embla-carousel-autoplay": "8.5.2",
+    "lucide": "^1.33.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
@@ -103,7 +135,6 @@
     "globals": "^16.2.0",
     "husky": "^9.1.7",
     "jasmine-core": "latest",
-    "lucide": "^1.33.0",
     "npm-run-all": "latest",
     "playwright": "latest",
     "prettier": "latest",

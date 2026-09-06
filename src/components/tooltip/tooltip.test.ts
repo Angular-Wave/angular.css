@@ -1,15 +1,15 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
 
-const canonicalUrl = "/docs/static/examples/components/tooltip.html";
+const canonicalUrl = "/src/components/tooltip/tooltip.html";
 const workflowsUrl = "/docs/static/examples/components/tooltip-workflows.html";
 const rtlUrl = "/docs/static/examples/components/tooltip-rtl.html";
 
 const expectBuiltArtifactRuntime = async (page: Page): Promise<void> => {
   await expect(
-    page.locator('script[src="../../js/angular-ts.umd.js"]'),
+    page.locator('script[src$="/js/angular-ts.umd.js"]'),
   ).toHaveCount(1);
   await expect(
-    page.locator('script[src="../../js/angular-css.umd.js"]'),
+    page.locator('script[src$="/js/angular-css.umd.js"]'),
   ).toHaveCount(1);
   const sourceRequests = await page.evaluate(() =>
     performance

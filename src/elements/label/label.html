@@ -1,25 +1,57 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>AngularCSS</title>
-    <link rel="stylesheet" href="/docs/assets/angular.css" />
-    <script src="https://cdn.jsdelivr.net/npm/@angular-wave/angular.ts/dist/angular-ts.umd.min.js"></script>
-    <script type="module" src="../../index.ts"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/docs/static/css/tailwind-preflight.css" />
+    <link rel="stylesheet" href="/docs/static/css/angular.css" />
+    <link rel="stylesheet" href="/docs/static/examples/example.css" />
+    <script src="/docs/static/js/angular-ts.umd.js"></script>
+    <script src="/docs/static/js/angular-css.umd.js"></script>
   </head>
+  <body
+    ng-app="angular.css"
+    ng-cloak
+    ng-init="labelTerms=false;labelTermsRtl=false"
+    data-example="label-demo label-rtl"
+  >
+    <main class="label-workflows visual-example">
+      <form class="label-control-contract" aria-label="Label state contract">
+        <label for="email">Email</label>
+        <input id="email" placeholder="Email" class="input" />
+        <label for="name">Name</label>
+        <input id="name" placeholder="Name" class="input" />
+      </form>
 
-  <body ng-app="ui" ng-cloak>
-    <div class="grid w-full max-w-xl items-start gap-4 p-10">
-      <label for="email">Email</label>
-      <input id="email" placeholder="Email" class="input" />
+      <section class="label-checkbox-demo" aria-label="Label checkbox">
+        <input
+          id="label-terms"
+          type="checkbox"
+          ng-model="labelTerms"
+          class="checkbox"
+        />
+        <label for="label-terms">Accept terms and conditions</label>
+      </section>
 
-      <label for="disabled-email">Disabled email</label>
-      <input
-        id="disabled-email"
-        placeholder="Disabled"
-        disabled
-        class="input"
-      />
-    </div>
+      <section
+        class="label-checkbox-demo"
+        aria-label="تسمية خانة الاختيار"
+        dir="rtl"
+        lang="ar"
+      >
+        <input
+          id="label-terms-rtl"
+          type="checkbox"
+          ng-model="labelTermsRtl"
+          class="checkbox"
+        />
+        <label for="label-terms-rtl">قبول الشروط والأحكام</label>
+      </section>
+
+      <output class="label-output">
+        Terms: {{ labelTerms ? 'accepted' : 'not accepted' }} · الشروط: {{
+        labelTermsRtl ? 'مقبولة' : 'غير مقبولة' }}
+      </output>
+    </main>
   </body>
 </html>

@@ -34,11 +34,10 @@ Use `ng-menubar` around a strip of menu groups. Menu triggers support:
 <!-- angularcss-reference:start -->
 ## Installation
 
-Install AngularCSS once, load its stylesheet, and include the `ui` module in
-your AngularTS application. See [Installation]({{< relref
+Install AngularCSS, load its stylesheet, and include the `angular.css` module in your AngularTS application. See [Installation]({{< relref
 "/docs/get-started/installation" >}}) for the complete setup.
 
-This component's root directive is `[ng-menubar]`. Importing the package registers it with the AngularCSS `ui` module; there is no per-component JavaScript registration step.
+This component's root directive is `[ng-menubar]`. Importing the package registers it with the AngularCSS `angular.css` module; there is no per-component JavaScript registration step.
 
 ## Anatomy
 
@@ -56,10 +55,16 @@ Each top-level section requires one native button trigger and one `menu`. The ro
 
 | Attribute | Access | Purpose |
 | --- | --- | --- |
-| `aria-checked` | Input | ARIA relationship or state. |
+| `aria-checked` | Input/output | ARIA relationship or state. |
+| `aria-controls` | Output | ARIA relationship or state. |
+| `aria-expanded` | Output | Open or expanded state exposed to assistive technology. |
+| `aria-haspopup` | Output | ARIA relationship or state. |
+| `aria-hidden` | Output | ARIA relationship or state. |
+| `aria-labelledby` | Output | ARIA relationship or state. |
 | `dir` | Input | Text and interaction direction: `ltr` or `rtl`. |
 | `open` | Input | Initial or controlled open state. |
-| `tabindex` | Input | Keyboard focus order for composite descendants. |
+| `role` | Output | Explicit semantic role when native HTML does not provide one. |
+| `tabindex` | Input/output | Keyboard focus order for composite descendants. |
 
 `Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
 

@@ -1,0 +1,68 @@
+@scope (form.filter-bar) to (.filter-bar) {
+  :scope {
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(var(--spacing) * 2);
+    align-items: end;
+    padding: calc(var(--spacing) * 3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--background);
+  }
+
+  :scope > fieldset {
+    display: flex;
+    min-width: min(100%, 18rem);
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    gap: calc(var(--spacing) * 2);
+    align-items: end;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  :scope > fieldset > label {
+    display: grid;
+    min-width: 10rem;
+    flex: 1 1 12rem;
+    gap: calc(var(--spacing) * 2);
+    color: var(--foreground);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+  }
+
+  :scope > menu {
+    display: flex;
+    flex: 0 0 auto;
+    gap: calc(var(--spacing) * 2);
+    margin: 0;
+    padding: 0;
+  }
+
+  @media (width < 40rem) {
+    :scope > fieldset {
+      min-width: 0;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    :scope > fieldset > label,
+    :scope > menu {
+      width: 100%;
+    }
+
+    :scope > fieldset > label {
+      min-width: 0;
+      flex: none;
+    }
+
+    :scope > fieldset > label > :is(input, select) {
+      width: 100%;
+    }
+
+    :scope > menu > button {
+      flex: 1 1 0;
+    }
+  }
+}

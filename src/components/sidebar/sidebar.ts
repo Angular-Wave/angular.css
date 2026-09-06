@@ -1,6 +1,6 @@
 import type {} from "@angular-wave/angular.ts";
 
-import { onDestroy, queryAll } from "../../internal/dom";
+import { onDestroy, queryAll, setAttributeIfChanged } from "../../internal/dom";
 
 type SidebarScope = ng.Scope;
 let sidebarIdCounter = 0;
@@ -9,23 +9,13 @@ const selectors = {
   group: ":scope > nav > section",
   groupLabel: ":scope > :is(h1, h2, h3, h4, h5, h6)",
   menuButton:
-    ":scope > nav li > :is(a, button, summary), :scope > :is(header, footer) > :is(a, button), :scope > :is(header, footer) > [ng-dropdown] > button",
+    ":scope > nav li > :is(a, button, summary), :scope > :is(header, footer) > :is(a, button), :scope > :is(header, footer) > [ng-dropdown-menu] > button",
 };
 
 const sidebarOptions = {
   collapsible: new Set(["icon", "none", "offcanvas"]),
   side: new Set(["left", "right"]),
   variant: new Set(["floating", "inset", "sidebar"]),
-};
-
-const setAttributeIfChanged = (
-  element: HTMLElement,
-  name: string,
-  value: string,
-) => {
-  if (element.getAttribute(name) !== value) {
-    element.setAttribute(name, value);
-  }
 };
 
 /**
@@ -39,6 +29,7 @@ export function sidebarDirective(): ng.Directive {
         : ":not(*)";
       const cleanupTriggers = new Map<HTMLElement, () => void>();
       const getCollapsed = () => element.hasAttribute("collapsed");
+      const responsiveQuery = window.matchMedia("(width < 48rem)");
 
       const syncOptions = () => {
         const reflect = (
@@ -78,6 +69,15 @@ export function sidebarDirective(): ng.Directive {
       const syncFromState = () => {
         syncOptions();
         setCollapsed(getCollapsed());
+      };
+
+      const syncResponsiveState = () => {
+        if (
+          element.hasAttribute("responsive") &&
+          element.getAttribute("collapsible") === "offcanvas"
+        ) {
+          setCollapsed(responsiveQuery.matches);
+        }
       };
 
       const syncStructure = () => {
@@ -152,14 +152,34 @@ export function sidebarDirective(): ng.Directive {
       }
 
       syncFromState();
+      syncResponsiveState();
       syncStructure();
       syncTriggers();
 
-      const stateObserver = new MutationObserver(syncFromState);
+      const stateObserver = new MutationObserver((records) => {
+        syncFromState();
+        if (
+          records.some(
+            (record) =>
+              record.attributeName === "collapsible" ||
+              record.attributeName === "responsive",
+          )
+        ) {
+          syncResponsiveState();
+        }
+      });
       stateObserver.observe(element, {
         attributes: true,
-        attributeFilter: ["collapsible", "collapsed", "dir", "side", "variant"],
+        attributeFilter: [
+          "collapsible",
+          "collapsed",
+          "dir",
+          "responsive",
+          "side",
+          "variant",
+        ],
       });
+      responsiveQuery.addEventListener("change", syncResponsiveState);
       const triggerObserver = new MutationObserver(syncTriggers);
       triggerObserver.observe(document.body, {
         attributes: true,
@@ -178,6 +198,7 @@ export function sidebarDirective(): ng.Directive {
         stateObserver.disconnect();
         triggerObserver.disconnect();
         structureObserver.disconnect();
+        responsiveQuery.removeEventListener("change", syncResponsiveState);
         cleanupTriggers.forEach((cleanup) => {
           cleanup();
         });

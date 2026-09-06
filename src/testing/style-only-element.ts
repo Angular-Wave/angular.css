@@ -1,12 +1,14 @@
 import { expect, test } from "@playwright/test";
 
 interface StyleOnlyElementContract {
+  readonly category: "elements" | "foundations" | "patterns" | "recipes";
   readonly directive: string;
   readonly name: string;
   readonly selector: string;
 }
 
 export function testStyleOnlyElement({
+  category,
   directive,
   name,
   selector,
@@ -14,7 +16,7 @@ export function testStyleOnlyElement({
   test(`${name} remains styling-only in the built artifact`, async ({
     page,
   }) => {
-    await page.goto(`/docs/static/examples/components/${name}.html`);
+    await page.goto(`/src/${category}/${name}/${name}.html`);
 
     const element = page.locator(selector).first();
     await expect(element).toBeVisible();
@@ -29,7 +31,7 @@ export function testStyleOnlyElement({
 
       return (
         runtime
-          .module("ui")
+          .module("angular.css")
           ._invokeQueue?.flatMap((entry) =>
             entry[1] === "directive" ? [entry[2][0]] : [],
           ) ?? []

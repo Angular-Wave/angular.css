@@ -1,0 +1,86 @@
+.drawer > dialog {
+  height: auto;
+  margin: 0;
+}
+
+.drawer > dialog[side="bottom"] {
+  --modal-enter-y: 100%;
+
+  inset-inline: 0;
+  inset-block: auto 0;
+  max-height: 80dvh;
+  border-block-start: 1px solid var(--border);
+  border-start-start-radius: calc(var(--radius) + 2px);
+  border-start-end-radius: calc(var(--radius) + 2px);
+}
+
+.drawer > dialog[side="top"] {
+  --modal-enter-y: -100%;
+
+  inset-inline: 0;
+  inset-block: 0 auto;
+  max-height: 80dvh;
+  border-block-end: 1px solid var(--border);
+  border-end-start-radius: calc(var(--radius) + 2px);
+  border-end-end-radius: calc(var(--radius) + 2px);
+}
+
+.drawer > dialog[side="left"] {
+  --modal-enter-x: -100%;
+  --modal-enter-y: 0;
+
+  inset-block: 0;
+  right: auto;
+  left: 0;
+  border-inline-end: 1px solid var(--border);
+  border-start-end-radius: calc(var(--radius) + 2px);
+  border-end-end-radius: calc(var(--radius) + 2px);
+}
+
+.drawer > dialog[side="right"] {
+  --modal-enter-x: 100%;
+  --modal-enter-y: 0;
+
+  inset-block: 0;
+  right: 0;
+  left: auto;
+  border-inline-start: 1px solid var(--border);
+  border-start-start-radius: calc(var(--radius) + 2px);
+  border-end-start-radius: calc(var(--radius) + 2px);
+}
+
+.drawer > dialog[size="half"] {
+  max-height: 50dvh;
+}
+
+.drawer > dialog::before {
+  display: none;
+  width: 6.25rem;
+  height: calc(var(--spacing) * 1);
+  margin-block-start: calc(var(--spacing) * 4);
+  flex-shrink: 0;
+  align-self: center;
+  border-radius: 999px;
+  background: var(--muted);
+  content: "";
+}
+
+.drawer > dialog[side="bottom"]::before {
+  display: block;
+}
+
+.drawer > dialog header {
+  text-align: start;
+}
+
+.drawer > dialog[side="bottom"] header,
+.drawer > dialog[side="top"] header {
+  text-align: center;
+}
+
+@media (width >= 48rem) {
+  .drawer > dialog[side="bottom"] header,
+  .drawer > dialog[side="top"] header {
+    text-align: start;
+  }
+}

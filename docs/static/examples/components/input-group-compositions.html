@@ -10,7 +10,7 @@
     <script src="../../js/angular-css.umd.js"></script>
   </head>
   <body
-    ng-app="ui"
+    ng-app="angular.css"
     ng-cloak
     ng-init="copied=false; favorite=false; country='+1'; compositionStatus='Ready'"
     class="input-group-workflow-body"
@@ -65,7 +65,7 @@
         <h2 id="igc-button-title">Buttons</h2>
         <div class="input-group">
           <input
-            value="https://x.com/shadcn"
+            value="https://x.com/angularcss"
             aria-label="Share URL"
             readonly
             class="input"
@@ -222,7 +222,7 @@
             class="input"
           />
           <div align="inline-end">
-            <span ng-dropdown class="input-group-overlay-control">
+            <span ng-dropdown-menu class="input-group-overlay-control">
               <button
                 size="icon-xs"
                 variant="ghost"
@@ -253,7 +253,7 @@
             class="input"
           />
           <div align="inline-end">
-            <span ng-dropdown class="input-group-overlay-control">
+            <span ng-dropdown-menu class="input-group-overlay-control">
               <button variant="ghost" type="button" class="button">
                 Search in
                 <svg aria-hidden="true"><use href="#igc-chevron"></use></svg>
@@ -380,7 +380,7 @@
             <div class="input-group">
               <input id="igc-country-input" type="tel" class="input" />
               <div>
-                <span ng-dropdown class="input-group-overlay-control">
+                <span ng-dropdown-menu class="input-group-overlay-control">
                   <button variant="ghost" type="button" class="button">
                     {{ country }}
                     <svg aria-hidden="true">

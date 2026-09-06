@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 
-const canonicalUrl = "/docs/static/examples/components/context-menu.html";
+const canonicalUrl = "/src/components/context-menu/context-menu.html";
 const workflowsUrl =
   "/docs/static/examples/components/context-menu-workflows.html";
 const sidesUrl = "/docs/static/examples/components/context-menu-sides.html";

@@ -15,23 +15,20 @@ know basic HTML but do not assume prior AngularCSS experience.
 1. [Introduction]({{< relref "/docs/get-started/introduction" >}}) explains what
    AngularCSS owns and what remains native HTML or AngularTS behavior.
 2. [Installation]({{< relref "/docs/get-started/installation" >}}) adds the
-   local npm packages, stylesheet, and `ui` module.
+   local npm packages, stylesheet, and `angular.css` module.
 3. [Build your first component]({{< relref
    "/docs/get-started/first-component" >}}) creates an interactive accordion.
 4. [Styling with Tailwind]({{< relref
    "/docs/get-started/styling-tailwind" >}}) covers tokens, parts, and state
    selectors.
 
-## Find a component
+## Browse the catalog
 
-The [component catalog]({{< relref "/docs/components" >}}) contains a working
-iframe demo and complete contract for every canonical component. Each page
-documents selectors, parts, authored attributes, generated state, ARIA
-relationships, CSS variables, events, behavior ownership, and customization.
-
-The [element entrypoints]({{< relref "/docs/elements" >}}) are compatibility
-imports. They re-export canonical TypeScript implementations and do not define a
-second behavior model.
+The catalog is organized by responsibility: [foundations]({{< relref
+"/docs/foundations" >}}), [elements]({{< relref "/docs/elements" >}}),
+[patterns]({{< relref "/docs/patterns" >}}), [components]({{< relref
+"/docs/components" >}}), and [recipes]({{< relref "/docs/recipes" >}}). Every
+entry has one canonical source, one functional demo, and one documentation page.
 
 ## Production guides
 

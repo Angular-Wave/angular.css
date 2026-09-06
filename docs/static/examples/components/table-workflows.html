@@ -10,7 +10,7 @@
     <script src="../../js/angular-css.umd.js"></script>
   </head>
   <body
-    ng-app="ui"
+    ng-app="angular.css"
     ng-cloak
     ng-init="invoices=[{id:'INV001',status:'Paid',method:'Credit Card',amount:'$250.00'},{id:'INV002',status:'Pending',method:'PayPal',amount:'$150.00'},{id:'INV003',status:'Unpaid',method:'Bank Transfer',amount:'$350.00'},{id:'INV004',status:'Paid',method:'Credit Card',amount:'$450.00'},{id:'INV005',status:'Paid',method:'PayPal',amount:'$550.00'},{id:'INV006',status:'Pending',method:'Bank Transfer',amount:'$200.00'},{id:'INV007',status:'Unpaid',method:'Credit Card',amount:'$300.00'}];products=[{name:'Wireless Mouse',price:'$29.99'},{name:'Mechanical Keyboard',price:'$129.99'},{name:'USB-C Hub',price:'$49.99'}];payments=[{id:'m5gr84i9',amount:'$316.00',status:'success',statusAr:'ناجح',email:'ken99@example.com',selected:false},{id:'3u1reuv4',amount:'$242.00',status:'success',statusAr:'ناجح',email:'Abe45@example.com',selected:false},{id:'derv1ws0',amount:'$837.00',status:'processing',statusAr:'قيد المعالجة',email:'Monserrat44@example.com',selected:false},{id:'5kma53ae',amount:'$874.00',status:'success',statusAr:'ناجح',email:'Silas22@example.com',selected:false},{id:'bhqecj4p',amount:'$721.00',status:'failed',statusAr:'فشل',email:'carmella@example.com',selected:false}];dataState={query:'',order:'email',all:false,selected:0,showStatus:true,showEmail:true,showAmount:true};rtlDataState={query:'',order:'email',all:false,showStatus:true,showEmail:true,showAmount:true};tableState={action:'Ready'}"
   >
@@ -70,7 +70,7 @@
                 <th scope="row">{{ product.name }}</th>
                 <td>{{ product.price }}</td>
                 <td class="text-right">
-                  <div ng-dropdown class="table-action-menu dropdown-menu">
+                  <div ng-dropdown-menu class="table-action-menu dropdown-menu">
                     <button
                       variant="ghost"
                       size="icon-xs"
@@ -171,7 +171,7 @@
             aria-label="Filter payment emails"
             class="input"
           />
-          <div ng-dropdown class="dropdown-menu">
+          <div ng-dropdown-menu class="dropdown-menu">
             <button variant="outline" type="button" class="button">
               Columns <span aria-hidden="true">⌄</span>
             </button>
@@ -314,7 +314,7 @@
             aria-label="تصفية البريد الإلكتروني"
             class="input"
           />
-          <div ng-dropdown class="dropdown-menu">
+          <div ng-dropdown-menu class="dropdown-menu">
             <button variant="outline" type="button" class="button">
               الأعمدة <span aria-hidden="true">⌄</span>
             </button>

@@ -1,9 +1,12 @@
 import type {} from "@angular-wave/angular.ts";
 
 import {
+  isOwnedBy,
+  queryOwned,
+  queryOwnedAll,
+  setAttributeIfChanged,
   isDisabled,
   onDestroy,
-  queryAll,
   setOpenState,
 } from "../../internal/dom";
 
@@ -26,33 +29,21 @@ const rootSelector = ".combobox, [ng-combobox]";
 const separatorSelector = ":scope > aside > div > section > hr";
 const triggerSelector = ':scope button[value="toggle"]';
 
-const setAttributeIfChanged = (
-  element: HTMLElement,
-  name: string,
-  value: string,
-) => {
-  if (element.getAttribute(name) !== value) element.setAttribute(name, value);
-};
-
 export function comboboxDirective(): ng.Directive {
   return {
     link(scope: ng.Scope, element: HTMLElement) {
-      const isOwned = (candidate: Element) =>
-        candidate.closest(rootSelector) === element;
-      const owned = <T extends HTMLElement>(
-        selector: string,
-        constructor: abstract new (...args: never[]) => T,
-      ): T | null => {
-        const candidate = queryAll<HTMLElement>(element, selector).find(
-          isOwned,
-        );
-        return candidate instanceof constructor ? candidate : null;
-      };
-      const ownedAll = <T extends HTMLElement>(selector: string): T[] =>
-        queryAll<T>(element, selector).filter(isOwned);
-
-      const input = owned(inputSelector, HTMLInputElement);
-      const content = owned(contentSelector, HTMLElement);
+      const input = queryOwned(
+        element,
+        rootSelector,
+        inputSelector,
+        HTMLInputElement,
+      );
+      const content = queryOwned(
+        element,
+        rootSelector,
+        contentSelector,
+        HTMLElement,
+      );
       if (!input || !content) return;
 
       const directionOwner = element.closest<HTMLElement>("[dir]") ?? element;
@@ -108,12 +99,15 @@ export function comboboxDirective(): ng.Directive {
 
       const positionContent = () => {
         if (!open) return;
-        const externalTrigger = ownedAll<HTMLElement>(triggerSelector).find(
-          (trigger) =>
-            !content.contains(trigger) && !trigger.closest(anchorSelector),
-        );
+        const externalTrigger = queryOwnedAll<HTMLElement>(
+          element,
+          rootSelector,
+          triggerSelector,
+        ).find((trigger) => trigger.parentElement === element);
         const anchor =
-          externalTrigger ?? owned(anchorSelector, HTMLElement) ?? input;
+          externalTrigger ??
+          queryOwned(element, rootSelector, anchorSelector, HTMLElement) ??
+          input;
         const rootBox = element.getBoundingClientRect();
         const anchorBox = anchor.getBoundingClientRect();
         const contentHeight = Math.min(content.scrollHeight, 288);
@@ -154,7 +148,11 @@ export function comboboxDirective(): ng.Directive {
         setAttributeIfChanged(element, "open", String(open));
         setAttributeIfChanged(content, "aria-hidden", String(!open));
         setAttributeIfChanged(input, "aria-expanded", String(open));
-        ownedAll<HTMLElement>(triggerSelector).forEach((trigger) => {
+        queryOwnedAll<HTMLElement>(
+          element,
+          rootSelector,
+          triggerSelector,
+        ).forEach((trigger) => {
           setAttributeIfChanged(trigger, "aria-expanded", String(open));
         });
         setOpenState(content, open);
@@ -301,15 +299,27 @@ export function comboboxDirective(): ng.Directive {
       const syncStructure = () => {
         syncChrome();
         const previousActive = activeItem;
-        items = ownedAll<HTMLElement>(itemSelector);
+        items = queryOwnedAll<HTMLElement>(element, rootSelector, itemSelector);
         items.forEach(bindItem);
-        ownedAll<HTMLElement>(triggerSelector).forEach((control) => {
+        queryOwnedAll<HTMLElement>(
+          element,
+          rootSelector,
+          triggerSelector,
+        ).forEach((control) => {
           bindControl(control, "trigger");
         });
-        ownedAll<HTMLElement>(clearSelector).forEach((control) => {
+        queryOwnedAll<HTMLElement>(
+          element,
+          rootSelector,
+          clearSelector,
+        ).forEach((control) => {
           bindControl(control, "clear");
         });
-        ownedAll<HTMLElement>(groupSelector).forEach((group) => {
+        queryOwnedAll<HTMLElement>(
+          element,
+          rootSelector,
+          groupSelector,
+        ).forEach((group) => {
           setAttributeIfChanged(group, "role", "group");
           const label = group.querySelector<HTMLElement>(groupLabelSelector);
           if (!label) return;
@@ -317,18 +327,25 @@ export function comboboxDirective(): ng.Directive {
             label.id = `combobox-label-${String(comboboxIdCounter++)}`;
           setAttributeIfChanged(group, "aria-labelledby", label.id);
         });
-        ownedAll<HTMLElement>(separatorSelector).forEach((separator) => {
+        queryOwnedAll<HTMLElement>(
+          element,
+          rootSelector,
+          separatorSelector,
+        ).forEach((separator) => {
           separator.removeAttribute("aria-orientation");
         });
 
         itemCleanups.forEach((cleanup, item) => {
-          if (!item.isConnected || !isOwned(item)) {
+          if (!item.isConnected || !isOwnedBy(element, rootSelector, item)) {
             cleanup();
             itemCleanups.delete(item);
           }
         });
         controlCleanups.forEach((cleanup, control) => {
-          if (!control.isConnected || !isOwned(control)) {
+          if (
+            !control.isConnected ||
+            !isOwnedBy(element, rootSelector, control)
+          ) {
             cleanup();
             controlCleanups.delete(control);
           }
@@ -336,7 +353,11 @@ export function comboboxDirective(): ng.Directive {
 
         const visible = visibleItems(true);
         const empty = visible.length === 0;
-        ownedAll<HTMLElement>(emptySelector).forEach((emptySlot) => {
+        queryOwnedAll<HTMLElement>(
+          element,
+          rootSelector,
+          emptySelector,
+        ).forEach((emptySlot) => {
           setAttributeIfChanged(emptySlot, "role", "status");
           setOpenState(emptySlot, empty);
         });
@@ -401,7 +422,7 @@ export function comboboxDirective(): ng.Directive {
           event.key === "Backspace" &&
           isMultiple() &&
           input.value.length === 0 &&
-          ownedAll<HTMLElement>(chipSelector).length
+          queryOwnedAll<HTMLElement>(element, rootSelector, chipSelector).length
         ) {
           element.dispatchEvent(
             new CustomEvent("angularcss:combobox-remove-last", {

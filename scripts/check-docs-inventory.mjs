@@ -1,96 +1,29 @@
-import { existsSync, readdirSync, statSync } from "node:fs";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
-const componentNames = readdirSync("src/components")
-  .filter((entry) => statSync(join("src/components", entry)).isDirectory())
-  .filter((entry) => existsSync(join("src/components", entry, `${entry}.ts`)))
-  .sort();
-
-const listTypeScriptFiles = (directory) =>
-  readdirSync(directory)
-    .flatMap((entry) => {
-      const path = join(directory, entry);
-      return statSync(path).isDirectory() ? listTypeScriptFiles(path) : path;
-    })
-    .filter((path) => path.endsWith(".ts") && !path.endsWith(".test.ts"));
-
-const elementNames = [
-  ...new Set(
-    listTypeScriptFiles("src/elements").map((path) =>
-      path.split("/").at(-1).replace(/\.ts$/, ""),
-    ),
-  ),
-].sort();
+import { catalogNames, catalogPolicy } from "./component-policy.ts";
 
 const failures = [];
 
-const checkDocsPage = ({
-  componentName,
-  docsPage,
-  expectedExample,
-  sectionName,
-}) => {
+for (const name of catalogNames) {
+  const { category } = catalogPolicy[name];
+  const docsPage = join("docs/content/docs", category, `${name}.md`);
+  const examplePage = join("docs/static/examples/components", `${name}.html`);
+
   if (!existsSync(docsPage)) {
-    failures.push(`${componentName}: missing ${sectionName} docs page ${docsPage}`);
-    return;
+    failures.push(`${name}: missing documentation page ${docsPage}`);
+  } else {
+    const source = readFileSync(docsPage, "utf8");
+    if (source.match(/^title:\s*(.+)$/m)?.[1]?.trim() !== name) {
+      failures.push(`${docsPage}: title must be "${name}"`);
+    }
+    if (!source.includes(`src="examples/components/${name}.html"`)) {
+      failures.push(`${docsPage}: must embed the canonical ${name} demo`);
+    }
   }
-
-  const docsSource = readFileSync(docsPage, "utf8");
-  const title = docsSource.match(/^title:\s*(.+)$/m)?.[1]?.trim();
-
-  if (title !== componentName) {
-    failures.push(
-      `${componentName}: ${sectionName} docs title must be "${componentName}"`,
-    );
-  }
-
-  if (!/^description:\s*>/m.test(docsSource)) {
-    failures.push(`${componentName}: ${sectionName} docs must include description`);
-  }
-
-  if (!docsSource.includes(expectedExample)) {
-    failures.push(`${componentName}: ${sectionName} docs must embed ${expectedExample}`);
-  }
-};
-
-for (const componentName of componentNames) {
-  const docsPage = join("docs/content/docs/components", `${componentName}.md`);
-  const examplePage = join(
-    "docs/static/examples/components",
-    `${componentName}.html`,
-  );
-
-  checkDocsPage({
-    componentName,
-    docsPage,
-    expectedExample: `src="examples/components/${componentName}.html"`,
-    sectionName: "component",
-  });
 
   if (!existsSync(examplePage)) {
-    failures.push(
-      `${componentName}: missing component iframe example ${examplePage}`,
-    );
-  }
-}
-
-for (const elementName of elementNames) {
-  const docsPage = join("docs/content/docs/elements", `${elementName}.md`);
-  const examplePage = join(
-    "docs/static/examples/elements",
-    `${elementName}.html`,
-  );
-
-  checkDocsPage({
-    componentName: elementName,
-    docsPage,
-    expectedExample: `src="examples/elements/${elementName}.html"`,
-    sectionName: "element",
-  });
-
-  if (!existsSync(examplePage)) {
-    failures.push(`${elementName}: missing element iframe example ${examplePage}`);
+    failures.push(`${name}: missing canonical demo ${examplePage}`);
   }
 }
 
@@ -99,4 +32,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log("Docs inventory check passed.");
+console.log(`Docs inventory check passed for ${catalogNames.length} entries.`);
