@@ -32,8 +32,8 @@ const build = spawnSync(
 );
 
 if (build.status !== 0) {
-  process.stderr.write(build.stdout);
-  process.stderr.write(build.stderr);
+  process.stderr.write(build.stdout ?? "");
+  process.stderr.write(build.stderr ?? "");
   process.exit(build.status ?? 1);
 }
 
