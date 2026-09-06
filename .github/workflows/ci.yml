@@ -32,13 +32,16 @@ jobs:
         with:
           path: |
             node_modules
+            docs/node_modules
             ~/.cache/ms-playwright
-          key: deps-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          key: deps-${{ runner.os }}-${{ hashFiles('package-lock.json', 'docs/package-lock.json') }}
           restore-keys: |
             deps-${{ runner.os }}-
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          npm --prefix docs ci
 
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
@@ -57,8 +60,9 @@ jobs:
         with:
           path: |
             node_modules
+            docs/node_modules
             ~/.cache/ms-playwright
-          key: deps-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          key: deps-${{ runner.os }}-${{ hashFiles('package-lock.json', 'docs/package-lock.json') }}
           restore-keys: |
             deps-${{ runner.os }}-
       - name: Run repository checks
@@ -77,7 +81,7 @@ jobs:
         uses: actions/cache@v5
         with:
           path: node_modules
-          key: deps-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          key: deps-${{ runner.os }}-${{ hashFiles('package-lock.json', 'docs/package-lock.json') }}
           restore-keys: |
             deps-${{ runner.os }}-
       - name: Build release artifacts
@@ -108,8 +112,9 @@ jobs:
         with:
           path: |
             node_modules
+            docs/node_modules
             ~/.cache/ms-playwright
-          key: deps-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          key: deps-${{ runner.os }}-${{ hashFiles('package-lock.json', 'docs/package-lock.json') }}
           restore-keys: |
             deps-${{ runner.os }}-
       - name: Run browser tests
@@ -138,8 +143,9 @@ jobs:
         with:
           path: |
             node_modules
+            docs/node_modules
             ~/.cache/ms-playwright
-          key: deps-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          key: deps-${{ runner.os }}-${{ hashFiles('package-lock.json', 'docs/package-lock.json') }}
           restore-keys: |
             deps-${{ runner.os }}-
       - name: Install Hugo
