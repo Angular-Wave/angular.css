@@ -3090,7 +3090,7 @@
         }
     }
     window.angular
-        .module("datePickerDemo", ["angular.css"])
+        .createModule("datePickerDemo", ["angular.css"])
         .controller("DatePickerDemoController", DatePickerDemoController);
 
 })();

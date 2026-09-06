@@ -36,7 +36,7 @@ import { angular } from '@angular-wave/angular.ts';
 import '@angular-wave/angular.css';
 import '@angular-wave/angular.css/dist/angular.css';
 
-angular.module('app', ['angular.css']);
+angular.createModule('app', ['angular.css']);
 ```
 
 No controller is required for this example. `ng-model` creates the profile name

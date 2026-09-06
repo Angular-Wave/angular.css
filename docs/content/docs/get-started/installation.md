@@ -45,7 +45,7 @@ import { angular } from '@angular-wave/angular.ts';
 import '@angular-wave/angular.css';
 import '@angular-wave/angular.css/dist/angular.css';
 
-angular.module('app', ['angular.css']);
+angular.createModule('app', ['angular.css']);
 ```
 
 Then attach your application module to an HTML root:

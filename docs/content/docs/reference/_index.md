@@ -28,7 +28,7 @@ The AngularTS module name registered by AngularCSS. Add it as an application
 module dependency:
 
 ```ts
-angular.module('app', [angularCssModuleName]);
+angular.createModule('app', [angularCssModuleName]);
 ```
 
 ## `angular`

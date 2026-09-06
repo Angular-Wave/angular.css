@@ -248,7 +248,7 @@ class BookingsController {
 }
 
 window.angular
-  .module("bookingsDemo", ["angular.css"])
+  .createModule("bookingsDemo", ["angular.css"])
   .directive("ngIcon", () => ({
     link(_scope: ng.Scope, element: HTMLElement) {
       const name = element.getAttribute("ng-icon") || "";

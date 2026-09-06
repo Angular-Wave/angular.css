@@ -43,13 +43,13 @@ test("AngularCSS registry excludes AngularTS ngInput ownership", async ({
   expect(
     await page.evaluate(() => {
       const runtime = window.angular as unknown as {
-        module: (name: string) => {
+        getModule: (name: string) => {
           _invokeQueue?: Array<[string, string, [string]]>;
         };
       };
       return (
         runtime
-          .module("angular.css")
+          .getModule("angular.css")
           ._invokeQueue?.flatMap((entry) =>
             entry[1] === "directive" ? [entry[2][0]] : [],
           ) ?? []

@@ -1,4 +1,4 @@
-/* Version: 0.34.0 */
+/* Version: 0.35.5 */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
     typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -637,7 +637,7 @@
           </div>
         </file>
         <file name="script.js">
-            angular.module('equalsExample', []).controller('ExampleController', ['$scope', function($scope) {
+            angular.createModule('equalsExample', []).controller('ExampleController', ['$scope', function($scope) {
               $scope.user1 = {};
               $scope.user2 = {};
               $scope.compare = function() {
@@ -1305,15 +1305,6 @@
             removeIfEmptyData(element);
         }
     }
-    /**
-     * Stores data associated with an element inside the expando property of the DOM element.
-     *
-     * @param element - The element whose expando store should be read or created.
-     * @param createIfNecessary - When `true`, creates the expando store if it does not exist.
-     * @returns The existing or newly created expando store, or `undefined` when none exists and creation is disabled.
-     *
-     * @see {@link https://developer.mozilla.org/en-US/docs/Glossary/Expando MDN Glossary: Expando}
-     */
     function getExpando(element, createIfNecessary = false) {
         let expandoStore = expandoCache.get(element);
         if (createIfNecessary && !expandoStore) {
@@ -2173,7 +2164,7 @@
      * @param {Array<String|Function>} modulesToLoad
      * @returns {InjectorService}
      */
-    function createInjector(modulesToLoad, configure, resolveModule = (name) => window.angular.module(name)) {
+    function createInjector(modulesToLoad, configure, resolveModule = (name) => window.angular.getModule(name)) {
         if (!isArray(modulesToLoad)) {
             throw $injectorError$1("modules", "Modules to load must be an array.");
         }
@@ -2786,7 +2777,7 @@
         }
     }
     /** @internal Observes the Scope-backed values read while evaluating a function. */
-    function observeScopeExpression(scope, read, listener) {
+    function observeScopeExpression(scope, read, listener, registerDestroy = true) {
         const owner = scope._handler;
         const observer = {
             _owner: owner,
@@ -2806,7 +2797,9 @@
             observer._deregisterDestroy?.();
             observer._deregisterDestroy = undefined;
         };
-        observer._deregisterDestroy = scope.on("$destroy", dispose);
+        if (registerDestroy) {
+            observer._deregisterDestroy = scope.on("$destroy", dispose);
+        }
         runScopeExpressionObserver(observer);
         return dispose;
     }
@@ -4839,8 +4832,14 @@
                     const filteredListeners = task._filter
                         ? task._filter(task._listeners)
                         : task._listeners;
-                    for (let i = 0, l = filteredListeners.length; i < l; i++) {
-                        this._notifyListener(filteredListeners[i], task._target, task._sourceHandler, task._sourceProperty);
+                    for (let i = 0; i < filteredListeners.length;) {
+                        const listener = filteredListeners[i];
+                        this._notifyListener(listener, task._target, task._sourceHandler, task._sourceProperty);
+                        // Deregistration uses swap-and-pop. Revisit this index when the
+                        // current listener was removed so the moved listener is not skipped.
+                        if (filteredListeners[i] === listener) {
+                            i++;
+                        }
                     }
                 }
             }
@@ -6698,6 +6697,57 @@
             throw new AggregateError(errors, `Compiled fragment '${record.id}' disposal failed.`);
         }
     }
+    /** @internal Disposes fragment records after detaching sibling groups in one pass. */
+    function disposeCompiledFragmentRecords(records, releaseOwnedNodes = true) {
+        const pending = [];
+        const selected = new Set();
+        for (let index = 0; index < records.length; index++) {
+            const record = records[index];
+            if (!record.disposed && !selected.has(record)) {
+                selected.add(record);
+                pending.push(record);
+            }
+        }
+        if (pending.length === 0)
+            return;
+        const removalsByParent = new Map();
+        for (let index = 0; index < pending.length; index++) {
+            const record = pending[index];
+            const parent = compiledFragmentParents.get(record);
+            if (!parent)
+                continue;
+            compiledFragmentParents.delete(record);
+            if (parent.disposed || selected.has(parent))
+                continue;
+            let removals = removalsByParent.get(parent);
+            if (!removals) {
+                removals = new Set();
+                removalsByParent.set(parent, removals);
+            }
+            removals.add(record);
+        }
+        for (const [parent, removals] of removalsByParent) {
+            const children = getFragmentArray(parent, "childFragments");
+            if (!children)
+                continue;
+            let writeIndex = 0;
+            for (let index = 0; index < children.length; index++) {
+                const child = children[index];
+                if (!removals.has(child))
+                    children[writeIndex++] = child;
+            }
+            children.length = writeIndex;
+        }
+        const errors = [];
+        disposeReverse(pending, (record) => {
+            disposeCompiledFragmentRecord(record, releaseOwnedNodes);
+        }, errors);
+        if (errors.length === 1)
+            throw errors[0];
+        if (errors.length > 1) {
+            throw new AggregateError(errors, "Compiled fragment disposal failed.");
+        }
+    }
     function detachCompiledFragmentParent(record) {
         const parent = compiledFragmentParents.get(record);
         if (!parent)
@@ -6948,6 +6998,90 @@
         return { $element: element };
     }
 
+    /**
+     * Validates keys and stages every new value before returning a mutation plan.
+     * Existing state remains untouched when keying or creation fails.
+     *
+     * @internal
+     */
+    function planKeyedReconciliation(items, previous, keyOf, indexOf, create) {
+        const keys = new Array(items.length);
+        const seen = new Set();
+        for (let index = 0; index < items.length; index++) {
+            const key = keyOf(items[index]);
+            if (seen.has(key)) {
+                throw new TypeError(`Duplicate programmatic view key '${String(key)}'.`);
+            }
+            seen.add(key);
+            keys[index] = key;
+        }
+        const entries = new Array(items.length);
+        const previousIndexes = new Array(items.length);
+        for (let index = 0; index < items.length; index++) {
+            const value = items[index];
+            const state = previous.get(keys[index]);
+            const previousIndex = state ? indexOf(state) : -1;
+            entries[index] = state
+                ? {
+                    kind: "reused",
+                    key: keys[index],
+                    value,
+                    previous: state,
+                    previousIndex,
+                }
+                : {
+                    kind: "created",
+                    key: keys[index],
+                    value,
+                    created: create(value),
+                    previousIndex,
+                };
+            previousIndexes[index] = previousIndex;
+        }
+        const removed = [];
+        for (const [key, state] of previous) {
+            if (!seen.has(key))
+                removed.push(state);
+        }
+        return {
+            entries,
+            removed,
+            stable: findStableKeyedIndexes(previousIndexes),
+        };
+    }
+    /** @internal */
+    function findStableKeyedIndexes(previousIndexes) {
+        const tails = [];
+        const predecessors = new Int32Array(previousIndexes.length);
+        predecessors.fill(-1);
+        for (let index = 0; index < previousIndexes.length; index++) {
+            const previousIndex = previousIndexes[index];
+            if (previousIndex < 0)
+                continue;
+            let low = 0;
+            let high = tails.length;
+            while (low < high) {
+                const middle = (low + high) >>> 1;
+                if (previousIndexes[tails[middle]] < previousIndex) {
+                    low = middle + 1;
+                }
+                else {
+                    high = middle;
+                }
+            }
+            if (low > 0)
+                predecessors[index] = tails[low - 1];
+            tails[low] = index;
+        }
+        const stable = new Uint8Array(previousIndexes.length);
+        let index = tails.length > 0 ? tails[tails.length - 1] : -1;
+        while (index >= 0) {
+            stable[index] = 1;
+            index = predecessors[index];
+        }
+        return stable;
+    }
+
     const PROGRAMMATIC_VIEW_MARKER = "ng-programmatic-view";
     const PROGRAMMATIC_VIEW_TEMPLATE = `<!--${PROGRAMMATIC_VIEW_MARKER}-->`;
     const bindingMetadata = Symbol("programmatic-view-binding");
@@ -7003,15 +7137,72 @@
             _binding: binding,
         });
     }
+    function firstKeyedStateNode(state) {
+        for (let index = 0; index < state._children.length; index++) {
+            const nodes = state._children[index]._nodes;
+            if (nodes.length > 0)
+                return nodes[0];
+        }
+        return undefined;
+    }
+    function lastKeyedStateNode(state) {
+        for (let index = state._children.length - 1; index >= 0; index--) {
+            const nodes = state._children[index]._nodes;
+            if (nodes.length > 0)
+                return nodes[nodes.length - 1];
+        }
+        return undefined;
+    }
+    function detachKeyedStateRange(states, anchor) {
+        let firstState;
+        let lastState;
+        for (const state of states) {
+            if (!firstState || state._index < firstState._index)
+                firstState = state;
+            if (!lastState || state._index > lastState._index)
+                lastState = state;
+        }
+        if (!firstState || !lastState)
+            return;
+        const firstNode = firstKeyedStateNode(firstState);
+        const lastNode = lastKeyedStateNode(lastState);
+        const parent = firstNode?.parentNode;
+        if (!firstNode || !lastNode || !parent || parent !== lastNode.parentNode) {
+            return;
+        }
+        if (firstNode === parent.firstChild &&
+            lastNode.nextSibling === anchor &&
+            anchor.nextSibling === null) {
+            parent.replaceChildren(anchor);
+            return;
+        }
+        const range = document.createRange();
+        range.setStartBefore(firstNode);
+        range.setEndAfter(lastNode);
+        range.deleteContents();
+    }
+    function moveKeyedStateBefore(parent, state, before) {
+        for (let childIndex = 0; childIndex < state._children.length; childIndex++) {
+            const nodes = state._children[childIndex]._nodes;
+            for (let nodeIndex = 0; nodeIndex < nodes.length; nodeIndex++) {
+                parent.insertBefore(nodes[nodeIndex], before);
+            }
+        }
+    }
     const pendingBindings = new WeakMap();
     const tagProxyCache = new Map();
     function addPendingBinding(node, binding) {
-        let bindings = pendingBindings.get(node);
+        const bindings = pendingBindings.get(node);
         if (!bindings) {
-            bindings = [];
-            pendingBindings.set(node, bindings);
+            pendingBindings.set(node, binding);
+            return;
         }
-        bindings.push(binding);
+        if (isArray(bindings)) {
+            bindings.push(binding);
+        }
+        else {
+            pendingBindings.set(node, [bindings, binding]);
+        }
     }
     function isProperties(value) {
         if (!value || typeof value !== "object" || value instanceof Node) {
@@ -7143,7 +7334,7 @@
                 _kind: "property",
                 _name: propertyName,
                 _read: propertyValue,
-                _target: target === "auto" ? "property" : target,
+                _target: target === "auto" && propertyName !== "class" ? "property" : target,
             });
         }
         else if (deferredStaticProperties.has(propertyName.toLowerCase())) {
@@ -7206,43 +7397,49 @@
         materializeChild(value, nodes);
         return nodes;
     }
-    function appendChildren(element, children) {
-        for (let index = 0; index < children.length; index++) {
-            const nodes = materializeProgrammaticView(children[index]);
-            for (let nodeIndex = 0; nodeIndex < nodes.length; nodeIndex++) {
-                element.appendChild(nodes[nodeIndex]);
-            }
+    function appendChildren(element, children, startIndex) {
+        const nodes = [];
+        for (let index = startIndex; index < children.length; index++) {
+            materializeChild(children[index], nodes);
+        }
+        for (let index = 0; index < nodes.length; index++) {
+            element.appendChild(nodes[index]);
         }
     }
     function createTag(namespaceUri, name, ...args) {
         const properties = isProperties(args[0]) ? args[0] : undefined;
-        const children = properties ? args.slice(1) : args;
         const customElementName = properties?.is;
         const element = namespaceUri
             ? document.createElementNS(namespaceUri, name, customElementName ? { is: customElementName } : undefined)
             : document.createElement(name, customElementName ? { is: customElementName } : undefined);
         if (properties) {
-            for (const [propertyName, propertyValue] of Object.entries(properties)) {
+            const propertyNames = Object.keys(properties);
+            for (let index = 0; index < propertyNames.length; index++) {
+                const propertyName = propertyNames[index];
                 if (propertyName === "is")
                     continue;
-                applyProperty(element, propertyName, propertyValue, "auto");
+                applyProperty(element, propertyName, properties[propertyName], "auto");
             }
             if (isPropertyGroup(properties)) {
                 const attributeValues = properties[attributeGroup];
                 const propertyValues = properties[propertyGroup];
                 if (attributeValues) {
-                    for (const [name, value] of Object.entries(attributeValues)) {
-                        applyProperty(element, name, value, "attribute");
+                    const names = Object.keys(attributeValues);
+                    for (let index = 0; index < names.length; index++) {
+                        const name = names[index];
+                        applyProperty(element, name, attributeValues[name], "attribute");
                     }
                 }
                 if (propertyValues) {
-                    for (const [name, value] of Object.entries(propertyValues)) {
-                        applyProperty(element, name, value, "property");
+                    const names = Object.keys(propertyValues);
+                    for (let index = 0; index < names.length; index++) {
+                        const name = names[index];
+                        applyProperty(element, name, propertyValues[name], "property");
                     }
                 }
             }
         }
-        appendChildren(element, children);
+        appendChildren(element, args, properties ? 1 : 0);
         return element;
     }
     function tag(name, ...args) {
@@ -7274,14 +7471,158 @@
         tagProxyCache.set(cacheKey, proxy);
         return proxy;
     }
-    const htmlTags = getTagProxy();
-    const tags = new Proxy(((namespaceUri) => getTagProxy(namespaceUri)), {
+    const htmlTags = /* @__PURE__ */ getTagProxy();
+    const tags = /* @__PURE__ */ new Proxy(((namespaceUri) => getTagProxy(namespaceUri)), {
         get(_target, property) {
             if (property === "then")
                 return undefined;
             return Reflect.get(htmlTags, property);
         },
     });
+    /** Direct, tree-shakable factories for every supported HTML element. */
+    // HTMLElementTagNameMap
+    const a = (...args) => createTag(undefined, "a", ...args);
+    const abbr = (...args) => createTag(undefined, "abbr", ...args);
+    const address = (...args) => createTag(undefined, "address", ...args);
+    const area = (...args) => createTag(undefined, "area", ...args);
+    const article = (...args) => createTag(undefined, "article", ...args);
+    const aside = (...args) => createTag(undefined, "aside", ...args);
+    const audio = (...args) => createTag(undefined, "audio", ...args);
+    const b = (...args) => createTag(undefined, "b", ...args);
+    const base = (...args) => createTag(undefined, "base", ...args);
+    const bdi = (...args) => createTag(undefined, "bdi", ...args);
+    const bdo = (...args) => createTag(undefined, "bdo", ...args);
+    const blockquote = (...args) => createTag(undefined, "blockquote", ...args);
+    const body = (...args) => createTag(undefined, "body", ...args);
+    const br = (...args) => createTag(undefined, "br", ...args);
+    const button = (...args) => createTag(undefined, "button", ...args);
+    const canvas = (...args) => createTag(undefined, "canvas", ...args);
+    const caption = (...args) => createTag(undefined, "caption", ...args);
+    const cite = (...args) => createTag(undefined, "cite", ...args);
+    const code = (...args) => createTag(undefined, "code", ...args);
+    const col = (...args) => createTag(undefined, "col", ...args);
+    const colgroup = (...args) => createTag(undefined, "colgroup", ...args);
+    const data = (...args) => createTag(undefined, "data", ...args);
+    const datalist = (...args) => createTag(undefined, "datalist", ...args);
+    const dd = (...args) => createTag(undefined, "dd", ...args);
+    const del = (...args) => createTag(undefined, "del", ...args);
+    const details = (...args) => createTag(undefined, "details", ...args);
+    const dfn = (...args) => createTag(undefined, "dfn", ...args);
+    const dialog = (...args) => createTag(undefined, "dialog", ...args);
+    const div = (...args) => createTag(undefined, "div", ...args);
+    const dl = (...args) => createTag(undefined, "dl", ...args);
+    const dt = (...args) => createTag(undefined, "dt", ...args);
+    const em = (...args) => createTag(undefined, "em", ...args);
+    const embed = (...args) => createTag(undefined, "embed", ...args);
+    const fieldset = (...args) => createTag(undefined, "fieldset", ...args);
+    const figcaption = (...args) => createTag(undefined, "figcaption", ...args);
+    const figure = (...args) => createTag(undefined, "figure", ...args);
+    const footer = (...args) => createTag(undefined, "footer", ...args);
+    const form = (...args) => createTag(undefined, "form", ...args);
+    const h1 = (...args) => createTag(undefined, "h1", ...args);
+    const h2 = (...args) => createTag(undefined, "h2", ...args);
+    const h3 = (...args) => createTag(undefined, "h3", ...args);
+    const h4 = (...args) => createTag(undefined, "h4", ...args);
+    const h5 = (...args) => createTag(undefined, "h5", ...args);
+    const h6 = (...args) => createTag(undefined, "h6", ...args);
+    const head = (...args) => createTag(undefined, "head", ...args);
+    const header = (...args) => createTag(undefined, "header", ...args);
+    const hgroup = (...args) => createTag(undefined, "hgroup", ...args);
+    const hr = (...args) => createTag(undefined, "hr", ...args);
+    const html = (...args) => createTag(undefined, "html", ...args);
+    const i = (...args) => createTag(undefined, "i", ...args);
+    const iframe = (...args) => createTag(undefined, "iframe", ...args);
+    const img = (...args) => createTag(undefined, "img", ...args);
+    const input = (...args) => createTag(undefined, "input", ...args);
+    const ins = (...args) => createTag(undefined, "ins", ...args);
+    const kbd = (...args) => createTag(undefined, "kbd", ...args);
+    const label = (...args) => createTag(undefined, "label", ...args);
+    const legend = (...args) => createTag(undefined, "legend", ...args);
+    const li = (...args) => createTag(undefined, "li", ...args);
+    const link = (...args) => createTag(undefined, "link", ...args);
+    const main = (...args) => createTag(undefined, "main", ...args);
+    const map = (...args) => createTag(undefined, "map", ...args);
+    const mark = (...args) => createTag(undefined, "mark", ...args);
+    const menu = (...args) => createTag(undefined, "menu", ...args);
+    const meta = (...args) => createTag(undefined, "meta", ...args);
+    const meter = (...args) => createTag(undefined, "meter", ...args);
+    const nav = (...args) => createTag(undefined, "nav", ...args);
+    const noscript = (...args) => createTag(undefined, "noscript", ...args);
+    const object = (...args) => createTag(undefined, "object", ...args);
+    const ol = (...args) => createTag(undefined, "ol", ...args);
+    const optgroup = (...args) => createTag(undefined, "optgroup", ...args);
+    const option = (...args) => createTag(undefined, "option", ...args);
+    const output = (...args) => createTag(undefined, "output", ...args);
+    const p = (...args) => createTag(undefined, "p", ...args);
+    const picture = (...args) => createTag(undefined, "picture", ...args);
+    const pre = (...args) => createTag(undefined, "pre", ...args);
+    const progress = (...args) => createTag(undefined, "progress", ...args);
+    const q = (...args) => createTag(undefined, "q", ...args);
+    const rp = (...args) => createTag(undefined, "rp", ...args);
+    const rt = (...args) => createTag(undefined, "rt", ...args);
+    const ruby = (...args) => createTag(undefined, "ruby", ...args);
+    const s = (...args) => createTag(undefined, "s", ...args);
+    const samp = (...args) => createTag(undefined, "samp", ...args);
+    const script = (...args) => createTag(undefined, "script", ...args);
+    const search = (...args) => createTag(undefined, "search", ...args);
+    const section = (...args) => createTag(undefined, "section", ...args);
+    const select = (...args) => createTag(undefined, "select", ...args);
+    const slot = (...args) => createTag(undefined, "slot", ...args);
+    const small = (...args) => createTag(undefined, "small", ...args);
+    const source = (...args) => createTag(undefined, "source", ...args);
+    const span = (...args) => createTag(undefined, "span", ...args);
+    const strong = (...args) => createTag(undefined, "strong", ...args);
+    const style = (...args) => createTag(undefined, "style", ...args);
+    const sub = (...args) => createTag(undefined, "sub", ...args);
+    const summary = (...args) => createTag(undefined, "summary", ...args);
+    const sup = (...args) => createTag(undefined, "sup", ...args);
+    const table = (...args) => createTag(undefined, "table", ...args);
+    const tbody = (...args) => createTag(undefined, "tbody", ...args);
+    const td = (...args) => createTag(undefined, "td", ...args);
+    const template = (...args) => createTag(undefined, "template", ...args);
+    const textarea = (...args) => createTag(undefined, "textarea", ...args);
+    const tfoot = (...args) => createTag(undefined, "tfoot", ...args);
+    const th = (...args) => createTag(undefined, "th", ...args);
+    const thead = (...args) => createTag(undefined, "thead", ...args);
+    const time = (...args) => createTag(undefined, "time", ...args);
+    const title = (...args) => createTag(undefined, "title", ...args);
+    const tr = (...args) => createTag(undefined, "tr", ...args);
+    const track = (...args) => createTag(undefined, "track", ...args);
+    const u = (...args) => createTag(undefined, "u", ...args);
+    const ul = (...args) => createTag(undefined, "ul", ...args);
+    const varTag = (...args) => createTag(undefined, "var", ...args);
+    const video = (...args) => createTag(undefined, "video", ...args);
+    const wbr = (...args) => createTag(undefined, "wbr", ...args);
+    // HTMLElementDeprecatedTagNameMap
+    const acronym = (...args) => createTag(undefined, "acronym", ...args);
+    const applet = (...args) => createTag(undefined, "applet", ...args);
+    const basefont = (...args) => createTag(undefined, "basefont", ...args);
+    const bgsound = (...args) => createTag(undefined, "bgsound", ...args);
+    const big = (...args) => createTag(undefined, "big", ...args);
+    const blink = (...args) => createTag(undefined, "blink", ...args);
+    const center = (...args) => createTag(undefined, "center", ...args);
+    const dir = (...args) => createTag(undefined, "dir", ...args);
+    const font = (...args) => createTag(undefined, "font", ...args);
+    const frame = (...args) => createTag(undefined, "frame", ...args);
+    const frameset = (...args) => createTag(undefined, "frameset", ...args);
+    const isindex = (...args) => createTag(undefined, "isindex", ...args);
+    const keygen = (...args) => createTag(undefined, "keygen", ...args);
+    const listing = (...args) => createTag(undefined, "listing", ...args);
+    const marquee = (...args) => createTag(undefined, "marquee", ...args);
+    const menuitem = (...args) => createTag(undefined, "menuitem", ...args);
+    const multicol = (...args) => createTag(undefined, "multicol", ...args);
+    const nextid = (...args) => createTag(undefined, "nextid", ...args);
+    const nobr = (...args) => createTag(undefined, "nobr", ...args);
+    const noembed = (...args) => createTag(undefined, "noembed", ...args);
+    const noframes = (...args) => createTag(undefined, "noframes", ...args);
+    const param = (...args) => createTag(undefined, "param", ...args);
+    const plaintext = (...args) => createTag(undefined, "plaintext", ...args);
+    const rb = (...args) => createTag(undefined, "rb", ...args);
+    const rtc = (...args) => createTag(undefined, "rtc", ...args);
+    const spacer = (...args) => createTag(undefined, "spacer", ...args);
+    const strike = (...args) => createTag(undefined, "strike", ...args);
+    const tt = (...args) => createTag(undefined, "tt", ...args);
+    const xmp = (...args) => createTag(undefined, "xmp", ...args);
     function uniqueRecords(nodes) {
         const records = [];
         const seen = new Set();
@@ -7294,23 +7635,40 @@
         }
         return records;
     }
-    function disposeLinkedChildren(children) {
+    function disposeLinkedChildrenGroups(groups) {
         const disposedRecords = new Set();
-        for (let index = children.length - 1; index >= 0; index--) {
-            const child = children[index];
-            for (let recordIndex = child._records.length - 1; recordIndex >= 0; recordIndex--) {
-                const record = child._records[recordIndex];
-                if (!record.disposed && !disposedRecords.has(record)) {
-                    disposedRecords.add(record);
-                    record.dispose();
+        const records = [];
+        for (let groupIndex = groups.length - 1; groupIndex >= 0; groupIndex--) {
+            const children = groups[groupIndex];
+            for (let index = children.length - 1; index >= 0; index--) {
+                const child = children[index];
+                child._disposeBindings();
+                for (let recordIndex = child._records.length - 1; recordIndex >= 0; recordIndex--) {
+                    const record = child._records[recordIndex];
+                    if (!record.disposed && !disposedRecords.has(record)) {
+                        disposedRecords.add(record);
+                        records.push(record);
+                    }
                 }
             }
-            for (let nodeIndex = child._nodes.length - 1; nodeIndex >= 0; nodeIndex--) {
-                const node = child._nodes[nodeIndex];
-                node.parentNode?.removeChild(node);
-            }
         }
-        children.length = 0;
+        disposeCompiledFragmentRecords(records);
+        for (let groupIndex = groups.length - 1; groupIndex >= 0; groupIndex--) {
+            const children = groups[groupIndex];
+            for (let index = children.length - 1; index >= 0; index--) {
+                const child = children[index];
+                for (let nodeIndex = child._nodes.length - 1; nodeIndex >= 0; nodeIndex--) {
+                    const node = child._nodes[nodeIndex];
+                    if (node instanceof Element)
+                        dealoc(node);
+                    node.parentNode?.removeChild(node);
+                }
+            }
+            children.length = 0;
+        }
+    }
+    function disposeLinkedChildren(children) {
+        disposeLinkedChildrenGroups([children]);
     }
     function linkChildValue(value, parent, anchor, runtime) {
         return linkMaterializedChildren(materializeProgrammaticView(value), parent, anchor, runtime);
@@ -7321,14 +7679,26 @@
             const rawNode = rawNodes[index];
             parent.insertBefore(rawNode, anchor);
             const linkedNodes = runtime._linkNode(rawNode, parent, anchor);
+            let cursor = anchor;
+            let alreadyPlaced = true;
+            for (let nodeIndex = linkedNodes.length - 1; nodeIndex >= 0; nodeIndex--) {
+                const linkedNode = linkedNodes[nodeIndex];
+                if (linkedNode.parentNode !== parent ||
+                    linkedNode.nextSibling !== cursor) {
+                    alreadyPlaced = false;
+                    break;
+                }
+                cursor = linkedNode;
+            }
             for (let nodeIndex = 0; nodeIndex < linkedNodes.length; nodeIndex++) {
                 const linkedNode = linkedNodes[nodeIndex];
-                parent.insertBefore(linkedNode, anchor);
-                activateProgrammaticBindings([linkedNode], runtime);
+                if (!alreadyPlaced)
+                    parent.insertBefore(linkedNode, anchor);
             }
             children.push({
                 _nodes: linkedNodes,
                 _records: uniqueRecords(linkedNodes),
+                _disposeBindings: activateProgrammaticBindings(linkedNodes, runtime),
             });
         }
         return children;
@@ -7353,7 +7723,7 @@
             }
             disposeLinkedChildren(linkedChildren);
             linkedChildren.push(...linkChildValue(value, parent, anchor, runtime));
-        });
+        }, false);
         return () => {
             stop();
             disposeLinkedChildren(linkedChildren);
@@ -7361,79 +7731,331 @@
     }
     function activateKeyedChildBinding(anchor, binding, runtime) {
         let states = new Map();
-        const stop = observeScopeExpression(runtime._scope, binding._read, (value) => {
+        let observedItems = [];
+        let stablePrefixLength = 0;
+        let removedIndex = -1;
+        let swappedIndexes;
+        let observedArray;
+        let lastSeenArrayMutationVersion = 0;
+        const stop = observeScopeExpression(runtime._scope, () => {
+            const value = binding._read();
+            if (value === null || value === undefined) {
+                stablePrefixLength = 0;
+                removedIndex = -1;
+                swappedIndexes = undefined;
+                observedArray = undefined;
+                if (observedItems.length !== 0)
+                    observedItems = [];
+                return observedItems;
+            }
+            if (isArray(value)) {
+                const length = value.length;
+                const mutationMeta = observedArray === value ? getArrayMutationMeta(value) : undefined;
+                if (mutationMeta &&
+                    mutationMeta._version > lastSeenArrayMutationVersion &&
+                    mutationMeta._previousLength === observedItems.length &&
+                    mutationMeta._currentLength === length) {
+                    lastSeenArrayMutationVersion = mutationMeta._version;
+                    if (mutationMeta._kind === "swap") {
+                        stablePrefixLength = mutationMeta._swapFromIndex;
+                        removedIndex = -1;
+                        swappedIndexes = [
+                            mutationMeta._swapFromIndex,
+                            mutationMeta._swapToIndex,
+                        ];
+                        observedItems = value.slice();
+                        return observedItems;
+                    }
+                    if (mutationMeta._kind === "splice" &&
+                        mutationMeta._deleteCount === 0 &&
+                        mutationMeta._index === mutationMeta._previousLength) {
+                        stablePrefixLength = mutationMeta._previousLength;
+                        removedIndex = -1;
+                        swappedIndexes = undefined;
+                        observedItems = value.slice();
+                        return observedItems;
+                    }
+                    if (mutationMeta._kind === "splice" &&
+                        mutationMeta._deleteCount === 1 &&
+                        mutationMeta._insertCount === 0) {
+                        stablePrefixLength = mutationMeta._index;
+                        removedIndex = mutationMeta._index;
+                        swappedIndexes = undefined;
+                        observedItems = value.slice();
+                        return observedItems;
+                    }
+                }
+                let index = 0;
+                while (index < length &&
+                    index < observedItems.length &&
+                    Object.is(observedItems[index], value[index])) {
+                    index++;
+                }
+                stablePrefixLength = index;
+                removedIndex = -1;
+                swappedIndexes = undefined;
+                if (index === length && index === observedItems.length) {
+                    return observedItems;
+                }
+                if (observedItems.length === length + 1 &&
+                    index < observedItems.length) {
+                    let suffixIndex = index;
+                    while (suffixIndex < length &&
+                        Object.is(observedItems[suffixIndex + 1], value[suffixIndex])) {
+                        suffixIndex++;
+                    }
+                    if (suffixIndex === length)
+                        removedIndex = index;
+                }
+                else if (observedItems.length === length && index < length) {
+                    let secondIndex = index + 1;
+                    while (secondIndex < length &&
+                        Object.is(observedItems[secondIndex], value[secondIndex])) {
+                        secondIndex++;
+                    }
+                    if (secondIndex < length &&
+                        Object.is(observedItems[index], value[secondIndex]) &&
+                        Object.is(observedItems[secondIndex], value[index])) {
+                        let suffixIndex = secondIndex + 1;
+                        while (suffixIndex < length &&
+                            Object.is(observedItems[suffixIndex], value[suffixIndex])) {
+                            suffixIndex++;
+                        }
+                        if (suffixIndex === length) {
+                            swappedIndexes = [index, secondIndex];
+                        }
+                    }
+                }
+                observedItems = value.slice();
+                observedArray = value;
+                return observedItems;
+            }
+            let nextItems;
+            let index = 0;
+            stablePrefixLength = 0;
+            removedIndex = -1;
+            swappedIndexes = undefined;
+            observedArray = undefined;
+            for (const item of value) {
+                if (nextItems) {
+                    nextItems.push(item);
+                }
+                else if (index >= observedItems.length ||
+                    !Object.is(observedItems[index], item)) {
+                    nextItems = observedItems.slice(0, index);
+                    nextItems.push(item);
+                }
+                index++;
+            }
+            if (nextItems) {
+                observedItems = nextItems;
+            }
+            else if (index !== observedItems.length) {
+                observedItems = observedItems.slice(0, index);
+            }
+            return observedItems;
+        }, (value) => {
             const parent = anchor.parentNode;
             if (!parent)
                 return;
-            const items = value === null || value === undefined
-                ? []
-                : Array.from(value);
-            const descriptors = [];
-            const descriptorByKey = new Map();
-            for (let index = 0; index < items.length; index++) {
-                const item = items[index];
-                const key = binding._key(item);
-                if (descriptorByKey.has(key)) {
-                    throw new TypeError(`Duplicate programmatic view key '${String(key)}'.`);
+            const items = value;
+            const retainedLength = states.size;
+            const indexToRemove = removedIndex;
+            const indexesToSwap = swappedIndexes;
+            removedIndex = -1;
+            swappedIndexes = undefined;
+            if (indexesToSwap && retainedLength === items.length) {
+                const leftIndex = indexesToSwap[0];
+                const rightIndex = indexesToSwap[1];
+                let leftState;
+                let rightState;
+                for (const state of states.values()) {
+                    if (state._index === leftIndex)
+                        leftState = state;
+                    else if (state._index === rightIndex)
+                        rightState = state;
+                    if (leftState && rightState)
+                        break;
                 }
-                descriptorByKey.set(key, item);
-                const previous = states.get(key);
-                const holder = previous
-                    ? previous._holder
-                    : createScope({ value: item }, runtime._scope._handler);
-                descriptors.push({
-                    _key: key,
-                    _value: item,
+                const leftStart = leftState && firstKeyedStateNode(leftState);
+                const rightEnd = rightState && lastKeyedStateNode(rightState);
+                if (leftState && rightState && leftStart && rightEnd) {
+                    const afterRight = rightEnd.nextSibling;
+                    moveKeyedStateBefore(parent, rightState, leftStart);
+                    moveKeyedStateBefore(parent, leftState, afterRight);
+                    rightState._index = leftIndex;
+                    leftState._index = rightIndex;
+                    return;
+                }
+            }
+            if (indexToRemove >= 0 && retainedLength === items.length + 1) {
+                let removedState;
+                for (const state of states.values()) {
+                    if (state._index === indexToRemove) {
+                        removedState = state;
+                    }
+                    else if (state._index > indexToRemove) {
+                        state._index--;
+                    }
+                }
+                if (removedState) {
+                    disposeLinkedChildren(removedState._children);
+                    states.delete(removedState._key);
+                    return;
+                }
+            }
+            if (stablePrefixLength === 0 && retainedLength > 0 && items.length > 0) {
+                const replacementKeys = new Array(items.length);
+                const seenReplacementKeys = new Set();
+                let isDisjointReplacement = true;
+                for (let index = 0; index < items.length; index++) {
+                    const key = binding._key(items[index]);
+                    if (seenReplacementKeys.has(key)) {
+                        throw new TypeError(`Duplicate programmatic view key '${String(key)}'.`);
+                    }
+                    if (states.has(key)) {
+                        isDisjointReplacement = false;
+                        break;
+                    }
+                    seenReplacementKeys.add(key);
+                    replacementKeys[index] = key;
+                }
+                if (isDisjointReplacement) {
+                    const replacements = new Array(items.length);
+                    for (let index = 0; index < items.length; index++) {
+                        const item = items[index];
+                        const holder = createScope({ value: item }, runtime._scope._handler);
+                        replacements[index] = {
+                            _holder: holder,
+                            _nodes: materializeProgrammaticView(binding._render(() => holder.value)),
+                        };
+                    }
+                    const removedChildren = new Array(retainedLength);
+                    let removedIndex = 0;
+                    for (const state of states.values()) {
+                        removedChildren[removedIndex++] = state._children;
+                    }
+                    detachKeyedStateRange(states.values(), anchor);
+                    disposeLinkedChildrenGroups(removedChildren);
+                    states = new Map();
+                    for (let index = 0; index < items.length; index++) {
+                        const item = items[index];
+                        const key = replacementKeys[index];
+                        const replacement = replacements[index];
+                        const children = linkMaterializedChildren(replacement._nodes, parent, anchor, runtime);
+                        states.set(key, {
+                            _key: key,
+                            _value: item,
+                            _holder: replacement._holder,
+                            _children: children,
+                            _index: index,
+                        });
+                    }
+                    return;
+                }
+            }
+            if (stablePrefixLength === retainedLength &&
+                items.length > retainedLength) {
+                const appendedLength = items.length - retainedLength;
+                const appendedKeys = new Array(appendedLength);
+                const seenAppendedKeys = new Set();
+                for (let index = retainedLength; index < items.length; index++) {
+                    const key = binding._key(items[index]);
+                    if (states.has(key) || seenAppendedKeys.has(key)) {
+                        throw new TypeError(`Duplicate programmatic view key '${String(key)}'.`);
+                    }
+                    seenAppendedKeys.add(key);
+                    appendedKeys[index - retainedLength] = key;
+                }
+                for (let index = retainedLength; index < items.length; index++) {
+                    const item = items[index];
+                    const key = appendedKeys[index - retainedLength];
+                    const holder = createScope({ value: item }, runtime._scope._handler);
+                    const children = linkMaterializedChildren(materializeProgrammaticView(binding._render(() => holder.value)), parent, anchor, runtime);
+                    states.set(key, {
+                        _key: key,
+                        _value: item,
+                        _holder: holder,
+                        _children: children,
+                        _index: index,
+                    });
+                }
+                return;
+            }
+            const plan = planKeyedReconciliation(items, states, binding._key, (state) => state._index, (item) => {
+                const holder = createScope({ value: item }, runtime._scope._handler);
+                return {
                     _holder: holder,
-                    _nodes: previous
-                        ? []
-                        : materializeProgrammaticView(binding._render(() => holder.value)),
-                });
-            }
-            const nextStates = new Map();
-            for (const [key, state] of states) {
-                if (!descriptorByKey.has(key)) {
-                    disposeLinkedChildren(state._children);
-                }
-            }
-            for (let index = 0; index < descriptors.length; index++) {
-                const descriptor = descriptors[index];
-                const previous = states.get(descriptor._key);
-                const children = previous
-                    ? previous._children
-                    : linkMaterializedChildren(descriptor._nodes, parent, anchor, runtime);
-                if (previous && !Object.is(previous._value, descriptor._value)) {
-                    descriptor._holder.value = descriptor._value;
-                }
-                const state = {
-                    _key: descriptor._key,
-                    _value: descriptor._value,
-                    _holder: descriptor._holder,
-                    _children: children,
+                    _nodes: materializeProgrammaticView(binding._render(() => holder.value)),
                 };
+            });
+            const nextStates = new Map();
+            const removedChildren = plan.removed.map((state) => state._children);
+            if (plan.entries.length === 0) {
+                detachKeyedStateRange(states.values(), anchor);
+            }
+            disposeLinkedChildrenGroups(removedChildren);
+            for (let index = 0; index < plan.entries.length; index++) {
+                const descriptor = plan.entries[index];
+                let state;
+                if (descriptor.kind === "reused") {
+                    state = descriptor.previous;
+                    if (!Object.is(state._value, descriptor.value)) {
+                        state._holder.value = descriptor.value;
+                    }
+                }
+                else {
+                    state = {
+                        _key: descriptor.key,
+                        _value: descriptor.value,
+                        _holder: descriptor.created._holder,
+                        _children: linkMaterializedChildren(descriptor.created._nodes, parent, anchor, runtime),
+                        _index: index,
+                    };
+                }
+                state._value = descriptor.value;
+                state._index = index;
                 nextStates.set(state._key, state);
             }
             states = nextStates;
+            let lastPreviousIndex = -1;
+            let sawNewState = false;
+            let needsPlacement = false;
+            for (let index = 0; index < plan.entries.length; index++) {
+                const indexInPrevious = plan.entries[index].previousIndex;
+                if (indexInPrevious < 0) {
+                    sawNewState = true;
+                }
+                else {
+                    if (indexInPrevious < lastPreviousIndex || sawNewState) {
+                        needsPlacement = true;
+                    }
+                    lastPreviousIndex = indexInPrevious;
+                }
+            }
+            if (!needsPlacement)
+                return;
             let cursor = anchor;
             const orderedStates = Array.from(states.values());
+            const stableIndexes = plan.stable;
             for (let stateIndex = orderedStates.length - 1; stateIndex >= 0; stateIndex--) {
                 const children = orderedStates[stateIndex]._children;
+                const move = stableIndexes[stateIndex] === 0;
                 for (let childIndex = children.length - 1; childIndex >= 0; childIndex--) {
                     const nodes = children[childIndex]._nodes;
                     for (let nodeIndex = nodes.length - 1; nodeIndex >= 0; nodeIndex--) {
                         const node = nodes[nodeIndex];
-                        if (node.nextSibling !== cursor)
+                        if (move && node.nextSibling !== cursor) {
                             parent.insertBefore(node, cursor);
+                        }
                         cursor = node;
                     }
                 }
             }
-        });
+        }, false);
         return () => {
             stop();
-            for (const state of states.values()) {
-                disposeLinkedChildren(state._children);
-            }
+            disposeLinkedChildrenGroups(Array.from(states.values(), (state) => state._children));
             states.clear();
         };
     }
@@ -7441,8 +8063,10 @@
         const bindings = pendingBindings.get(node);
         if (bindings) {
             pendingBindings.delete(node);
-            for (let index = 0; index < bindings.length; index++) {
-                const binding = bindings[index];
+            const multipleBindings = isArray(bindings);
+            const bindingCount = multipleBindings ? bindings.length : 1;
+            for (let index = 0; index < bindingCount; index++) {
+                const binding = multipleBindings ? bindings[index] : bindings;
                 if (binding._kind === "event") {
                     const eventTarget = node;
                     const listener = function (eventValue) {
@@ -7482,7 +8106,7 @@
                         hasValue = true;
                         previousValue = sanitizedValue;
                         setDomValue(node, binding._name, sanitizedValue, binding._target);
-                    }));
+                    }, false));
                 }
                 else if (binding._kind === "child") {
                     disposers.push(activateChildBinding(node, binding._read, runtime));
@@ -7492,9 +8116,16 @@
                 }
             }
         }
-        const childNodes = Array.from(node.childNodes);
-        for (let index = 0; index < childNodes.length; index++) {
-            activateNodeBindings(childNodes[index], runtime, disposers);
+        const childNodes = node.childNodes;
+        if (childNodes.length === 0)
+            return;
+        if (childNodes.length === 1) {
+            activateNodeBindings(childNodes[0], runtime, disposers);
+            return;
+        }
+        const snapshot = Array.from(childNodes);
+        for (let index = 0; index < snapshot.length; index++) {
+            activateNodeBindings(snapshot[index], runtime, disposers);
         }
     }
     function activateProgrammaticBindings(nodes, runtime) {
@@ -7615,11 +8246,16 @@
                     /** @internal Links one generated node against the owning scope. */
                     _linkNode(node, parent) {
                         try {
-                            const linked = $compile(node)(scope, undefined, {
+                            const linkOptions = {
                                 _futureParentElement: parent,
                                 _ownsNodes: true,
-                            });
-                            return normalizeLinkResult(linked);
+                            };
+                            const directlyLinked = $compile._linkProgrammaticNode
+                                ? $compile._linkProgrammaticNode(node, scope, linkOptions)
+                                : $compile(node)(scope, undefined, linkOptions);
+                            if (directlyLinked === null)
+                                return [node];
+                            return normalizeLinkResult(directlyLinked);
                         }
                         catch (error) {
                             node.parentNode?.removeChild(node);
@@ -8468,7 +9104,7 @@
             this.component = registerComponent;
             this.configure = (config) => {
                 if (config.strictComponentBindingsEnabled !== undefined) {
-                    this.strictComponentBindingsEnabled(config.strictComponentBindingsEnabled);
+                    this.setStrictComponentBindingsEnabled(config.strictComponentBindingsEnabled);
                 }
                 if (config.propertySecurityContexts !== undefined) {
                     for (const context of config.propertySecurityContexts) {
@@ -8500,9 +9136,8 @@
                 strictComponentBindingsEnabled = false;
             };
             /**
-             * @param enabled - Update the strictComponentBindingsEnabled state if provided,
-             * otherwise return the current strictComponentBindingsEnabled state.
-             * @returns Current value if used as getter or itself (chaining) if used as setter.
+             * @param enabled - New strict component binding validation state.
+             * @returns This registry for chaining.
              *
              * Call this method to enable / disable the strict component bindings check. If enabled, the
              * compiler will enforce that all scope / controller bindings of a
@@ -8514,15 +9149,11 @@
              * The default value is false.
              */
             let strictComponentBindingsEnabled = false;
-            this.strictComponentBindingsEnabled =
-                /** @param enabled */
-                function (enabled) {
-                    if (enabled !== undefined) {
-                        strictComponentBindingsEnabled = enabled;
-                        return this;
-                    }
-                    return strictComponentBindingsEnabled;
-                };
+            this.isStrictComponentBindingsEnabled = () => strictComponentBindingsEnabled;
+            this.setStrictComponentBindingsEnabled = function (enabled) {
+                strictComponentBindingsEnabled = enabled;
+                return this;
+            };
             /**
              * The security context of DOM Properties.
              */
@@ -8989,6 +9620,21 @@
                             _futureParentElement,
                         });
                     }
+                    Object.assign(compile, {
+                        /** @internal Links a programmatic node without public-link overhead when no directives match. */
+                        _linkProgrammaticNode(node, scope, options) {
+                            const publicLinkState = createPublicLinkState(node, null);
+                            const templatePlan = planTemplate(assertInvariantDefined(publicLinkState._nodes), undefined, undefined, undefined, null);
+                            if (!templatePlan)
+                                return null;
+                            if (templatePlan._trackedNodeList) {
+                                publicLinkState._nodes = templatePlan._trackedNodeList;
+                            }
+                            publicLinkState._templateLinkExecutor =
+                                createTemplateLinkExecutor(templatePlan);
+                            return invokePublicLink(publicLinkState, scope, undefined, options);
+                        },
+                    });
                     return compile;
                     function compile(element, transcludeFn, maxPriority, ignoreDirective, previousCompileContext) {
                         const publicLinkState = createPublicLinkState(element, previousCompileContext);
@@ -12363,7 +13009,7 @@
      *
      * ```js
      * angular
-     *   .module('app')
+     *   .createModule('app')
      *   .factory('$exceptionHandler', ['myLogger', function(myLogger) {
      *     return function handleError(error) {
      *       myLogger.capture(error);
@@ -13628,7 +14274,7 @@
             this._bootsrappedModules = [];
             this._injectorCreated = false;
             /** AngularTS version string replaced at build time. */
-            this.version = "0.34.0";
+            this.version = "0.35.5";
             /** Retrieve the controller instance cached on a compiled DOM element. */
             this.getController = getController;
             /** Retrieve the injector cached on a bootstrapped DOM element. */
@@ -13678,16 +14324,19 @@
             }
             return builtinNgModuleRegistrar(this);
         }
-        module(name, requires, configFn) {
-            validateNotHasOwnPropertyName(name, "module");
-            if (requires && hasOwn(this._moduleRegistry, name)) {
+        createModule(name, requires = [], configFn) {
+            validateNotHasOwnPropertyName(name, "createModule");
+            if (hasOwn(this._moduleRegistry, name)) {
                 this._moduleRegistry[name] = null;
             }
             return ensure(this._moduleRegistry, name, () => {
-                if (!requires) {
-                    throw $injectorError("nomod", "Module '{0}' is not available. Possibly misspelled or not loaded", name);
-                }
                 return new NgModule(name, requires, configFn, this._composition.animationRegistry, this._composition.controllerRegistry, this._composition.filterRegistry, this._composition.compileRegistry, this._composition.appContext, this._composition.configRegistry);
+            });
+        }
+        getModule(name) {
+            validateNotHasOwnPropertyName(name, "getModule");
+            return ensure(this._moduleRegistry, name, () => {
+                throw $injectorError("nomod", "Module '{0}' is not available. Possibly misspelled or not loaded", name);
             });
         }
         /**
@@ -13792,7 +14441,7 @@
          *
          * <script src="angular.js"></script>
          * <script>
-         *   let app = angular.module('demo', [])
+         *   let app = angular.createModule('demo', [])
          *   .controller('WelcomeController', ['$scope', function($scope) {
          *       $scope.greeting = 'Welcome!';
          *   }]);
@@ -13806,7 +14455,7 @@
          * @param modules an array of modules to load into the application.
          *     Each item in the array should be the name of a predefined module or a (DI annotated)
          *     function that will be invoked by the injector as a `config` block.
-         *     See `angular.module()`.
+         *     See `angular.createModule()` and `angular.getModule()`.
          * @returns The created injector instance for this application.
          */
         bootstrap(element, modules) {
@@ -13823,7 +14472,7 @@
             this._bootsrappedModules.unshift("ng");
             const injector = createInjector(this._bootsrappedModules, (registry) => {
                 registry.value(_rootElement, element);
-            }, (name) => this.module(name));
+            }, (name) => this.getModule(name));
             injector.invoke([
                 _rootScope,
                 _rootElement,
@@ -13875,7 +14524,7 @@
                 this.currentInjector.loadNewModules(modules);
                 return this.currentInjector;
             }
-            this.currentInjector = createInjector(modules, undefined, (name) => this.module(name));
+            this.currentInjector = createInjector(modules, undefined, (name) => this.getModule(name));
             this._injectorCreated = true;
             return this.currentInjector;
         }
@@ -13977,6 +14626,59 @@
      */
     function isInvocationDetail(value) {
         return isObject(value) && isString(value.expr);
+    }
+
+    function snapshotPosition(position) {
+        const { coords } = position;
+        return {
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+            accuracy: coords.accuracy,
+            altitude: coords.altitude,
+            altitudeAccuracy: coords.altitudeAccuracy,
+            heading: coords.heading,
+            speed: coords.speed,
+            timestamp: position.timestamp,
+        };
+    }
+    /**
+     * Connects the experimental HTML `geolocation` element to `ng-model`.
+     *
+     * The binding is intentionally one-way. Native `location` events write a
+     * serializable {@link GeolocationValue} to the model. Model changes do not
+     * request permission or write to the element's read-only `position` property.
+     */
+    function geolocationDirective() {
+        return {
+            restrict: "E",
+            require: "?ngModel",
+            link(scope, element, ngModelController) {
+                if (!ngModelController) {
+                    return;
+                }
+                const geolocationElement = element;
+                ngModelController.isEmpty = (value) => value == null;
+                ngModelController.render = () => undefined;
+                const publishLocation = () => {
+                    const position = geolocationElement.position;
+                    if (geolocationElement.error || !position) {
+                        ngModelController.setViewValue(undefined, "location");
+                        ngModelController.setValidity("geolocation", false);
+                        return;
+                    }
+                    ngModelController.setValidity("geolocation", true);
+                    ngModelController.setViewValue(snapshotPosition(position), "location");
+                };
+                const cleanup = () => {
+                    geolocationElement.removeEventListener("location", publishLocation);
+                    geolocationElement.removeEventListener("$destroy", cleanup);
+                    deregisterDestroy();
+                };
+                geolocationElement.addEventListener("location", publishLocation);
+                geolocationElement.addEventListener("$destroy", cleanup, { once: true });
+                const deregisterDestroy = scope.on("$destroy", cleanup);
+            },
+        };
     }
 
     const $animateError = createErrorFactory("$animate");
@@ -21607,7 +22309,7 @@
          * ```js
          * // App served from `https://example.com/`.
          * angular
-         *   .module('xsrfTrustedOriginsExample', [])
+         *   .createModule('xsrfTrustedOriginsExample', [])
          *   .config({
          *     $http: {
          *       xsrfTrustedOrigins: ['https://api.example.com'],
@@ -23630,7 +24332,6 @@
         updateOn: "",
         updateOnDefault: true,
         debounce: 0,
-        getterSetter: false,
         allowInvalid: false,
     });
     /** Registers the `ngModelOptions` directive controller. */
@@ -23913,27 +24614,8 @@
             return version;
         }
         /** @internal */
-        _initGetterSetters() {
-            if (this.options.getOption("getterSetter")) {
-                const invokeModelGetter = this._parse(`${this._modelExpression}()`);
-                const invokeModelSetter = this._parse(`${this._modelExpression}(_$p)`);
-                this._ngModelGet = ($scope) => {
-                    let modelValue = this._parsedNgModel($scope);
-                    if (isFunction(modelValue)) {
-                        modelValue = callFunction(invokeModelGetter, undefined, $scope);
-                    }
-                    return modelValue;
-                };
-                this._ngModelSet = ($scope, newValue) => {
-                    if (isFunction(this._parsedNgModel($scope))) {
-                        callFunction(invokeModelSetter, undefined, $scope, { _$p: newValue });
-                    }
-                    else {
-                        callFunction(this._parsedNgModelAssign, undefined, $scope, newValue);
-                    }
-                };
-            }
-            else if (!this._parsedNgModel._assign) {
+        _validateModelExpression() {
+            if (!this._parsedNgModel._assign) {
                 throw ngModelError("nonassign", "Expression '{0}' is non-assignable. Element: {1}", this._modelExpression, startingTag(this._element));
             }
         }
@@ -24118,7 +24800,7 @@
          * @example
          * <example name="ng-model-cancel-update" module="cancel-update-example">
          *   <file name="app.js">
-         *     angular.module('cancel-update-example', [])
+         *     angular.createModule('cancel-update-example', [])
          *
          *     .controller('CancelUpdateController', ['$scope', function($scope) {
          *       $scope.model = {value1: '', value2: ''};
@@ -24533,10 +25215,6 @@
          * obtained initially.
          * </div>
          *
-         * <div class="alert alert-danger">
-         * **Note:** it is not possible to override the `getterSetter` option.
-         * </div>
-         *
          * @param  options a hash of settings to override the previous options
          *
          */
@@ -24590,7 +25268,7 @@
             </div>
            </file>
            <file name="app.js">
-            angular.module('inputExample', [])
+            angular.createModule('inputExample', [])
               .controller('inputController', ['$scope', function($scope) {
                 $scope.items = [
                   {name: 'Apricot', id: 443},
@@ -24790,7 +25468,7 @@
                         if (optionsCtrl) {
                             modelCtrl.options = optionsCtrl.options;
                         }
-                        modelCtrl._initGetterSetters();
+                        modelCtrl._validateModelExpression();
                         // notify others, especially parent forms
                         formCtrl.addControl(modelCtrl);
                         const handleNameChange = (newValue) => {
@@ -26536,6 +27214,9 @@
                     getNormalizedAttr($element, "dataIndex") ??
                     undefined;
                 const hasLazy = hasNormalizedAttr($element, "lazy");
+                if (findRepeatExpressionSeparator(expression.trim(), "track by")) {
+                    throw ngRepeatError("utrack", "'track by' is not supported. Use the 'data-index' attribute to select the repeat key property.");
+                }
                 const repeatExpression = parseRepeatExpression(expression);
                 if (!repeatExpression) {
                     throw ngRepeatError("iexp", "Expected expression in form of '_item_ in _collection_' but got '{0}'.", expression);
@@ -30306,29 +30987,31 @@
                 (this._baseHref = getBaseHref() || window.location.pathname));
         }
         /** @internal */
-        _url(newUrl, state) {
-            if (isDefined(newUrl)) {
-                this._location.setUrl(decodeURIComponent(newUrl));
-            }
-            if (state)
-                this._location.setState(state);
+        _getUrl() {
             return this._location.getUrl();
         }
         /** @internal */
-        _update(read) {
-            if (read) {
-                this._lastUrl = this._url();
+        _setUrl(newUrl, state) {
+            this._location.setUrl(decodeURIComponent(newUrl));
+            if (state)
+                this._location.setState(state);
+            return this._getUrl();
+        }
+        /** @internal */
+        _readUrl() {
+            this._lastUrl = this._getUrl();
+        }
+        /** @internal */
+        _writeUrl() {
+            if (this._getUrl() === this._lastUrl)
                 return;
-            }
-            if (this._url() === this._lastUrl)
-                return;
-            this._url(this._lastUrl, true);
+            this._setUrl(this._lastUrl, true);
         }
         /** @internal */
         _push(urlMatcher, params, options) {
             const url = urlMatcher._format(params);
             if (!isNull(url)) {
-                this._url(url, !!options.replace);
+                this._setUrl(url, !!options.replace);
             }
         }
         /** @internal */
@@ -31091,7 +31774,7 @@
                     }
                     function addState(stateName, stateParams, activeClass) {
                         const state = stateName
-                            ? $state.get(stateName, stateContext($element))
+                            ? $state.getState(stateName, stateContext($element))
                             : undefined;
                         const foundState = state;
                         const stateInfo = {
@@ -31986,12 +32669,9 @@
             });
             return selected;
         }
-        /**
-         * Gets or sets the root view context used for relative `ng-view` targeting.
-         */
-        /** @internal */
-        _rootViewContext(context) {
-            return (this._rootContext = context ?? this._rootContext);
+        /** @internal Returns the root context for relative `ng-view` targeting. */
+        _getRootViewContext() {
+            return this._rootContext;
         }
         /**
          * Removes a view config from the active registry.
@@ -32206,7 +32886,7 @@
      */
     function ViewDirective($state, $anchorScroll, $interpolate, $parse) {
         const $view = $state._viewService;
-        const rootContext = $view._rootViewContext();
+        const rootContext = $view._getRootViewContext();
         const rootData = {
             _config: { _viewDecl: { _context: rootContext } },
             $ngView: {},
@@ -33262,7 +33942,7 @@
          *
          * #### Example:
          * ```js
-         * let allStates = registry.get();
+         * let allStates = registry.getStates();
          *
          * // Later, invoke deregisterFn() to remove the listener
          * let deregisterFn = registry.onStatesChanged((event, states) => {
@@ -33440,7 +34120,7 @@
          * @returns {StateDeclaration[]} a list of removed state declarations
          */
         deregister(stateOrName) {
-            const stateDeclaration = this.get(stateOrName);
+            const stateDeclaration = this.getState(stateOrName);
             if (!stateDeclaration) {
                 throw new Error(`Can't deregister state; not found: ${stateOrNameToString(stateOrName)}`);
             }
@@ -33464,21 +34144,17 @@
         /**
          * @return {StateDeclaration[]}
          */
-        getAll() {
+        getStates() {
             return this._getAllBuilt().map((state) => state.self);
         }
-        get(stateOrName, base) {
-            if (arguments.length === 0) {
-                const stateNames = keys(this._states);
-                const states = [];
-                stateNames.forEach((name) => {
-                    states.push(this._states[name].self);
-                });
-                return states;
-            }
-            const found = stateOrName === undefined
-                ? undefined
-                : this._matcher.find(stateOrName, base);
+        /**
+         *
+         * @param {StateOrName} [stateOrName]
+         * @param {StateOrName} [base]
+         * @returns {StateDeclaration | StateDeclaration[] | null}
+         */
+        getState(stateOrName, base) {
+            const found = this._matcher.find(stateOrName, base);
             return found?.self ?? null;
         }
     }
@@ -35621,7 +36297,7 @@
             };
             routerState._urlRuntime._push(navigable._url, stateService._routerState._params, urlOptions);
         }
-        routerState._urlRuntime._update(true);
+        routerState._urlRuntime._readUrl();
     }
     function registerUpdateUrl(transitionService) {
         return transitionService.onSuccess({}, updateUrlHook, {
@@ -36018,7 +36694,7 @@
         const tokens = stateNameString.split(".");
         for (let i = tokens.length; i > 0; i--) {
             const candidateName = tokens.slice(0, i).join(".");
-            const state = stateProvider._stateRegistry.get(candidateName);
+            const state = stateProvider._stateRegistry.getState(candidateName);
             if (!state)
                 continue;
             const policy = state.policy?.transition?.retry;
@@ -36174,7 +36850,7 @@
             const isLatest = routerState._lastStartedTransitionId <= trans.id;
             if (error.type === RejectType._IGNORED) {
                 if (isLatest) {
-                    routerState._urlRuntime._update();
+                    routerState._urlRuntime._writeUrl();
                 }
                 // Consider ignored `Transition.run()` as a successful `transitionTo`.
                 return Promise.resolve(routerState._current);
@@ -36188,7 +36864,7 @@
             }
             if (error.type === RejectType._ABORTED) {
                 if (isLatest) {
-                    routerState._urlRuntime._update();
+                    routerState._urlRuntime._writeUrl();
                 }
                 return Promise.reject(error);
             }
@@ -36479,7 +37155,7 @@
                 const tokens = stateNameString.split(".");
                 for (let i = tokens.length; i > 0; i--) {
                     const candidateName = tokens.slice(0, i).join(".");
-                    const state = this._stateRegistry.get(candidateName);
+                    const state = this._stateRegistry.getState(candidateName);
                     if (!state)
                         continue;
                     const policy = readPolicy(state);
@@ -36713,7 +37389,7 @@
          *
          * #### Example:
          * ```js
-         * let app = angular.module('app', []);
+         * let app = angular.createModule('app', []);
          *
          * app.controller('ctrl', ['$scope', '$state', function ($scope, $state) {
          *   $scope.changeState = function () {
@@ -36852,13 +37528,16 @@
                 absolute: options?.absolute,
             });
         }
-        get(stateOrName, base) {
-            const reg = this._stateRegistry;
-            if (arguments.length === 0)
-                return reg.get();
-            if (stateOrName === undefined)
-                return undefined;
-            return reg.get(stateOrName, base ?? this._current);
+        /**
+         * @param {StateOrName} stateOrName
+         * @param {undefined} [base]
+         */
+        getStates() {
+            return this._stateRegistry.getStates();
+        }
+        getState(stateOrName, base) {
+            return (this._stateRegistry.getState(stateOrName, base ?? this._current) ??
+                undefined);
         }
     }
     function normalizeStateDeclaration(nameOrDefinition, definition) {
@@ -37538,7 +38217,7 @@
             this.absUrl = "";
         }
         /**
-         * Change path, search and hash, when called with parameter and return `$location`.
+         * Set the path, search, and hash, then return `$location`.
          *
          * @param url - New URL without base prefix (e.g. `/path?a=b#hash`).
          * @returns The `Location` instance.
@@ -37559,17 +38238,12 @@
             return this;
         }
         /**
-         * Return URL (e.g. `/path?a=b#hash`) when called without any parameter.
+         * Return the current URL (for example, `/path?a=b#hash`).
          *
          * @returns The current path/search/hash string.
          */
         getUrl() {
             return this._url;
-        }
-        url(url) {
-            return arguments.length
-                ? this.setUrl(validateRequired(url, "url"))
-                : this.getUrl();
         }
         /**
          * Changes the path parameter and returns `$location`.
@@ -37593,11 +38267,8 @@
         getPath() {
             return this._path;
         }
-        path(path) {
-            return arguments.length ? this.setPath(path ?? null) : this.getPath();
-        }
         /**
-         * Changes the hash fragment when called with a parameter and returns `$location`.
+         * Set the hash fragment and return `$location`.
          * @param hash - New hash fragment.
          * @returns The `Location` instance.
          */
@@ -37609,56 +38280,46 @@
             return this;
         }
         /**
-         * Returns the hash fragment when called without any parameters.
+         * Return the current hash fragment.
          * @returns The current hash fragment.
          */
         getHash() {
             return this._hash;
         }
-        hash(hash) {
-            return arguments.length ? this.setHash(hash ?? null) : this.getHash();
-        }
         /**
          * Sets the search part of the current URL as an object.
          *
          * @param search - New search params as a string or object.
-         * @param paramValue - If `search` is a string or number, overrides only a single search property.
          * @returns The `Location` instance.
          */
-        setSearch(search, paramValue) {
+        setSearch(search) {
             validateRequired(search, "search");
-            switch (arguments.length) {
-                case 1:
-                    if (isString(search) || isNumber(search)) {
-                        search = search.toString();
-                        this._search = parseKeyValue(search);
-                    }
-                    else if (isObject(search)) {
-                        const clonedSearch = structuredClone(search);
-                        // remove object undefined or null properties
-                        entries(clonedSearch).forEach(([key, value]) => {
-                            if (isNull(value))
-                                deleteProperty(clonedSearch, key);
-                        });
-                        this._search = clonedSearch;
-                    }
-                    else {
-                        throw $locationError("isrcharg", "The first argument of the `$location#search()` call must be a string or an object.");
-                    }
-                    break;
-                default: {
-                    if (!isString(search) && !isNumber(search)) {
-                        throw $locationError("isrcharg", "The first argument of the `$location#search()` call must be a string or number when setting a single parameter.");
-                    }
-                    const searchKey = isString(search) ? search : String(search);
-                    if (isUndefined(paramValue) || paramValue === null) {
-                        deleteProperty(this._search, searchKey);
-                    }
-                    else {
-                        this._search[searchKey] = paramValue;
-                    }
-                    break;
-                }
+            if (isString(search) || isNumber(search)) {
+                this._search = parseKeyValue(search.toString());
+            }
+            else if (isObject(search)) {
+                const clonedSearch = structuredClone(search);
+                entries(clonedSearch).forEach(([key, value]) => {
+                    if (isNull(value))
+                        deleteProperty(clonedSearch, key);
+                });
+                this._search = clonedSearch;
+            }
+            else {
+                throw $locationError("isrcharg", "The argument to `$location.setSearch()` must be a string or an object.");
+            }
+            this._compose();
+            return this;
+        }
+        /** Set or remove one search parameter. */
+        setSearchParam(name, value) {
+            validateRequired(name, "name");
+            const key = String(name);
+            if (isUndefined(value) || value === null) {
+                deleteProperty(this._search, key);
+            }
+            else {
+                this._search[key] = value;
             }
             this._compose();
             return this;
@@ -37670,11 +38331,6 @@
          */
         getSearch() {
             return this._search;
-        }
-        search(search, paramValue) {
-            return arguments.length
-                ? this.setSearch(validateRequired(search, "search"), paramValue)
-                : this.getSearch();
         }
         /**
          * @internal
@@ -37689,7 +38345,7 @@
             setTimeout(() => this._updateBrowser?.());
         }
         /**
-         * Change the history state object when called with one parameter and return `$location`.
+         * Set the history state object and return `$location`.
          * The state object is later passed to `pushState` or `replaceState`.
          * See {@link https://developer.mozilla.org/en-US/docs/Web/API/History/pushState#state|History.state}
          *
@@ -37715,9 +38371,6 @@
          */
         getState() {
             return this._state;
-        }
-        state(state) {
-            return arguments.length ? this.setState(state) : this.getState();
         }
         /** Attempts to parse a clicked link into an app-relative URL update. */
         parseLinkUrl(url, relHref) {
@@ -40289,7 +40942,7 @@
      * Here is what a secure configuration for this scenario might look like:
      *
      * ```
-     *  angular.module('myApp', []).config({
+     *  angular.createModule('myApp', []).config({
      *    $sceDelegate: {
      *      trustedResourceUrlList: [
      *        // Allow same origin resource loads.
@@ -40329,10 +40982,10 @@
              *     Follow {@link ng.$sce#resourceUrlPatternItem this link} for a description of the items
              *     allowed in this array.
              *
-             * @returns The currently set trusted resource URL array.
+             * @returns This configuration for chaining.
              *
              *
-             * Sets/Gets the list trusted of resource URLs.
+             * Replaces the list of trusted resource URLs.
              *
              * The **default value** when no `trustedResourceUrlList` has been explicitly set is `['self']`
              * allowing only same origin resource requests.
@@ -40342,12 +40995,9 @@
              * its origin with other apps! It is a good idea to limit it to only your application's directory.
              * </div>
              */
-            this.trustedResourceUrlList = function (value) {
-                if (arguments.length) {
-                    const list = value ?? [];
-                    trustedResourceUrlList = list.map(adjustMatcher);
-                }
-                return trustedResourceUrlList;
+            this.setTrustedResourceUrlList = function (value) {
+                trustedResourceUrlList = (value ?? []).map(adjustMatcher);
+                return this;
             };
             /**
              *
@@ -40363,20 +41013,17 @@
              *     Finally, **the banned resource URL list overrides the trusted resource URL list** and has
              *     the final say.
              *
-             * @returns The currently set `bannedResourceUrlList` array.
+             * @returns This configuration for chaining.
              *
              *
-             * Sets/Gets the `bannedResourceUrlList` of trusted resource URLs.
+             * Replaces the list of banned resource URLs.
              *
              * The **default value** when no trusted resource URL list has been explicitly set is the empty
              * array (i.e. there is no `bannedResourceUrlList`.)
              */
-            this.bannedResourceUrlList = function (value) {
-                if (arguments.length) {
-                    const list = value ?? [];
-                    bannedResourceUrlList = list.map(adjustMatcher);
-                }
-                return bannedResourceUrlList;
+            this.setBannedResourceUrlList = function (value) {
+                bannedResourceUrlList = (value ?? []).map(adjustMatcher);
+                return this;
             };
             /**
              * Retrieves or overrides the default regular expression that is used for
@@ -40393,15 +41040,12 @@
              * written into the DOM.
              *
              * @param regexp - New regexp to trust urls with.
-             * @returns Current RegExp if called without value or self for chaining
-             * otherwise.
+             * @returns This configuration for chaining.
              */
-            this.aHrefSanitizationTrustedUrlList = function (regexp) {
-                if (isDefined(regexp)) {
-                    aHrefSanitizationTrustedUrlList = regexp;
-                    return this;
-                }
-                return aHrefSanitizationTrustedUrlList;
+            this.getAHrefSanitizationTrustedUrlList = () => aHrefSanitizationTrustedUrlList;
+            this.setAHrefSanitizationTrustedUrlList = function (regexp) {
+                aHrefSanitizationTrustedUrlList = regexp;
+                return this;
             };
             /**
              * Retrieves or overrides the default regular expression that is used for
@@ -40419,15 +41063,12 @@
              * the DOM.
              *
              * @param regexp - New regexp to trust urls with.
-             * @returns Current RegExp if called without value or self for chaining
-             * otherwise.
+             * @returns This configuration for chaining.
              */
-            this.imgSrcSanitizationTrustedUrlList = function (regexp) {
-                if (isDefined(regexp)) {
-                    imgSrcSanitizationTrustedUrlList = regexp;
-                    return this;
-                }
-                return imgSrcSanitizationTrustedUrlList;
+            this.getImgSrcSanitizationTrustedUrlList = () => imgSrcSanitizationTrustedUrlList;
+            this.setImgSrcSanitizationTrustedUrlList = function (regexp) {
+                imgSrcSanitizationTrustedUrlList = regexp;
+                return this;
             };
             /** Creates `$sceDelegate` from the current policy configuration. */
             this.createService = function ($injector, $window) {
@@ -40648,17 +41289,12 @@
         constructor() {
             let enabled = true;
             /**
-             * @param value If provided, then enables/disables SCE application-wide.
-             * @returns True if SCE is enabled, false otherwise.
-             *
-             *
-             * Enables/disables SCE and returns the current value.
+             * @param value Enables or disables SCE application-wide.
+             * @returns This configuration for chaining.
              */
-            this.enabled = function (value) {
-                if (arguments.length) {
-                    enabled = !!value;
-                }
-                return enabled;
+            this.setEnabled = function (value) {
+                enabled = value;
+                return this;
             };
             /**
              * Creates the runtime `$sce` service.
@@ -42577,7 +43213,7 @@
             context.runtime.configRegistry.register(name, (value) => {
                 const config = value;
                 if (config.enabled !== undefined) {
-                    configuration.enabled(config.enabled);
+                    configuration.setEnabled(config.enabled);
                 }
             });
             return registry.factory(name, [
@@ -42594,16 +43230,16 @@
             context.runtime.configRegistry.register(name, (value) => {
                 const config = value;
                 if (config.trustedResourceUrlList !== undefined) {
-                    configuration.trustedResourceUrlList(config.trustedResourceUrlList);
+                    configuration.setTrustedResourceUrlList(config.trustedResourceUrlList);
                 }
                 if (config.bannedResourceUrlList !== undefined) {
-                    configuration.bannedResourceUrlList(config.bannedResourceUrlList);
+                    configuration.setBannedResourceUrlList(config.bannedResourceUrlList);
                 }
                 if (config.aHrefSanitizationTrustedUrlList !== undefined) {
-                    configuration.aHrefSanitizationTrustedUrlList(config.aHrefSanitizationTrustedUrlList);
+                    configuration.setAHrefSanitizationTrustedUrlList(config.aHrefSanitizationTrustedUrlList);
                 }
                 if (config.imgSrcSanitizationTrustedUrlList !== undefined) {
-                    configuration.imgSrcSanitizationTrustedUrlList(config.imgSrcSanitizationTrustedUrlList);
+                    configuration.setImgSrcSanitizationTrustedUrlList(config.imgSrcSanitizationTrustedUrlList);
                 }
             });
             return registry.factory(name, [
@@ -42826,6 +43462,7 @@
     };
     /** Element, form, and script directives for normal HTML integration. */
     const ngElementDirectives = {
+        geolocation: geolocationDirective,
         input: inputDirective,
         textarea: inputDirective,
         form: formDirective,
@@ -42959,7 +43596,7 @@
         const composition = runtime._composition;
         const compileRegistry = composition.compileRegistry;
         composition._installAnimationRegistry(new AnimationRegistry());
-        const ngModule = angular.module("ng", []);
+        const ngModule = angular.createModule("ng", []);
         ngModule._registerProviders((registry) => {
             const composition = registerRuntimeHostValues(angular, registry);
             registry.factory(_compile, [
@@ -43035,7 +43672,7 @@
         const serviceRegistrations = normalizeRegistrations(options.services);
         const composition = getRuntimeComposition(angular);
         const { compileRegistry, platform } = composition;
-        const ngModule = angular.module(moduleName, options.requires);
+        const ngModule = angular.createModule(moduleName, options.requires);
         ngModule._registerProviders((registry) => {
             registry.value(_window, platform.window);
             registry.value(_document, platform.document);
@@ -43136,17 +43773,158 @@
     });
 
     exports.AngularRuntime = AngularRuntime;
+    exports.a = a;
+    exports.abbr = abbr;
+    exports.acronym = acronym;
+    exports.address = address;
     exports.afterRender = afterRender;
     exports.angular = angular;
+    exports.applet = applet;
+    exports.area = area;
+    exports.article = article;
+    exports.aside = aside;
     exports.attrs = attrs;
+    exports.audio = audio;
+    exports.b = b;
+    exports.base = base;
+    exports.basefont = basefont;
+    exports.bdi = bdi;
+    exports.bdo = bdo;
+    exports.bgsound = bgsound;
+    exports.big = big;
+    exports.blink = blink;
+    exports.blockquote = blockquote;
+    exports.body = body;
+    exports.br = br;
+    exports.button = button;
+    exports.canvas = canvas;
+    exports.caption = caption;
+    exports.center = center;
+    exports.cite = cite;
+    exports.code = code;
+    exports.col = col;
+    exports.colgroup = colgroup;
     exports.createAngular = createAngular;
+    exports.data = data;
+    exports.datalist = datalist;
+    exports.dd = dd;
     exports.defineWorkflow = defineWorkflow;
+    exports.del = del;
+    exports.details = details;
+    exports.dfn = dfn;
+    exports.dialog = dialog;
+    exports.dir = dir;
+    exports.div = div;
+    exports.dl = dl;
+    exports.dt = dt;
     exports.each = each;
+    exports.em = em;
+    exports.embed = embed;
     exports.event = event;
+    exports.fieldset = fieldset;
+    exports.figcaption = figcaption;
+    exports.figure = figure;
+    exports.font = font;
+    exports.footer = footer;
+    exports.form = form;
+    exports.frame = frame;
+    exports.frameset = frameset;
+    exports.h1 = h1;
+    exports.h2 = h2;
+    exports.h3 = h3;
+    exports.h4 = h4;
+    exports.h5 = h5;
+    exports.h6 = h6;
+    exports.head = head;
+    exports.header = header;
+    exports.hgroup = hgroup;
+    exports.hr = hr;
+    exports.html = html;
+    exports.i = i;
+    exports.iframe = iframe;
+    exports.img = img;
+    exports.input = input;
+    exports.ins = ins;
+    exports.isindex = isindex;
+    exports.kbd = kbd;
+    exports.keygen = keygen;
+    exports.label = label;
+    exports.legend = legend;
+    exports.li = li;
+    exports.link = link;
+    exports.listing = listing;
+    exports.main = main;
+    exports.map = map;
+    exports.mark = mark;
+    exports.marquee = marquee;
+    exports.menu = menu;
+    exports.menuitem = menuitem;
+    exports.meta = meta;
+    exports.meter = meter;
+    exports.multicol = multicol;
+    exports.nav = nav;
+    exports.nextid = nextid;
+    exports.nobr = nobr;
+    exports.noembed = noembed;
+    exports.noframes = noframes;
+    exports.noscript = noscript;
+    exports.object = object;
+    exports.ol = ol;
+    exports.optgroup = optgroup;
+    exports.option = option;
+    exports.output = output;
+    exports.p = p;
+    exports.param = param;
+    exports.picture = picture;
+    exports.plaintext = plaintext;
+    exports.pre = pre;
+    exports.progress = progress;
     exports.props = props;
+    exports.q = q;
     exports.queueAfterRender = queueAfterRender;
+    exports.rb = rb;
+    exports.rp = rp;
+    exports.rt = rt;
+    exports.rtc = rtc;
+    exports.ruby = ruby;
+    exports.s = s;
+    exports.samp = samp;
+    exports.script = script;
+    exports.search = search;
+    exports.section = section;
+    exports.select = select;
+    exports.slot = slot;
+    exports.small = small;
+    exports.source = source;
+    exports.spacer = spacer;
+    exports.span = span;
+    exports.strike = strike;
+    exports.strong = strong;
+    exports.style = style;
+    exports.sub = sub;
+    exports.summary = summary;
+    exports.sup = sup;
+    exports.table = table;
     exports.tag = tag;
     exports.tagNS = tagNS;
     exports.tags = tags;
+    exports.tbody = tbody;
+    exports.td = td;
+    exports.template = template;
+    exports.textarea = textarea;
+    exports.tfoot = tfoot;
+    exports.th = th;
+    exports.thead = thead;
+    exports.time = time;
+    exports.title = title;
+    exports.tr = tr;
+    exports.track = track;
+    exports.tt = tt;
+    exports.u = u;
+    exports.ul = ul;
+    exports.varTag = varTag;
+    exports.video = video;
+    exports.wbr = wbr;
+    exports.xmp = xmp;
 
 }));

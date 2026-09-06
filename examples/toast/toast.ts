@@ -80,5 +80,5 @@ class ToastDemoController {
 }
 
 window.angular
-  .module("toastDemo", ["angular.css"])
+  .createModule("toastDemo", ["angular.css"])
   .controller("ToastDemoController", ToastDemoController);

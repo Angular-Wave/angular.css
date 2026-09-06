@@ -70,7 +70,7 @@ test('every catalog page loads a bootstrapped local example', async ({
       ),
       angular: Boolean(window.angular),
       bodyText: document.body.innerText.trim(),
-      module: Boolean(window.angular?.module?.('angular.css')),
+      module: Boolean(window.angular?.getModule('angular.css')),
       remoteAssets: Array.from(
         document.querySelectorAll('script[src], link[href]'),
         (element) =>

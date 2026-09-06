@@ -30,7 +30,7 @@ import "@angular-wave/angular.css/angular.css";
 import { angularCssModuleName } from "@angular-wave/angular.css";
 import { angular } from "@angular-wave/angular.ts";
 
-angular.module("app", [angularCssModuleName]);
+angular.createModule("app", [angularCssModuleName]);
 ```
 
 The UMD bundle registers `angular.css` automatically when AngularTS is already

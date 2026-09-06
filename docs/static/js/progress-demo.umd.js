@@ -13,7 +13,7 @@
         }
     }
     window.angular
-        .module("progressDemo", ["angular.css"])
+        .createModule("progressDemo", ["angular.css"])
         .controller("ProgressDemoController", ProgressDemoController);
 
 })();

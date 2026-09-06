@@ -31,14 +31,14 @@ test("Select remains styling-only", async ({ page }) => {
 
   const registeredDirectives = await page.evaluate(() => {
     const runtime = window.angular as unknown as {
-      module: (moduleName: string) => {
+      getModule: (moduleName: string) => {
         _invokeQueue?: Array<[string, string, [string]]>;
       };
     };
 
     return (
       runtime
-        .module("angular.css")
+        .getModule("angular.css")
         ._invokeQueue?.flatMap((entry) =>
           entry[1] === "directive" ? [entry[2][0]] : [],
         ) ?? []

@@ -7218,12 +7218,15 @@
         ["ngTree", treeDirective],
     ];
     function registerAngularCss(ng = angular) {
-        if (!ng?.module)
+        if (!ng)
             return undefined;
+        const runtime = ng;
+        if (!runtime.getModule && !runtime.createModule && !runtime.module) {
+            return undefined;
+        }
         const registered = registeredModules.get(ng);
         if (registered)
             return registered;
-        const runtime = ng;
         let module;
         try {
             if (runtime.getModule)

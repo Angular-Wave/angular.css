@@ -132,12 +132,16 @@ export const angularCssDirectives: readonly AngularCssDirective[] = [
 export function registerAngularCss(
   ng: typeof angularRuntime | undefined = angular,
 ): ng.NgModule | undefined {
-  if (!ng?.module) return undefined;
+  if (!ng) return undefined;
+
+  const runtime = ng as unknown as AngularModuleRuntime;
+  if (!runtime.getModule && !runtime.createModule && !runtime.module) {
+    return undefined;
+  }
 
   const registered = registeredModules.get(ng);
   if (registered) return registered;
 
-  const runtime = ng as unknown as AngularModuleRuntime;
   let module: ng.NgModule;
   try {
     if (runtime.getModule) module = runtime.getModule(angularCssModuleName);
