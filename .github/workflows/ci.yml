@@ -24,6 +24,9 @@ jobs:
           node-version: "24"
           package-manager-cache: false
 
+      - name: Install project npm version
+        run: npm install --global npm@11.18.0
+
       - name: Cache node_modules and Playwright
         uses: actions/cache@v5
         with:
