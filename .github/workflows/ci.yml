@@ -65,6 +65,8 @@ jobs:
           key: deps-${{ runner.os }}-${{ hashFiles('package-lock.json', 'docs/package-lock.json') }}
           restore-keys: |
             deps-${{ runner.os }}-
+      - name: Build validation artifacts
+        run: npm run release:build
       - name: Run repository checks
         run: npm run check
 
