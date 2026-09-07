@@ -181,8 +181,6 @@ params:
   #       desc: Discuss development issues around the project
 
 module:
-  # Uncomment the next line to build and serve using local docsy clone declared in the named Hugo workspace:
-  # workspace: docsy.work
   hugoVersion:
     extended: true
     min: 0.146.0

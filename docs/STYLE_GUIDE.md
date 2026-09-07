@@ -26,7 +26,7 @@ Assume the reader knows basic HTML but has not used AngularCSS.
 
 - Serve AngularTS and AngularCSS from local assets, never a CDN.
 - Render demos in isolated, non-scrollable iframes.
-- Load Tailwind preflight before AngularCSS in every iframe.
+- Load the project reset stylesheet before AngularCSS in every iframe.
 - Use AngularTS bindings for model, validation, event, and structural state.
 - Use native HTML behavior before adding a component directive.
 

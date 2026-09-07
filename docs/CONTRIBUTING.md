@@ -1,7 +1,8 @@
 # Documentation contributions
 
 The documentation is part of the AngularCSS release and follows the repository
-[contribution guide](../CONTRIBUTING.md).
+[contribution guide](../CONTRIBUTING.md). Its site build requires Hugo Extended
+0.146 or newer.
 
 Install the root and documentation dependencies, build generated assets, and run
 the documentation suite before submitting a change:

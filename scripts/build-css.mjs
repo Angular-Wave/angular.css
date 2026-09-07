@@ -51,7 +51,6 @@ async function build() {
   const preflightCss = await compile("src/preflight.css", !watchMode);
 
   write("dist/angular.css", angularCss);
-  write("docs/assets/angular.css", angularCss);
   write("docs/static/css/angular.css", angularCss);
   write("docs/static/css/preflight.css", preflightCss);
 

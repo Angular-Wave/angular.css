@@ -12,8 +12,7 @@ const sourceAssets = (html: string): string =>
     .replaceAll("../../css/preflight.css", "/docs/static/css/preflight.css")
     .replaceAll("../../css/angular.css", "/docs/static/css/angular.css")
     .replaceAll("../example.css", "/docs/static/examples/example.css")
-    .replaceAll("../../js/", "/docs/static/js/")
-    .replaceAll("/docs/assets/angular.css", "/docs/static/css/angular.css");
+    .replaceAll("../../js/", "/docs/static/js/");
 
 const publishedAssets = (html: string): string =>
   html

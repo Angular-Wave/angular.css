@@ -28,7 +28,8 @@ Update the DTCG 2025.10 source under `tokens/`, regenerate it with
 
 ## Local setup
 
-Use Node.js 24 or newer and the npm version declared in `package.json`:
+Use Node.js 24 or newer, the npm version declared in `package.json`, and Hugo
+Extended 0.146 or newer:
 
 ```sh
 npm install

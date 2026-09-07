@@ -5,7 +5,6 @@ export default defineConfig({
     port: 4000,
     watch: {
       ignored: [
-        "**/ui/**",
         "**/docs/public/**",
         "**/dist/**",
         "**/playwright-report/**",

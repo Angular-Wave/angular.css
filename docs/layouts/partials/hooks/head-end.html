@@ -12,5 +12,4 @@
 <script src="{{ "js/angular-ts.umd.js" | relURL }}"></script>
 <script src="{{ "js/angular-css.umd.js" | relURL }}"></script>
 
-{{ $style := resources.Get "angular.css" | minify | fingerprint }}
-<link rel="stylesheet" href="{{ $style.RelPermalink }}" />
+<link rel="stylesheet" href="{{ "css/angular.css" | relURL }}" />

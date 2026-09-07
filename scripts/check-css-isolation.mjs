@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 
 import selectorParser from "postcss-selector-parser";
 
-const cssFiles = ["dist/angular.css", "docs/assets/angular.css"];
+const cssFiles = ["dist/angular.css"];
 const reviewedNativeStyles = new Set(["select"]);
 const guardedElements = new Set([
   "audio",

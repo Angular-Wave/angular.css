@@ -91,6 +91,3 @@ The default developer catalog is `index.html`; every entry links to a
 standalone functional HTML example. The canonical HTML-first classification is
 maintained in `scripts/component-policy.ts` and enforced by
 `npm run check:component-registry`.
-
-The [project roadmap](ROADMAP.md) tracks the ordered work and release gates for
-the next version.
