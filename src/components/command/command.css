@@ -12,7 +12,7 @@
 }
 
 :is(.command, [ng-command])[variant="surface"] {
-  border: 1px solid var(--border);
+  border: var(--border-width-default) solid var(--border);
 }
 
 :is(.command, [ng-command]):dir(rtl) {
@@ -28,10 +28,11 @@
   position: relative;
   display: flex;
   width: 100%;
-  height: calc(var(--spacing) * 8);
+  height: var(--size-control-md);
   align-items: center;
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--input) 30%, transparent);
+  border: var(--border-width-default) solid
+    color-mix(in srgb, var(--input) 30%, transparent);
   border-radius: var(--radius);
   background: color-mix(in srgb, var(--input) 30%, transparent);
   box-shadow: none;
@@ -39,7 +40,8 @@
 
 :is(.command, [ng-command]) > header > label:focus-within {
   border-color: var(--ring);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 35%, transparent);
+  box-shadow: 0 0 0 var(--focus-ring-width)
+    color-mix(in srgb, var(--ring) 35%, transparent);
 }
 
 :is(.command, [ng-command]) > header > label > span {
@@ -119,7 +121,7 @@
 }
 
 :is(.command, [ng-command]) > :last-child > hr {
-  height: 1px;
+  height: var(--border-width-default);
   margin-inline: calc(var(--spacing) * -1);
   border: 0;
   background: var(--border);
@@ -130,7 +132,7 @@
   position: relative;
   display: flex;
   width: 100%;
-  min-height: calc(var(--spacing) * 8);
+  min-height: var(--size-control-sm);
   align-items: center;
   gap: calc(var(--spacing) * 2);
   border: 0;

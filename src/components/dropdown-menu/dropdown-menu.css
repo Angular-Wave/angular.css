@@ -6,12 +6,12 @@
 
 :is([ng-dropdown-menu], .dropdown-menu) > button:not(.button) {
   display: inline-flex;
-  min-height: calc(var(--spacing) * 9);
+  min-height: var(--size-control-md);
   align-items: center;
   justify-content: center;
   gap: calc(var(--spacing) * 2);
-  border: 1px solid var(--input);
-  border-radius: calc(var(--radius) - 2px);
+  border: var(--border-width-default) solid var(--input);
+  border-radius: var(--radius-md);
   background: var(--background);
   color: var(--foreground);
   padding-inline: calc(var(--spacing) * 4);
@@ -27,7 +27,7 @@
   max-height: var(--dropdown-menu-available-height, none);
   overflow-y: auto;
   gap: 0;
-  border: 1px solid var(--border);
+  border: var(--border-width-default) solid var(--border);
   border-radius: var(--radius);
   background: var(--popover);
   color: var(--popover-foreground);
@@ -43,8 +43,8 @@
   transform: translateY(-2px) scale(0.98);
   transform-origin: top;
   transition:
-    opacity 120ms ease,
-    transform 120ms ease;
+    opacity var(--motion-duration-default) var(--motion-easing-standard),
+    transform var(--motion-duration-default) var(--motion-easing-standard);
 }
 
 :is([ng-dropdown-menu], .dropdown-menu) > menu:where(:not([hidden])) {
@@ -68,24 +68,24 @@
 :is([ng-dropdown-menu], .dropdown-menu)
   menu
   :is(a, button, summary)[variant="destructive"] {
-  color: var(--error);
+  color: var(--error-foreground);
 }
 
 :is([ng-dropdown-menu], .dropdown-menu)
   menu
   :is(a, button, summary)[variant="destructive"]:is(:hover, :focus-visible) {
   background: color-mix(in srgb, var(--error) 10%, transparent);
-  color: var(--error);
+  color: var(--error-foreground);
 }
 
 :is([ng-dropdown-menu], .dropdown-menu) menu :is(a, button, summary) {
   display: flex;
   width: 100%;
-  min-height: calc(var(--spacing) * 8);
+  min-height: var(--size-control-sm);
   align-items: center;
   gap: calc(var(--spacing) * 2);
   border: 0;
-  border-radius: calc(var(--radius) - 2px);
+  border-radius: var(--radius-md);
   background: transparent;
   color: var(--foreground);
   padding: calc(var(--spacing) * 1.5) calc(var(--spacing) * 2);
@@ -131,7 +131,7 @@
 }
 
 :is([ng-dropdown-menu], .dropdown-menu) menu hr {
-  height: 1px;
+  height: var(--border-width-default);
   margin-block: calc(var(--spacing) * 1);
   margin-inline: calc(var(--spacing) * -1);
   border: 0;
@@ -178,6 +178,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   :is([ng-dropdown-menu], .dropdown-menu) > menu {
-    transition-duration: 0s;
+    transition-duration: var(--motion-duration-instant);
   }
 }

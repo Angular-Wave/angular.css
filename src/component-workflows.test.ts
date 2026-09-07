@@ -79,7 +79,7 @@ test("badge workflows preserve link, icon, loading, and RTL compositions", async
             : tokenName;
       const probe = document.createElement("span");
       probe.style.background = `var(--${token}-2)`;
-      probe.style.color = `var(--${token}-11)`;
+      probe.style.color = `var(--${token}-${token === "green" ? "12" : "11"})`;
       document.body.append(probe);
       const expected = getComputedStyle(probe);
       const result = {
@@ -1008,7 +1008,7 @@ test("alert workflows preserve action, color, destructive, and RTL compositions"
   const destructive = page.locator(`.alert[variant="destructive"]`);
   const destructiveColors = await destructive.evaluate((element) => {
     const probe = document.createElement("span");
-    probe.style.color = "var(--error)";
+    probe.style.color = "var(--error-foreground)";
     document.body.append(probe);
     const foreground = getComputedStyle(element).color;
     const token = getComputedStyle(probe).color;
@@ -1467,7 +1467,7 @@ test("calendar workflows preserve reference scale, connected state, and disabled
   await expect(calendars.nth(1).locator(`[data-booked="true"]`)).toHaveCount(
     15,
   );
-  await expect(calendars.nth(3).locator(`[aria-selected="true"]`)).toHaveCount(
+  await expect(calendars.nth(3).locator(`[aria-pressed="true"]`)).toHaveCount(
     2,
   );
   const range = calendars.nth(4);

@@ -14,14 +14,14 @@
 
   li {
     min-width: 0;
-    border-radius: calc(var(--radius) - 2px);
+    border-radius: var(--radius-md);
     color: var(--foreground);
     outline: none;
   }
 
   li > span {
     display: flex;
-    min-height: calc(var(--spacing) * 8);
+    min-height: var(--size-control-sm);
     align-items: center;
     gap: calc(var(--spacing) * 2);
     border-radius: inherit;
@@ -38,7 +38,8 @@
     border-right: 1.5px solid currentcolor;
     border-bottom: 1.5px solid currentcolor;
     transform: rotate(45deg);
-    transition: transform 150ms ease;
+    transition: transform var(--motion-duration-deliberate)
+      var(--motion-easing-standard);
   }
 
   li[aria-expanded="false"] > span::before {
@@ -59,7 +60,7 @@
   }
 
   li:focus-visible > span {
-    box-shadow: 0 0 0 2px var(--ring);
+    box-shadow: 0 0 0 var(--focus-ring-width) var(--ring);
   }
 
   li[aria-disabled="true"] > span {
@@ -74,6 +75,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   [ng-tree] li > span::before {
-    transition-duration: 0s;
+    transition-duration: var(--motion-duration-instant);
   }
 }

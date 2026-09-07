@@ -1,4 +1,4 @@
-/* Version: 0.0.1 */
+/* Version: 0.0.2 */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
     typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -1458,7 +1458,7 @@
                                 selectedValues.has(value) ||
                                 value === rangeStart ||
                                 value === rangeEnd) {
-                                day.setAttribute("aria-selected", "true");
+                                day.setAttribute("aria-pressed", "true");
                             }
                             if (value === rangeStart)
                                 day.setAttribute("data-range-start", "true");
@@ -1469,7 +1469,7 @@
                                 value > rangeStart &&
                                 value < rangeEnd) {
                                 day.setAttribute("data-range-middle", "true");
-                                day.setAttribute("aria-selected", "true");
+                                day.setAttribute("aria-pressed", "true");
                             }
                             if (value === todayValue)
                                 day.setAttribute("aria-current", "date");
@@ -1528,7 +1528,7 @@
                                         value > rangeStart &&
                                         value < rangeEnd)
                                 : value === singleValue;
-                        setAttributeIfChanged(day, "aria-selected", String(selected));
+                        setAttributeIfChanged(day, "aria-pressed", String(selected));
                         if (selectionMode === "range") {
                             setAttributeIfChanged(day, "data-range-start", String(value === rangeStart));
                             setAttributeIfChanged(day, "data-range-end", String(value === rangeEnd));
@@ -1783,8 +1783,8 @@
                     queryAll(element, "[data-calendar-preset]").forEach(bindPresetControl);
                     const requestedValue = element.getAttribute("data-value");
                     const selected = days.find((day) => getDayValue(day) === requestedValue) ??
-                        days.find((day) => day.getAttribute("aria-selected") === "true" ||
-                            day.getAttribute("aria-selected") === "true");
+                        days.find((day) => day.getAttribute("aria-pressed") === "true" ||
+                            day.getAttribute("aria-pressed") === "true");
                     if (selected && selectionMode === "single") {
                         selectDay(selected, false);
                     }
@@ -1802,7 +1802,7 @@
                     attributes: true,
                     attributeFilter: [
                         "aria-disabled",
-                        "aria-selected",
+                        "aria-pressed",
                         "data-disabled-after",
                         "data-disabled-before",
                         "data-disabled-dates",
@@ -3794,7 +3794,7 @@
                     setAttributeIfChanged(element, "tabindex", element.getAttribute("tabindex") ?? "0");
                     setAttributeIfChanged(element, "orientation", getOrientation());
                     items.forEach((item, index) => {
-                        setAttributeIfChanged(item, "role", "group");
+                        item.removeAttribute("role");
                         setAttributeIfChanged(item, "aria-roledescription", "slide");
                         setAttributeIfChanged(item, "aria-label", item.getAttribute("aria-label") ??
                             `${String(index + 1)} of ${String(items.length)}`);
@@ -4484,9 +4484,11 @@
                         if (!heading.id) {
                             heading.id = `command-group-heading-${String(commandIdCounter++)}`;
                         }
+                        setAttributeIfChanged(heading, "role", "presentation");
                         setAttributeIfChanged(group, "aria-labelledby", heading.id);
                     });
                     queryOwnedAll(element, rootSelector$1, separatorSelector).forEach((separator) => {
+                        setAttributeIfChanged(separator, "role", "presentation");
                         separator.removeAttribute("aria-orientation");
                     });
                     queryOwnedAll(element, rootSelector$1, shortcutSelector).forEach((shortcut) => {
@@ -4607,6 +4609,9 @@
                 };
                 const contentId = content.id || `context-menu-content-${String(contextMenuIdCounter++)}`;
                 content.id = contentId;
+                if (!trigger.matches("button, a[href], input, select, textarea, summary, [role]")) {
+                    trigger.setAttribute("role", "button");
+                }
                 trigger.setAttribute("aria-haspopup", "menu");
                 trigger.setAttribute("aria-controls", contentId);
                 if (!trigger.hasAttribute("tabindex"))
@@ -6050,6 +6055,7 @@
                     }
                     const hidden = collapsed && element.getAttribute("collapsible") === "offcanvas";
                     element.toggleAttribute("collapsed", collapsed);
+                    element.toggleAttribute("inert", hidden);
                     setAttributeIfChanged(element, "aria-hidden", String(hidden));
                     cleanupTriggers.forEach((_, trigger) => {
                         setAttributeIfChanged(trigger, "aria-expanded", String(!collapsed));
@@ -6527,6 +6533,9 @@
                     });
                 };
                 const bindToaster = () => {
+                    if (!element.hasAttribute("role")) {
+                        setAttributeIfChanged(element, "role", "region");
+                    }
                     syncPosition();
                     queryAll(element, toastSelector).forEach(bindToast);
                     queryAll(element, actionSelector).forEach(bindActionButton);

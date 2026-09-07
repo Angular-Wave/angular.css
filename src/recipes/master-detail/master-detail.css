@@ -2,7 +2,7 @@
   :scope {
     container: angularcss-master-detail / inline-size;
     min-height: 28rem;
-    border: 1px solid var(--border);
+    border: var(--border-width-default) solid var(--border);
     border-radius: var(--radius);
     background: var(--background);
   }
@@ -22,7 +22,7 @@
   :scope article > header {
     display: grid;
     gap: calc(var(--spacing) * 1);
-    border-block-end: 1px solid var(--border);
+    border-block-end: var(--border-width-default) solid var(--border);
   }
 
   :scope nav :is(h1, h2, h3) {
@@ -31,7 +31,7 @@
   }
 
   :scope article :is(h1, h2, h3) {
-    font-size: 1rem;
+    font-size: var(--text-base);
     font-weight: var(--font-weight-medium);
   }
 
@@ -45,7 +45,7 @@
   :scope nav a {
     display: grid;
     gap: calc(var(--spacing) * 1);
-    border-radius: calc(var(--radius) - 2px);
+    border-radius: var(--radius-md);
     color: inherit;
     padding: calc(var(--spacing) * 3);
     font-size: var(--text-sm);
@@ -80,7 +80,7 @@
     }
 
     :scope > section + section {
-      border-block-start: 1px solid var(--border);
+      border-block-start: var(--border-width-default) solid var(--border);
     }
 
     :scope > section:first-child {

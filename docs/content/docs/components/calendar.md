@@ -122,7 +122,7 @@ Use native elements for authored structure. Component classes are optional visua
 | `aria-label` | Input/output | Accessible name when visible text is insufficient. |
 | `aria-labelledby` | Output | ARIA relationship or state. |
 | `aria-live` | Output | ARIA relationship or state. |
-| `aria-selected` | Input/output | Selected item state. |
+| `aria-pressed` | Input/output | ARIA relationship or state. |
 | `data-booked` | Output | Stable component state or styling hook. |
 | `data-booked-dates` | Input | Comma-separated ISO dates styled as booked. |
 | `data-calendar-generated` | Input | Stable component state or styling hook. |
@@ -191,9 +191,9 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-calendar]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-calendar]`, semantic descendants, component classes, and generated state with ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
-Read [Styling with Tailwind]({{< relref
-"/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state
+Read [Customization]({{< relref
+"/docs/get-started/customization" >}}) for layer order, design tokens, state
 variants, and iframe demo isolation.
 <!-- angularcss-reference:end -->

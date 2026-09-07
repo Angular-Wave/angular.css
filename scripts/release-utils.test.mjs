@@ -6,6 +6,7 @@ import {
   releaseDetails,
   validateManifest,
   validatePack,
+  validateRegistryPublication,
 } from "./release-utils.mjs";
 
 test("release details require a matching semantic version tag", () => {
@@ -44,9 +45,10 @@ test("manifest validation requires public package boundaries", () => {
     exports: {
       ".": {},
       "./angular.css": "./dist/angular.css",
+      "./customization-tokens": "./tokens/angularcss.resolver.json",
       "./package.json": "./package.json",
     },
-    files: ["@types", "dist", "README.md", "LICENSE"],
+    files: ["@types", "dist", "tokens", "README.md", "LICENSE"],
     publishConfig: {
       access: "public",
       registry: "https://registry.npmjs.org/",
@@ -69,6 +71,9 @@ test("pack validation checks identity, runtime files, and package scope", () => 
     "dist/angular-css.umd.js",
     "dist/angular-css.umd.min.js",
     "package.json",
+    "tokens/angularcss.resolver.json",
+    "tokens/foundation/angularcss.tokens.json",
+    "tokens/themes/dark.tokens.json",
   ].map((path) => ({ path }));
   const pack = {
     files,
@@ -86,5 +91,63 @@ test("pack validation checks identity, runtime files, and package scope", () => 
         pack,
       ),
     /development files/,
+  );
+});
+
+test("registry validation requires the exact tarball and dist-tag", () => {
+  const expected = {
+    name: "@angular-wave/angular.css",
+    version: "0.0.2",
+  };
+  const pack = {
+    integrity: "sha512-local",
+    shasum: "local-shasum",
+  };
+  const metadata = {
+    "dist-tags": { latest: expected.version },
+    versions: {
+      [expected.version]: {
+        ...expected,
+        dist: {
+          integrity: pack.integrity,
+          shasum: pack.shasum,
+        },
+      },
+    },
+  };
+
+  assert.doesNotThrow(() =>
+    validateRegistryPublication(metadata, pack, expected, "latest"),
+  );
+  assert.throws(
+    () =>
+      validateRegistryPublication(
+        {
+          ...metadata,
+          versions: {
+            [expected.version]: {
+              ...metadata.versions[expected.version],
+              dist: {
+                ...metadata.versions[expected.version].dist,
+                integrity: "sha512-other",
+              },
+            },
+          },
+        },
+        pack,
+        expected,
+        "latest",
+      ),
+    /integrity does not match/,
+  );
+  assert.throws(
+    () =>
+      validateRegistryPublication(
+        { ...metadata, "dist-tags": { latest: "0.0.1" } },
+        pack,
+        expected,
+        "latest",
+      ),
+    /dist-tag latest resolves to 0\.0\.1/,
   );
 });

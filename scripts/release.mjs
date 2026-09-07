@@ -6,6 +6,7 @@ import {
   releaseDetails,
   validateManifest,
   validatePack,
+  validateRegistryPublication,
 } from "./release-utils.mjs";
 
 const [command = "validate", argument] = process.argv.slice(2);
@@ -72,6 +73,49 @@ if (command === "validate") {
     );
   } else {
     console.log(JSON.stringify(values));
+  }
+} else if (command === "verify-registry") {
+  if (!argument) {
+    throw new Error("verify-registry requires an npm pack JSON file");
+  }
+  const [pack] = readJson(argument);
+  const details = releaseDetails(manifest);
+  let lastError;
+
+  for (let attempt = 1; attempt <= 20; attempt += 1) {
+    try {
+      const response = await fetch(
+        `https://registry.npmjs.org/${encodeURIComponent(manifest.name)}`,
+      );
+      if (!response.ok) {
+        throw new Error(
+          `npm registry lookup failed with HTTP ${response.status}`,
+        );
+      }
+      validateRegistryPublication(
+        await response.json(),
+        pack,
+        details,
+        details.npmTag,
+      );
+      console.log(
+        `Published artifact verified: ${details.name}@${details.version} (${pack.integrity}).`,
+      );
+      lastError = undefined;
+      break;
+    } catch (error) {
+      lastError = error;
+      if (attempt < 20) {
+        await new Promise((resolve) => setTimeout(resolve, 3_000));
+      }
+    }
+  }
+
+  if (lastError) {
+    throw new Error(
+      `npm publication did not become verifiable: ${lastError.message}`,
+      { cause: lastError },
+    );
   }
 } else {
   throw new Error(`Unknown release command: ${command}`);

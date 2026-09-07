@@ -236,3 +236,30 @@ test("responsive off-canvas sidebars initialize from the viewport", async ({
   await expect(sidebar).not.toHaveAttribute("collapsed", "");
   await expect(sidebar).toHaveAttribute("aria-hidden", "false");
 });
+
+test("canonical mobile overlay keeps its trigger reachable", async ({
+  page,
+}) => {
+  await page.setViewportSize({ height: 800, width: 320 });
+  await page.goto(canonicalUrl);
+
+  const sidebar = page.locator("#app-sidebar");
+  const trigger = page.getByRole("button", { name: "Close Sidebar" });
+  const [sidebarBox, triggerBox] = await Promise.all([
+    sidebar.boundingBox(),
+    trigger.boundingBox(),
+  ]);
+
+  await expect(sidebar).toHaveCSS("position", "fixed");
+  expect(sidebarBox).not.toBeNull();
+  expect(triggerBox).not.toBeNull();
+  expect(triggerBox!.x).toBeGreaterThanOrEqual(
+    sidebarBox!.x + sidebarBox!.width,
+  );
+
+  await trigger.click();
+  await expect(sidebar).toHaveAttribute("collapsed", "");
+  await expect(
+    page.getByRole("button", { name: "Open Sidebar" }),
+  ).toBeVisible();
+});

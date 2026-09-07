@@ -58,7 +58,7 @@ export function extractReleaseNotes(changelog, requestedVersion) {
 }
 
 export function validateManifest(manifest) {
-  const requiredFiles = ["@types", "dist", "README.md", "LICENSE"];
+  const requiredFiles = ["@types", "dist", "tokens", "README.md", "LICENSE"];
   const files = new Set(manifest.files ?? []);
   const missingFiles = requiredFiles.filter((file) => !files.has(file));
   if (missingFiles.length) {
@@ -75,7 +75,12 @@ export function validateManifest(manifest) {
   }
 
   const exports = manifest.exports ?? {};
-  for (const path of [".", "./angular.css", "./package.json"]) {
+  for (const path of [
+    ".",
+    "./angular.css",
+    "./customization-tokens",
+    "./package.json",
+  ]) {
     if (!(path in exports)) {
       throw new Error(`package.json exports is missing ${path}`);
     }
@@ -102,6 +107,9 @@ export function validatePack(pack, expected) {
     "dist/angular-css.umd.js",
     "dist/angular-css.umd.min.js",
     "package.json",
+    "tokens/angularcss.resolver.json",
+    "tokens/foundation/angularcss.tokens.json",
+    "tokens/themes/dark.tokens.json",
   ];
   const missing = required.filter((path) => !included.has(path));
   if (missing.length) {
@@ -118,6 +126,41 @@ export function validatePack(pack, expected) {
   if (unexpected.length) {
     throw new Error(
       `Packed artifact contains development files: ${unexpected.join(", ")}`,
+    );
+  }
+}
+
+export function validateRegistryPublication(metadata, pack, expected, npmTag) {
+  const published = metadata.versions?.[expected.version];
+  if (!published) {
+    throw new Error(
+      `npm has not exposed ${expected.name}@${expected.version} yet`,
+    );
+  }
+  if (
+    published.name !== expected.name ||
+    published.version !== expected.version
+  ) {
+    throw new Error(
+      `npm exposed ${published.name}@${published.version}; expected ${expected.name}@${expected.version}`,
+    );
+  }
+
+  for (const field of ["integrity", "shasum"]) {
+    if (!pack[field]) {
+      throw new Error(`Local npm pack result is missing ${field}`);
+    }
+    if (published.dist?.[field] !== pack[field]) {
+      throw new Error(
+        `Published ${field} does not match the verified local tarball`,
+      );
+    }
+  }
+
+  const publishedTag = metadata["dist-tags"]?.[npmTag];
+  if (publishedTag !== expected.version) {
+    throw new Error(
+      `npm dist-tag ${npmTag} resolves to ${publishedTag ?? "nothing"}; expected ${expected.version}`,
     );
   }
 }

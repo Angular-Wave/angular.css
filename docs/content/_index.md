@@ -7,7 +7,7 @@ title: AngularCSS
   <p>
     HTML-first styles and focused components for AngularTS. Style semantic HTML
     directly, add TypeScript only for missing interaction, and customize every
-    visual detail with Tailwind or ordinary CSS.
+    visual detail through its CSS customization contract.
   </p>
   <nav aria-label="Start with AngularCSS">
     <a href="{{< relref "/docs/get-started/installation" >}}">Install</a>

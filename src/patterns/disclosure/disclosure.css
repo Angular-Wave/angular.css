@@ -10,7 +10,7 @@ details.disclosure > summary::-webkit-details-marker,
 
 @media (prefers-reduced-motion: no-preference) {
   details.disclosure > summary svg {
-    transition: translate 90ms ease-out;
+    transition: translate var(--motion-duration-fast) var(--motion-easing-out);
   }
 
   details.disclosure > summary:active svg {
@@ -23,9 +23,9 @@ details.disclosure > summary::-webkit-details-marker,
       overflow: clip;
       opacity: 0;
       transition:
-        block-size 180ms ease-out,
-        content-visibility 180ms allow-discrete,
-        opacity 140ms ease-out;
+        block-size var(--motion-duration-deliberate) var(--motion-easing-out),
+        content-visibility var(--motion-duration-deliberate) allow-discrete,
+        opacity var(--motion-duration-default) var(--motion-easing-out);
     }
 
     details.disclosure:open::details-content {
@@ -42,7 +42,8 @@ details.disclosure > summary::-webkit-details-marker,
 
   @supports not selector(details::details-content) {
     details.disclosure:open > :last-child {
-      animation: disclosure-content-enter 160ms ease-out;
+      animation: disclosure-content-enter var(--motion-duration-deliberate)
+        var(--motion-easing-out);
     }
   }
 }

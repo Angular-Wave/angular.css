@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <title>AngularCSS Toast Workflows</title>
+    <link rel="stylesheet" href="../../css/preflight.css" />
     <link rel="stylesheet" href="../../css/angular.css" />
     <link rel="stylesheet" href="../example.css" />
     <script src="../../js/angular-ts.umd.js"></script>
@@ -198,11 +199,7 @@
             class="toast-inline-toaster"
             aria-label="Type notifications"
           >
-            <article
-              type="{{ toast.type }}"
-              ng-if="toast.typeVisible"
-              animate
-            >
+            <article type="{{ toast.type }}" ng-if="toast.typeVisible" animate>
               <figure ng-if="toast.type === 'success'"></figure>
               <figure ng-if="toast.type === 'info'"></figure>
               <figure ng-if="toast.type === 'warning'"></figure>

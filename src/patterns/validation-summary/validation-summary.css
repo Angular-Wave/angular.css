@@ -2,7 +2,8 @@
   :scope {
     display: grid;
     gap: calc(var(--spacing) * 2);
-    border: 1px solid color-mix(in srgb, var(--error) 35%, var(--border));
+    border: var(--border-width-default) solid
+      color-mix(in srgb, var(--error) 35%, var(--border));
     border-radius: var(--radius);
     background: color-mix(in srgb, var(--error) 8%, var(--background));
     color: var(--foreground);

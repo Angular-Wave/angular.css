@@ -9,7 +9,7 @@
   inset-inline: 0;
   inset-block: auto 0;
   max-height: 80dvh;
-  border-block-start: 1px solid var(--border);
+  border-block-start: var(--border-width-default) solid var(--border);
   border-start-start-radius: calc(var(--radius) + 2px);
   border-start-end-radius: calc(var(--radius) + 2px);
 }
@@ -20,7 +20,7 @@
   inset-inline: 0;
   inset-block: 0 auto;
   max-height: 80dvh;
-  border-block-end: 1px solid var(--border);
+  border-block-end: var(--border-width-default) solid var(--border);
   border-end-start-radius: calc(var(--radius) + 2px);
   border-end-end-radius: calc(var(--radius) + 2px);
 }
@@ -32,7 +32,7 @@
   inset-block: 0;
   right: auto;
   left: 0;
-  border-inline-end: 1px solid var(--border);
+  border-inline-end: var(--border-width-default) solid var(--border);
   border-start-end-radius: calc(var(--radius) + 2px);
   border-end-end-radius: calc(var(--radius) + 2px);
 }
@@ -44,7 +44,7 @@
   inset-block: 0;
   right: 0;
   left: auto;
-  border-inline-start: 1px solid var(--border);
+  border-inline-start: var(--border-width-default) solid var(--border);
   border-start-start-radius: calc(var(--radius) + 2px);
   border-end-start-radius: calc(var(--radius) + 2px);
 }
@@ -60,7 +60,7 @@
   margin-block-start: calc(var(--spacing) * 4);
   flex-shrink: 0;
   align-self: center;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   background: var(--muted);
   content: "";
 }

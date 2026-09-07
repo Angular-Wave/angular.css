@@ -32,6 +32,7 @@ test("canonical artifact opens only as a context menu and skips disabled items",
   const content = root.locator(":scope > menu");
 
   await expect(trigger).toHaveAttribute("aria-haspopup", "menu");
+  await expect(trigger).toHaveAttribute("role", "button");
   await expect(content).toHaveAttribute("role", "menu");
   await expect(content).toBeHidden();
 

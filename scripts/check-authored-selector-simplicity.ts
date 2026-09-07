@@ -866,11 +866,19 @@ for (const path of files) {
       );
     }
 
-    const roleMatch = source.match(/\srole=(["'])[^"']+\1/i);
-    if (roleMatch) {
-      failures.push(
-        `${displayPath}: authored roles are directive-owned (${roleMatch[0].trim()})`,
-      );
+    for (const tag of source.match(
+      /<[a-z][^>]*\srole=(["'])[^"']+\1[^>]*>/gis,
+    ) ?? []) {
+      const role = tag.match(/\srole=(["'])([^"']+)\1/i)?.[2];
+      const isChartImage =
+        role === "img" &&
+        /(?:^|\/)chart(?:[-./]|$)/.test(displayPath) &&
+        /\sdata-value=/.test(tag);
+      if (!isChartImage) {
+        failures.push(
+          `${displayPath}: authored roles are directive-owned (${role ?? "unknown"})`,
+        );
+      }
     }
 
     const invalidCustomElement = source.match(

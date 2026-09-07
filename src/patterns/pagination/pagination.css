@@ -20,25 +20,26 @@
 .pagination > ul > li > :is(a, span) {
   display: inline-flex;
   width: calc(var(--spacing) * 8);
-  height: calc(var(--spacing) * 8);
+  height: var(--size-control-sm);
   align-items: center;
   justify-content: center;
   gap: calc(var(--spacing) * 1.5);
-  border: 1px solid transparent;
-  border-radius: calc(var(--radius) - 2px);
+  border: var(--border-width-default) solid transparent;
+  border-radius: var(--radius-md);
   color: var(--foreground);
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
-  line-height: 1;
+  line-height: var(--leading-none);
   white-space: nowrap;
   text-decoration: none;
   outline: none;
   transition:
-    background-color 120ms ease,
-    border-color 120ms ease,
-    box-shadow 120ms ease,
-    color 120ms ease,
-    transform 90ms ease-out;
+    background-color var(--motion-duration-default)
+      var(--motion-easing-standard),
+    border-color var(--motion-duration-default) var(--motion-easing-standard),
+    box-shadow var(--motion-duration-default) var(--motion-easing-standard),
+    color var(--motion-duration-default) var(--motion-easing-standard),
+    transform var(--motion-duration-fast) var(--motion-easing-out);
 }
 
 .pagination a[rel] {
@@ -61,7 +62,8 @@
 
 .pagination a:focus-visible {
   border-color: var(--ring);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+  box-shadow: 0 0 0 var(--focus-ring-width)
+    color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
 .pagination a:active:not([aria-disabled="true"]) {
@@ -96,8 +98,8 @@
 
 .pagination > ul > li > span > span {
   position: absolute;
-  width: 1px;
-  height: 1px;
+  width: var(--border-width-default);
+  height: var(--border-width-default);
   overflow: hidden;
   white-space: nowrap;
   clip-path: inset(50%);
@@ -111,6 +113,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .pagination a {
-    transition-duration: 0s;
+    transition-duration: var(--motion-duration-instant);
   }
 }

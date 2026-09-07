@@ -5,7 +5,7 @@
 }
 
 .accordion > details:not(:last-child) {
-  border-block-end: 1px solid var(--border);
+  border-block-end: var(--border-width-default) solid var(--border);
 }
 
 .accordion summary {
@@ -15,22 +15,22 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: calc(var(--spacing) * 4);
-  border: 1px solid transparent;
-  border-radius: calc(var(--radius) - 2px);
+  border: var(--border-width-default) solid transparent;
+  border-radius: var(--radius-md);
   padding-block: calc(var(--spacing) * 4);
   background: transparent;
   color: inherit;
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
-  line-height: 1.25;
+  line-height: var(--leading-tight);
   list-style: none;
   text-align: start;
   cursor: pointer;
   outline: none;
   transition:
-    border-color 120ms ease,
-    box-shadow 120ms ease,
-    color 120ms ease;
+    border-color var(--motion-duration-default) var(--motion-easing-standard),
+    box-shadow var(--motion-duration-default) var(--motion-easing-standard),
+    color var(--motion-duration-default) var(--motion-easing-standard);
 }
 
 .accordion summary::-webkit-details-marker {
@@ -49,8 +49,8 @@
   pointer-events: none;
   transform: translateY(1px) rotate(45deg) scale(0.55);
   transition:
-    transform 200ms ease,
-    translate 90ms ease-out;
+    transform var(--motion-duration-layout) var(--motion-easing-standard),
+    translate var(--motion-duration-fast) var(--motion-easing-out);
 }
 
 .accordion summary:active::after {
@@ -59,12 +59,13 @@
 
 .accordion summary:hover {
   text-decoration-line: underline;
-  text-underline-offset: 4px;
+  text-underline-offset: var(--spacing);
 }
 
 .accordion summary:focus-visible {
   border-color: var(--ring);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+  box-shadow: 0 0 0 var(--focus-ring-width)
+    color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
 .accordion details:open > summary::after {
@@ -83,7 +84,7 @@
   padding-block-end: calc(var(--spacing) * 4);
   color: var(--foreground);
   font-size: var(--text-sm);
-  line-height: 1.5;
+  line-height: var(--leading-normal);
   text-wrap: balance;
 }
 
@@ -94,9 +95,9 @@
       overflow: clip;
       opacity: 0;
       transition:
-        block-size 180ms ease-out,
-        content-visibility 180ms allow-discrete,
-        opacity 140ms ease-out;
+        block-size var(--motion-duration-deliberate) var(--motion-easing-out),
+        content-visibility var(--motion-duration-deliberate) allow-discrete,
+        opacity var(--motion-duration-default) var(--motion-easing-out);
     }
 
     .accordion > details:open::details-content {

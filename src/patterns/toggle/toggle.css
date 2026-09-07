@@ -1,11 +1,11 @@
 .toggle {
   display: inline-flex;
-  height: calc(var(--spacing) * 9);
+  height: var(--size-control-md);
   align-items: center;
   justify-content: center;
   gap: calc(var(--spacing) * 2);
-  border: 1px solid transparent;
-  border-radius: calc(var(--radius) - 2px);
+  border: var(--border-width-default) solid transparent;
+  border-radius: var(--radius-md);
   background: transparent;
   color: var(--foreground);
   padding-inline: calc(var(--spacing) * 3);
@@ -14,10 +14,11 @@
   white-space: nowrap;
   cursor: pointer;
   transition:
-    background-color 120ms ease,
-    border-color 120ms ease,
-    color 120ms ease,
-    transform 90ms ease-out;
+    background-color var(--motion-duration-default)
+      var(--motion-easing-standard),
+    border-color var(--motion-duration-default) var(--motion-easing-standard),
+    color var(--motion-duration-default) var(--motion-easing-standard),
+    transform var(--motion-duration-fast) var(--motion-easing-out);
 }
 
 .toggle:hover {
@@ -43,12 +44,12 @@
 }
 
 .toggle[size="sm"] {
-  height: calc(var(--spacing) * 8);
+  height: var(--size-control-sm);
   padding-inline: calc(var(--spacing) * 2);
 }
 
 .toggle[size="lg"] {
-  height: calc(var(--spacing) * 10);
+  height: var(--size-control-lg);
   padding-inline: calc(var(--spacing) * 4);
 }
 
@@ -59,6 +60,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .toggle {
-    transition-duration: 0s;
+    transition-duration: var(--motion-duration-instant);
   }
 }

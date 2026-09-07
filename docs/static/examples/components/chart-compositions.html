@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <title>AngularCSS Chart Compositions</title>
+    <link rel="stylesheet" href="../../css/preflight.css" />
     <link rel="stylesheet" href="../../css/angular.css" />
     <link rel="stylesheet" href="../example.css" />
     <script src="../../js/angular-ts.umd.js"></script>
@@ -55,22 +56,26 @@
               <hr />
               <div class="chart-daily-bars">
                 <span
+                  role="img"
                   ng-repeat="point in interactiveData"
                   aria-label="{{ point.date }} {{ activeChart }}"
                   data-value="{{ activeChart == 'desktop' ? point.dp : point.mp }}"
                   data-color="{{ activeChart == 'desktop' ? 'var(--chart-2)' : 'var(--chart-1)' }}"
                   ng-mouseenter="demoTip.visible=true;demoTip.date=point.date;demoTip.value=activeChart == 'desktop' ? point.d : point.m"
                   ng-mouseleave="demoTip.visible=false"
+                  style="--value: {{ activeChart == 'desktop' ? point.dp : point.mp }}; --chart-color: {{ activeChart == 'desktop' ? 'var(--chart-2)' : 'var(--chart-1)' }}"
                 ></span>
               </div>
               <output class="chart-floating-tooltip" ng-if="demoTip.visible">
                 <strong>{{ demoTip.date }}, 2024</strong>
                 <dl>
                   <div>
-                    <span
-                      data-color="{{ activeChart == 'desktop' ? 'var(--chart-2)' : 'var(--chart-1)' }}"
-                    ></span>
                     <dt>
+                      <span
+                        aria-hidden="true"
+                        data-color="{{ activeChart == 'desktop' ? 'var(--chart-2)' : 'var(--chart-1)' }}"
+                        style="--chart-color: {{ activeChart == 'desktop' ? 'var(--chart-2)' : 'var(--chart-1)' }}"
+                      ></span>
                       {{ activeChart == 'desktop' ? 'Desktop' : 'Mobile' }}
                     </dt>
                     <dd>{{ demoTip.value }}</dd>
@@ -109,14 +114,18 @@
                 ng-mouseleave="rtlTip.visible=false"
               >
                 <span
+                  role="img"
                   aria-label="{{ point.month }} سطح المكتب"
                   data-value="{{ point.d }}"
                   data-color="var(--chart-2)"
+                  style="--value: {{ point.d }}; --chart-color: var(--chart-2)"
                 ></span>
                 <span
+                  role="img"
                   aria-label="{{ point.month }} الجوال"
                   data-value="{{ point.m }}"
                   data-color="var(--chart-1)"
+                  style="--value: {{ point.m }}; --chart-color: var(--chart-1)"
                 ></span>
               </li>
             </ul>
@@ -124,13 +133,25 @@
               <strong>{{ rtlTip.month }}</strong>
               <dl>
                 <div>
-                  <span data-color="var(--chart-2)"></span>
-                  <dt>سطح المكتب</dt>
+                  <dt>
+                    <span
+                      aria-hidden="true"
+                      data-color="var(--chart-2)"
+                      style="--chart-color: var(--chart-2)"
+                    ></span
+                    >سطح المكتب
+                  </dt>
                   <dd>{{ rtlTip.desktop }}</dd>
                 </div>
                 <div>
-                  <span data-color="var(--chart-1)"></span>
-                  <dt>الجوال</dt>
+                  <dt>
+                    <span
+                      aria-hidden="true"
+                      data-color="var(--chart-1)"
+                      style="--chart-color: var(--chart-1)"
+                    ></span
+                    >الجوال
+                  </dt>
                   <dd>{{ rtlTip.mobile }}</dd>
                 </div>
               </dl>
@@ -140,8 +161,20 @@
             <span ng-repeat="point in rtlData"> {{ point.short }} </span>
           </footer>
           <ul>
-            <li><span data-color="var(--chart-2)"></span>سطح المكتب</li>
-            <li><span data-color="var(--chart-1)"></span>الجوال</li>
+            <li>
+              <span
+                data-color="var(--chart-2)"
+                style="--chart-color: var(--chart-2)"
+              ></span
+              >سطح المكتب
+            </li>
+            <li>
+              <span
+                data-color="var(--chart-1)"
+                style="--chart-color: var(--chart-1)"
+              ></span
+              >الجوال
+            </li>
           </ul>
         </figure>
       </section>
@@ -159,13 +192,25 @@
             <strong>Page Views</strong>
             <dl>
               <div>
-                <span data-color="var(--chart-1)"></span>
-                <dt>Desktop</dt>
+                <dt>
+                  <span
+                    aria-hidden="true"
+                    data-color="var(--chart-1)"
+                    style="--chart-color: var(--chart-1)"
+                  ></span
+                  >Desktop
+                </dt>
                 <dd>186</dd>
               </div>
               <div>
-                <span data-color="var(--chart-2)"></span>
-                <dt>Mobile</dt>
+                <dt>
+                  <span
+                    aria-hidden="true"
+                    data-color="var(--chart-2)"
+                    style="--chart-color: var(--chart-2)"
+                  ></span
+                  >Mobile
+                </dt>
                 <dd>80</dd>
               </div>
             </dl>
@@ -173,13 +218,27 @@
           <output>
             <dl>
               <div>
-                <span indicator="dashed" data-color="var(--chart-3)"></span>
-                <dt>Chrome</dt>
+                <dt>
+                  <span
+                    aria-hidden="true"
+                    indicator="dashed"
+                    data-color="var(--chart-3)"
+                    style="--chart-color: var(--chart-3)"
+                  ></span
+                  >Chrome
+                </dt>
                 <dd>1,286</dd>
               </div>
               <div>
-                <span indicator="dashed" data-color="var(--chart-4)"></span>
-                <dt>Firefox</dt>
+                <dt>
+                  <span
+                    aria-hidden="true"
+                    indicator="dashed"
+                    data-color="var(--chart-4)"
+                    style="--chart-color: var(--chart-4)"
+                  ></span
+                  >Firefox
+                </dt>
                 <dd>1,000</dd>
               </div>
             </dl>
@@ -187,8 +246,15 @@
           <output>
             <dl>
               <div>
-                <span indicator="line" data-color="var(--chart-3)"></span>
-                <dt><strong>Page Views</strong><br />Desktop</dt>
+                <dt>
+                  <span
+                    aria-hidden="true"
+                    indicator="line"
+                    data-color="var(--chart-3)"
+                    style="--chart-color: var(--chart-3)"
+                  ></span
+                  ><strong>Page Views</strong><br />Desktop
+                </dt>
                 <dd>12,486</dd>
               </div>
             </dl>
@@ -196,8 +262,14 @@
           <output>
             <dl>
               <div>
-                <span data-color="var(--chart-1)"></span>
-                <dt>Chrome</dt>
+                <dt>
+                  <span
+                    aria-hidden="true"
+                    data-color="var(--chart-1)"
+                    style="--chart-color: var(--chart-1)"
+                  ></span
+                  >Chrome
+                </dt>
                 <dd>1,286</dd>
               </div>
             </dl>

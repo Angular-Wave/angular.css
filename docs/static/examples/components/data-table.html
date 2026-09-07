@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <title>AngularCSS Data Table</title>
+    <link rel="stylesheet" href="../../css/preflight.css" />
     <link rel="stylesheet" href="../../css/angular.css" />
     <link rel="stylesheet" href="../example.css" />
     <script src="../../js/angular-ts.umd.js"></script>
@@ -12,10 +13,14 @@
   <body
     ng-app="angular.css"
     ng-cloak
-    ng-init="query=''; order='customer'; rows=[{id:'ORD-1048',customer:'Ada Lovelace',status:'Open',total:'€1,240'},{id:'ORD-1047',customer:'Grace Hopper',status:'Review',total:'€860'},{id:'ORD-1046',customer:'Edsger Dijkstra',status:'Complete',total:'€420'}]"
+    ng-init="query=''; order='customer'; page=1; state={loading:false,error:false,stale:true,selected:false,canArchive:false}; rows=[{id:'ORD-1048',customer:'Ada Lovelace',status:'Open',total:'€1,240',selected:false},{id:'ORD-1047',customer:'Grace Hopper',status:'Review',total:'€860',selected:false},{id:'ORD-1046',customer:'Edsger Dijkstra',status:'Complete',total:'€420',selected:false},{id:'ORD-1045',customer:'Margaret Hamilton',status:'Open',total:'€2,100',selected:false}]"
     data-example="data-table-demo"
   >
-    <section class="data-table visual-example" aria-labelledby="orders-title">
+    <section
+      class="data-table visual-example"
+      aria-labelledby="orders-title"
+      aria-busy="{{ state.loading }}"
+    >
       <header>
         <div>
           <h2 id="orders-title">Orders</h2>
@@ -36,13 +41,83 @@
           </fieldset>
         </form>
       </header>
+      <aside
+        class="alert"
+        variant="warning"
+        aria-live="polite"
+        ng-if="state.stale && !state.loading && !state.error"
+      >
+        <h3>Showing cached orders</h3>
+        <p>The latest refresh did not complete. Values may be out of date.</p>
+        <button
+          class="button"
+          size="xs"
+          variant="ghost"
+          type="button"
+          ng-click="state.stale=false"
+        >
+          Dismiss
+        </button>
+      </aside>
+      <aside
+        class="alert"
+        variant="destructive"
+        aria-live="assertive"
+        ng-if="state.error"
+      >
+        <h3>Orders could not be loaded</h3>
+        <p>The service returned an error. Existing filters are preserved.</p>
+        <button
+          class="button"
+          size="xs"
+          variant="outline"
+          type="button"
+          ng-click="state.error=false; state.loading=true"
+        >
+          Retry
+        </button>
+      </aside>
+      <menu aria-label="Selected order actions" ng-if="state.selected">
+        <output>
+          <span ng-repeat="row in rows | filter:{selected:true}" ng-show="$last"
+            >{{ $index + 1 }}</span
+          >
+          selected
+        </output>
+        <button class="button" size="sm" variant="outline" type="button">
+          Export
+        </button>
+        <button
+          class="button"
+          size="sm"
+          type="button"
+          ng-disabled="!state.canArchive"
+          aria-describedby="orders-permission-note"
+        >
+          Archive
+        </button>
+      </menu>
       <figure>
-        <table class="table">
+        <section class="empty" ng-if="state.loading" aria-live="polite">
+          <output class="spinner" aria-label="Loading orders"></output>
+          <h3>Loading orders</h3>
+          <p>Current filters and selection will be preserved.</p>
+        </section>
+        <table class="table" ng-if="!state.loading && !state.error">
           <caption>
             Orders currently available to your account.
           </caption>
           <thead>
             <tr>
+              <th scope="col">
+                <input
+                  class="checkbox"
+                  type="checkbox"
+                  aria-label="Select all orders"
+                  ng-model="state.selectAll"
+                  ng-change="rows[0].selected=state.selectAll; rows[1].selected=state.selectAll; rows[2].selected=state.selectAll; rows[3].selected=state.selectAll; state.selected=state.selectAll"
+                />
+              </th>
               <th scope="col">
                 <button
                   class="button"
@@ -66,7 +141,19 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="row in rows | filter:query | orderBy:order">
+            <tr
+              ng-repeat="row in rows | filter:query | orderBy:order | limitTo:2:(page - 1) * 2"
+              aria-selected="{{ row.selected }}"
+            >
+              <td>
+                <input
+                  class="checkbox"
+                  type="checkbox"
+                  aria-label="Select {{ row.id }}"
+                  ng-model="row.selected"
+                  ng-change="state.selected=rows[0].selected || rows[1].selected || rows[2].selected || rows[3].selected"
+                />
+              </td>
               <th scope="row">{{ row.id }}</th>
               <td>{{ row.customer }}</td>
               <td><span class="badge">{{ row.status }}</span></td>
@@ -74,19 +161,39 @@
             </tr>
           </tbody>
         </table>
-        <p>No matching orders.</p>
+        <p ng-if="!state.loading && !state.error">No matching orders.</p>
       </figure>
       <footer>
-        <output
-          ><span>0</span
-          ><span ng-repeat="row in rows | filter:query" ng-show="$last"
-            >{{ $index + 1 }}</span
+        <div>
+          <output
+            ><span>0</span
+            ><span ng-repeat="row in rows | filter:query" ng-show="$last"
+              >{{ $index + 1 }}</span
+            >
+            orders</output
           >
-          orders</output
-        >
+          <p id="orders-permission-note" ng-if="!state.canArchive">
+            Your role can export orders but cannot archive them.
+          </p>
+        </div>
         <nav class="pagination" aria-label="Order pages">
           <ul>
-            <li><a href="#page-1" aria-current="page">1</a></li>
+            <li>
+              <a
+                href="#page-1"
+                ng-click="page=1"
+                aria-current="{{ page === 1 ? 'page' : 'false' }}"
+                >1</a
+              >
+            </li>
+            <li>
+              <a
+                href="#page-2"
+                ng-click="page=2"
+                aria-current="{{ page === 2 ? 'page' : 'false' }}"
+                >2</a
+              >
+            </li>
           </ul>
         </nav>
       </footer>

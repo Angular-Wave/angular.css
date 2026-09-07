@@ -12,7 +12,7 @@
   }
 
   :scope > header :is(h1, h2, h3) {
-    font-size: 1rem;
+    font-size: var(--text-base);
     font-weight: var(--font-weight-semibold);
   }
 
@@ -58,7 +58,7 @@
     justify-content: flex-end;
     gap: calc(var(--spacing) * 2);
     padding-block-start: calc(var(--spacing) * 3);
-    border-block-start: 1px solid var(--border);
+    border-block-start: var(--border-width-default) solid var(--border);
   }
 
   @container angularcss-form-layout (width < 40rem) {

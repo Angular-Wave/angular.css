@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
   overflow: visible;
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   background: var(--muted);
   color: var(--muted-foreground);
   user-select: none;
@@ -16,7 +16,7 @@
 .avatar::after {
   position: absolute;
   inset: 0;
-  border: 1px solid var(--border);
+  border: var(--border-width-default) solid var(--border);
   border-radius: inherit;
   content: "";
   pointer-events: none;
@@ -70,8 +70,8 @@
   height: calc(var(--spacing) * 2.5);
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 0 2px var(--background);
-  border-radius: 9999px;
+  box-shadow: 0 0 0 var(--border-width-strong) var(--background);
+  border-radius: var(--radius-full);
   background: var(--primary);
   color: var(--primary-foreground);
 }
@@ -98,8 +98,8 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: 0 0 0 2px var(--background);
-  border-radius: 9999px;
+  box-shadow: 0 0 0 var(--border-width-strong) var(--background);
+  border-radius: var(--radius-full);
   background: var(--muted);
   color: var(--muted-foreground);
   font-size: var(--text-sm);
@@ -126,7 +126,7 @@
 }
 
 .avatar-group > .avatar {
-  box-shadow: 0 0 0 2px var(--background);
+  box-shadow: 0 0 0 var(--border-width-strong) var(--background);
   margin-inline-start: calc(var(--spacing) * -2);
 }
 

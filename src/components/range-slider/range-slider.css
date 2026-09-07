@@ -19,7 +19,7 @@
   top: 50%;
   height: calc(var(--spacing) * 1);
   overflow: hidden;
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   background: var(--muted);
   transform: translateY(-50%);
   pointer-events: none;
@@ -32,7 +32,7 @@
   left: var(--range-start, 0%);
   width: calc(var(--range-end, 0%) - var(--range-start, 0%));
   height: calc(var(--spacing) * 1);
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   background: var(--primary);
   transform: translateY(-50%);
   pointer-events: none;
@@ -70,29 +70,33 @@
   height: calc(var(--spacing) * 3);
   margin-block-start: calc(var(--spacing) * -1);
   appearance: none;
-  border: 1px solid var(--ring);
-  border-radius: 9999px;
+  border: var(--border-width-default) solid var(--ring);
+  border-radius: var(--radius-full);
   background: white;
   pointer-events: auto;
-  transition: box-shadow 120ms ease;
+  transition: box-shadow var(--motion-duration-default)
+    var(--motion-easing-standard);
 }
 
 [ng-range-slider] > input[type="range"]::-moz-range-thumb {
   width: calc(var(--spacing) * 3);
   height: calc(var(--spacing) * 3);
-  border: 1px solid var(--ring);
-  border-radius: 9999px;
+  border: var(--border-width-default) solid var(--ring);
+  border-radius: var(--radius-full);
   background: white;
   pointer-events: auto;
-  transition: box-shadow 120ms ease;
+  transition: box-shadow var(--motion-duration-default)
+    var(--motion-easing-standard);
 }
 
 [ng-range-slider] > input[type="range"]:focus-visible::-webkit-slider-thumb {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+  box-shadow: 0 0 0 var(--focus-ring-width)
+    color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
 [ng-range-slider] > input[type="range"]:focus-visible::-moz-range-thumb {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+  box-shadow: 0 0 0 var(--focus-ring-width)
+    color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
 [ng-range-slider] > input[type="range"]:disabled {

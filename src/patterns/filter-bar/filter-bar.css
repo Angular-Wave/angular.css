@@ -5,7 +5,7 @@
     gap: calc(var(--spacing) * 2);
     align-items: end;
     padding: calc(var(--spacing) * 3);
-    border: 1px solid var(--border);
+    border: var(--border-width-default) solid var(--border);
     border-radius: var(--radius);
     background: var(--background);
   }

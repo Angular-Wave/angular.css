@@ -2,6 +2,48 @@
 
 ## [Unreleased]
 
+## [0.0.2] - 2026-09-07
+
+### Added
+
+- Added a DTCG 2025.10 customization contract for colors, spacing, typography,
+  shadows, radii, sizing, borders, focus, and motion, with global, subtree,
+  dark, density, contrast, and print usage.
+- Added enterprise catalog coverage for descriptions, filtering, pagination,
+  validation, empty states, data views, application shells, overlays, and
+  master-detail workflows while keeping the catalog at 67 entries.
+- Added catalog-wide mobile and automated accessibility checks, Chromium,
+  Firefox, and WebKit contracts, package and runtime performance budgets, and a
+  clean tarball consumer test.
+- Added public API drift detection and compatibility, upgrade, support, and
+  contribution documentation.
+
+### Changed
+
+- Renamed product references to AngularCSS and clarified that it is a
+  customization system rather than a product design system.
+- Consolidated shared spacing, control geometry, state color, motion, border,
+  focus, density, contrast, and print behavior across the catalog.
+- Updated every catalog example for consistent proportions, narrow viewports,
+  semantic HTML, keyboard behavior, and focused AngularTS ownership.
+- Declared AngularTS through the npm `latest` tag and added daily testing against
+  the registry's current release.
+
+### Fixed
+
+- Fixed combobox filtering, popup sizing, grouped results, mobile layout, and
+  selection behavior.
+- Fixed sidebar off-canvas isolation, calendar selection semantics, carousel
+  list semantics, command ownership, chart compatibility, status announcements,
+  color contrast, and inconsistent error-state presentation.
+
+### Build
+
+- Removed Tailwind from the source, build, and distributed CSS in favor of a
+  standards-based Lightning CSS pipeline.
+- Added OIDC-only npm trusted publishing with provenance and post-publish
+  integrity, shasum, and dist-tag verification against the exact local tarball.
+
 ## [0.0.1] - 2026-09-06
 
 ### Added

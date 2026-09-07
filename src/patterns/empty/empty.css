@@ -46,15 +46,15 @@
 
 .empty > header > :is(h1, h2, h3) {
   color: var(--foreground);
-  font-size: 1.125rem;
-  line-height: 1.25;
+  font-size: var(--text-lg);
+  line-height: var(--leading-tight);
   font-weight: var(--font-weight-medium);
 }
 
 .empty > header > p {
   color: var(--muted-foreground);
   font-size: var(--text-sm);
-  line-height: 1.625;
+  line-height: var(--leading-relaxed);
 }
 
 .empty > section {

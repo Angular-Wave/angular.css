@@ -6,22 +6,23 @@ a.button {
   align-items: center;
   justify-content: center;
   gap: calc(var(--spacing) * 1.5);
-  border: 1px solid transparent;
-  border-radius: calc(var(--radius) - 2px);
+  border: var(--border-width-default) solid transparent;
+  border-radius: var(--radius-md);
   background-clip: padding-box;
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
-  line-height: 1;
+  line-height: var(--leading-none);
   white-space: nowrap;
   cursor: pointer;
   outline: none;
   user-select: none;
   transition:
-    background-color 120ms ease,
-    border-color 120ms ease,
-    box-shadow 120ms ease,
-    color 120ms ease,
-    transform 80ms ease;
+    background-color var(--motion-duration-default)
+      var(--motion-easing-standard),
+    border-color var(--motion-duration-default) var(--motion-easing-standard),
+    box-shadow var(--motion-duration-default) var(--motion-easing-standard),
+    color var(--motion-duration-default) var(--motion-easing-standard),
+    transform var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
 :is(button, input[type="button"], a).button:has(> [icon="inline-start"]) {
@@ -34,7 +35,8 @@ a.button {
 
 :is(button, input[type="button"], a).button:focus-visible {
   border-color: var(--ring);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+  box-shadow: 0 0 0 var(--focus-ring-width)
+    color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
 :is(button, input[type="button"], a).button:disabled,
@@ -45,7 +47,7 @@ a.button {
 
 :is(button, input[type="button"], a).button:not([size]),
 :is(button, input[type="button"], a).button[size="default"] {
-  height: calc(var(--spacing) * 9);
+  height: var(--size-control-md);
   padding-inline: calc(var(--spacing) * 2.5);
 }
 
@@ -91,8 +93,8 @@ a.button {
 
 :is(button, input[type="button"], a).button[variant="destructive"],
 :is(button, input[type="button"], a).button[variant="error"] {
-  background: color-mix(in srgb, var(--error) 10%, transparent);
-  color: var(--error);
+  background: color-mix(in srgb, var(--error) 5%, transparent);
+  color: var(--error-foreground);
 }
 
 :is(button, input[type="button"], a).button[variant="destructive"]:hover,
@@ -121,7 +123,7 @@ a.button {
 :is(button, input[type="button"], a).button[variant="link"] {
   background: transparent;
   color: var(--primary);
-  text-underline-offset: 4px;
+  text-underline-offset: var(--spacing);
 }
 
 :is(button, input[type="button"], a).button[variant="link"]:hover {
@@ -129,41 +131,41 @@ a.button {
 }
 
 :is(button, input[type="button"], a).button[size="xs"] {
-  height: calc(var(--spacing) * 6);
+  height: var(--size-control-xs);
   gap: calc(var(--spacing) * 1);
   padding-inline: calc(var(--spacing) * 2);
   font-size: var(--text-xs);
 }
 
 :is(button, input[type="button"], a).button[size="sm"] {
-  height: calc(var(--spacing) * 8);
+  height: var(--size-control-sm);
   gap: calc(var(--spacing) * 1);
   padding-inline: calc(var(--spacing) * 2.5);
 }
 
 :is(button, input[type="button"], a).button[size="lg"] {
-  height: calc(var(--spacing) * 10);
+  height: var(--size-control-lg);
   padding-inline: calc(var(--spacing) * 2.5);
 }
 
 :is(button, input[type="button"], a).button[size="icon-xs"] {
-  width: calc(var(--spacing) * 6);
-  height: calc(var(--spacing) * 6);
+  width: var(--size-control-xs);
+  height: var(--size-control-xs);
 }
 
 :is(button, input[type="button"], a).button[size="icon-sm"] {
-  width: calc(var(--spacing) * 8);
-  height: calc(var(--spacing) * 8);
+  width: var(--size-control-sm);
+  height: var(--size-control-sm);
 }
 
 :is(button, input[type="button"], a).button[size="icon"] {
-  width: calc(var(--spacing) * 9);
-  height: calc(var(--spacing) * 9);
+  width: var(--size-control-md);
+  height: var(--size-control-md);
 }
 
 :is(button, input[type="button"], a).button[size="icon-lg"] {
-  width: calc(var(--spacing) * 10);
-  height: calc(var(--spacing) * 10);
+  width: var(--size-control-lg);
+  height: var(--size-control-lg);
 }
 
 :is(button, input[type="button"], a).button > svg {
@@ -181,7 +183,8 @@ a.button {
 
 :is(button, input[type="button"], a).button[aria-invalid="true"] {
   border-color: var(--error);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--error) 20%, transparent);
+  box-shadow: 0 0 0 var(--focus-ring-width)
+    color-mix(in srgb, var(--error) 20%, transparent);
 }
 
 :is(button, input[type="button"], a).button:active:not([aria-haspopup]) {
@@ -190,6 +193,6 @@ a.button {
 
 @media (prefers-reduced-motion: reduce) {
   :is(button, input[type="button"], a).button {
-    transition-duration: 0s;
+    transition-duration: var(--motion-duration-instant);
   }
 }

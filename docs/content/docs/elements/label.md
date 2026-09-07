@@ -71,9 +71,9 @@ content come from the application.
 
 ## Customization
 
-Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes with ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
-Read [Styling with Tailwind]({{< relref
-"/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state
+Read [Customization]({{< relref
+"/docs/get-started/customization" >}}) for layer order, design tokens, state
 variants, and iframe demo isolation.
 <!-- angularcss-reference:end -->

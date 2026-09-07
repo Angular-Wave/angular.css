@@ -23,7 +23,7 @@ progress.progress {
   height: calc(var(--spacing) * 1);
   overflow: hidden;
   border: 0;
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   background: var(--muted);
 }
 

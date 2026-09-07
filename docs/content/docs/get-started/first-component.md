@@ -64,6 +64,6 @@ Omit `name` when several panels may remain open:
 
 ## Next step
 
-[Style components with Tailwind]({{< relref
-"/docs/get-started/styling-tailwind" >}}), then browse the [complete accordion
+[Customize components]({{< relref
+"/docs/get-started/customization" >}}), then browse the [complete accordion
 reference]({{< relref "/docs/patterns/accordion" >}}).

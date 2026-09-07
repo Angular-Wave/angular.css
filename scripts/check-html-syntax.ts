@@ -22,10 +22,14 @@ for (const path of roots
   .flatMap(filesIn)
   .filter((file) => extname(file) === ".html")) {
   try {
-    await format(readFileSync(path, "utf8"), {
+    const source = readFileSync(path, "utf8");
+    await format(source, {
       filepath: path,
       parser: "html",
     });
+    if (!/<title>\S(?:.|\n)*?<\/title>/.test(source)) {
+      failures.push(`${relative(".", path)}: missing a non-empty title`);
+    }
   } catch (error) {
     failures.push(
       `${relative(".", path)}: ${error instanceof Error ? error.message : String(error)}`,

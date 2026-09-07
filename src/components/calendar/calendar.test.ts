@@ -59,10 +59,7 @@ test("canonical artifact generates a complete navigable calendar", async ({
   await expect(page.getByRole("combobox", { name: "Year" })).toHaveValue(
     "2026",
   );
-  await expect(day(page, "2026-05-14")).toHaveAttribute(
-    "aria-selected",
-    "true",
-  );
+  await expect(day(page, "2026-05-14")).toHaveAttribute("aria-pressed", "true");
 
   await day(page, "2026-05-20").click();
   await expect(calendar).toHaveAttribute("data-value", "2026-05-20");
@@ -83,10 +80,7 @@ test("canonical artifact generates a complete navigable calendar", async ({
   await page.keyboard.press("PageUp");
   await expect(calendar).toHaveAttribute("data-month", "2026-06");
   await expect(day(page, "2026-06-15")).toBeFocused();
-  await expect(day(page, "2026-06-15")).toHaveAttribute(
-    "aria-selected",
-    "true",
-  );
+  await expect(day(page, "2026-06-15")).toHaveAttribute("aria-pressed", "true");
 });
 
 test("workflow artifact covers booked, caption, multiple, range, and week-number options", async ({
@@ -116,7 +110,7 @@ test("workflow artifact covers booked, caption, multiple, range, and week-number
   await expect(caption).toHaveAttribute("data-month", "2026-10");
 
   const multiple = calendars.nth(3);
-  await expect(multiple.locator('[aria-selected="true"]')).toHaveCount(2);
+  await expect(multiple.locator('[aria-pressed="true"]')).toHaveCount(2);
   await multiple.locator('[value="2026-09-14"]').click();
   await expect(multiple).toHaveAttribute(
     "data-values",

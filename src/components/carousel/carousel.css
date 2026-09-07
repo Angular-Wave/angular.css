@@ -48,7 +48,7 @@
   inset-block-start: 50%;
   z-index: 10;
   transform: translateY(-50%);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   touch-action: manipulation;
 }
 
@@ -86,12 +86,13 @@
   flex: 0 0 auto;
   width: calc(var(--spacing) * 2);
   height: calc(var(--spacing) * 2);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   background: var(--muted-foreground);
   opacity: 0.35;
   transition:
-    background-color 120ms ease,
-    opacity 120ms ease;
+    background-color var(--motion-duration-default)
+      var(--motion-easing-standard),
+    opacity var(--motion-duration-default) var(--motion-easing-standard);
 }
 
 :is(.carousel, [ng-carousel]) > nav > button[aria-current="true"] {
@@ -101,6 +102,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   :is(.carousel, [ng-carousel]) > nav > :where(button) {
-    transition-duration: 0s;
+    transition-duration: var(--motion-duration-instant);
   }
 }

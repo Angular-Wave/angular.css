@@ -1,23 +1,55 @@
 input[type="checkbox"].switch {
   appearance: none;
+  position: relative;
+  display: inline-flex;
+  width: calc(var(--spacing) * 8);
+  height: calc(var(--spacing) * 5);
+  flex-shrink: 0;
+  align-items: center;
+  border: var(--border-width-default) solid transparent;
+  border-radius: var(--radius-full);
+  background: var(--input);
+  outline: none;
+  box-shadow: var(--shadow-xs);
+  transition:
+    background-color var(--motion-duration-default)
+      var(--motion-easing-standard),
+    border-color var(--motion-duration-default) var(--motion-easing-standard),
+    box-shadow var(--motion-duration-default) var(--motion-easing-standard);
 
-  @apply relative inline-flex h-5 w-8 shrink-0 items-center rounded-full
-    border border-transparent bg-input shadow-xs transition-colors outline-none
-    disabled:cursor-not-allowed disabled:opacity-50
-    focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]
-    aria-invalid:border-error aria-invalid:ring-error/20
-    dark:bg-input/80 dark:aria-invalid:ring-error/40;
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &:focus-visible {
+    border-color: var(--ring);
+    box-shadow: 0 0 0 var(--focus-ring-width)
+      color-mix(in srgb, var(--ring) 50%, transparent);
+  }
+
+  &[aria-invalid="true"] {
+    border-color: var(--error);
+    box-shadow: 0 0 0 var(--focus-ring-width)
+      color-mix(in srgb, var(--error) 20%, transparent);
+  }
 }
 
 input[type="checkbox"].switch::after {
   content: "";
-
-  @apply pointer-events-none block size-4 translate-x-0 rounded-full bg-background
-    ring-0 transition-transform;
+  pointer-events: none;
+  display: block;
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+  border-radius: var(--radius-full);
+  background: var(--background);
+  transform: translateX(0);
+  transition: transform var(--motion-duration-default)
+    var(--motion-easing-standard);
 }
 
 input[type="checkbox"].switch:checked {
-  @apply bg-primary;
+  background: var(--primary);
 }
 
 input[type="checkbox"].switch:checked::after {
@@ -29,24 +61,32 @@ input[type="checkbox"].switch:dir(rtl):checked::after {
 }
 
 input[type="checkbox"].switch[size="sm"] {
-  @apply h-4 w-7;
+  width: calc(var(--spacing) * 7);
+  height: calc(var(--spacing) * 4);
 
   &::after {
-    @apply size-3;
+    width: calc(var(--spacing) * 3);
+    height: calc(var(--spacing) * 3);
+  }
+}
+
+.dark input[type="checkbox"].switch,
+.dark-theme input[type="checkbox"].switch {
+  background: color-mix(in srgb, var(--input) 80%, transparent);
+
+  &:checked {
+    background: var(--primary);
   }
 
-  &:checked::after {
-    transform: translateX(14px);
-  }
-
-  &:dir(rtl):checked::after {
-    transform: translateX(-14px);
+  &[aria-invalid="true"] {
+    box-shadow: 0 0 0 var(--focus-ring-width)
+      color-mix(in srgb, var(--error) 40%, transparent);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   input[type="checkbox"].switch,
   input[type="checkbox"].switch::after {
-    transition-duration: 0s;
+    transition-duration: var(--motion-duration-instant);
   }
 }

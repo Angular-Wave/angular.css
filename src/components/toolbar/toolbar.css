@@ -7,7 +7,7 @@
     align-items: center;
     gap: calc(var(--spacing) * 1);
     margin: 0;
-    border: 1px solid var(--border);
+    border: var(--border-width-default) solid var(--border);
     border-radius: var(--radius);
     background: var(--background);
     padding: calc(var(--spacing) * 1);
@@ -21,14 +21,14 @@
   }
 
   :scope > hr {
-    width: 1px;
+    width: var(--border-width-default);
     height: calc(var(--spacing) * 6);
     margin: 0 calc(var(--spacing) * 1);
   }
 
   :scope[orientation="vertical"] > hr {
     width: auto;
-    height: 1px;
+    height: var(--border-width-default);
     margin: calc(var(--spacing) * 1) 0;
   }
 }

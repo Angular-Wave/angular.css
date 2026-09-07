@@ -2,14 +2,14 @@
 [ng-menubar] {
   display: flex;
   width: fit-content;
-  height: calc(var(--spacing) * 9);
+  height: var(--size-control-md);
   align-items: center;
   gap: calc(var(--spacing) * 0.5);
-  border: 1px solid var(--border);
+  border: var(--border-width-default) solid var(--border);
   border-radius: var(--radius);
   background: var(--background);
   color: var(--foreground);
-  padding: 3px;
+  padding: calc(var(--spacing) * 0.75);
 }
 
 :is(.menubar, [ng-menubar]) > section {
@@ -21,10 +21,10 @@
   min-height: calc(var(--spacing) * 7);
   align-items: center;
   border: 0;
-  border-radius: calc(var(--radius) - 2px);
+  border-radius: var(--radius-md);
   background: transparent;
   color: var(--foreground);
-  padding: 2px calc(var(--spacing) * 1.5);
+  padding: calc(var(--spacing) * 0.5) calc(var(--spacing) * 1.5);
   font: inherit;
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
@@ -60,12 +60,14 @@
   color: var(--popover-foreground);
   padding: calc(var(--spacing) * 1);
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--foreground) 10%, transparent),
+    0 0 0 var(--border-width-default)
+      color-mix(in srgb, var(--foreground) 10%, transparent),
     var(--shadow-md);
 }
 
 :is(.menubar, [ng-menubar]) menu:where(:not([hidden])) {
-  animation: angularcss-surface-enter 120ms ease-out;
+  animation: angularcss-surface-enter var(--motion-duration-default)
+    var(--motion-easing-out);
 }
 
 :is(.menubar, [ng-menubar]) > section > menu {
@@ -86,7 +88,7 @@
   align-items: center;
   gap: calc(var(--spacing) * 1.5);
   border: 0;
-  border-radius: calc(var(--radius) - 4px);
+  border-radius: var(--radius-sm);
   background: transparent;
   color: inherit;
   padding: calc(var(--spacing) * 1) calc(var(--spacing) * 1.5);
@@ -153,7 +155,7 @@
 }
 
 :is(.menubar, [ng-menubar]) menu hr {
-  height: 1px;
+  height: var(--border-width-default);
   margin-block: calc(var(--spacing) * 1);
   border: 0;
   background: var(--border);
@@ -189,7 +191,7 @@
   margin-inline-start: auto;
   content: "\203a";
   font-size: var(--text-base);
-  line-height: 1;
+  line-height: var(--leading-none);
 }
 
 :is(.menubar, [ng-menubar]):dir(rtl) details > summary::after {
@@ -202,7 +204,8 @@
   z-index: 51;
   min-width: 8rem;
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--foreground) 10%, transparent),
+    0 0 0 var(--border-width-default)
+      color-mix(in srgb, var(--foreground) 10%, transparent),
     var(--shadow-lg);
 }
 

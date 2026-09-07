@@ -1,0 +1,38 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/resolver.json",
+  "name": "AngularCSS customization contract",
+  "description": "Customizable presentation defaults for AngularCSS. This is not a product design system.",
+  "version": "2025.10",
+  "sets": {
+    "foundation": {
+      "description": "Shared customization tokens.",
+      "sources": [
+        {
+          "$ref": "./foundation/angularcss.tokens.json"
+        }
+      ]
+    }
+  },
+  "modifiers": {
+    "color-mode": {
+      "description": "Light and dark presentation contexts.",
+      "default": "light",
+      "contexts": {
+        "light": [],
+        "dark": [
+          {
+            "$ref": "./themes/dark.tokens.json"
+          }
+        ]
+      }
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/sets/foundation"
+    },
+    {
+      "$ref": "#/modifiers/color-mode"
+    }
+  ]
+}

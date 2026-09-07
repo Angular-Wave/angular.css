@@ -22,14 +22,37 @@
   }
 
   :scope > header :is(h1, h2, h3) {
-    font-size: 1rem;
+    font-size: var(--text-base);
     font-weight: var(--font-weight-semibold);
   }
 
   :scope > header p,
-  :scope > footer > output {
+  :scope > footer output,
+  :scope > footer p {
     color: var(--muted-foreground);
     font-size: var(--text-sm);
+  }
+
+  :scope > :is(aside, menu) {
+    margin: 0;
+  }
+
+  :scope > menu {
+    display: flex;
+    min-width: 0;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: calc(var(--spacing) * 2);
+    border: var(--border-width-default) solid var(--border);
+    border-radius: var(--radius);
+    background: var(--muted);
+    padding: calc(var(--spacing) * 2);
+  }
+
+  :scope > menu > output {
+    margin-inline-end: auto;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
   }
 
   :scope > header > form {
@@ -40,7 +63,7 @@
 
   :scope > figure {
     max-height: var(--data-table-max-height, 32rem);
-    border: 1px solid var(--border);
+    border: var(--border-width-default) solid var(--border);
     border-radius: var(--radius);
     background: var(--background);
   }
@@ -64,14 +87,24 @@
     text-align: center;
   }
 
+  :scope > figure > .empty {
+    min-height: 12rem;
+    border: 0;
+  }
+
   :scope > figure:has(tbody > tr) > p,
-  :scope > footer > output:has(> span:nth-child(2)) > span:first-child {
+  :scope > footer output:has(> span:nth-child(2)) > span:first-child {
     display: none;
   }
 
   :scope > footer > nav {
     width: auto;
     margin-inline-start: auto;
+  }
+
+  :scope > footer > div {
+    display: grid;
+    gap: calc(var(--spacing) * 0.5);
   }
 
   @media (width < 40rem) {

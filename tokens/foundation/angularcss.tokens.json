@@ -1,0 +1,1662 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+  "$description": "AngularCSS customization tokens. This file configures AngularCSS; it does not define a product design system.",
+  "palette": {
+    "$description": "Default color values retained for compatibility and optional application customization.",
+    "slate": {
+      "1": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.988235, 0.988235, 0.992157],
+          "alpha": 1,
+          "hex": "#fcfcfd"
+        }
+      },
+      "2": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.976471, 0.976471, 0.984314],
+          "alpha": 1,
+          "hex": "#f9f9fb"
+        }
+      },
+      "3": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.941176, 0.941176, 0.952941],
+          "alpha": 1,
+          "hex": "#f0f0f3"
+        }
+      },
+      "4": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.909804, 0.909804, 0.92549],
+          "alpha": 1,
+          "hex": "#e8e8ec"
+        }
+      },
+      "5": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.878431, 0.882353, 0.901961],
+          "alpha": 1,
+          "hex": "#e0e1e6"
+        }
+      },
+      "6": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.85098, 0.85098, 0.878431],
+          "alpha": 1,
+          "hex": "#d9d9e0"
+        }
+      },
+      "7": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.803922, 0.807843, 0.839216],
+          "alpha": 1,
+          "hex": "#cdced6"
+        }
+      },
+      "8": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.72549, 0.733333, 0.776471],
+          "alpha": 1,
+          "hex": "#b9bbc6"
+        }
+      },
+      "9": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.545098, 0.552941, 0.596078],
+          "alpha": 1,
+          "hex": "#8b8d98"
+        }
+      },
+      "10": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.501961, 0.513725, 0.552941],
+          "alpha": 1,
+          "hex": "#80838d"
+        }
+      },
+      "11": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.376471, 0.392157, 0.423529],
+          "alpha": 1,
+          "hex": "#60646c"
+        }
+      },
+      "12": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.109804, 0.12549, 0.141176],
+          "alpha": 1,
+          "hex": "#1c2024"
+        }
+      },
+      "$description": "Slate customization palette."
+    },
+    "blue": {
+      "1": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.984314, 0.992157, 1],
+          "alpha": 1,
+          "hex": "#fbfdff"
+        }
+      },
+      "2": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.956863, 0.980392, 1],
+          "alpha": 1,
+          "hex": "#f4faff"
+        }
+      },
+      "3": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.901961, 0.956863, 0.996078],
+          "alpha": 1,
+          "hex": "#e6f4fe"
+        }
+      },
+      "4": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.835294, 0.937255, 1],
+          "alpha": 1,
+          "hex": "#d5efff"
+        }
+      },
+      "5": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.760784, 0.898039, 1],
+          "alpha": 1,
+          "hex": "#c2e5ff"
+        }
+      },
+      "6": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.67451, 0.847059, 0.988235],
+          "alpha": 1,
+          "hex": "#acd8fc"
+        }
+      },
+      "7": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.556863, 0.784314, 0.964706],
+          "alpha": 1,
+          "hex": "#8ec8f6"
+        }
+      },
+      "8": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.368627, 0.694118, 0.937255],
+          "alpha": 1,
+          "hex": "#5eb1ef"
+        }
+      },
+      "9": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0, 0.564706, 1],
+          "alpha": 1,
+          "hex": "#0090ff"
+        }
+      },
+      "10": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.019608, 0.533333, 0.941176],
+          "alpha": 1,
+          "hex": "#0588f0"
+        }
+      },
+      "11": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.05098, 0.454902, 0.807843],
+          "alpha": 1,
+          "hex": "#0d74ce"
+        }
+      },
+      "12": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.066667, 0.196078, 0.392157],
+          "alpha": 1,
+          "hex": "#113264"
+        }
+      },
+      "$description": "Blue customization palette."
+    },
+    "green": {
+      "1": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.984314, 0.996078, 0.988235],
+          "alpha": 1,
+          "hex": "#fbfefc"
+        }
+      },
+      "2": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.956863, 0.984314, 0.964706],
+          "alpha": 1,
+          "hex": "#f4fbf6"
+        }
+      },
+      "3": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.901961, 0.964706, 0.921569],
+          "alpha": 1,
+          "hex": "#e6f6eb"
+        }
+      },
+      "4": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.839216, 0.945098, 0.87451],
+          "alpha": 1,
+          "hex": "#d6f1df"
+        }
+      },
+      "5": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.768627, 0.909804, 0.819608],
+          "alpha": 1,
+          "hex": "#c4e8d1"
+        }
+      },
+      "6": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.678431, 0.866667, 0.752941],
+          "alpha": 1,
+          "hex": "#adddc0"
+        }
+      },
+      "7": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.556863, 0.807843, 0.666667],
+          "alpha": 1,
+          "hex": "#8eceaa"
+        }
+      },
+      "8": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.356863, 0.72549, 0.545098],
+          "alpha": 1,
+          "hex": "#5bb98b"
+        }
+      },
+      "9": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.188235, 0.643137, 0.423529],
+          "alpha": 1,
+          "hex": "#30a46c"
+        }
+      },
+      "10": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.168627, 0.603922, 0.4],
+          "alpha": 1,
+          "hex": "#2b9a66"
+        }
+      },
+      "11": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.129412, 0.513725, 0.345098],
+          "alpha": 1,
+          "hex": "#218358"
+        }
+      },
+      "12": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.098039, 0.231373, 0.176471],
+          "alpha": 1,
+          "hex": "#193b2d"
+        }
+      },
+      "$description": "Green customization palette."
+    },
+    "cyan": {
+      "1": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.980392, 0.992157, 0.996078],
+          "alpha": 1,
+          "hex": "#fafdfe"
+        }
+      },
+      "2": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.94902, 0.980392, 0.984314],
+          "alpha": 1,
+          "hex": "#f2fafb"
+        }
+      },
+      "3": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.870588, 0.968627, 0.976471],
+          "alpha": 1,
+          "hex": "#def7f9"
+        }
+      },
+      "4": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.792157, 0.945098, 0.964706],
+          "alpha": 1,
+          "hex": "#caf1f6"
+        }
+      },
+      "5": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.709804, 0.913725, 0.941176],
+          "alpha": 1,
+          "hex": "#b5e9f0"
+        }
+      },
+      "6": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.615686, 0.866667, 0.905882],
+          "alpha": 1,
+          "hex": "#9ddde7"
+        }
+      },
+      "7": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.490196, 0.807843, 0.862745],
+          "alpha": 1,
+          "hex": "#7dcedc"
+        }
+      },
+      "8": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.239216, 0.72549, 0.811765],
+          "alpha": 1,
+          "hex": "#3db9cf"
+        }
+      },
+      "9": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0, 0.635294, 0.780392],
+          "alpha": 1,
+          "hex": "#00a2c7"
+        }
+      },
+      "10": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.027451, 0.592157, 0.72549],
+          "alpha": 1,
+          "hex": "#0797b9"
+        }
+      },
+      "11": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.062745, 0.490196, 0.596078],
+          "alpha": 1,
+          "hex": "#107d98"
+        }
+      },
+      "12": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.05098, 0.235294, 0.282353],
+          "alpha": 1,
+          "hex": "#0d3c48"
+        }
+      },
+      "$description": "Cyan customization palette."
+    },
+    "violet": {
+      "1": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.992157, 0.988235, 0.996078],
+          "alpha": 1,
+          "hex": "#fdfcfe"
+        }
+      },
+      "2": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.980392, 0.972549, 1],
+          "alpha": 1,
+          "hex": "#faf8ff"
+        }
+      },
+      "3": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.956863, 0.941176, 0.996078],
+          "alpha": 1,
+          "hex": "#f4f0fe"
+        }
+      },
+      "4": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.921569, 0.894118, 1],
+          "alpha": 1,
+          "hex": "#ebe4ff"
+        }
+      },
+      "5": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.882353, 0.85098, 1],
+          "alpha": 1,
+          "hex": "#e1d9ff"
+        }
+      },
+      "6": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.831373, 0.792157, 0.996078],
+          "alpha": 1,
+          "hex": "#d4cafe"
+        }
+      },
+      "7": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.760784, 0.709804, 0.960784],
+          "alpha": 1,
+          "hex": "#c2b5f5"
+        }
+      },
+      "8": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.666667, 0.6, 0.92549],
+          "alpha": 1,
+          "hex": "#aa99ec"
+        }
+      },
+      "9": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.431373, 0.337255, 0.811765],
+          "alpha": 1,
+          "hex": "#6e56cf"
+        }
+      },
+      "10": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.396078, 0.301961, 0.768627],
+          "alpha": 1,
+          "hex": "#654dc4"
+        }
+      },
+      "11": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.396078, 0.313725, 0.72549],
+          "alpha": 1,
+          "hex": "#6550b9"
+        }
+      },
+      "12": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.184314, 0.14902, 0.372549],
+          "alpha": 1,
+          "hex": "#2f265f"
+        }
+      },
+      "$description": "Violet customization palette."
+    },
+    "amber": {
+      "1": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.996078, 0.992157, 0.984314],
+          "alpha": 1,
+          "hex": "#fefdfb"
+        }
+      },
+      "2": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.996078, 0.984314, 0.913725],
+          "alpha": 1,
+          "hex": "#fefbe9"
+        }
+      },
+      "3": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [1, 0.968627, 0.760784],
+          "alpha": 1,
+          "hex": "#fff7c2"
+        }
+      },
+      "4": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [1, 0.933333, 0.611765],
+          "alpha": 1,
+          "hex": "#ffee9c"
+        }
+      },
+      "5": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.984314, 0.898039, 0.466667],
+          "alpha": 1,
+          "hex": "#fbe577"
+        }
+      },
+      "6": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.952941, 0.839216, 0.45098],
+          "alpha": 1,
+          "hex": "#f3d673"
+        }
+      },
+      "7": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.913725, 0.756863, 0.384314],
+          "alpha": 1,
+          "hex": "#e9c162"
+        }
+      },
+      "8": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.886275, 0.639216, 0.211765],
+          "alpha": 1,
+          "hex": "#e2a336"
+        }
+      },
+      "9": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [1, 0.772549, 0.239216],
+          "alpha": 1,
+          "hex": "#ffc53d"
+        }
+      },
+      "10": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [1, 0.729412, 0.094118],
+          "alpha": 1,
+          "hex": "#ffba18"
+        }
+      },
+      "11": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.670588, 0.392157, 0],
+          "alpha": 1,
+          "hex": "#ab6400"
+        }
+      },
+      "12": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.309804, 0.203922, 0.133333],
+          "alpha": 1,
+          "hex": "#4f3422"
+        }
+      },
+      "$description": "Amber customization palette."
+    },
+    "red": {
+      "1": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [1, 0.988235, 0.988235],
+          "alpha": 1,
+          "hex": "#fffcfc"
+        }
+      },
+      "2": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [1, 0.968627, 0.968627],
+          "alpha": 1,
+          "hex": "#fff7f7"
+        }
+      },
+      "3": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.996078, 0.921569, 0.92549],
+          "alpha": 1,
+          "hex": "#feebec"
+        }
+      },
+      "4": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [1, 0.858824, 0.862745],
+          "alpha": 1,
+          "hex": "#ffdbdc"
+        }
+      },
+      "5": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [1, 0.803922, 0.807843],
+          "alpha": 1,
+          "hex": "#ffcdce"
+        }
+      },
+      "6": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.992157, 0.741176, 0.745098],
+          "alpha": 1,
+          "hex": "#fdbdbe"
+        }
+      },
+      "7": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.956863, 0.662745, 0.666667],
+          "alpha": 1,
+          "hex": "#f4a9aa"
+        }
+      },
+      "8": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.921569, 0.556863, 0.564706],
+          "alpha": 1,
+          "hex": "#eb8e90"
+        }
+      },
+      "9": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.898039, 0.282353, 0.301961],
+          "alpha": 1,
+          "hex": "#e5484d"
+        }
+      },
+      "10": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.862745, 0.243137, 0.258824],
+          "alpha": 1,
+          "hex": "#dc3e42"
+        }
+      },
+      "11": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.807843, 0.172549, 0.192157],
+          "alpha": 1,
+          "hex": "#ce2c31"
+        }
+      },
+      "12": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.392157, 0.090196, 0.137255],
+          "alpha": 1,
+          "hex": "#641723"
+        }
+      },
+      "$description": "Red customization palette."
+    }
+  },
+  "color": {
+    "$description": "Semantic colors consumed by AngularCSS components.",
+    "background": {
+      "$type": "color",
+      "$value": "{palette.slate.1}",
+      "$description": "Application background."
+    },
+    "foreground": {
+      "$type": "color",
+      "$value": "{palette.slate.12}",
+      "$description": "Default text and icon color."
+    },
+    "card": {
+      "$type": "color",
+      "$value": "{palette.slate.1}",
+      "$description": "Card surface."
+    },
+    "card-foreground": {
+      "$type": "color",
+      "$value": "{palette.slate.12}",
+      "$description": "Text and icons on card surfaces."
+    },
+    "popover": {
+      "$type": "color",
+      "$value": "{palette.slate.1}",
+      "$description": "Popover and menu surface."
+    },
+    "popover-foreground": {
+      "$type": "color",
+      "$value": "{palette.slate.12}",
+      "$description": "Text and icons on popover surfaces."
+    },
+    "primary": {
+      "$type": "color",
+      "$value": "{palette.slate.12}",
+      "$description": "Primary action and emphasis."
+    },
+    "primary-foreground": {
+      "$type": "color",
+      "$value": "{palette.slate.1}",
+      "$description": "Content shown on primary actions."
+    },
+    "secondary": {
+      "$type": "color",
+      "$value": "{palette.slate.3}",
+      "$description": "Secondary action surface."
+    },
+    "secondary-foreground": {
+      "$type": "color",
+      "$value": "{palette.slate.12}",
+      "$description": "Content shown on secondary actions."
+    },
+    "muted": {
+      "$type": "color",
+      "$value": "{palette.slate.3}",
+      "$description": "Subdued surface."
+    },
+    "muted-foreground": {
+      "$type": "color",
+      "$value": "{palette.slate.11}",
+      "$description": "Subdued text and icons."
+    },
+    "accent": {
+      "$type": "color",
+      "$value": "{palette.slate.3}",
+      "$description": "Hover and selected surface."
+    },
+    "accent-foreground": {
+      "$type": "color",
+      "$value": "{palette.slate.12}",
+      "$description": "Content shown on accent surfaces."
+    },
+    "info": {
+      "$type": "color",
+      "$value": "{palette.blue.9}",
+      "$description": "Informational state."
+    },
+    "info-foreground": {
+      "$type": "color",
+      "$value": "{palette.blue.12}",
+      "$description": "Informational state text."
+    },
+    "success": {
+      "$type": "color",
+      "$value": "{palette.green.9}",
+      "$description": "Successful state."
+    },
+    "success-foreground": {
+      "$type": "color",
+      "$value": "{palette.green.12}",
+      "$description": "Successful state text."
+    },
+    "warning": {
+      "$type": "color",
+      "$value": "{palette.amber.9}",
+      "$description": "Warning state."
+    },
+    "warning-foreground": {
+      "$type": "color",
+      "$value": "{palette.amber.12}",
+      "$description": "Warning state text."
+    },
+    "error": {
+      "$type": "color",
+      "$value": "{palette.red.9}",
+      "$description": "Error and destructive state."
+    },
+    "error-foreground": {
+      "$type": "color",
+      "$value": "{palette.red.11}",
+      "$description": "Error state text."
+    },
+    "border": {
+      "$type": "color",
+      "$value": "{palette.slate.6}",
+      "$description": "Default border."
+    },
+    "input": {
+      "$type": "color",
+      "$value": "{palette.slate.7}",
+      "$description": "Form-control border and disabled surface."
+    },
+    "ring": {
+      "$type": "color",
+      "$value": "{palette.slate.8}",
+      "$description": "Keyboard focus indicator."
+    },
+    "chart": {
+      "1": {
+        "$type": "color",
+        "$value": "{palette.blue.9}"
+      },
+      "2": {
+        "$type": "color",
+        "$value": "{palette.green.9}"
+      },
+      "3": {
+        "$type": "color",
+        "$value": "{palette.amber.9}"
+      },
+      "4": {
+        "$type": "color",
+        "$value": "{palette.red.9}"
+      },
+      "5": {
+        "$type": "color",
+        "$value": "{palette.slate.9}"
+      },
+      "$description": "Default data visualization series colors."
+    },
+    "sidebar": {
+      "$description": "Application-shell navigation colors.",
+      "background": {
+        "$type": "color",
+        "$value": "{palette.slate.2}"
+      },
+      "foreground": {
+        "$type": "color",
+        "$value": "{palette.slate.12}"
+      },
+      "primary": {
+        "$type": "color",
+        "$value": "{palette.slate.12}"
+      },
+      "primary-foreground": {
+        "$type": "color",
+        "$value": "{palette.slate.1}"
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{palette.slate.3}"
+      },
+      "accent-foreground": {
+        "$type": "color",
+        "$value": "{palette.slate.12}"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{palette.slate.6}"
+      },
+      "ring": {
+        "$type": "color",
+        "$value": "{palette.slate.8}"
+      }
+    }
+  },
+  "spacing": {
+    "1": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.25,
+        "unit": "rem"
+      }
+    },
+    "2": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.5,
+        "unit": "rem"
+      }
+    },
+    "3": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.75,
+        "unit": "rem"
+      }
+    },
+    "4": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1,
+        "unit": "rem"
+      }
+    },
+    "5": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1.25,
+        "unit": "rem"
+      }
+    },
+    "6": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1.5,
+        "unit": "rem"
+      }
+    },
+    "7": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1.75,
+        "unit": "rem"
+      }
+    },
+    "8": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2,
+        "unit": "rem"
+      }
+    },
+    "9": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2.25,
+        "unit": "rem"
+      }
+    },
+    "10": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2.5,
+        "unit": "rem"
+      }
+    },
+    "11": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2.75,
+        "unit": "rem"
+      }
+    },
+    "12": {
+      "$type": "dimension",
+      "$value": {
+        "value": 3,
+        "unit": "rem"
+      }
+    },
+    "14": {
+      "$type": "dimension",
+      "$value": {
+        "value": 3.5,
+        "unit": "rem"
+      }
+    },
+    "16": {
+      "$type": "dimension",
+      "$value": {
+        "value": 4,
+        "unit": "rem"
+      }
+    },
+    "18": {
+      "$type": "dimension",
+      "$value": {
+        "value": 4.5,
+        "unit": "rem"
+      }
+    },
+    "24": {
+      "$type": "dimension",
+      "$value": {
+        "value": 6,
+        "unit": "rem"
+      }
+    },
+    "32": {
+      "$type": "dimension",
+      "$value": {
+        "value": 8,
+        "unit": "rem"
+      }
+    },
+    "40": {
+      "$type": "dimension",
+      "$value": {
+        "value": 10,
+        "unit": "rem"
+      }
+    },
+    "72": {
+      "$type": "dimension",
+      "$value": {
+        "value": 18,
+        "unit": "rem"
+      }
+    },
+    "$description": "Spacing values available to AngularCSS and application overrides.",
+    "unit": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.25,
+        "unit": "rem"
+      },
+      "$description": "Base spacing rhythm retained as --spacing for compatibility."
+    },
+    "0-5": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.125,
+        "unit": "rem"
+      }
+    },
+    "1-5": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.375,
+        "unit": "rem"
+      }
+    },
+    "2-5": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.625,
+        "unit": "rem"
+      }
+    },
+    "2-75": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.6875,
+        "unit": "rem"
+      }
+    },
+    "3-5": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.875,
+        "unit": "rem"
+      }
+    }
+  },
+  "typography": {
+    "$description": "Font families, sizes, weights, and line heights used by AngularCSS.",
+    "family": {
+      "sans": {
+        "$type": "fontFamily",
+        "$value": [
+          "ui-sans-serif",
+          "system-ui",
+          "sans-serif",
+          "Apple Color Emoji",
+          "Segoe UI Emoji",
+          "Segoe UI Symbol",
+          "Noto Color Emoji"
+        ]
+      },
+      "mono": {
+        "$type": "fontFamily",
+        "$value": [
+          "ui-monospace",
+          "SFMono-Regular",
+          "Menlo",
+          "Monaco",
+          "Consolas",
+          "Liberation Mono",
+          "Courier New",
+          "monospace"
+        ]
+      }
+    },
+    "size": {
+      "xs": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0.75,
+          "unit": "rem"
+        }
+      },
+      "sm": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0.875,
+          "unit": "rem"
+        }
+      },
+      "base": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1,
+          "unit": "rem"
+        }
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1.125,
+          "unit": "rem"
+        }
+      },
+      "xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1.25,
+          "unit": "rem"
+        }
+      },
+      "2xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1.5,
+          "unit": "rem"
+        }
+      }
+    },
+    "weight": {
+      "normal": {
+        "$type": "fontWeight",
+        "$value": 400
+      },
+      "medium": {
+        "$type": "fontWeight",
+        "$value": 500
+      },
+      "semibold": {
+        "$type": "fontWeight",
+        "$value": 600
+      },
+      "bold": {
+        "$type": "fontWeight",
+        "$value": 700
+      }
+    },
+    "leading": {
+      "none": {
+        "$type": "number",
+        "$value": 1
+      },
+      "tight": {
+        "$type": "number",
+        "$value": 1.25
+      },
+      "snug": {
+        "$type": "number",
+        "$value": 1.375
+      },
+      "sm": {
+        "$description": "Line height paired with the small text size.",
+        "$type": "number",
+        "$value": 1.4285714286
+      },
+      "normal": {
+        "$type": "number",
+        "$value": 1.5
+      },
+      "relaxed": {
+        "$type": "number",
+        "$value": 1.625
+      }
+    }
+  },
+  "shadow": {
+    "$description": "Elevation values for controls, panels, menus, and dialogs.",
+    "xs": {
+      "$type": "shadow",
+      "$value": {
+        "color": {
+          "colorSpace": "srgb",
+          "components": [0, 0, 0],
+          "alpha": 0.05
+        },
+        "offsetX": {
+          "value": 0,
+          "unit": "px"
+        },
+        "offsetY": {
+          "value": 1,
+          "unit": "px"
+        },
+        "blur": {
+          "value": 2,
+          "unit": "px"
+        },
+        "spread": {
+          "value": 0,
+          "unit": "px"
+        }
+      }
+    },
+    "sm": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [0, 0, 0],
+            "alpha": 0.1
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 1,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 3,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        },
+        {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [0, 0, 0],
+            "alpha": 0.1
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 1,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 2,
+            "unit": "px"
+          },
+          "spread": {
+            "value": -1,
+            "unit": "px"
+          }
+        }
+      ]
+    },
+    "md": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [0, 0, 0],
+            "alpha": 0.1
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 4,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 6,
+            "unit": "px"
+          },
+          "spread": {
+            "value": -1,
+            "unit": "px"
+          }
+        },
+        {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [0, 0, 0],
+            "alpha": 0.1
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 2,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 4,
+            "unit": "px"
+          },
+          "spread": {
+            "value": -2,
+            "unit": "px"
+          }
+        }
+      ]
+    },
+    "lg": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [0, 0, 0],
+            "alpha": 0.1
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 10,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 15,
+            "unit": "px"
+          },
+          "spread": {
+            "value": -3,
+            "unit": "px"
+          }
+        },
+        {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [0, 0, 0],
+            "alpha": 0.1
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 4,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 6,
+            "unit": "px"
+          },
+          "spread": {
+            "value": -4,
+            "unit": "px"
+          }
+        }
+      ]
+    }
+  },
+  "radius": {
+    "$description": "Corner radii used by controls, surfaces, and overlays.",
+    "base": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.625,
+        "unit": "rem"
+      },
+      "$description": "Default radius retained as --radius for compatibility."
+    },
+    "sm": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.375,
+        "unit": "rem"
+      }
+    },
+    "md": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.5,
+        "unit": "rem"
+      }
+    },
+    "lg": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.625,
+        "unit": "rem"
+      }
+    },
+    "xl": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.875,
+        "unit": "rem"
+      }
+    },
+    "full": {
+      "$type": "dimension",
+      "$value": {
+        "value": 9999,
+        "unit": "px"
+      }
+    }
+  },
+  "size": {
+    "$description": "Shared control, icon, and minimum target dimensions.",
+    "control": {
+      "xs": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1.5,
+          "unit": "rem"
+        }
+      },
+      "sm": {
+        "$type": "dimension",
+        "$value": {
+          "value": 2,
+          "unit": "rem"
+        }
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": {
+          "value": 2.25,
+          "unit": "rem"
+        }
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": {
+          "value": 2.5,
+          "unit": "rem"
+        }
+      }
+    },
+    "icon": {
+      "xs": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0.75,
+          "unit": "rem"
+        }
+      },
+      "sm": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0.875,
+          "unit": "rem"
+        }
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1,
+          "unit": "rem"
+        }
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1.25,
+          "unit": "rem"
+        }
+      }
+    },
+    "target-minimum": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2.75,
+        "unit": "rem"
+      },
+      "$description": "Minimum comfortable pointer target."
+    }
+  },
+  "border": {
+    "$description": "Shared border widths.",
+    "default": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1,
+        "unit": "px"
+      }
+    },
+    "strong": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      }
+    }
+  },
+  "focus": {
+    "$description": "Visible keyboard focus geometry.",
+    "width": {
+      "$type": "dimension",
+      "$value": {
+        "value": 3,
+        "unit": "px"
+      }
+    },
+    "offset": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1,
+        "unit": "px"
+      }
+    }
+  },
+  "motion": {
+    "$description": "Durations and easing curves for interaction feedback.",
+    "duration": {
+      "instant": {
+        "$type": "duration",
+        "$value": {
+          "value": 0,
+          "unit": "ms"
+        }
+      },
+      "fast": {
+        "$type": "duration",
+        "$value": {
+          "value": 80,
+          "unit": "ms"
+        }
+      },
+      "default": {
+        "$type": "duration",
+        "$value": {
+          "value": 120,
+          "unit": "ms"
+        }
+      },
+      "deliberate": {
+        "$type": "duration",
+        "$value": {
+          "value": 160,
+          "unit": "ms"
+        }
+      },
+      "layout": {
+        "$type": "duration",
+        "$value": {
+          "value": 200,
+          "unit": "ms"
+        }
+      },
+      "slow": {
+        "$type": "duration",
+        "$value": {
+          "value": 300,
+          "unit": "ms"
+        }
+      }
+    },
+    "easing": {
+      "standard": {
+        "$type": "cubicBezier",
+        "$value": [0.25, 0.1, 0.25, 1]
+      },
+      "out": {
+        "$type": "cubicBezier",
+        "$value": [0, 0, 0.58, 1]
+      },
+      "linear": {
+        "$type": "cubicBezier",
+        "$value": [0, 0, 1, 1]
+      }
+    }
+  }
+}

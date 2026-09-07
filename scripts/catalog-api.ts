@@ -8,8 +8,9 @@ export interface CatalogReferenceApi {
 }
 
 /** Public authored styling hooks that cannot be derived from runtime code. */
-export const catalogReferenceApi: Partial<
-  Record<CatalogEntryName, CatalogReferenceApi>
+export const catalogReferenceApi: Record<
+  CatalogEntryName,
+  CatalogReferenceApi
 > = {
   direction: {
     attributes: ["align", "dir"],
@@ -33,6 +34,7 @@ export const catalogReferenceApi: Partial<
   checkbox: { attributes: ["checked", "disabled", "required"] },
   dialog: { attributes: ["command", "commandfor", "closedby", "dir", "size"] },
   input: { attributes: ["aria-invalid", "disabled", "type"] },
+  kbd: {},
   label: { attributes: ["for"], rootSelector: "label" },
   progress: { attributes: ["dir", "max", "value"] },
   "radio-group": {
@@ -123,6 +125,7 @@ export const catalogReferenceApi: Partial<
   item: { attributes: ["size", "variant"] },
   pagination: { attributes: ["aria-current", "aria-disabled", "dir"] },
   popover: { attributes: ["align", "popover", "popovertarget", "side"] },
+  skeleton: {},
   spinner: { attributes: ["size"] },
   stepper: { attributes: ["aria-current"], rootSelector: "nav.stepper" },
   toggle: { attributes: ["aria-disabled", "aria-pressed", "size", "variant"] },
@@ -184,6 +187,12 @@ export const catalogReferenceApi: Partial<
         "Width and height of calendar controls and day cells.",
     },
   },
+  carousel: {
+    cssVariables: {
+      "--carousel-gap": "Gap between slides; defaults to four spacing units.",
+      "--carousel-item-size": "Slide basis; defaults to `100%`.",
+    },
+  },
   combobox: {
     attributes: ["auto-highlight", "multiple", "open"],
     attributeDescriptions: {
@@ -194,6 +203,7 @@ export const catalogReferenceApi: Partial<
       open: "Initial or externally synchronized disclosure state.",
     },
   },
+  command: {},
   "context-menu": {
     attributes: ["align-offset", "side-offset"],
     attributeDescriptions: {
@@ -208,12 +218,10 @@ export const catalogReferenceApi: Partial<
       "side-offset": "Distance from the trigger in CSS pixels.",
     },
   },
-  carousel: {
-    cssVariables: {
-      "--carousel-gap": "Gap between slides; defaults to four spacing units.",
-      "--carousel-item-size": "Slide basis; defaults to `100%`.",
-    },
-  },
+  "hover-card": {},
+  menubar: {},
+  "navigation-menu": {},
+  "range-slider": {},
   resizable: {
     attributes: ["data-max-size", "data-min-size", "data-step", "orientation"],
     attributeDescriptions: {
@@ -234,7 +242,10 @@ export const catalogReferenceApi: Partial<
       variant: "Surface style: `sidebar`, `floating`, or `inset`.",
     },
   },
+  tabs: {},
+  toast: {},
   toolbar: { attributes: ["aria-label", "orientation"] },
+  tooltip: {},
   tree: {
     attributes: ["aria-label", "aria-multiselectable", "data-value"],
     attributeDescriptions: {

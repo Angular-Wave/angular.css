@@ -149,7 +149,7 @@ export function carouselDirective(): ng.Directive {
         setAttributeIfChanged(element, "orientation", getOrientation());
 
         items.forEach((item, index) => {
-          setAttributeIfChanged(item, "role", "group");
+          item.removeAttribute("role");
           setAttributeIfChanged(item, "aria-roledescription", "slide");
           setAttributeIfChanged(
             item,

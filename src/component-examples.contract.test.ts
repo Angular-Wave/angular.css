@@ -823,14 +823,14 @@ const contracts: Record<string, Contract> = {
   "data-table": async (page) => {
     const rows = page.locator("tbody tr").filter({ visible: true });
     const search = page.getByRole("searchbox", { name: "Search orders" });
-    await expect(rows).toHaveCount(3);
+    await expect(rows).toHaveCount(2);
     await search.fill("Grace");
     await expect(rows).toHaveCount(1);
     await expect(rows).toContainText("Grace Hopper");
     await search.fill("Missing");
     await expect(rows).toHaveCount(0);
     await expect(page.locator(".data-table > figure > p")).toBeVisible();
-    await expect(page.locator(".data-table > footer > output")).toHaveText(
+    await expect(page.locator(".data-table > footer output")).toHaveText(
       "0 orders",
     );
   },

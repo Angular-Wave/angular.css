@@ -11,6 +11,10 @@ AngularTS. Most interface elements are semantic HTML styled directly by CSS.
 TypeScript components are reserved for interactions that native HTML, CSS, and
 AngularTS do not already provide.
 
+AngularCSS is a customization system, not a design system. It provides a stable
+functional baseline and presentation controls; the application owns its brand,
+visual language, and product-specific design.
+
 ```html
 <button class="button" variant="outline">Save changes</button>
 ```
@@ -47,16 +51,15 @@ Complex components are composed from named parts rather than hidden templates:
 </details>
 ```
 
-You control the elements, content, AngularTS expressions, and Tailwind classes.
+You control the elements, content, AngularTS expressions, and application CSS.
 Each catalog page documents the authored HTML and any runtime behavior it needs.
 
 ## What is included
 
-- 55 documented entries split into foundations, elements, patterns, focused
+- 67 documented entries split into foundations, elements, patterns, focused
   behavioral components, and recipes.
 - TypeScript declarations generated from the canonical source.
-- A compiled CSS entrypoint with Radix color tokens and Tailwind-compatible
-  selectors.
+- A compiled CSS entrypoint and a DTCG 2025.10 customization token resolver.
 - Local UMD and ESM builds.
 - Browser-tested demos isolated from the documentation shell in iframes.
 

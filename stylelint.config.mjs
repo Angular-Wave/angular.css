@@ -6,8 +6,9 @@ export default {
     "docs/assets/angular.css",
     "docs/static/css/angular.css",
     "docs/static/css/docsy.css",
-    "docs/static/css/tailwind-preflight.css",
+    "docs/static/css/preflight.css",
     "docs/static/examples/applications/**/*.css",
+    "src/styles/generated/**",
     "public/**",
     "ui/**",
   ],
@@ -26,14 +27,8 @@ export default {
     },
   ],
   rules: {
-    "at-rule-no-unknown": [
-      true,
-      { ignoreAtRules: ["apply", "custom-variant", "theme"] },
-    ],
-    "at-rule-prelude-no-invalid": [
-      true,
-      { ignoreAtRules: ["apply", "custom-variant", "import", "theme"] },
-    ],
+    "at-rule-no-unknown": true,
+    "at-rule-prelude-no-invalid": [true, { ignoreAtRules: ["import"] }],
     "declaration-no-important": true,
     "import-notation": "string",
     "max-nesting-depth": 3,

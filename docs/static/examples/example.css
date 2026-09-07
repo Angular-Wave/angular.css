@@ -249,6 +249,10 @@ body {
     padding: 0;
   }
 
+  .sidebar-demo-toolbar {
+    justify-content: flex-end;
+  }
+
   .sidebar-demo-toolbar .button > span {
     position: absolute;
     width: 1px;
@@ -2024,7 +2028,7 @@ body .visually-hidden {
 }
 
 .alert-warning-demo > p {
-  color: var(--amber-11);
+  color: var(--amber-12);
 }
 
 .alert-rtl-demo {
@@ -2144,7 +2148,7 @@ body .visually-hidden {
 
 .badge-color-green.badge {
   background: var(--green-2);
-  color: var(--green-11);
+  color: var(--green-12);
 }
 
 .badge-color-sky.badge {

@@ -12,7 +12,8 @@
   background: var(--popover);
   color: var(--popover-foreground);
   padding: calc(var(--spacing) * 6);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--foreground) 10%, transparent);
+  box-shadow: 0 0 0 var(--border-width-default)
+    color-mix(in srgb, var(--foreground) 10%, transparent);
   outline: none;
   transform: translate(-50%, -50%);
 }
@@ -45,7 +46,7 @@
   align-items: center;
   justify-content: center;
   margin-block-end: calc(var(--spacing) * 2);
-  border-radius: calc(var(--radius) - 2px);
+  border-radius: var(--radius-md);
   background: var(--muted);
   color: var(--foreground);
 }
@@ -80,14 +81,14 @@
 .alert-dialog > dialog > header > p {
   color: var(--muted-foreground);
   font-size: var(--text-sm);
-  line-height: 1.5;
+  line-height: var(--leading-normal);
   text-wrap: balance;
 }
 
 .alert-dialog > dialog > header > p a {
   color: inherit;
   text-decoration-line: underline;
-  text-underline-offset: 3px;
+  text-underline-offset: calc(var(--spacing) * 0.75);
 }
 
 .alert-dialog > dialog > header > p a:hover {

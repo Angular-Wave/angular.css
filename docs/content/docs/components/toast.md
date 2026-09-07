@@ -67,7 +67,7 @@ Use native elements for authored structure. Component classes are optional visua
 | `aria-labelledby` | Input/output | ARIA relationship or state. |
 | `aria-live` | Input/output | ARIA relationship or state. |
 | `position` | Input/output | Placement token used by the component surface. |
-| `role` | Output | Explicit semantic role when native HTML does not provide one. |
+| `role` | Input/output | Explicit semantic role when native HTML does not provide one. |
 | `type` | Input/output | Component or native behavior variant. |
 
 `Input` attributes are read from authored HTML. `Output` attributes are maintained by AngularCSS for CSS and testing. `Input/output` attributes may be authored for a controlled initial state and are then synchronized by the directive.
@@ -100,9 +100,9 @@ content come from the application.
 
 ## Customization
 
-Target `[ng-toast]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
+Target `[ng-toast]`, semantic descendants, component classes, and generated state with ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.
 
-Read [Styling with Tailwind]({{< relref
-"/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state
+Read [Customization]({{< relref
+"/docs/get-started/customization" >}}) for layer order, design tokens, state
 variants, and iframe demo isolation.
 <!-- angularcss-reference:end -->

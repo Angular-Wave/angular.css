@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 
 const packageName = "@angular-wave/angular.ts";
+const verifyRegistryLatest = process.argv.includes("--registry-latest");
 const manifest = JSON.parse(readFileSync("package.json", "utf8"));
 const declaredVersion = manifest.dependencies?.[packageName];
 const failures = [];
@@ -23,7 +24,11 @@ if (!existsSync(installedManifestPath)) {
   ).version;
 }
 
-if (installedVersion && existsSync("package-lock.json")) {
+if (
+  installedVersion &&
+  existsSync("package-lock.json") &&
+  !verifyRegistryLatest
+) {
   const lockfile = JSON.parse(readFileSync("package-lock.json", "utf8"));
   const lockedDeclaration =
     lockfile.packages?.[""]?.dependencies?.[packageName];
@@ -43,7 +48,7 @@ if (installedVersion && existsSync("package-lock.json")) {
   }
 }
 
-if (installedVersion) {
+if (installedVersion && verifyRegistryLatest) {
   let latestVersion;
 
   try {
@@ -72,5 +77,7 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `AngularTS dependency policy passed: latest (${installedVersion}).`,
+  verifyRegistryLatest
+    ? `AngularTS registry compatibility target: latest (${installedVersion}).`
+    : `AngularTS dependency policy passed: latest (${installedVersion}).`,
 );

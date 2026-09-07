@@ -47,8 +47,8 @@
   display: grid;
   align-items: end;
   min-height: 12rem;
-  border-inline-start: 1px solid var(--border);
-  border-block-end: 1px solid var(--border);
+  border-inline-start: var(--border-width-default) solid var(--border);
+  border-block-end: var(--border-width-default) solid var(--border);
   padding: calc(var(--spacing) * 4);
 }
 
@@ -59,7 +59,7 @@
   background-image: repeating-linear-gradient(
     to bottom,
     transparent 0,
-    transparent calc(25% - 1px),
+    transparent calc(25% - var(--border-width-default)),
     var(--border) 25%
   );
   pointer-events: none;
@@ -67,7 +67,7 @@
 
 .chart:dir(rtl) > section {
   border-inline-start: 0;
-  border-inline-end: 1px solid var(--border);
+  border-inline-end: var(--border-width-default) solid var(--border);
   direction: rtl;
 }
 
@@ -101,14 +101,17 @@
   gap: calc(var(--spacing) * 1);
 }
 
+/* stylelint-disable declaration-block-no-duplicate-properties -- Typed attr() follows a Firefox-safe fallback. */
 .chart > section > div > span,
 .chart > section > ul > li > span {
   display: block;
   width: 100%;
   min-width: calc(var(--spacing) * 6);
+  height: var(--value, 50%);
   height: var(--value, attr(data-value type(<percentage>), 50%));
   border: 0;
-  border-radius: calc(var(--radius) - 2px) calc(var(--radius) - 2px) 0 0;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  background: var(--chart-color, var(--chart-1));
   background: var(
     --chart-color,
     attr(data-color type(<color>), var(--chart-1))
@@ -118,7 +121,8 @@
 .chart > ul > li > span:first-child {
   width: calc(var(--spacing) * 2.5);
   height: calc(var(--spacing) * 2.5);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
+  background: var(--chart-color, var(--chart-1));
   background: var(
     --chart-color,
     attr(data-color type(<color>), var(--chart-1))
@@ -138,7 +142,8 @@
   width: fit-content;
   min-width: 8rem;
   gap: calc(var(--spacing) * 1.5);
-  border: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
+  border: var(--border-width-default) solid
+    color-mix(in srgb, var(--border) 50%, transparent);
   border-radius: var(--radius);
   background: var(--background);
   color: var(--foreground);
@@ -164,35 +169,40 @@
   gap: calc(var(--spacing) * 2);
 }
 
-.chart output > dl > div > span:first-child {
+.chart output > dl > div > dt > span:first-child {
   width: calc(var(--spacing) * 2.5);
   height: calc(var(--spacing) * 2.5);
   flex: 0 0 auto;
-  border: 1px solid
+  border: var(--border-width-default) solid
     var(--chart-color, attr(data-color type(<color>), var(--chart-1)));
   border-radius: 2px;
+  background: var(--chart-color, var(--chart-1));
   background: var(
     --chart-color,
     attr(data-color type(<color>), var(--chart-1))
   );
 }
 
-.chart output > dl > div > span:first-child[indicator="line"] {
+.chart output > dl > div > dt > span:first-child[indicator="line"] {
   width: calc(var(--spacing) * 1);
   height: 100%;
 }
 
-.chart output > dl > div > span:first-child[indicator="dashed"] {
+.chart output > dl > div > dt > span:first-child[indicator="dashed"] {
   width: 0;
   height: 100%;
   border-width: 1.5px;
   border-style: dashed;
   background: transparent;
 }
+/* stylelint-enable declaration-block-no-duplicate-properties */
 
 .chart output dt {
+  display: flex;
   min-width: 0;
   flex: 1;
+  align-items: center;
+  gap: calc(var(--spacing) * 2);
   color: var(--muted-foreground);
 }
 

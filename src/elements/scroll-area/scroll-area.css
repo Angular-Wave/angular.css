@@ -7,7 +7,8 @@
 }
 
 .scroll-area:focus-visible {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+  box-shadow: 0 0 0 var(--focus-ring-width)
+    color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
 .scroll-area::-webkit-scrollbar {
@@ -20,8 +21,8 @@
 }
 
 .scroll-area::-webkit-scrollbar-thumb {
-  border: 1px solid transparent;
-  border-radius: 9999px;
+  border: var(--border-width-default) solid transparent;
+  border-radius: var(--radius-full);
   background: var(--border);
   background-clip: padding-box;
 }

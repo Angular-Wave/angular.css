@@ -24,7 +24,8 @@
 .breadcrumb a {
   color: var(--muted-foreground);
   text-decoration: none;
-  transition: color 150ms ease;
+  transition: color var(--motion-duration-deliberate)
+    var(--motion-easing-standard);
 }
 
 .breadcrumb a:hover {

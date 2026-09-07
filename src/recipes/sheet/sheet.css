@@ -12,7 +12,7 @@
   inset-block: 0;
   right: 0;
   left: auto;
-  border-left: 1px solid var(--border);
+  border-left: var(--border-width-default) solid var(--border);
 }
 
 .sheet > dialog[side="left"] {
@@ -22,7 +22,7 @@
   inset-block: 0;
   right: auto;
   left: 0;
-  border-right: 1px solid var(--border);
+  border-right: var(--border-width-default) solid var(--border);
 }
 
 .sheet > dialog[side="top"] {
@@ -31,7 +31,7 @@
   inset-block: 0 auto;
   inset-inline: 0;
   height: auto;
-  border-block-end: 1px solid var(--border);
+  border-block-end: var(--border-width-default) solid var(--border);
 }
 
 .sheet > dialog[side="bottom"] {
@@ -40,7 +40,7 @@
   inset-block: auto 0;
   inset-inline: 0;
   height: auto;
-  border-block-start: 1px solid var(--border);
+  border-block-start: var(--border-width-default) solid var(--border);
 }
 
 .sheet > dialog[size="half"] {

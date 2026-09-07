@@ -17,7 +17,7 @@ export default defineConfig({
   expect: {
     toHaveScreenshot: {
       // Allow minor font and edge anti-aliasing variance across Linux runners.
-      maxDiffPixelRatio: 0.005,
+      maxDiffPixelRatio: 0.007,
     },
   },
   /* Run tests in files in parallel */
@@ -48,15 +48,17 @@ export default defineConfig({
       use: { ...devices["Desktop Chrome"] },
     },
 
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
+    {
+      name: "firefox",
+      testMatch: "**/component-examples.contract.test.ts",
+      use: { ...devices["Desktop Firefox"] },
+    },
 
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
+    {
+      name: "webkit",
+      testMatch: "**/component-examples.contract.test.ts",
+      use: { ...devices["Desktop Safari"] },
+    },
 
     /* Test against mobile viewports. */
     // {

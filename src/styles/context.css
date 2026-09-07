@@ -1,0 +1,86 @@
+:where([data-density="compact"]) {
+  --spacing: 0.2188rem;
+  --size-control-xs: 1.375rem;
+  --size-control-sm: 1.75rem;
+  --size-control-md: 2rem;
+  --size-control-lg: 2.25rem;
+  --size-target-minimum: 2.25rem;
+}
+
+:where([data-density="comfortable"]) {
+  --spacing: 0.275rem;
+  --size-control-xs: 1.75rem;
+  --size-control-sm: 2.25rem;
+  --size-control-md: 2.5rem;
+  --size-control-lg: 2.75rem;
+  --size-target-minimum: 3rem;
+}
+
+:where([data-contrast="more"]) {
+  --border: color-mix(in srgb, var(--foreground) 55%, transparent);
+  --input: color-mix(in srgb, var(--foreground) 70%, transparent);
+  --ring: var(--foreground);
+  --focus-ring-width: var(--border-width-strong);
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --border: color-mix(in srgb, var(--foreground) 55%, transparent);
+    --input: color-mix(in srgb, var(--foreground) 70%, transparent);
+    --ring: var(--foreground);
+    --focus-ring-width: var(--border-width-strong);
+  }
+}
+
+:where([data-print="only"]) {
+  display: none;
+}
+
+@media print {
+  :root {
+    color-scheme: light;
+
+    --background: white;
+    --foreground: black;
+    --card: white;
+    --card-foreground: black;
+    --popover: white;
+    --popover-foreground: black;
+    --muted: #eee;
+    --muted-foreground: #333;
+    --border: #777;
+    --input: #555;
+    --ring: black;
+    --shadow-xs: none;
+    --shadow-sm: none;
+    --shadow-md: none;
+    --shadow-lg: none;
+    --motion-duration-fast: var(--motion-duration-instant);
+    --motion-duration-default: var(--motion-duration-instant);
+    --motion-duration-deliberate: var(--motion-duration-instant);
+    --motion-duration-layout: var(--motion-duration-instant);
+    --motion-duration-slow: var(--motion-duration-instant);
+  }
+
+  :where([data-print="exclude"]) {
+    /* stylelint-disable-next-line declaration-no-important -- Authored print exclusion must override component display. */
+    display: none !important;
+  }
+
+  :where([data-print="only"]) {
+    display: revert;
+  }
+
+  .scroll-area,
+  .data-table > figure,
+  figure:has(> table.table) {
+    max-width: none;
+    max-height: none;
+    overflow: visible;
+  }
+
+  :is(.card, .alert, .empty, dialog, figure:has(> table.table)) {
+    break-inside: avoid;
+    box-shadow: none;
+  }
+}

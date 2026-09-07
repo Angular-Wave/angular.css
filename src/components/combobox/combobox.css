@@ -11,14 +11,14 @@
 :is(.combobox, [ng-combobox]) > aside > header {
   display: flex;
   width: 100%;
-  height: calc(var(--spacing) * 8);
+  height: var(--size-control-md);
   align-items: center;
-  border: 1px solid var(--input);
-  border-radius: calc(var(--radius) - 2px);
+  border: var(--border-width-default) solid var(--input);
+  border-radius: var(--radius-md);
   background: transparent;
   transition:
-    border-color 120ms ease,
-    box-shadow 120ms ease;
+    border-color var(--motion-duration-default) var(--motion-easing-standard),
+    box-shadow var(--motion-duration-default) var(--motion-easing-standard);
 }
 
 :is(.combobox, [ng-combobox]) > aside > header {
@@ -32,13 +32,15 @@
 
 :is(.combobox, [ng-combobox]) :is(header, fieldset):focus-within {
   border-color: var(--ring);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+  box-shadow: 0 0 0 var(--focus-ring-width)
+    color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
 :is(.combobox, [ng-combobox]):has(input:is(:invalid, [aria-invalid="true"]))
   > :is(header, fieldset) {
   border-color: var(--error);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--error) 20%, transparent);
+  box-shadow: 0 0 0 var(--focus-ring-width)
+    color-mix(in srgb, var(--error) 20%, transparent);
 }
 
 :is(.combobox, [ng-combobox]) > header:has(input:disabled) {
@@ -81,7 +83,7 @@
   height: calc(var(--spacing) * 7);
   flex: 0 0 auto;
   border: 0;
-  border-radius: calc(var(--radius) - 4px);
+  border-radius: var(--radius-sm);
   background: transparent;
   color: var(--muted-foreground);
   padding: 0;
@@ -103,7 +105,7 @@
   button:is([value="clear"], [value="remove"])::after {
   position: absolute;
   width: calc(var(--spacing) * 2.5);
-  height: 1px;
+  height: var(--border-width-default);
   background: currentcolor;
   content: "";
   transform: rotate(45deg);
@@ -117,13 +119,16 @@
 :is(.combobox, [ng-combobox]) > aside {
   position: absolute;
   z-index: 50;
-  inset-block-start: var(--combobox-content-top, calc(100% + 6px));
+  inset-block-start: var(
+    --combobox-content-top,
+    calc(100% + var(--spacing) * 1.5)
+  );
   inset-inline-start: 0;
   display: block;
   width: var(--combobox-options-width, var(--combobox-anchor-width, 100%));
   min-width: var(--combobox-options-width, var(--combobox-anchor-width, 100%));
-  max-width: calc(100vw - 8px);
-  max-height: min(18rem, calc(100vh - 8px));
+  max-width: calc(100vw - var(--spacing) * 2);
+  max-height: min(18rem, calc(100dvh - var(--spacing) * 2));
   overflow: hidden;
   border: 0;
   border-radius: var(--radius);
@@ -131,12 +136,14 @@
   color: var(--popover-foreground);
   box-shadow:
     var(--shadow-md),
-    0 0 0 1px color-mix(in srgb, var(--foreground) 10%, transparent);
+    0 0 0 var(--border-width-default)
+      color-mix(in srgb, var(--foreground) 10%, transparent);
   isolation: isolate;
 }
 
 :is(.combobox, [ng-combobox]) > aside:where(:not([hidden])) {
-  animation: angularcss-surface-enter 120ms ease-out;
+  animation: angularcss-surface-enter var(--motion-duration-default)
+    var(--motion-easing-out);
 }
 
 :is(.combobox, [ng-combobox]):has(> fieldset) > aside {
@@ -195,7 +202,7 @@
   align-items: center;
   gap: calc(var(--spacing) * 2);
   border: 0;
-  border-radius: calc(var(--radius) - 4px);
+  border-radius: var(--radius-sm);
   background: transparent;
   color: var(--foreground);
   padding-block: calc(var(--spacing) * 1);
@@ -256,7 +263,7 @@
 }
 
 :is(.combobox, [ng-combobox]) > aside > div > section > hr {
-  height: 1px;
+  height: var(--border-width-default);
   margin: calc(var(--spacing) * 1) calc(var(--spacing) * -1);
   border: 0;
   background: var(--border);
@@ -266,18 +273,18 @@
   display: flex;
   width: 100%;
   min-width: 0;
-  min-height: calc(var(--spacing) * 8);
+  min-height: var(--size-control-sm);
   flex-wrap: wrap;
   align-items: center;
   gap: calc(var(--spacing) * 1);
-  border: 1px solid var(--input);
-  border-radius: calc(var(--radius) - 2px);
+  border: var(--border-width-default) solid var(--input);
+  border-radius: var(--radius-md);
   background: transparent;
   padding-block: calc(var(--spacing) * 1);
   padding-inline: calc(var(--spacing) * 2.5);
   transition:
-    border-color 120ms ease,
-    box-shadow 120ms ease;
+    border-color var(--motion-duration-default) var(--motion-easing-standard),
+    box-shadow var(--motion-duration-default) var(--motion-easing-standard);
 }
 
 :is(.combobox, [ng-combobox]) > fieldset:has(> span) {
@@ -287,7 +294,7 @@
 :is(.combobox, [ng-combobox]) > fieldset > span {
   display: inline-flex;
   width: fit-content;
-  height: 21px;
+  height: calc(var(--spacing) * 6);
   align-items: center;
   justify-content: center;
   gap: calc(var(--spacing) * 1);
@@ -311,12 +318,14 @@
 }
 
 :is(.combobox, [ng-combobox]) > fieldset > span.ng-enter {
-  animation: angularcss-structural-enter 140ms ease-out;
+  animation: angularcss-structural-enter var(--motion-duration-default)
+    var(--motion-easing-out);
 }
 
 :is(.combobox, [ng-combobox]) > fieldset > span.ng-leave-active {
   opacity: 0;
-  transition: opacity 100ms ease;
+  transition: opacity var(--motion-duration-default)
+    var(--motion-easing-standard);
 }
 
 :is(.combobox, [ng-combobox]) > fieldset > span > button[value="remove"] {

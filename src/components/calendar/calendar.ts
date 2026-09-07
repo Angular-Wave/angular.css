@@ -312,7 +312,7 @@ export function calendarDirective(): ng.Directive {
               value === rangeStart ||
               value === rangeEnd
             ) {
-              day.setAttribute("aria-selected", "true");
+              day.setAttribute("aria-pressed", "true");
             }
             if (value === rangeStart)
               day.setAttribute("data-range-start", "true");
@@ -324,7 +324,7 @@ export function calendarDirective(): ng.Directive {
               value < rangeEnd
             ) {
               day.setAttribute("data-range-middle", "true");
-              day.setAttribute("aria-selected", "true");
+              day.setAttribute("aria-pressed", "true");
             }
             if (value === todayValue) day.setAttribute("aria-current", "date");
             if (bookedDates.has(value)) day.setAttribute("data-booked", "true");
@@ -395,7 +395,7 @@ export function calendarDirective(): ng.Directive {
                     value < rangeEnd,
                   )
                 : value === singleValue;
-          setAttributeIfChanged(day, "aria-selected", String(selected));
+          setAttributeIfChanged(day, "aria-pressed", String(selected));
           if (selectionMode === "range") {
             setAttributeIfChanged(
               day,
@@ -734,8 +734,8 @@ export function calendarDirective(): ng.Directive {
           days.find((day) => getDayValue(day) === requestedValue) ??
           days.find(
             (day) =>
-              day.getAttribute("aria-selected") === "true" ||
-              day.getAttribute("aria-selected") === "true",
+              day.getAttribute("aria-pressed") === "true" ||
+              day.getAttribute("aria-pressed") === "true",
           );
         if (selected && selectionMode === "single") {
           selectDay(selected, false);
@@ -760,7 +760,7 @@ export function calendarDirective(): ng.Directive {
         attributes: true,
         attributeFilter: [
           "aria-disabled",
-          "aria-selected",
+          "aria-pressed",
           "data-disabled-after",
           "data-disabled-before",
           "data-disabled-dates",

@@ -158,6 +158,7 @@ export function commandDirective(): ng.Directive {
           if (!heading.id) {
             heading.id = `command-group-heading-${String(commandIdCounter++)}`;
           }
+          setAttributeIfChanged(heading, "role", "presentation");
           setAttributeIfChanged(group, "aria-labelledby", heading.id);
         });
         queryOwnedAll<HTMLElement>(
@@ -165,6 +166,7 @@ export function commandDirective(): ng.Directive {
           rootSelector,
           separatorSelector,
         ).forEach((separator) => {
+          setAttributeIfChanged(separator, "role", "presentation");
           separator.removeAttribute("aria-orientation");
         });
         queryOwnedAll<HTMLElement>(

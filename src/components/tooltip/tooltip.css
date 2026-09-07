@@ -17,7 +17,7 @@
   max-width: 18rem;
   align-items: center;
   gap: calc(var(--spacing) * 1.5);
-  border-radius: calc(var(--radius) - 2px);
+  border-radius: var(--radius-md);
   background: var(--primary);
   color: var(--primary-foreground);
   padding: calc(var(--spacing) * 1.5) calc(var(--spacing) * 3);
@@ -29,8 +29,8 @@
     translate(var(--tooltip-motion-x, 0), var(--tooltip-motion-y, 2px))
     scale(0.98);
   transition:
-    opacity 150ms ease,
-    transform 150ms ease;
+    opacity var(--motion-duration-deliberate) var(--motion-easing-standard),
+    transform var(--motion-duration-deliberate) var(--motion-easing-standard);
 }
 
 :is(.tooltip, [ng-tooltip]) > :last-child:dir(rtl) {
@@ -121,6 +121,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   :is(.tooltip, [ng-tooltip]) > :last-child {
-    transition-duration: 0s;
+    transition-duration: var(--motion-duration-instant);
   }
 }

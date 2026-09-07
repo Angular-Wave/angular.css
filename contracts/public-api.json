@@ -1,0 +1,1395 @@
+{
+  "version": 1,
+  "module": "angular.css",
+  "customization": {
+    "format": "2025.10",
+    "contexts": [
+      "data-contrast=more",
+      "data-density=comfortable",
+      "data-density=compact",
+      "data-print=exclude",
+      "data-print=only"
+    ],
+    "variables": [
+      "--accent",
+      "--accent-foreground",
+      "--amber-1",
+      "--amber-10",
+      "--amber-11",
+      "--amber-12",
+      "--amber-2",
+      "--amber-3",
+      "--amber-4",
+      "--amber-5",
+      "--amber-6",
+      "--amber-7",
+      "--amber-8",
+      "--amber-9",
+      "--background",
+      "--blue-1",
+      "--blue-10",
+      "--blue-11",
+      "--blue-12",
+      "--blue-2",
+      "--blue-3",
+      "--blue-4",
+      "--blue-5",
+      "--blue-6",
+      "--blue-7",
+      "--blue-8",
+      "--blue-9",
+      "--border",
+      "--border-width-default",
+      "--border-width-strong",
+      "--card",
+      "--card-foreground",
+      "--chart-1",
+      "--chart-2",
+      "--chart-3",
+      "--chart-4",
+      "--chart-5",
+      "--cyan-1",
+      "--cyan-10",
+      "--cyan-11",
+      "--cyan-12",
+      "--cyan-2",
+      "--cyan-3",
+      "--cyan-4",
+      "--cyan-5",
+      "--cyan-6",
+      "--cyan-7",
+      "--cyan-8",
+      "--cyan-9",
+      "--error",
+      "--error-foreground",
+      "--focus-ring-offset",
+      "--focus-ring-width",
+      "--font-mono",
+      "--font-sans",
+      "--font-weight-bold",
+      "--font-weight-medium",
+      "--font-weight-normal",
+      "--font-weight-semibold",
+      "--foreground",
+      "--green-1",
+      "--green-10",
+      "--green-11",
+      "--green-12",
+      "--green-2",
+      "--green-3",
+      "--green-4",
+      "--green-5",
+      "--green-6",
+      "--green-7",
+      "--green-8",
+      "--green-9",
+      "--info",
+      "--info-foreground",
+      "--input",
+      "--leading-none",
+      "--leading-normal",
+      "--leading-relaxed",
+      "--leading-sm",
+      "--leading-snug",
+      "--leading-tight",
+      "--motion-duration-default",
+      "--motion-duration-deliberate",
+      "--motion-duration-fast",
+      "--motion-duration-instant",
+      "--motion-duration-layout",
+      "--motion-duration-slow",
+      "--motion-easing-linear",
+      "--motion-easing-out",
+      "--motion-easing-standard",
+      "--muted",
+      "--muted-foreground",
+      "--popover",
+      "--popover-foreground",
+      "--primary",
+      "--primary-foreground",
+      "--radius",
+      "--radius-full",
+      "--radius-lg",
+      "--radius-md",
+      "--radius-sm",
+      "--radius-xl",
+      "--red-1",
+      "--red-10",
+      "--red-11",
+      "--red-12",
+      "--red-2",
+      "--red-3",
+      "--red-4",
+      "--red-5",
+      "--red-6",
+      "--red-7",
+      "--red-8",
+      "--red-9",
+      "--ring",
+      "--secondary",
+      "--secondary-foreground",
+      "--shadow-lg",
+      "--shadow-md",
+      "--shadow-sm",
+      "--shadow-xs",
+      "--sidebar",
+      "--sidebar-accent",
+      "--sidebar-accent-foreground",
+      "--sidebar-border",
+      "--sidebar-foreground",
+      "--sidebar-primary",
+      "--sidebar-primary-foreground",
+      "--sidebar-ring",
+      "--size-control-lg",
+      "--size-control-md",
+      "--size-control-sm",
+      "--size-control-xs",
+      "--size-icon-lg",
+      "--size-icon-md",
+      "--size-icon-sm",
+      "--size-icon-xs",
+      "--size-target-minimum",
+      "--slate-1",
+      "--slate-10",
+      "--slate-11",
+      "--slate-12",
+      "--slate-2",
+      "--slate-3",
+      "--slate-4",
+      "--slate-5",
+      "--slate-6",
+      "--slate-7",
+      "--slate-8",
+      "--slate-9",
+      "--space-0-5",
+      "--space-1",
+      "--space-1-5",
+      "--space-10",
+      "--space-11",
+      "--space-12",
+      "--space-14",
+      "--space-16",
+      "--space-18",
+      "--space-2",
+      "--space-2-5",
+      "--space-2-75",
+      "--space-24",
+      "--space-3",
+      "--space-3-5",
+      "--space-32",
+      "--space-4",
+      "--space-40",
+      "--space-5",
+      "--space-6",
+      "--space-7",
+      "--space-72",
+      "--space-8",
+      "--space-9",
+      "--spacing",
+      "--success",
+      "--success-foreground",
+      "--text-2xl",
+      "--text-base",
+      "--text-lg",
+      "--text-sm",
+      "--text-xl",
+      "--text-xs",
+      "--violet-1",
+      "--violet-10",
+      "--violet-11",
+      "--violet-12",
+      "--violet-2",
+      "--violet-3",
+      "--violet-4",
+      "--violet-5",
+      "--violet-6",
+      "--violet-7",
+      "--violet-8",
+      "--violet-9",
+      "--warning",
+      "--warning-foreground"
+    ]
+  },
+  "entries": {
+    "accordion": {
+      "attributes": [
+        "inert",
+        "name",
+        "open"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".accordion"
+      ]
+    },
+    "alert": {
+      "attributes": [
+        "variant"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".alert"
+      ]
+    },
+    "alert-dialog": {
+      "attributes": [
+        "size"
+      ],
+      "category": "recipes",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".alert-dialog"
+      ]
+    },
+    "application-shell": {
+      "attributes": [],
+      "category": "recipes",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".application-shell"
+      ]
+    },
+    "aspect-ratio": {
+      "attributes": [
+        "ratio"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [
+        "--ratio"
+      ],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".aspect-ratio"
+      ]
+    },
+    "avatar": {
+      "attributes": [
+        "size",
+        "variant"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".avatar"
+      ]
+    },
+    "badge": {
+      "attributes": [
+        "icon",
+        "variant"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".badge"
+      ]
+    },
+    "breadcrumb": {
+      "attributes": [
+        "aria-current",
+        "dir"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".breadcrumb"
+      ]
+    },
+    "button": {
+      "attributes": [
+        "aria-disabled",
+        "aria-haspopup",
+        "aria-invalid",
+        "icon",
+        "size",
+        "variant"
+      ],
+      "category": "elements",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".button"
+      ]
+    },
+    "button-group": {
+      "attributes": [
+        "aria-orientation",
+        "orientation"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".button-group"
+      ]
+    },
+    "calendar": {
+      "attributes": [
+        "aria-current",
+        "aria-disabled",
+        "aria-label",
+        "aria-labelledby",
+        "aria-live",
+        "aria-pressed",
+        "data-booked",
+        "data-booked-dates",
+        "data-calendar-generated",
+        "data-calendar-preset",
+        "data-caption-layout",
+        "data-columns",
+        "data-disabled-after",
+        "data-disabled-before",
+        "data-disabled-dates",
+        "data-end-year",
+        "data-min-nights",
+        "data-month",
+        "data-months",
+        "data-number-of-months",
+        "data-outside",
+        "data-range-end",
+        "data-range-end-value",
+        "data-range-invalid",
+        "data-range-middle",
+        "data-range-start",
+        "data-range-start-value",
+        "data-selection-mode",
+        "data-show-outside-days",
+        "data-show-week-numbers",
+        "data-start-year",
+        "data-value",
+        "data-values",
+        "data-week-start",
+        "dir",
+        "lang",
+        "selected",
+        "tabindex",
+        "value"
+      ],
+      "category": "components",
+      "cssCustomProperties": [
+        "--calendar-cell-size"
+      ],
+      "events": [
+        "angularcss:calendar-month-change",
+        "angularcss:calendar-range-invalid",
+        "angularcss:calendar-select"
+      ],
+      "runtime": true,
+      "selectors": [
+        "ng-calendar"
+      ]
+    },
+    "card": {
+      "attributes": [
+        "size"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [
+        "--card-padding-block"
+      ],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".card"
+      ]
+    },
+    "carousel": {
+      "attributes": [
+        "align",
+        "aria-current",
+        "aria-disabled",
+        "aria-hidden",
+        "aria-label",
+        "aria-roledescription",
+        "autoplay",
+        "autoplay-delay",
+        "contain-scroll",
+        "dir",
+        "drag-free",
+        "draggable",
+        "loop",
+        "orientation",
+        "role",
+        "skip-snaps",
+        "slides-to-scroll",
+        "tabindex"
+      ],
+      "category": "components",
+      "cssCustomProperties": [
+        "--carousel-gap",
+        "--carousel-item-size"
+      ],
+      "events": [
+        "angularcss:carousel-change",
+        "angularcss:carousel-ready"
+      ],
+      "runtime": true,
+      "selectors": [
+        "ng-carousel"
+      ]
+    },
+    "chart": {
+      "attributes": [
+        "data-color",
+        "data-value",
+        "indicator"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [
+        "--chart-color",
+        "--value"
+      ],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".chart"
+      ]
+    },
+    "checkbox": {
+      "attributes": [
+        "checked",
+        "disabled",
+        "required"
+      ],
+      "category": "elements",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".checkbox"
+      ]
+    },
+    "combobox": {
+      "attributes": [
+        "aria-activedescendant",
+        "aria-autocomplete",
+        "aria-controls",
+        "aria-disabled",
+        "aria-expanded",
+        "aria-haspopup",
+        "aria-hidden",
+        "aria-invalid",
+        "aria-label",
+        "aria-labelledby",
+        "aria-multiselectable",
+        "aria-orientation",
+        "aria-selected",
+        "auto-highlight",
+        "data-highlighted",
+        "data-value",
+        "dir",
+        "disabled",
+        "hidden",
+        "multiple",
+        "open",
+        "required",
+        "role",
+        "side",
+        "tabindex",
+        "type"
+      ],
+      "category": "components",
+      "cssCustomProperties": [
+        "--combobox-anchor-width",
+        "--combobox-content-top"
+      ],
+      "events": [
+        "angularcss:combobox-clear",
+        "angularcss:combobox-open-change",
+        "angularcss:combobox-remove-last",
+        "angularcss:combobox-select"
+      ],
+      "runtime": true,
+      "selectors": [
+        "ng-combobox"
+      ]
+    },
+    "command": {
+      "attributes": [
+        "aria-activedescendant",
+        "aria-autocomplete",
+        "aria-controls",
+        "aria-disabled",
+        "aria-expanded",
+        "aria-hidden",
+        "aria-labelledby",
+        "aria-orientation",
+        "aria-selected",
+        "dir",
+        "disabled",
+        "hidden",
+        "role",
+        "tabindex"
+      ],
+      "category": "components",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": true,
+      "selectors": [
+        "ng-command"
+      ]
+    },
+    "context-menu": {
+      "attributes": [
+        "align",
+        "align-offset",
+        "aria-checked",
+        "aria-controls",
+        "aria-disabled",
+        "aria-expanded",
+        "aria-haspopup",
+        "aria-hidden",
+        "dir",
+        "disabled",
+        "open",
+        "role",
+        "side",
+        "side-offset",
+        "tabindex"
+      ],
+      "category": "components",
+      "cssCustomProperties": [
+        "--context-menu-available-height",
+        "--context-menu-left",
+        "--context-menu-top"
+      ],
+      "events": [
+        "angularcss:context-menu-select"
+      ],
+      "runtime": true,
+      "selectors": [
+        "ng-context-menu"
+      ]
+    },
+    "data-table": {
+      "attributes": [
+        "aria-selected",
+        "aria-sort"
+      ],
+      "category": "recipes",
+      "cssCustomProperties": [
+        "--data-table-max-height"
+      ],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".data-table"
+      ]
+    },
+    "date-picker": {
+      "attributes": [
+        "aria-invalid"
+      ],
+      "category": "recipes",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".date-picker"
+      ]
+    },
+    "description-list": {
+      "attributes": [
+        "orientation"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        "dl.description-list"
+      ]
+    },
+    "dialog": {
+      "attributes": [
+        "closedby",
+        "command",
+        "commandfor",
+        "dir",
+        "size"
+      ],
+      "category": "elements",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".dialog"
+      ]
+    },
+    "direction": {
+      "attributes": [
+        "align",
+        "dir"
+      ],
+      "category": "foundations",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".direction"
+      ]
+    },
+    "disclosure": {
+      "attributes": [
+        "open"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".disclosure"
+      ]
+    },
+    "drawer": {
+      "attributes": [
+        "dir",
+        "side",
+        "size"
+      ],
+      "category": "recipes",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".drawer"
+      ]
+    },
+    "dropdown-menu": {
+      "attributes": [
+        "align",
+        "align-offset",
+        "aria-checked",
+        "aria-controls",
+        "aria-disabled",
+        "aria-expanded",
+        "aria-haspopup",
+        "aria-hidden",
+        "aria-labelledby",
+        "dir",
+        "disabled",
+        "open",
+        "role",
+        "side",
+        "side-offset",
+        "size",
+        "tabindex"
+      ],
+      "category": "components",
+      "cssCustomProperties": [
+        "--dropdown-menu-available-height"
+      ],
+      "events": [],
+      "runtime": true,
+      "selectors": [
+        "ng-dropdown-menu"
+      ]
+    },
+    "empty": {
+      "attributes": [
+        "variant"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".empty"
+      ]
+    },
+    "field": {
+      "attributes": [
+        "aria-invalid",
+        "orientation",
+        "variant"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".field"
+      ]
+    },
+    "file-upload": {
+      "attributes": [
+        "accept",
+        "dragging",
+        "multiple"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".file-upload"
+      ]
+    },
+    "filter-bar": {
+      "attributes": [],
+      "category": "patterns",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        "form.filter-bar"
+      ]
+    },
+    "form-layout": {
+      "attributes": [
+        "columns"
+      ],
+      "category": "recipes",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        "form.form-layout"
+      ]
+    },
+    "hover-card": {
+      "attributes": [
+        "aria-controls",
+        "aria-expanded",
+        "aria-hidden",
+        "close-delay",
+        "open",
+        "open-delay",
+        "side"
+      ],
+      "category": "components",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": true,
+      "selectors": [
+        "ng-hover-card"
+      ]
+    },
+    "input": {
+      "attributes": [
+        "aria-invalid",
+        "disabled",
+        "type"
+      ],
+      "category": "elements",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".input"
+      ]
+    },
+    "input-group": {
+      "attributes": [
+        "align",
+        "aria-invalid",
+        "border",
+        "size"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".input-group"
+      ]
+    },
+    "input-otp": {
+      "attributes": [
+        "aria-invalid",
+        "maxlength",
+        "pattern",
+        "size"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [
+        "--otp-cell-size"
+      ],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".input-otp"
+      ]
+    },
+    "item": {
+      "attributes": [
+        "size",
+        "variant"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".item"
+      ]
+    },
+    "kbd": {
+      "attributes": [],
+      "category": "elements",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".kbd"
+      ]
+    },
+    "label": {
+      "attributes": [
+        "for"
+      ],
+      "category": "elements",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        "label"
+      ]
+    },
+    "master-detail": {
+      "attributes": [
+        "orientation"
+      ],
+      "category": "recipes",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".master-detail"
+      ]
+    },
+    "menubar": {
+      "attributes": [
+        "aria-checked",
+        "aria-controls",
+        "aria-expanded",
+        "aria-haspopup",
+        "aria-hidden",
+        "aria-labelledby",
+        "dir",
+        "open",
+        "role",
+        "tabindex"
+      ],
+      "category": "components",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": true,
+      "selectors": [
+        "ng-menubar"
+      ]
+    },
+    "navigation-menu": {
+      "attributes": [
+        "align",
+        "aria-controls",
+        "aria-expanded",
+        "aria-haspopup",
+        "aria-hidden",
+        "aria-labelledby",
+        "dir",
+        "disabled",
+        "open",
+        "role"
+      ],
+      "category": "components",
+      "cssCustomProperties": [
+        "--navigation-menu-content-offset"
+      ],
+      "events": [],
+      "runtime": true,
+      "selectors": [
+        "ng-navigation-menu"
+      ]
+    },
+    "pagination": {
+      "attributes": [
+        "aria-current",
+        "aria-disabled",
+        "dir"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".pagination"
+      ]
+    },
+    "popover": {
+      "attributes": [
+        "align",
+        "popover",
+        "popovertarget",
+        "side"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".popover"
+      ]
+    },
+    "progress": {
+      "attributes": [
+        "dir",
+        "max",
+        "value"
+      ],
+      "category": "elements",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".progress"
+      ]
+    },
+    "radio-group": {
+      "attributes": [
+        "aria-invalid",
+        "checked",
+        "dir",
+        "disabled",
+        "name",
+        "required",
+        "value"
+      ],
+      "category": "elements",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".radio-group"
+      ]
+    },
+    "range": {
+      "attributes": [
+        "disabled",
+        "max",
+        "min",
+        "orientation",
+        "step",
+        "value"
+      ],
+      "category": "elements",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        "input[type=\"range\"]"
+      ]
+    },
+    "range-slider": {
+      "attributes": [
+        "aria-orientation",
+        "dir",
+        "max",
+        "min",
+        "orientation"
+      ],
+      "category": "components",
+      "cssCustomProperties": [
+        "--range-end",
+        "--range-start",
+        "--value"
+      ],
+      "events": [],
+      "runtime": true,
+      "selectors": [
+        "ng-range-slider"
+      ]
+    },
+    "resizable": {
+      "attributes": [
+        "aria-controls",
+        "aria-disabled",
+        "aria-orientation",
+        "aria-valuemax",
+        "aria-valuemin",
+        "aria-valuenow",
+        "data-max-size",
+        "data-min-size",
+        "data-resizing",
+        "data-step",
+        "dir",
+        "orientation",
+        "tabindex"
+      ],
+      "category": "components",
+      "cssCustomProperties": [
+        "--panel-size"
+      ],
+      "events": [],
+      "runtime": true,
+      "selectors": [
+        "ng-resizable-panel-group"
+      ]
+    },
+    "scroll-area": {
+      "attributes": [
+        "dir",
+        "tabindex"
+      ],
+      "category": "elements",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".scroll-area"
+      ]
+    },
+    "select": {
+      "attributes": [
+        "aria-invalid",
+        "dir",
+        "disabled",
+        "multiple",
+        "name",
+        "required",
+        "size"
+      ],
+      "category": "elements",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        "select"
+      ]
+    },
+    "separator": {
+      "attributes": [
+        "aria-orientation"
+      ],
+      "category": "elements",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".separator"
+      ]
+    },
+    "sheet": {
+      "attributes": [
+        "command",
+        "dir",
+        "side",
+        "size"
+      ],
+      "category": "recipes",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".sheet"
+      ]
+    },
+    "sidebar": {
+      "attributes": [
+        "aria-controls",
+        "aria-current",
+        "aria-expanded",
+        "aria-hidden",
+        "aria-labelledby",
+        "collapsed",
+        "collapsible",
+        "data-variant",
+        "dir",
+        "ng-click",
+        "responsive",
+        "role",
+        "side",
+        "type",
+        "variant"
+      ],
+      "category": "components",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": true,
+      "selectors": [
+        "ng-sidebar"
+      ]
+    },
+    "skeleton": {
+      "attributes": [],
+      "category": "patterns",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".skeleton"
+      ]
+    },
+    "spinner": {
+      "attributes": [
+        "size"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".spinner"
+      ]
+    },
+    "stepper": {
+      "attributes": [
+        "aria-current"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        "nav.stepper"
+      ]
+    },
+    "switch": {
+      "attributes": [
+        "checked",
+        "disabled",
+        "required",
+        "size"
+      ],
+      "category": "elements",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".switch"
+      ]
+    },
+    "table": {
+      "attributes": [
+        "aria-selected"
+      ],
+      "category": "elements",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".table"
+      ]
+    },
+    "tabs": {
+      "attributes": [
+        "aria-controls",
+        "aria-disabled",
+        "aria-hidden",
+        "aria-labelledby",
+        "aria-orientation",
+        "aria-selected",
+        "dir",
+        "disabled",
+        "orientation",
+        "role",
+        "tabindex"
+      ],
+      "category": "components",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": true,
+      "selectors": [
+        "ng-tabs"
+      ]
+    },
+    "textarea": {
+      "attributes": [
+        "aria-invalid",
+        "disabled",
+        "required"
+      ],
+      "category": "elements",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".textarea"
+      ]
+    },
+    "toast": {
+      "attributes": [
+        "aria-atomic",
+        "aria-describedby",
+        "aria-label",
+        "aria-labelledby",
+        "aria-live",
+        "position",
+        "role",
+        "type"
+      ],
+      "category": "components",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": true,
+      "selectors": [
+        "ng-toast"
+      ]
+    },
+    "toggle": {
+      "attributes": [
+        "aria-disabled",
+        "aria-pressed",
+        "size",
+        "variant"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".toggle"
+      ]
+    },
+    "toggle-group": {
+      "attributes": [
+        "orientation",
+        "size",
+        "spacing",
+        "variant"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [
+        "--toggle-group-gap"
+      ],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".toggle-group"
+      ]
+    },
+    "toolbar": {
+      "attributes": [
+        "aria-disabled",
+        "aria-label",
+        "aria-orientation",
+        "dir",
+        "disabled",
+        "hidden",
+        "orientation",
+        "role",
+        "tabindex"
+      ],
+      "category": "components",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": true,
+      "selectors": [
+        "ng-toolbar"
+      ]
+    },
+    "tooltip": {
+      "attributes": [
+        "aria-describedby",
+        "aria-hidden",
+        "open",
+        "role",
+        "side"
+      ],
+      "category": "components",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": true,
+      "selectors": [
+        "ng-tooltip"
+      ]
+    },
+    "tree": {
+      "attributes": [
+        "aria-disabled",
+        "aria-expanded",
+        "aria-label",
+        "aria-labelledby",
+        "aria-multiselectable",
+        "aria-selected",
+        "data-value",
+        "disabled",
+        "hidden",
+        "id",
+        "role",
+        "tabindex"
+      ],
+      "category": "components",
+      "cssCustomProperties": [],
+      "events": [
+        "angularcss:tree-select"
+      ],
+      "runtime": true,
+      "selectors": [
+        "ng-tree"
+      ]
+    },
+    "validation-summary": {
+      "attributes": [
+        "aria-live",
+        "tabindex"
+      ],
+      "category": "patterns",
+      "cssCustomProperties": [],
+      "events": [],
+      "runtime": false,
+      "selectors": [
+        ".validation-summary"
+      ]
+    }
+  },
+  "javascript": {
+    "directives": [
+      "ngCalendar",
+      "ngCarousel",
+      "ngCombobox",
+      "ngCommand",
+      "ngContextMenu",
+      "ngDropdownMenu",
+      "ngHoverCard",
+      "ngMenubar",
+      "ngNavigationMenu",
+      "ngRangeSlider",
+      "ngResizablePanelGroup",
+      "ngSidebar",
+      "ngTabs",
+      "ngToast",
+      "ngToolbar",
+      "ngTooltip",
+      "ngTree"
+    ],
+    "exports": [
+      "angular",
+      "AngularCssCustomEvent",
+      "AngularCssDirective",
+      "angularCssDirectives",
+      "AngularCssEventDetailMap",
+      "AngularCssEventName",
+      "angularCssModuleName",
+      "CalendarMonthChangeDetail",
+      "CalendarRangeInvalidDetail",
+      "CalendarSelectDetail",
+      "CalendarSelectionMode",
+      "CarouselChangeDetail",
+      "ComboboxOpenChangeDetail",
+      "ComboboxSelectDetail",
+      "ContextMenuSelectDetail",
+      "registerAngularCss",
+      "TreeSelectDetail"
+    ]
+  }
+}

@@ -20,9 +20,26 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  release-preflight:
+    name: Validate npm release credentials
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          registry-url: https://registry.npmjs.org/
+          package-manager-cache: false
+
+      - name: Verify npm package access
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm whoami
+
   verify:
     name: Verify release commit
     if: github.event_name == 'push'
+    needs: release-preflight
     uses: ./.github/workflows/ci.yml
     permissions:
       contents: read
@@ -52,7 +69,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
           package-manager-cache: false
 
-      - name: Install trusted-publishing npm version
+      - name: Install release npm version
         run: npm install --global npm@11.18.0
 
       - name: Validate release tag
@@ -70,16 +87,6 @@ jobs:
         run: |
           echo "${{ steps.release.outputs.name }}@${{ steps.release.outputs.version }} is already published" >&2
           exit 1
-
-      - name: Require bootstrap token for the first npm release
-        if: steps.registry.outputs.package_exists != 'true'
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          if [[ -z "$NPM_TOKEN" ]]; then
-            echo "NPM_TOKEN is required to create the first npm package release." >&2
-            exit 1
-          fi
 
       - name: Extract release notes
         env:
@@ -145,10 +152,13 @@ jobs:
       - name: Publish exact tarball to npm
         if: steps.registry.outputs.version_exists != 'true'
         env:
-          NODE_AUTH_TOKEN: ${{ steps.registry.outputs.package_exists != 'true' && secrets.NPM_TOKEN || '' }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_TAG: ${{ steps.release.outputs.npm_tag }}
           TARBALL: ${{ steps.package.outputs.tarball }}
         run: npm publish "./$TARBALL" --access public --tag "$NPM_TAG" --provenance
+
+      - name: Verify the published npm artifact
+        run: node scripts/release.mjs verify-registry "$RUNNER_TEMP/npm-pack.json"
 
       - name: Publish GitHub Release
         env:

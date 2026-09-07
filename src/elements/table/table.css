@@ -19,8 +19,9 @@
   }
 
   tr {
-    border-bottom: 1px solid var(--border);
-    transition: background-color 150ms ease;
+    border-bottom: var(--border-width-default) solid var(--border);
+    transition: background-color var(--motion-duration-deliberate)
+      var(--motion-easing-standard);
   }
 
   tr:hover {
@@ -32,14 +33,16 @@
   }
 
   tr:is(.ng-enter, .ng-move) {
-    animation: angularcss-structural-enter 140ms ease-out;
+    animation: angularcss-structural-enter var(--motion-duration-default)
+      var(--motion-easing-out);
   }
 
   tr.ng-leave-active {
     opacity: 0;
     transition:
-      background-color 150ms ease,
-      opacity 100ms ease;
+      background-color var(--motion-duration-deliberate)
+        var(--motion-easing-standard),
+      opacity var(--motion-duration-default) var(--motion-easing-standard);
   }
 
   tbody > tr:last-child {
@@ -47,7 +50,7 @@
   }
 
   th {
-    height: calc(var(--spacing) * 10);
+    height: var(--size-control-lg);
     padding-inline: calc(var(--spacing) * 2);
     text-align: left;
     vertical-align: middle;
@@ -67,7 +70,7 @@
   }
 
   tfoot {
-    border-top: 1px solid var(--border);
+    border-top: var(--border-width-default) solid var(--border);
     background: var(--muted);
     font-weight: var(--font-weight-medium);
   }
@@ -76,7 +79,7 @@
     tr,
     tr.ng-leave-active {
       animation: none;
-      transition-duration: 0s;
+      transition-duration: var(--motion-duration-instant);
     }
   }
 

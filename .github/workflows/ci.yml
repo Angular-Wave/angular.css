@@ -6,6 +6,8 @@ permissions:
 on:
   workflow_call:
   workflow_dispatch:
+  schedule:
+    - cron: "17 5 * * *"
   push:
     branches:
       - master
@@ -99,8 +101,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Chromium
-        run: npx playwright install --with-deps chromium
+      - name: Install the current AngularTS release
+        run: npm install --no-save --package-lock=false @angular-wave/angular.ts@latest
+
+      - name: Report the AngularTS compatibility target
+        run: npm run check:angular-ts-version -- --registry-latest
+
+      - name: Install supported browsers
+        run: npx playwright install --with-deps chromium firefox webkit
 
       - name: Run browser tests
         run: npm test

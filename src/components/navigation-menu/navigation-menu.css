@@ -25,7 +25,7 @@
 :is(.navigation-menu, [ng-navigation-menu]) > ul > li > :is(button, a) {
   display: inline-flex;
   width: max-content;
-  height: calc(var(--spacing) * 9);
+  height: var(--size-control-md);
   align-items: center;
   justify-content: center;
   gap: calc(var(--spacing) * 1);
@@ -42,8 +42,9 @@
   cursor: default;
   outline: none;
   transition:
-    background-color 150ms ease,
-    box-shadow 150ms ease;
+    background-color var(--motion-duration-deliberate)
+      var(--motion-easing-standard),
+    box-shadow var(--motion-duration-deliberate) var(--motion-easing-standard);
 }
 
 :is(.navigation-menu, [ng-navigation-menu]) > ul > li > button::after {
@@ -54,7 +55,8 @@
   border-bottom: 1.5px solid currentcolor;
   content: "";
   transform: translateY(-25%) rotate(45deg);
-  transition: transform 300ms ease;
+  transition: transform var(--motion-duration-slow)
+    var(--motion-easing-standard);
 }
 
 :is(.navigation-menu, [ng-navigation-menu])
@@ -80,7 +82,8 @@
   > ul
   > li
   > :is(button, a):focus-visible {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+  box-shadow: 0 0 0 var(--focus-ring-width)
+    color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
 :is(.navigation-menu, [ng-navigation-menu])
@@ -106,14 +109,16 @@
   color: var(--popover-foreground);
   padding: calc(var(--spacing) * 1);
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--foreground) 10%, transparent),
+    0 0 0 var(--border-width-default)
+      color-mix(in srgb, var(--foreground) 10%, transparent),
     var(--shadow-md);
   transform: translateX(var(--navigation-menu-content-offset, 0));
 }
 
 :is(.navigation-menu, [ng-navigation-menu]) > ul > li > section:not([hidden]) {
   display: block;
-  animation: angularcss-surface-enter 120ms ease-out;
+  animation: angularcss-surface-enter var(--motion-duration-default)
+    var(--motion-easing-out);
 }
 
 :is(.navigation-menu, [ng-navigation-menu]) > ul > li > section ul {
@@ -135,8 +140,9 @@
   text-decoration: none;
   outline: none;
   transition:
-    background-color 150ms ease,
-    box-shadow 150ms ease;
+    background-color var(--motion-duration-deliberate)
+      var(--motion-easing-standard),
+    box-shadow var(--motion-duration-deliberate) var(--motion-easing-standard);
 }
 
 :is(.navigation-menu, [ng-navigation-menu])
@@ -152,7 +158,8 @@
   > li
   > section
   a:focus-visible {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+  box-shadow: 0 0 0 var(--focus-ring-width)
+    color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
 :is(.navigation-menu, [ng-navigation-menu]) > ul > li > section a svg {
@@ -193,6 +200,6 @@
   :is(.navigation-menu, [ng-navigation-menu]) > ul > li > :is(button, a),
   :is(.navigation-menu, [ng-navigation-menu]) > ul > li > section a,
   :is(.navigation-menu, [ng-navigation-menu]) > ul > li > button::after {
-    transition-duration: 0s;
+    transition-duration: var(--motion-duration-instant);
   }
 }

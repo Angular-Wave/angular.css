@@ -7,8 +7,8 @@ description:
 ---
 
 AngularCSS is a library of semantic HTML contracts, TypeScript directives, and
-Tailwind-friendly CSS for AngularTS applications. These docs assume that you
-know basic HTML but do not assume prior AngularCSS experience.
+customizable CSS for AngularTS applications. These docs assume that you know
+basic HTML but do not assume prior AngularCSS experience.
 
 ## Start here
 
@@ -18,9 +18,8 @@ know basic HTML but do not assume prior AngularCSS experience.
    local npm packages, stylesheet, and `angular.css` module.
 3. [Build your first component]({{< relref
    "/docs/get-started/first-component" >}}) creates an interactive accordion.
-4. [Styling with Tailwind]({{< relref
-   "/docs/get-started/styling-tailwind" >}}) covers tokens, parts, and state
-   selectors.
+4. [Customization]({{< relref "/docs/get-started/customization" >}}) covers
+   tokens, parts, and state selectors.
 
 ## Browse the catalog
 

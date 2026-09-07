@@ -22,16 +22,17 @@
   padding: calc(var(--spacing) * 2.5);
   font-size: var(--text-sm);
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--foreground) 10%, transparent),
+    0 0 0 var(--border-width-default)
+      color-mix(in srgb, var(--foreground) 10%, transparent),
     var(--shadow-md);
   outline: none;
   opacity: 0;
   transform: scale(0.98);
   transition:
-    display 150ms allow-discrete,
-    overlay 150ms allow-discrete,
-    opacity 150ms ease,
-    transform 150ms ease;
+    display var(--motion-duration-deliberate) allow-discrete,
+    overlay var(--motion-duration-deliberate) allow-discrete,
+    opacity var(--motion-duration-deliberate) var(--motion-easing-standard),
+    transform var(--motion-duration-deliberate) var(--motion-easing-standard);
   position-try-fallbacks: flip-block, flip-inline;
 }
 
@@ -126,7 +127,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .popover > [popover] {
-    transition-duration: 0s;
+    transition-duration: var(--motion-duration-instant);
   }
 }
 

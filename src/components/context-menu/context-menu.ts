@@ -94,6 +94,13 @@ export function contextMenuDirective(): ng.Directive {
       const contentId =
         content.id || `context-menu-content-${String(contextMenuIdCounter++)}`;
       content.id = contentId;
+      if (
+        !trigger.matches(
+          "button, a[href], input, select, textarea, summary, [role]",
+        )
+      ) {
+        trigger.setAttribute("role", "button");
+      }
       trigger.setAttribute("aria-haspopup", "menu");
       trigger.setAttribute("aria-controls", contentId);
       if (!trigger.hasAttribute("tabindex")) trigger.tabIndex = 0;

@@ -40,11 +40,20 @@ test("canonical artifact exposes semantic command structure and packaged runtime
   );
   await expect(list).toHaveAttribute("role", "listbox");
   await expect(root.getByRole("option")).toHaveCount(6);
-  await expect(root.locator(":scope > :last-child > section")).toHaveCount(2);
-  await expect(root.getByRole("separator")).toHaveCount(1);
+  const groups = root.locator(":scope > :last-child > section");
+  await expect(groups).toHaveCount(2);
+  await expect(groups.first()).toHaveAttribute("role", "group");
+  await expect(groups.first().locator("h2")).toHaveAttribute(
+    "role",
+    "presentation",
+  );
+  await expect(root.locator(":scope > :last-child > hr")).toHaveAttribute(
+    "role",
+    "presentation",
+  );
   await expect(root.locator(":scope > header > label")).toHaveCSS(
     "height",
-    "32px",
+    "36px",
   );
   await expect(root.getByRole("option").first()).toHaveCSS("height", "32px");
 });

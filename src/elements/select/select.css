@@ -3,9 +3,9 @@ select:not([multiple], [size]) {
   display: block;
   width: fit-content;
   min-width: 12rem;
-  height: calc(var(--spacing) * 8);
-  border: 1px solid var(--input);
-  border-radius: calc(var(--radius) - 2px);
+  height: var(--size-control-md);
+  border: var(--border-width-default) solid var(--input);
+  border-radius: var(--radius-md);
   background: transparent;
   color: var(--foreground);
   padding-block: calc(var(--spacing) * 1);
@@ -25,7 +25,8 @@ select:not([multiple], [size]):disabled {
 
 select:not([multiple], [size]):focus-visible {
   border-color: var(--ring);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+  box-shadow: 0 0 0 var(--focus-ring-width)
+    color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
 select:not([multiple], [size]):is(
@@ -34,7 +35,8 @@ select:not([multiple], [size]):is(
     [aria-invalid="true"]
   ) {
   border-color: var(--error);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--error) 20%, transparent);
+  box-shadow: 0 0 0 var(--focus-ring-width)
+    color-mix(in srgb, var(--error) 20%, transparent);
 }
 
 select:not([multiple], [size]) option,

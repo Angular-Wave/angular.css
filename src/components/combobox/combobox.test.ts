@@ -39,7 +39,7 @@ test("canonical basic and auto-highlight artifacts expose distinct listbox behav
   await expect(basicContent).toBeHidden();
   await expect(basicInput).toHaveAttribute("aria-expanded", "false");
   await expect(basicInput).toHaveAttribute("aria-autocomplete", "list");
-  await expect(basic.locator(":scope > header")).toHaveCSS("height", "32px");
+  await expect(basic.locator(":scope > header")).toHaveCSS("height", "36px");
   await basicInput.focus();
   await expect(basicContent).toBeVisible();
   await expect

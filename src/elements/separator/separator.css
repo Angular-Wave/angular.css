@@ -6,11 +6,11 @@
 
 .separator:not([aria-orientation="vertical"]) {
   width: 100%;
-  height: 1px;
+  height: var(--border-width-default);
 }
 
 .separator[aria-orientation="vertical"] {
   align-self: stretch;
-  width: 1px;
+  width: var(--border-width-default);
   min-height: 1rem;
 }

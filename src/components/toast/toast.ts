@@ -174,6 +174,9 @@ export function toastDirective(): ng.Directive {
       };
 
       const bindToaster = () => {
+        if (!element.hasAttribute("role")) {
+          setAttributeIfChanged(element, "role", "region");
+        }
         syncPosition();
         queryAll<HTMLElement>(element, toastSelector).forEach(bindToast);
         queryAll<HTMLElement>(element, actionSelector).forEach(

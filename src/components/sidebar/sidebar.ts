@@ -57,6 +57,7 @@ export function sidebarDirective(): ng.Directive {
         const hidden =
           collapsed && element.getAttribute("collapsible") === "offcanvas";
         element.toggleAttribute("collapsed", collapsed);
+        element.toggleAttribute("inert", hidden);
         setAttributeIfChanged(element, "aria-hidden", String(hidden));
         cleanupTriggers.forEach((_, trigger) => {
           setAttributeIfChanged(trigger, "aria-expanded", String(!collapsed));

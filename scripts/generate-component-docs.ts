@@ -698,9 +698,6 @@ const referenceFor = (component: (typeof catalogNames)[number]): string => {
       );
     }
   }
-  const childSelectors = matches(source, /\b(ng-[a-z][a-z0-9-]+)/g).filter(
-    (selector) => selector !== rootSelector,
-  );
   const readAttributes = unique([
     ...matches(source, /(?:getAttribute|hasAttribute)\(["']([^"']+)["']\)/g),
     ...(readAttributesByComponent[component] || []),
@@ -749,12 +746,12 @@ const referenceFor = (component: (typeof catalogNames)[number]): string => {
     ? "This styling hook does not define component-specific CSS custom properties."
     : "This directive does not write component-specific CSS custom properties.";
   const customization = stylingOnly
-    ? "Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet."
+    ? "Target semantic elements, native state selectors, and component classes with ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet."
     : "Target `[" +
       rootSelector +
-      "]`, semantic descendants, component classes, and generated state from Tailwind or ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.";
+      "]`, semantic descendants, component classes, and generated state with ordinary CSS. Keep behavior and accessible state in the TypeScript directive; visual choices belong in the application stylesheet.";
 
-  const selectorList = [rootSelector, ...childSelectors];
+  const selectorList = [rootSelector];
 
   return `${START}
 ## Installation
@@ -820,8 +817,8 @@ content come from the application.
 
 ${customization}
 
-Read [Styling with Tailwind]({{< relref
-"/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state
+Read [Customization]({{< relref
+"/docs/get-started/customization" >}}) for layer order, design tokens, state
 variants, and iframe demo isolation.
 ${END}`;
 };

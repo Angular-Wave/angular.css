@@ -13,6 +13,24 @@ local bindings and the backend owns data operations.
 
 {{< example src="examples/components/data-table.html" title="Orders data table" height="520" >}}
 
+## Backend-driven states
+
+The recipe keeps service state in authored HTML so applications can bind it to
+their own requests and authorization model:
+
+| State                     | HTML contract                                                                                                     |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Loading                   | Set `aria-busy="true"` on `.data-table` and replace the table region with Spinner, Skeleton, or Progress content. |
+| Empty                     | Keep a direct explanatory paragraph or compose Empty after the filtered `tbody` has no rows.                      |
+| Error                     | Place an Alert with `aria-live="assertive"` before the data region and retain filters for retry.                  |
+| Permission limited        | Disable unavailable native actions and connect the reason with `aria-describedby`.                                |
+| Stale data                | Place a warning Alert with `aria-live="polite"` before the data region.                                           |
+| Filtering and paging      | Bind Filter Bar controls and Pagination links to application-owned query and page state.                          |
+| Selection and bulk action | Bind native checkboxes to row `aria-selected` and reveal one shared action `menu` when rows are selected.         |
+
+AngularCSS styles these compositions without defining a request, cache,
+authorization, or data-source API.
+
 <!-- angularcss-reference:start -->
 ## Installation
 
@@ -72,9 +90,9 @@ content come from the application.
 
 ## Customization
 
-Target semantic elements, native state selectors, and component classes from Tailwind or ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
+Target semantic elements, native state selectors, and component classes with ordinary CSS. Behavior and accessible state remain with native HTML and AngularTS; visual choices belong in the application stylesheet.
 
-Read [Styling with Tailwind]({{< relref
-"/docs/get-started/styling-tailwind" >}}) for layer order, design tokens, state
+Read [Customization]({{< relref
+"/docs/get-started/customization" >}}) for layer order, design tokens, state
 variants, and iframe demo isolation.
 <!-- angularcss-reference:end -->

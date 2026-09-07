@@ -170,7 +170,7 @@ const assertGeometry = async (
       42,
     );
     await expect(
-      page.locator(`[ng-calendar] > div button[value][aria-selected="true"]`),
+      page.locator(`[ng-calendar] > div button[value][aria-pressed="true"]`),
     ).toHaveCount(1);
     await expect(page.getByRole("combobox", { name: "Month" })).toHaveValue(
       "4",

@@ -9,7 +9,7 @@ const failures: string[] = [];
 
 const sourceAssets = (html: string): string =>
   html
-    .replaceAll("../../css/tailwind-preflight.css", "/docs/static/css/tailwind-preflight.css")
+    .replaceAll("../../css/preflight.css", "/docs/static/css/preflight.css")
     .replaceAll("../../css/angular.css", "/docs/static/css/angular.css")
     .replaceAll("../example.css", "/docs/static/examples/example.css")
     .replaceAll("../../js/", "/docs/static/js/")
@@ -17,7 +17,7 @@ const sourceAssets = (html: string): string =>
 
 const publishedAssets = (html: string): string =>
   html
-    .replaceAll("/docs/static/css/tailwind-preflight.css", "../../css/tailwind-preflight.css")
+    .replaceAll("/docs/static/css/preflight.css", "../../css/preflight.css")
     .replaceAll("/docs/static/css/angular.css", "../../css/angular.css")
     .replaceAll("/docs/static/examples/example.css", "../example.css")
     .replaceAll("/docs/static/js/", "../../js/");
@@ -33,7 +33,8 @@ for (const name of catalogNames) {
     : publishedAssets(readFileSync(inputPath, "utf8"));
 
   if (checkOnly) {
-    if (readFileSync(outputPath, "utf8") !== expected) failures.push(outputPath);
+    if (readFileSync(outputPath, "utf8") !== expected)
+      failures.push(outputPath);
   } else {
     writeFileSync(outputPath, expected);
   }

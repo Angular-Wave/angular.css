@@ -1,5 +1,11 @@
 label {
-  @apply flex items-center gap-2 text-sm font-medium leading-none select-none;
+  display: flex;
+  align-items: center;
+  gap: calc(var(--spacing) * 2);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--leading-none);
+  user-select: none;
 }
 
 label:is(:has(:disabled), :has(+ :disabled)) {

@@ -3,7 +3,7 @@
 
   width: calc(var(--otp-cell-size) * 6);
   height: var(--otp-cell-size);
-  border: 1px solid var(--input);
+  border: var(--border-width-default) solid var(--input);
   border-radius: var(--radius);
   background-color: var(--background);
   background-image: repeating-linear-gradient(
@@ -16,11 +16,11 @@
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   letter-spacing: calc(var(--otp-cell-size) - 1ch);
-  line-height: 1;
+  line-height: var(--leading-none);
   outline: none;
   transition:
-    border-color 150ms ease,
-    box-shadow 150ms ease;
+    border-color var(--motion-duration-deliberate) var(--motion-easing-standard),
+    box-shadow var(--motion-duration-deliberate) var(--motion-easing-standard);
 }
 
 .input-otp[size="4"] {
@@ -29,13 +29,15 @@
 
 .input-otp:focus-visible {
   border-color: var(--ring);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+  box-shadow: 0 0 0 var(--focus-ring-width)
+    color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
 .input-otp:user-invalid,
 .input-otp[aria-invalid="true"] {
   border-color: var(--error);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--error) 20%, transparent);
+  box-shadow: 0 0 0 var(--focus-ring-width)
+    color-mix(in srgb, var(--error) 20%, transparent);
 }
 
 .input-otp:disabled {

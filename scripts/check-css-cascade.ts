@@ -6,7 +6,7 @@ const indexCss = readFileSync("src/index.css", "utf8");
 const preflightCss = readFileSync("src/preflight.css", "utf8");
 const failures: string[] = [];
 const expectedOrder =
-  "@layer theme, base, angularcss.tokens, angularcss.components, components, utilities;";
+  "@layer base, angularcss.tokens, angularcss.components, components, utilities;";
 
 if (!indexCss.startsWith(expectedOrder)) {
   failures.push(`src/index.css must begin with ${expectedOrder}`);
@@ -49,16 +49,18 @@ for (const actual of actualCatalogImports) {
   }
 }
 
-for (const match of indexCss.matchAll(
-  /^@import "@radix-ui\/colors\/[^\n]+$/gm,
-)) {
-  if (!match[0].endsWith(" layer(angularcss.tokens);")) {
-    failures.push(`color import is outside angularcss.tokens: ${match[0]}`);
-  }
+const tokenImport =
+  '@import "./styles/generated/tokens.css" layer(angularcss.tokens);';
+if (indexCss.split(tokenImport).length !== 2) {
+  failures.push(
+    "src/index.css must import generated customization tokens exactly once",
+  );
 }
 
-if (!preflightCss.includes("layer(base)")) {
-  failures.push("src/preflight.css must import Tailwind preflight into base");
+if (!preflightCss.startsWith("@layer base {")) {
+  failures.push(
+    "src/preflight.css must define the documentation reset in base",
+  );
 }
 
 if (failures.length > 0) {

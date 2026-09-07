@@ -10,9 +10,9 @@
   backdrop-filter: blur(4px);
   opacity: 0;
   transition:
-    display 180ms allow-discrete,
-    overlay 180ms allow-discrete,
-    opacity 140ms ease;
+    display var(--motion-duration-deliberate) allow-discrete,
+    overlay var(--motion-duration-deliberate) allow-discrete,
+    opacity var(--motion-duration-default) var(--motion-easing-standard);
 }
 
 :is(.alert-dialog, .dialog, .drawer, .sheet) > dialog:open::backdrop {
@@ -30,10 +30,10 @@
   opacity: 0;
   translate: var(--modal-enter-x) var(--modal-enter-y);
   transition:
-    display 180ms allow-discrete,
-    overlay 180ms allow-discrete,
-    opacity 140ms ease,
-    translate 180ms ease-out;
+    display var(--motion-duration-deliberate) allow-discrete,
+    overlay var(--motion-duration-deliberate) allow-discrete,
+    opacity var(--motion-duration-default) var(--motion-easing-standard),
+    translate var(--motion-duration-deliberate) var(--motion-easing-out);
 }
 
 :is(.dialog, .drawer, .sheet) > dialog {

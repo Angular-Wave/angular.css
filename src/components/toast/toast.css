@@ -51,7 +51,7 @@
   min-height: calc(var(--spacing) * 16);
   align-items: start;
   gap: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
-  border: 1px solid var(--border);
+  border: var(--border-width-default) solid var(--border);
   border-radius: calc(var(--radius) * 2);
   background: var(--popover);
   color: var(--foreground);
@@ -61,8 +61,8 @@
   opacity: 1;
   translate: 0 0;
   transition:
-    opacity 140ms ease,
-    translate 180ms ease-out;
+    opacity var(--motion-duration-default) var(--motion-easing-standard),
+    translate var(--motion-duration-deliberate) var(--motion-easing-out);
 
   @starting-style {
     opacity: 0;
@@ -99,7 +99,7 @@
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
   place-items: center;
-  margin-block-start: 1px;
+  margin-block-start: var(--border-width-default);
 }
 
 [ng-toast] > article[type="success"] > figure {
@@ -115,11 +115,11 @@
 }
 
 [ng-toast] > article[type="error"] > figure {
-  color: var(--error);
+  color: var(--error-foreground);
 }
 
 [ng-toast] > article[type="loading"] > figure > svg {
-  animation: angularcss-toast-spin 800ms linear infinite;
+  animation: angularcss-toast-spin 800ms var(--motion-easing-linear) infinite;
 }
 
 [ng-toast] > article > :is(header, section) {

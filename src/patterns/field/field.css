@@ -1,82 +1,111 @@
 fieldset.field-set {
-  @apply flex flex-col gap-4;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 4);
 
   &:has(> :is(.checkbox-group, .radio-group)) {
-    @apply gap-3;
+    gap: calc(var(--spacing) * 3);
   }
 }
 
 :is(fieldset.field-set, fieldset.radio-group) > legend {
-  @apply mb-1.5 font-medium;
+  margin-bottom: calc(var(--spacing) * 1.5);
+  font-weight: var(--font-weight-medium);
 
   &[variant="label"] {
-    @apply text-sm;
+    font-size: var(--text-sm);
+    line-height: var(--leading-sm);
   }
 
   &[variant="legend"] {
-    @apply text-base;
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
   }
 }
 
 .field-group {
-  @apply flex w-full flex-col gap-5;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 5);
 }
 
 .field {
-  @apply flex w-full flex-col gap-2;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 2);
 
   &[orientation="horizontal"] {
-    @apply flex-row items-center;
+    flex-direction: row;
+    align-items: center;
 
     &:has(> :is(section, span)) {
-      @apply items-start;
+      align-items: flex-start;
     }
 
     > label {
-      @apply flex-auto;
+      flex: auto;
     }
 
     &:has(> :is(section, span))
       > :is(input[type="checkbox"], input[type="radio"]) {
-      margin-top: 1px;
+      margin-top: var(--border-width-default);
     }
   }
 
   &[orientation="responsive"] {
-    @apply flex-col gap-2 md:flex-row md:items-center md:gap-3;
+    flex-direction: column;
+    gap: calc(var(--spacing) * 2);
   }
 
   &:has(:invalid),
   &:has([aria-invalid="true"]),
   &[aria-invalid="true"] {
     label {
-      @apply text-error;
+      color: var(--error-foreground);
     }
   }
 
   &:has(:disabled) :is(label, strong) {
-    @apply opacity-50;
+    opacity: 0.5;
   }
 }
 
 .field > :is(section, span) {
-  @apply flex flex-1 flex-col gap-0.5 leading-snug;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 0.5);
+  line-height: var(--leading-snug);
 }
 
+/* stylelint-disable no-descending-specificity -- Label rules target separate field orientations and selectable-card parents. */
 .field label,
 .field-group > label:has(> .field),
 .radio-group > label:not([class]):has(> .field) {
-  @apply flex w-fit items-center gap-2 text-sm leading-none font-medium;
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: calc(var(--spacing) * 2);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--leading-none);
 }
 
 .field-group > label:has(> .field),
 .radio-group > label:not([class]):has(> .field) {
-  @apply w-full flex-col items-start rounded-lg border border-border;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  border: var(--border-width-default) solid var(--border);
+  border-radius: var(--radius);
 
   > .field {
-    @apply p-2.5;
+    padding: calc(var(--spacing) * 2.5);
   }
 }
+/* stylelint-enable no-descending-specificity */
 
 :is(.field-group > label, .radio-group > label:not([class])):has(
   > .field :is(.checkbox, .switch, input[type="radio"]):checked
@@ -86,18 +115,44 @@ fieldset.field-set {
 }
 
 .field strong {
-  @apply flex w-fit items-center gap-2 text-sm font-medium;
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: calc(var(--spacing) * 2);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--leading-sm);
 }
 
 .field :is(p:not(.field-error), small),
 fieldset.field-set > p {
-  @apply text-sm leading-normal font-normal text-muted-foreground;
+  color: var(--muted-foreground);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--leading-normal);
 
   a {
-    @apply underline underline-offset-4 hover:text-primary;
+    text-decoration-line: underline;
+    text-underline-offset: var(--spacing);
+
+    &:hover {
+      color: var(--primary);
+    }
   }
 }
 
 .field-error {
-  @apply mt-1 text-sm font-normal text-error;
+  margin-top: calc(var(--spacing) * 1);
+  color: var(--error-foreground);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--leading-sm);
+}
+
+@media (width >= 48rem) {
+  .field[orientation="responsive"] {
+    flex-direction: row;
+    align-items: center;
+    gap: calc(var(--spacing) * 3);
+  }
 }

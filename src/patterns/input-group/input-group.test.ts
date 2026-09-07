@@ -82,7 +82,7 @@ test("input group examples match canonical geometry, state, and addon focus beha
   const basicGroup = page.locator("#ig-basic").locator("..");
   const basicBox = await basicGroup.boundingBox();
   expect(basicBox).not.toBeNull();
-  expect(basicBox!.height).toBeCloseTo(32, 0);
+  expect(basicBox!.height).toBeCloseTo(36, 0);
   await expect(page.locator("#ig-disabled").locator("..")).toHaveCSS(
     "opacity",
     "0.5",

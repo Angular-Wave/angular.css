@@ -65,8 +65,8 @@
     .input,
     .input-group
   ):last-child {
-  border-start-end-radius: calc(var(--radius) - 2px);
-  border-end-end-radius: calc(var(--radius) - 2px);
+  border-start-end-radius: var(--radius-md);
+  border-end-end-radius: var(--radius-md);
 }
 
 .button-group > :is([ng-dropdown-menu], .popover) > button {
@@ -122,8 +122,8 @@
     .input-group
   ) {
   border-radius: 0;
-  border-start-start-radius: calc(var(--radius) - 2px);
-  border-start-end-radius: calc(var(--radius) - 2px);
+  border-start-start-radius: var(--radius-md);
+  border-start-end-radius: var(--radius-md);
 }
 
 .button-group[orientation="vertical"]
@@ -166,8 +166,8 @@
     .input,
     .input-group
   ):last-child {
-  border-end-start-radius: calc(var(--radius) - 2px);
-  border-end-end-radius: calc(var(--radius) - 2px);
+  border-end-start-radius: var(--radius-md);
+  border-end-end-radius: var(--radius-md);
 }
 
 .button-group[orientation="vertical"]
@@ -191,8 +191,8 @@
   display: flex;
   align-items: center;
   gap: calc(var(--spacing) * 2);
-  border: 1px solid var(--border);
-  border-radius: calc(var(--radius) - 2px);
+  border: var(--border-width-default) solid var(--border);
+  border-radius: var(--radius-md);
   background: var(--muted);
   padding-inline: calc(var(--spacing) * 2.5);
   font-size: var(--text-sm);
@@ -209,15 +209,15 @@
 .button-group > hr {
   position: relative;
   width: auto;
-  height: 1px;
+  height: var(--border-width-default);
   align-self: stretch;
   flex: none;
-  margin-inline: 1px;
+  margin-inline: var(--border-width-default);
   background: var(--input);
 }
 
 .button-group > hr[aria-orientation="vertical"] {
-  width: 1px;
+  width: var(--border-width-default);
   height: auto;
-  margin-block: 1px;
+  margin-block: var(--border-width-default);
 }

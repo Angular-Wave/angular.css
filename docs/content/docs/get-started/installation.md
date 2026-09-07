@@ -31,8 +31,8 @@ AngularCSS stylesheet:
 ```
 
 These entries register no AngularCSS directive. Add AngularTS for application
-bindings, and load AngularCSS JavaScript with the `angular.css` dependency when using
-behavioral components such as tabs or comboboxes.
+bindings, and load AngularCSS JavaScript with the `angular.css` dependency when
+using behavioral components such as tabs or comboboxes.
 
 ## Bundler setup
 
@@ -56,8 +56,9 @@ Then attach your application module to an HTML root:
 </main>
 ```
 
-The package registers one AngularTS module named `angular.css`. Your application should
-depend on that module; do not register individual AngularCSS directives again.
+The package registers one AngularTS module named `angular.css`. Your application
+should depend on that module; do not register individual AngularCSS directives
+again.
 
 ## Local script setup
 
@@ -77,24 +78,30 @@ into their own static asset directory. Serve all three from the same origin:
 Load AngularTS first. The documentation examples use this local script order and
 never fetch runtime code or styles from a CDN.
 
-## Tailwind layer order
+## Application styles
 
-When your application compiles Tailwind itself, load AngularCSS first so it
-establishes the layer order, then load Tailwind and application overrides:
+Load AngularCSS before application styles so your custom properties and rules
+can configure its defaults:
 
 ```css
 @import '@angular-wave/angular.css/dist/angular.css';
-@import 'tailwindcss';
 
 @layer components {
+  :root {
+    --primary: #175cd3;
+    --radius: 0.375rem;
+  }
+
   .button[variant='outline'] {
-    @apply border-slate-300 bg-transparent;
+    border-color: var(--border);
+    background: transparent;
   }
 }
 ```
 
-AngularCSS does not require Tailwind at runtime. The published CSS is already
-compiled.
+The published CSS is compiled and has no framework dependency. See
+[Customization]({{< relref "/docs/get-started/customization" >}}) for the
+complete CSS-variable and DTCG token contract.
 
 ## Verify the installation
 

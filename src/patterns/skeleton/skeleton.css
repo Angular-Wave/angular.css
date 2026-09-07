@@ -1,5 +1,6 @@
 .skeleton {
-  border-radius: calc(var(--radius) - 2px);
+  display: block;
+  border-radius: var(--radius-md);
   background: var(--muted);
   animation: angularcss-skeleton-pulse 1.6s ease-in-out infinite;
 }

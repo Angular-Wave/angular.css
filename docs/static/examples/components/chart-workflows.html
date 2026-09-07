@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../../css/tailwind-preflight.css" />
+    <title>AngularCSS Chart Workflows</title>
+    <link rel="stylesheet" href="../../css/preflight.css" />
     <link rel="stylesheet" href="../../css/angular.css" />
     <link rel="stylesheet" href="../example.css" />
     <script src="../../js/angular-ts.umd.js"></script>
@@ -27,14 +28,18 @@
             <ul>
               <li ng-repeat="point in chartData">
                 <span
+                  role="img"
                   aria-label="{{ point.month }} desktop"
                   data-value="{{ point.d }}"
                   data-color="#2563eb"
+                  style="--value: {{ point.d }}; --chart-color: #2563eb"
                 ></span>
                 <span
+                  role="img"
                   aria-label="{{ point.month }} mobile"
                   data-value="{{ point.m }}"
                   data-color="#60a5fa"
+                  style="--value: {{ point.m }}; --chart-color: #60a5fa"
                 ></span>
               </li>
             </ul>
@@ -53,14 +58,18 @@
             <ul>
               <li ng-repeat="point in chartData">
                 <span
+                  role="img"
                   aria-label="{{ point.month }} desktop"
                   data-value="{{ point.d }}"
                   data-color="#2563eb"
+                  style="--value: {{ point.d }}; --chart-color: #2563eb"
                 ></span>
                 <span
+                  role="img"
                   aria-label="{{ point.month }} mobile"
                   data-value="{{ point.m }}"
                   data-color="#60a5fa"
+                  style="--value: {{ point.m }}; --chart-color: #60a5fa"
                 ></span>
               </li>
             </ul>
@@ -86,14 +95,18 @@
                 ng-mouseleave="tooltip.visible=false"
               >
                 <span
+                  role="img"
                   aria-label="{{ point.month }} desktop"
                   data-value="{{ point.d }}"
                   data-color="#2563eb"
+                  style="--value: {{ point.d }}; --chart-color: #2563eb"
                 ></span>
                 <span
+                  role="img"
                   aria-label="{{ point.month }} mobile"
                   data-value="{{ point.m }}"
                   data-color="#60a5fa"
+                  style="--value: {{ point.m }}; --chart-color: #60a5fa"
                 ></span>
               </li>
             </ul>
@@ -101,13 +114,25 @@
               <strong>{{ tooltip.month }}</strong>
               <dl>
                 <div>
-                  <span data-color="#2563eb"></span>
-                  <dt>Desktop</dt>
+                  <dt>
+                    <span
+                      aria-hidden="true"
+                      data-color="#2563eb"
+                      style="--chart-color: #2563eb"
+                    ></span
+                    >Desktop
+                  </dt>
                   <dd>{{ tooltip.desktop }}</dd>
                 </div>
                 <div>
-                  <span data-color="#60a5fa"></span>
-                  <dt>Mobile</dt>
+                  <dt>
+                    <span
+                      aria-hidden="true"
+                      data-color="#60a5fa"
+                      style="--chart-color: #60a5fa"
+                    ></span
+                    >Mobile
+                  </dt>
                   <dd>{{ tooltip.mobile }}</dd>
                 </div>
               </dl>
@@ -134,14 +159,18 @@
                 ng-mouseleave="legendTip.visible=false"
               >
                 <span
+                  role="img"
                   aria-label="{{ point.month }} desktop"
                   data-value="{{ point.d }}"
                   data-color="#2563eb"
+                  style="--value: {{ point.d }}; --chart-color: #2563eb"
                 ></span>
                 <span
+                  role="img"
                   aria-label="{{ point.month }} mobile"
                   data-value="{{ point.m }}"
                   data-color="#60a5fa"
+                  style="--value: {{ point.m }}; --chart-color: #60a5fa"
                 ></span>
               </li>
             </ul>
@@ -149,13 +178,25 @@
               <strong>{{ legendTip.month }}</strong>
               <dl>
                 <div>
-                  <span data-color="#2563eb"></span>
-                  <dt>Desktop</dt>
+                  <dt>
+                    <span
+                      aria-hidden="true"
+                      data-color="#2563eb"
+                      style="--chart-color: #2563eb"
+                    ></span
+                    >Desktop
+                  </dt>
                   <dd>{{ legendTip.desktop }}</dd>
                 </div>
                 <div>
-                  <span data-color="#60a5fa"></span>
-                  <dt>Mobile</dt>
+                  <dt>
+                    <span
+                      aria-hidden="true"
+                      data-color="#60a5fa"
+                      style="--chart-color: #60a5fa"
+                    ></span
+                    >Mobile
+                  </dt>
                   <dd>{{ legendTip.mobile }}</dd>
                 </div>
               </dl>
@@ -165,8 +206,14 @@
             <span ng-repeat="point in chartData"> {{ point.short }} </span>
           </footer>
           <ul>
-            <li><span data-color="#2563eb"></span>Desktop</li>
-            <li><span data-color="#60a5fa"></span>Mobile</li>
+            <li>
+              <span data-color="#2563eb" style="--chart-color: #2563eb"></span
+              >Desktop
+            </li>
+            <li>
+              <span data-color="#60a5fa" style="--chart-color: #60a5fa"></span
+              >Mobile
+            </li>
           </ul>
         </figure>
       </section>

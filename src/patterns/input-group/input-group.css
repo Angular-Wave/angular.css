@@ -1,18 +1,18 @@
 .input-group {
   position: relative;
   display: flex;
-  height: calc(var(--spacing) * 8);
+  height: var(--size-control-md);
   width: 100%;
   min-width: 0;
   align-items: center;
   overflow: visible;
-  border: 1px solid var(--input);
+  border: var(--border-width-default) solid var(--input);
   border-radius: var(--radius);
   background: var(--background);
   color: var(--foreground);
   transition:
-    border-color 150ms ease,
-    box-shadow 150ms ease;
+    border-color var(--motion-duration-deliberate) var(--motion-easing-standard),
+    box-shadow var(--motion-duration-deliberate) var(--motion-easing-standard);
 }
 
 .input-group:has(> :is(textarea, [align="block-start"], [align="block-end"])) {
@@ -28,12 +28,14 @@
 
 .input-group:has([aria-invalid="true"]) {
   border-color: var(--error);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--error) 20%, transparent);
+  box-shadow: 0 0 0 var(--focus-ring-width)
+    color-mix(in srgb, var(--error) 20%, transparent);
 }
 
 .input-group:has(> :is(input, textarea, select):focus-visible) {
   border-color: var(--ring);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+  box-shadow: 0 0 0 var(--focus-ring-width)
+    color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
 .input-group > :is(input, textarea, select) {
@@ -127,12 +129,12 @@
 }
 
 .input-group > [align="block-start"][border="true"] {
-  border-block-end: 1px solid var(--border);
+  border-block-end: var(--border-width-default) solid var(--border);
   padding-block-end: calc(var(--spacing) * 2);
 }
 
 .input-group > [align="block-end"][border="true"] {
-  border-block-start: 1px solid var(--border);
+  border-block-start: var(--border-width-default) solid var(--border);
   padding-block-start: calc(var(--spacing) * 2);
 }
 
@@ -153,8 +155,8 @@
   .input-group > button,
   .input-group > :not(input, textarea, select) > button
 ) {
-  min-height: calc(var(--spacing) * 6);
-  height: calc(var(--spacing) * 6);
+  min-height: var(--size-control-xs);
+  height: var(--size-control-xs);
   gap: calc(var(--spacing) * 1);
   border-radius: calc(var(--radius) - 3px);
   padding-inline: calc(var(--spacing) * 1.5);
@@ -167,8 +169,8 @@
   .input-group > button,
   .input-group > :not(input, textarea, select) > button
 )[size="sm"] {
-  min-height: calc(var(--spacing) * 8);
-  height: calc(var(--spacing) * 8);
+  min-height: var(--size-control-sm);
+  height: var(--size-control-sm);
   padding-inline: calc(var(--spacing) * 3);
   font-size: var(--text-sm);
 }
@@ -177,7 +179,7 @@
   .input-group > button,
   .input-group > :not(input, textarea, select) > button
 )[size="icon-xs"] {
-  width: calc(var(--spacing) * 6);
+  width: var(--size-control-xs);
   padding-inline: 0;
 }
 
@@ -185,8 +187,8 @@
   .input-group > button,
   .input-group > :not(input, textarea, select) > button
 )[size="icon-sm"] {
-  width: calc(var(--spacing) * 8);
-  min-height: calc(var(--spacing) * 8);
-  height: calc(var(--spacing) * 8);
+  width: var(--size-control-sm);
+  min-height: var(--size-control-sm);
+  height: var(--size-control-sm);
   padding-inline: 0;
 }

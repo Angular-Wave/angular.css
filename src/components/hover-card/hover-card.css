@@ -21,7 +21,8 @@
   color: var(--popover-foreground);
   padding: calc(var(--spacing) * 2.5);
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--foreground) 10%, transparent),
+    0 0 0 var(--border-width-default)
+      color-mix(in srgb, var(--foreground) 10%, transparent),
     var(--shadow-md);
   opacity: 0;
   pointer-events: none;
@@ -29,8 +30,8 @@
     translate(var(--hover-card-motion-x, 0), var(--hover-card-motion-y, 2px))
     scale(0.98);
   transition:
-    opacity 150ms ease,
-    transform 150ms ease;
+    opacity var(--motion-duration-deliberate) var(--motion-easing-standard),
+    transform var(--motion-duration-deliberate) var(--motion-easing-standard);
 }
 
 :is(.hover-card, [ng-hover-card])
@@ -105,6 +106,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   :is(.hover-card, [ng-hover-card]) > :is(aside, article, section):last-child {
-    transition-duration: 0s;
+    transition-duration: var(--motion-duration-instant);
   }
 }

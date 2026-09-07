@@ -3,7 +3,7 @@
     display: grid;
     grid-template-columns: minmax(8rem, 0.35fr) minmax(0, 1fr);
     margin: 0;
-    border-block-start: 1px solid var(--border);
+    border-block-start: var(--border-width-default) solid var(--border);
     font-size: var(--text-sm);
   }
 
@@ -13,7 +13,7 @@
     grid-template-columns: subgrid;
     gap: calc(var(--spacing) * 4);
     padding-block: calc(var(--spacing) * 2.5);
-    border-block-end: 1px solid var(--border);
+    border-block-end: var(--border-width-default) solid var(--border);
   }
 
   dt {

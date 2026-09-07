@@ -16,7 +16,7 @@ test("source template styles native select and defaults values to option text", 
 
   const select = page.getByRole("combobox", { name: "Status" });
   await expect(select).toHaveValue("");
-  await expect(select).toHaveCSS("height", "32px");
+  await expect(select).toHaveCSS("height", "36px");
   await expect(select).toHaveClass(/ng-invalid/);
   await expect(select).toHaveClass(/ng-pristine/);
   await select.selectOption({ label: "Done" });

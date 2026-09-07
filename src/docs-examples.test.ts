@@ -107,7 +107,7 @@ test("published calendar workflow page covers basic, booked, caption, multiple, 
   await expect(caption).toHaveAttribute("data-month", "2026-10");
 
   const multiple = calendars.nth(3);
-  await expect(multiple.locator(`[aria-selected="true"]`)).toHaveCount(2);
+  await expect(multiple.locator(`[aria-pressed="true"]`)).toHaveCount(2);
   await multiple.locator(`[value="2026-09-14"]`).click();
   await expect(page.locator(".calendar-workflow-output").nth(3)).toContainText(
     "2026-09-14",
@@ -501,11 +501,7 @@ test("docs iframe examples render without stale AngularTS bindings", async ({
       );
     }
 
-    const requiredStylesheets = [
-      "tailwind-preflight.css",
-      "angular.css",
-      "example.css",
-    ];
+    const requiredStylesheets = ["preflight.css", "angular.css", "example.css"];
 
     for (const stylesheet of requiredStylesheets) {
       if (!result.stylesheetSources.some((src) => src.endsWith(stylesheet))) {

@@ -1,0 +1,25 @@
+{
+  "artifacts": {
+    "dist/angular.css": {
+      "maximumBytes": 186000,
+      "maximumGzipBytes": 25000
+    },
+    "dist/angular-css.esm.js": {
+      "maximumBytes": 240000,
+      "maximumGzipBytes": 36000
+    },
+    "dist/angular-css.umd.min.js": {
+      "maximumBytes": 106000,
+      "maximumGzipBytes": 31000
+    }
+  },
+  "package": {
+    "maximumFiles": 32,
+    "maximumPackedBytes": 160000,
+    "maximumUnpackedBytes": 950000
+  },
+  "runtime": {
+    "maximumInteractionBatchMs": 250,
+    "maximumPageLoadMs": 1500
+  }
+}
